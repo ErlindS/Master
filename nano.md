@@ -12,18 +12,17 @@ Spezielle Kapitel Machine Learning
 
 Erstes Semester:
 Wahl:
-1. Software Architektur (vll)
-2. Konzepte von Programmierparadigmen (vl)
-3. Graphenalgorithmen (Theorie effizienter Algorithmen) (v)
-4. Machine Learning (vvl)
+1. Software Architektur (vll) -> Vorlesung
+2. Konzepte von Programmierparadigmen (vl) -> Midterm
+3. Graphenalgorithmen (Theorie effizienter Algorithmen) (v) -> Graphenalgorithmen
+4. Machine Learning (vvl) -> Prüfung
 ---------- 24 ects
 
 Pflicht: 
 1. Projektarbeit 
 2. Ethik  
 3. IT-Enterpreuneurship 
-4. Seminararbeit
----------- 14 ects
+---------- 9 ects
 
 Zweites Semester:
 Wahl:
