@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/src/intersector.cpp" "CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o" "gcc" "CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o.d"
   "/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/src/main.cpp" "CMakeFiles/RaytracerLab.dir/src/main.cpp.o" "gcc" "CMakeFiles/RaytracerLab.dir/src/main.cpp.o.d"
+  "/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/src/mesh.cpp" "CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o" "gcc" "CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o.d"
   )
 
 # Targets to which this target links.
