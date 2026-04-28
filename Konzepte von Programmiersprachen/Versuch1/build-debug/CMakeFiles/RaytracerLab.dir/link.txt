@@ -1,0 +1,1 @@
+/usr/bin/c++ -g -g -O0 CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o CMakeFiles/RaytracerLab.dir/src/main.cpp.o CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o -o RaytracerLab 

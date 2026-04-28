@@ -15,8 +15,6 @@ Intersection Intersector::intersectRayTriangle(
     // Determinante berechnen (auch Vektor p genannt)
     // Einfach der orthogonale Vektor
     glm::vec3 h = glm::cross(ray.direction, edge2);
-
-    
     float a = glm::dot(edge1, h);
 
     // Wenn a nahe 0 ist, ist der Strahl parallel zum Dreieck

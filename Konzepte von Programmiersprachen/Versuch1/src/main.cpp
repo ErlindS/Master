@@ -38,12 +38,11 @@ int main() {
         return -1; 
     }
 
-    // 3. Lichtquelle definieren (Eine Position oben rechts hinter der Kamera)
-    glm::vec3 lightPos(5.0f, 10.0f, 5.0f);
+    // 3. Lichtquelle definieren (Von oben rechts, um schöne Schatten nach links zu werfen)
+    glm::vec3 lightPos(6.0f, 8.0f, -5.0f);
 
-    // 4. Kamera (Du musst die Werte ggf. anpassen, damit die Teekanne gut im Bild ist!)
-    // Teekannen sind oft groß, wir gehen weiter weg (Z = 15) und schauen auf den Ursprung
-    Camera cam(glm::vec3(0, 5, 15), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0), 45.0f, width, height);
+    // 4. Kamera (Wieder auf der Seite der Tassen, aber etwas zentrierter und leicht von oben)
+    Camera cam(glm::vec3(-3.0f, 3.5f, -8.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 45.0f, width, height);
 
     imageFile << "P3\n" << width << " " << height << "\n255\n";
 
@@ -76,10 +75,16 @@ int main() {
                 // 4. SCHATTENSTRAHL (Shadow Ray)
                 // Wir schieben den Startpunkt minimal in Richtung der Normale (0.001f), 
                 // damit das Dreieck sich nicht selbst verdeckt (Shadow Acne)
+                float distanceToLight = glm::length(lightPos - hitPoint);
                 Ray shadowRay = {hitPoint + normal * 0.001f, lightDir};
                 Intersection shadowIsect;
                 Triangle dummyTriangle;
                 bool inShadow = findClosestHit(shadowRay, scene.triangles, shadowIsect, dummyTriangle);
+
+                // Nur Objekte ZWISCHEN Trefferpunkt und Lichtquelle erzeugen Schatten
+                if (inShadow && shadowIsect.t > distanceToLight) {
+                    inShadow = false;
+                }
 
                 if (inShadow) {
                     // Punkt liegt im Schatten (nur ganz dunkles Umgebungslicht)

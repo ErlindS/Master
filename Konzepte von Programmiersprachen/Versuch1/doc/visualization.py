@@ -17,7 +17,7 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
 # Setup Daten
 v0 = np.array([1.0, 1.0, 1.0])
-v1 = np.array([3.0, 1.0, 1.0])
+v1 = np.array([3.0, 1.0, 3.0])
 v2 = np.array([1.0, 3.0, 1.0])
 
 ray_origin = np.array([1.5, 1.5, 4.0])
