@@ -1,0 +1,1 @@
+/usr/bin/c++  -O3 -march=native -mavx2 -O3 -DNDEBUG CMakeFiles/raytracer_triangle_normal.dir/src/raytracer_triangle_normal.cpp.o -o raytracer_triangle_normal  libGeometryLib.a 

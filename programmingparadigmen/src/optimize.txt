@@ -1,0 +1,270 @@
+Eine Lösung.
+
+// Triangle intersection method
+// Möller–Trumbore intersection algorithm
+/*
+template<typename T, size_t Dim>
+Intersection<T, Dim> Triangle<T, Dim>::intersect(const Ray<T, Dim>& ray, T min_t) const {
+	Intersection<T, Dim> result = {false, 0, Vector<T, Dim>(), 0, 0};
+    auto edge1 = this->vertices[1] - this->vertices[0];
+	auto edge2 = this->vertices[2] - this->vertices[0];
+	
+    Vector<T, Dim> h = ray.direction.cross(this->edge2);
+    T a = this->edge1.dot(h);
+
+    if (std::abs(a) < 1e-6) {
+        return result; // Ray is parallel to the triangle
+    }
+     
+    T f = 1.0 / a;
+
+    Vector<T, Dim> s = ray.origin - vertices[0];
+    T u = f * s.dot(h);
+
+    if (u < 0.0 || u > 1.0) {
+        return result;
+    }
+
+    Vector<T, Dim> q = s.cross(this->edge1);
+    T v = f * ray.direction.dot(q);
+
+    if (v < 0.0 || u + v > 1.0) {
+        return result;
+    }
+
+    T t = f * this->edge2.dot(q);
+
+    if ( 1e-6 < t && t < min_t) {
+		result.hit = true;
+        result.t = t;
+        Vector<T, Dim> normal = (ccw ? this->edge1.cross(this->edge2) : this->edge2.cross(this->edge1)).normalized();
+        result.normal = normal;
+        result.u = u;
+        result.v = v;
+        return result;
+    }
+
+    return result;
+}
+*/
+
+
+#include "kd_tree.h"
+#include <iostream>
+#include <stack>
+#include <limits>
+#include "statistics.h"
+
+template<typename T, size_t Dim, typename ObjType>
+AABB<T, Dim> calculateAABB(const std::vector<std::shared_ptr<ObjType>>& objects) {
+    if (objects.empty()) {
+        // Handle case where there are no triangles in the vector
+        return AABB<T, Dim>(Vector<T, Dim>(0), Vector<T, Dim>(0));
+    }
+
+    // Initialize min and max to the first triangle's vertices
+    AABB<T, Dim> firstAABB = objects[0]->getAABB();
+    Vector<T, Dim> min = firstAABB.min;
+    Vector<T, Dim> max = firstAABB.max;
+
+    // Now iterate through the rest of the triangles, expanding min and max as needed
+    for (size_t i = 1; i < objects.size(); ++i) {
+        AABB<T, Dim> currentAABB = objects[i]->getAABB();
+        for (size_t j = 0; j < Dim; ++j) {
+            min[j] = std::min(min[j], currentAABB.min[j]);
+            max[j] = std::max(max[j], currentAABB.max[j]);
+        }
+    }
+
+    return AABB<T, Dim>(min, max);
+}
+
+template<typename F, size_t D, typename O>
+std::ostream& operator<<(std::ostream& os, const KDTree<F, D, O>& tree) {
+    os << "KD-Tree Structure:" << std::endl;
+    tree.printTree(os, tree.root.get(), 0);
+    return os;
+}
+
+template<typename T, size_t Dim, typename ObjType>
+void KDTree<T, Dim, ObjType>::printTree(std::ostream& os, const Node* node, size_t depth) const {
+    if (node == nullptr) {
+        return;
+    }
+
+    // Print indentation for current depth
+    for (size_t i = 0; i < depth; i++) {
+        os << "  ";
+    }
+
+    // Print node information
+    os << "Node at depth " << depth << std::endl;
+    os << "  Split Axis: " << node->split_axis << std::endl;
+    os << "  Split Point: ";
+    for (size_t i = 0; i < Dim; i++) {
+        os << node->split_point[i] << " ";
+    }
+    os << std::endl;
+    os << "  Objects: " << node->objects.size() << std::endl;
+    for (const auto& obj : node->objects) {
+        os << "    Object: " << obj << std::endl;
+    }
+
+    if (node->spawn != nullptr) {
+        os << "  Spawn Child:" << std::endl;
+        printTree(os, node->spawn.get(), depth + 1);
+    }
+
+    // Recursively print left and right child nodes
+    if (node->left != nullptr) {
+        os << "  Left Child:" << std::endl;
+        printTree(os, node->left.get(), depth + 1);
+    }
+
+    if (node->right != nullptr) {
+        os << "  Right Child:" << std::endl;
+        printTree(os, node->right.get(), depth + 1);
+    }
+}
+template<typename T, size_t Dim, typename ObjType>
+void KDTree<T, Dim, ObjType>::buildTree(std::vector<std::shared_ptr<ObjType>>& objects, size_t depth, std::unique_ptr<Node>& node) {
+	node->aabb = calculateAABB<T, Dim, ObjType>(objects);
+	
+	if (objects.size() <= 8 || depth == 20) {
+		node->objects = objects;
+		node->aabb_nodes = node->aabb;
+		return;
+	}
+	
+	
+	
+    size_t axis = depth % Dim;
+	
+    std::sort(objects.begin(), objects.end(), 
+        [axis](const std::shared_ptr<ObjType>& a, const std::shared_ptr<ObjType>& b) {
+            return a->getCentroid()[axis] < b->getCentroid()[axis];
+        });
+
+    size_t median = objects.size() / 2;
+    node->split_axis = axis;
+    node->split_point[axis] = objects[median]->getAABB().min[axis] + (objects[median]->getAABB().max[axis] - objects[median]->getAABB().min[axis]) / T(2);
+	
+    std::vector<std::shared_ptr<ObjType>> right_objects;
+    std::vector<std::shared_ptr<ObjType>> left_objects;
+	std::vector<std::shared_ptr<ObjType>> spawn_objects;
+	
+    for (const auto& obj : objects) {
+        const AABB<T, Dim>& aabb = obj->getAABB();
+        bool is_left = aabb.max[axis] <= node->split_point[axis] + std::numeric_limits<T>::epsilon();
+        bool is_right = aabb.min[axis] >= node->split_point[axis] - std::numeric_limits<T>::epsilon();
+
+        if (is_left && ! is_right) {
+            left_objects.push_back(obj);
+        } else if (! is_left && is_right) {
+            right_objects.push_back(obj);
+        } else {
+			spawn_objects.push_back(obj);
+		}
+    }
+
+
+     // Sort spanning objects by AABB size in descending order
+    std::sort(spawn_objects.begin(), spawn_objects.end(),
+        [](const std::shared_ptr<ObjType>& a, const std::shared_ptr<ObjType>& b) {
+            return a->getAABB().getSize() > b->getAABB().getSize(); 
+        });
+
+    // Assign the largest spanning objects to the node, subdivide the rest.
+    size_t num_objects_to_store = std::min(static_cast<size_t>(8), spawn_objects.size()); 
+    if ( num_objects_to_store > 0 ) {
+		node->objects.assign(spawn_objects.begin(), spawn_objects.begin() + num_objects_to_store);  // store biggest to objects
+		node->aabb_nodes = calculateAABB<T, Dim, ObjType>(node->objects);
+	}
+    
+    // Pass what has not being saved
+    if (spawn_objects.size() > num_objects_to_store ) { // Test the limit
+        std::vector<std::shared_ptr<ObjType>> remaining_objects(spawn_objects.begin() + num_objects_to_store, spawn_objects.end());
+
+        if (!remaining_objects.empty()) {
+		     statistic::stat.kd_tree_no_of_nodes_created++;
+             node->spawn = std::make_unique<Node>();
+             buildTree(remaining_objects, depth + 1, node->spawn);
+        }
+    }
+	
+    if (!left_objects.empty()) {
+		statistic::stat.kd_tree_no_of_nodes_created++;
+        node->left = std::make_unique<Node>();
+        buildTree(left_objects, depth + 1, node->left);
+    }
+
+    if (!right_objects.empty()) {
+		statistic::stat.kd_tree_no_of_nodes_created++;
+        node->right = std::make_unique<Node>();
+        buildTree(right_objects, depth + 1, node->right);
+    }
+}
+
+template<typename T, size_t Dim, typename ObjType>
+void KDTree<T, Dim, ObjType>::build(std::vector<std::shared_ptr<ObjType>>& objects, const std::string& strategy) {
+    all_objects = objects; 
+    root = std::make_unique<Node>();
+    buildTree(all_objects, 0, root);
+}
+
+
+template<typename T, size_t Dim, typename ObjType>
+ObjectIntersection<T, Dim, ObjType> KDTree<T, Dim, ObjType>::nearestIntersection(const Ray<T, Dim>& ray, const Node* node, ObjectIntersection<T, Dim, ObjType> best, bool stopOnFirstIntersection,  int depth)  {
+    if (!node || (! node->spawn && node->objects.empty()) ) return best;
+    //if (stopOnFirstIntersection && best.hit) return best;
+	
+	Intersection<T, Dim> aabbIntersection = node->aabb.intersects(ray, best.t);
+    if (! aabbIntersection.hit) {
+		return best;
+    }
+	
+	if (! node->objects.empty() ) {
+        aabbIntersection = node->aabb_nodes.intersects(ray, best.t); 
+	    if ( aabbIntersection.hit ) {
+	        best = SpatialStructure<T, Dim, ObjType>::bruteForceNearestIntersection(ray, node->objects, best, stopOnFirstIntersection);
+            if (stopOnFirstIntersection && best.hit) return best;
+	    }
+	}
+	
+	if (node->spawn) {
+        best = nearestIntersection(ray, node->spawn.get(), best, stopOnFirstIntersection, depth + 1);
+        if (stopOnFirstIntersection && best.hit) return best;
+    }
+	
+    T split_plane = node->split_point[node->split_axis];
+	if ( ray.origin[node->split_axis] < (split_plane + std::numeric_limits<T>::epsilon()) ) {
+		best = nearestIntersection(ray, node->left.get(), best, stopOnFirstIntersection, depth + 1);
+		if ( ray.direction[node->split_axis] > -std::numeric_limits<T>::epsilon()
+			&& (! best.hit ||
+			     (ray.origin[node->split_axis] + best.t * ray.direction[node->split_axis] 
+	             > (split_plane - std::numeric_limits<T>::epsilon())))
+		   ) {
+		   if (!stopOnFirstIntersection || !best.hit) {
+               best = nearestIntersection(ray, node->right.get(), best, stopOnFirstIntersection, depth + 1);
+           }
+		}
+	} else {
+		best = nearestIntersection(ray, node->right.get(), best, stopOnFirstIntersection, depth + 1);
+		if ( ray.direction[node->split_axis] < std::numeric_limits<T>::epsilon()
+		     && (! best.hit ||
+			  (ray.origin[node->split_axis] + best.t * ray.direction[node->split_axis] 
+	             < (split_plane + std::numeric_limits<T>::epsilon())))) {
+			if (!stopOnFirstIntersection || !best.hit) {		 
+			     best = nearestIntersection(ray, node->left.get(), best, stopOnFirstIntersection, depth + 1);
+			}				 
+		}
+	}
+ 
+    return best;
+}
+
+template<typename T, size_t Dim, typename ObjType>
+ObjectIntersection<T, Dim, ObjType> KDTree<T, Dim, ObjType>::nearestIntersection(const Ray<T, Dim>& ray, ObjectIntersection<T, Dim, ObjType> best, bool stopOnFirstIntersection,  int depth)  {
+	  return nearestIntersection(ray, root.get(), best, stopOnFirstIntersection, depth);
+}
+

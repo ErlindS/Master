@@ -1,0 +1,5 @@
+if(EXISTS "/home/ubuntu/repo/Master/programmingparadigmen/build/Test[1]_tests.cmake")
+  include("/home/ubuntu/repo/Master/programmingparadigmen/build/Test[1]_tests.cmake")
+else()
+  add_test(Test_NOT_BUILT Test_NOT_BUILT)
+endif()
