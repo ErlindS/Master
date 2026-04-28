@@ -1,0 +1,3 @@
+C:/Users/Diu/repo/Master/Konzepte von Programmiersprachen/Versuch1/build/CMakeFiles/RaytracerLab.dir
+C:/Users/Diu/repo/Master/Konzepte von Programmiersprachen/Versuch1/build/CMakeFiles/edit_cache.dir
+C:/Users/Diu/repo/Master/Konzepte von Programmiersprachen/Versuch1/build/CMakeFiles/rebuild_cache.dir
