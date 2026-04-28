@@ -3,6 +3,7 @@
 #include <vector>
 #include <limits>
 #include <glm/glm.hpp>
+#include <chrono>
 #include "camera.h"
 #include "intersector.h"
 #include "mesh.h"
@@ -48,6 +49,7 @@ int main() {
 
     // 5. Render Loop
     std::cout << "Starte Rendern..." << std::endl;
+    auto start_time = std::chrono::high_resolution_clock::now();
     for (int y = height - 1; y >= 0; --y) {
         for (int x = 0; x < width; ++x) {
             float u = (float)x / (width - 1);
@@ -98,7 +100,11 @@ int main() {
         }
     }
 
+    auto end_time = std::chrono::high_resolution_clock::now();
+    auto duration_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
+
     imageFile.close();
     std::cout << "Fertig! 'output.ppm' wurde erstellt." << std::endl;
+    std::cout << "Renderzeit: " << duration_ms.count() << " ms" << std::endl;
     return 0;
 }
