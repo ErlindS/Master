@@ -1,9 +1,0 @@
-/home/ubuntu/repo/Master/programmingparadigmen/build/CMakeFiles/GeometryLib.dir
-/home/ubuntu/repo/Master/programmingparadigmen/build/CMakeFiles/raytracer_main.dir
-/home/ubuntu/repo/Master/programmingparadigmen/build/CMakeFiles/raytracer_path_tracer.dir
-/home/ubuntu/repo/Master/programmingparadigmen/build/CMakeFiles/raytracer_triangle.dir
-/home/ubuntu/repo/Master/programmingparadigmen/build/CMakeFiles/raytracer_triangle_normal.dir
-/home/ubuntu/repo/Master/programmingparadigmen/build/CMakeFiles/Test.dir
-/home/ubuntu/repo/Master/programmingparadigmen/build/CMakeFiles/test.dir
-/home/ubuntu/repo/Master/programmingparadigmen/build/CMakeFiles/edit_cache.dir
-/home/ubuntu/repo/Master/programmingparadigmen/build/CMakeFiles/rebuild_cache.dir
