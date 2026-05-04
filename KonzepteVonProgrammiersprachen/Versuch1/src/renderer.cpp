@@ -2,6 +2,7 @@
 #include <iostream>
 #include <limits>
 #include <algorithm>
+#include <random>
 
 bool Renderer::findClosestHit(const Ray& ray, const std::vector<Triangle>& triangles, Intersection& closestIsect, Triangle& hitTriangle) {
     closestIsect.hit = false;
@@ -37,55 +38,87 @@ glm::vec3 Renderer::traceRay(const Ray& ray, const Mesh& scene, const glm::vec3&
         float w = 1.0f - isect.u - isect.v;
         glm::vec3 normal = glm::normalize(w * hitTriangle.n0 + isect.u * hitTriangle.n1 + isect.v * hitTriangle.n2);
 
-        // Vektor vom Trefferpunkt zum Licht
-        glm::vec3 lightDir = glm::normalize(lightPos - hitPoint);
+        // -- Hard Shadows & Blinn-Phong --
+        const int N_SHADOW_SAMPLES = 1;
+        
+        glm::vec3 viewDir = glm::normalize(ray.origin - hitPoint);
+        glm::vec3 diffuseSum(0.0f);
+        glm::vec3 specularSum(0.0f);
 
-        // Schattenstrahl (Shadow Ray)
-        float distanceToLight = glm::length(lightPos - hitPoint);
-        Ray shadowRay = {hitPoint + normal * 0.001f, lightDir};
-        Intersection shadowIsect;
-        Triangle dummyTriangle;
-        bool inShadow = findClosestHit(shadowRay, scene.triangles, shadowIsect, dummyTriangle);
-
-        if (inShadow && shadowIsect.t > distanceToLight) {
-            inShadow = false;
-        }
-
-        // Objektfarbe aus dem getroffenen Dreieck holen (Materialfarbe aus der .mtl Datei)
-        glm::vec3 objectColor = hitTriangle.color;
-        glm::vec3 ambientColor = objectColor * 0.15f; // 15% Umgebungslicht
-
-        if (inShadow) {
-            // Nur Umgebungslicht
-            return ambientColor * 255.0f;
-        } else {
-            // Basisfarbe berechnen (Lambert Diffuse)
-            float diff = std::max(glm::dot(normal, lightDir), 0.0f);
-            glm::vec3 diffuseColor = objectColor * diff;
+        for (int i = 0; i < N_SHADOW_SAMPLES; ++i) {
+            // Exakte Lichtposition (Punktlichtquelle)
+            glm::vec3 lightDir = glm::normalize(lightPos - hitPoint);
+            float distanceToLight = glm::length(lightPos - hitPoint);
             
-            // Ambient + Diffuse zusammenrechnen
-            glm::vec3 finalColor = glm::clamp(ambientColor + diffuseColor, 0.0f, 1.0f);
-            return finalColor * 255.0f;
+            // Schattenstrahl (Shadow Ray)
+            Ray shadowRay = {hitPoint + normal * 0.001f, lightDir};
+            Intersection shadowIsect;
+            Triangle dummyTriangle;
+            bool inShadow = findClosestHit(shadowRay, scene.triangles, shadowIsect, dummyTriangle);
+
+            if (inShadow && shadowIsect.t > distanceToLight) {
+                inShadow = false;
+            }
+
+            if (!inShadow) {
+                // Diffuse (Lambert)
+                float diff = std::max(glm::dot(normal, lightDir), 0.0f);
+                diffuseSum += hitTriangle.color * diff;
+
+                // Specular (Blinn-Phong)
+                if (hitTriangle.specularExponent > 0.0f && diff > 0.0f) {
+                    glm::vec3 halfDir = glm::normalize(lightDir + viewDir);
+                    float specAngle = std::max(glm::dot(normal, halfDir), 0.0f);
+                    float specFactor = std::pow(specAngle, hitTriangle.specularExponent);
+                    specularSum += hitTriangle.specularColor * specFactor;
+                }
+            }
         }
+
+        // 15% Umgebungslicht
+        glm::vec3 ambientColor = hitTriangle.color * 0.15f;
+        
+        // Durchschnittliche Beleuchtung über alle Schatten-Samples berechnen
+        glm::vec3 finalDiffuse = diffuseSum / (float)N_SHADOW_SAMPLES;
+        glm::vec3 finalSpecular = specularSum / (float)N_SHADOW_SAMPLES;
+
+        // Ambient + Diffuse + Specular zusammenrechnen
+        glm::vec3 finalColor = glm::clamp(ambientColor + finalDiffuse + finalSpecular, 0.0f, 1.0f);
+        return finalColor * 255.0f;
     }
     
-    // Hintergrundfarbe (Schwarz)
-    return glm::vec3(0.0f, 0.0f, 0.0f);
+    // Hintergrundfarbe (Dunkelblau wie im Referenzbild)
+    return glm::vec3(0.05f, 0.05f, 0.15f) * 255.0f;
 }
 
 void Renderer::render(const Mesh& scene, const Camera& cam, const glm::vec3& lightPos, Image& image) {
     int width = image.getWidth();
     int height = image.getHeight();
+    const int N_AA_SAMPLES = 4;
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<float> dis(-0.5f, 0.5f);
 
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
-            float u = (float)x / (width - 1);
-            float v = (float)y / (height - 1);
-
-            Ray ray = cam.generateRay(u, v);
-            glm::vec3 color = traceRay(ray, scene, lightPos);
+            glm::vec3 finalColor(0.0f);
             
-            image.setPixel(x, y, color);
+            // Anti-Aliasing Loop (Multisampling)
+            for (int s = 0; s < N_AA_SAMPLES; ++s) {
+                float jitterX = dis(gen);
+                float jitterY = dis(gen);
+                float u = (float)(x + jitterX) / (width - 1);
+                float v = (float)(y + jitterY) / (height - 1);
+
+                Ray ray = cam.generateRay(u, v);
+                finalColor += traceRay(ray, scene, lightPos);
+            }
+            
+            // Durchschnittliche Farbe der Samples
+            finalColor /= (float)N_AA_SAMPLES;
+            
+            image.setPixel(x, y, finalColor);
         }
     }
 }

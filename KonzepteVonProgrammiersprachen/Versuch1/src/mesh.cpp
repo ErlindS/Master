@@ -14,8 +14,14 @@ bool Mesh::loadOBJ(const std::string& filename) {
     std::vector<glm::vec3> temp_vertices;
     std::vector<glm::vec3> temp_normals;
     
-    std::map<std::string, glm::vec3> materials;
-    glm::vec3 current_color(0.8f, 0.4f, 0.2f); // Fallback-Farbe (Kupfer/Orange)
+    struct Material {
+        glm::vec3 Kd;
+        glm::vec3 Ks;
+        float Ns;
+    };
+    
+    std::map<std::string, Material> materials;
+    Material current_mat = {glm::vec3(0.8f, 0.4f, 0.2f), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f}; // Fallback-Material
 
     std::string line;
     while (std::getline(file, line)) {
@@ -47,7 +53,15 @@ bool Mesh::loadOBJ(const std::string& filename) {
                     } else if (mtl_type == "Kd" && current_mtl != "") {
                         glm::vec3 kd;
                         mtl_iss >> kd.r >> kd.g >> kd.b;
-                        materials[current_mtl] = kd;
+                        materials[current_mtl].Kd = kd;
+                    } else if (mtl_type == "Ks" && current_mtl != "") {
+                        glm::vec3 ks;
+                        mtl_iss >> ks.r >> ks.g >> ks.b;
+                        materials[current_mtl].Ks = ks;
+                    } else if (mtl_type == "Ns" && current_mtl != "") {
+                        float ns;
+                        mtl_iss >> ns;
+                        materials[current_mtl].Ns = ns;
                     }
                 }
             } else {
@@ -57,7 +71,7 @@ bool Mesh::loadOBJ(const std::string& filename) {
             std::string mtl_name;
             iss >> mtl_name;
             if (materials.find(mtl_name) != materials.end()) {
-                current_color = materials[mtl_name];
+                current_mat = materials[mtl_name];
             }
         } else if (type == "v") {
             // Zeile ist ein Vertex (Eckpunkt)
@@ -101,7 +115,9 @@ bool Mesh::loadOBJ(const std::string& filename) {
             tri.v0 = temp_vertices[v1];
             tri.v1 = temp_vertices[v2];
             tri.v2 = temp_vertices[v3];
-            tri.color = current_color; // Farbe aus dem Material setzen
+            tri.color = current_mat.Kd;
+            tri.specularColor = current_mat.Ks;
+            tri.specularExponent = current_mat.Ns;
 
             // Wenn Normalen vorhanden sind, weisen wir sie zu, andernfalls berechnen wir eine flache Normale (Flat Shading)
             if (n1 >= 0 && n2 >= 0 && n3 >= 0 && 
