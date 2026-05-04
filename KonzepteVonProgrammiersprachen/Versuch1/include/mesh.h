@@ -3,9 +3,10 @@
 #include <string>
 #include <glm/glm.hpp>
 
-// Speichert die drei Eckpunkte eines Dreiecks
 struct Triangle {
     glm::vec3 v0, v1, v2;
+    glm::vec3 n0, n1, n2; // Vertex-Normalen für die Interpolation
+    glm::vec3 color;      // Materialfarbe (Diffuse Kd)
 };
 
 class Mesh {

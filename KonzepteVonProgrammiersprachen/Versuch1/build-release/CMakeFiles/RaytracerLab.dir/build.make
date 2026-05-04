@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1"
+CMAKE_SOURCE_DIR = /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/build-release"
+CMAKE_BINARY_DIR = /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build-release
 
 # Include any dependencies generated for this target.
 include CMakeFiles/RaytracerLab.dir/depend.make
@@ -69,63 +69,95 @@ include CMakeFiles/RaytracerLab.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/RaytracerLab.dir/flags.make
 
+CMakeFiles/RaytracerLab.dir/src/image.cpp.o: CMakeFiles/RaytracerLab.dir/flags.make
+CMakeFiles/RaytracerLab.dir/src/image.cpp.o: ../src/image.cpp
+CMakeFiles/RaytracerLab.dir/src/image.cpp.o: CMakeFiles/RaytracerLab.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/RaytracerLab.dir/src/image.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RaytracerLab.dir/src/image.cpp.o -MF CMakeFiles/RaytracerLab.dir/src/image.cpp.o.d -o CMakeFiles/RaytracerLab.dir/src/image.cpp.o -c /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/image.cpp
+
+CMakeFiles/RaytracerLab.dir/src/image.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/RaytracerLab.dir/src/image.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/image.cpp > CMakeFiles/RaytracerLab.dir/src/image.cpp.i
+
+CMakeFiles/RaytracerLab.dir/src/image.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/RaytracerLab.dir/src/image.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/image.cpp -o CMakeFiles/RaytracerLab.dir/src/image.cpp.s
+
 CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o: CMakeFiles/RaytracerLab.dir/flags.make
 CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o: ../src/intersector.cpp
 CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o: CMakeFiles/RaytracerLab.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/build-release/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o -MF CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o.d -o CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o -c "/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/src/intersector.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o -MF CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o.d -o CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o -c /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/intersector.cpp
 
 CMakeFiles/RaytracerLab.dir/src/intersector.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/RaytracerLab.dir/src/intersector.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/src/intersector.cpp" > CMakeFiles/RaytracerLab.dir/src/intersector.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/intersector.cpp > CMakeFiles/RaytracerLab.dir/src/intersector.cpp.i
 
 CMakeFiles/RaytracerLab.dir/src/intersector.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/RaytracerLab.dir/src/intersector.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/src/intersector.cpp" -o CMakeFiles/RaytracerLab.dir/src/intersector.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/intersector.cpp -o CMakeFiles/RaytracerLab.dir/src/intersector.cpp.s
 
 CMakeFiles/RaytracerLab.dir/src/main.cpp.o: CMakeFiles/RaytracerLab.dir/flags.make
 CMakeFiles/RaytracerLab.dir/src/main.cpp.o: ../src/main.cpp
 CMakeFiles/RaytracerLab.dir/src/main.cpp.o: CMakeFiles/RaytracerLab.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/build-release/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/RaytracerLab.dir/src/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RaytracerLab.dir/src/main.cpp.o -MF CMakeFiles/RaytracerLab.dir/src/main.cpp.o.d -o CMakeFiles/RaytracerLab.dir/src/main.cpp.o -c "/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/src/main.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/RaytracerLab.dir/src/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RaytracerLab.dir/src/main.cpp.o -MF CMakeFiles/RaytracerLab.dir/src/main.cpp.o.d -o CMakeFiles/RaytracerLab.dir/src/main.cpp.o -c /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/main.cpp
 
 CMakeFiles/RaytracerLab.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/RaytracerLab.dir/src/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/src/main.cpp" > CMakeFiles/RaytracerLab.dir/src/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/main.cpp > CMakeFiles/RaytracerLab.dir/src/main.cpp.i
 
 CMakeFiles/RaytracerLab.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/RaytracerLab.dir/src/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/src/main.cpp" -o CMakeFiles/RaytracerLab.dir/src/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/main.cpp -o CMakeFiles/RaytracerLab.dir/src/main.cpp.s
 
 CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o: CMakeFiles/RaytracerLab.dir/flags.make
 CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o: ../src/mesh.cpp
 CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o: CMakeFiles/RaytracerLab.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/build-release/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o -MF CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o.d -o CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o -c "/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/src/mesh.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o -MF CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o.d -o CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o -c /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/mesh.cpp
 
 CMakeFiles/RaytracerLab.dir/src/mesh.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/RaytracerLab.dir/src/mesh.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/src/mesh.cpp" > CMakeFiles/RaytracerLab.dir/src/mesh.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/mesh.cpp > CMakeFiles/RaytracerLab.dir/src/mesh.cpp.i
 
 CMakeFiles/RaytracerLab.dir/src/mesh.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/RaytracerLab.dir/src/mesh.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/src/mesh.cpp" -o CMakeFiles/RaytracerLab.dir/src/mesh.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/mesh.cpp -o CMakeFiles/RaytracerLab.dir/src/mesh.cpp.s
+
+CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o: CMakeFiles/RaytracerLab.dir/flags.make
+CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o: ../src/renderer.cpp
+CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o: CMakeFiles/RaytracerLab.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o -MF CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o.d -o CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o -c /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/renderer.cpp
+
+CMakeFiles/RaytracerLab.dir/src/renderer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/RaytracerLab.dir/src/renderer.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/renderer.cpp > CMakeFiles/RaytracerLab.dir/src/renderer.cpp.i
+
+CMakeFiles/RaytracerLab.dir/src/renderer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/RaytracerLab.dir/src/renderer.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/renderer.cpp -o CMakeFiles/RaytracerLab.dir/src/renderer.cpp.s
 
 # Object files for target RaytracerLab
 RaytracerLab_OBJECTS = \
+"CMakeFiles/RaytracerLab.dir/src/image.cpp.o" \
 "CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o" \
 "CMakeFiles/RaytracerLab.dir/src/main.cpp.o" \
-"CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o"
+"CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o" \
+"CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o"
 
 # External object files for target RaytracerLab
 RaytracerLab_EXTERNAL_OBJECTS =
 
+RaytracerLab: CMakeFiles/RaytracerLab.dir/src/image.cpp.o
 RaytracerLab: CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o
 RaytracerLab: CMakeFiles/RaytracerLab.dir/src/main.cpp.o
 RaytracerLab: CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o
+RaytracerLab: CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o
 RaytracerLab: CMakeFiles/RaytracerLab.dir/build.make
 RaytracerLab: CMakeFiles/RaytracerLab.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/build-release/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable RaytracerLab"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable RaytracerLab"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/RaytracerLab.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -137,6 +169,6 @@ CMakeFiles/RaytracerLab.dir/clean:
 .PHONY : CMakeFiles/RaytracerLab.dir/clean
 
 CMakeFiles/RaytracerLab.dir/depend:
-	cd "/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/build-release" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1" "/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1" "/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/build-release" "/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/build-release" "/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/build-release/CMakeFiles/RaytracerLab.dir/DependInfo.cmake" --color=$(COLOR)
+	cd /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build-release && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1 /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1 /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build-release /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build-release /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build-release/CMakeFiles/RaytracerLab.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/RaytracerLab.dir/depend
 

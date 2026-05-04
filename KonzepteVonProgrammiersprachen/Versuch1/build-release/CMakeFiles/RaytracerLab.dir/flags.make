@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I"/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/include" -isystem /usr/lib
+CXX_INCLUDES = -I/home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include -isystem /usr/lib
 
 CXX_FLAGS = -O3 -DNDEBUG -O3 -march=native -mavx2 -Wall -Wextra -std=gnu++17
 

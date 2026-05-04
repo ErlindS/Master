@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <map>
 
 bool Mesh::loadOBJ(const std::string& filename) {
     std::ifstream file(filename);
@@ -11,30 +12,111 @@ bool Mesh::loadOBJ(const std::string& filename) {
     }
 
     std::vector<glm::vec3> temp_vertices;
-    std::string line;
+    std::vector<glm::vec3> temp_normals;
+    
+    std::map<std::string, glm::vec3> materials;
+    glm::vec3 current_color(0.8f, 0.4f, 0.2f); // Fallback-Farbe (Kupfer/Orange)
 
+    std::string line;
     while (std::getline(file, line)) {
         std::istringstream iss(line);
         std::string type;
         iss >> type;
 
-        if (type == "v") {
+        if (type == "mtllib") {
+            std::string mtl_filename;
+            iss >> mtl_filename;
+            
+            // Pfad der OBJ-Datei extrahieren, um die MTL-Datei im selben Ordner zu finden
+            std::string basepath = "";
+            auto lastSlash = filename.find_last_of('/');
+            if (lastSlash != std::string::npos) {
+                basepath = filename.substr(0, lastSlash + 1);
+            }
+            
+            std::ifstream mtl_file(basepath + mtl_filename);
+            if (mtl_file.is_open()) {
+                std::string mtl_line;
+                std::string current_mtl = "";
+                while (std::getline(mtl_file, mtl_line)) {
+                    std::istringstream mtl_iss(mtl_line);
+                    std::string mtl_type;
+                    mtl_iss >> mtl_type;
+                    if (mtl_type == "newmtl") {
+                        mtl_iss >> current_mtl;
+                    } else if (mtl_type == "Kd" && current_mtl != "") {
+                        glm::vec3 kd;
+                        mtl_iss >> kd.r >> kd.g >> kd.b;
+                        materials[current_mtl] = kd;
+                    }
+                }
+            } else {
+                std::cerr << "Warnung: Konnte MTL-Datei " << (basepath + mtl_filename) << " nicht oeffnen!" << std::endl;
+            }
+        } else if (type == "usemtl") {
+            std::string mtl_name;
+            iss >> mtl_name;
+            if (materials.find(mtl_name) != materials.end()) {
+                current_color = materials[mtl_name];
+            }
+        } else if (type == "v") {
             // Zeile ist ein Vertex (Eckpunkt)
             glm::vec3 v;
             iss >> v.x >> v.y >> v.z;
             temp_vertices.push_back(v);
+        } else if (type == "vn") {
+            // Zeile ist eine Vertex-Normale
+            glm::vec3 vn;
+            iss >> vn.x >> vn.y >> vn.z;
+            temp_normals.push_back(vn);
         } else if (type == "f") {
             // Zeile ist ein Face (Dreieck)
-            // Format ist oft: v1/vt1/vn1 v2/vt2/vn2 v3/vt3/vn3
             std::string v1_str, v2_str, v3_str;
             iss >> v1_str >> v2_str >> v3_str;
 
-            // Wir schneiden alles ab dem ersten Slash '/' ab, um nur den Vertex-Index zu bekommen
-            int i1 = std::stoi(v1_str.substr(0, v1_str.find('/'))) - 1;
-            int i2 = std::stoi(v2_str.substr(0, v2_str.find('/'))) - 1;
-            int i3 = std::stoi(v3_str.substr(0, v3_str.find('/'))) - 1;
+            // Hilfsfunktion zum Parsen von z.B. "1/2/3" oder "1//3" oder "1"
+            auto parseFace = [](const std::string& str, int& v_idx, int& n_idx) {
+                auto firstSlash = str.find('/');
+                if (firstSlash == std::string::npos) {
+                    v_idx = std::stoi(str) - 1;
+                    n_idx = -1;
+                } else {
+                    v_idx = std::stoi(str.substr(0, firstSlash)) - 1;
+                    auto secondSlash = str.find('/', firstSlash + 1);
+                    if (secondSlash != std::string::npos && secondSlash + 1 < str.length()) {
+                        n_idx = std::stoi(str.substr(secondSlash + 1)) - 1;
+                    } else {
+                        n_idx = -1;
+                    }
+                }
+            };
 
-            triangles.push_back({temp_vertices[i1], temp_vertices[i2], temp_vertices[i3]});
+            int v1, v2, v3;
+            int n1, n2, n3;
+            parseFace(v1_str, v1, n1);
+            parseFace(v2_str, v2, n2);
+            parseFace(v3_str, v3, n3);
+
+            Triangle tri;
+            tri.v0 = temp_vertices[v1];
+            tri.v1 = temp_vertices[v2];
+            tri.v2 = temp_vertices[v3];
+            tri.color = current_color; // Farbe aus dem Material setzen
+
+            // Wenn Normalen vorhanden sind, weisen wir sie zu, andernfalls berechnen wir eine flache Normale (Flat Shading)
+            if (n1 >= 0 && n2 >= 0 && n3 >= 0 && 
+                n1 < temp_normals.size() && n2 < temp_normals.size() && n3 < temp_normals.size()) {
+                tri.n0 = temp_normals[n1];
+                tri.n1 = temp_normals[n2];
+                tri.n2 = temp_normals[n3];
+            } else {
+                glm::vec3 flatNormal = glm::normalize(glm::cross(tri.v1 - tri.v0, tri.v2 - tri.v0));
+                tri.n0 = flatNormal;
+                tri.n1 = flatNormal;
+                tri.n2 = flatNormal;
+            }
+
+            triangles.push_back(tri);
         }
     }
     

@@ -4,7 +4,9 @@
 
 ## 1. Implementierung eines Whitted-Style Raytracers
 
-Für die erste Rechneraufgabe wurde ein rudimentärer Whitted-Style Raytracer in C++ implementiert. Die wesentliche Aufgabe bestand in der Berechnung der Schnittpunkte zwischen den generierten Primärstrahlen und der Szenengeometrie. Zur Effizienzsteigerung der Schnittpunktberechnung wurde der Möller-Trumbore-Algorithmus umgesetzt. Dieser Algorithmus bietet eine performante Alternative zu klassischen Verfahren, indem er die Berechnung auf Basis baryzentrischer Koordinaten ohne explizite Konstruktion der Dreiecksebenengleichung durchführt. 
+Für die erste Rechneraufgabe wurde ein rudimentärer Whitted-Style Raytracer in C++ implementiert. Die wesentliche Aufgabe bestand in der Berechnung der Schnittpunkte zwischen den generierten Primärstrahlen und der Szenengeometrie. Zur Effizienzsteigerung der Schnittpunktberechnung wurde zunächst als Baseline der Schnittpunkttest nach Badouel implementiert. Dieser Algorithmus berechnet zunächst den 3D-Schnittpunkt mit der Dreiecksebene und projiziert die Koordinaten anschließend auf eine 2D-Ebene (durch Weglassen der dominierenden Normalenachse), um den Point-in-Polygon-Test durch Lösen eines linearen 2D-Gleichungssystems effizienter zu gestalten.
+
+Als erste Optimierungsmaßnahme gegenüber dieser Baseline wurde zusätzlich der Möller-Trumbore-Algorithmus umgesetzt. Dieser Algorithmus bietet eine performantere Alternative, indem er die Berechnung direkt auf Basis baryzentrischer Koordinaten ohne explizite Konstruktion der Dreiecksebenengleichung oder Fallunterscheidungen durchführt.
 
 Zur Repräsentation der Testszene wurde eine einfache Import-Funktion für das Wavefront-Format (`.obj`) integriert. Diese liest die bereitgestellte Testszene in eine flache, lineare Datenstruktur (Liste von Dreiecken) ein. Zum aktuellen Zeitpunkt (Aufgabe 1) erfolgt die Bestimmung des nächstgelegenen Schnittpunktes durch eine vollständige Brute-Force-Suche über alle eingelesenen Dreiecke für jeden abgefeuerten Strahl, da noch keine Beschleunigungsdatenstruktur wie ein k-d-Baum vorliegt.
 
@@ -58,9 +60,9 @@ Intersection Intersector::intersectRayTriangle(
 
 Die Zeitmessung der Ausführung des Renderers dient als Basislinie für spätere Optimierungsaufgaben. Gemessen wurde hierbei ausschließlich die Dauer des Render-Loops für die Szene `teapot_n_glass.obj` (18.032 Dreiecke) bei einer festgelegten Auflösung von 500x500 Bildpunkten inklusive der Berechnung harter Schatten. Der C++-Code wurde mittels `g++` über CMake unter Verwendung des `-O3`-Flags im Release-Modus übersetzt.
 
-| Implementierungsschritt              | Renderzeit [ms] |
-|:-------------------------------------|----------------:|
-| Aufgabe 1: Brute-Force (ohne kd-Baum)|          128028 |
+| Implementierungsschritt              | Badouel [ms] | Möller-Trumbore [ms] |
+|:-------------------------------------|-------------:|---------------------:|
+| Aufgabe 1: Brute-Force (ohne kd-Baum)|       100067 |                65019 |
 
 Aus den Messergebnissen ist deutlich ersichtlich, dass die lineare Brute-Force-Suche bei komplexen Szenen schnell ineffizient wird, was die Notwendigkeit für die nachfolgenden Aufgaben bezüglich räumlicher Datenstrukturen und Hardware-Parallelisierung unterstreicht.
 

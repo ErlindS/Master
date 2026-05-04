@@ -2,7 +2,7 @@
 # =============================================================================
 # Build- und Ausführungsskript für den Raytracer
 # Verwendung: ./build_and_run.sh [debug|release|all]
-# Standardmäßig wird "all" ausgeführt (Debug + Release)
+# Standardmäßig wird "release" ausgeführt
 # =============================================================================
 
 set -e  # Skript bei Fehler abbrechen
@@ -133,7 +133,7 @@ print_results() {
 }
 
 # --- Hauptprogramm ---
-MODE="${1:-all}"
+MODE="${1:-release}"
 
 case "${MODE}" in
     debug)
@@ -166,9 +166,9 @@ case "${MODE}" in
         echo "Verwendung: $0 [debug|release|default|all|clean]"
         echo ""
         echo "  debug   - Kompiliert und startet im Debug-Modus (keine Optimierung)"
-        echo "  release - Kompiliert und startet im Release-Modus (-O3)"
+        echo "  release - Kompiliert und startet im Release-Modus (-O3) (Standard)"
         echo "  default - Kompiliert und startet mit bestehendem build/-Ordner"
-        echo "  all     - Führt Debug und Release nacheinander aus (Standard)"
+        echo "  all     - Führt Debug und Release nacheinander aus"
         echo "  clean   - Entfernt Debug- und Release-Build-Ordner"
         exit 1
         ;;

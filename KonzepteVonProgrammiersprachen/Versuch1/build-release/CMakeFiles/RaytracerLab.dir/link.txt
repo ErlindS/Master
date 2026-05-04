@@ -1,1 +1,1 @@
-/usr/bin/c++ -O3 -DNDEBUG -O3 -march=native -mavx2 CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o CMakeFiles/RaytracerLab.dir/src/main.cpp.o CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o -o RaytracerLab 
+/usr/bin/c++ -O3 -DNDEBUG -O3 -march=native -mavx2 CMakeFiles/RaytracerLab.dir/src/image.cpp.o CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o CMakeFiles/RaytracerLab.dir/src/main.cpp.o CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o -o RaytracerLab 

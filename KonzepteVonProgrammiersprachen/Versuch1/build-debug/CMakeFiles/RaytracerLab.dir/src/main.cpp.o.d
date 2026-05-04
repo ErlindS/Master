@@ -1,5 +1,5 @@
 CMakeFiles/RaytracerLab.dir/src/main.cpp.o: \
- /home/ubuntu/repo/Master/Konzepte\ von\ Programmiersprachen/Versuch1/src/main.cpp \
+ /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/main.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/11/iostream \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
@@ -302,7 +302,9 @@ CMakeFiles/RaytracerLab.dir/src/main.cpp.o: \
  /usr/include/glm/detail/func_integer.inl /usr/include/c++/11/chrono \
  /usr/include/c++/11/ratio /usr/include/c++/11/ctime \
  /usr/include/c++/11/bits/parse_numbers.h \
- /home/ubuntu/repo/Master/Konzepte\ von\ Programmiersprachen/Versuch1/include/camera.h \
- /home/ubuntu/repo/Master/Konzepte\ von\ Programmiersprachen/Versuch1/include/ray.h \
- /home/ubuntu/repo/Master/Konzepte\ von\ Programmiersprachen/Versuch1/include/intersector.h \
- /home/ubuntu/repo/Master/Konzepte\ von\ Programmiersprachen/Versuch1/include/mesh.h
+ /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/camera.h \
+ /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/ray.h \
+ /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/intersector.h \
+ /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/mesh.h \
+ /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/renderer.h \
+ /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/image.h

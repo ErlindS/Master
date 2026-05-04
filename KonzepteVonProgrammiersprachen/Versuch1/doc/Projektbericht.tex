@@ -99,7 +99,7 @@
 
     \vspace{1.5cm}
     {\fontsize{24}{30}\selectfont\bfseries\color{hkared} Raytracer-Optimierung}\\[0.6cm]
-    {\Large Whitted-Style Raytracer mit Möller-Trumbore}\\[.75cm]
+    {\Large Whitted-Style Raytracer mit Badouel \& Möller-Trumbore}\\[.75cm]
     {\LARGE\bfseries Projektbericht}
 
     \vspace{.5cm}
@@ -150,10 +150,18 @@ Das Modul \texttt{Intersector} enthält die statische Methode zur Schnittpunktbe
 
 \newpage
 % -----------------------------------------------------------------------------
-\subsection{Möller-Trumbore-Algorithmus}
+\subsection{Badouel-Algorithmus (Baseline)}
 % -----------------------------------------------------------------------------
 
-Für die Schnittpunktberechnung zwischen einem Sehstrahl und einem Dreieck wurde der Möller-Trumbore-Algorithmus implementiert. Dieser bietet gegenüber klassischen Verfahren, die zunächst die Ebenengleichung des Dreiecks aufstellen und anschließend prüfen, ob der Schnittpunkt innerhalb des Dreiecks liegt, einen Effizienzvorteil: Er berechnet die baryzentrischen Koordinaten $(u, v)$ direkt und vermeidet so die explizite Konstruktion der Dreiecksebene.
+Als Baseline für die Schnittpunktberechnung zwischen einem Sehstrahl und einem Dreieck wurde der Algorithmus nach Badouel implementiert. Dieser Algorithmus berechnet zunächst explizit die Ebenengleichung des Dreiecks und den potenziellen 3D-Schnittpunkt des Strahls mit dieser Ebene. 
+
+Um den anschließenden \textit{Point-in-Polygon}-Test durchzuführen, projiziert das Verfahren den 3D-Schnittpunkt und die Dreieckseckpunkte auf eine 2D-Ebene. Dies geschieht durch das simple Weglassen derjenigen Koordinatenachse, bei der die Flächennormale ihre betragsmäßig größte Ausdehnung besitzt (die sogenannte dominierende Achse). Durch diese Projektion auf die xy-, xz- oder yz-Ebene reduziert sich der Test auf das Lösen eines 2D-Gleichungssystems zur Bestimmung der baryzentrischen Koordinaten. Obwohl dieser Ansatz durch die Reduktion auf zwei Dimensionen prinzipiell Multiplikationen einspart, bildet er aufgrund des Branching-Overheads (zur Bestimmung der dominierenden Achse) sowie der initialen Ebenenberechnungen unsere Performance-Baseline.
+
+% -----------------------------------------------------------------------------
+\subsection{Möller-Trumbore-Algorithmus (1. Optimierung)}
+% -----------------------------------------------------------------------------
+
+Als erste Optimierungsmaßnahme gegenüber der Badouel-Baseline wurde zusätzlich der Möller-Trumbore-Algorithmus implementiert. Dieser bietet gegenüber klassischen Verfahren einen entscheidenden Effizienzvorteil: Er berechnet die baryzentrischen Koordinaten $(u, v)$ direkt im 3D-Raum und vermeidet so die explizite Konstruktion der Dreiecksebene sowie die teuren Fallunterscheidungen für die 2D-Projektion.
 
 Der Algorithmus beruht auf der Umformung der Strahlgleichung $\mathbf{O} + t \cdot \mathbf{D} = (1 - u - v) \cdot \mathbf{V_0} + u \cdot \mathbf{V_1} + v \cdot \mathbf{V_2}$ in ein lineares Gleichungssystem, das mit der Cramerschen Regel gelöst wird. Dabei werden die Kanten $\mathbf{e_1} = \mathbf{V_1} - \mathbf{V_0}$ und $\mathbf{e_2} = \mathbf{V_2} - \mathbf{V_0}$ berechnet, und über Kreuzprodukte und Skalarprodukte die Parameter $t$, $u$ und $v$ bestimmt. Ein Treffer liegt genau dann vor, wenn $u \geq 0$, $v \geq 0$, $u + v \leq 1$ und $t > \varepsilon$ gilt. Der Schwellwert $\varepsilon = 10^{-7}$ verhindert numerische Artefakte bei nahezu parallelen Strahlen.
 
@@ -230,27 +238,27 @@ Die Distanzprüfung in Zeile 9--11 stellt sicher, dass ausschließlich Objekte, 
 
 % -----------------------------------------------------------------------------
 \subsection{Zeitmessung}
+\label{sec:zeitmessung}
 % -----------------------------------------------------------------------------
 
-Die Zeitmessung erfolgt über \texttt{std::chrono::high\_resolution\_clock} und umfasst ausschließlich den Render-Loop ohne die Ladezeit der Szene. Gemessen wurde auf einem System mit Ubuntu unter WSL. Die folgende Tabelle zeigt die Renderzeiten für die Brute-Force-Implementierung in Abhängigkeit der Compiler-Optimierungsstufe.
+Die Zeitmessung erfolgt über \texttt{std::chrono::high\_resolution\_clock} und umfasst ausschließlich den Render-Loop ohne die Ladezeit der Szene. Gemessen wurde auf einem System mit Ubuntu unter WSL. Die folgende Tabelle zeigt die Renderzeiten für die Brute-Force-Implementierung (500\,$\times$\,500 Pixel, 18\,032 Dreiecke).
 
 \begin{table}[H]
     \centering
-    \caption{Renderzeiten der Brute-Force-Implementierung (500\,$\times$\,500 Pixel, 18\,032 Dreiecke)}
+    \caption{Renderzeiten der Brute-Force-Implementierung (500\,\times\,500 Pixel, 18\,032 Dreiecke)}
     \label{tab:zeiten-aufgabe1}
-    \begin{tabular}{l S[table-format=6.0]}
+    \begin{tabular}{l S[table-format=6.0] S[table-format=6.0]}
         \toprule
-        \textbf{Konfiguration} & {\textbf{Renderzeit [ms]}} \\
+        \textbf{Konfiguration} & {\textbf{Badouel [ms]}} & {\textbf{Möller-Trumbore [ms]}} \\
         \midrule
-        Debug (ohne Optimierung, \texttt{-O0 -g})  & 555534 \\
-        Release (mit \texttt{-O3 -march=native})    &  37466 \\
+        Release (mit \texttt{-O3 -march=native})    & 100067 &  65019 \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-Die Messergebnisse zeigen, dass die Compiler-Optimierung mit \texttt{-O3} die Renderzeit um den Faktor~14,8 reduziert. Dieser erhebliche Unterschied erklärt sich durch aggressive Optimierungen wie Schleifenentrollung, Inlining der GLM-Vektorfunktionen und automatische Vektorisierung. Für alle weiteren Zeitmessungen in den nachfolgenden Aufgaben wird ausschließlich der Release-Modus verwendet, um die Wirksamkeit der algorithmischen und architekturellen Optimierungen isoliert bewerten zu können.
+Die Messergebnisse zeigen die Ausführungszeiten im vollständig optimierten Release-Modus (Compiler-Flags \texttt{-O3 -march=native}). Es zeigt sich, dass der Möller-Trumbore-Algorithmus unsere Baseline (Badouel) durch Reduktion von Branching und Verzicht auf Ebenenkonstruktion messbar schlägt. Der Geschwindigkeitsvorteil beträgt hierbei etwa den Faktor $1,5\times$.
 
-Trotz der Compiler-Optimierung bleibt die Renderzeit mit rund 37 Sekunden hoch. Die Ursache liegt in der linearen Komplexität $\mathcal{O}(n)$ der Brute-Force-Suche pro Strahl, wobei $n$ die Anzahl der Dreiecke in der Szene bezeichnet. Dies motiviert die Einführung einer hierarchischen Beschleunigungsdatenstruktur in der nachfolgenden Aufgabe.
+Trotz des Einsatzes des performanteren Algorithmus bleibt die absolute Renderzeit mit rund 100 Sekunden (Badouel) bzw. 65 Sekunden (Möller-Trumbore) sehr hoch. Die Ursache liegt in der linearen Komplexität $\mathcal{O}(n)$ der Brute-Force-Suche pro Strahl, wobei $n$ die Anzahl der Dreiecke in der Szene bezeichnet. Dies motiviert die Einführung einer hierarchischen Beschleunigungsdatenstruktur in der nachfolgenden Aufgabe.
 
 % =============================================================================
 \section{Aufgabe 2: Beschleunigungsdatenstruktur}
@@ -276,14 +284,15 @@ Trotz der Compiler-Optimierung bleibt die Renderzeit mit rund 37 Sekunden hoch. 
         \toprule
         \textbf{Implementierungsschritt} & {\textbf{Renderzeit [ms]}} & {\textbf{Speedup}} \\
         \midrule
-        Aufgabe 1: Brute-Force           & 37466  & {1,0$\times$} \\
+        Aufgabe 1: Brute-Force (Badouel) & 100067 & {1,0\times} \\
+        Aufgabe 1: Brute-Force (M.-T.)   &  65019 & {1,5\times} \\
         Aufgabe 2: k-d-Baum              & {--}   & {--} \\
         Aufgabe 3: AVX Packet Tracing    & {--}   & {--} \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-Die bisherige Implementierung stellt eine funktionsfähige Basislinie dar. Der Möller-Trumbore-Algorithmus liefert korrekte Schnittpunktergebnisse und die Brute-Force-Suche dient als Referenz für die Bewertung zukünftiger Optimierungen. In den folgenden Aufgaben wird zunächst die algorithmische Komplexität durch einen k-d-Baum reduziert und anschließend durch SIMD-Parallelisierung mittels AVX-Instruktionen die Hardwareausnutzung verbessert.
+Die bisherige Implementierung stellt eine funktionsfähige Basislinie dar. Der Badouel-Algorithmus fungiert dabei als Referenz für die Bewertung zukünftiger Optimierungen, beginnend mit dem ersten Speedup durch Möller-Trumbore. In den folgenden Aufgaben wird zunächst die algorithmische Komplexität durch einen k-d-Baum weiter reduziert und anschließend durch SIMD-Parallelisierung mittels AVX-Instruktionen die Hardwareausnutzung verbessert.
 
 \begin{figure}[H]
     \centering

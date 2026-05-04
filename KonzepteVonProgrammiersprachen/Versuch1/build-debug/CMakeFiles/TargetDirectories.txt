@@ -1,3 +1,3 @@
-/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/build-debug/CMakeFiles/RaytracerLab.dir
-/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/build-debug/CMakeFiles/edit_cache.dir
-/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/build-debug/CMakeFiles/rebuild_cache.dir
+/home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build-debug/CMakeFiles/RaytracerLab.dir
+/home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build-debug/CMakeFiles/edit_cache.dir
+/home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build-debug/CMakeFiles/rebuild_cache.dir

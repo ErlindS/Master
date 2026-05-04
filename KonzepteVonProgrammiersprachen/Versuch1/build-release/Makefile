@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1"
+CMAKE_SOURCE_DIR = /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/build-release"
+CMAKE_BINARY_DIR = /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build-release
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/build-release/CMakeFiles" "/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/build-release//CMakeFiles/progress.marks"
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build-release/CMakeFiles /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build-release//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/ubuntu/repo/Master/Konzepte von Programmiersprachen/Versuch1/build-release/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build-release/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -128,6 +128,30 @@ RaytracerLab: cmake_check_build_system
 RaytracerLab/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/RaytracerLab.dir/build.make CMakeFiles/RaytracerLab.dir/build
 .PHONY : RaytracerLab/fast
+
+src/image.o: src/image.cpp.o
+.PHONY : src/image.o
+
+# target to build an object file
+src/image.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RaytracerLab.dir/build.make CMakeFiles/RaytracerLab.dir/src/image.cpp.o
+.PHONY : src/image.cpp.o
+
+src/image.i: src/image.cpp.i
+.PHONY : src/image.i
+
+# target to preprocess a source file
+src/image.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RaytracerLab.dir/build.make CMakeFiles/RaytracerLab.dir/src/image.cpp.i
+.PHONY : src/image.cpp.i
+
+src/image.s: src/image.cpp.s
+.PHONY : src/image.s
+
+# target to generate assembly for a file
+src/image.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RaytracerLab.dir/build.make CMakeFiles/RaytracerLab.dir/src/image.cpp.s
+.PHONY : src/image.cpp.s
 
 src/intersector.o: src/intersector.cpp.o
 .PHONY : src/intersector.o
@@ -201,6 +225,30 @@ src/mesh.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/RaytracerLab.dir/build.make CMakeFiles/RaytracerLab.dir/src/mesh.cpp.s
 .PHONY : src/mesh.cpp.s
 
+src/renderer.o: src/renderer.cpp.o
+.PHONY : src/renderer.o
+
+# target to build an object file
+src/renderer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RaytracerLab.dir/build.make CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o
+.PHONY : src/renderer.cpp.o
+
+src/renderer.i: src/renderer.cpp.i
+.PHONY : src/renderer.i
+
+# target to preprocess a source file
+src/renderer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RaytracerLab.dir/build.make CMakeFiles/RaytracerLab.dir/src/renderer.cpp.i
+.PHONY : src/renderer.cpp.i
+
+src/renderer.s: src/renderer.cpp.s
+.PHONY : src/renderer.s
+
+# target to generate assembly for a file
+src/renderer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RaytracerLab.dir/build.make CMakeFiles/RaytracerLab.dir/src/renderer.cpp.s
+.PHONY : src/renderer.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -210,6 +258,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... RaytracerLab"
+	@echo "... src/image.o"
+	@echo "... src/image.i"
+	@echo "... src/image.s"
 	@echo "... src/intersector.o"
 	@echo "... src/intersector.i"
 	@echo "... src/intersector.s"
@@ -219,6 +270,9 @@ help:
 	@echo "... src/mesh.o"
 	@echo "... src/mesh.i"
 	@echo "... src/mesh.s"
+	@echo "... src/renderer.o"
+	@echo "... src/renderer.i"
+	@echo "... src/renderer.s"
 .PHONY : help
 
 

@@ -18,4 +18,12 @@ public:
         const glm::vec3& v1, 
         const glm::vec3& v2
     );
+
+    // Führt den Badouel Test für einen Strahl und drei Eckpunkte durch
+    static Intersection intersectRayTriangleBadouel(
+        const Ray& ray, 
+        const glm::vec3& v0, 
+        const glm::vec3& v1, 
+        const glm::vec3& v2
+    );
 };

@@ -2,10 +2,11 @@
 \contentsline {section}{\numberline {1}Einleitung}{2}{section.1}%
 \contentsline {section}{\numberline {2}Aufgabe 1: Whitted-Style Raytracer mit Brute-Force-Suche}{2}{section.2}%
 \contentsline {subsection}{\numberline {2.1}Architektur und Modulstruktur}{2}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}Möller-Trumbore-Algorithmus}{3}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}Brute-Force-Schnittpunktsuche}{3}{subsection.2.3}%
-\contentsline {subsection}{\numberline {2.4}Beleuchtung und Schatten}{4}{subsection.2.4}%
-\contentsline {subsection}{\numberline {2.5}Zeitmessung}{4}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.2}Badouel-Algorithmus (Baseline)}{3}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Möller-Trumbore-Algorithmus (1. Optimierung)}{3}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Brute-Force-Schnittpunktsuche}{4}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Beleuchtung und Schatten}{4}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Zeitmessung}{5}{subsection.2.6}%
 \contentsline {section}{\numberline {3}Aufgabe 2: Beschleunigungsdatenstruktur}{5}{section.3}%
-\contentsline {section}{\numberline {4}Aufgabe 3: AVX-Optimierung mit Packet Tracing}{5}{section.4}%
-\contentsline {section}{\numberline {5}Zusammenfassung und Ausblick}{5}{section.5}%
+\contentsline {section}{\numberline {4}Aufgabe 3: AVX-Optimierung mit Packet Tracing}{6}{section.4}%
+\contentsline {section}{\numberline {5}Zusammenfassung und Ausblick}{6}{section.5}%
