@@ -11,9 +11,17 @@ struct Triangle {
     float specularExponent;  // Glanz-Exponent (Shininess Ns)
 };
 
+#include <memory>
+
+class BVH;
+
 class Mesh {
 public:
     std::vector<Triangle> triangles;
+    std::unique_ptr<BVH> bvh;
+    
+    Mesh();
+    ~Mesh();
     
     // Lädt die Datei und gibt true zurück, wenn es geklappt hat
     bool loadOBJ(const std::string& filename);

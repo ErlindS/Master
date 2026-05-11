@@ -9,6 +9,11 @@ struct Intersection {
     float u, v;        // Baryzentrische Koordinaten auf dem Dreieck
 };
 
+enum class IntersectionAlgorithm {
+    MOELLER_TRUMBORE,
+    BADOUEL
+};
+
 class Intersector {
 public:
     // Führt den Möller-Trumbore Test für einen Strahl und drei Eckpunkte durch

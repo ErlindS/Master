@@ -27,7 +27,7 @@ public:
 
     // WICHTIG: Hier nutzen wir jetzt float (s und t bzw. u und v)
     Ray generateRay(float s, float t) const {
-        return {origin, glm::normalize(lowerLeftCorner + s * horizontal + t * vertical - origin)};
+        return Ray(origin, glm::normalize(lowerLeftCorner + s * horizontal + t * vertical - origin));
     }
 
 private:

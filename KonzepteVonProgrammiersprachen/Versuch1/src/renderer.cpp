@@ -4,12 +4,19 @@
 #include <algorithm>
 #include <random>
 
-bool Renderer::findClosestHit(const Ray& ray, const std::vector<Triangle>& triangles, Intersection& closestIsect, Triangle& hitTriangle) {
+#include "bvh.h"
+
+bool Renderer::findClosestHit(const Ray& ray, const Mesh& scene, Intersection& closestIsect, Triangle& hitTriangle) {
+    if (scene.bvh) {
+        return scene.bvh->intersect(ray, closestIsect, hitTriangle, algorithm);
+    }
+    
+    // Fallback: Lineare Suche, falls kein BVH vorhanden ist
     closestIsect.hit = false;
     closestIsect.t = std::numeric_limits<float>::max();
     bool hitAnything = false;
 
-    for (const auto& tri : triangles) {
+    for (const auto& tri : scene.triangles) {
         Intersection isect;
         if (algorithm == IntersectionAlgorithm::BADOUEL) {
             isect = Intersector::intersectRayTriangleBadouel(ray, tri.v0, tri.v1, tri.v2);
@@ -30,7 +37,7 @@ glm::vec3 Renderer::traceRay(const Ray& ray, const Mesh& scene, const glm::vec3&
     Intersection isect;
     Triangle hitTriangle;
 
-    if (findClosestHit(ray, scene.triangles, isect, hitTriangle)) {
+    if (findClosestHit(ray, scene, isect, hitTriangle)) {
         // Exakter Punkt im 3D-Raum (Ursprung + Richtung * Distanz)
         glm::vec3 hitPoint = ray.origin + ray.direction * isect.t;
 
@@ -51,10 +58,10 @@ glm::vec3 Renderer::traceRay(const Ray& ray, const Mesh& scene, const glm::vec3&
             float distanceToLight = glm::length(lightPos - hitPoint);
             
             // Schattenstrahl (Shadow Ray)
-            Ray shadowRay = {hitPoint + normal * 0.001f, lightDir};
+            Ray shadowRay(hitPoint + normal * 0.001f, lightDir);
             Intersection shadowIsect;
             Triangle dummyTriangle;
-            bool inShadow = findClosestHit(shadowRay, scene.triangles, shadowIsect, dummyTriangle);
+            bool inShadow = findClosestHit(shadowRay, scene, shadowIsect, dummyTriangle);
 
             if (inShadow && shadowIsect.t > distanceToLight) {
                 inShadow = false;

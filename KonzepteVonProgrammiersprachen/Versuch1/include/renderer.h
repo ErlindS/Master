@@ -7,10 +7,6 @@
 #include <glm/glm.hpp>
 #include <vector>
 
-enum class IntersectionAlgorithm {
-    MOELLER_TRUMBORE,
-    BADOUEL
-};
 
 class Renderer {
 public:
@@ -22,8 +18,8 @@ public:
 private:
     IntersectionAlgorithm algorithm = IntersectionAlgorithm::MOELLER_TRUMBORE;
 
-    // Sucht das nächste getroffene Dreieck in der Szene
-    bool findClosestHit(const Ray& ray, const std::vector<Triangle>& triangles, Intersection& closestIsect, Triangle& hitTriangle);
+    // Sucht das nächste getroffene Dreieck in der Szene mittels BVH
+    bool findClosestHit(const Ray& ray, const Mesh& scene, Intersection& closestIsect, Triangle& hitTriangle);
 
     // Berechnet die Farbe für einen einzelnen Strahl
     glm::vec3 traceRay(const Ray& ray, const Mesh& scene, const glm::vec3& lightPos);

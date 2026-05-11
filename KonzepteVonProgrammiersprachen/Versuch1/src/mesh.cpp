@@ -1,8 +1,12 @@
 #include "mesh.h"
+#include "bvh.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
 #include <map>
+
+Mesh::Mesh() : bvh(std::make_unique<BVH>()) {}
+Mesh::~Mesh() = default;
 
 bool Mesh::loadOBJ(const std::string& filename) {
     std::ifstream file(filename);
@@ -137,5 +141,10 @@ bool Mesh::loadOBJ(const std::string& filename) {
     }
     
     std::cout << "Geladen: " << triangles.size() << " Dreiecke aus " << filename << std::endl;
+    
+    std::cout << "Baue Beschleunigungsdatenstruktur (BVH) auf..." << std::endl;
+    bvh->build(triangles);
+    std::cout << "BVH fertig!" << std::endl;
+    
     return true;
 }
