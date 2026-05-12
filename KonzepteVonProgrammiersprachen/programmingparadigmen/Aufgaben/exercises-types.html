@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title>Exercises - Strong typing</title>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="http://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
+  <script src="http://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js.gz"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">Exercises - Strong typing</h1>
+  <p class="author">
+
+  </p>
+</div>
+<div class="section slide level2" id="section">
+
+<ul>
+<li>Provide the typing derivation for the following expressions</li>
+</ul>
+<pre><code>\x -&gt; \y -&gt; \z -&gt; x y z
+
+let f = \x -&gt; x
+in (f 1, f True)</code></pre>
+<p>In the above, we assume that in the initial typing environment we find the constants <code>{ 1 : Int, True : Bool }</code>.</p>
+<ul>
+<li>Provide a typing derivation for the following expression which only uses (explicit) type abstraction and application</li>
+</ul>
+<pre><code>let f = \x -&gt; x
+in (f 1, f True)</code></pre>
+<ul>
+<li>Recall the subtyping rule for function types
+<ul>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=t_1%20%5Crightarrow%20t_2%20%5Cleq%20s_1%20%5Crightarrow%20s_2" alt="t_1 \rightarrow t_2 \leq s_1 \rightarrow s_2" title="t_1 \rightarrow t_2 \leq s_1 \rightarrow s_2" /> iff (i) <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=s_1%20%5Cleq%20t_1" alt="s_1 \leq t_1" title="s_1 \leq t_1" />, and (ii) <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=t_2%20%5Cleq%20s_2" alt="t_2 \leq s_2" title="t_2 \leq s_2" />.</li>
+<li>What could possibly go wrong if we use the following variant where the argument as well as the result are co-variant:</li>
+<li><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=t_1%20%5Crightarrow%20t_2%20%5Cleq%20s_1%20%5Crightarrow%20s_2" alt="t_1 \rightarrow t_2 \leq s_1 \rightarrow s_2" title="t_1 \rightarrow t_2 \leq s_1 \rightarrow s_2" /> iff (i) <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=t_1%20%5Cleq%20s_1" alt="t_1 \leq s_1" title="t_1 \leq s_1" />, and (ii) <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=t_2%20%5Cleq%20s_2" alt="t_2 \leq s_2" title="t_2 \leq s_2" />.</li>
+</ul></li>
+</ul>
+</div>
+<div class="section slide level2" id="expressions-types-and-environment">
+<h1>Expressions, types and environment</h1>
+<pre><code> e ::= x | \x-&gt;e | e e | let x = e in e
+    | \x:t-&gt; e  |  /\ a -&gt; e  | e[t]       
+ t ::= t -&gt; t               Function types
+    |  Int                  Primitives
+    |  Bool
+    |  a                    Type variable
+ sigma ::= t                    Simple type
+         | forall a1 ... an. t  Quantified type
+ G ::= G cup G | { x:sigma }    Variable environment</code></pre>
+</div>
+<div class="section slide level2" id="typing-rules">
+<h1>Typing rules</h1>
+<pre><code>(Var)   (x:t) in G
+       ------------
+        G |- x : t
+
+(App)   G |- e1 : t1 -&gt; t2  G |- e2 : t1
+        --------------------------------
+        G |- e1 e2 : t2
+
+(Abs)   G cup { x: t1 } |- e : t2 
+        -------------------------
+        G |- \x-&gt;e : t1 -&gt; t2
+
+(Abs-Annot)   G cup { x: t1 } |- e : t2 
+              -------------------------
+              G |- \x:t1-&gt;e : t1 -&gt; t2
+
+(Forall-Intro)  G |- e : t  
+                {a1, ..., an} in fv(t) 
+                {a1, ..., an} not in fv(G)
+                ----------------------------
+                G |- e : forall a1 ... an. t
+
+(Forall-Elim)   G |- e : forall a1 ... an. t
+                ----------------------------
+                G |- e : [t1/a1, ..., tn/an] t
+
+(Let)  G |- e1 : sigma
+       G cup { x:sigma } |- e2 : t
+       -------------------------
+       G |- let x = e1 in e2 : t
+
+
+(Ty-Abs)   G |- e : t     a in fv(t)   a not in fv(G)
+          -------------------------------------------
+           G |- /\ a -&gt; e : forall a.t
+
+
+(Ty-App)  G |- e : forall a.t1 
+          ------------------------------------
+          G |- e[t2] : [t2/a] t1</code></pre>
+</div>
+</body>
+</html>

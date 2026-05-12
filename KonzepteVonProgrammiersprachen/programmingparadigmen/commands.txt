@@ -1,0 +1,1 @@
+runhaskell w1.lhs

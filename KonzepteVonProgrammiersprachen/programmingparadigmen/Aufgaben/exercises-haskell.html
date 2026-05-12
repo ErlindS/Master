@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Martin Sulzmann" />
+  <title>Haskell: Additional material including exercises</title>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="http://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
+  <script src="http://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js.gz"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">Haskell: Additional material including exercises</h1>
+  <p class="author">
+Martin Sulzmann
+  </p>
+</div>
+<div class="section slide level1" id="haskell-basics">
+<h1>Haskell basics</h1>
+<ul>
+<li>Function definitions</li>
+</ul>
+<p>Recall from class</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">isEven ::</span> <span class="dt">Integer</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>
+isEven n
+  <span class="fu">|</span> n <span class="ot">`mod`</span> <span class="dv">2</span> <span class="fu">==</span> <span class="dv">0</span>  <span class="fu">=</span> <span class="kw">True</span>
+  <span class="fu">|</span> <span class="fu">otherwise</span>       <span class="fu">=</span> <span class="kw">False</span></code></pre>
+<p>The above definition is much too complicitated. Provide a definition of <code>isEven</code> in a single line (without any guards, if-then-else, ...).</p>
+<ul>
+<li>Reversing of a list</li>
+</ul>
+<p>Implement a function <code>rev</code> which reverses a list</p>
+<ul>
+<li>Variants of map</li>
+</ul>
+<p>Implement two functions which * add one to all elements in a list * square every element</p>
+<ul>
+<li>Accumulator recursion</li>
+</ul>
+<p>Recall the definition of summing up a list of elements</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">sumNums xs 
+  <span class="fu">|</span> <span class="fu">null</span> xs <span class="fu">=</span> <span class="dv">0</span>
+  <span class="fu">|</span> <span class="fu">otherwise</span> <span class="fu">=</span> <span class="fu">head</span> xs <span class="fu">+</span> sumNums (<span class="fu">tail</span> xs)</code></pre>
+<p>Consider the following alternative definition.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">sumNums&#39; <span class="fu">=</span> sumNumsAcc <span class="dv">0</span>
+sumNumsAcc acc xs  
+  <span class="fu">|</span> <span class="fu">null</span> xs <span class="fu">=</span> acc
+  <span class="fu">|</span> <span class="fu">otherwise</span> <span class="fu">=</span> sumNumsAcc (acc <span class="fu">+</span> <span class="fu">head</span> xs) (<span class="fu">tail</span> xs)</code></pre>
+<p>The main difference is that we accumulate the sum of elements via some additional argument.</p>
+<p>Implement a accumulator-recursive definition of <code>rev</code> (the function for reversing a list of elements)</p>
+<p>Note: Accumulator recursive functions are in tail recursion form. Compard to general recursive functions, a function in tail recursion form doesn't require any additional stack space because the function can be straightforwardly turned into a while-loop by the Haskell compiler. In principle, all functions can be turned into tail recursion form.</p>
+</div>
+<div class="section slide level1" id="database-functions-over-lists">
+<h1>Database (functions over lists)</h1>
+<p>We are given a database of students. Your task is to implement a number of query operations. Check ilias for a code template (see Database.hs). Below we'll give a brief description.</p>
+<p>A student is represented by her name, student id and a list of the courses the student is taking.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Student</span> <span class="fu">=</span> (<span class="dt">String</span>, <span class="dt">Int</span>, [<span class="dt">Int</span>])
+<span class="kw">type</span> <span class="dt">DB</span> <span class="fu">=</span> [<span class="dt">Student</span>]</code></pre>
+<ul>
+<li>Task 0</li>
+</ul>
+<p>Databases must be consistent. We say the database is consistent if there're no multiple entries of students, and no multiple entries of courses per students For example, the below databases are <em>inconsistent</em></p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">incons1 <span class="fu">=</span> [(<span class="st">&quot;Jack&quot;</span>, <span class="dv">111</span>, [<span class="dv">141</span>, <span class="dv">252</span>, <span class="dv">141</span>])]
+incons2 <span class="fu">=</span> [(<span class="st">&quot;Jane&quot;</span>, <span class="dv">112</span>, [<span class="dv">141</span>, <span class="dv">252</span>]), (<span class="st">&quot;Jane&quot;</span>, <span class="dv">112</span>, [<span class="dv">141</span>, <span class="dv">252</span>])]</code></pre>
+<p>Your task is to implement the following function which returns True if the database is valid (consistent), otherwise the function returns False.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">valid ::</span> <span class="dt">DB</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span></code></pre>
+<p>Extension: We strenghten the notion of consistency. In addition, we require that there shall by no duplicate student id's. For example,</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">incons3 <span class="fu">=</span> [(<span class="st">&quot;Jane&quot;</span>, <span class="dv">111</span>, [<span class="dv">141</span>]), (<span class="st">&quot;Jack&quot;</span>, <span class="dv">111</span>, [<span class="dv">141</span>, <span class="dv">252</span>])]</code></pre>
+<p>FROM HERE ON, WE WILL ASSUME THAT ALL DATABASES ARE CONSISTENT !!!</p>
+<ul>
+<li>Task 1</li>
+</ul>
+<p>Given a database and a student id, we're looking for the list of courses of this particular student.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">query1 ::</span> <span class="dt">DB</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> [<span class="dt">Int</span>]</code></pre>
+<ul>
+<li>Task 2</li>
+</ul>
+<p>Given a database and a course, find all students taking this course.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">query2 ::</span> <span class="dt">DB</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> [<span class="dt">String</span>]</code></pre>
+<ul>
+<li>Task 3</li>
+</ul>
+<p>Given a database, sort the database (in non-decreasing order) according to the name of students.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">sortDB ::</span> <span class="dt">DB</span> <span class="ot">-&gt;</span> <span class="dt">DB</span></code></pre>
+<p>Extension1: Provide a function sortDB' which sorts the database according to the number of courses a student is taking</p>
+<p>Extension2: Provide a function sortDB'' which is parameterized in the actual comparing relation which determines the sorting order For example: Given</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">  cmpName ::</span> <span class="dt">Student</span> <span class="ot">-&gt;</span> <span class="dt">Student</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>
+  cmpName (n1, _, _) (n2, _, _) <span class="fu">=</span> n1 <span class="fu">&lt;=</span> n2</code></pre>
+<p>Then you can define</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"> sortDB <span class="fu">=</span> sortDB&#39;&#39; cmpName</code></pre>
+<ul>
+<li>Task 4</li>
+</ul>
+<p>Given two databases, merge them to obtain one (consistent) database Example:</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"> merge [(<span class="st">&quot;Jane&quot;</span>, <span class="dv">112</span>, [<span class="dv">141</span>, <span class="dv">353</span>])] [(<span class="st">&quot;Jane&quot;</span>, <span class="dv">112</span>, [<span class="dv">141</span>, <span class="dv">252</span>])]
+    <span class="ot">=&gt;</span> <span class="kw">Just</span> [(<span class="st">&quot;Jane&quot;</span>, <span class="dv">112</span>, [<span class="dv">141</span>, <span class="dv">252</span>, <span class="dv">353</span>])]
+ merge [(<span class="st">&quot;Jane&quot;</span>, <span class="dv">112</span>, [<span class="dv">141</span>, <span class="dv">353</span>])] [(<span class="st">&quot;Jane&quot;</span>, <span class="dv">113</span>, [<span class="dv">141</span>, <span class="dv">252</span>])]
+    <span class="ot">=&gt;</span> <span class="kw">Nothing</span> </code></pre>
+<p>The last merge fails because Jane has been given two distinct student IDs.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">merge ::</span> <span class="dt">DB</span> <span class="ot">-&gt;</span> <span class="dt">DB</span> <span class="ot">-&gt;</span> <span class="dt">Maybe</span> <span class="dt">DB</span></code></pre>
+</div>
+<div class="section slide level1" id="enumerations-and-list-comprehensions">
+<h1>Enumerations and list comprehensions</h1>
+<p>Recall the enumeration from class.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">WeekDay</span> <span class="fu">=</span> <span class="dt">Mo</span> 
+             <span class="fu">|</span> <span class="dt">Tue</span> 
+             <span class="fu">|</span> <span class="dt">Wed</span> 
+             <span class="fu">|</span> <span class="dt">Thur</span> 
+             <span class="fu">|</span> <span class="dt">Friday</span> 
+             <span class="fu">|</span> <span class="dt">Sat</span> 
+             <span class="fu">|</span> <span class="dt">Sun</span>
+             <span class="kw">deriving</span> (<span class="kw">Eq</span>, <span class="kw">Show</span>)</code></pre>
+<p>Additionally, we provide for a equality among values of type <code>WeekDay</code> by &quot;deriving&quot; the standard <code>Eq</code> instance. Thus, we can simply write <code>Mo == Wed</code> which yields <code>False</code> whereas <code>Mo == Mo</code> yields <code>True</code>.</p>
+<p>We are given a list of workers (their names) and a specific day each worker is busy. In Haskell, this data structure is represented by <code>[(String, WeekDay)]</code>.</p>
+<p>Your task is to implement a function which selects all workers (their names) which are busy at a certain day.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">select ::</span> [(<span class="dt">String</span>, <span class="dt">WeekDay</span>)] <span class="ot">-&gt;</span> <span class="dt">WeekDay</span> <span class="ot">-&gt;</span> [<span class="dt">String</span>]</code></pre>
+</div>
+<div class="section slide level1" id="expression-evaluator-data-types">
+<h1>Expression evaluator (data types)</h1>
+<p>Your task is to implement an evaluator (think interpreter) for a simple expression language. Check ilias for a code template (see Exp.hs).</p>
+<p>The language of expressions is defined by the following data type.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Value</span> <span class="fu">=</span> <span class="dt">N</span> <span class="dt">Int</span> <span class="fu">|</span> <span class="dt">B</span> <span class="dt">Bool</span> <span class="kw">deriving</span> <span class="kw">Show</span>
+
+<span class="kw">data</span> <span class="dt">Exp</span> <span class="fu">=</span> <span class="dt">Val</span> <span class="dt">Value</span> <span class="fu">|</span> <span class="dt">Plus</span> <span class="dt">Exp</span> <span class="dt">Exp</span> <span class="fu">|</span> <span class="dt">Minus</span> <span class="dt">Exp</span> <span class="dt">Exp</span> <span class="fu">|</span> <span class="dt">Times</span> <span class="dt">Exp</span> <span class="dt">Exp</span>
+         <span class="fu">|</span> <span class="dt">Div</span> <span class="dt">Exp</span> <span class="dt">Exp</span> <span class="fu">|</span> <span class="dt">Equal</span> <span class="dt">Exp</span> <span class="dt">Exp</span> <span class="fu">|</span> <span class="dt">Gt</span> <span class="dt">Exp</span> <span class="dt">Exp</span> 
+         <span class="fu">|</span> <span class="dt">And</span> <span class="dt">Exp</span> <span class="dt">Exp</span> <span class="fu">|</span> <span class="dt">Not</span> <span class="dt">Exp</span> <span class="kw">deriving</span> <span class="kw">Show</span></code></pre>
+<p>Here's a representation of &quot;1 + (3 * 5)&quot;.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">e1 ::</span> <span class="dt">Exp</span>
+e1 <span class="fu">=</span> <span class="dt">Plus</span> (<span class="dt">Val</span> (<span class="dt">N</span> <span class="dv">1</span>)) 
+          (<span class="dt">Times</span> (<span class="dt">Val</span> (<span class="dt">N</span> <span class="dv">3</span>)) (<span class="dt">Val</span> (<span class="dt">N</span> <span class="dv">5</span>)))</code></pre>
+<p>The actual evaluator takes an expression and yields a value. Well, we must be careful to catch &quot;illegal&quot; expressions. Therefore, the type of the evaluator function <code>evalExp</code> is as follows.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Res</span> a <span class="fu">=</span> <span class="dt">Res</span> a <span class="fu">|</span> <span class="dt">Err</span> <span class="dt">String</span>
+<span class="ot">evalExp ::</span> <span class="dt">Exp</span> <span class="ot">-&gt;</span> <span class="dt">Res</span> <span class="dt">Value</span></code></pre>
+<p>What kind of illegal expressions do we need to catch?</p>
+<ul>
+<li>Division by zero</li>
+<li>Type incompatability</li>
+</ul>
+<p>The above <code>Exp</code> data type describes the untyped syntax of expression. For example, we can define the following meaningless expressions</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">e1 ::</span> <span class="dt">Exp</span>
+e1 <span class="fu">=</span> <span class="dt">Plus</span> (<span class="dt">Val</span> (<span class="dt">B</span> <span class="kw">True</span>)) (<span class="dt">Val</span> (<span class="dt">N</span> <span class="dv">1</span>))
+
+<span class="ot">e2 ::</span> <span class="dt">Exp</span>
+<span class="ot">e2 ::</span> <span class="dt">Equal</span> (<span class="dt">Val</span> (<span class="dt">B</span> <span class="kw">True</span>)) (<span class="dt">Val</span> (<span class="dt">N</span> <span class="dv">1</span>))</code></pre>
+<p>The above expressions are meaningless because we can't provide for a well-defined semantics to add/compare integers and booleans. Of course, we could apply the C rule and via booleans like integers but that's not what we want here.</p>
+<p>The consequence is that our evaluator may get &quot;stuck&quot;. Of course, we wish to provide some meaningful feedback to the user for such cases. As an example, consider the definition of <code>Plus</code></p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">evalExp ::</span> <span class="dt">Exp</span> <span class="ot">-&gt;</span> <span class="dt">Res</span> <span class="dt">Value</span>
+evalExp (<span class="dt">Val</span> v) <span class="fu">=</span> <span class="dt">Res</span> v
+evalExp (<span class="dt">Plus</span> e1 e2) <span class="fu">=</span> 
+   <span class="kw">case</span> (evalExp e1, evalExp e2) <span class="kw">of</span>
+    (<span class="dt">Res</span> (<span class="dt">N</span> i1), <span class="dt">Res</span> (<span class="dt">N</span> i2)) <span class="ot">-&gt;</span> <span class="dt">Res</span> (<span class="dt">N</span> (i1 <span class="fu">+</span> i2))
+    x                        <span class="ot">-&gt;</span> errorHandler x <span class="st">&quot;plus: incompatible type&quot;</span></code></pre>
+<p>The <code>errorhandler</code> function provides for a uniform handling of the erroneous cases.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">errorHandler x msg <span class="fu">=</span> 
+   <span class="kw">case</span> x <span class="kw">of</span>
+    (<span class="dt">Err</span> s1, <span class="dt">Err</span> s2)         <span class="ot">-&gt;</span> <span class="dt">Err</span> (<span class="fu">unlines</span> [s1, s2])  <span class="co">-- propagate failure</span>
+    (<span class="dt">Err</span> s1, _)              <span class="ot">-&gt;</span> <span class="dt">Err</span> s1
+    (_, <span class="dt">Err</span> s2)              <span class="ot">-&gt;</span> <span class="dt">Err</span> s2
+    _                        <span class="ot">-&gt;</span> <span class="dt">Err</span> msg                 <span class="co">-- new failure</span></code></pre>
+<p>For example, if both results have failed, we propagate both failure strings. If one of the results have failed we propagate them. For a new falure, we use a customized failure message.</p>
+</div>
+<div class="section slide level1" id="lambda-calculus">
+<h1>Lambda calculus</h1>
+<p>The lambda calculus provides the functions of functional programming. The lambda calculus represents a minimal core language just consisting of functions. We briefly consider a formal decription of the lambda calculus and give an implementation (interpreter-style) in Haskell.</p>
+<h2 id="lambda-calculus-syntax-and-semantics">Lambda calculus: Syntax and semantics</h2>
+<p>Terms (expressions/programs) in the lambda calculus are defined by the following EBNF syntax.</p>
+<p><br /><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%0A%20t%20~~%20%3A%3A%3D%20~~%20x%20~~%20%5Cmid%20~~%20%5Clambda%20x.t%20~~%20%5Cmid%20~~%20t%20~t%20%0A" alt="
+ t ~~ ::= ~~ x ~~ \mid ~~ \lambda x.t ~~ \mid ~~ t ~t 
+" title="
+ t ~~ ::= ~~ x ~~ \mid ~~ \lambda x.t ~~ \mid ~~ t ~t 
+" /><br /></p>
+<p>The operational semantics of the lambda calculus is defined via a single rule, commonly referred to as <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Cbeta" alt="\beta" title="\beta" />-reduction.</p>
+<p><br /><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%0A%20%28%5Clambda%20x.%20t_1%29%20~%20t_2%20%5Crightarrow%20%5Bt_2%2Fx%5Dt_1%0A" alt="
+ (\lambda x. t_1) ~ t_2 \rightarrow [t_2/x]t_1
+" title="
+ (\lambda x. t_1) ~ t_2 \rightarrow [t_2/x]t_1
+" /><br /></p>
+<p>In <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Bt_2%2Fx%5Dt_1" alt="[t_2/x]t_1" title="[t_2/x]t_1" />, we apply the substitution <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Bt_2%2Fx%5D" alt="[t_2/x]" title="[t_2/x]" />: In the body <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=t_1" alt="t_1" title="t_1" />, replace each occurence of the formal parameter <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=x" alt="x" title="x" /> by the argument <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=t_2" alt="t_2" title="t_2" />.</p>
+<p>Commonly, we refer to <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Clambda%20x.e" alt="\lambda x.e" title="\lambda x.e" /> as a lambda-abstraction and to <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Clambda%20x" alt="\lambda x" title="\lambda x" /> as the lambda-binding.</p>
+<p>For example, <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%28%5Clambda%20x.%20%28%5Clambda%20y.%20y%29%29%20~%20z" alt="(\lambda x. (\lambda y. y)) ~ z" title="(\lambda x. (\lambda y. y)) ~ z" /> reduces to <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Clambda%20y.y" alt="\lambda y.y" title="\lambda y.y" />.</p>
+<p>As it is common in programming languages, we can reuse the same variable names and apply the common rule that each use of a variable name refers to the closest binding site. For example, consider <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Clambda%20x.%20%28%5Clambda%20x.%20x%29" alt="\lambda x. (\lambda x. x)" title="\lambda x. (\lambda x. x)" /> where the innermost occurence of <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=x" alt="x" title="x" /> refers to the inner lambda-binding.</p>
+<p>Via some simply renaming we can always guarantee that variables are distinct. For example, <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Clambda%20x.%20%28%5Clambda%20x.%20x%29" alt="\lambda x. (\lambda x. x)" title="\lambda x. (\lambda x. x)" /> can be renamed to <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Clambda%20x.%20%28%5Clambda%20y.%20y%29" alt="\lambda x. (\lambda y. y)" title="\lambda x. (\lambda y. y)" />.</p>
+<p>We generally assume that lambda-bindings always introduce fresh, distinct variables.</p>
+<h2 id="lambda-calculus-interpreter-in-haskell-first-order-syntax">Lambda calculus interpreter in Haskell (First-order syntax)</h2>
+<p>We introduce a data type to represent lambda terms.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Term</span> <span class="fu">=</span> <span class="dt">Var</span> <span class="dt">Int</span> 
+          <span class="fu">|</span> <span class="dt">Fun</span> <span class="dt">Int</span> <span class="dt">Term</span> 
+          <span class="fu">|</span> <span class="dt">App</span> <span class="dt">Term</span> <span class="dt">Term</span></code></pre>
+<p>For example, <img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Clambda%20x.%20%28%5Clambda%20y.%20y%29" alt="\lambda x. (\lambda y. y)" title="\lambda x. (\lambda y. y)" /> is represented in Haskell as follows.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">Fun</span> <span class="dv">1</span> (<span class="dt">Fun</span> <span class="dv">2</span> (<span class="dt">Var</span> <span class="dv">2</span>)</code></pre>
+<p>We use here numbers (integers) to represent variables. Recall that we assume that lambda-bindings always introduce fresh, distinct variables. Hence, the first argument of <code>Fun</code> will be a distinct number.</p>
+<p>We could use our <code>Term</code> language to describe the result of evaluation but instead will use a more specialized data type.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Val</span> <span class="fu">=</span> <span class="dt">VInt</span> <span class="dt">Int</span> <span class="fu">|</span> <span class="dt">VFun</span> (<span class="dt">Val</span><span class="ot">-&gt;</span><span class="dt">Val</span>) </code></pre>
+<p><img style="vertical-align:middle" src="http://chart.apis.google.com/chart?cht=tx&amp;chl=%5Cbeta" alt="\beta" title="\beta" />-reduction will be performed exhaustively and therefore function application is omitted.</p>
+<p>Here's the definition of our lambda-calculus evaluator.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Env</span> <span class="fu">=</span> <span class="dt">Int</span><span class="ot">-&gt;</span><span class="dt">Val</span>
+
+<span class="ot">eval ::</span> <span class="dt">Env</span> <span class="ot">-&gt;</span> <span class="dt">Term</span> <span class="ot">-&gt;</span> <span class="dt">Val</span>
+eval env (<span class="dt">Var</span> x) <span class="fu">=</span> env x
+eval env (<span class="dt">Fun</span> x t) <span class="fu">=</span> <span class="dt">VFun</span> (\y<span class="ot">-&gt;</span> <span class="kw">let</span> env&#39; z <span class="fu">=</span> <span class="kw">if</span> z<span class="fu">==</span>x <span class="kw">then</span> y <span class="kw">else</span> env z
+                                <span class="kw">in</span> eval env&#39; t)
+eval env (<span class="dt">App</span> t1 t2) <span class="fu">=</span> <span class="kw">let</span> <span class="dt">VFun</span> f <span class="fu">=</span> eval env t1
+                       <span class="kw">in</span> f (eval env t2)</code></pre>
+<p><code>Env</code> represents the substitution binding. Notice how the <code>Fun</code> constructor is turned into Haskell function.</p>
+<p>The immediate question is why not directly use Haskell functions as our term language? This is what we will consider next. For the record, the above style is referred to as &quot;first-order abstract syntax encoding&quot; (FOAS) and the upcoming style as &quot;higher-order abstract syntax encoding&quot; (HOAS).</p>
+<p><em>Abstract</em> because don't consider here a concrete source language but some abstraction where we ignore the common syntactic sugar present in a programming language. <em>First-oder</em> means that we use plain values to represent terms, e.g. numbers to represent variables etc. <em>Higher-order</em> means that we use Haskell variables to represent lambda term variables, Haskell functions to represent lambda functions etc.</p>
+<h2 id="lambda-calculus-interpreter-in-haskell-higher-order-syntax">Lambda calculus interpreter in Haskell (Higher-order syntax)</h2>
+<p>Here's the representation in Haskell</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Term</span> <span class="fu">=</span> <span class="dt">Zero</span> <span class="fu">|</span> <span class="dt">Succ</span> <span class="dt">Term</span> <span class="fu">|</span> <span class="dt">Plus</span> <span class="dt">Term</span> <span class="dt">Term</span> 
+         <span class="fu">|</span> <span class="dt">Fun</span> (<span class="dt">Term</span><span class="ot">-&gt;</span><span class="dt">Term</span>) 
+         <span class="fu">|</span> <span class="dt">App</span> <span class="dt">Term</span> <span class="dt">Term</span> </code></pre>
+<p>The evaluation takes now a <code>Term</code> value and produces another <code>Term</code> value.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">eval ::</span> <span class="dt">Term</span> <span class="ot">-&gt;</span> <span class="dt">Term</span>
+eval <span class="dt">Zero</span> <span class="fu">=</span> <span class="dt">Zero</span>
+eval (<span class="dt">Succ</span> e) <span class="fu">=</span> <span class="dt">Succ</span> (eval e)
+eval (<span class="dt">Plus</span> <span class="dt">Zero</span> e) <span class="fu">=</span> eval e
+eval (<span class="dt">Plus</span> (<span class="dt">Succ</span> e1) e2) <span class="fu">=</span> <span class="dt">Succ</span> (eval (<span class="dt">Plus</span> e1 e2))
+eval (<span class="dt">Fun</span> f) <span class="fu">=</span> <span class="dt">Fun</span> f 
+eval (<span class="dt">App</span> f e) <span class="fu">=</span> <span class="kw">case</span> (eval f) <span class="kw">of</span> 
+                  <span class="dt">Fun</span> f&#39; <span class="ot">-&gt;</span> eval (f&#39; (eval e))</code></pre>
+<p>Some examples</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">one <span class="fu">=</span> <span class="dt">Succ</span> <span class="dt">Zero</span>
+two <span class="fu">=</span> <span class="dt">Succ</span> one
+e1 <span class="fu">=</span> <span class="dt">Fun</span> (\ x <span class="ot">-&gt;</span> <span class="dt">Plus</span> x two)
+e2 <span class="fu">=</span> <span class="dt">App</span> e1 two</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> eval e1
+<span class="dt">Functions</span><span class="fu">!</span>
+<span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> eval e2
+<span class="dv">4</span></code></pre>
+<p>We can only show concrete values. For function values we simply print the String &quot;Functions!&quot;</p>
+<p>As we have seen earlier, evaluation may get stuck in case of an illegal term.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">e3 <span class="fu">=</span> <span class="dt">App</span> one e1        <span class="co">-- 1 (\x-&gt;x+2)</span>
+
+<span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> eval e3
+<span class="fu">***</span> <span class="dt">Exception</span><span class="fu">:</span> Lambda.hs<span class="fu">:</span>(<span class="dv">30</span>,<span class="dv">18</span>)<span class="fu">-</span>(<span class="dv">31</span>,<span class="dv">46</span>)<span class="fu">:</span> <span class="dt">Non</span><span class="fu">-</span>exhaustive patterns <span class="kw">in</span> <span class="kw">case</span></code></pre>
+<p>In the above expression we find <code>one</code> in function position. Attempting to perform function application yields an exception (because of the partial function definition in <code>App</code>).</p>
+</div>
+<div class="section slide level1" id="well-typed-interpreters">
+<h1>Well-typed interpreters</h1>
+<p>Our goal is to statically rule our illegal terms. We use a GADT which encodes the typing rules of the simply-typed lambda calculus.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Term</span> a <span class="kw">where</span> 
+  <span class="dt">Inj</span><span class="ot"> ::</span> a <span class="ot">-&gt;</span> <span class="dt">Term</span> a
+  <span class="dt">Zero</span><span class="ot"> ::</span> <span class="dt">Term</span> <span class="dt">Int</span>
+  <span class="dt">Succ</span><span class="ot"> ::</span> <span class="dt">Term</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Term</span> <span class="dt">Int</span>
+  <span class="dt">Plus</span><span class="ot"> ::</span> <span class="dt">Term</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Term</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Term</span> <span class="dt">Int</span>
+  <span class="dt">Fun</span><span class="ot"> ::</span> (<span class="dt">Term</span> a <span class="ot">-&gt;</span> <span class="dt">Term</span> b) <span class="ot">-&gt;</span> <span class="dt">Term</span> (a<span class="ot">-&gt;</span>b)
+  <span class="dt">App</span><span class="ot"> ::</span> <span class="dt">Term</span> (a<span class="ot">-&gt;</span>b) <span class="ot">-&gt;</span> <span class="dt">Term</span> a <span class="ot">-&gt;</span> <span class="dt">Term</span> b</code></pre>
+<p>The evaluator functions takes a well-typed term of type <code>Term a</code> and yields a value of type <code>a</code>. The important point to note is that there is no longer a need to &quot;wrap up&quot; values inside some constructors. The <code>Inj</code> constructor is necessary for injecting values into the term language. See the function definition for <code>Fun</code>.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">eval ::</span> <span class="dt">Term</span> a <span class="ot">-&gt;</span> a
+eval (<span class="dt">Inj</span> x)             <span class="fu">=</span> x
+eval <span class="dt">Zero</span>                <span class="fu">=</span> <span class="dv">0</span>
+eval (<span class="dt">Succ</span> e)            <span class="fu">=</span> <span class="dv">1</span> <span class="fu">+</span> eval e
+eval (<span class="dt">Plus</span> (<span class="dt">Inj</span> x) e)    <span class="fu">=</span> x <span class="fu">+</span> eval e 
+eval (<span class="dt">Plus</span> <span class="dt">Zero</span> e)       <span class="fu">=</span> eval e
+eval (<span class="dt">Plus</span> (<span class="dt">Succ</span> e1) e2) <span class="fu">=</span> <span class="dv">1</span> <span class="fu">+</span> eval (<span class="dt">Plus</span> e1 e2)
+eval (<span class="dt">Fun</span> f)             <span class="fu">=</span> \x <span class="ot">-&gt;</span> eval (f (<span class="dt">Inj</span> x)) 
+eval (<span class="dt">App</span> f e)           <span class="fu">=</span> (eval f) (eval e)</code></pre>
+<p>Our earlier examples from before</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">one <span class="fu">=</span> <span class="dt">Succ</span> <span class="dt">Zero</span>
+two <span class="fu">=</span> <span class="dt">Succ</span> one
+e1 <span class="fu">=</span> <span class="dt">Fun</span> (\ x <span class="ot">-&gt;</span> <span class="dt">Plus</span> x two)
+e2 <span class="fu">=</span> <span class="dt">App</span> e1 two
+
+<span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> eval two       
+<span class="dv">2</span>
+<span class="fu">*</span><span class="dt">Main</span><span class="fu">&gt;</span> eval e2        
+<span class="dv">4</span></code></pre>
+<p>The illegal expression</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">e3 <span class="fu">=</span> <span class="dt">App</span> one e1        <span class="co">-- 1 (\x-&gt;x+2)</span></code></pre>
+<p>won't type check any longer.</p>
+<p>We obtain the error message</p>
+<pre><code>  Couldn&#39;t match expected type `a0 -&gt; b0&#39; with actual type `Int&#39;
+    Expected type: Term (a0 -&gt; b0)
+      Actual type: Term Int
+    In the first argument of `App&#39;, namely `one&#39;
+    In the expression: App one e1</code></pre>
+</div>
+<div class="section slide level1" id="church-encodings">
+<h1>Church Encodings</h1>
+<p>Consider</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE FlexibleInstances, OverlappingInstances, IncoherentInstances #-}</span>
+
+true <span class="fu">=</span> \x <span class="ot">-&gt;</span> \y <span class="ot">-&gt;</span> x
+false <span class="fu">=</span> \x <span class="ot">-&gt;</span> \y <span class="ot">-&gt;</span> y
+ifThenElse x y z <span class="fu">=</span> x y z
+notC x <span class="fu">=</span> ifThenElse x false true
+andC x y <span class="fu">=</span> ifThenElse x y false
+orC x y <span class="fu">=</span> ifThenElse x true y
+
+<span class="kw">instance</span> <span class="kw">Show</span> (t<span class="ot">-&gt;</span>t1<span class="ot">-&gt;</span>t) <span class="kw">where</span>
+   <span class="fu">show</span> _ <span class="fu">=</span> <span class="st">&quot;true&quot;</span>
+
+<span class="kw">instance</span> <span class="kw">Show</span> (t<span class="ot">-&gt;</span>t1<span class="ot">-&gt;</span>t1) <span class="kw">where</span>
+   <span class="fu">show</span> _ <span class="fu">=</span> <span class="st">&quot;false&quot;</span>
+
+<span class="co">-- Examples</span>
+ex <span class="fu">=</span> ifThenElse true true false
+ex2 <span class="fu">=</span> ifThenElse ex (andC false ex) false
+ex2a <span class="fu">=</span> ifThenElse false true false
+
+
+mkPair x y <span class="fu">=</span> \b <span class="ot">-&gt;</span> b x y
+fstP p <span class="fu">=</span> p true
+sndP p <span class="fu">=</span> p false
+
+
+ex3 <span class="fu">=</span> fstP (mkPair ex ex2)</code></pre>
+<p>We can 'evaluate' expressions either by performing type inference or applying show.</p>
+<pre><code>*Main&gt; :t ex3 
+ex3 :: t -&gt; t1 -&gt; t
+*Main&gt; show ex3 
+&quot;true&quot;</code></pre>
+</div>
+<div class="section slide level1" id="lazy-evaluation-and-space-leaks">
+<h1>Lazy evaluation and space leaks</h1>
+<p>Consider the following program which attempts to sum up all numbers from 1 to 10^6</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">sumAcc acc [] <span class="fu">=</span> acc
+sumAcc acc (x<span class="fu">:</span>xs) <span class="fu">=</span> sumAcc (acc<span class="fu">+</span>x) xs
+mySum <span class="fu">=</span> sumAcc <span class="dv">1</span>
+main <span class="fu">=</span> <span class="kw">do</span> <span class="fu">print</span> <span class="fu">$</span> mySum <span class="fu">$</span> <span class="fu">take</span> (<span class="dv">10</span><span class="fu">^</span><span class="dv">6</span>) <span class="fu">$</span> [<span class="dv">1</span><span class="fu">..</span>]</code></pre>
+<p>Compile and execute the above program (we require here the compiler ghc instead of the interpreter ghci)</p>
+<pre><code>&gt; ghc HigherOrderLazy.hs
+[1 of 1] Compiling Main             ( HigherOrderLazy.hs, HigherOrderLazy.o )
+Linking HigherOrderLazy ...
+&gt; ./HigherOrderLazy 
+Stack space overflow: current size 8388608 bytes.
+Use `+RTS -Ksize -RTS&#39; to increase it.</code></pre>
+<p>We have hit a space leak. The expression <code>acc+x</code> won't be evaluated and therefore we accumulate a large chain of unevaluated expressions. Once we attempt to <code>print</code> the result we force evaluation which then results in a stack overflow.</p>
+<p>The common fix is to force evaluation of <code>acc + x</code>. There are several methods. We use here the <code>seq</code> combinator.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">sumAcc2 acc [] <span class="fu">=</span> acc
+sumAcc2 acc (x<span class="fu">:</span>xs) <span class="fu">=</span> (acc<span class="fu">+</span>x) <span class="ot">`seq`</span> sumAcc2 (acc<span class="fu">+</span>x) xs
+mySum2 <span class="fu">=</span> sumAcc2 <span class="dv">1</span>
+main <span class="fu">=</span> <span class="kw">do</span> <span class="fu">print</span> <span class="fu">$</span> mySum2 <span class="fu">$</span> <span class="fu">take</span> (<span class="dv">10</span><span class="fu">^</span><span class="dv">6</span>) <span class="fu">$</span> [<span class="dv">1</span><span class="fu">..</span>]</code></pre>
+<p>Compile and execute the above and you'll see that the program will run without problems.</p>
+</div>
+<div class="section slide level1" id="higher-order-functions">
+<h1>Higher-order functions</h1>
+<h2 id="currying">Currying</h2>
+<p>Apply the <code>curry</code> and <code>uncurry</code> functions to express <code>plus</code> in terms of <code>plusP</code> and vice versa.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">plus x y <span class="fu">=</span> x <span class="fu">+</span> y
+plusP (x,y) <span class="fu">=</span> x <span class="fu">+</span> y</code></pre>
+</div>
+<div class="section slide level1" id="parsing">
+<h1>Parsing</h1>
+<h2 id="html">HTML</h2>
+<p>Your task is to write a (simple) HTML parser. In orderto keep things simple, write first a parser for which only checks that tags are well-nested.</p>
+<p>For example, the following is a well-nested(formed) HTML document</p>
+<pre><code>&lt;tag1&gt; 
+&lt;tag2&gt;  
+&lt;/tag2&gt; 
+&lt;/tag1&gt;</code></pre>
+<p>whereas</p>
+<pre><code>&lt;tag1&gt; 
+&lt;tag2&gt;  
+&lt;/tag1&gt;
+&lt;/tag2&gt; </code></pre>
+<p>is ill-nested(formed).</p>
+<p>Then, you may consider additional HTML syntactic constructs such as attributes etc.</p>
+<p>You may make use of the Parser Monad. See below.</p>
+<h3 id="parser-monad">Parser Monad</h3>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import</span> <span class="dt">Control.Monad</span>
+
+<span class="fu">------------------------------------------------------</span>
+<span class="co">-- The Parser Monad</span>
+
+<span class="kw">newtype</span> <span class="dt">Parser</span> a <span class="fu">=</span> <span class="dt">Parser</span> (<span class="dt">String</span> <span class="ot">-&gt;</span> [(a,<span class="dt">String</span>)])
+
+<span class="ot">run ::</span> <span class="dt">Parser</span> t <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> [(t, <span class="dt">String</span>)]
+run (<span class="dt">Parser</span> p) s <span class="fu">=</span> p s
+
+parse (<span class="dt">Parser</span> p) <span class="fu">=</span> p
+
+<span class="kw">instance</span> <span class="kw">Monad</span> <span class="dt">Parser</span> <span class="kw">where</span>
+  <span class="fu">return</span> a <span class="fu">=</span> <span class="dt">Parser</span> (\cs <span class="ot">-&gt;</span> [(a,cs)])
+  p <span class="fu">&gt;&gt;=</span> f  <span class="fu">=</span> <span class="dt">Parser</span> (\cs <span class="ot">-&gt;</span> <span class="fu">concat</span> [parse (f a) cs&#39; <span class="fu">|</span> (a,cs&#39;) <span class="ot">&lt;-</span> parse p cs])
+
+
+<span class="kw">instance</span> <span class="dt">MonadPlus</span> <span class="dt">Parser</span> <span class="kw">where</span>
+  mzero <span class="fu">=</span> <span class="dt">Parser</span> (\cs <span class="ot">-&gt;</span>[])
+  p <span class="ot">`mplus`</span> q <span class="fu">=</span> <span class="dt">Parser</span> (\cs <span class="ot">-&gt;</span> parse p cs <span class="fu">++</span> parse q cs)
+
+<span class="fu">------------------------</span>
+<span class="co">-- Some combinators </span>
+
+
+<span class="co">-- deterministic (first) choice</span>
+<span class="ot">(+++) ::</span> <span class="dt">Parser</span> a <span class="ot">-&gt;</span> <span class="dt">Parser</span> a <span class="ot">-&gt;</span> <span class="dt">Parser</span> a
+(<span class="fu">+++</span>) p q <span class="fu">=</span> <span class="dt">Parser</span> ( \cs <span class="ot">-&gt;</span> <span class="kw">case</span> parse (p <span class="ot">`mplus`</span> q) cs <span class="kw">of</span>
+                           []     <span class="ot">-&gt;</span> []
+                           (x<span class="fu">:</span>xs) <span class="ot">-&gt;</span> [x] )
+
+<span class="co">-- unconditionally parse a single character</span>
+<span class="ot">item ::</span> <span class="dt">Parser</span> <span class="dt">Char</span>
+item <span class="fu">=</span> <span class="dt">Parser</span> (\cs <span class="ot">-&gt;</span> <span class="kw">case</span> cs <span class="kw">of</span>
+                       <span class="st">&quot;&quot;</span>     <span class="ot">-&gt;</span> []
+                       (c<span class="fu">:</span>cs) <span class="ot">-&gt;</span> [(c,cs)])
+
+
+
+<span class="ot">sat ::</span> (<span class="dt">Char</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>) <span class="ot">-&gt;</span> <span class="dt">Parser</span> <span class="dt">Char</span>
+sat p <span class="fu">=</span> <span class="kw">do</span> { c <span class="ot">&lt;-</span> item; <span class="kw">if</span> p c <span class="kw">then</span> <span class="fu">return</span> c <span class="kw">else</span> mzero }
+
+<span class="ot">char ::</span> <span class="dt">Char</span> <span class="ot">-&gt;</span> <span class="dt">Parser</span> <span class="dt">Char</span>
+char c <span class="fu">=</span> sat (c <span class="fu">==</span>)
+
+<span class="co">-- parse a specific string</span>
+<span class="ot">string ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Parser</span> <span class="dt">String</span>
+string <span class="st">&quot;&quot;</span> <span class="fu">=</span> <span class="fu">return</span> <span class="st">&quot;&quot;</span>
+string (c<span class="fu">:</span>cs) <span class="fu">=</span> <span class="kw">do</span> {char c; string cs; <span class="fu">return</span> (c<span class="fu">:</span>cs)}
+
+
+<span class="co">-- option</span>
+<span class="ot">option ::</span> <span class="dt">Parser</span> a <span class="ot">-&gt;</span> <span class="dt">Parser</span> [a]
+option p <span class="fu">=</span> (<span class="kw">do</span> x <span class="ot">&lt;-</span> p
+               <span class="fu">return</span> [x])
+           <span class="fu">+++</span> <span class="fu">return</span> []
+
+<span class="co">-- zero or more repetitions</span>
+<span class="ot">many ::</span> <span class="dt">Parser</span> a <span class="ot">-&gt;</span> <span class="dt">Parser</span> [a]
+many p <span class="fu">=</span> many1 p <span class="fu">+++</span> <span class="fu">return</span> []
+
+<span class="co">-- one or more repetitions</span>
+<span class="ot">many1 ::</span> <span class="dt">Parser</span> a <span class="ot">-&gt;</span> <span class="dt">Parser</span> [a]
+many1 p <span class="fu">=</span> <span class="kw">do</span> {a <span class="ot">&lt;-</span> p; <span class="kw">as</span> <span class="ot">&lt;-</span> many p; <span class="fu">return</span> (a<span class="fu">:</span><span class="kw">as</span>)}
+
+
+<span class="co">-- parse a token, throwing away any leading/trailing spaces</span>
+<span class="ot">token ::</span> <span class="dt">Parser</span> a <span class="ot">-&gt;</span> <span class="dt">Parser</span> a 
+token p <span class="fu">=</span> <span class="kw">do</span> {space; a <span class="ot">&lt;-</span> p; space; <span class="fu">return</span> a}
+
+<span class="co">-- parse a string of spaces, tabs</span>
+<span class="ot">space ::</span> <span class="dt">Parser</span> <span class="dt">String</span>
+space <span class="fu">=</span> many (sat (\c <span class="ot">-&gt;</span> <span class="kw">case</span> c <span class="kw">of</span>
+                          <span class="ch">&#39; &#39;</span>  <span class="ot">-&gt;</span> <span class="kw">True</span>
+                          <span class="ch">&#39;\t&#39;</span> <span class="ot">-&gt;</span> <span class="kw">True</span>
+                          _    <span class="ot">-&gt;</span> <span class="kw">False</span>))
+
+<span class="fu">-------------------------------------</span>
+<span class="co">-- Write a simple html parser </span>
+<span class="co">-- Step1: Parsing of tags</span>
+<span class="co">--    </span>
+<span class="co">--   &lt;tag1&gt; .... &lt;tag2&gt;  .... &lt;/tag2&gt; &lt;/tag1&gt;</span>
+<span class="co">-- Step2: Add additional features, attributes etc</span>
+
+
+<span class="co">-- simpleHTML yields True if the HTML String is well-nested,</span>
+<span class="co">-- otherwise we return False.</span>
+<span class="ot">simpleHTML ::</span> <span class="dt">Parser</span> <span class="dt">Bool</span>
+simpleHTML <span class="fu">=</span> <span class="fu">undefined</span></code></pre>
+</div>
+<div class="section slide level1" id="concurrent-programming-with-stm">
+<h1>Concurrent Programming with STM</h1>
+<h2 id="stm-based-semaphore">STM-based Semaphore</h2>
+<p>The semaphore is classic concurrent data structure. Below you are given an interface to an unbounded semaphore. Your task is to provide the implementation details. Your implementation shall make use of STM</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">newSem ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> <span class="dt">Sem</span>
+<span class="ot">p ::</span> <span class="dt">Sem</span> <span class="ot">-&gt;</span> <span class="dt">STM</span> ()
+<span class="ot">v ::</span> <span class="dt">Sem</span> <span class="ot">-&gt;</span> <span class="dt">STM</span> ()</code></pre>
+<h2 id="dinining-philosophers">Dinining Philosophers</h2>
+<p>Implement the classic concurrency example of dining philosophers with STM. You will find many solutions already on the net. Additional tasks: Does your STM solution guarantee fairness (each philosopher will eventually be able to eat). Compare STM solutions against traditional lock-based solutions.</p>
+<p>Hints: Represents forks as transactional variables. For simplicity, you may consider a specific instances with three philosophers and four forks.</p>
+<h2 id="sleeping-barber">Sleeping Barber</h2>
+<p>This is yet another classic concurrency example.</p>
+<p>The barber has one barber chair and a waiting room with a number of chairs in it. When the barber finishes cutting a customer's hair, he dismisses the customer and then goes to the waiting room to see if there are other customers waiting. If there are, he brings one of them back to the chair and cuts his hair. If there are no other customers waiting, he returns to his chair and sleeps in it.</p>
+<p>Each customer, when he arrives, looks to see what the barber is doing. If the barber is sleeping, then the customer wakes him up and sits in the chair. If the barber is cutting hair, then the customer goes to the waiting room. If there is a free chair in the waiting room, the customer sits in it and waits his turn. If there is no free chair, then the customer leaves.</p>
+<p>How to represent the barber and its shop? For example, the barber could be represented as a transactional variable which has several states (cutting, sleeping). In a first instance, you could ignore waiting chairs.</p>
+<h3 id="appendix">Appendix</h3>
+<p>You will need the following imports in your program.</p>
+<pre class="hs"><code>import Control.Concurrent
+import Control.Concurrent.STM
+import Data.IORef
+import Data.List</code></pre>
+<h3 id="sample-solutions">Sample Solutions</h3>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import</span> <span class="dt">Control.Concurrent</span>
+<span class="kw">import</span> <span class="dt">Control.Concurrent.STM</span>
+<span class="kw">import</span> <span class="dt">Data.IORef</span>
+<span class="kw">import</span> <span class="dt">Data.List</span>
+
+
+<span class="co">-- semaphore</span>
+<span class="kw">type</span> <span class="dt">Sem</span> <span class="fu">=</span> <span class="dt">TVar</span> <span class="dt">Int</span>
+
+<span class="ot">newSem ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> <span class="dt">Sem</span>
+newSem n <span class="fu">=</span> newTVarIO n
+
+<span class="ot">p ::</span> <span class="dt">Sem</span> <span class="ot">-&gt;</span> <span class="dt">STM</span> ()
+p sem <span class="fu">=</span> <span class="kw">do</span> n <span class="ot">&lt;-</span> readTVar sem
+           <span class="kw">if</span> n <span class="fu">&gt;</span> <span class="dv">0</span>
+             <span class="kw">then</span> writeTVar sem (n<span class="dv">-1</span>)
+             <span class="kw">else</span> retry
+
+<span class="ot">v ::</span> <span class="dt">Sem</span> <span class="ot">-&gt;</span> <span class="dt">STM</span> ()
+v sem <span class="fu">=</span> <span class="kw">do</span> n <span class="ot">&lt;-</span> readTVar sem
+           writeTVar sem (n<span class="dv">+1</span>)
+
+
+testSem <span class="fu">=</span> <span class="kw">do</span> s <span class="ot">&lt;-</span> newSem <span class="dv">5</span>
+             atomically <span class="fu">$</span> p s
+             atomically <span class="fu">$</span> v s
+
+
+<span class="co">-- Dining philosopher:</span>
+<span class="co">-- We assume that forks are unordered.</span>
+<span class="ot">philo ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">TVar</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Chan</span> [<span class="dt">Char</span>] <span class="ot">-&gt;</span> <span class="dt">IO</span> ()
+philo no forks out <span class="fu">=</span> <span class="kw">do</span>
+   atomically <span class="fu">$</span> <span class="kw">do</span> v <span class="ot">&lt;-</span> readTVar forks
+                   <span class="kw">if</span> v <span class="fu">&lt;=</span> <span class="dv">1</span> 
+                    <span class="kw">then</span> retry
+                    <span class="kw">else</span> writeTVar forks (v<span class="dv">-2</span>)
+
+   writeChan out <span class="fu">$</span> <span class="st">&quot;Philosopher &quot;</span> <span class="fu">++</span> <span class="fu">show</span> no <span class="fu">++</span> <span class="st">&quot; is eating&quot;</span>
+   threadDelay <span class="dv">1000000</span>
+
+   atomically <span class="fu">$</span> <span class="kw">do</span> v <span class="ot">&lt;-</span> readTVar forks
+                   writeTVar forks (v<span class="dv">+2</span>)
+
+   philo no forks out
+
+
+printOut out <span class="fu">=</span> <span class="kw">do</span>
+   txt <span class="ot">&lt;-</span> readChan out
+   <span class="fu">putStrLn</span> txt
+   printOut out
+
+testPhilo <span class="fu">=</span> <span class="kw">do</span> 
+   out <span class="ot">&lt;-</span> newChan
+   forks <span class="ot">&lt;-</span> newTVarIO <span class="dv">4</span>
+   forkIO <span class="fu">$</span> philo <span class="dv">1</span> forks out
+   forkIO <span class="fu">$</span> philo <span class="dv">2</span> forks out
+   forkIO <span class="fu">$</span> philo <span class="dv">3</span> forks out
+   printOut out</code></pre>
+</div>
+</body>
+</html>
