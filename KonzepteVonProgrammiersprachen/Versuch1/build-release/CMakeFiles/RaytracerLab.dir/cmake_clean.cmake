@@ -9,6 +9,10 @@ file(REMOVE_RECURSE
   "CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o.d"
   "CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o"
   "CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o.d"
+  "CMakeFiles/RaytracerLab.dir/src/scene.cpp.o"
+  "CMakeFiles/RaytracerLab.dir/src/scene.cpp.o.d"
+  "CMakeFiles/RaytracerLab.dir/src/shading.cpp.o"
+  "CMakeFiles/RaytracerLab.dir/src/shading.cpp.o.d"
   "RaytracerLab"
   "RaytracerLab.pdb"
 )

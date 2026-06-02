@@ -249,6 +249,54 @@ src/renderer.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/RaytracerLab.dir/build.make CMakeFiles/RaytracerLab.dir/src/renderer.cpp.s
 .PHONY : src/renderer.cpp.s
 
+src/scene.o: src/scene.cpp.o
+.PHONY : src/scene.o
+
+# target to build an object file
+src/scene.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RaytracerLab.dir/build.make CMakeFiles/RaytracerLab.dir/src/scene.cpp.o
+.PHONY : src/scene.cpp.o
+
+src/scene.i: src/scene.cpp.i
+.PHONY : src/scene.i
+
+# target to preprocess a source file
+src/scene.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RaytracerLab.dir/build.make CMakeFiles/RaytracerLab.dir/src/scene.cpp.i
+.PHONY : src/scene.cpp.i
+
+src/scene.s: src/scene.cpp.s
+.PHONY : src/scene.s
+
+# target to generate assembly for a file
+src/scene.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RaytracerLab.dir/build.make CMakeFiles/RaytracerLab.dir/src/scene.cpp.s
+.PHONY : src/scene.cpp.s
+
+src/shading.o: src/shading.cpp.o
+.PHONY : src/shading.o
+
+# target to build an object file
+src/shading.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RaytracerLab.dir/build.make CMakeFiles/RaytracerLab.dir/src/shading.cpp.o
+.PHONY : src/shading.cpp.o
+
+src/shading.i: src/shading.cpp.i
+.PHONY : src/shading.i
+
+# target to preprocess a source file
+src/shading.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RaytracerLab.dir/build.make CMakeFiles/RaytracerLab.dir/src/shading.cpp.i
+.PHONY : src/shading.cpp.i
+
+src/shading.s: src/shading.cpp.s
+.PHONY : src/shading.s
+
+# target to generate assembly for a file
+src/shading.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RaytracerLab.dir/build.make CMakeFiles/RaytracerLab.dir/src/shading.cpp.s
+.PHONY : src/shading.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -273,6 +321,12 @@ help:
 	@echo "... src/renderer.o"
 	@echo "... src/renderer.i"
 	@echo "... src/renderer.s"
+	@echo "... src/scene.o"
+	@echo "... src/scene.i"
+	@echo "... src/scene.s"
+	@echo "... src/shading.o"
+	@echo "... src/shading.i"
+	@echo "... src/shading.s"
 .PHONY : help
 
 

@@ -13,6 +13,8 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/main.cpp" "CMakeFiles/RaytracerLab.dir/src/main.cpp.o" "gcc" "CMakeFiles/RaytracerLab.dir/src/main.cpp.o.d"
   "/home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/mesh.cpp" "CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o" "gcc" "CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o.d"
   "/home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/renderer.cpp" "CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o" "gcc" "CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o.d"
+  "/home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/scene.cpp" "CMakeFiles/RaytracerLab.dir/src/scene.cpp.o" "gcc" "CMakeFiles/RaytracerLab.dir/src/scene.cpp.o.d"
+  "/home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/shading.cpp" "CMakeFiles/RaytracerLab.dir/src/shading.cpp.o" "gcc" "CMakeFiles/RaytracerLab.dir/src/shading.cpp.o.d"
   )
 
 # Targets to which this target links.

@@ -148,3 +148,28 @@ bool Mesh::loadOBJ(const std::string& filename) {
     
     return true;
 }
+
+void Mesh::addGroundPlane(float y, float size, const glm::vec3& color) {
+    // Zwei Dreiecke bilden ein großes Quadrat als Bodenebene
+    glm::vec3 normal(0.0f, 1.0f, 0.0f); // Normale zeigt nach oben
+
+    Triangle t1;
+    t1.v0 = glm::vec3(-size, y, -size);
+    t1.v1 = glm::vec3( size, y, -size);
+    t1.v2 = glm::vec3( size, y,  size);
+    t1.n0 = t1.n1 = t1.n2 = normal;
+    t1.color = color;
+    t1.specularColor = glm::vec3(0.0f);
+    t1.specularExponent = 0.0f;
+    triangles.push_back(t1);
+
+    Triangle t2;
+    t2.v0 = glm::vec3(-size, y, -size);
+    t2.v1 = glm::vec3( size, y,  size);
+    t2.v2 = glm::vec3(-size, y,  size);
+    t2.n0 = t2.n1 = t2.n2 = normal;
+    t2.color = color;
+    t2.specularColor = glm::vec3(0.0f);
+    t2.specularExponent = 0.0f;
+    triangles.push_back(t2);
+}

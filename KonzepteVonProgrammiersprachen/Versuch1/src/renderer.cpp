@@ -33,7 +33,7 @@ bool Renderer::findClosestHit(const Ray& ray, const Mesh& scene, Intersection& c
     return hitAnything;
 }
 
-glm::vec3 Renderer::traceRay(const Ray& ray, const Mesh& scene, const glm::vec3& lightPos) {
+glm::vec3 Renderer::traceRay(const Ray& ray, const Mesh& scene, const Light& light) {
     Intersection isect;
     Triangle hitTriangle;
 
@@ -45,12 +45,8 @@ glm::vec3 Renderer::traceRay(const Ray& ray, const Mesh& scene, const glm::vec3&
         float w = 1.0f - isect.u - isect.v;
         glm::vec3 normal = glm::normalize(w * hitTriangle.n0 + isect.u * hitTriangle.n1 + isect.v * hitTriangle.n2);
 
-        // -- Hard Shadows & Blinn-Phong --
-        const int N_SHADOW_SAMPLES = 1;
-        
+        // Blickrichtung berechnen
         glm::vec3 viewDir = glm::normalize(ray.origin - hitPoint);
-        glm::vec3 diffuseSum(0.0f);
-        glm::vec3 specularSum(0.0f);
 
         for (int i = 0; i < N_SHADOW_SAMPLES; ++i) {
             // Exakte Lichtposition (Punktlichtquelle)
@@ -98,7 +94,7 @@ glm::vec3 Renderer::traceRay(const Ray& ray, const Mesh& scene, const glm::vec3&
     return glm::vec3(0.05f, 0.05f, 0.15f) * 255.0f;
 }
 
-void Renderer::render(const Mesh& scene, const Camera& cam, const glm::vec3& lightPos, Image& image) {
+void Renderer::render(const Mesh& scene, const Camera& cam, const Light& light, Image& image) {
     int width = image.getWidth();
     int height = image.getHeight();
     const int N_AA_SAMPLES = 4;
@@ -119,7 +115,7 @@ void Renderer::render(const Mesh& scene, const Camera& cam, const glm::vec3& lig
                 float v = (float)(y + jitterY) / (height - 1);
 
                 Ray ray = cam.generateRay(u, v);
-                finalColor += traceRay(ray, scene, lightPos);
+                finalColor += traceRay(ray, scene, light);
             }
             
             // Durchschnittliche Farbe der Samples

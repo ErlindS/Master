@@ -142,11 +142,34 @@ Der Bericht dokumentiert die Ergebnisse aller Teilaufgaben. Jeder Abschnitt besc
 \subsection{Architektur und Modulstruktur}
 % -----------------------------------------------------------------------------
 
-Das Programm ist in vier logische Module unterteilt, die jeweils als eigene Header- bzw. Quelldatei organisiert sind. Das Modul \texttt{Ray} definiert die grundlegende Datenstruktur eines Sehstrahls, bestehend aus einem Ursprungspunkt und einem normalisierten Richtungsvektor. Das Modul \texttt{Camera} kapselt die Kameralogik und berechnet aus einer gegebenen Position, einem Blickpunkt, einem Up-Vektor sowie einem vertikalen Öffnungswinkel das lokale Koordinatensystem der Kamera. Für jeden Bildpunkt kann daraus ein Primärstrahl erzeugt werden, indem die normalisierten Bildkoordinaten $(u, v)$ auf die Bildebene im Weltkoordinatensystem abgebildet werden.
+Das Programm ist modular aufgebaut und in mehrere logisch getrennte Einheiten unterteilt. Die folgende Tabelle gibt einen Überblick über alle Dateien des Projekts:
 
-Das Modul \texttt{Mesh} ist für das Einlesen der Szenengeometrie aus dem Wavefront-OBJ-Format zuständig. Es parst die Datei zeilenweise und extrahiert Vertex-Positionen (Zeilen mit Präfix \texttt{v}) sowie Dreiecksdefinitionen (Zeilen mit Präfix \texttt{f}). Da das OBJ-Format Vertex-Indizes in der Form \texttt{v/vt/vn} kodiert, wird lediglich der erste Index bis zum Schrägstrich extrahiert. Die resultierenden Dreiecke werden in einer flachen Liste von \texttt{Triangle}-Strukturen gespeichert, wobei jedes Dreieck durch seine drei Eckpunkte \texttt{v0}, \texttt{v1} und \texttt{v2} repräsentiert wird.
+\begin{table}[H]
+    \centering
+    \caption{Übersicht der Projektdateien}
+    \label{tab:dateistruktur}
+    \begin{tabularx}{\textwidth}{l l X}
+        \toprule
+        \textbf{Datei} & \textbf{Typ} & \textbf{Beschreibung} \\
+        \midrule
+        \texttt{ray.h}         & Header & Definiert die Datenstruktur \texttt{Ray} (Ursprung + Richtungsvektor). \\
+        \texttt{camera.h}      & Header & Kameralogik: Berechnet aus Position, Blickpunkt und FOV das lokale Koordinatensystem und erzeugt Primärstrahlen. \\
+        \texttt{mesh.h/.cpp}   & Modul  & Einlesen der Szenengeometrie aus Wavefront-OBJ-Dateien inkl.\ Materialien (MTL). Enthält die \texttt{Triangle}-Struktur und eine Methode zum Einfügen einer Bodenebene. \\
+        \texttt{intersector.h/.cpp} & Modul & Schnittpunktalgorithmen: Möller-Trumbore und Badouel. Definiert auch die \texttt{Intersection}-Struktur und das \texttt{IntersectionAlgorithm}-Enum. \\
+        \texttt{shading.h/.cpp}    & Modul & Beleuchtungsberechnung: Blinn-Phong-Modell (Ambient + Diffuse + Specular) und Shadow-Ray-Logik. Enthält die \texttt{Light}-Struktur. \\
+        \texttt{renderer.h/.cpp}   & Modul & Render-Loop mit Anti-Aliasing (Multisampling). Delegiert die Beleuchtung an das Shading-Modul. \\
+        \texttt{scene.h/.cpp}      & Modul & Szenenkonfiguration: Bündelt Mesh, Kamera und Lichtquelle. Lädt das Modell und fügt die Bodenebene hinzu. \\
+        \texttt{image.h/.cpp}      & Modul & Bildspeicher und PPM-Export. Verwaltet den Pixelpuffer und schreibt das Ergebnis als PPM-Datei. \\
+        \texttt{main.cpp}          & Einstieg & Programmstart: Erstellt die Szene, führt beide Algorithmen aus und misst die Renderzeiten. \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
 
-Das Modul \texttt{Intersector} enthält die statische Methode zur Schnittpunktberechnung, deren Implementierung im folgenden Abschnitt erläutert wird.
+Das Modul \texttt{Ray} definiert die grundlegende Datenstruktur eines Sehstrahls, bestehend aus einem Ursprungspunkt und einem normalisierten Richtungsvektor. Das Modul \texttt{Camera} kapselt die Kameralogik und berechnet aus einer gegebenen Position, einem Blickpunkt, einem Up-Vektor sowie einem vertikalen Öffnungswinkel das lokale Koordinatensystem der Kamera. Für jeden Bildpunkt kann daraus ein Primärstrahl erzeugt werden, indem die normalisierten Bildkoordinaten $(u, v)$ auf die Bildebene im Weltkoordinatensystem abgebildet werden.
+
+Das Modul \texttt{Mesh} ist für das Einlesen der Szenengeometrie aus dem Wavefront-OBJ-Format zuständig. Es parst die Datei zeilenweise und extrahiert Vertex-Positionen (Zeilen mit Präfix \texttt{v}), Vertex-Normalen (\texttt{vn}) sowie Dreiecksdefinitionen (Zeilen mit Präfix \texttt{f}). Zusätzlich werden Materialdateien (\texttt{.mtl}) geparst, um diffuse Farben (\texttt{Kd}), spekulare Farben (\texttt{Ks}) und Glanzexponenten (\texttt{Ns}) den jeweiligen Dreiecken zuzuordnen.
+
+Das Modul \texttt{Intersector} enthält die statischen Methoden zur Schnittpunktberechnung, deren Implementierung im folgenden Abschnitt erläutert wird. Das Modul \texttt{Shading} kapselt die gesamte Beleuchtungslogik (Blinn-Phong und Shadow Rays), während das Modul \texttt{Scene} alle Szenen-Parameter (Geometrie, Kamera, Licht) in einer zentralen Struktur bündelt.
 
 \newpage
 % -----------------------------------------------------------------------------
@@ -216,7 +239,9 @@ Da in dieser ersten Teilaufgabe noch keine Beschleunigungsdatenstruktur vorliegt
 \subsection{Beleuchtung und Schatten}
 % -----------------------------------------------------------------------------
 
-Zur Erzeugung eines plastischen Eindrucks wurde ein einfaches Beleuchtungsmodell implementiert. Es besteht aus einer einzelnen Punktlichtquelle an der Position $(5, 10, 5)$ im Weltkoordinatensystem. Trifft ein Primärstrahl auf ein Dreieck, wird zunächst der exakte Auftreffpunkt $\mathbf{P} = \mathbf{O} + t \cdot \mathbf{D}$ berechnet. Die Oberflächennormale ergibt sich aus dem normalisierten Kreuzprodukt der Dreieckskanten.
+Zur Erzeugung eines plastischen Eindrucks wurde ein Blinn-Phong-Beleuchtungsmodell implementiert, das aus ambienter, diffuser und spekularer Komponente besteht. Eine einzelne Punktlichtquelle an der Position $(6, 8, -5)$ im Weltkoordinatensystem beleuchtet die Szene. Trifft ein Primärstrahl auf ein Dreieck, wird zunächst der exakte Auftreffpunkt $\mathbf{P} = \mathbf{O} + t \cdot \mathbf{D}$ berechnet. Die Oberflächennormale wird durch baryzentrische Interpolation der Vertex-Normalen bestimmt, was zu einer glatten Schattierung (Smooth Shading) führt.
+
+Um den Schattenwurf sichtbar zu machen, wurde zusätzlich eine Bodenebene (Ground Plane) unter der Szene eingefügt. Diese besteht aus zwei großen Dreiecken und dient als Empfängerfläche für die Schatten der darüberliegenden Objekte.
 
 Für die Schattenberechnung wird ein sekundärer Strahl (Shadow Ray) vom Auftreffpunkt in Richtung der Lichtquelle ausgesendet. Der Startpunkt wird dabei um einen kleinen Offset in Normalenrichtung ($0{,}001$) verschoben, um das Phänomen der Shadow Acne zu vermeiden, bei dem ein Dreieck sich selbst fälschlicherweise verschattet. Trifft der Schattenstrahl auf seinem Weg ein Objekt, dessen Entfernung kleiner ist als die Distanz zur Lichtquelle, wird der Punkt als verschattet deklariert und lediglich mit einem schwachen Umgebungslicht dargestellt. Andernfalls wird die Helligkeit nach dem Lambertschen Beleuchtungsmodell berechnet, bei dem der Kosinus des Einfallswinkels zwischen Lichtrichtung und Oberflächennormale die Intensität bestimmt:
 
@@ -251,14 +276,14 @@ Die Zeitmessung erfolgt über \texttt{std::chrono::high\_resolution\_clock} und 
         \toprule
         \textbf{Konfiguration} & {\textbf{Badouel [ms]}} & {\textbf{Möller-Trumbore [ms]}} \\
         \midrule
-        Release (mit \texttt{-O3 -march=native})    & 100067 &  65019 \\
+        Release (mit \texttt{-O3 -march=native})    & 394279 & 262182 \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-Die Messergebnisse zeigen die Ausführungszeiten im vollständig optimierten Release-Modus (Compiler-Flags \texttt{-O3 -march=native}). Es zeigt sich, dass der Möller-Trumbore-Algorithmus unsere Baseline (Badouel) durch Reduktion von Branching und Verzicht auf Ebenenkonstruktion messbar schlägt. Der Geschwindigkeitsvorteil beträgt hierbei etwa den Faktor $1,5\times$.
+Die Messergebnisse zeigen die Ausführungszeiten im vollständig optimierten Release-Modus (Compiler-Flags \texttt{-O3 -march=native}). Die Renderzeiten beinhalten Anti-Aliasing (4$\times$ Multisampling), Blinn-Phong-Beleuchtung mit Normaleninterpolation, Shadow Rays sowie eine Bodenebene für sichtbare Schatten. Es zeigt sich, dass der Möller-Trumbore-Algorithmus unsere Baseline (Badouel) durch Reduktion von Branching und Verzicht auf Ebenenkonstruktion messbar schlägt. Der Geschwindigkeitsvorteil beträgt hierbei etwa den Faktor $1{,}50\times$.
 
-Trotz des Einsatzes des performanteren Algorithmus bleibt die absolute Renderzeit mit rund 100 Sekunden (Badouel) bzw. 65 Sekunden (Möller-Trumbore) sehr hoch. Die Ursache liegt in der linearen Komplexität $\mathcal{O}(n)$ der Brute-Force-Suche pro Strahl, wobei $n$ die Anzahl der Dreiecke in der Szene bezeichnet. Dies motiviert die Einführung einer hierarchischen Beschleunigungsdatenstruktur in der nachfolgenden Aufgabe.
+Trotz des Einsatzes des performanteren Algorithmus bleibt die absolute Renderzeit mit rund 394 Sekunden (Badouel) bzw. 262 Sekunden (Möller-Trumbore) sehr hoch. Die Ursache liegt in der linearen Komplexität $\mathcal{O}(n)$ der Brute-Force-Suche pro Strahl, wobei $n$ die Anzahl der Dreiecke in der Szene bezeichnet. Dies motiviert die Einführung einer hierarchischen Beschleunigungsdatenstruktur in der nachfolgenden Aufgabe.
 
 % =============================================================================
 \section{Aufgabe 2: Beschleunigungsdatenstruktur}
@@ -284,8 +309,8 @@ Trotz des Einsatzes des performanteren Algorithmus bleibt die absolute Renderzei
         \toprule
         \textbf{Implementierungsschritt} & {\textbf{Renderzeit [ms]}} & {\textbf{Speedup}} \\
         \midrule
-        Aufgabe 1: Brute-Force (Badouel) & 100067 & {1,0\times} \\
-        Aufgabe 1: Brute-Force (M.-T.)   &  65019 & {1,5\times} \\
+        Aufgabe 1: Brute-Force (Badouel) & 394279 & {1,0\times} \\
+        Aufgabe 1: Brute-Force (M.-T.)   & 262182 & {1,50\times} \\
         Aufgabe 2: k-d-Baum              & {--}   & {--} \\
         Aufgabe 3: AVX Packet Tracing    & {--}   & {--} \\
         \bottomrule
@@ -296,8 +321,8 @@ Die bisherige Implementierung stellt eine funktionsfähige Basislinie dar. Der B
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{../build-release/output.png}
-    \caption{Gerendertes Ergebnis der Szene (Teekanne und Glasobjekt) mit einfachem Schatten}
+    \includegraphics[width=0.7\textwidth]{../build-release/output_moeller.png}
+    \caption{Gerendertes Ergebnis der Szene (Teekanne und Glasobjekt) mit Blinn-Phong-Beleuchtung und Schattenwurf auf der Bodenebene}
     \label{fig:render_output}
 \end{figure}
 

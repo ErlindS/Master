@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.10.5)  4 MAY 2026 01:54
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.10.5)  4 MAY 2026 09:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -692,73 +692,37 @@ File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 
 [2{c:/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{c:/texlive/2025/tex
-mf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{c:/texlive/2025/texmf-dist/fonts/enc/
-dvips/lm/lm-mathit.enc}]
-Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
-nput line 171.
-LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <9> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 173.
-
-
-[3]
-
-[4]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.248 ...00\,\times\,500 Pixel, 18\,032 Dreiecke)}
-                                                  
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.248 ...00\,\times\,500 Pixel, 18\,032 Dreiecke)}
-                                                  
-? 
-
-
-[5
+mf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}
 pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has
  been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.276 \section{Zusammenfassung und Ausblick}
-                                            ]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.288         A
-               ufgabe 1: Brute-Force (M.-T.)   &  65019 & {1,5\times} \\
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.288         A
-               ufgabe 1: Brute-Force (M.-T.)   &  65019 & {1,5\times} \\
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.289         A
-               ufgabe 2: k-d-Baum              & {--}   & {--} \\
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.289         A
-               ufgabe 2: k-d-Baum              & {--}   & {--} \\
-? 
+l.170 D
+       as Modul \texttt{Mesh} ist f√ºr das Einlesen der Szenengeometrie aus ...
+]
 
-Overfull \hbox (4.26572pt too wide) in paragraph at lines 295--296
-\T1/lmr/m/n/10.95 Die bis-he-ri-ge Im-ple-men-tie-rung stellt ei-ne funk-ti-ons
--f‰-hi-ge Ba-sis-li-nie dar. Der Badouel-Algorithmus
- []
+[3{c:/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}]
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
+nput line 194.
+LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <9> not available
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 196.
 
-<../build-release/output.png, id=147, 501.875pt x 501.875pt>
-File: ../build-release/output.png Graphic file (type png)
-<use ../build-release/output.png>
-Package pdftex.def Info: ../build-release/output.png  used on input line 299.
-(pdftex.def)             Requested size: 318.66948pt x 318.68707pt.
+
+[4]
+
+[5]
+! Missing $ inserted.
+<inserted text> 
+                $
+l.273 ...00\,\times\,500 Pixel, 18\,032 Dreiecke)}
+                                                  
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.273 ...00\,\times\,500 Pixel, 18\,032 Dreiecke)}
+                                                  
+? 
 
 
 [6
@@ -766,14 +730,60 @@ pdfTeX warning (ext4): destination with the same identifier (name{table.2}) has
  been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.304 \end{document}
+l.295 ...be 3: AVX-Optimierung mit Packet Tracing}
+                                                  ]
+! Missing $ inserted.
+<inserted text> 
+                $
+l.313         A
+               ufgabe 1: Brute-Force (M.-T.)   & 262182 & {1,50\times} \\
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.313         A
+               ufgabe 1: Brute-Force (M.-T.)   & 262182 & {1,50\times} \\
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.314         A
+               ufgabe 2: k-d-Baum              & {--}   & {--} \\
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.314         A
+               ufgabe 2: k-d-Baum              & {--}   & {--} \\
+? 
+
+Overfull \hbox (4.26572pt too wide) in paragraph at lines 320--321
+\T1/lmr/m/n/10.95 Die bis-he-ri-ge Im-ple-men-tie-rung stellt ei-ne funk-ti-ons
+-f‰-hi-ge Ba-sis-li-nie dar. Der Badouel-Algorithmus
+ []
+
+<../build-release/output_moeller.png, id=153, 501.875pt x 501.875pt>
+File: ../build-release/output_moeller.png Graphic file (type png)
+<use ../build-release/output_moeller.png>
+Package pdftex.def Info: ../build-release/output_moeller.png  used on input lin
+e 324.
+(pdftex.def)             Requested size: 318.66948pt x 318.68707pt.
+
+
+[7
+pdfTeX warning (ext4): destination with the same identifier (name{table.3}) has
+ been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.329 \end{document}
                     
 pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.304 \end{document}
-                     <../build-release/output.png>] (./Projektbericht.aux)
+l.329 \end{document}
+                     <../build-release/output_moeller.png>]
+(./Projektbericht.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-09-02>
@@ -782,20 +792,14 @@ L3 programming layer <2025-09-02>
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
-
-Package rerunfilecheck Warning: File `Projektbericht.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `Projektbericht.out':
-(rerunfilecheck)             Before: D8544A9C7B1A5589A79F8125A5FF4CEA;2201
-(rerunfilecheck)             After:  026FD36ED171E12301C950A8A4BF7F4A;2362.
+Package rerunfilecheck Info: File `Projektbericht.out' has not changed.
+(rerunfilecheck)             Checksum: 026FD36ED171E12301C950A8A4BF7F4A;2362.
  ) 
 Here is how much of TeX's memory you used:
- 18392 strings out of 467748
- 342493 string characters out of 5431138
+ 18397 strings out of 467748
+ 342641 string characters out of 5431138
  1018689 words of memory out of 5000000
- 46799 multiletter control sequences out of 15000+600000
+ 46802 multiletter control sequences out of 15000+600000
  689840 words of font info for 71 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,13n,79p,1203b,1352s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -810,10 +814,10 @@ ve/2025/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/texlive/2025/texmf-dist
 /fonts/type1/public/lm/lmsy8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public
 /lm/lmtk10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:
 /texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt9.pfb>
-Output written on Projektbericht.pdf (7 pages, 470636 bytes).
+Output written on Projektbericht.pdf (8 pages, 492396 bytes).
 PDF statistics:
- 238 PDF objects out of 1000 (max. 8388607)
- 195 compressed objects within 2 object streams
- 66 named destinations out of 1000 (max. 500000)
+ 244 PDF objects out of 1000 (max. 8388607)
+ 200 compressed objects within 2 object streams
+ 68 named destinations out of 1000 (max. 500000)
  99 words of extra memory for PDF output out of 10000 (max. 10000000)
 
