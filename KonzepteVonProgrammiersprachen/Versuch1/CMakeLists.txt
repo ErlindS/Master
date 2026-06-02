@@ -32,12 +32,13 @@ endif()
 # 4. Header-Verzeichnisse bekannt machen
 include_directories(include)
 
-# 5. Quelldateien sammeln
+# 5. Quelldateien sammeln (ohne main.cpp für die Tests)
 file(GLOB_RECURSE SOURCES "src/*.cpp")
+list(REMOVE_ITEM SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
 file(GLOB_RECURSE HEADERS "include/*.h")
 
-# 6. Das ausführbare Programm erstellen
-add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+# 6. Das ausführbare Hauptprogramm erstellen
+add_executable(${PROJECT_NAME} ${SOURCES} src/main.cpp ${HEADERS})
 
 # 7. GLM verlinken (da header-only, reicht oft include_directories, aber sauberer so:)
 if(glm_FOUND)
@@ -46,3 +47,30 @@ endif()
 
 # Zusätzliche Info für den Build-Prozess
 message(STATUS "Build-Typ: ${CMAKE_BUILD_TYPE}")
+
+# ==============================================================================
+# TESTS (Google Test)
+# ==============================================================================
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
+enable_testing()
+
+file(GLOB_RECURSE TEST_SOURCES "test/*.cpp")
+
+if(TEST_SOURCES)
+    add_executable(RaytracerTests ${TEST_SOURCES} ${SOURCES} ${HEADERS})
+    target_link_libraries(RaytracerTests gtest_main)
+    if(glm_FOUND)
+        target_link_libraries(RaytracerTests glm::glm)
+    endif()
+    
+    include(GoogleTest)
+    gtest_discover_tests(RaytracerTests)
+endif()

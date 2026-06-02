@@ -69,7 +69,7 @@ build_release() {
     cd "${PROJECT_DIR}"
 }
 
-# --- Funktion: Standard-Build (bestehender build-Ordner) ---
+# --- Funktion: Standard-Build (bestehender build/-Ordner) ---
 build_default() {
     print_header "BUILD: Standard (bestehender build/-Ordner)"
 
@@ -83,6 +83,33 @@ build_default() {
     make -j$(nproc) 2>&1
 
     print_success "Standard-Build erfolgreich!"
+    cd "${PROJECT_DIR}"
+}
+
+# --- Funktion: Tests kompilieren und ausführen ---
+run_tests() {
+    print_header "TESTS: Kompilieren und Ausführen"
+
+    mkdir -p "${BUILD_DIR_DEBUG}"
+    cd "${BUILD_DIR_DEBUG}"
+
+    print_info "CMake konfigurieren (Debug für Tests)..."
+    cmake "${PROJECT_DIR}" -DCMAKE_BUILD_TYPE=Debug 2>&1 | tail -3
+
+    print_info "Kompiliere Tests (RaytracerTests)..."
+    make RaytracerTests -j$(nproc) 2>&1
+
+    if [ ! -f "RaytracerTests" ]; then
+        echo -e "${RED}✗ Test-Executable (RaytracerTests) nicht gefunden in ${BUILD_DIR_DEBUG}${NC}"
+        return 1
+    fi
+
+    print_info "Führe Tests aus..."
+    echo ""
+    ./RaytracerTests
+    echo ""
+    
+    print_success "Tests abgeschlossen."
     cd "${PROJECT_DIR}"
 }
 
@@ -148,6 +175,9 @@ case "${MODE}" in
         build_default
         run_raytracer "${BUILD_DIR_DEFAULT}" "Standard"
         ;;
+    test)
+        run_tests
+        ;;
     all)
         build_debug
         run_raytracer "${BUILD_DIR_DEBUG}" "Debug"
@@ -163,11 +193,12 @@ case "${MODE}" in
         print_success "Build-Verzeichnisse entfernt."
         ;;
     *)
-        echo "Verwendung: $0 [debug|release|default|all|clean]"
+        echo "Verwendung: $0 [debug|release|default|test|all|clean]"
         echo ""
         echo "  debug   - Kompiliert und startet im Debug-Modus (keine Optimierung)"
         echo "  release - Kompiliert und startet im Release-Modus (-O3) (Standard)"
         echo "  default - Kompiliert und startet mit bestehendem build/-Ordner"
+        echo "  test    - Kompiliert und führt die Google Tests aus (RaytracerTests)"
         echo "  all     - Führt Debug und Release nacheinander aus"
         echo "  clean   - Entfernt Debug- und Release-Build-Ordner"
         exit 1
