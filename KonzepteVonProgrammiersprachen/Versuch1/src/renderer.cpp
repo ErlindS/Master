@@ -47,6 +47,10 @@ glm::vec3 Renderer::traceRay(const Ray& ray, const Mesh& scene, const Light& lig
 
         // Blickrichtung berechnen
         glm::vec3 viewDir = glm::normalize(ray.origin - hitPoint);
+        const int N_SHADOW_SAMPLES = 8;
+        const glm::vec3 lightPos = light.position;
+        glm::vec3 diffuseSum(0.0f);
+        glm::vec3 specularSum(0.0f);
 
         for (int i = 0; i < N_SHADOW_SAMPLES; ++i) {
             // Exakte Lichtposition (Punktlichtquelle)

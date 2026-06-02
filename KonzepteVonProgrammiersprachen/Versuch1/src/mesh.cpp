@@ -125,7 +125,7 @@ bool Mesh::loadOBJ(const std::string& filename) {
 
             // Wenn Normalen vorhanden sind, weisen wir sie zu, andernfalls berechnen wir eine flache Normale (Flat Shading)
             if (n1 >= 0 && n2 >= 0 && n3 >= 0 && 
-                n1 < temp_normals.size() && n2 < temp_normals.size() && n3 < temp_normals.size()) {
+                static_cast<size_t>(n1) < temp_normals.size() && static_cast<size_t>(n2) < temp_normals.size() && static_cast<size_t>(n3) < temp_normals.size()) {
                 tri.n0 = temp_normals[n1];
                 tri.n1 = temp_normals[n2];
                 tri.n2 = temp_normals[n3];
