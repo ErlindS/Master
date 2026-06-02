@@ -48,10 +48,10 @@ struct AABB {
 };
 
 // Ein Knoten im Baum (kann innerer Knoten oder Blatt sein)
-struct BVHNode {
+struct KDNode {
     AABB bounds;
-    std::unique_ptr<BVHNode> left;
-    std::unique_ptr<BVHNode> right;
+    std::unique_ptr<KDNode> left;
+    std::unique_ptr<KDNode> right;
     
     // Für Blatt-Knoten: Referenz auf die Dreiecke im Array
     int firstTriangleIndex = -1;
@@ -61,7 +61,7 @@ struct BVHNode {
 };
 
 // Die Hauptklasse, die den Baum verwaltet
-class BVH {
+class KDTree {
 public:
     // Baut den Baum mittels Median-Split
     void build(std::vector<Triangle>& triangles);
@@ -70,12 +70,12 @@ public:
     bool intersect(const Ray& ray, Intersection& closestIsect, Triangle& hitTriangle, IntersectionAlgorithm algorithm) const;
 
 private:
-    std::unique_ptr<BVHNode> root;
+    std::unique_ptr<KDNode> root;
     std::vector<Triangle> m_triangles; // Interne, umsortierte Liste der Dreiecke
     
     // Rekursive Hilfsfunktion für den Aufbau (Unterteilung am Median)
-    std::unique_ptr<BVHNode> buildRecursive(int first, int count, int depth);
+    std::unique_ptr<KDNode> buildRecursive(int first, int count, int depth);
     
     // Rekursive Traversierungsfunktion
-    void intersectRecursive(const BVHNode* node, const Ray& ray, Intersection& closestIsect, Triangle& hitTriangle, IntersectionAlgorithm algorithm) const;
+    void intersectRecursive(const KDNode* node, const Ray& ray, Intersection& closestIsect, Triangle& hitTriangle, IntersectionAlgorithm algorithm) const;
 };
