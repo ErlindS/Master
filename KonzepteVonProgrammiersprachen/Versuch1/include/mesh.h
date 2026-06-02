@@ -13,12 +13,12 @@ struct Triangle {
 
 #include <memory>
 
-class BVH;
+class KDTree;
 
 class Mesh {
 public:
     std::vector<Triangle> triangles;
-    std::unique_ptr<BVH> bvh;
+    std::unique_ptr<KDTree> kdtree;
     
     Mesh();
     ~Mesh();

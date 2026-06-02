@@ -1,8 +1,8 @@
-#include "bvh.h"
+#include "kdtree.h"
 #include <algorithm>
 #include <iostream>
 
-void BVH::build(std::vector<Triangle>& triangles) {
+void KDTree::build(std::vector<Triangle>& triangles) {
     if (triangles.empty()) return;
     
     // Kopiere Dreiecke in unsere interne Liste, um sie zu sortieren
@@ -13,8 +13,8 @@ void BVH::build(std::vector<Triangle>& triangles) {
     triangles = m_triangles;
 }
 
-std::unique_ptr<BVHNode> BVH::buildRecursive(int first, int count, int depth) {
-    auto node = std::make_unique<BVHNode>();
+std::unique_ptr<KDNode> KDTree::buildRecursive(int first, int count, int depth) {
+    auto node = std::make_unique<KDNode>();
     
     // 1. Berechne die Bounding Box für alle Dreiecke in diesem Knoten
     for (int i = 0; i < count; ++i) {
@@ -63,7 +63,7 @@ std::unique_ptr<BVHNode> BVH::buildRecursive(int first, int count, int depth) {
     return node;
 }
 
-bool BVH::intersect(const Ray& ray, Intersection& closestIsect, Triangle& hitTriangle, IntersectionAlgorithm algorithm) const {
+bool KDTree::intersect(const Ray& ray, Intersection& closestIsect, Triangle& hitTriangle, IntersectionAlgorithm algorithm) const {
     closestIsect.hit = false;
     closestIsect.t = std::numeric_limits<float>::max();
     
@@ -74,7 +74,7 @@ bool BVH::intersect(const Ray& ray, Intersection& closestIsect, Triangle& hitTri
     return closestIsect.hit;
 }
 
-void BVH::intersectRecursive(const BVHNode* node, const Ray& ray, Intersection& closestIsect, Triangle& hitTriangle, IntersectionAlgorithm algorithm) const {
+void KDTree::intersectRecursive(const KDNode* node, const Ray& ray, Intersection& closestIsect, Triangle& hitTriangle, IntersectionAlgorithm algorithm) const {
     // Slab-Test für die Bounding Box
     float tMin = 0.0f;
     float tMax = closestIsect.t; // Wir müssen nicht weiter suchen als der bisher nächste Treffer

@@ -4,14 +4,14 @@
 #include <algorithm>
 #include <random>
 
-#include "bvh.h"
+#include "kdtree.h"
 
 bool Renderer::findClosestHit(const Ray& ray, const Mesh& scene, Intersection& closestIsect, Triangle& hitTriangle) {
-    if (scene.bvh) {
-        return scene.bvh->intersect(ray, closestIsect, hitTriangle, algorithm);
+    if (useAcceleration && scene.kdtree) {
+        return scene.kdtree->intersect(ray, closestIsect, hitTriangle, algorithm);
     }
     
-    // Fallback: Lineare Suche, falls kein BVH vorhanden ist
+    // Fallback: Lineare Suche, falls kein KD-Baum vorhanden oder deaktiviert ist
     closestIsect.hit = false;
     closestIsect.t = std::numeric_limits<float>::max();
     bool hitAnything = false;

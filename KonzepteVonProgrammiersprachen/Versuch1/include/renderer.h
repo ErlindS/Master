@@ -10,12 +10,14 @@
 class Renderer {
 public:
     void setAlgorithm(IntersectionAlgorithm alg) { algorithm = alg; }
+    void setUseAcceleration(bool use) { useAcceleration = use; }
 
     // Durchläuft alle Pixel und rendert die Szene
     void render(const Mesh& scene, const Camera& cam, const Light& light, Image& image);
 
 private:
     IntersectionAlgorithm algorithm = IntersectionAlgorithm::MOELLER_TRUMBORE;
+    bool useAcceleration = true;
 
     // Sucht das nächste getroffene Dreieck in der Szene mittels BVH
     bool findClosestHit(const Ray& ray, const Mesh& scene, Intersection& closestIsect, Triangle& hitTriangle);

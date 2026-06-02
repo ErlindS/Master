@@ -15,24 +15,13 @@ int main() {
         return -1;
     }
 
-    // 3. Rendern mit Möller-Trumbore
-    std::cout << "\nStarte Rendern (Möller-Trumbore)..." << std::endl;
-    Image image_moeller(width, height);
     Renderer renderer;
-    renderer.setAlgorithm(IntersectionAlgorithm::MOELLER_TRUMBORE);
-    
-    auto start_m = std::chrono::high_resolution_clock::now();
-    renderer.render(scene.mesh, scene.camera, scene.light, image_moeller);
-    auto end_m = std::chrono::high_resolution_clock::now();
-    auto duration_m = std::chrono::duration_cast<std::chrono::milliseconds>(end_m - start_m);
-    
-    image_moeller.save("output_moeller.ppm");
-    std::cout << "Fertig! 'output_moeller.ppm' erstellt in " << duration_m.count() << " ms." << std::endl;
 
-    // 4. Rendern mit Badouel
-    std::cout << "\nStarte Rendern (Badouel)..." << std::endl;
+    // 3. Rendern mit Badouel (ohne KD-Baum)
+    std::cout << "\nStarte Rendern (Badouel, ohne KD-Baum)..." << std::endl;
     Image image_badouel(width, height);
     renderer.setAlgorithm(IntersectionAlgorithm::BADOUEL);
+    renderer.setUseAcceleration(false);
 
     auto start_b = std::chrono::high_resolution_clock::now();
     renderer.render(scene.mesh, scene.camera, scene.light, image_badouel);
@@ -42,10 +31,39 @@ int main() {
     image_badouel.save("output_badouel.ppm");
     std::cout << "Fertig! 'output_badouel.ppm' erstellt in " << duration_b.count() << " ms." << std::endl;
 
-    // 5. Auswertung
+    // 4. Rendern mit Möller-Trumbore (ohne KD-Baum)
+    std::cout << "\nStarte Rendern (Möller-Trumbore, ohne KD-Baum)..." << std::endl;
+    Image image_moeller(width, height);
+    renderer.setAlgorithm(IntersectionAlgorithm::MOELLER_TRUMBORE);
+    renderer.setUseAcceleration(false);
+    
+    auto start_m = std::chrono::high_resolution_clock::now();
+    renderer.render(scene.mesh, scene.camera, scene.light, image_moeller);
+    auto end_m = std::chrono::high_resolution_clock::now();
+    auto duration_m = std::chrono::duration_cast<std::chrono::milliseconds>(end_m - start_m);
+    
+    image_moeller.save("output_moeller.ppm");
+    std::cout << "Fertig! 'output_moeller.ppm' erstellt in " << duration_m.count() << " ms." << std::endl;
+
+    // 5. Rendern mit Möller-Trumbore (MIT KD-Baum)
+    std::cout << "\nStarte Rendern (Möller-Trumbore, MIT KD-Baum)..." << std::endl;
+    Image image_moeller_kd(width, height);
+    renderer.setAlgorithm(IntersectionAlgorithm::MOELLER_TRUMBORE);
+    renderer.setUseAcceleration(true);
+    
+    auto start_kd = std::chrono::high_resolution_clock::now();
+    renderer.render(scene.mesh, scene.camera, scene.light, image_moeller_kd);
+    auto end_kd = std::chrono::high_resolution_clock::now();
+    auto duration_kd = std::chrono::duration_cast<std::chrono::milliseconds>(end_kd - start_kd);
+    
+    image_moeller_kd.save("output_moeller_kdtree.ppm");
+    std::cout << "Fertig! 'output_moeller_kdtree.ppm' erstellt in " << duration_kd.count() << " ms." << std::endl;
+
+    // 6. Auswertung
     std::cout << "\n=== ZUSAMMENFASSUNG DER RENDERZEITEN ===" << std::endl;
-    std::cout << "Möller-Trumbore: " << duration_m.count() << " ms" << std::endl;
-    std::cout << "Badouel:         " << duration_b.count() << " ms" << std::endl;
+    std::cout << "Badouel (ohne KD-Baum):         " << duration_b.count() << " ms" << std::endl;
+    std::cout << "Möller-Trumbore (ohne KD-Baum): " << duration_m.count() << " ms" << std::endl;
+    std::cout << "Möller-Trumbore (mit KD-Baum):  " << duration_kd.count() << " ms" << std::endl;
     
     return 0;
 }
