@@ -100,10 +100,34 @@ void KDTree::intersectRecursive(const KDNode* node, const Ray& ray, Intersection
             }
         }
     } else {
-        // Innerer Knoten: Traversiere Kinder
-        // TODO (Optimierung): Sortiere die Traversierung nach Distanz (Slab-Test-Ergebnis),
-        //                     sodass der nähere Knoten zuerst getestet wird.
-        intersectRecursive(node->left.get(), ray, closestIsect, hitTriangle, algorithm);
-        intersectRecursive(node->right.get(), ray, closestIsect, hitTriangle, algorithm);
+        // Innerer Knoten: Front-to-Back Traversierung
+        // Führe den Slab-Test für beide Kinder durch, um die Distanz (tMin) zu erhalten
+        float tMinL = 0.0f, tMaxL = closestIsect.t;
+        bool hitL = node->left->bounds.intersect(ray, tMinL, tMaxL);
+        
+        float tMinR = 0.0f, tMaxR = closestIsect.t;
+        bool hitR = node->right->bounds.intersect(ray, tMinR, tMaxR);
+
+        if (hitL && hitR) {
+            // Beide Kinder getroffen: Teste den näheren Knoten ZUERST!
+            if (tMinL < tMinR) {
+                intersectRecursive(node->left.get(), ray, closestIsect, hitTriangle, algorithm);
+                // WICHTIG: Nach dem linken Ast prüfen wir, ob wir den rechten Ast noch brauchen!
+                // Wenn wir im linken Ast einen Treffer fanden, ist closestIsect.t jetzt kleiner.
+                // Liegt der rechte Ast weiter weg als unser neuer Treffer, können wir ihn ignorieren.
+                if (tMinR < closestIsect.t) { 
+                    intersectRecursive(node->right.get(), ray, closestIsect, hitTriangle, algorithm);
+                }
+            } else {
+                intersectRecursive(node->right.get(), ray, closestIsect, hitTriangle, algorithm);
+                if (tMinL < closestIsect.t) {
+                    intersectRecursive(node->left.get(), ray, closestIsect, hitTriangle, algorithm);
+                }
+            }
+        } else if (hitL) {
+            intersectRecursive(node->left.get(), ray, closestIsect, hitTriangle, algorithm);
+        } else if (hitR) {
+            intersectRecursive(node->right.get(), ray, closestIsect, hitTriangle, algorithm);
+        }
     }
 }
