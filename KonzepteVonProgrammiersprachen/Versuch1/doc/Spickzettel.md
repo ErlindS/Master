@@ -2,14 +2,17 @@
 
 Dieses Dokument dient als kompakte Übersicht, in welcher Datei und welcher Methode die wichtigsten Konzepte des Projekts implementiert sind.
 
-## 1. Schnittpunkt-Algorithmen (Ray-Triangle Intersection)
-*Hier wird berechnet, ob und wo ein Lichtstrahl ein Dreieck trifft.*
+## 1. Brute-Force Suche & Schnittpunkte (Aufgabe 1)
+*Hier wird berechnet, ob und wo ein Lichtstrahl ein Dreieck trifft, indem alle Dreiecke linear getestet werden.*
+
+* **Datei:** `src/shading.cpp`
+* **Brute-Force Suche:** Methode `Shading::findClosestHit()`. Iteriert über **alle** Dreiecke der Szene und ruft für jedes Dreieck die Schnittpunkt-Methode auf (Komplexität $\mathcal{O}(n)$). Speichert den Treffer mit der geringsten Distanz ($t$-Wert).
 
 * **Datei:** `src/intersector.cpp` bzw. `include/intersector.h`
-* **Möller-Trumbore-Algorithmus:** Methode `intersectRayTriangle()`. Löst das Problem direkt im 3D-Raum mit der Cramerschen Regel, ohne vorher die Ebenengleichung auszurechnen. Ermittelt Parameter $t$, $u$ und $v$.
-* **Badouel-Algorithmus:** Methode `intersectRayTriangleBadouel()`. Die Basislinie (Brute-Force). Projiziert das Dreieck in 2D (xy-, xz- oder yz-Ebene je nach dominierender Achse) und macht dort den Point-in-Polygon-Test.
+* **Möller-Trumbore-Algorithmus:** Methode `Intersector::intersectRayTriangle()`. Löst das Problem direkt im 3D-Raum mit der Cramerschen Regel, ohne vorher die Ebenengleichung auszurechnen. Ermittelt Parameter $t$, $u$ und $v$.
+* **Badouel-Algorithmus:** Methode `Intersector::intersectRayTriangleBadouel()`. Die Basislinie (Brute-Force). Projiziert das Dreieck in 2D (xy-, xz- oder yz-Ebene je nach dominierender Achse) und macht dort den Point-in-Polygon-Test.
 
-## 2. Beschleunigungsdatenstruktur (k-d-Baum)
+## 2. Beschleunigungsdatenstruktur k-d-Baum (Aufgabe 2)
 *Hier wird die $\mathcal{O}(n)$ Brute-Force Suche auf den Durchschnittsfall $\mathcal{O}(\log n)$ optimiert.*
 
 * **Datei:** `src/kdtree.cpp` und `include/kdtree.h`
@@ -21,17 +24,19 @@ Dieses Dokument dient als kompakte Übersicht, in welcher Datei und welcher Meth
 * **Slab-Test:** Methode `AABB::intersect()`. Prüft super-effizient, ob der Strahl die Bounding-Box trifft. Verwendet `ray.invDirection` (aus `include/ray.h`), um in der Schleife keine langsamen Divisionen machen zu müssen.
 * **Early Rejection (Dynamic tMax):** In `intersectRecursive` wird dem Slab-Test der bisher beste gefundene $t$-Wert (`closestIsect.t`) als `tMax` übergeben. Liegt eine Bounding-Box weiter entfernt, bricht der Test ab.
 
-## 3. Beleuchtung & Schatten (Shading)
+## 3. Beleuchtung & Schatten (Aufgabe 1)
 *Hier entstehen die realistischen Farben und Schattierungen.*
 
-* **Datei:** `src/renderer.cpp` (speziell in der Methode `traceRay()`)
+* **Datei:** `src/shading.cpp`
+* **Shadow Rays (Schattenprüfung):** Methode `Shading::isInShadow()`. Schießt einen sekundären Strahl vom getroffenen Punkt zur Lichtquelle, um zu prüfen, ob ein Objekt dazwischen liegt. Gegen *Shadow Acne* wird der Startpunkt leicht entlang der Normalen verschoben (`normal * 0.001f`). Die Distanzprüfung verhindert, dass Objekte hinter der Lichtquelle Schatten werfen.
+
+* **Datei:** `src/renderer.cpp` (speziell in der Methode `Renderer::traceRay()`)
 * **Blinn-Phong Beleuchtungsmodell:** In `traceRay()` aufgeteilt in:
   * *Ambient:* Pauschales Restlicht (15% der Grundfarbe).
   * *Diffuse (Lambert):* Hängt vom Winkel zwischen Normale und Lichtstrahl ab (`glm::dot(normal, lightDir)`).
   * *Specular:* Das Glanzlicht (Halfway-Vektor und Specular-Exponent `Ns`).
 * **Baryzentrische Interpolation:** Die Oberflächennormale wird aus den 3 Eckpunkt-Normalen glatt interpoliert (Smooth Shading). Passiert in `traceRay()` mittels den baryzentrischen Koordinaten $u$ und $v$.
 * **Double-Sided Shading:** Falls eine Normale von uns wegzeigt (`dot(normal, viewDir) < 0`), drehen wir sie um (`normal = -normal;`), um schwarze Flächen zu vermeiden (z. B. beim Tablett).
-* **Shadow Rays (Schatten):** Ein sekundärer Strahl wird vom getroffenen Punkt zur Lichtquelle geschossen (`Ray shadowRay(...)`). Gegen *Shadow Acne* wird der Startpunkt leicht entlang der Normalen verschoben (`normal * 0.001f`).
 
 ## 4. Anti-Aliasing (Kantenglättung)
 *Verhindert Treppcheneffekte an den Objektkanten.*
@@ -84,3 +89,13 @@ Dieses Dokument dient als kompakte Übersicht, in welcher Datei und welcher Meth
   * *"Weil wir im Durchschnitt logarithmische statt lineare Suchzeit haben. Durch den AABB-Slab-Test an inneren Baumknoten und das Setzen von `tMax` (Early Rejection) können wir ganze Geometrie-Gruppen frühzeitig ausschließen, wenn sie nicht getroffen werden."*
 * **"Was genau ist Baryzentrische Interpolation?"**
   * *"Ein Koordinatensystem innerhalb eines Dreiecks (Werte $u$, $v$ und $w=1-u-v$). Wir nutzen es, um Vertex-Eigenschaften wie die Flächennormale weich und stufenlos über das gesamte Dreieck zu überblenden (Smooth Shading)."*
+* **"Wo machen Sie eigentlich das Anti-Aliasing (Kantenglättung)?"**
+  * *Zeigen in:* `src/renderer.cpp` in `Renderer::render()` (Zeile 119+). Hier werden $N$ Strahlen pro Pixel geschossen und über `std::uniform_real_distribution` minimal auf der Bildachse gejittert.
+* **"Wo interpolieren Sie die Normalen für das Smooth Shading?"**
+  * *Zeigen in:* `src/renderer.cpp` (`Renderer::traceRay()`, ca. Zeile 45). Das geschieht mit `float w = 1.0f - isect.u - isect.v;` unter Verwendung der baryzentrischen Koordinaten aus dem Möller-Trumbore-Algorithmus.
+* **"Was passiert, wenn wir ein Objekt von hinten betrachten? Wo fangen Sie das ab?"**
+  * *Zeigen in:* `src/renderer.cpp` (ca. Zeile 51). Durch das *Double-Sided Shading* (`if (glm::dot(normal, viewDir) < 0.0f) normal = -normal;`). Es dreht wegzeigende Normalen zur Kamera hin.
+* **"Wo und wie verfeinern Sie die Baumtraversierung (Early Rejection beim k-d-Baum)?"**
+  * *Zeigen in:* `src/kdtree.cpp` (`KDTree::intersectRecursive()`, Zeile 118). Nach dem Besuch des vorderen Kindknotens prüfen wir: `if (tMinR < closestIsect.t)`. Ist die Distanz zur Bounding-Box des verbleibenden Knotens größer als unser bisher bester Treffer (`closestIsect.t`), überspringen wir diesen komplett.
+* **"Wo wird das Problem der Shadow Acne behoben?"**
+  * *Zeigen in:* Bei der Initialisierung des Schattenstrahls (`Ray shadowRay(hitPoint + normal * 0.001f, lightDir);` in `src/renderer.cpp` oder `shading.cpp`). Der kleine Offset schiebt den Startpunkt entlang der Normalen von der Oberfläche weg.
