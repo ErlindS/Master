@@ -60,9 +60,9 @@ int main() {
     std::cout << "Fertig! 'output_moeller_kdtree.ppm' erstellt in " << duration_kd.count() << " ms." << std::endl;
 
     // 6. Auswertung
-    std::cout << "\n=== ZUSAMMENFASSUNG DER RENDERZEITEN ===" << std::endl;
-    std::cout << "Badouel (ohne KD-Baum):         " << duration_b.count() << " ms" << std::endl;
-    std::cout << "Möller-Trumbore (ohne KD-Baum): " << duration_m.count() << " ms" << std::endl;
+    //std::cout << "\n=== ZUSAMMENFASSUNG DER RENDERZEITEN ===" << std::endl;
+    //std::cout << "Badouel (ohne KD-Baum):         " << duration_b.count() << " ms" << std::endl;
+    //std::cout << "Möller-Trumbore (ohne KD-Baum): " << duration_m.count() << " ms" << std::endl;
     std::cout << "Möller-Trumbore (mit KD-Baum):  " << duration_kd.count() << " ms" << std::endl;
     
     return 0;
