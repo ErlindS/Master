@@ -8,5 +8,7 @@
 \contentsline {subsection}{\numberline {2.5}Beleuchtung und Schatten}{5}{subsection.2.5}%
 \contentsline {subsection}{\numberline {2.6}Zeitmessung}{6}{subsection.2.6}%
 \contentsline {section}{\numberline {3}Aufgabe 2: Beschleunigungsdatenstruktur}{7}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Struktur und Aufbau des k-d-Baums}{7}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Traversierung und Slab-Test}{7}{subsection.3.2}%
 \contentsline {section}{\numberline {4}Aufgabe 3: AVX-Optimierung mit Packet Tracing}{7}{section.4}%
 \contentsline {section}{\numberline {5}Zusammenfassung und Ausblick}{7}{section.5}%
