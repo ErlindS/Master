@@ -1,3 +1,0 @@
-C:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build_ps/CMakeFiles/RaytracerLab.dir
-C:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build_ps/CMakeFiles/ALL_BUILD.dir
-C:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build_ps/CMakeFiles/ZERO_CHECK.dir
