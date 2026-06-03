@@ -7,7 +7,7 @@ bool Scene::setup(const std::string& modelPath, int width, int height) {
     }
 
     // 2. Bodenebene hinzufügen (für sichtbare Schatten)
-    mesh.addGroundPlane(-0.01f, 15.0f, glm::vec3(0.6f, 0.6f, 0.6f));
+    //mesh.addGroundPlane(-0.01f, 15.0f, glm::vec3(0.6f, 0.6f, 0.6f));
 
     // 3. Lichtquelle definieren (Von oben rechts, um schöne Schatten nach links zu werfen)
     light = Light(glm::vec3(6.0f, 8.0f, -5.0f));
