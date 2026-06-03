@@ -47,6 +47,11 @@ glm::vec3 Renderer::traceRay(const Ray& ray, const Mesh& scene, const Light& lig
 
         // Blickrichtung berechnen
         glm::vec3 viewDir = glm::normalize(ray.origin - hitPoint);
+
+        // Normale zur Kamera hin drehen (Double-Sided Shading)
+        if (glm::dot(normal, viewDir) < 0.0f) {
+            normal = -normal;
+        }
         const int N_SHADOW_SAMPLES = 8;
         const glm::vec3 lightPos = light.position;
         glm::vec3 diffuseSum(0.0f);
