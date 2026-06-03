@@ -88,55 +88,70 @@ bool Mesh::loadOBJ(const std::string& filename) {
             iss >> vn.x >> vn.y >> vn.z;
             temp_normals.push_back(vn);
         } else if (type == "f") {
-            // Zeile ist ein Face (Dreieck)
-            std::string v1_str, v2_str, v3_str;
-            iss >> v1_str >> v2_str >> v3_str;
+            // Zeile ist ein Face (Dreieck oder Polygon)
+            std::vector<std::string> tokens;
+            std::string token;
+            while (iss >> token) {
+                tokens.push_back(token);
+            }
+
+            if (tokens.size() < 3) continue;
 
             // Hilfsfunktion zum Parsen von z.B. "1/2/3" oder "1//3" oder "1"
             auto parseFace = [](const std::string& str, int& v_idx, int& n_idx) {
                 auto firstSlash = str.find('/');
                 if (firstSlash == std::string::npos) {
-                    v_idx = std::stoi(str) - 1;
-                    n_idx = -1;
+                    v_idx = std::stoi(str);
+                    n_idx = 0;
                 } else {
-                    v_idx = std::stoi(str.substr(0, firstSlash)) - 1;
+                    v_idx = std::stoi(str.substr(0, firstSlash));
                     auto secondSlash = str.find('/', firstSlash + 1);
                     if (secondSlash != std::string::npos && secondSlash + 1 < str.length()) {
-                        n_idx = std::stoi(str.substr(secondSlash + 1)) - 1;
+                        n_idx = std::stoi(str.substr(secondSlash + 1));
                     } else {
-                        n_idx = -1;
+                        n_idx = 0;
                     }
                 }
             };
 
-            int v1, v2, v3;
-            int n1, n2, n3;
-            parseFace(v1_str, v1, n1);
-            parseFace(v2_str, v2, n2);
-            parseFace(v3_str, v3, n3);
-
-            Triangle tri;
-            tri.v0 = temp_vertices[v1];
-            tri.v1 = temp_vertices[v2];
-            tri.v2 = temp_vertices[v3];
-            tri.color = current_mat.Kd;
-            tri.specularColor = current_mat.Ks;
-            tri.specularExponent = current_mat.Ns;
-
-            // Wenn Normalen vorhanden sind, weisen wir sie zu, andernfalls berechnen wir eine flache Normale (Flat Shading)
-            if (n1 >= 0 && n2 >= 0 && n3 >= 0 && 
-                static_cast<size_t>(n1) < temp_normals.size() && static_cast<size_t>(n2) < temp_normals.size() && static_cast<size_t>(n3) < temp_normals.size()) {
-                tri.n0 = temp_normals[n1];
-                tri.n1 = temp_normals[n2];
-                tri.n2 = temp_normals[n3];
-            } else {
-                glm::vec3 flatNormal = glm::normalize(glm::cross(tri.v1 - tri.v0, tri.v2 - tri.v0));
-                tri.n0 = flatNormal;
-                tri.n1 = flatNormal;
-                tri.n2 = flatNormal;
+            std::vector<int> v_indices, n_indices;
+            for (const auto& tok : tokens) {
+                int v, n;
+                parseFace(tok, v, n);
+                // Umwandlung von 1-basiert (oder negativ) in 0-basiert
+                v_indices.push_back(v > 0 ? v - 1 : temp_vertices.size() + v);
+                n_indices.push_back(n > 0 ? n - 1 : (n < 0 ? temp_normals.size() + n : -1));
             }
 
-            triangles.push_back(tri);
+            // Fan-Triangulierung: Zerteilt Polygone in Dreiecke (0, 1, 2), (0, 2, 3), ...
+            for (size_t i = 1; i + 1 < v_indices.size(); ++i) {
+                Triangle tri;
+                tri.v0 = temp_vertices[v_indices[0]];
+                tri.v1 = temp_vertices[v_indices[i]];
+                tri.v2 = temp_vertices[v_indices[i+1]];
+                tri.color = current_mat.Kd;
+                tri.specularColor = current_mat.Ks;
+                tri.specularExponent = current_mat.Ns;
+
+                int n1 = n_indices[0];
+                int n2 = n_indices[i];
+                int n3 = n_indices[i+1];
+
+                // Wenn Normalen vorhanden sind, weisen wir sie zu, andernfalls berechnen wir eine flache Normale (Flat Shading)
+                if (n1 >= 0 && n2 >= 0 && n3 >= 0 && 
+                    static_cast<size_t>(n1) < temp_normals.size() && static_cast<size_t>(n2) < temp_normals.size() && static_cast<size_t>(n3) < temp_normals.size()) {
+                    tri.n0 = temp_normals[n1];
+                    tri.n1 = temp_normals[n2];
+                    tri.n2 = temp_normals[n3];
+                } else {
+                    glm::vec3 flatNormal = glm::normalize(glm::cross(tri.v1 - tri.v0, tri.v2 - tri.v0));
+                    tri.n0 = flatNormal;
+                    tri.n1 = flatNormal;
+                    tri.n2 = flatNormal;
+                }
+
+                triangles.push_back(tri);
+            }
         }
     }
     
