@@ -1,0 +1,50 @@
+[
+{
+  "directory": "C:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/RaytracerLab.dir/includes_CXX.rsp -g -g -O0 -std=gnu++17 -Wall -Wextra -o CMakeFiles\\RaytracerLab.dir\\src\\image.cpp.obj -c C:\\Users\\erlin\\repo\\Master\\KonzepteVonProgrammiersprachen\\Versuch1\\src\\image.cpp",
+  "file": "C:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/image.cpp",
+  "output": "CMakeFiles/RaytracerLab.dir/src/image.cpp.obj"
+},
+{
+  "directory": "C:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/RaytracerLab.dir/includes_CXX.rsp -g -g -O0 -std=gnu++17 -Wall -Wextra -o CMakeFiles\\RaytracerLab.dir\\src\\intersector.cpp.obj -c C:\\Users\\erlin\\repo\\Master\\KonzepteVonProgrammiersprachen\\Versuch1\\src\\intersector.cpp",
+  "file": "C:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/intersector.cpp",
+  "output": "CMakeFiles/RaytracerLab.dir/src/intersector.cpp.obj"
+},
+{
+  "directory": "C:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/RaytracerLab.dir/includes_CXX.rsp -g -g -O0 -std=gnu++17 -Wall -Wextra -o CMakeFiles\\RaytracerLab.dir\\src\\kdtree.cpp.obj -c C:\\Users\\erlin\\repo\\Master\\KonzepteVonProgrammiersprachen\\Versuch1\\src\\kdtree.cpp",
+  "file": "C:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/kdtree.cpp",
+  "output": "CMakeFiles/RaytracerLab.dir/src/kdtree.cpp.obj"
+},
+{
+  "directory": "C:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/RaytracerLab.dir/includes_CXX.rsp -g -g -O0 -std=gnu++17 -Wall -Wextra -o CMakeFiles\\RaytracerLab.dir\\src\\mesh.cpp.obj -c C:\\Users\\erlin\\repo\\Master\\KonzepteVonProgrammiersprachen\\Versuch1\\src\\mesh.cpp",
+  "file": "C:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/mesh.cpp",
+  "output": "CMakeFiles/RaytracerLab.dir/src/mesh.cpp.obj"
+},
+{
+  "directory": "C:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/RaytracerLab.dir/includes_CXX.rsp -g -g -O0 -std=gnu++17 -Wall -Wextra -o CMakeFiles\\RaytracerLab.dir\\src\\renderer.cpp.obj -c C:\\Users\\erlin\\repo\\Master\\KonzepteVonProgrammiersprachen\\Versuch1\\src\\renderer.cpp",
+  "file": "C:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/renderer.cpp",
+  "output": "CMakeFiles/RaytracerLab.dir/src/renderer.cpp.obj"
+},
+{
+  "directory": "C:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/RaytracerLab.dir/includes_CXX.rsp -g -g -O0 -std=gnu++17 -Wall -Wextra -o CMakeFiles\\RaytracerLab.dir\\src\\scene.cpp.obj -c C:\\Users\\erlin\\repo\\Master\\KonzepteVonProgrammiersprachen\\Versuch1\\src\\scene.cpp",
+  "file": "C:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/scene.cpp",
+  "output": "CMakeFiles/RaytracerLab.dir/src/scene.cpp.obj"
+},
+{
+  "directory": "C:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/RaytracerLab.dir/includes_CXX.rsp -g -g -O0 -std=gnu++17 -Wall -Wextra -o CMakeFiles\\RaytracerLab.dir\\src\\shading.cpp.obj -c C:\\Users\\erlin\\repo\\Master\\KonzepteVonProgrammiersprachen\\Versuch1\\src\\shading.cpp",
+  "file": "C:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/shading.cpp",
+  "output": "CMakeFiles/RaytracerLab.dir/src/shading.cpp.obj"
+},
+{
+  "directory": "C:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/RaytracerLab.dir/includes_CXX.rsp -g -g -O0 -std=gnu++17 -Wall -Wextra -o CMakeFiles\\RaytracerLab.dir\\src\\main.cpp.obj -c C:\\Users\\erlin\\repo\\Master\\KonzepteVonProgrammiersprachen\\Versuch1\\src\\main.cpp",
+  "file": "C:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/main.cpp",
+  "output": "CMakeFiles/RaytracerLab.dir/src/main.cpp.obj"
+}
+]

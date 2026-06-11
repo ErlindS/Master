@@ -1,0 +1,5 @@
+if(EXISTS "C:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build/RaytracerTests[1]_tests.cmake")
+  include("C:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/build/RaytracerTests[1]_tests.cmake")
+else()
+  add_test(RaytracerTests_NOT_BUILT RaytracerTests_NOT_BUILT)
+endif()

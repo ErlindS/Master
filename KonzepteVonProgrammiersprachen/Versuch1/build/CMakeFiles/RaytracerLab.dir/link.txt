@@ -1,0 +1,3 @@
+C:\msys64\ucrt64\bin\cmake.exe -E rm -f CMakeFiles\RaytracerLab.dir/objects.a
+C:\msys64\ucrt64\bin\ar.exe qc CMakeFiles\RaytracerLab.dir/objects.a @CMakeFiles\RaytracerLab.dir\objects1.rsp
+C:\msys64\ucrt64\bin\g++.exe -g -g -O0 -Wl,--whole-archive CMakeFiles\RaytracerLab.dir/objects.a -Wl,--no-whole-archive -o RaytracerLab.exe -Wl,--out-implib,libRaytracerLab.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\RaytracerLab.dir\linkLibs.rsp

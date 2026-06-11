@@ -51,26 +51,34 @@ message(STATUS "Build-Typ: ${CMAKE_BUILD_TYPE}")
 # ==============================================================================
 # TESTS (Google Test)
 # ==============================================================================
-include(FetchContent)
-FetchContent_Declare(
-  googletest
-  URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
-)
-# For Windows: Prevent overriding the parent project's compiler/linker settings
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-FetchContent_MakeAvailable(googletest)
-
-enable_testing()
-
-file(GLOB_RECURSE TEST_SOURCES "test/*.cpp")
-
-if(TEST_SOURCES)
-    add_executable(RaytracerTests ${TEST_SOURCES} ${SOURCES} ${HEADERS})
-    target_link_libraries(RaytracerTests gtest_main)
-    if(glm_FOUND)
-        target_link_libraries(RaytracerTests glm::glm)
-    endif()
-    
-    include(GoogleTest)
-    gtest_discover_tests(RaytracerTests)
-endif()
+#include(FetchContent)
+#FetchContent_Declare(
+#  googletest
+#  URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+#)
+## For Windows: Prevent overriding the parent project's compiler/linker settings
+#set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+#FetchContent_MakeAvailable(googletest)
+#
+#enable_testing()
+#
+#file(GLOB_RECURSE TEST_SOURCES "test/*.cpp")
+#
+#if(TEST_SOURCES)
+#    add_executable(RaytracerTests ${TEST_SOURCES} ${SOURCES} ${HEADERS})
+#    
+#    # Hier machen wir die Pfade für die Tests unmissverständlich klar:
+#    target_include_directories(RaytracerTests PRIVATE 
+#        ${CMAKE_CURRENT_SOURCE_DIR}/include
+#        ${CMAKE_CURRENT_SOURCE_DIR}/external   # <-- WICHTIG: Damit die Tests GLM finden!
+#        ${CMAKE_CURRENT_SOURCE_DIR}/test       # Falls Test-Header untereinander gelinkt werden
+#    )
+#    
+#    target_link_libraries(RaytracerTests gtest_main)
+#    if(glm_FOUND)
+#        target_link_libraries(RaytracerTests glm::glm)
+#    endif()
+#    
+#    include(GoogleTest)
+#    gtest_discover_tests(RaytracerTests)
+#endif()

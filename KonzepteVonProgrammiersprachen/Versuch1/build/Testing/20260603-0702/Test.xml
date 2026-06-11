@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Site BuildName="(empty)"
+	BuildStamp="20260603-0702-Experimental"
+	Name="(empty)"
+	Generator="ctest-3.31.2"
+	CompilerName=""
+	CompilerVersion=""
+	OSName="Windows"
+	Hostname="DESKTOP-8I30UO3"
+	OSRelease=" Personal"
+	OSVersion=" (Build 26200)"
+	OSPlatform="AMD64"
+	Is64Bits="1"
+	VendorString=""
+	VendorID="Unknown Manufacturer"
+	FamilyID="0"
+	ModelID="0"
+	ModelName=""
+	ProcessorCacheSize="0"
+	NumberOfLogicalCPU="16"
+	NumberOfPhysicalCPU="8"
+	TotalVirtualMemory="37029"
+	TotalPhysicalMemory="31909"
+	LogicalProcessorsPerPhysical="2"
+	ProcessorClockFrequency="1996"
+	>
+	<Testing>
+		<StartDateTime>Jun 03 09:12 Mitteleurop[NON-UTF-8-BYTE-0xE4]ische Sommerzeit</StartDateTime>
+		<StartTestTime>1780470759</StartTestTime>
+		<TestList/>
+		<EndDateTime>Jun 03 09:12 Mitteleurop[NON-UTF-8-BYTE-0xE4]ische Sommerzeit</EndDateTime>
+		<EndTestTime>1780470759</EndTestTime>
+		<ElapsedMinutes>0</ElapsedMinutes>
+	</Testing>
+</Site>
