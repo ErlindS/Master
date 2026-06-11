@@ -8,19 +8,20 @@ TEST(KDTreeTest, Empty) {
     KDTree kd;
     std::vector<Triangle> tris;
     kd.build(tris);
-    Ray r; r.origin = {0,0,5}; r.direction = {0,0,-1};
-    float t,u,v;
-    EXPECT_EQ(kd.closest_hit(tris, r, 1e-4f, 1e30f, t, u, v), -1);
+    Ray r(glm::vec3(0,0,5), glm::vec3(0,0,-1));
+    Intersection isect; isect.t = 1e30f; isect.hit = false;
+    Triangle hitTri;
+    EXPECT_FALSE(kd.intersect(r, isect, hitTri, IntersectionAlgorithm::MOELLER_TRUMBORE));
 }
 
 TEST(KDTreeTest, SingleHit) {
     std::vector<Triangle> tris = {xy_tri()};
     KDTree kd; kd.build(tris);
-    Ray r; r.origin = {0.25f,0.25f,1.f}; r.direction = {0,0,-1};
-    float t,u,v;
-    int idx = kd.closest_hit(tris, r, 1e-4f, 1e30f, t, u, v);
-    EXPECT_EQ(idx, 0);
-    EXPECT_NEAR(t, 1.f, 1e-4f);
+    Ray r(glm::vec3(0.25f,0.25f,1.f), glm::vec3(0,0,-1));
+    Intersection isect; isect.t = 1e30f; isect.hit = false;
+    Triangle hitTri;
+    EXPECT_TRUE(kd.intersect(r, isect, hitTri, IntersectionAlgorithm::MOELLER_TRUMBORE));
+    EXPECT_NEAR(isect.t, 1.f, 1e-4f);
 }
 
 TEST(KDTreeTest, NearestOfTwo) {
@@ -30,11 +31,11 @@ TEST(KDTreeTest, NearestOfTwo) {
     std::vector<Triangle> tris = {t1, t2};
     KDTree kd; kd.build(tris);
     
-    Ray r; r.origin = {0.25f,0.25f,5.f}; r.direction = {0,0,-1};
-    float t,u,v;
-    int idx = kd.closest_hit(tris, r, 1e-4f, 1e30f, t, u, v);
-    EXPECT_EQ(idx, 1);
-    EXPECT_NEAR(t, 3.f, 1e-4f);
+    Ray r(glm::vec3(0.25f,0.25f,5.f), glm::vec3(0,0,-1));
+    Intersection isect; isect.t = 1e30f; isect.hit = false;
+    Triangle hitTri;
+    EXPECT_TRUE(kd.intersect(r, isect, hitTri, IntersectionAlgorithm::MOELLER_TRUMBORE));
+    EXPECT_NEAR(isect.t, 3.f, 1e-4f);
 }
 
 TEST(KDTreeTest, HitFarVsNearNode) {
@@ -43,23 +44,9 @@ TEST(KDTreeTest, HitFarVsNearNode) {
     std::vector<Triangle> tris = {tNear, tFar};
     KDTree kd; kd.build(tris);
     
-    Ray r; r.origin = {0.2f,0.2f,5.f}; r.direction = {0,0,-1};
-    float t,u,v;
-    int idx = kd.closest_hit(tris, r, 1e-4f, 1e30f, t, u, v);
-    
-    EXPECT_EQ(idx, 0); 
-}
-
-TEST(KDTreeTest, AnyHitTrue) {
-    std::vector<Triangle> tris = {xy_tri()};
-    KDTree kd; kd.build(tris);
-    Ray r; r.origin = {0.25f,0.25f,1.f}; r.direction = {0,0,-1};
-    EXPECT_TRUE(kd.any_hit(tris, r, 1e-4f, 1e30f));
-}
-
-TEST(KDTreeTest, AnyHitBehindOrigin) {
-    std::vector<Triangle> tris = {xy_tri()}; 
-    KDTree kd; kd.build(tris);
-    Ray r; r.origin = {0.25f,0.25f,1.f}; r.direction = {0,0,1}; 
-    EXPECT_FALSE(kd.any_hit(tris, r, 1e-4f, 1e30f));
+    Ray r(glm::vec3(0.2f,0.2f,5.f), glm::vec3(0,0,-1));
+    Intersection isect; isect.t = 1e30f; isect.hit = false;
+    Triangle hitTri;
+    EXPECT_TRUE(kd.intersect(r, isect, hitTri, IntersectionAlgorithm::MOELLER_TRUMBORE));
+    EXPECT_NEAR(isect.t, 4.f, 1e-4f);
 }

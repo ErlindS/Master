@@ -1,29 +1,32 @@
 #include <gtest/gtest.h>
-#include "triangle.h"
+#include "mesh.h"
+#include "intersector.h"
 #include "ray.h"
 #include "test_helpers.h"
 
 TEST(TriangleTest, MTHit) {
     Triangle tri = xy_tri();
-    Ray r; r.origin = {0.25f,0.25f,1.f}; r.direction = {0,0,-1};
-    float u, v, t = tri.intersect(r, 0, 10, u, v);
-    EXPECT_NEAR(t,  1.f,   1e-5f);
-    EXPECT_NEAR(u,  0.25f, 1e-5f);
-    EXPECT_NEAR(v,  0.25f, 1e-5f);
+    Ray r(glm::vec3(0.25f,0.25f,1.f), glm::vec3(0,0,-1));
+    Intersection isect = Intersector::intersectRayTriangle(r, tri.v0, tri.v1, tri.v2);
+    EXPECT_TRUE(isect.hit);
+    EXPECT_NEAR(isect.t,  1.f,   1e-5f);
+    EXPECT_NEAR(isect.u,  0.25f, 1e-5f);
+    EXPECT_NEAR(isect.v,  0.25f, 1e-5f);
 }
 
 TEST(TriangleTest, MTMissOutside) {
     Triangle tri = xy_tri();
-    Ray r; r.origin = {0.8f,0.8f,1.f}; r.direction = {0,0,-1};
-    float u,v; float t = tri.intersect(r, 0, 10, u, v);
-    EXPECT_TRUE(t < 0);
+    Ray r(glm::vec3(0.8f,0.8f,1.f), glm::vec3(0,0,-1));
+    Intersection isect = Intersector::intersectRayTriangle(r, tri.v0, tri.v1, tri.v2);
+    EXPECT_FALSE(isect.hit);
 }
 
 TEST(TriangleTest, MTBackfaceHit) {
     Triangle tri = xy_tri();
-    Ray r; r.origin = {0.25f,0.25f,-1.f}; r.direction = {0,0,1};
-    float u,v; float t = tri.intersect(r, 0, 10, u, v);
-    EXPECT_NEAR(t,  1.f,   1e-5f);
+    Ray r(glm::vec3(0.25f,0.25f,-1.f), glm::vec3(0,0,1));
+    Intersection isect = Intersector::intersectRayTriangle(r, tri.v0, tri.v1, tri.v2);
+    EXPECT_TRUE(isect.hit);
+    EXPECT_NEAR(isect.t,  1.f,   1e-5f);
 }
 
 TEST(TriangleTest, BadouelAgreesWithMT) {
@@ -33,15 +36,14 @@ TEST(TriangleTest, BadouelAgreesWithMT) {
         {2.0f, 0.f,  1.f}, 
     };
     for (auto& c : cases) {
-        Ray r; r.origin = {c.ox,c.oy,c.oz}; r.direction = {0,0,-1};
-        float u1,v1,u2,v2;
-        float t1 = tri.intersect(r, 0, 100, u1, v1);
-        float t2 = tri.intersect_naive(r, 0, 100, u2, v2);
-        EXPECT_EQ((t1 > 0), (t2 > 0));
-        if (t1 > 0 && t2 > 0) {
-            EXPECT_NEAR(t1, t2, 1e-4f);
-            EXPECT_NEAR(u1, u2, 1e-4f);
-            EXPECT_NEAR(v1, v2, 1e-4f);
+        Ray r(glm::vec3(c.ox,c.oy,c.oz), glm::vec3(0,0,-1));
+        Intersection isect1 = Intersector::intersectRayTriangle(r, tri.v0, tri.v1, tri.v2);
+        Intersection isect2 = Intersector::intersectRayTriangleBadouel(r, tri.v0, tri.v1, tri.v2);
+        EXPECT_EQ(isect1.hit, isect2.hit);
+        if (isect1.hit && isect2.hit) {
+            EXPECT_NEAR(isect1.t, isect2.t, 1e-4f);
+            EXPECT_NEAR(isect1.u, isect2.u, 1e-4f);
+            EXPECT_NEAR(isect1.v, isect2.v, 1e-4f);
         }
     }
 }

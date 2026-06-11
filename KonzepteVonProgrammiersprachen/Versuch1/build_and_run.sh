@@ -135,10 +135,31 @@ run_raytracer() {
     echo ""
     print_success "${mode}-Modus abgeschlossen."
 
-    # PPM-Ausgabe prüfen
+    # PPM-Ausgabe prüfen und zu PNG konvertieren
     if [ -f "output.ppm" ]; then
         local filesize=$(du -h output.ppm | cut -f1)
         print_info "Ausgabedatei: output.ppm (${filesize})"
+        
+        # Konvertierung zu PNG
+        if command -v magick &> /dev/null; then
+            print_info "Konvertiere output.ppm zu output.png (mit magick)..."
+            magick output.ppm output.png
+            print_success "Erfolgreich konvertiert: output.png"
+        elif command -v convert &> /dev/null; then
+            print_info "Konvertiere output.ppm zu output.png (mit convert)..."
+            convert output.ppm output.png
+            print_success "Erfolgreich konvertiert: output.png"
+        elif command -v ffmpeg &> /dev/null; then
+            print_info "Konvertiere output.ppm zu output.png (mit ffmpeg)..."
+            ffmpeg -y -v quiet -i output.ppm output.png
+            print_success "Erfolgreich konvertiert: output.png"
+        elif command -v pnmtopng &> /dev/null; then
+            print_info "Konvertiere output.ppm zu output.png (mit pnmtopng)..."
+            pnmtopng output.ppm > output.png
+            print_success "Erfolgreich konvertiert: output.png"
+        else
+            print_info "Weder ImageMagick, ffmpeg noch netpbm gefunden. Überspringe die Konvertierung zu PNG."
+        fi
     fi
 
     cd "${PROJECT_DIR}"

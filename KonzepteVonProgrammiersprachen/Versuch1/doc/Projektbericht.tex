@@ -289,7 +289,24 @@ Trotz des Einsatzes des performanteren Algorithmus bleibt die absolute Renderzei
 \section{Aufgabe 2: Beschleunigungsdatenstruktur}
 % =============================================================================
 
-\textit{Dieser Abschnitt wird nach Implementierung des k-d-Baums mit Slab-Test und Median-Unter\-teilung ergänzt.}
+% -----------------------------------------------------------------------------
+\subsection{Struktur und Aufbau des k-d-Baums}
+% -----------------------------------------------------------------------------
+
+Um die ineffiziente Brute-Force-Suche abzulösen, wurde als Beschleunigungsdatenstruktur ein k-d-Baum (\textit{k-dimensional tree}) implementiert. Dieser hierarchische Raumunterteilungsbaum partitioniert die 3D-Szene rekursiv in achsenparallele Teilräume (Bounding Boxes). 
+
+Der Aufbau des Baums erfolgt \textit{Top-Down}. In jedem Rekursionsschritt wird zunächst eine Axis-Aligned Bounding Box (AABB) berechnet, die alle Dreiecke des aktuellen Knotens umschließt. Anschließend wird die längste Achse dieser Bounding Box als Trennachse bestimmt. Die Dreiecke werden entlang dieser Achse basierend auf ihren Schwerpunkten (Centroids) aufsteigend sortiert. 
+Die Unterteilung erfolgt strikt am \textbf{Median}, das heißt, die sortierte Liste wird exakt in zwei gleich große Hälften geteilt, was zu einem gut balancierten Baum führt. Die Rekursion bricht ab, sobald ein Knoten weniger als drei Dreiecke enthält oder die maximale Baumtiefe von 20 erreicht ist. Dieser Knoten wird dann als Blattknoten markiert und referenziert die zugehörigen Dreiecke aus dem umgeschichteten Speicher-Array.
+
+% -----------------------------------------------------------------------------
+\subsection{Traversierung und Slab-Test}
+% -----------------------------------------------------------------------------
+
+Während des Renderns wird der Baum durchquert, um den nächstgelegenen Schnittpunkt eines Strahls mit der Szenengeometrie zu finden. Anstatt jedes Dreieck einzeln zu testen, wird an jedem Knoten ein \textbf{Slab-Test} gegen dessen AABB durchgeführt. Der Slab-Test ist sehr effizient umgesetzt und nutzt den vorausberechneten Kehrwert der Strahlrichtung (\texttt{invDirection}), wodurch teure Fließkommadivisionen in der Schleife entfallen.
+
+Verfehlt der Strahl die Bounding Box eines Knotens, können alle darunterliegenden Dreiecke sowie Unterbäume komplett übersprungen werden. Ein weiterer entscheidender Optimierungsfaktor in der Implementierung ist die dynamische Begrenzung des Slab-Tests: Als maximal zulässige Distanz (\texttt{tMax}) wird die Distanz des bisher nächstgelegenen Treffers (\texttt{closestIsect.t}) übergeben. Liegt die Bounding Box eines Knotens weiter entfernt als ein bereits bestätigter Treffer, schlägt der Slab-Test sofort fehl.
+
+Erreicht die Traversierung einen Blattknoten, werden die enthaltenen Dreiecke mittels Möller-Trumbore-Algorithmus (oder Badouel) auf Schnittpunkte geprüft. Durch die Reduzierung der Komplexität von $\mathcal{O}(n)$ auf den durchschnittlichen Fall von $\mathcal{O}(\log n)$ verringert sich die Anzahl der zwingend notwendigen Strahl-Dreieck-Tests erheblich. Die Renderzeit der 18\,032 Dreiecke fassenden Teekannen-Szene sinkt durch den Einsatz des k-d-Baums drastisch.
 
 % =============================================================================
 \section{Aufgabe 3: AVX-Optimierung mit Packet Tracing}
@@ -311,7 +328,7 @@ Trotz des Einsatzes des performanteren Algorithmus bleibt die absolute Renderzei
         \midrule
         Aufgabe 1: Brute-Force (Badouel) & 394279 & {1,0\times} \\
         Aufgabe 1: Brute-Force (M.-T.)   & 262182 & {1,50\times} \\
-        Aufgabe 2: k-d-Baum              & {--}   & {--} \\
+        Aufgabe 2: k-d-Baum              & 2222   & {177,4\times} \\
         Aufgabe 3: AVX Packet Tracing    & {--}   & {--} \\
         \bottomrule
     \end{tabular}
