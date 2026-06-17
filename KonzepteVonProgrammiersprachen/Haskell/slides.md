@@ -15,7 +15,7 @@ transition: slide-left
 
 # Bindings in Haskell
 
-Focusing on the where clause
+Focusing on the `where` clause
 
 <div @click="$slidev.nav.next"> </div>
 
@@ -156,7 +156,6 @@ Because `let` is an expression, we must repeat `let y = x * 2` for every single 
 
 </div>
 
-
 ---
 transition: slide-up
 layout: two-cols
@@ -173,8 +172,8 @@ f x
   | x > 3     = y - 1
   | otherwise = y
   where 
-    y = x * z
-      where z = y + 1
+    y = z + z
+      where z = x * x
 
 main = print (f 3)
 ```
@@ -191,8 +190,8 @@ main = print (f 3)
 f x = 
   -- Ein einziger let-Block,
   -- y und z sehen sich gegenseitig
-  let y = x * z
-      z = y + 1
+  let y = z + z
+      z = x * x
       
   in if x < 3 
      then y + 1
@@ -215,24 +214,116 @@ We lose the clean, top-down structure of guards and have to use a nested `if-the
 ---
 transition: slide-up
 layout: two-cols
+layoutClass: gap-4
+---
+
+# The Illusion of `where`
+
+What we write (Syntactic Sugar):
+
+```haskell
+f :: Int -> Int
+f x = y + y + 1  
+  where y = x * 2
+```
+
+<div v-click class="mt-8 p-4 bg-yellow-100 dark:bg-yellow-900 rounded-lg shadow-md border-l-4 border-yellow-500 text-sm">
+
+**The Revelation:** <br>
+The `where` clause doesn't actually exist at the machine level! The Glasgow Haskell Compiler (GHC) completely strips it away.
+
+</div>
+
+::right::
+
+<div v-click>
+
+# <br>
+
+What the compiler sees (GHC Core):
+
+```haskell
+-- 'where' is translated to a strict 'let'
+f = \ x_awu ->
+      let { y_awv = * $fNumInt x_awu (I# 2#) } in
+      + $fNumInt (+ $fNumInt y_awv y_awv) (I# 1#)
+```
+
+</div>
+
+<div v-click class="mt-4 text-sm">
+
+- **No `where`:** It is replaced by an explicit `let ... in` expression.
+- **Prefix Notation:** Math becomes prefix (`+ y 1` instead of `y + 1`).
+- **Lambdas:** The function arguments are translated into an anonymous lambda `\ x ->`.
+
+</div>
+
+---
+transition: slide-up
+layout: two-cols
+layoutClass: gap-2
+---
+
+# Compiling Nested `where`
+
+A complex example with guards and nested `where`s:
+
+```haskell
+f5 :: Int -> Int
+f5 x 
+  | x < 3     = y + y + 1
+  | x > 3     = y - 1
+  | otherwise = y
+  where 
+    y = z + z  
+      where z = x * x
+```
+
+::right::
+
+<div v-click>
+
+# <br>
+
+**The Compiled Output (GHC Core):**
+*(Click to animate through the translation)*
+
+```haskell {all|2-5|6-13|all}
+f5 = \ x_azb ->
+      let {
+        y_azc
+          = let { z_azd = * $fNumInt x_azb x_azb } in
+            + $fNumInt z_azd z_azd } in
+      case < $fOrdInt x_azb (I# 3#) of {
+        False ->
+          case > $fOrdInt x_azb (I# 3#) of {
+            False -> y_azc;
+            True -> - $fNumInt y_azc (I# 1#)
+          };
+        True -> + $fNumInt (+ $fNumInt y_azc y_azc) (I# 1#)
+      }
+```
+
+</div>
+
+---
+transition: slide-up
+layout: two-cols
 layoutClass: gap-8
 ---
 
 # Advantages of `where`
 
-- **High readability:** 
-  The main result is at the very top. When someone reads the function, they immediately see the “what” and can look at the “how” in the `where` section if needed.
-- **Sharing via guards:** 
-  This is the superpower of `where`. A variable defined in the `where` block can be used across multiple pattern-matching guards (`|`) without duplicating the code.
+- **High readability:** The main result is at the very top. When someone reads the function, they immediately see the “what” and can look at the “how” in the `where` section if needed.
+- **Sharing via guards:** This is the superpower of `where`. A variable defined in the `where` block can be used across multiple pattern-matching guards (`|`) without duplicating the code.
 
 ::right::
 
 # Disadvantages of `where`
 
-- **Not an expression:** 
-  Since `where` is not an expression, you cannot use it spontaneously “inline” in the middle of another calculation or in a lambda expression.
-- **Lack of clarity in very long functions:** 
-  If the `where` clause is at the very end of a long function, the definition is spatially far removed from its usage.
+- **Not an expression:** Since `where` is not an expression, you cannot use it spontaneously “inline” in the middle of another calculation or in a lambda expression.
+- **Lack of clarity in very long functions:** If the `where` clause is at the very end of a long function, the definition is spatially far removed from its usage.
 
 ---
 transition: slide-up
