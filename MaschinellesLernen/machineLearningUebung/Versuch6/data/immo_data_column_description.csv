@@ -1,0 +1,50 @@
+Column Name,Description
+regio1,Bundesland
+serviceCharge,aucilliary costs such as electricty or internet in €
+heatingType,Type of heating
+telekomTvOffer,Is payed TV included if so which offer
+telekomHybridUploadSpeed,how fast is the hybrid inter upload speed
+newlyConst,is the building newly constructed
+balcony,does the object have a balcony
+picturecount,how many pictures were uploaded to the listing
+pricetrend,price trend as calculated by Immoscout
+telekomUploadSpeed,how fast is the internet upload speed
+totalRent,"total rent (usually a sum of base rent, service charge and heating cost)"
+yearConstructed,construction year
+scoutId,immoscout Id
+noParkSpaces,number of parking spaces
+firingTypes,"main energy sources, separated by colon"
+hasKitchen,has a kitchen
+geo_bln,"bundesland (state), same as regio1"
+cellar,has a cellar
+yearConstructedRange,"binned construction year, 1 to 9"
+baseRent,base rent without electricity and heating
+houseNumber,house number
+livingSpace,living space in sqm
+geo_krs,"district, above ZIP code"
+condition,condition of the flat
+interiorQual,interior quality
+petsAllowed,"are pets allowed, can be yes, no or negotiable"
+street,street name
+streetPlain,"street name (plain, different formating)"
+lift,is elevator available
+baseRentRange,"binned base rent, 1 to 9"
+typeOfFlat,type of flat
+geo_plz,ZIP code
+noRooms,number of rooms
+thermalChar,"energy need in kWh/(m^2a), defines the energy efficiency class"
+floor,which floor is the flat on
+numberOfFloors,number of floors in the building
+noRoomsRange,"binned number of rooms, 1 to 5"
+garden,has a garden
+livingSpaceRange,"binned living space, 1 to 7"
+regio2,"District or Kreis, same as geo krs"
+regio3,City/town
+description,free text description of the object
+facilities,free text description about available facilities
+heatingCosts,monthly heating costs in €
+energyEfficiencyClass,"energy efficiency class (based on binned thermalChar, deprecated since Feb 2020)"
+lastRefurbish,year of last renovation
+electricityBasePrice,monthly base price for electricity in € (deprecated since Feb 2020)
+electricityKwhPrice,electricity price per kwh (deprecated since Feb 2020)
+date,time of scraping
