@@ -122,6 +122,7 @@ Intersection Intersector::intersectRayTriangleBadouel(
     return result;
 }
 
+// Vektorisierte Version von Möller-Trumbore (simultaner Test für ein ganzes Strahlen-Paket)
 IntersectionPacket Intersector::intersectPacketTriangle(
     const RayPacket& ray,
     const glm::vec3& v0,
@@ -132,19 +133,21 @@ IntersectionPacket Intersector::intersectPacketTriangle(
     IntersectionPacket result;
     result.hit = maskv(false);
 
+    // Früher Abbruch, falls alle Strahlen im Paket bereits inaktiv sind (z.B. verfehlt Bounding Box)
     if (stdx::none_of(active_mask)) return result;
 
     glm::vec3 edge1 = v1 - v0;
     glm::vec3 edge2 = v2 - v0;
 
-    // h = cross(ray.direction, edge2)
+    // Kreuzprodukt (Strahlrichtung x Kante2) für alle Strahlen simultan
     floatv hx = ray.dy * floatv(edge2.z) - ray.dz * floatv(edge2.y);
     floatv hy = ray.dz * floatv(edge2.x) - ray.dx * floatv(edge2.z);
     floatv hz = ray.dx * floatv(edge2.y) - ray.dy * floatv(edge2.x);
 
-    // a = dot(edge1, h)
+    // Skalarprodukt a = dot(edge1, h)
     floatv a = floatv(edge1.x) * hx + floatv(edge1.y) * hy + floatv(edge1.z) * hz;
 
+    // Strahlen ignorieren, die parallel zum Dreieck verlaufen
     const float EPSILON = 0.0000001f;
     maskv valid_a = (a <= -EPSILON) || (a >= EPSILON);
     maskv mask = active_mask && valid_a;
@@ -153,33 +156,37 @@ IntersectionPacket Intersector::intersectPacketTriangle(
 
     floatv f = 1.0f / a;
     
-    // s = ray.origin - v0
+    // Vektor vom Ursprung des Strahls zum Eckpunkt v0
     floatv sx = ray.ox - floatv(v0.x);
     floatv sy = ray.oy - floatv(v0.y);
     floatv sz = ray.oz - floatv(v0.z);
 
-    // u = f * dot(s, h)
+    // Baryzentrische Koordinate u berechnen
     floatv u = f * (sx * hx + sy * hy + sz * hz);
     
+    // Maske aktualisieren (u muss zwischen 0.0 und 1.0 liegen)
     mask = mask && (u >= 0.0f) && (u <= 1.0f);
     if (stdx::none_of(mask)) return result;
 
-    // q = cross(s, edge1)
+    // Kreuzprodukt q = cross(s, edge1)
     floatv qx = sy * floatv(edge1.z) - sz * floatv(edge1.y);
     floatv qy = sz * floatv(edge1.x) - sx * floatv(edge1.z);
     floatv qz = sx * floatv(edge1.y) - sy * floatv(edge1.x);
 
-    // v = f * dot(ray.direction, q)
+    // Baryzentrische Koordinate v berechnen
     floatv v = f * (ray.dx * qx + ray.dy * qy + ray.dz * qz);
 
+    // Maske aktualisieren (v muss positiv sein und u + v <= 1.0)
     mask = mask && (v >= 0.0f) && (u + v <= 1.0f);
     if (stdx::none_of(mask)) return result;
 
-    // t = f * dot(edge2, q)
+    // Distanz t berechnen
     floatv t = f * (floatv(edge2.x) * qx + floatv(edge2.y) * qy + floatv(edge2.z) * qz);
 
+    // Maske aktualisieren (Strahl darf nicht in die entgegengesetzte Richtung zeigen)
     mask = mask && (t > EPSILON);
 
+    // Ergebnisse für die aktiven und erfolgreichen Strahlen eintragen
     result.hit = mask;
     result.t = t;
     result.u = u;

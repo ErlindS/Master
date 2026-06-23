@@ -271,6 +271,7 @@ void Renderer::renderSIMD(const Mesh& scene, const Camera& cam, const Light& lig
                     floatv normZ(nz, stdx::element_aligned);
 
                     // Lichtrichtung berechnen (SIMD)
+                    // Wir rechnen die Differenz zwischen Lichtposition und Auftreffpunkten für 8 Strahlen gleichzeitig
                     floatv lx = light.position.x - hitX;
                     floatv ly = light.position.y - hitY;
                     floatv lz = light.position.z - hitZ;
@@ -280,6 +281,7 @@ void Renderer::renderSIMD(const Mesh& scene, const Camera& cam, const Light& lig
                     lz /= distToLight;
 
                     // Schattenstrahlen-Paket generieren
+                    // Um Fehler (Shadow Acne) zu vermeiden, versetzen wir den Startpunkt leicht entlang der Normale
                     RayPacket shadowPacket;
                     shadowPacket.ox = hitX + normX * 0.001f;
                     shadowPacket.oy = hitY + normY * 0.001f;
@@ -287,52 +289,59 @@ void Renderer::renderSIMD(const Mesh& scene, const Camera& cam, const Light& lig
                     shadowPacket.dx = lx;
                     shadowPacket.dy = ly;
                     shadowPacket.dz = lz;
+                    // Invertierte Richtungen für den Bounding-Box Slab-Test der Schattenstrahlen vorbereiten
                     shadowPacket.invDx = 1.0f / lx;
                     shadowPacket.invDy = 1.0f / ly;
                     shadowPacket.invDz = 1.0f / lz;
 
+                    // Schattenstrahlen-Paket als Ganzes (SIMD) durch den KD-Baum schießen
                     IntersectionPacket shadowIsect;
                     if (useAcceleration && scene.kdtree) {
                         scene.kdtree->intersectPacket(shadowPacket, validHit, shadowIsect, algorithm);
                     }
 
-                    // Maske für Pixel im Schatten
+                    // Maske für Pixel im Schatten (nur Treffer zählen, die näher als die Lichtquelle liegen)
                     maskv inShadow = shadowIsect.hit && (shadowIsect.t < distToLight);
                     maskv lit = validHit && !inShadow;
 
+                    // Lambert'sches Cosinus-Gesetz (Skalarprodukt aus Normale und Lichtrichtung, Max mit 0.0)
                     floatv diff = stdx::max(floatv(0.0f), normX * lx + normY * ly + normZ * lz);
                     
                     floatv colorR(cr, stdx::element_aligned);
                     floatv colorG(cg, stdx::element_aligned);
                     floatv colorB(cb, stdx::element_aligned);
                     
-                    // Ambiente Beleuchtung
+                    // Ambiente Beleuchtung (15% der Grundfarbe)
                     floatv finalR = colorR * 0.15f;
                     floatv finalG = colorG * 0.15f;
                     floatv finalB = colorB * 0.15f;
 
-                    // Diffuse Beleuchtung
+                    // Diffuse Beleuchtung (nur auf Pixel anwenden, die nicht im Schatten liegen)
                     maskv applyDiff = lit && (diff > 0.0f);
                     stdx::where(applyDiff, finalR) += colorR * diff;
                     stdx::where(applyDiff, finalG) += colorG * diff;
                     stdx::where(applyDiff, finalB) += colorB * diff;
 
-                    // Spekulare Beleuchtung
+                    // Spekulare Beleuchtung (Blinn-Phong)
                     floatv specExp(se, stdx::element_aligned);
                     maskv applySpec = applyDiff && (specExp > 0.0f);
+                    // Überspringen, falls kein Strahl im Paket spekulares Licht empfängt
                     if (stdx::any_of(applySpec)) {
+                        // Vektor zum Auge / Kamera
                         floatv vx = rayPacket.ox - hitX;
                         floatv vy = rayPacket.oy - hitY;
                         floatv vz = rayPacket.oz - hitZ;
                         floatv vLen = stdx::sqrt(vx*vx + vy*vy + vz*vz);
                         vx /= vLen; vy /= vLen; vz /= vLen;
 
+                        // Half-Vektor (Lichtrichtung + Blickrichtung)
                         floatv hx_half = lx + vx;
                         floatv hy_half = ly + vy;
                         floatv hz_half = lz + vz;
                         floatv hLen = stdx::sqrt(hx_half*hx_half + hy_half*hy_half + hz_half*hz_half);
                         hx_half /= hLen; hy_half /= hLen; hz_half /= hLen;
 
+                        // Spekularer Winkel und Potenz (alles auf Vektorregistern)
                         floatv specAngle = stdx::max(floatv(0.0f), normX * hx_half + normY * hy_half + normZ * hz_half);
                         floatv specFactor = stdx::pow(specAngle, specExp);
 
