@@ -2,18 +2,18 @@
 #include <algorithm>
 #include <iostream>
 
-void KDTree::build(std::vector<Triangle>& triangles) {
+void KDTree::build(std::vector<Triangle>& triangles, bool useSAH) {
     if (triangles.empty()) return;
     
     // Kopiere Dreiecke in unsere interne Liste, um sie zu sortieren
     m_triangles = triangles;
-    root = buildRecursive(0, m_triangles.size(), 0);
+    root = buildRecursive(0, m_triangles.size(), 0, useSAH);
     
     // Schreibe die sortierten Dreiecke zurück, falls nötig
     triangles = m_triangles;
 }
 
-std::unique_ptr<KDNode> KDTree::buildRecursive(int first, int count, int depth) {
+std::unique_ptr<KDNode> KDTree::buildRecursive(int first, int count, int depth, bool useSAH) {
     auto node = std::make_unique<KDNode>();
     
     // 1. Berechne die Bounding Box für alle Dreiecke in diesem Knoten
@@ -31,34 +31,107 @@ std::unique_ptr<KDNode> KDTree::buildRecursive(int first, int count, int depth) 
         return node;
     }
     
-    // 2. Finde die längste Achse der Bounding Box
-    glm::vec3 extent = node->bounds.max - node->bounds.min;
-    int axis = 0;
-    if (extent.y > extent.x) axis = 1;
-    if (extent.z > extent[axis]) axis = 2;
+    int bestAxis = 0;
+    int bestMid = count / 2;
     
-    // 3. Unterteilung am Median
-    // Wir sortieren die Dreiecke nach dem Schwerpunkt (Centroid) entlang der gewählten Achse
-    std::sort(m_triangles.begin() + first, m_triangles.begin() + first + count,
-              [axis](const Triangle& a, const Triangle& b) {
-                  float centroidA = (a.v0[axis] + a.v1[axis] + a.v2[axis]) / 3.0f;
-                  float centroidB = (b.v0[axis] + b.v1[axis] + b.v2[axis]) / 3.0f;
-                  return centroidA < centroidB;
-              });
-    
-    // Der Median-Split erfolgt genau in der Mitte der Liste
-    int mid = count / 2;
+    if (!useSAH) {
+        // Fallback: Einfacher Median-Split
+        glm::vec3 extent = node->bounds.max - node->bounds.min;
+        if (extent.y > extent.x) bestAxis = 1;
+        if (extent.z > extent[bestAxis]) bestAxis = 2;
+        
+        std::sort(m_triangles.begin() + first, m_triangles.begin() + first + count,
+                  [bestAxis](const Triangle& a, const Triangle& b) {
+                      float centroidA = (a.v0[bestAxis] + a.v1[bestAxis] + a.v2[bestAxis]) / 3.0f;
+                      float centroidB = (b.v0[bestAxis] + b.v1[bestAxis] + b.v2[bestAxis]) / 3.0f;
+                      return centroidA < centroidB;
+                  });
+    } else {
+        // SAH-Split
+        float minCost = std::numeric_limits<float>::max();
+        float totalArea = node->bounds.surfaceArea();
+        
+        // Konstanten für SAH
+        const float C_trav = 1.0f;
+        const float C_isect = 1.5f; // Dreiecksschnitt ist etwas teurer als AABB-Schnitt
+        
+        float leafCost = count * C_isect; // Kosten, wenn dieser Knoten ein Blatt wird
+        
+        // Wir probieren alle 3 Achsen
+        for (int axis = 0; axis < 3; ++axis) {
+            // Sortieren nach Centroid entlang der aktuellen Achse
+            std::sort(m_triangles.begin() + first, m_triangles.begin() + first + count,
+                      [axis](const Triangle& a, const Triangle& b) {
+                          float centroidA = (a.v0[axis] + a.v1[axis] + a.v2[axis]) / 3.0f;
+                          float centroidB = (b.v0[axis] + b.v1[axis] + b.v2[axis]) / 3.0f;
+                          return centroidA < centroidB;
+                      });
+            
+            // Sweep von Links nach Rechts
+            std::vector<float> leftArea(count);
+            AABB leftBox;
+            for (int i = 0; i < count; ++i) {
+                const Triangle& tri = m_triangles[first + i];
+                leftBox.expand(tri.v0);
+                leftBox.expand(tri.v1);
+                leftBox.expand(tri.v2);
+                leftArea[i] = leftBox.surfaceArea();
+            }
+            
+            // Sweep von Rechts nach Links
+            std::vector<float> rightArea(count);
+            AABB rightBox;
+            for (int i = count - 1; i >= 0; --i) {
+                const Triangle& tri = m_triangles[first + i];
+                rightBox.expand(tri.v0);
+                rightBox.expand(tri.v1);
+                rightBox.expand(tri.v2);
+                rightArea[i] = rightBox.surfaceArea();
+            }
+            
+            // Finde den besten Split auf dieser Achse
+            for (int i = 1; i < count; ++i) {
+                // i Elemente links (0 bis i-1), count - i Elemente rechts (i bis count-1)
+                float probLeft = leftArea[i - 1] / totalArea;
+                float probRight = rightArea[i] / totalArea;
+                
+                float cost = C_trav + C_isect * (probLeft * i + probRight * (count - i));
+                
+                if (cost < minCost) {
+                    minCost = cost;
+                    bestAxis = axis;
+                    bestMid = i;
+                }
+            }
+        }
+        
+        // Wenn selbst der beste Split schlechter ist als ein Blattknoten, mache ein Blatt daraus
+        // Optional: Kleine Toleranz einbauen oder strikt nach SAH vorgehen.
+        if (minCost > leafCost) {
+            node->firstTriangleIndex = first;
+            node->triangleCount = count;
+            return node;
+        }
+        
+        // Wir müssen die Dreiecke endgültig nach der besten Achse sortieren
+        std::sort(m_triangles.begin() + first, m_triangles.begin() + first + count,
+                  [bestAxis](const Triangle& a, const Triangle& b) {
+                      float centroidA = (a.v0[bestAxis] + a.v1[bestAxis] + a.v2[bestAxis]) / 3.0f;
+                      float centroidB = (b.v0[bestAxis] + b.v1[bestAxis] + b.v2[bestAxis]) / 3.0f;
+                      return centroidA < centroidB;
+                  });
+    }
     
     // Fallback, falls alle Centroids gleich sind (sehr selten, aber sicher ist sicher)
-    if (mid == 0 || mid == count) {
+    if (bestMid == 0 || bestMid == count) {
         node->firstTriangleIndex = first;
         node->triangleCount = count;
         return node;
     }
     
     // 4. Rekursiver Aufbau der Kinder
-    node->left = buildRecursive(first, mid, depth + 1);
-    node->right = buildRecursive(first + mid, count - mid, depth + 1);
+    node->left = buildRecursive(first, bestMid, depth + 1, useSAH);
+    node->right = buildRecursive(first + bestMid, count - bestMid, depth + 1, useSAH);
     
     return node;
 }

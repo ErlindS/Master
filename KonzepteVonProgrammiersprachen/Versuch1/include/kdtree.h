@@ -31,6 +31,13 @@ struct AABB {
         return (min + max) * 0.5f;
     }
 
+    // Berechnet die Oberfläche der Bounding Box (für SAH)
+    float surfaceArea() const {
+        glm::vec3 extent = max - min;
+        if (extent.x <= 0.0f || extent.y <= 0.0f || extent.z <= 0.0f) return 0.0f;
+        return 2.0f * (extent.x * extent.y + extent.x * extent.z + extent.y * extent.z);
+    }
+
     // Slab-Test: Prüft, ob der Strahl die Box trifft
     // ray.invDirection ist 1.0f / ray.direction (zur Vermeidung von Divisionen)
     bool intersect(const Ray& ray, float& tMin, float& tMax) const {
@@ -63,8 +70,8 @@ struct KDNode {
 // Die Hauptklasse, die den Baum verwaltet
 class KDTree {
 public:
-    // Baut den Baum mittels Median-Split
-    void build(std::vector<Triangle>& triangles);
+    // Baut den Baum mittels SAH oder Median-Split
+    void build(std::vector<Triangle>& triangles, bool useSAH = true);
     
     // Traversiert den Baum und sucht den exakten, nächsten Schnittpunkt
     bool intersect(const Ray& ray, Intersection& closestIsect, Triangle& hitTriangle, IntersectionAlgorithm algorithm) const;
@@ -73,8 +80,8 @@ private:
     std::unique_ptr<KDNode> root;
     std::vector<Triangle> m_triangles; // Interne, umsortierte Liste der Dreiecke
     
-    // Rekursive Hilfsfunktion für den Aufbau (Unterteilung am Median)
-    std::unique_ptr<KDNode> buildRecursive(int first, int count, int depth);
+    // Rekursive Hilfsfunktion für den Aufbau
+    std::unique_ptr<KDNode> buildRecursive(int first, int count, int depth, bool useSAH);
     
     // Rekursive Traversierungsfunktion
     void intersectRecursive(const KDNode* node, const Ray& ray, Intersection& closestIsect, Triangle& hitTriangle, IntersectionAlgorithm algorithm) const;
