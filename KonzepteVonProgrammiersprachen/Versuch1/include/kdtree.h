@@ -6,6 +6,7 @@
 #include "mesh.h"
 #include "ray.h"
 #include "intersector.h"
+#include "packet.h"
 
 // Axis-Aligned Bounding Box für den Slab-Test
 struct AABB {
@@ -52,6 +53,32 @@ struct AABB {
 
         return tMin <= tMax;
     }
+    
+    // Slab-Test für SIMD Packet
+    maskv intersectPacket(const RayPacket& ray, floatv& tMin, floatv& tMax) const {
+        floatv t0x = (floatv(min.x) - ray.ox) * ray.invDx;
+        floatv t1x = (floatv(max.x) - ray.ox) * ray.invDx;
+        
+        floatv t0y = (floatv(min.y) - ray.oy) * ray.invDy;
+        floatv t1y = (floatv(max.y) - ray.oy) * ray.invDy;
+        
+        floatv t0z = (floatv(min.z) - ray.oz) * ray.invDz;
+        floatv t1z = (floatv(max.z) - ray.oz) * ray.invDz;
+
+        floatv tSmallX = stdx::min(t0x, t1x);
+        floatv tBigX   = stdx::max(t0x, t1x);
+        
+        floatv tSmallY = stdx::min(t0y, t1y);
+        floatv tBigY   = stdx::max(t0y, t1y);
+        
+        floatv tSmallZ = stdx::min(t0z, t1z);
+        floatv tBigZ   = stdx::max(t0z, t1z);
+
+        tMin = stdx::max(tMin, stdx::max(tSmallX, stdx::max(tSmallY, tSmallZ)));
+        tMax = stdx::min(tMax, stdx::min(tBigX, stdx::min(tBigY, tBigZ)));
+
+        return tMin <= tMax;
+    }
 };
 
 // Ein Knoten im Baum (kann innerer Knoten oder Blatt sein)
@@ -75,6 +102,9 @@ public:
     
     // Traversiert den Baum und sucht den exakten, nächsten Schnittpunkt
     bool intersect(const Ray& ray, Intersection& closestIsect, Triangle& hitTriangle, IntersectionAlgorithm algorithm) const;
+    
+    // Traversiert den Baum mit einem Strahlenpaket
+    void intersectPacket(const RayPacket& ray, const maskv& active_mask, IntersectionPacket& closestIsect, IntersectionAlgorithm algorithm) const;
 
 private:
     std::unique_ptr<KDNode> root;
@@ -85,4 +115,7 @@ private:
     
     // Rekursive Traversierungsfunktion
     void intersectRecursive(const KDNode* node, const Ray& ray, Intersection& closestIsect, Triangle& hitTriangle, IntersectionAlgorithm algorithm) const;
+    
+    // Rekursive Traversierungsfunktion für Pakete
+    void intersectPacketRecursive(const KDNode* node, const RayPacket& ray, const maskv& active_mask, IntersectionPacket& closestIsect, IntersectionAlgorithm algorithm) const;
 };

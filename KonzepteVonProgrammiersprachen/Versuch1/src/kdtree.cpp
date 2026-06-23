@@ -204,3 +204,51 @@ void KDTree::intersectRecursive(const KDNode* node, const Ray& ray, Intersection
         }
     }
 }
+
+void KDTree::intersectPacket(const RayPacket& ray, const maskv& active_mask, IntersectionPacket& closestIsect, IntersectionAlgorithm algorithm) const {
+    if (root) {
+        intersectPacketRecursive(root.get(), ray, active_mask, closestIsect, algorithm);
+    }
+}
+
+void KDTree::intersectPacketRecursive(const KDNode* node, const RayPacket& ray, const maskv& active_mask, IntersectionPacket& closestIsect, IntersectionAlgorithm algorithm) const {
+    // Slab-Test für die Bounding Box
+    floatv tMin = floatv(0.0f);
+    floatv tMax = closestIsect.t; 
+    maskv hitMask = node->bounds.intersectPacket(ray, tMin, tMax) && active_mask;
+    
+    if (stdx::none_of(hitMask)) {
+        return; // Strahlpaket verfehlt die Bounding Box komplett
+    }
+    
+    if (node->isLeaf()) {
+        // Blattknoten: Teste alle Dreiecke in diesem Knoten
+        for (int i = 0; i < node->triangleCount; ++i) {
+            int triIdx = node->firstTriangleIndex + i;
+            const Triangle& tri = m_triangles[triIdx];
+            
+            IntersectionPacket isect = Intersector::intersectPacketTriangle(ray, tri.v0, tri.v1, tri.v2, hitMask);
+            
+            maskv closerHit = isect.hit && (isect.t < closestIsect.t);
+            if (stdx::any_of(closerHit)) {
+                stdx::where(closerHit, closestIsect.hit) = true;
+                stdx::where(closerHit, closestIsect.t) = isect.t;
+                stdx::where(closerHit, closestIsect.u) = isect.u;
+                stdx::where(closerHit, closestIsect.v) = isect.v;
+                stdx::where(closerHit, closestIsect.triIndex) = floatv((float)triIdx);
+            }
+        }
+    } else {
+        // Beide Kinder testen, wenn sie von irgendeinem Strahl getroffen werden
+        intersectPacketRecursive(node->left.get(), ray, hitMask, closestIsect, algorithm);
+        
+        // Neu evaluieren, da sich closestIsect.t geändert haben könnte
+        floatv tMinR = floatv(0.0f);
+        floatv tMaxR = closestIsect.t;
+        maskv hitMaskR = node->right->bounds.intersectPacket(ray, tMinR, tMaxR) && hitMask;
+        
+        if (stdx::any_of(hitMaskR)) {
+            intersectPacketRecursive(node->right.get(), ray, hitMaskR, closestIsect, algorithm);
+        }
+    }
+}

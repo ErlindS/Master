@@ -121,3 +121,69 @@ Intersection Intersector::intersectRayTriangleBadouel(
     result.v = beta;
     return result;
 }
+
+IntersectionPacket Intersector::intersectPacketTriangle(
+    const RayPacket& ray,
+    const glm::vec3& v0,
+    const glm::vec3& v1,
+    const glm::vec3& v2,
+    const maskv& active_mask)
+{
+    IntersectionPacket result;
+    result.hit = maskv(false);
+
+    if (stdx::none_of(active_mask)) return result;
+
+    glm::vec3 edge1 = v1 - v0;
+    glm::vec3 edge2 = v2 - v0;
+
+    // h = cross(ray.direction, edge2)
+    floatv hx = ray.dy * floatv(edge2.z) - ray.dz * floatv(edge2.y);
+    floatv hy = ray.dz * floatv(edge2.x) - ray.dx * floatv(edge2.z);
+    floatv hz = ray.dx * floatv(edge2.y) - ray.dy * floatv(edge2.x);
+
+    // a = dot(edge1, h)
+    floatv a = floatv(edge1.x) * hx + floatv(edge1.y) * hy + floatv(edge1.z) * hz;
+
+    const float EPSILON = 0.0000001f;
+    maskv valid_a = (a <= -EPSILON) || (a >= EPSILON);
+    maskv mask = active_mask && valid_a;
+
+    if (stdx::none_of(mask)) return result;
+
+    floatv f = 1.0f / a;
+    
+    // s = ray.origin - v0
+    floatv sx = ray.ox - floatv(v0.x);
+    floatv sy = ray.oy - floatv(v0.y);
+    floatv sz = ray.oz - floatv(v0.z);
+
+    // u = f * dot(s, h)
+    floatv u = f * (sx * hx + sy * hy + sz * hz);
+    
+    mask = mask && (u >= 0.0f) && (u <= 1.0f);
+    if (stdx::none_of(mask)) return result;
+
+    // q = cross(s, edge1)
+    floatv qx = sy * floatv(edge1.z) - sz * floatv(edge1.y);
+    floatv qy = sz * floatv(edge1.x) - sx * floatv(edge1.z);
+    floatv qz = sx * floatv(edge1.y) - sy * floatv(edge1.x);
+
+    // v = f * dot(ray.direction, q)
+    floatv v = f * (ray.dx * qx + ray.dy * qy + ray.dz * qz);
+
+    mask = mask && (v >= 0.0f) && (u + v <= 1.0f);
+    if (stdx::none_of(mask)) return result;
+
+    // t = f * dot(edge2, q)
+    floatv t = f * (floatv(edge2.x) * qx + floatv(edge2.y) * qy + floatv(edge2.z) * qz);
+
+    mask = mask && (t > EPSILON);
+
+    result.hit = mask;
+    result.t = t;
+    result.u = u;
+    result.v = v;
+
+    return result;
+}

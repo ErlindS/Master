@@ -1,5 +1,6 @@
 #pragma once
 #include "ray.h"
+#include "packet.h"
 #include <glm/glm.hpp>
 
 // Speichert das Ergebnis eines Schnittpunkttests
@@ -31,4 +32,11 @@ public:
         const glm::vec3& v1, 
         const glm::vec3& v2
     );
+
+    static IntersectionPacket intersectPacketTriangle(
+        const RayPacket& ray,
+        const glm::vec3& v0,
+        const glm::vec3& v1,
+        const glm::vec3& v2,
+        const maskv& active_mask);
 };

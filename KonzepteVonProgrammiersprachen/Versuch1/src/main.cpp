@@ -59,11 +59,22 @@ int main() {
     image_moeller_kd.save("output_moeller_kdtree.ppm");
     std::cout << "Fertig! 'output_moeller_kdtree.ppm' erstellt in " << duration_kd.count() << " ms." << std::endl;
 
-    // 6. Auswertung
-    //std::cout << "\n=== ZUSAMMENFASSUNG DER RENDERZEITEN ===" << std::endl;
-    //std::cout << "Badouel (ohne KD-Baum):         " << duration_b.count() << " ms" << std::endl;
-    //std::cout << "Möller-Trumbore (ohne KD-Baum): " << duration_m.count() << " ms" << std::endl;
+    // 6. Rendern mit SIMD Packet Tracing (MIT KD-Baum)
+    std::cout << "\nStarte Rendern (SIMD Packet-Tracing, MIT KD-Baum)..." << std::endl;
+    Image image_simd(width, height);
+    
+    auto start_simd = std::chrono::high_resolution_clock::now();
+    renderer.renderSIMD(scene.mesh, scene.camera, scene.light, image_simd);
+    auto end_simd = std::chrono::high_resolution_clock::now();
+    auto duration_simd = std::chrono::duration_cast<std::chrono::milliseconds>(end_simd - start_simd);
+    
+    image_simd.save("output_simd_kdtree.ppm");
+    std::cout << "Fertig! 'output_simd_kdtree.ppm' erstellt in " << duration_simd.count() << " ms." << std::endl;
+
+    // 7. Auswertung
+    std::cout << "\n=== ZUSAMMENFASSUNG DER RENDERZEITEN ===" << std::endl;
     std::cout << "Möller-Trumbore (mit KD-Baum):  " << duration_kd.count() << " ms" << std::endl;
+    std::cout << "SIMD Packet Tracing (KD-Baum):  " << duration_simd.count() << " ms" << std::endl;
     
     return 0;
 }

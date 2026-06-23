@@ -14,6 +14,9 @@ public:
 
     // Durchläuft alle Pixel und rendert die Szene
     void render(const Mesh& scene, const Camera& cam, const Light& light, Image& image);
+    
+    // Rendert die Szene mittels SIMD-Vektorisierung (Packet Tracing für Primärstrahlen)
+    void renderSIMD(const Mesh& scene, const Camera& cam, const Light& light, Image& image);
 
 private:
     IntersectionAlgorithm algorithm = IntersectionAlgorithm::MOELLER_TRUMBORE;

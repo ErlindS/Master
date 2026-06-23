@@ -571,13 +571,27 @@ CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o: /home/arch/repo/Master/Konzep
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/vec3.hpp \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/vec4.hpp \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/intersector.h \
+  /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/packet.h \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/ray.h \
   /usr/include/alloca.h \
+  /usr/include/asm-generic/bitsperlong.h \
+  /usr/include/asm-generic/errno-base.h \
+  /usr/include/asm-generic/errno.h \
+  /usr/include/asm-generic/int-ll64.h \
+  /usr/include/asm-generic/posix_types.h \
+  /usr/include/asm-generic/types.h \
+  /usr/include/asm/bitsperlong.h \
+  /usr/include/asm/errno.h \
+  /usr/include/asm/posix_types.h \
+  /usr/include/asm/posix_types_64.h \
+  /usr/include/asm/types.h \
   /usr/include/assert.h \
   /usr/include/bits/atomic_wide_counter.h \
   /usr/include/bits/byteswap.h \
+  /usr/include/bits/cpu-set.h \
   /usr/include/bits/endian.h \
   /usr/include/bits/endianness.h \
+  /usr/include/bits/errno.h \
   /usr/include/bits/floatn-common.h \
   /usr/include/bits/floatn.h \
   /usr/include/bits/flt-eval-method.h \
@@ -587,6 +601,7 @@ CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o: /home/arch/repo/Master/Konzep
   /usr/include/bits/libc-header-start.h \
   /usr/include/bits/libm-simd-decl-stubs.h \
   /usr/include/bits/local_lim.h \
+  /usr/include/bits/locale.h \
   /usr/include/bits/long-double.h \
   /usr/include/bits/math-vector.h \
   /usr/include/bits/mathcalls-helper-functions.h \
@@ -598,105 +613,205 @@ CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o: /home/arch/repo/Master/Konzep
   /usr/include/bits/pthread_stack_min-dynamic.h \
   /usr/include/bits/pthreadtypes-arch.h \
   /usr/include/bits/pthreadtypes.h \
+  /usr/include/bits/sched.h \
   /usr/include/bits/select.h \
+  /usr/include/bits/setjmp.h \
   /usr/include/bits/stdint-intn.h \
   /usr/include/bits/stdint-least.h \
   /usr/include/bits/stdint-uintn.h \
+  /usr/include/bits/stdio.h \
+  /usr/include/bits/stdio_lim.h \
   /usr/include/bits/stdlib-bsearch.h \
   /usr/include/bits/stdlib-float.h \
   /usr/include/bits/struct_mutex.h \
   /usr/include/bits/struct_rwlock.h \
   /usr/include/bits/thread-shared-types.h \
+  /usr/include/bits/time.h \
   /usr/include/bits/time64.h \
   /usr/include/bits/timesize.h \
+  /usr/include/bits/timex.h \
   /usr/include/bits/types.h \
+  /usr/include/bits/types/FILE.h \
+  /usr/include/bits/types/__FILE.h \
+  /usr/include/bits/types/__fpos64_t.h \
+  /usr/include/bits/types/__fpos_t.h \
   /usr/include/bits/types/__locale_t.h \
+  /usr/include/bits/types/__mbstate_t.h \
   /usr/include/bits/types/__sigset_t.h \
   /usr/include/bits/types/clock_t.h \
   /usr/include/bits/types/clockid_t.h \
+  /usr/include/bits/types/cookie_io_functions_t.h \
+  /usr/include/bits/types/error_t.h \
   /usr/include/bits/types/locale_t.h \
+  /usr/include/bits/types/mbstate_t.h \
   /usr/include/bits/types/sigset_t.h \
+  /usr/include/bits/types/struct_FILE.h \
+  /usr/include/bits/types/struct___jmp_buf_tag.h \
+  /usr/include/bits/types/struct_itimerspec.h \
+  /usr/include/bits/types/struct_sched_param.h \
   /usr/include/bits/types/struct_timespec.h \
   /usr/include/bits/types/struct_timeval.h \
+  /usr/include/bits/types/struct_tm.h \
   /usr/include/bits/types/time_t.h \
   /usr/include/bits/types/timer_t.h \
+  /usr/include/bits/types/wint_t.h \
   /usr/include/bits/typesizes.h \
   /usr/include/bits/uintn-identity.h \
   /usr/include/bits/uio_lim.h \
   /usr/include/bits/waitflags.h \
   /usr/include/bits/waitstatus.h \
   /usr/include/bits/wchar.h \
+  /usr/include/bits/wctype-wchar.h \
   /usr/include/bits/wordsize.h \
   /usr/include/bits/xopen_lim.h \
+  /usr/include/c++/16.1.1/algorithm \
   /usr/include/c++/16.1.1/array \
   /usr/include/c++/16.1.1/backward/binders.h \
   /usr/include/c++/16.1.1/bit \
+  /usr/include/c++/16.1.1/bits/algorithmfwd.h \
   /usr/include/c++/16.1.1/bits/alloc_traits.h \
   /usr/include/c++/16.1.1/bits/allocator.h \
+  /usr/include/c++/16.1.1/bits/basic_ios.h \
+  /usr/include/c++/16.1.1/bits/basic_ios.tcc \
+  /usr/include/c++/16.1.1/bits/basic_string.h \
+  /usr/include/c++/16.1.1/bits/basic_string.tcc \
+  /usr/include/c++/16.1.1/bits/char_traits.h \
+  /usr/include/c++/16.1.1/bits/charconv.h \
+  /usr/include/c++/16.1.1/bits/codecvt.h \
   /usr/include/c++/16.1.1/bits/concept_check.h \
   /usr/include/c++/16.1.1/bits/cpp_type_traits.h \
+  /usr/include/c++/16.1.1/bits/cxxabi_forced.h \
+  /usr/include/c++/16.1.1/bits/cxxabi_init_exception.h \
   /usr/include/c++/16.1.1/bits/enable_special_members.h \
   /usr/include/c++/16.1.1/bits/erase_if.h \
   /usr/include/c++/16.1.1/bits/exception.h \
   /usr/include/c++/16.1.1/bits/exception_defines.h \
+  /usr/include/c++/16.1.1/bits/exception_ptr.h \
   /usr/include/c++/16.1.1/bits/functexcept.h \
   /usr/include/c++/16.1.1/bits/functional_hash.h \
   /usr/include/c++/16.1.1/bits/hash_bytes.h \
   /usr/include/c++/16.1.1/bits/hashtable.h \
   /usr/include/c++/16.1.1/bits/hashtable_policy.h \
   /usr/include/c++/16.1.1/bits/invoke.h \
+  /usr/include/c++/16.1.1/bits/ios_base.h \
+  /usr/include/c++/16.1.1/bits/istream.tcc \
+  /usr/include/c++/16.1.1/bits/locale_classes.h \
+  /usr/include/c++/16.1.1/bits/locale_classes.tcc \
+  /usr/include/c++/16.1.1/bits/locale_conv.h \
+  /usr/include/c++/16.1.1/bits/locale_facets.h \
+  /usr/include/c++/16.1.1/bits/locale_facets.tcc \
+  /usr/include/c++/16.1.1/bits/locale_facets_nonio.h \
+  /usr/include/c++/16.1.1/bits/locale_facets_nonio.tcc \
+  /usr/include/c++/16.1.1/bits/localefwd.h \
   /usr/include/c++/16.1.1/bits/memory_resource.h \
   /usr/include/c++/16.1.1/bits/memoryfwd.h \
   /usr/include/c++/16.1.1/bits/move.h \
+  /usr/include/c++/16.1.1/bits/nested_exception.h \
   /usr/include/c++/16.1.1/bits/new_allocator.h \
   /usr/include/c++/16.1.1/bits/new_except.h \
   /usr/include/c++/16.1.1/bits/new_throw.h \
   /usr/include/c++/16.1.1/bits/node_handle.h \
+  /usr/include/c++/16.1.1/bits/ostream.h \
+  /usr/include/c++/16.1.1/bits/ostream.tcc \
+  /usr/include/c++/16.1.1/bits/ostream_insert.h \
+  /usr/include/c++/16.1.1/bits/ostream_print.h \
+  /usr/include/c++/16.1.1/bits/postypes.h \
   /usr/include/c++/16.1.1/bits/predefined_ops.h \
   /usr/include/c++/16.1.1/bits/ptr_traits.h \
+  /usr/include/c++/16.1.1/bits/quoted_string.h \
   /usr/include/c++/16.1.1/bits/range_access.h \
   /usr/include/c++/16.1.1/bits/refwrap.h \
   /usr/include/c++/16.1.1/bits/requires_hosted.h \
   /usr/include/c++/16.1.1/bits/specfun.h \
+  /usr/include/c++/16.1.1/bits/sstream.tcc \
   /usr/include/c++/16.1.1/bits/std_abs.h \
   /usr/include/c++/16.1.1/bits/std_function.h \
+  /usr/include/c++/16.1.1/bits/stdexcept_except.h \
   /usr/include/c++/16.1.1/bits/stdexcept_throw.h \
   /usr/include/c++/16.1.1/bits/stdexcept_throwfwd.h \
+  /usr/include/c++/16.1.1/bits/stl_algo.h \
   /usr/include/c++/16.1.1/bits/stl_algobase.h \
   /usr/include/c++/16.1.1/bits/stl_bvector.h \
   /usr/include/c++/16.1.1/bits/stl_construct.h \
   /usr/include/c++/16.1.1/bits/stl_function.h \
+  /usr/include/c++/16.1.1/bits/stl_heap.h \
   /usr/include/c++/16.1.1/bits/stl_iterator.h \
   /usr/include/c++/16.1.1/bits/stl_iterator_base_funcs.h \
   /usr/include/c++/16.1.1/bits/stl_iterator_base_types.h \
   /usr/include/c++/16.1.1/bits/stl_pair.h \
+  /usr/include/c++/16.1.1/bits/stl_relops.h \
+  /usr/include/c++/16.1.1/bits/stl_tempbuf.h \
   /usr/include/c++/16.1.1/bits/stl_uninitialized.h \
   /usr/include/c++/16.1.1/bits/stl_vector.h \
+  /usr/include/c++/16.1.1/bits/streambuf.tcc \
+  /usr/include/c++/16.1.1/bits/streambuf_iterator.h \
+  /usr/include/c++/16.1.1/bits/string_view.tcc \
+  /usr/include/c++/16.1.1/bits/stringfwd.h \
+  /usr/include/c++/16.1.1/bits/uniform_int_dist.h \
   /usr/include/c++/16.1.1/bits/unordered_map.h \
   /usr/include/c++/16.1.1/bits/uses_allocator.h \
   /usr/include/c++/16.1.1/bits/uses_allocator_args.h \
   /usr/include/c++/16.1.1/bits/utility.h \
   /usr/include/c++/16.1.1/bits/vector.tcc \
   /usr/include/c++/16.1.1/bits/version.h \
+  /usr/include/c++/16.1.1/bitset \
   /usr/include/c++/16.1.1/cassert \
+  /usr/include/c++/16.1.1/cctype \
+  /usr/include/c++/16.1.1/cerrno \
   /usr/include/c++/16.1.1/cfloat \
   /usr/include/c++/16.1.1/climits \
+  /usr/include/c++/16.1.1/clocale \
   /usr/include/c++/16.1.1/cmath \
   /usr/include/c++/16.1.1/compare \
   /usr/include/c++/16.1.1/concepts \
   /usr/include/c++/16.1.1/cstddef \
   /usr/include/c++/16.1.1/cstdint \
+  /usr/include/c++/16.1.1/cstdio \
+  /usr/include/c++/16.1.1/cstdlib \
+  /usr/include/c++/16.1.1/cstring \
+  /usr/include/c++/16.1.1/ctime \
+  /usr/include/c++/16.1.1/cwchar \
+  /usr/include/c++/16.1.1/cwctype \
   /usr/include/c++/16.1.1/debug/assertions.h \
   /usr/include/c++/16.1.1/debug/debug.h \
+  /usr/include/c++/16.1.1/exception \
+  /usr/include/c++/16.1.1/experimental/bits/numeric_traits.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_builtin.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_converter.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_detail.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_fixed_size.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_math.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_scalar.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_x86.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_x86_conversions.h \
+  /usr/include/c++/16.1.1/experimental/simd \
   /usr/include/c++/16.1.1/ext/aligned_buffer.h \
   /usr/include/c++/16.1.1/ext/alloc_traits.h \
+  /usr/include/c++/16.1.1/ext/atomicity.h \
   /usr/include/c++/16.1.1/ext/numeric_traits.h \
+  /usr/include/c++/16.1.1/ext/string_conversions.h \
   /usr/include/c++/16.1.1/ext/type_traits.h \
   /usr/include/c++/16.1.1/functional \
   /usr/include/c++/16.1.1/initializer_list \
+  /usr/include/c++/16.1.1/iomanip \
+  /usr/include/c++/16.1.1/ios \
+  /usr/include/c++/16.1.1/iosfwd \
+  /usr/include/c++/16.1.1/istream \
   /usr/include/c++/16.1.1/limits \
+  /usr/include/c++/16.1.1/locale \
   /usr/include/c++/16.1.1/new \
+  /usr/include/c++/16.1.1/ostream \
+  /usr/include/c++/16.1.1/pstl/execution_defs.h \
+  /usr/include/c++/16.1.1/pstl/glue_algorithm_defs.h \
   /usr/include/c++/16.1.1/pstl/pstl_config.h \
+  /usr/include/c++/16.1.1/sstream \
+  /usr/include/c++/16.1.1/stdexcept \
+  /usr/include/c++/16.1.1/stdlib.h \
+  /usr/include/c++/16.1.1/streambuf \
+  /usr/include/c++/16.1.1/string \
+  /usr/include/c++/16.1.1/string_view \
+  /usr/include/c++/16.1.1/system_error \
   /usr/include/c++/16.1.1/tr1/bessel_function.tcc \
   /usr/include/c++/16.1.1/tr1/beta_function.tcc \
   /usr/include/c++/16.1.1/tr1/ell_integral.tcc \
@@ -713,30 +828,173 @@ CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o: /home/arch/repo/Master/Konzep
   /usr/include/c++/16.1.1/type_traits \
   /usr/include/c++/16.1.1/typeinfo \
   /usr/include/c++/16.1.1/unordered_map \
+  /usr/include/c++/16.1.1/utility \
   /usr/include/c++/16.1.1/vector \
+  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/c++allocator.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/c++config.h \
+  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/c++locale.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/cpu_defines.h \
+  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/ctype_base.h \
+  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/ctype_inline.h \
+  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/error_constants.h \
+  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/gthr-default.h \
+  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/gthr.h \
+  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/messages_members.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/os_defines.h \
+  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/time_members.h \
+  /usr/include/ctype.h \
   /usr/include/endian.h \
+  /usr/include/errno.h \
   /usr/include/features-time64.h \
   /usr/include/features.h \
   /usr/include/gnu/stubs-64.h \
   /usr/include/gnu/stubs.h \
+  /usr/include/libintl.h \
   /usr/include/limits.h \
+  /usr/include/linux/errno.h \
   /usr/include/linux/limits.h \
+  /usr/include/linux/posix_types.h \
+  /usr/include/linux/sched/types.h \
+  /usr/include/linux/stddef.h \
+  /usr/include/linux/types.h \
+  /usr/include/locale.h \
   /usr/include/math.h \
+  /usr/include/pthread.h \
+  /usr/include/sched.h \
   /usr/include/stdc-predef.h \
   /usr/include/stdint.h \
+  /usr/include/stdio.h \
   /usr/include/stdlib.h \
+  /usr/include/string.h \
+  /usr/include/strings.h \
   /usr/include/sys/cdefs.h \
   /usr/include/sys/select.h \
+  /usr/include/sys/single_threaded.h \
   /usr/include/sys/types.h \
+  /usr/include/time.h \
+  /usr/include/wchar.h \
+  /usr/include/wctype.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/adxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/ammintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxavx512intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxbf16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxcomplexintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxfp16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxfp8intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxint8intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxmovrsintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxtf32intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxtileintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2bf16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2convertintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2copyintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2mediaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2minmaxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2satcvtintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx2intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bf16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bf16vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bitalgintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bitalgvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bmmvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bwintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512cdintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512dqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512fintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512fp16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512fp16vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512ifmaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512ifmavlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmi2intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmi2vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmiintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmivlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vlbwintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vldqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vnniintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vnnivlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vp2intersectintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vp2intersectvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vpopcntdqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vpopcntdqvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxifmaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxneconvertintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxvnniint16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxvnniint8intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxvnniintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/bmi2intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/bmiintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/cetintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/cldemoteintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/clflushoptintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/clwbintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/clzerointrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/cmpccxaddintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/emmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/enqcmdintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/f16cintrin.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/float.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/fma4intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/fmaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/fxsrintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/gfniintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/hresetintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/ia32intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/immintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/keylockerintrin.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/limits.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/lwpintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/lzcntintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mm3dnow.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mm_malloc.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/movdirintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/movrsintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mwaitintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mwaitxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/pconfigintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/pkuintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/pmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/popcntintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/prfchiintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/prfchwintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/raointintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/rdseedintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/rtmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/serializeintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sgxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sha512intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/shaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sm3intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sm4intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/smmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/stdarg.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/stddef.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/stdint.h \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/syslimits.h
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/syslimits.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/tbmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/tmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/tsxldtrkintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/uintrintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/usermsrintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/vaesintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/vpclmulqdqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/waitpkgintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/wbnoinvdintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/wmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/x86gprintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/x86intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xopintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsavecintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsaveintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsaveoptintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsavesintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xtestintrin.h
 
 CMakeFiles/RaytracerLab.dir/src/kdtree.cpp.o: /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/kdtree.cpp \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/common.hpp \
@@ -883,6 +1141,7 @@ CMakeFiles/RaytracerLab.dir/src/kdtree.cpp.o: /home/arch/repo/Master/KonzepteVon
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/intersector.h \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/kdtree.h \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/mesh.h \
+  /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/packet.h \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/ray.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
@@ -993,6 +1252,7 @@ CMakeFiles/RaytracerLab.dir/src/kdtree.cpp.o: /home/arch/repo/Master/KonzepteVon
   /usr/include/c++/16.1.1/bits/basic_string.tcc \
   /usr/include/c++/16.1.1/bits/char_traits.h \
   /usr/include/c++/16.1.1/bits/charconv.h \
+  /usr/include/c++/16.1.1/bits/codecvt.h \
   /usr/include/c++/16.1.1/bits/concept_check.h \
   /usr/include/c++/16.1.1/bits/cpp_type_traits.h \
   /usr/include/c++/16.1.1/bits/cxxabi_forced.h \
@@ -1012,8 +1272,11 @@ CMakeFiles/RaytracerLab.dir/src/kdtree.cpp.o: /home/arch/repo/Master/KonzepteVon
   /usr/include/c++/16.1.1/bits/istream.tcc \
   /usr/include/c++/16.1.1/bits/locale_classes.h \
   /usr/include/c++/16.1.1/bits/locale_classes.tcc \
+  /usr/include/c++/16.1.1/bits/locale_conv.h \
   /usr/include/c++/16.1.1/bits/locale_facets.h \
   /usr/include/c++/16.1.1/bits/locale_facets.tcc \
+  /usr/include/c++/16.1.1/bits/locale_facets_nonio.h \
+  /usr/include/c++/16.1.1/bits/locale_facets_nonio.tcc \
   /usr/include/c++/16.1.1/bits/localefwd.h \
   /usr/include/c++/16.1.1/bits/memory_resource.h \
   /usr/include/c++/16.1.1/bits/memoryfwd.h \
@@ -1030,6 +1293,7 @@ CMakeFiles/RaytracerLab.dir/src/kdtree.cpp.o: /home/arch/repo/Master/KonzepteVon
   /usr/include/c++/16.1.1/bits/postypes.h \
   /usr/include/c++/16.1.1/bits/predefined_ops.h \
   /usr/include/c++/16.1.1/bits/ptr_traits.h \
+  /usr/include/c++/16.1.1/bits/quoted_string.h \
   /usr/include/c++/16.1.1/bits/range_access.h \
   /usr/include/c++/16.1.1/bits/refwrap.h \
   /usr/include/c++/16.1.1/bits/requires_hosted.h \
@@ -1037,6 +1301,7 @@ CMakeFiles/RaytracerLab.dir/src/kdtree.cpp.o: /home/arch/repo/Master/KonzepteVon
   /usr/include/c++/16.1.1/bits/shared_ptr_atomic.h \
   /usr/include/c++/16.1.1/bits/shared_ptr_base.h \
   /usr/include/c++/16.1.1/bits/specfun.h \
+  /usr/include/c++/16.1.1/bits/sstream.tcc \
   /usr/include/c++/16.1.1/bits/std_abs.h \
   /usr/include/c++/16.1.1/bits/std_function.h \
   /usr/include/c++/16.1.1/bits/stdexcept_except.h \
@@ -1053,6 +1318,7 @@ CMakeFiles/RaytracerLab.dir/src/kdtree.cpp.o: /home/arch/repo/Master/KonzepteVon
   /usr/include/c++/16.1.1/bits/stl_iterator_base_types.h \
   /usr/include/c++/16.1.1/bits/stl_pair.h \
   /usr/include/c++/16.1.1/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/16.1.1/bits/stl_relops.h \
   /usr/include/c++/16.1.1/bits/stl_tempbuf.h \
   /usr/include/c++/16.1.1/bits/stl_uninitialized.h \
   /usr/include/c++/16.1.1/bits/stl_vector.h \
@@ -1068,6 +1334,7 @@ CMakeFiles/RaytracerLab.dir/src/kdtree.cpp.o: /home/arch/repo/Master/KonzepteVon
   /usr/include/c++/16.1.1/bits/utility.h \
   /usr/include/c++/16.1.1/bits/vector.tcc \
   /usr/include/c++/16.1.1/bits/version.h \
+  /usr/include/c++/16.1.1/bitset \
   /usr/include/c++/16.1.1/cassert \
   /usr/include/c++/16.1.1/cctype \
   /usr/include/c++/16.1.1/cerrno \
@@ -1081,11 +1348,24 @@ CMakeFiles/RaytracerLab.dir/src/kdtree.cpp.o: /home/arch/repo/Master/KonzepteVon
   /usr/include/c++/16.1.1/cstdint \
   /usr/include/c++/16.1.1/cstdio \
   /usr/include/c++/16.1.1/cstdlib \
+  /usr/include/c++/16.1.1/cstring \
+  /usr/include/c++/16.1.1/ctime \
   /usr/include/c++/16.1.1/cwchar \
   /usr/include/c++/16.1.1/cwctype \
   /usr/include/c++/16.1.1/debug/assertions.h \
   /usr/include/c++/16.1.1/debug/debug.h \
   /usr/include/c++/16.1.1/exception \
+  /usr/include/c++/16.1.1/experimental/bits/numeric_traits.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_builtin.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_converter.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_detail.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_fixed_size.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_math.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_scalar.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_x86.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_x86_conversions.h \
+  /usr/include/c++/16.1.1/experimental/simd \
   /usr/include/c++/16.1.1/ext/aligned_buffer.h \
   /usr/include/c++/16.1.1/ext/alloc_traits.h \
   /usr/include/c++/16.1.1/ext/atomicity.h \
@@ -1095,11 +1375,13 @@ CMakeFiles/RaytracerLab.dir/src/kdtree.cpp.o: /home/arch/repo/Master/KonzepteVon
   /usr/include/c++/16.1.1/ext/type_traits.h \
   /usr/include/c++/16.1.1/functional \
   /usr/include/c++/16.1.1/initializer_list \
+  /usr/include/c++/16.1.1/iomanip \
   /usr/include/c++/16.1.1/ios \
   /usr/include/c++/16.1.1/iosfwd \
   /usr/include/c++/16.1.1/iostream \
   /usr/include/c++/16.1.1/istream \
   /usr/include/c++/16.1.1/limits \
+  /usr/include/c++/16.1.1/locale \
   /usr/include/c++/16.1.1/memory \
   /usr/include/c++/16.1.1/new \
   /usr/include/c++/16.1.1/ostream \
@@ -1107,7 +1389,9 @@ CMakeFiles/RaytracerLab.dir/src/kdtree.cpp.o: /home/arch/repo/Master/KonzepteVon
   /usr/include/c++/16.1.1/pstl/glue_algorithm_defs.h \
   /usr/include/c++/16.1.1/pstl/glue_memory_defs.h \
   /usr/include/c++/16.1.1/pstl/pstl_config.h \
+  /usr/include/c++/16.1.1/sstream \
   /usr/include/c++/16.1.1/stdexcept \
+  /usr/include/c++/16.1.1/stdlib.h \
   /usr/include/c++/16.1.1/streambuf \
   /usr/include/c++/16.1.1/string \
   /usr/include/c++/16.1.1/string_view \
@@ -1128,6 +1412,7 @@ CMakeFiles/RaytracerLab.dir/src/kdtree.cpp.o: /home/arch/repo/Master/KonzepteVon
   /usr/include/c++/16.1.1/type_traits \
   /usr/include/c++/16.1.1/typeinfo \
   /usr/include/c++/16.1.1/unordered_map \
+  /usr/include/c++/16.1.1/utility \
   /usr/include/c++/16.1.1/vector \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/c++allocator.h \
@@ -1139,7 +1424,9 @@ CMakeFiles/RaytracerLab.dir/src/kdtree.cpp.o: /home/arch/repo/Master/KonzepteVon
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/error_constants.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/gthr-default.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/gthr.h \
+  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/messages_members.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/os_defines.h \
+  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/time_members.h \
   /usr/include/ctype.h \
   /usr/include/endian.h \
   /usr/include/errno.h \
@@ -1147,6 +1434,7 @@ CMakeFiles/RaytracerLab.dir/src/kdtree.cpp.o: /home/arch/repo/Master/KonzepteVon
   /usr/include/features.h \
   /usr/include/gnu/stubs-64.h \
   /usr/include/gnu/stubs.h \
+  /usr/include/libintl.h \
   /usr/include/limits.h \
   /usr/include/linux/errno.h \
   /usr/include/linux/limits.h \
@@ -1162,6 +1450,8 @@ CMakeFiles/RaytracerLab.dir/src/kdtree.cpp.o: /home/arch/repo/Master/KonzepteVon
   /usr/include/stdint.h \
   /usr/include/stdio.h \
   /usr/include/stdlib.h \
+  /usr/include/string.h \
+  /usr/include/strings.h \
   /usr/include/sys/cdefs.h \
   /usr/include/sys/select.h \
   /usr/include/sys/single_threaded.h \
@@ -1169,12 +1459,126 @@ CMakeFiles/RaytracerLab.dir/src/kdtree.cpp.o: /home/arch/repo/Master/KonzepteVon
   /usr/include/time.h \
   /usr/include/wchar.h \
   /usr/include/wctype.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/adxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/ammintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxavx512intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxbf16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxcomplexintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxfp16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxfp8intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxint8intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxmovrsintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxtf32intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxtileintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2bf16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2convertintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2copyintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2mediaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2minmaxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2satcvtintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx2intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bf16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bf16vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bitalgintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bitalgvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bmmvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bwintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512cdintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512dqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512fintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512fp16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512fp16vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512ifmaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512ifmavlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmi2intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmi2vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmiintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmivlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vlbwintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vldqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vnniintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vnnivlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vp2intersectintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vp2intersectvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vpopcntdqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vpopcntdqvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxifmaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxneconvertintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxvnniint16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxvnniint8intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxvnniintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/bmi2intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/bmiintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/cetintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/cldemoteintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/clflushoptintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/clwbintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/clzerointrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/cmpccxaddintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/emmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/enqcmdintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/f16cintrin.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/float.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/fma4intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/fmaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/fxsrintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/gfniintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/hresetintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/ia32intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/immintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/keylockerintrin.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/limits.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/lwpintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/lzcntintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mm3dnow.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mm_malloc.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/movdirintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/movrsintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mwaitintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mwaitxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/pconfigintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/pkuintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/pmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/popcntintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/prfchiintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/prfchwintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/raointintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/rdseedintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/rtmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/serializeintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sgxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sha512intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/shaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sm3intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sm4intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/smmintrin.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/stdarg.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/stddef.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/stdint.h \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/syslimits.h
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/syslimits.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/tbmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/tmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/tsxldtrkintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/uintrintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/usermsrintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/vaesintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/vpclmulqdqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/waitpkgintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/wbnoinvdintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/wmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/x86gprintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/x86intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xopintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsavecintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsaveintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsaveoptintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsavesintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xtestintrin.h
 
 CMakeFiles/RaytracerLab.dir/src/main.cpp.o: /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/main.cpp \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/common.hpp \
@@ -1322,6 +1726,7 @@ CMakeFiles/RaytracerLab.dir/src/main.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/image.h \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/intersector.h \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/mesh.h \
+  /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/packet.h \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/ray.h \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/renderer.h \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/scene.h \
@@ -1417,10 +1822,12 @@ CMakeFiles/RaytracerLab.dir/src/main.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/bits/wctype-wchar.h \
   /usr/include/bits/wordsize.h \
   /usr/include/bits/xopen_lim.h \
+  /usr/include/c++/16.1.1/algorithm \
   /usr/include/c++/16.1.1/array \
   /usr/include/c++/16.1.1/backward/auto_ptr.h \
   /usr/include/c++/16.1.1/backward/binders.h \
   /usr/include/c++/16.1.1/bit \
+  /usr/include/c++/16.1.1/bits/algorithmfwd.h \
   /usr/include/c++/16.1.1/bits/align.h \
   /usr/include/c++/16.1.1/bits/alloc_traits.h \
   /usr/include/c++/16.1.1/bits/allocated_ptr.h \
@@ -1434,6 +1841,7 @@ CMakeFiles/RaytracerLab.dir/src/main.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/c++/16.1.1/bits/char_traits.h \
   /usr/include/c++/16.1.1/bits/charconv.h \
   /usr/include/c++/16.1.1/bits/chrono.h \
+  /usr/include/c++/16.1.1/bits/codecvt.h \
   /usr/include/c++/16.1.1/bits/concept_check.h \
   /usr/include/c++/16.1.1/bits/cpp_type_traits.h \
   /usr/include/c++/16.1.1/bits/cxxabi_forced.h \
@@ -1453,8 +1861,11 @@ CMakeFiles/RaytracerLab.dir/src/main.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/c++/16.1.1/bits/istream.tcc \
   /usr/include/c++/16.1.1/bits/locale_classes.h \
   /usr/include/c++/16.1.1/bits/locale_classes.tcc \
+  /usr/include/c++/16.1.1/bits/locale_conv.h \
   /usr/include/c++/16.1.1/bits/locale_facets.h \
   /usr/include/c++/16.1.1/bits/locale_facets.tcc \
+  /usr/include/c++/16.1.1/bits/locale_facets_nonio.h \
+  /usr/include/c++/16.1.1/bits/locale_facets_nonio.tcc \
   /usr/include/c++/16.1.1/bits/localefwd.h \
   /usr/include/c++/16.1.1/bits/memory_resource.h \
   /usr/include/c++/16.1.1/bits/memoryfwd.h \
@@ -1472,6 +1883,7 @@ CMakeFiles/RaytracerLab.dir/src/main.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/c++/16.1.1/bits/postypes.h \
   /usr/include/c++/16.1.1/bits/predefined_ops.h \
   /usr/include/c++/16.1.1/bits/ptr_traits.h \
+  /usr/include/c++/16.1.1/bits/quoted_string.h \
   /usr/include/c++/16.1.1/bits/range_access.h \
   /usr/include/c++/16.1.1/bits/refwrap.h \
   /usr/include/c++/16.1.1/bits/requires_hosted.h \
@@ -1479,20 +1891,24 @@ CMakeFiles/RaytracerLab.dir/src/main.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/c++/16.1.1/bits/shared_ptr_atomic.h \
   /usr/include/c++/16.1.1/bits/shared_ptr_base.h \
   /usr/include/c++/16.1.1/bits/specfun.h \
+  /usr/include/c++/16.1.1/bits/sstream.tcc \
   /usr/include/c++/16.1.1/bits/std_abs.h \
   /usr/include/c++/16.1.1/bits/std_function.h \
   /usr/include/c++/16.1.1/bits/stdexcept_except.h \
   /usr/include/c++/16.1.1/bits/stdexcept_throw.h \
   /usr/include/c++/16.1.1/bits/stdexcept_throwfwd.h \
+  /usr/include/c++/16.1.1/bits/stl_algo.h \
   /usr/include/c++/16.1.1/bits/stl_algobase.h \
   /usr/include/c++/16.1.1/bits/stl_bvector.h \
   /usr/include/c++/16.1.1/bits/stl_construct.h \
   /usr/include/c++/16.1.1/bits/stl_function.h \
+  /usr/include/c++/16.1.1/bits/stl_heap.h \
   /usr/include/c++/16.1.1/bits/stl_iterator.h \
   /usr/include/c++/16.1.1/bits/stl_iterator_base_funcs.h \
   /usr/include/c++/16.1.1/bits/stl_iterator_base_types.h \
   /usr/include/c++/16.1.1/bits/stl_pair.h \
   /usr/include/c++/16.1.1/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/16.1.1/bits/stl_relops.h \
   /usr/include/c++/16.1.1/bits/stl_tempbuf.h \
   /usr/include/c++/16.1.1/bits/stl_uninitialized.h \
   /usr/include/c++/16.1.1/bits/stl_vector.h \
@@ -1500,6 +1916,7 @@ CMakeFiles/RaytracerLab.dir/src/main.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/c++/16.1.1/bits/streambuf_iterator.h \
   /usr/include/c++/16.1.1/bits/string_view.tcc \
   /usr/include/c++/16.1.1/bits/stringfwd.h \
+  /usr/include/c++/16.1.1/bits/uniform_int_dist.h \
   /usr/include/c++/16.1.1/bits/unique_ptr.h \
   /usr/include/c++/16.1.1/bits/unordered_map.h \
   /usr/include/c++/16.1.1/bits/uses_allocator.h \
@@ -1507,6 +1924,7 @@ CMakeFiles/RaytracerLab.dir/src/main.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/c++/16.1.1/bits/utility.h \
   /usr/include/c++/16.1.1/bits/vector.tcc \
   /usr/include/c++/16.1.1/bits/version.h \
+  /usr/include/c++/16.1.1/bitset \
   /usr/include/c++/16.1.1/cassert \
   /usr/include/c++/16.1.1/cctype \
   /usr/include/c++/16.1.1/cerrno \
@@ -1521,12 +1939,24 @@ CMakeFiles/RaytracerLab.dir/src/main.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/c++/16.1.1/cstdint \
   /usr/include/c++/16.1.1/cstdio \
   /usr/include/c++/16.1.1/cstdlib \
+  /usr/include/c++/16.1.1/cstring \
   /usr/include/c++/16.1.1/ctime \
   /usr/include/c++/16.1.1/cwchar \
   /usr/include/c++/16.1.1/cwctype \
   /usr/include/c++/16.1.1/debug/assertions.h \
   /usr/include/c++/16.1.1/debug/debug.h \
   /usr/include/c++/16.1.1/exception \
+  /usr/include/c++/16.1.1/experimental/bits/numeric_traits.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_builtin.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_converter.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_detail.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_fixed_size.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_math.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_scalar.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_x86.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_x86_conversions.h \
+  /usr/include/c++/16.1.1/experimental/simd \
   /usr/include/c++/16.1.1/ext/aligned_buffer.h \
   /usr/include/c++/16.1.1/ext/alloc_traits.h \
   /usr/include/c++/16.1.1/ext/atomicity.h \
@@ -1536,19 +1966,24 @@ CMakeFiles/RaytracerLab.dir/src/main.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/c++/16.1.1/ext/type_traits.h \
   /usr/include/c++/16.1.1/functional \
   /usr/include/c++/16.1.1/initializer_list \
+  /usr/include/c++/16.1.1/iomanip \
   /usr/include/c++/16.1.1/ios \
   /usr/include/c++/16.1.1/iosfwd \
   /usr/include/c++/16.1.1/iostream \
   /usr/include/c++/16.1.1/istream \
   /usr/include/c++/16.1.1/limits \
+  /usr/include/c++/16.1.1/locale \
   /usr/include/c++/16.1.1/memory \
   /usr/include/c++/16.1.1/new \
   /usr/include/c++/16.1.1/ostream \
   /usr/include/c++/16.1.1/pstl/execution_defs.h \
+  /usr/include/c++/16.1.1/pstl/glue_algorithm_defs.h \
   /usr/include/c++/16.1.1/pstl/glue_memory_defs.h \
   /usr/include/c++/16.1.1/pstl/pstl_config.h \
   /usr/include/c++/16.1.1/ratio \
+  /usr/include/c++/16.1.1/sstream \
   /usr/include/c++/16.1.1/stdexcept \
+  /usr/include/c++/16.1.1/stdlib.h \
   /usr/include/c++/16.1.1/streambuf \
   /usr/include/c++/16.1.1/string \
   /usr/include/c++/16.1.1/string_view \
@@ -1569,6 +2004,7 @@ CMakeFiles/RaytracerLab.dir/src/main.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/c++/16.1.1/type_traits \
   /usr/include/c++/16.1.1/typeinfo \
   /usr/include/c++/16.1.1/unordered_map \
+  /usr/include/c++/16.1.1/utility \
   /usr/include/c++/16.1.1/vector \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/c++allocator.h \
@@ -1580,7 +2016,9 @@ CMakeFiles/RaytracerLab.dir/src/main.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/error_constants.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/gthr-default.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/gthr.h \
+  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/messages_members.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/os_defines.h \
+  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/time_members.h \
   /usr/include/ctype.h \
   /usr/include/endian.h \
   /usr/include/errno.h \
@@ -1588,6 +2026,7 @@ CMakeFiles/RaytracerLab.dir/src/main.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/features.h \
   /usr/include/gnu/stubs-64.h \
   /usr/include/gnu/stubs.h \
+  /usr/include/libintl.h \
   /usr/include/limits.h \
   /usr/include/linux/errno.h \
   /usr/include/linux/limits.h \
@@ -1603,6 +2042,8 @@ CMakeFiles/RaytracerLab.dir/src/main.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/stdint.h \
   /usr/include/stdio.h \
   /usr/include/stdlib.h \
+  /usr/include/string.h \
+  /usr/include/strings.h \
   /usr/include/sys/cdefs.h \
   /usr/include/sys/select.h \
   /usr/include/sys/single_threaded.h \
@@ -1610,12 +2051,126 @@ CMakeFiles/RaytracerLab.dir/src/main.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/time.h \
   /usr/include/wchar.h \
   /usr/include/wctype.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/adxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/ammintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxavx512intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxbf16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxcomplexintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxfp16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxfp8intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxint8intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxmovrsintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxtf32intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxtileintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2bf16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2convertintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2copyintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2mediaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2minmaxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2satcvtintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx2intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bf16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bf16vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bitalgintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bitalgvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bmmvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bwintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512cdintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512dqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512fintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512fp16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512fp16vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512ifmaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512ifmavlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmi2intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmi2vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmiintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmivlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vlbwintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vldqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vnniintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vnnivlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vp2intersectintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vp2intersectvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vpopcntdqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vpopcntdqvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxifmaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxneconvertintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxvnniint16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxvnniint8intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxvnniintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/bmi2intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/bmiintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/cetintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/cldemoteintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/clflushoptintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/clwbintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/clzerointrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/cmpccxaddintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/emmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/enqcmdintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/f16cintrin.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/float.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/fma4intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/fmaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/fxsrintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/gfniintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/hresetintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/ia32intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/immintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/keylockerintrin.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/limits.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/lwpintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/lzcntintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mm3dnow.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mm_malloc.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/movdirintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/movrsintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mwaitintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mwaitxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/pconfigintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/pkuintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/pmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/popcntintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/prfchiintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/prfchwintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/raointintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/rdseedintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/rtmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/serializeintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sgxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sha512intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/shaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sm3intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sm4intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/smmintrin.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/stdarg.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/stddef.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/stdint.h \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/syslimits.h
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/syslimits.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/tbmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/tmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/tsxldtrkintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/uintrintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/usermsrintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/vaesintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/vpclmulqdqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/waitpkgintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/wbnoinvdintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/wmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/x86gprintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/x86intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xopintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsavecintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsaveintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsaveoptintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsavesintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xtestintrin.h
 
 CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o: /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/mesh.cpp \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/common.hpp \
@@ -1762,6 +2317,7 @@ CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/intersector.h \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/kdtree.h \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/mesh.h \
+  /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/packet.h \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/ray.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
@@ -1854,10 +2410,12 @@ CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/bits/wctype-wchar.h \
   /usr/include/bits/wordsize.h \
   /usr/include/bits/xopen_lim.h \
+  /usr/include/c++/16.1.1/algorithm \
   /usr/include/c++/16.1.1/array \
   /usr/include/c++/16.1.1/backward/auto_ptr.h \
   /usr/include/c++/16.1.1/backward/binders.h \
   /usr/include/c++/16.1.1/bit \
+  /usr/include/c++/16.1.1/bits/algorithmfwd.h \
   /usr/include/c++/16.1.1/bits/align.h \
   /usr/include/c++/16.1.1/bits/alloc_traits.h \
   /usr/include/c++/16.1.1/bits/allocated_ptr.h \
@@ -1891,8 +2449,11 @@ CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/c++/16.1.1/bits/istream.tcc \
   /usr/include/c++/16.1.1/bits/locale_classes.h \
   /usr/include/c++/16.1.1/bits/locale_classes.tcc \
+  /usr/include/c++/16.1.1/bits/locale_conv.h \
   /usr/include/c++/16.1.1/bits/locale_facets.h \
   /usr/include/c++/16.1.1/bits/locale_facets.tcc \
+  /usr/include/c++/16.1.1/bits/locale_facets_nonio.h \
+  /usr/include/c++/16.1.1/bits/locale_facets_nonio.tcc \
   /usr/include/c++/16.1.1/bits/localefwd.h \
   /usr/include/c++/16.1.1/bits/memory_resource.h \
   /usr/include/c++/16.1.1/bits/memoryfwd.h \
@@ -1909,6 +2470,7 @@ CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/c++/16.1.1/bits/postypes.h \
   /usr/include/c++/16.1.1/bits/predefined_ops.h \
   /usr/include/c++/16.1.1/bits/ptr_traits.h \
+  /usr/include/c++/16.1.1/bits/quoted_string.h \
   /usr/include/c++/16.1.1/bits/range_access.h \
   /usr/include/c++/16.1.1/bits/refwrap.h \
   /usr/include/c++/16.1.1/bits/requires_hosted.h \
@@ -1922,10 +2484,12 @@ CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/c++/16.1.1/bits/stdexcept_except.h \
   /usr/include/c++/16.1.1/bits/stdexcept_throw.h \
   /usr/include/c++/16.1.1/bits/stdexcept_throwfwd.h \
+  /usr/include/c++/16.1.1/bits/stl_algo.h \
   /usr/include/c++/16.1.1/bits/stl_algobase.h \
   /usr/include/c++/16.1.1/bits/stl_bvector.h \
   /usr/include/c++/16.1.1/bits/stl_construct.h \
   /usr/include/c++/16.1.1/bits/stl_function.h \
+  /usr/include/c++/16.1.1/bits/stl_heap.h \
   /usr/include/c++/16.1.1/bits/stl_iterator.h \
   /usr/include/c++/16.1.1/bits/stl_iterator_base_funcs.h \
   /usr/include/c++/16.1.1/bits/stl_iterator_base_types.h \
@@ -1933,6 +2497,7 @@ CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/c++/16.1.1/bits/stl_multimap.h \
   /usr/include/c++/16.1.1/bits/stl_pair.h \
   /usr/include/c++/16.1.1/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/16.1.1/bits/stl_relops.h \
   /usr/include/c++/16.1.1/bits/stl_tempbuf.h \
   /usr/include/c++/16.1.1/bits/stl_tree.h \
   /usr/include/c++/16.1.1/bits/stl_uninitialized.h \
@@ -1941,6 +2506,7 @@ CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/c++/16.1.1/bits/streambuf_iterator.h \
   /usr/include/c++/16.1.1/bits/string_view.tcc \
   /usr/include/c++/16.1.1/bits/stringfwd.h \
+  /usr/include/c++/16.1.1/bits/uniform_int_dist.h \
   /usr/include/c++/16.1.1/bits/unique_ptr.h \
   /usr/include/c++/16.1.1/bits/unordered_map.h \
   /usr/include/c++/16.1.1/bits/uses_allocator.h \
@@ -1948,6 +2514,7 @@ CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/c++/16.1.1/bits/utility.h \
   /usr/include/c++/16.1.1/bits/vector.tcc \
   /usr/include/c++/16.1.1/bits/version.h \
+  /usr/include/c++/16.1.1/bitset \
   /usr/include/c++/16.1.1/cassert \
   /usr/include/c++/16.1.1/cctype \
   /usr/include/c++/16.1.1/cerrno \
@@ -1961,11 +2528,24 @@ CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/c++/16.1.1/cstdint \
   /usr/include/c++/16.1.1/cstdio \
   /usr/include/c++/16.1.1/cstdlib \
+  /usr/include/c++/16.1.1/cstring \
+  /usr/include/c++/16.1.1/ctime \
   /usr/include/c++/16.1.1/cwchar \
   /usr/include/c++/16.1.1/cwctype \
   /usr/include/c++/16.1.1/debug/assertions.h \
   /usr/include/c++/16.1.1/debug/debug.h \
   /usr/include/c++/16.1.1/exception \
+  /usr/include/c++/16.1.1/experimental/bits/numeric_traits.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_builtin.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_converter.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_detail.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_fixed_size.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_math.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_scalar.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_x86.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_x86_conversions.h \
+  /usr/include/c++/16.1.1/experimental/simd \
   /usr/include/c++/16.1.1/ext/aligned_buffer.h \
   /usr/include/c++/16.1.1/ext/alloc_traits.h \
   /usr/include/c++/16.1.1/ext/atomicity.h \
@@ -1976,20 +2556,24 @@ CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/c++/16.1.1/fstream \
   /usr/include/c++/16.1.1/functional \
   /usr/include/c++/16.1.1/initializer_list \
+  /usr/include/c++/16.1.1/iomanip \
   /usr/include/c++/16.1.1/ios \
   /usr/include/c++/16.1.1/iosfwd \
   /usr/include/c++/16.1.1/iostream \
   /usr/include/c++/16.1.1/istream \
   /usr/include/c++/16.1.1/limits \
+  /usr/include/c++/16.1.1/locale \
   /usr/include/c++/16.1.1/map \
   /usr/include/c++/16.1.1/memory \
   /usr/include/c++/16.1.1/new \
   /usr/include/c++/16.1.1/ostream \
   /usr/include/c++/16.1.1/pstl/execution_defs.h \
+  /usr/include/c++/16.1.1/pstl/glue_algorithm_defs.h \
   /usr/include/c++/16.1.1/pstl/glue_memory_defs.h \
   /usr/include/c++/16.1.1/pstl/pstl_config.h \
   /usr/include/c++/16.1.1/sstream \
   /usr/include/c++/16.1.1/stdexcept \
+  /usr/include/c++/16.1.1/stdlib.h \
   /usr/include/c++/16.1.1/streambuf \
   /usr/include/c++/16.1.1/string \
   /usr/include/c++/16.1.1/string_view \
@@ -2010,6 +2594,7 @@ CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/c++/16.1.1/type_traits \
   /usr/include/c++/16.1.1/typeinfo \
   /usr/include/c++/16.1.1/unordered_map \
+  /usr/include/c++/16.1.1/utility \
   /usr/include/c++/16.1.1/vector \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/basic_file.h \
@@ -2023,7 +2608,9 @@ CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/error_constants.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/gthr-default.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/gthr.h \
+  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/messages_members.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/os_defines.h \
+  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/time_members.h \
   /usr/include/ctype.h \
   /usr/include/endian.h \
   /usr/include/errno.h \
@@ -2031,6 +2618,7 @@ CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/features.h \
   /usr/include/gnu/stubs-64.h \
   /usr/include/gnu/stubs.h \
+  /usr/include/libintl.h \
   /usr/include/limits.h \
   /usr/include/linux/errno.h \
   /usr/include/linux/limits.h \
@@ -2046,6 +2634,8 @@ CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/stdint.h \
   /usr/include/stdio.h \
   /usr/include/stdlib.h \
+  /usr/include/string.h \
+  /usr/include/strings.h \
   /usr/include/sys/cdefs.h \
   /usr/include/sys/select.h \
   /usr/include/sys/single_threaded.h \
@@ -2053,12 +2643,126 @@ CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o: /home/arch/repo/Master/KonzepteVonPr
   /usr/include/time.h \
   /usr/include/wchar.h \
   /usr/include/wctype.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/adxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/ammintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxavx512intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxbf16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxcomplexintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxfp16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxfp8intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxint8intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxmovrsintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxtf32intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxtileintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2bf16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2convertintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2copyintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2mediaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2minmaxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2satcvtintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx2intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bf16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bf16vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bitalgintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bitalgvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bmmvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bwintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512cdintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512dqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512fintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512fp16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512fp16vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512ifmaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512ifmavlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmi2intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmi2vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmiintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmivlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vlbwintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vldqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vnniintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vnnivlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vp2intersectintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vp2intersectvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vpopcntdqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vpopcntdqvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxifmaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxneconvertintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxvnniint16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxvnniint8intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxvnniintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/bmi2intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/bmiintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/cetintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/cldemoteintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/clflushoptintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/clwbintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/clzerointrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/cmpccxaddintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/emmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/enqcmdintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/f16cintrin.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/float.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/fma4intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/fmaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/fxsrintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/gfniintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/hresetintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/ia32intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/immintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/keylockerintrin.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/limits.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/lwpintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/lzcntintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mm3dnow.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mm_malloc.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/movdirintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/movrsintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mwaitintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mwaitxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/pconfigintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/pkuintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/pmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/popcntintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/prfchiintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/prfchwintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/raointintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/rdseedintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/rtmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/serializeintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sgxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sha512intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/shaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sm3intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sm4intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/smmintrin.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/stdarg.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/stddef.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/stdint.h \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/syslimits.h
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/syslimits.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/tbmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/tmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/tsxldtrkintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/uintrintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/usermsrintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/vaesintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/vpclmulqdqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/waitpkgintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/wbnoinvdintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/wmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/x86gprintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/x86intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xopintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsavecintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsaveintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsaveoptintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsavesintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xtestintrin.h
 
 CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o: /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/renderer.cpp \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/common.hpp \
@@ -2207,6 +2911,7 @@ CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o: /home/arch/repo/Master/KonzepteV
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/intersector.h \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/kdtree.h \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/mesh.h \
+  /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/packet.h \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/ray.h \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/renderer.h \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/shading.h \
@@ -2319,6 +3024,7 @@ CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o: /home/arch/repo/Master/KonzepteV
   /usr/include/c++/16.1.1/bits/basic_string.tcc \
   /usr/include/c++/16.1.1/bits/char_traits.h \
   /usr/include/c++/16.1.1/bits/charconv.h \
+  /usr/include/c++/16.1.1/bits/codecvt.h \
   /usr/include/c++/16.1.1/bits/concept_check.h \
   /usr/include/c++/16.1.1/bits/cpp_type_traits.h \
   /usr/include/c++/16.1.1/bits/cxxabi_forced.h \
@@ -2338,8 +3044,11 @@ CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o: /home/arch/repo/Master/KonzepteV
   /usr/include/c++/16.1.1/bits/istream.tcc \
   /usr/include/c++/16.1.1/bits/locale_classes.h \
   /usr/include/c++/16.1.1/bits/locale_classes.tcc \
+  /usr/include/c++/16.1.1/bits/locale_conv.h \
   /usr/include/c++/16.1.1/bits/locale_facets.h \
   /usr/include/c++/16.1.1/bits/locale_facets.tcc \
+  /usr/include/c++/16.1.1/bits/locale_facets_nonio.h \
+  /usr/include/c++/16.1.1/bits/locale_facets_nonio.tcc \
   /usr/include/c++/16.1.1/bits/localefwd.h \
   /usr/include/c++/16.1.1/bits/memory_resource.h \
   /usr/include/c++/16.1.1/bits/memoryfwd.h \
@@ -2356,6 +3065,7 @@ CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o: /home/arch/repo/Master/KonzepteV
   /usr/include/c++/16.1.1/bits/postypes.h \
   /usr/include/c++/16.1.1/bits/predefined_ops.h \
   /usr/include/c++/16.1.1/bits/ptr_traits.h \
+  /usr/include/c++/16.1.1/bits/quoted_string.h \
   /usr/include/c++/16.1.1/bits/random.h \
   /usr/include/c++/16.1.1/bits/random.tcc \
   /usr/include/c++/16.1.1/bits/range_access.h \
@@ -2365,6 +3075,7 @@ CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o: /home/arch/repo/Master/KonzepteV
   /usr/include/c++/16.1.1/bits/shared_ptr_atomic.h \
   /usr/include/c++/16.1.1/bits/shared_ptr_base.h \
   /usr/include/c++/16.1.1/bits/specfun.h \
+  /usr/include/c++/16.1.1/bits/sstream.tcc \
   /usr/include/c++/16.1.1/bits/std_abs.h \
   /usr/include/c++/16.1.1/bits/std_function.h \
   /usr/include/c++/16.1.1/bits/stdexcept_except.h \
@@ -2382,6 +3093,7 @@ CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o: /home/arch/repo/Master/KonzepteV
   /usr/include/c++/16.1.1/bits/stl_numeric.h \
   /usr/include/c++/16.1.1/bits/stl_pair.h \
   /usr/include/c++/16.1.1/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/16.1.1/bits/stl_relops.h \
   /usr/include/c++/16.1.1/bits/stl_tempbuf.h \
   /usr/include/c++/16.1.1/bits/stl_uninitialized.h \
   /usr/include/c++/16.1.1/bits/stl_vector.h \
@@ -2397,6 +3109,7 @@ CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o: /home/arch/repo/Master/KonzepteV
   /usr/include/c++/16.1.1/bits/utility.h \
   /usr/include/c++/16.1.1/bits/vector.tcc \
   /usr/include/c++/16.1.1/bits/version.h \
+  /usr/include/c++/16.1.1/bitset \
   /usr/include/c++/16.1.1/cassert \
   /usr/include/c++/16.1.1/cctype \
   /usr/include/c++/16.1.1/cerrno \
@@ -2410,11 +3123,24 @@ CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o: /home/arch/repo/Master/KonzepteV
   /usr/include/c++/16.1.1/cstdint \
   /usr/include/c++/16.1.1/cstdio \
   /usr/include/c++/16.1.1/cstdlib \
+  /usr/include/c++/16.1.1/cstring \
+  /usr/include/c++/16.1.1/ctime \
   /usr/include/c++/16.1.1/cwchar \
   /usr/include/c++/16.1.1/cwctype \
   /usr/include/c++/16.1.1/debug/assertions.h \
   /usr/include/c++/16.1.1/debug/debug.h \
   /usr/include/c++/16.1.1/exception \
+  /usr/include/c++/16.1.1/experimental/bits/numeric_traits.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_builtin.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_converter.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_detail.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_fixed_size.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_math.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_scalar.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_x86.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_x86_conversions.h \
+  /usr/include/c++/16.1.1/experimental/simd \
   /usr/include/c++/16.1.1/ext/aligned_buffer.h \
   /usr/include/c++/16.1.1/ext/alloc_traits.h \
   /usr/include/c++/16.1.1/ext/atomicity.h \
@@ -2424,11 +3150,13 @@ CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o: /home/arch/repo/Master/KonzepteV
   /usr/include/c++/16.1.1/ext/type_traits.h \
   /usr/include/c++/16.1.1/functional \
   /usr/include/c++/16.1.1/initializer_list \
+  /usr/include/c++/16.1.1/iomanip \
   /usr/include/c++/16.1.1/ios \
   /usr/include/c++/16.1.1/iosfwd \
   /usr/include/c++/16.1.1/iostream \
   /usr/include/c++/16.1.1/istream \
   /usr/include/c++/16.1.1/limits \
+  /usr/include/c++/16.1.1/locale \
   /usr/include/c++/16.1.1/memory \
   /usr/include/c++/16.1.1/new \
   /usr/include/c++/16.1.1/numeric \
@@ -2439,6 +3167,7 @@ CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o: /home/arch/repo/Master/KonzepteV
   /usr/include/c++/16.1.1/pstl/glue_numeric_defs.h \
   /usr/include/c++/16.1.1/pstl/pstl_config.h \
   /usr/include/c++/16.1.1/random \
+  /usr/include/c++/16.1.1/sstream \
   /usr/include/c++/16.1.1/stdexcept \
   /usr/include/c++/16.1.1/stdlib.h \
   /usr/include/c++/16.1.1/streambuf \
@@ -2461,6 +3190,7 @@ CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o: /home/arch/repo/Master/KonzepteV
   /usr/include/c++/16.1.1/type_traits \
   /usr/include/c++/16.1.1/typeinfo \
   /usr/include/c++/16.1.1/unordered_map \
+  /usr/include/c++/16.1.1/utility \
   /usr/include/c++/16.1.1/vector \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/c++allocator.h \
@@ -2472,8 +3202,10 @@ CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o: /home/arch/repo/Master/KonzepteV
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/error_constants.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/gthr-default.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/gthr.h \
+  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/messages_members.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/opt_random.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/os_defines.h \
+  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/time_members.h \
   /usr/include/ctype.h \
   /usr/include/endian.h \
   /usr/include/errno.h \
@@ -2481,6 +3213,7 @@ CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o: /home/arch/repo/Master/KonzepteV
   /usr/include/features.h \
   /usr/include/gnu/stubs-64.h \
   /usr/include/gnu/stubs.h \
+  /usr/include/libintl.h \
   /usr/include/limits.h \
   /usr/include/linux/errno.h \
   /usr/include/linux/limits.h \
@@ -2496,6 +3229,8 @@ CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o: /home/arch/repo/Master/KonzepteV
   /usr/include/stdint.h \
   /usr/include/stdio.h \
   /usr/include/stdlib.h \
+  /usr/include/string.h \
+  /usr/include/strings.h \
   /usr/include/sys/cdefs.h \
   /usr/include/sys/select.h \
   /usr/include/sys/single_threaded.h \
@@ -2503,18 +3238,126 @@ CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o: /home/arch/repo/Master/KonzepteV
   /usr/include/time.h \
   /usr/include/wchar.h \
   /usr/include/wctype.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/adxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/ammintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxavx512intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxbf16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxcomplexintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxfp16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxfp8intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxint8intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxmovrsintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxtf32intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxtileintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2bf16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2convertintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2copyintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2mediaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2minmaxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2satcvtintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx2intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bf16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bf16vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bitalgintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bitalgvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bmmvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bwintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512cdintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512dqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512fintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512fp16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512fp16vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512ifmaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512ifmavlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmi2intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmi2vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmiintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmivlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vlbwintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vldqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vnniintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vnnivlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vp2intersectintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vp2intersectvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vpopcntdqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vpopcntdqvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxifmaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxneconvertintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxvnniint16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxvnniint8intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxvnniintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/bmi2intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/bmiintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/cetintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/cldemoteintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/clflushoptintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/clwbintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/clzerointrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/cmpccxaddintrin.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/emmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/enqcmdintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/f16cintrin.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/float.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/fma4intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/fmaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/fxsrintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/gfniintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/hresetintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/ia32intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/immintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/keylockerintrin.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/limits.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/lwpintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/lzcntintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mm3dnow.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mm_malloc.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/movdirintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/movrsintrin.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mwaitintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mwaitxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/pconfigintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/pkuintrin.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/pmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/popcntintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/prfchiintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/prfchwintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/raointintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/rdseedintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/rtmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/serializeintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sgxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sha512intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/shaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sm3intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sm4intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/smmintrin.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/stdarg.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/stddef.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/stdint.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/syslimits.h \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xmmintrin.h
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/tbmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/tmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/tsxldtrkintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/uintrintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/usermsrintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/vaesintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/vpclmulqdqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/waitpkgintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/wbnoinvdintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/wmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/x86gprintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/x86intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xopintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsavecintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsaveintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsaveoptintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsavesintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xtestintrin.h
 
 CMakeFiles/RaytracerLab.dir/src/scene.cpp.o: /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/scene.cpp \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/common.hpp \
@@ -2661,6 +3504,7 @@ CMakeFiles/RaytracerLab.dir/src/scene.cpp.o: /home/arch/repo/Master/KonzepteVonP
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/camera.h \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/intersector.h \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/mesh.h \
+  /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/packet.h \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/ray.h \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/scene.h \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/shading.h \
@@ -2752,22 +3596,28 @@ CMakeFiles/RaytracerLab.dir/src/scene.cpp.o: /home/arch/repo/Master/KonzepteVonP
   /usr/include/bits/waitflags.h \
   /usr/include/bits/waitstatus.h \
   /usr/include/bits/wchar.h \
+  /usr/include/bits/wctype-wchar.h \
   /usr/include/bits/wordsize.h \
   /usr/include/bits/xopen_lim.h \
+  /usr/include/c++/16.1.1/algorithm \
   /usr/include/c++/16.1.1/array \
   /usr/include/c++/16.1.1/backward/auto_ptr.h \
   /usr/include/c++/16.1.1/backward/binders.h \
   /usr/include/c++/16.1.1/bit \
+  /usr/include/c++/16.1.1/bits/algorithmfwd.h \
   /usr/include/c++/16.1.1/bits/align.h \
   /usr/include/c++/16.1.1/bits/alloc_traits.h \
   /usr/include/c++/16.1.1/bits/allocated_ptr.h \
   /usr/include/c++/16.1.1/bits/allocator.h \
   /usr/include/c++/16.1.1/bits/atomic_base.h \
   /usr/include/c++/16.1.1/bits/atomic_lockfree_defines.h \
+  /usr/include/c++/16.1.1/bits/basic_ios.h \
+  /usr/include/c++/16.1.1/bits/basic_ios.tcc \
   /usr/include/c++/16.1.1/bits/basic_string.h \
   /usr/include/c++/16.1.1/bits/basic_string.tcc \
   /usr/include/c++/16.1.1/bits/char_traits.h \
   /usr/include/c++/16.1.1/bits/charconv.h \
+  /usr/include/c++/16.1.1/bits/codecvt.h \
   /usr/include/c++/16.1.1/bits/concept_check.h \
   /usr/include/c++/16.1.1/bits/cpp_type_traits.h \
   /usr/include/c++/16.1.1/bits/cxxabi_forced.h \
@@ -2783,6 +3633,15 @@ CMakeFiles/RaytracerLab.dir/src/scene.cpp.o: /home/arch/repo/Master/KonzepteVonP
   /usr/include/c++/16.1.1/bits/hashtable.h \
   /usr/include/c++/16.1.1/bits/hashtable_policy.h \
   /usr/include/c++/16.1.1/bits/invoke.h \
+  /usr/include/c++/16.1.1/bits/ios_base.h \
+  /usr/include/c++/16.1.1/bits/istream.tcc \
+  /usr/include/c++/16.1.1/bits/locale_classes.h \
+  /usr/include/c++/16.1.1/bits/locale_classes.tcc \
+  /usr/include/c++/16.1.1/bits/locale_conv.h \
+  /usr/include/c++/16.1.1/bits/locale_facets.h \
+  /usr/include/c++/16.1.1/bits/locale_facets.tcc \
+  /usr/include/c++/16.1.1/bits/locale_facets_nonio.h \
+  /usr/include/c++/16.1.1/bits/locale_facets_nonio.tcc \
   /usr/include/c++/16.1.1/bits/localefwd.h \
   /usr/include/c++/16.1.1/bits/memory_resource.h \
   /usr/include/c++/16.1.1/bits/memoryfwd.h \
@@ -2792,10 +3651,14 @@ CMakeFiles/RaytracerLab.dir/src/scene.cpp.o: /home/arch/repo/Master/KonzepteVonP
   /usr/include/c++/16.1.1/bits/new_except.h \
   /usr/include/c++/16.1.1/bits/new_throw.h \
   /usr/include/c++/16.1.1/bits/node_handle.h \
+  /usr/include/c++/16.1.1/bits/ostream.h \
+  /usr/include/c++/16.1.1/bits/ostream.tcc \
   /usr/include/c++/16.1.1/bits/ostream_insert.h \
+  /usr/include/c++/16.1.1/bits/ostream_print.h \
   /usr/include/c++/16.1.1/bits/postypes.h \
   /usr/include/c++/16.1.1/bits/predefined_ops.h \
   /usr/include/c++/16.1.1/bits/ptr_traits.h \
+  /usr/include/c++/16.1.1/bits/quoted_string.h \
   /usr/include/c++/16.1.1/bits/range_access.h \
   /usr/include/c++/16.1.1/bits/refwrap.h \
   /usr/include/c++/16.1.1/bits/requires_hosted.h \
@@ -2803,24 +3666,32 @@ CMakeFiles/RaytracerLab.dir/src/scene.cpp.o: /home/arch/repo/Master/KonzepteVonP
   /usr/include/c++/16.1.1/bits/shared_ptr_atomic.h \
   /usr/include/c++/16.1.1/bits/shared_ptr_base.h \
   /usr/include/c++/16.1.1/bits/specfun.h \
+  /usr/include/c++/16.1.1/bits/sstream.tcc \
   /usr/include/c++/16.1.1/bits/std_abs.h \
   /usr/include/c++/16.1.1/bits/std_function.h \
+  /usr/include/c++/16.1.1/bits/stdexcept_except.h \
   /usr/include/c++/16.1.1/bits/stdexcept_throw.h \
   /usr/include/c++/16.1.1/bits/stdexcept_throwfwd.h \
+  /usr/include/c++/16.1.1/bits/stl_algo.h \
   /usr/include/c++/16.1.1/bits/stl_algobase.h \
   /usr/include/c++/16.1.1/bits/stl_bvector.h \
   /usr/include/c++/16.1.1/bits/stl_construct.h \
   /usr/include/c++/16.1.1/bits/stl_function.h \
+  /usr/include/c++/16.1.1/bits/stl_heap.h \
   /usr/include/c++/16.1.1/bits/stl_iterator.h \
   /usr/include/c++/16.1.1/bits/stl_iterator_base_funcs.h \
   /usr/include/c++/16.1.1/bits/stl_iterator_base_types.h \
   /usr/include/c++/16.1.1/bits/stl_pair.h \
   /usr/include/c++/16.1.1/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/16.1.1/bits/stl_relops.h \
   /usr/include/c++/16.1.1/bits/stl_tempbuf.h \
   /usr/include/c++/16.1.1/bits/stl_uninitialized.h \
   /usr/include/c++/16.1.1/bits/stl_vector.h \
+  /usr/include/c++/16.1.1/bits/streambuf.tcc \
+  /usr/include/c++/16.1.1/bits/streambuf_iterator.h \
   /usr/include/c++/16.1.1/bits/string_view.tcc \
   /usr/include/c++/16.1.1/bits/stringfwd.h \
+  /usr/include/c++/16.1.1/bits/uniform_int_dist.h \
   /usr/include/c++/16.1.1/bits/unique_ptr.h \
   /usr/include/c++/16.1.1/bits/unordered_map.h \
   /usr/include/c++/16.1.1/bits/uses_allocator.h \
@@ -2828,6 +3699,7 @@ CMakeFiles/RaytracerLab.dir/src/scene.cpp.o: /home/arch/repo/Master/KonzepteVonP
   /usr/include/c++/16.1.1/bits/utility.h \
   /usr/include/c++/16.1.1/bits/vector.tcc \
   /usr/include/c++/16.1.1/bits/version.h \
+  /usr/include/c++/16.1.1/bitset \
   /usr/include/c++/16.1.1/cassert \
   /usr/include/c++/16.1.1/cctype \
   /usr/include/c++/16.1.1/cerrno \
@@ -2841,10 +3713,24 @@ CMakeFiles/RaytracerLab.dir/src/scene.cpp.o: /home/arch/repo/Master/KonzepteVonP
   /usr/include/c++/16.1.1/cstdint \
   /usr/include/c++/16.1.1/cstdio \
   /usr/include/c++/16.1.1/cstdlib \
+  /usr/include/c++/16.1.1/cstring \
+  /usr/include/c++/16.1.1/ctime \
   /usr/include/c++/16.1.1/cwchar \
+  /usr/include/c++/16.1.1/cwctype \
   /usr/include/c++/16.1.1/debug/assertions.h \
   /usr/include/c++/16.1.1/debug/debug.h \
   /usr/include/c++/16.1.1/exception \
+  /usr/include/c++/16.1.1/experimental/bits/numeric_traits.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_builtin.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_converter.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_detail.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_fixed_size.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_math.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_scalar.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_x86.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_x86_conversions.h \
+  /usr/include/c++/16.1.1/experimental/simd \
   /usr/include/c++/16.1.1/ext/aligned_buffer.h \
   /usr/include/c++/16.1.1/ext/alloc_traits.h \
   /usr/include/c++/16.1.1/ext/atomicity.h \
@@ -2854,15 +3740,26 @@ CMakeFiles/RaytracerLab.dir/src/scene.cpp.o: /home/arch/repo/Master/KonzepteVonP
   /usr/include/c++/16.1.1/ext/type_traits.h \
   /usr/include/c++/16.1.1/functional \
   /usr/include/c++/16.1.1/initializer_list \
+  /usr/include/c++/16.1.1/iomanip \
+  /usr/include/c++/16.1.1/ios \
   /usr/include/c++/16.1.1/iosfwd \
+  /usr/include/c++/16.1.1/istream \
   /usr/include/c++/16.1.1/limits \
+  /usr/include/c++/16.1.1/locale \
   /usr/include/c++/16.1.1/memory \
   /usr/include/c++/16.1.1/new \
+  /usr/include/c++/16.1.1/ostream \
   /usr/include/c++/16.1.1/pstl/execution_defs.h \
+  /usr/include/c++/16.1.1/pstl/glue_algorithm_defs.h \
   /usr/include/c++/16.1.1/pstl/glue_memory_defs.h \
   /usr/include/c++/16.1.1/pstl/pstl_config.h \
+  /usr/include/c++/16.1.1/sstream \
+  /usr/include/c++/16.1.1/stdexcept \
+  /usr/include/c++/16.1.1/stdlib.h \
+  /usr/include/c++/16.1.1/streambuf \
   /usr/include/c++/16.1.1/string \
   /usr/include/c++/16.1.1/string_view \
+  /usr/include/c++/16.1.1/system_error \
   /usr/include/c++/16.1.1/tr1/bessel_function.tcc \
   /usr/include/c++/16.1.1/tr1/beta_function.tcc \
   /usr/include/c++/16.1.1/tr1/ell_integral.tcc \
@@ -2879,15 +3776,21 @@ CMakeFiles/RaytracerLab.dir/src/scene.cpp.o: /home/arch/repo/Master/KonzepteVonP
   /usr/include/c++/16.1.1/type_traits \
   /usr/include/c++/16.1.1/typeinfo \
   /usr/include/c++/16.1.1/unordered_map \
+  /usr/include/c++/16.1.1/utility \
   /usr/include/c++/16.1.1/vector \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/c++allocator.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/c++config.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/c++locale.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/cpu_defines.h \
+  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/ctype_base.h \
+  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/ctype_inline.h \
+  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/error_constants.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/gthr-default.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/gthr.h \
+  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/messages_members.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/os_defines.h \
+  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/time_members.h \
   /usr/include/ctype.h \
   /usr/include/endian.h \
   /usr/include/errno.h \
@@ -2895,6 +3798,7 @@ CMakeFiles/RaytracerLab.dir/src/scene.cpp.o: /home/arch/repo/Master/KonzepteVonP
   /usr/include/features.h \
   /usr/include/gnu/stubs-64.h \
   /usr/include/gnu/stubs.h \
+  /usr/include/libintl.h \
   /usr/include/limits.h \
   /usr/include/linux/errno.h \
   /usr/include/linux/limits.h \
@@ -2910,18 +3814,135 @@ CMakeFiles/RaytracerLab.dir/src/scene.cpp.o: /home/arch/repo/Master/KonzepteVonP
   /usr/include/stdint.h \
   /usr/include/stdio.h \
   /usr/include/stdlib.h \
+  /usr/include/string.h \
+  /usr/include/strings.h \
   /usr/include/sys/cdefs.h \
   /usr/include/sys/select.h \
   /usr/include/sys/single_threaded.h \
   /usr/include/sys/types.h \
   /usr/include/time.h \
   /usr/include/wchar.h \
+  /usr/include/wctype.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/adxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/ammintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxavx512intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxbf16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxcomplexintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxfp16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxfp8intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxint8intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxmovrsintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxtf32intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxtileintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2bf16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2convertintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2copyintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2mediaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2minmaxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2satcvtintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx2intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bf16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bf16vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bitalgintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bitalgvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bmmvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bwintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512cdintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512dqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512fintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512fp16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512fp16vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512ifmaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512ifmavlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmi2intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmi2vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmiintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmivlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vlbwintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vldqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vnniintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vnnivlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vp2intersectintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vp2intersectvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vpopcntdqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vpopcntdqvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxifmaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxneconvertintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxvnniint16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxvnniint8intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxvnniintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/bmi2intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/bmiintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/cetintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/cldemoteintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/clflushoptintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/clwbintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/clzerointrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/cmpccxaddintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/emmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/enqcmdintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/f16cintrin.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/float.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/fma4intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/fmaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/fxsrintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/gfniintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/hresetintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/ia32intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/immintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/keylockerintrin.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/limits.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/lwpintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/lzcntintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mm3dnow.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mm_malloc.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/movdirintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/movrsintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mwaitintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mwaitxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/pconfigintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/pkuintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/pmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/popcntintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/prfchiintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/prfchwintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/raointintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/rdseedintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/rtmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/serializeintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sgxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sha512intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/shaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sm3intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sm4intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/smmintrin.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/stdarg.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/stddef.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/stdint.h \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/syslimits.h
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/syslimits.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/tbmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/tmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/tsxldtrkintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/uintrintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/usermsrintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/vaesintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/vpclmulqdqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/waitpkgintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/wbnoinvdintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/wmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/x86gprintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/x86intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xopintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsavecintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsaveintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsaveoptintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsavesintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xtestintrin.h
 
 CMakeFiles/RaytracerLab.dir/src/shading.cpp.o: /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/shading.cpp \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/common.hpp \
@@ -3067,6 +4088,7 @@ CMakeFiles/RaytracerLab.dir/src/shading.cpp.o: /home/arch/repo/Master/KonzepteVo
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/vec4.hpp \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/intersector.h \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/mesh.h \
+  /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/packet.h \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/ray.h \
   /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/shading.h \
   /usr/include/alloca.h \
@@ -3157,6 +4179,7 @@ CMakeFiles/RaytracerLab.dir/src/shading.cpp.o: /home/arch/repo/Master/KonzepteVo
   /usr/include/bits/waitflags.h \
   /usr/include/bits/waitstatus.h \
   /usr/include/bits/wchar.h \
+  /usr/include/bits/wctype-wchar.h \
   /usr/include/bits/wordsize.h \
   /usr/include/bits/xopen_lim.h \
   /usr/include/c++/16.1.1/algorithm \
@@ -3171,10 +4194,13 @@ CMakeFiles/RaytracerLab.dir/src/shading.cpp.o: /home/arch/repo/Master/KonzepteVo
   /usr/include/c++/16.1.1/bits/allocator.h \
   /usr/include/c++/16.1.1/bits/atomic_base.h \
   /usr/include/c++/16.1.1/bits/atomic_lockfree_defines.h \
+  /usr/include/c++/16.1.1/bits/basic_ios.h \
+  /usr/include/c++/16.1.1/bits/basic_ios.tcc \
   /usr/include/c++/16.1.1/bits/basic_string.h \
   /usr/include/c++/16.1.1/bits/basic_string.tcc \
   /usr/include/c++/16.1.1/bits/char_traits.h \
   /usr/include/c++/16.1.1/bits/charconv.h \
+  /usr/include/c++/16.1.1/bits/codecvt.h \
   /usr/include/c++/16.1.1/bits/concept_check.h \
   /usr/include/c++/16.1.1/bits/cpp_type_traits.h \
   /usr/include/c++/16.1.1/bits/cxxabi_forced.h \
@@ -3190,6 +4216,15 @@ CMakeFiles/RaytracerLab.dir/src/shading.cpp.o: /home/arch/repo/Master/KonzepteVo
   /usr/include/c++/16.1.1/bits/hashtable.h \
   /usr/include/c++/16.1.1/bits/hashtable_policy.h \
   /usr/include/c++/16.1.1/bits/invoke.h \
+  /usr/include/c++/16.1.1/bits/ios_base.h \
+  /usr/include/c++/16.1.1/bits/istream.tcc \
+  /usr/include/c++/16.1.1/bits/locale_classes.h \
+  /usr/include/c++/16.1.1/bits/locale_classes.tcc \
+  /usr/include/c++/16.1.1/bits/locale_conv.h \
+  /usr/include/c++/16.1.1/bits/locale_facets.h \
+  /usr/include/c++/16.1.1/bits/locale_facets.tcc \
+  /usr/include/c++/16.1.1/bits/locale_facets_nonio.h \
+  /usr/include/c++/16.1.1/bits/locale_facets_nonio.tcc \
   /usr/include/c++/16.1.1/bits/localefwd.h \
   /usr/include/c++/16.1.1/bits/memory_resource.h \
   /usr/include/c++/16.1.1/bits/memoryfwd.h \
@@ -3199,10 +4234,14 @@ CMakeFiles/RaytracerLab.dir/src/shading.cpp.o: /home/arch/repo/Master/KonzepteVo
   /usr/include/c++/16.1.1/bits/new_except.h \
   /usr/include/c++/16.1.1/bits/new_throw.h \
   /usr/include/c++/16.1.1/bits/node_handle.h \
+  /usr/include/c++/16.1.1/bits/ostream.h \
+  /usr/include/c++/16.1.1/bits/ostream.tcc \
   /usr/include/c++/16.1.1/bits/ostream_insert.h \
+  /usr/include/c++/16.1.1/bits/ostream_print.h \
   /usr/include/c++/16.1.1/bits/postypes.h \
   /usr/include/c++/16.1.1/bits/predefined_ops.h \
   /usr/include/c++/16.1.1/bits/ptr_traits.h \
+  /usr/include/c++/16.1.1/bits/quoted_string.h \
   /usr/include/c++/16.1.1/bits/range_access.h \
   /usr/include/c++/16.1.1/bits/refwrap.h \
   /usr/include/c++/16.1.1/bits/requires_hosted.h \
@@ -3210,8 +4249,10 @@ CMakeFiles/RaytracerLab.dir/src/shading.cpp.o: /home/arch/repo/Master/KonzepteVo
   /usr/include/c++/16.1.1/bits/shared_ptr_atomic.h \
   /usr/include/c++/16.1.1/bits/shared_ptr_base.h \
   /usr/include/c++/16.1.1/bits/specfun.h \
+  /usr/include/c++/16.1.1/bits/sstream.tcc \
   /usr/include/c++/16.1.1/bits/std_abs.h \
   /usr/include/c++/16.1.1/bits/std_function.h \
+  /usr/include/c++/16.1.1/bits/stdexcept_except.h \
   /usr/include/c++/16.1.1/bits/stdexcept_throw.h \
   /usr/include/c++/16.1.1/bits/stdexcept_throwfwd.h \
   /usr/include/c++/16.1.1/bits/stl_algo.h \
@@ -3225,9 +4266,12 @@ CMakeFiles/RaytracerLab.dir/src/shading.cpp.o: /home/arch/repo/Master/KonzepteVo
   /usr/include/c++/16.1.1/bits/stl_iterator_base_types.h \
   /usr/include/c++/16.1.1/bits/stl_pair.h \
   /usr/include/c++/16.1.1/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/16.1.1/bits/stl_relops.h \
   /usr/include/c++/16.1.1/bits/stl_tempbuf.h \
   /usr/include/c++/16.1.1/bits/stl_uninitialized.h \
   /usr/include/c++/16.1.1/bits/stl_vector.h \
+  /usr/include/c++/16.1.1/bits/streambuf.tcc \
+  /usr/include/c++/16.1.1/bits/streambuf_iterator.h \
   /usr/include/c++/16.1.1/bits/string_view.tcc \
   /usr/include/c++/16.1.1/bits/stringfwd.h \
   /usr/include/c++/16.1.1/bits/uniform_int_dist.h \
@@ -3238,6 +4282,7 @@ CMakeFiles/RaytracerLab.dir/src/shading.cpp.o: /home/arch/repo/Master/KonzepteVo
   /usr/include/c++/16.1.1/bits/utility.h \
   /usr/include/c++/16.1.1/bits/vector.tcc \
   /usr/include/c++/16.1.1/bits/version.h \
+  /usr/include/c++/16.1.1/bitset \
   /usr/include/c++/16.1.1/cassert \
   /usr/include/c++/16.1.1/cctype \
   /usr/include/c++/16.1.1/cerrno \
@@ -3251,10 +4296,24 @@ CMakeFiles/RaytracerLab.dir/src/shading.cpp.o: /home/arch/repo/Master/KonzepteVo
   /usr/include/c++/16.1.1/cstdint \
   /usr/include/c++/16.1.1/cstdio \
   /usr/include/c++/16.1.1/cstdlib \
+  /usr/include/c++/16.1.1/cstring \
+  /usr/include/c++/16.1.1/ctime \
   /usr/include/c++/16.1.1/cwchar \
+  /usr/include/c++/16.1.1/cwctype \
   /usr/include/c++/16.1.1/debug/assertions.h \
   /usr/include/c++/16.1.1/debug/debug.h \
   /usr/include/c++/16.1.1/exception \
+  /usr/include/c++/16.1.1/experimental/bits/numeric_traits.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_builtin.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_converter.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_detail.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_fixed_size.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_math.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_scalar.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_x86.h \
+  /usr/include/c++/16.1.1/experimental/bits/simd_x86_conversions.h \
+  /usr/include/c++/16.1.1/experimental/simd \
   /usr/include/c++/16.1.1/ext/aligned_buffer.h \
   /usr/include/c++/16.1.1/ext/alloc_traits.h \
   /usr/include/c++/16.1.1/ext/atomicity.h \
@@ -3264,16 +4323,26 @@ CMakeFiles/RaytracerLab.dir/src/shading.cpp.o: /home/arch/repo/Master/KonzepteVo
   /usr/include/c++/16.1.1/ext/type_traits.h \
   /usr/include/c++/16.1.1/functional \
   /usr/include/c++/16.1.1/initializer_list \
+  /usr/include/c++/16.1.1/iomanip \
+  /usr/include/c++/16.1.1/ios \
   /usr/include/c++/16.1.1/iosfwd \
+  /usr/include/c++/16.1.1/istream \
   /usr/include/c++/16.1.1/limits \
+  /usr/include/c++/16.1.1/locale \
   /usr/include/c++/16.1.1/memory \
   /usr/include/c++/16.1.1/new \
+  /usr/include/c++/16.1.1/ostream \
   /usr/include/c++/16.1.1/pstl/execution_defs.h \
   /usr/include/c++/16.1.1/pstl/glue_algorithm_defs.h \
   /usr/include/c++/16.1.1/pstl/glue_memory_defs.h \
   /usr/include/c++/16.1.1/pstl/pstl_config.h \
+  /usr/include/c++/16.1.1/sstream \
+  /usr/include/c++/16.1.1/stdexcept \
+  /usr/include/c++/16.1.1/stdlib.h \
+  /usr/include/c++/16.1.1/streambuf \
   /usr/include/c++/16.1.1/string \
   /usr/include/c++/16.1.1/string_view \
+  /usr/include/c++/16.1.1/system_error \
   /usr/include/c++/16.1.1/tr1/bessel_function.tcc \
   /usr/include/c++/16.1.1/tr1/beta_function.tcc \
   /usr/include/c++/16.1.1/tr1/ell_integral.tcc \
@@ -3290,15 +4359,21 @@ CMakeFiles/RaytracerLab.dir/src/shading.cpp.o: /home/arch/repo/Master/KonzepteVo
   /usr/include/c++/16.1.1/type_traits \
   /usr/include/c++/16.1.1/typeinfo \
   /usr/include/c++/16.1.1/unordered_map \
+  /usr/include/c++/16.1.1/utility \
   /usr/include/c++/16.1.1/vector \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/c++allocator.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/c++config.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/c++locale.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/cpu_defines.h \
+  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/ctype_base.h \
+  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/ctype_inline.h \
+  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/error_constants.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/gthr-default.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/gthr.h \
+  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/messages_members.h \
   /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/os_defines.h \
+  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/time_members.h \
   /usr/include/ctype.h \
   /usr/include/endian.h \
   /usr/include/errno.h \
@@ -3306,6 +4381,7 @@ CMakeFiles/RaytracerLab.dir/src/shading.cpp.o: /home/arch/repo/Master/KonzepteVo
   /usr/include/features.h \
   /usr/include/gnu/stubs-64.h \
   /usr/include/gnu/stubs.h \
+  /usr/include/libintl.h \
   /usr/include/limits.h \
   /usr/include/linux/errno.h \
   /usr/include/linux/limits.h \
@@ -3321,18 +4397,135 @@ CMakeFiles/RaytracerLab.dir/src/shading.cpp.o: /home/arch/repo/Master/KonzepteVo
   /usr/include/stdint.h \
   /usr/include/stdio.h \
   /usr/include/stdlib.h \
+  /usr/include/string.h \
+  /usr/include/strings.h \
   /usr/include/sys/cdefs.h \
   /usr/include/sys/select.h \
   /usr/include/sys/single_threaded.h \
   /usr/include/sys/types.h \
   /usr/include/time.h \
   /usr/include/wchar.h \
+  /usr/include/wctype.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/adxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/ammintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxavx512intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxbf16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxcomplexintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxfp16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxfp8intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxint8intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxmovrsintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxtf32intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxtileintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2bf16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2convertintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2copyintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2mediaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2minmaxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2satcvtintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx2intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bf16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bf16vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bitalgintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bitalgvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bmmvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bwintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512cdintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512dqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512fintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512fp16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512fp16vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512ifmaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512ifmavlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmi2intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmi2vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmiintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmivlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vlbwintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vldqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vnniintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vnnivlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vp2intersectintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vp2intersectvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vpopcntdqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vpopcntdqvlintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxifmaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxneconvertintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxvnniint16intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxvnniint8intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxvnniintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/bmi2intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/bmiintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/cetintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/cldemoteintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/clflushoptintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/clwbintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/clzerointrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/cmpccxaddintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/emmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/enqcmdintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/f16cintrin.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/float.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/fma4intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/fmaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/fxsrintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/gfniintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/hresetintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/ia32intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/immintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/keylockerintrin.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/limits.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/lwpintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/lzcntintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mm3dnow.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mm_malloc.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/movdirintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/movrsintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mwaitintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mwaitxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/pconfigintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/pkuintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/pmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/popcntintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/prfchiintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/prfchwintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/raointintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/rdseedintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/rtmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/serializeintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sgxintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sha512intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/shaintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sm3intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sm4intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/smmintrin.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/stdarg.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/stddef.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/stdint.h \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/syslimits.h
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/syslimits.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/tbmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/tmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/tsxldtrkintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/uintrintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/usermsrintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/vaesintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/vpclmulqdqintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/waitpkgintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/wbnoinvdintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/wmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/x86gprintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/x86intrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xmmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xopintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsavecintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsaveintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsaveoptintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsavesintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xtestintrin.h
 
 RaytracerLab: /usr/lib/Scrt1.o \
   /usr/lib/crti.o \
@@ -3366,15 +4559,15 @@ CMakeFiles/RaytracerLab.dir/src/shading.cpp.o:
 
 CMakeFiles/RaytracerLab.dir/src/scene.cpp.o:
 
-CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o:
+CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o:
 
 CMakeFiles/RaytracerLab.dir/src/main.cpp.o:
 
-CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o:
-
-CMakeFiles/RaytracerLab.dir/src/image.cpp.o:
+CMakeFiles/RaytracerLab.dir/src/kdtree.cpp.o:
 
 /usr/lib/libm.so.6:
+
+/usr/lib/libc_nonshared.a:
 
 /usr/lib/ld-linux-x86-64.so.2:
 
@@ -3382,978 +4575,1248 @@ CMakeFiles/RaytracerLab.dir/src/image.cpp.o:
 
 /usr/lib/libgcc_s.so.1:
 
+/usr/lib/libgcc_s.so:
+
+/usr/lib/libatomic_asneeded.so:
+
+/usr/lib/crti.o:
+
 /usr/lib/Scrt1.o:
 
-/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xmmintrin.h:
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/scene.cpp:
 
-/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mm_malloc.h:
+/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/opt_random.h:
 
-/usr/include/c++/16.1.1/stdlib.h:
+/usr/include/c++/16.1.1/numeric:
 
-/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/pmmintrin.h:
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/crtendS.o:
 
-/usr/include/c++/16.1.1/pstl/glue_numeric_defs.h:
-
-/usr/include/c++/16.1.1/bits/random.h:
+/usr/include/c++/16.1.1/bits/random.tcc:
 
 /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/renderer.cpp:
 
 /usr/include/c++/16.1.1/map:
 
-/usr/include/c++/16.1.1/bits/sstream.tcc:
+/usr/include/c++/16.1.1/bits/stl_tree.h:
 
-/usr/include/c++/16.1.1/ctime:
+/usr/include/c++/16.1.1/bits/stl_map.h:
 
-/usr/include/c++/16.1.1/chrono:
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/mesh.cpp:
+
+/usr/include/c++/16.1.1/ratio:
 
 /usr/include/c++/16.1.1/bits/parse_numbers.h:
 
 /usr/include/c++/16.1.1/bits/chrono.h:
 
-/usr/include/c++/16.1.1/numeric:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/renderer.h:
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/shading.h:
 
 /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/camera.h:
 
 /home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/main.cpp:
 
-/usr/include/c++/16.1.1/pstl/glue_memory_defs.h:
+/usr/include/c++/16.1.1/memory:
 
 /usr/include/c++/16.1.1/ext/concurrence.h:
-
-/usr/include/c++/16.1.1/bits/unique_ptr.h:
 
 /usr/include/c++/16.1.1/bits/stl_raw_storage_iter.h:
 
 /usr/include/c++/16.1.1/bits/shared_ptr_atomic.h:
 
-/usr/include/c++/16.1.1/bits/shared_ptr.h:
-
 /usr/include/c++/16.1.1/bits/atomic_lockfree_defines.h:
-
-/usr/lib/libmvec.so.1:
-
-/usr/include/c++/16.1.1/bits/allocated_ptr.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/kdtree.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/intersector.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/stdint.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/stddef.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/limits.h:
-
-/usr/include/time.h:
-
-/usr/include/sys/types.h:
-
-/usr/include/sys/cdefs.h:
-
-/usr/include/stdlib.h:
-
-/usr/include/pthread.h:
-
-/usr/include/linux/stddef.h:
-
-/usr/include/linux/sched/types.h:
-
-/usr/include/limits.h:
-
-/usr/include/gnu/stubs.h:
-
-/usr/include/gnu/stubs-64.h:
-
-/usr/include/features-time64.h:
-
-/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/os_defines.h:
-
-/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/gthr.h:
-
-CMakeFiles/RaytracerLab.dir/src/renderer.cpp.o:
-
-/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/error_constants.h:
-
-/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/ctype_inline.h:
-
-/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/ctype_base.h:
-
-/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/c++config.h:
-
-/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/c++allocator.h:
-
-/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h:
-
-/usr/include/c++/16.1.1/unordered_map:
-
-/usr/include/c++/16.1.1/typeinfo:
-
-/usr/include/c++/16.1.1/tr1/poly_laguerre.tcc:
-
-/usr/include/c++/16.1.1/tr1/poly_hermite.tcc:
-
-/usr/include/c++/16.1.1/tr1/gamma.tcc:
-
-/usr/include/c++/16.1.1/tr1/exp_integral.tcc:
-
-/usr/include/c++/16.1.1/tr1/ell_integral.tcc:
-
-/usr/include/c++/16.1.1/tr1/beta_function.tcc:
-
-/usr/include/c++/16.1.1/tr1/riemann_zeta.tcc:
-
-/usr/include/c++/16.1.1/tr1/bessel_function.tcc:
-
-/usr/include/c++/16.1.1/system_error:
-
-/usr/include/c++/16.1.1/string_view:
-
-/usr/include/c++/16.1.1/streambuf:
-
-/usr/include/c++/16.1.1/stdexcept:
-
-/usr/include/errno.h:
-
-/usr/include/c++/16.1.1/pstl/glue_algorithm_defs.h:
-
-/usr/include/c++/16.1.1/tr1/hypergeometric.tcc:
-
-/usr/include/c++/16.1.1/pstl/execution_defs.h:
-
-/usr/lib/libc_nonshared.a:
-
-/usr/include/c++/16.1.1/istream:
-
-/usr/include/c++/16.1.1/ios:
-
-/usr/include/c++/16.1.1/initializer_list:
-
-CMakeFiles/RaytracerLab.dir/src/kdtree.cpp.o:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/crtbeginS.o:
-
-/usr/include/c++/16.1.1/functional:
-
-/usr/include/c++/16.1.1/fstream:
-
-/usr/include/c++/16.1.1/ext/type_traits.h:
-
-/usr/include/c++/16.1.1/ext/atomicity.h:
-
-/usr/include/c++/16.1.1/ext/alloc_traits.h:
-
-/usr/include/c++/16.1.1/ext/aligned_buffer.h:
-
-/usr/include/c++/16.1.1/type_traits:
-
-/usr/include/c++/16.1.1/exception:
-
-/usr/include/c++/16.1.1/cwctype:
-
-/usr/include/c++/16.1.1/cstdlib:
-
-/usr/include/c++/16.1.1/cstdint:
-
-/usr/include/c++/16.1.1/cstddef:
-
-/usr/include/c++/16.1.1/concepts:
-
-/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/c++io.h:
-
-/usr/include/c++/16.1.1/compare:
-
-/usr/include/c++/16.1.1/clocale:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/stdarg.h:
-
-/usr/include/c++/16.1.1/cctype:
-
-/usr/include/c++/16.1.1/bits/vector.tcc:
-
-/usr/include/linux/errno.h:
-
-/usr/include/c++/16.1.1/bits/uses_allocator.h:
-
-/usr/include/c++/16.1.1/bits/unordered_map.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/kdtree.cpp:
-
-/usr/include/c++/16.1.1/bits/string_view.tcc:
-
-/usr/include/c++/16.1.1/bits/streambuf.tcc:
-
-/usr/include/c++/16.1.1/bits/stl_vector.h:
-
-/usr/lib/libc.so.6:
-
-/usr/include/c++/16.1.1/cstdio:
-
-/usr/include/c++/16.1.1/bits/stl_iterator_base_types.h:
-
-/usr/include/c++/16.1.1/bits/stl_iterator.h:
-
-/usr/include/c++/16.1.1/bits/stl_heap.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/shading.cpp:
-
-/usr/include/c++/16.1.1/bits/stl_construct.h:
-
-/usr/lib/crti.o:
-
-/usr/include/c++/16.1.1/bits/stl_bvector.h:
-
-/usr/include/math.h:
-
-/usr/include/c++/16.1.1/iostream:
-
-/usr/include/c++/16.1.1/bits/stl_algobase.h:
-
-/usr/include/c++/16.1.1/bits/stdexcept_throwfwd.h:
-
-/usr/include/sys/single_threaded.h:
-
-/usr/include/c++/16.1.1/bits/stdexcept_throw.h:
-
-/usr/include/c++/16.1.1/bits/std_function.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/shading.h:
-
-/usr/include/c++/16.1.1/bits/requires_hosted.h:
-
-/usr/include/c++/16.1.1/bits/shared_ptr_base.h:
-
-/usr/include/c++/16.1.1/bits/refwrap.h:
-
-/usr/include/c++/16.1.1/bits/range_access.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/mesh.h:
-
-/usr/include/c++/16.1.1/bits/predefined_ops.h:
-
-/usr/include/c++/16.1.1/bits/ostream_insert.h:
-
-/usr/include/c++/16.1.1/bits/ostream.tcc:
-
-/usr/include/c++/16.1.1/bits/nested_exception.h:
-
-/usr/include/c++/16.1.1/sstream:
-
-/usr/include/c++/16.1.1/bits/postypes.h:
-
-/usr/include/c++/16.1.1/bits/memoryfwd.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/crtendS.o:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mmintrin.h:
-
-/usr/include/c++/16.1.1/cfloat:
-
-/usr/include/c++/16.1.1/bits/memory_resource.h:
-
-/usr/include/c++/16.1.1/bits/localefwd.h:
-
-/usr/include/c++/16.1.1/bits/locale_facets.tcc:
-
-/usr/include/c++/16.1.1/bits/locale_facets.h:
-
-/usr/include/c++/16.1.1/bits/ios_base.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_half.inl:
-
-/usr/include/asm/bitsperlong.h:
-
-/usr/include/c++/16.1.1/bits/istream.tcc:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/qualifier.hpp:
-
-/usr/include/asm/posix_types_64.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_uint3_sized.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_uint2.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_float4_precision.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_float4.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/func_packing.inl:
-
-/usr/include/bits/libc-header-start.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_float2.hpp:
-
-/usr/lib/libatomic_asneeded.so:
-
-/usr/include/bits/types/struct_timeval.h:
-
-/usr/include/c++/16.1.1/bits/stl_iterator_base_funcs.h:
-
-/usr/include/bits/uintn-identity.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_double3_precision.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float2x2.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/mesh.cpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_double3.hpp:
-
-/usr/include/c++/16.1.1/bits/stdexcept_except.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/image.h:
-
-/usr/include/c++/16.1.1/memory:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_bool4_precision.hpp:
-
-/usr/include/c++/16.1.1/vector:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_bool2_precision.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_vec1.inl:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_int4.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double2x2.hpp:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/syslimits.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_bool2.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double2x2_precision.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat2x2.inl:
-
-/usr/include/c++/16.1.1/bits/basic_ios.tcc:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/_vectorize.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float2x4_precision.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double4x4_precision.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/compute_vector_relational.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_double2.hpp:
-
-/usr/include/bits/endianness.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/func_integer.inl:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_float2_precision.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/matrix.hpp:
-
-/usr/include/bits/types/__locale_t.h:
-
-/usr/include/bits/floatn.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/mat4x2.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/mat3x4.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float2x2_precision.hpp:
-
-/usr/include/bits/stdlib-bsearch.h:
-
-/usr/include/c++/16.1.1/bits/stl_uninitialized.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/mat2x3.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat3x4.inl:
-
-/usr/lib/crtn.o:
-
-/usr/include/c++/16.1.1/bits/stl_tree.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_int3_sized.hpp:
-
-/usr/include/bits/types/wint_t.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float4x4_precision.hpp:
-
-/usr/include/c++/16.1.1/ext/numeric_traits.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float3x2_precision.hpp:
-
-/usr/include/c++/16.1.1/bits/align.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float4x4.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat2x3.hpp:
-
-/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/basic_file.h:
-
-/usr/include/c++/16.1.1/bits/stl_tempbuf.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/func_vector_relational.inl:
-
-/usr/include/c++/16.1.1/bits/char_traits.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float4x3_precision.hpp:
-
-/usr/include/bits/libm-simd-decl-stubs.h:
-
-/usr/include/c++/16.1.1/random:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat4x3.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/mat2x2.hpp:
-
-/usr/include/wchar.h:
-
-/usr/include/bits/posix1_lim.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/mat4x4.hpp:
-
-/usr/include/bits/byteswap.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat4x2.hpp:
-
-/usr/include/linux/types.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double2x4_precision.hpp:
-
-/usr/include/c++/16.1.1/bits/version.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat3x3.inl:
-
-/usr/include/bits/types/sigset_t.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_int2.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double3x2_precision.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/common.hpp:
-
-/usr/include/c++/16.1.1/bits/cpp_type_traits.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mwaitintrin.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_float3_precision.hpp:
-
-/usr/include/bits/types/struct_timespec.h:
-
-/usr/include/c++/16.1.1/tr1/special_function_util.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat2x4.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/geometric.hpp:
-
-/usr/include/c++/16.1.1/bits/node_handle.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/func_geometric.inl:
-
-/usr/include/wctype.h:
-
-/usr/include/sched.h:
-
-/usr/include/bits/fp-fast.h:
-
-/usr/include/bits/floatn-common.h:
-
-/usr/include/c++/16.1.1/bit:
-
-/usr/include/c++/16.1.1/bits/stl_map.h:
-
-/usr/include/c++/16.1.1/limits:
-
-/usr/include/c++/16.1.1/bits/streambuf_iterator.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/image.cpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/intersector.cpp:
-
-/usr/include/c++/16.1.1/bits/utility.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/exponential.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat3x4.hpp:
-
-/usr/include/c++/16.1.1/debug/assertions.h:
-
-/usr/include/c++/16.1.1/bits/specfun.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/mat4x3.hpp:
-
-/usr/lib/libstdc++.so:
-
-/usr/include/locale.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/compute_common.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat3x2.inl:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_double4_precision.hpp:
-
-/usr/include/bits/posix2_lim.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat2x4.inl:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_vec4.inl:
-
-/usr/include/c++/16.1.1/cwchar:
-
-/usr/include/bits/mathcalls.h:
-
-/usr/include/bits/types/__fpos_t.h:
-
-/usr/include/bits/types/clock_t.h:
-
-/usr/include/c++/16.1.1/ratio:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/vector_relational.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float3x3.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/_fixes.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_vec1.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/setup.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_half.hpp:
-
-/usr/include/c++/16.1.1/bits/invoke.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/scalar_int_sized.hpp:
-
-/usr/include/c++/16.1.1/bits/exception.h:
-
-/usr/include/c++/16.1.1/bits/concept_check.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_uint4_sized.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/func_common.inl:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double4x3_precision.hpp:
-
-/usr/include/bits/pthread_stack_min-dynamic.h:
-
-/usr/include/c++/16.1.1/bits/std_abs.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double2x3_precision.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/func_trigonometric.inl:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat4x2.inl:
-
-/usr/lib/libatomic.so:
-
-/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/opt_random.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/vec4.hpp:
-
-/usr/include/c++/16.1.1/bits/new_except.h:
-
-/usr/include/c++/16.1.1/bits/alloc_traits.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_vec4.hpp:
-
-/usr/include/c++/16.1.1/tuple:
-
-/usr/include/bits/types/__sigset_t.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double3x3_precision.hpp:
-
-/usr/include/sys/select.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double3x4.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat3x2.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double4x2_precision.hpp:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/emmintrin.h:
-
-/usr/include/c++/16.1.1/pstl/pstl_config.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double3x3.hpp:
-
-/usr/include/bits/wctype-wchar.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/scene.cpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double3x4_precision.hpp:
-
-/usr/include/bits/cpu-set.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double4x2.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_float3.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float2x3.hpp:
-
-/usr/include/c++/16.1.1/bits/random.tcc:
-
-/usr/include/ctype.h:
-
-/usr/include/c++/16.1.1/bits/new_allocator.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_int3.hpp:
 
 /usr/include/c++/16.1.1/bits/atomic_base.h:
 
-/usr/include/bits/types/cookie_io_functions_t.h:
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/renderer.h:
 
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double4x3.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_double4.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_bool4.hpp:
-
-/usr/include/c++/16.1.1/bits/stl_pair.h:
-
-/usr/include/c++/16.1.1/bits/stl_algo.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat4x4.hpp:
-
-/usr/include/bits/types/locale_t.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float2x4.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/func_matrix.inl:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_uint4.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/func_exponential.inl:
-
-/usr/include/bits/types/struct_sched_param.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat4x3.inl:
-
-/usr/include/bits/xopen_lim.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float3x2.hpp:
-
-/usr/include/bits/waitflags.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat2x3.inl:
-
-/usr/include/stdc-predef.h:
-
-/usr/include/c++/16.1.1/bits/uniform_int_dist.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/mat3x2.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat4x4.inl:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_vec2.inl:
-
-/usr/lib/libm.so:
-
-/usr/include/c++/16.1.1/bits/ostream_print.h:
-
-/usr/include/c++/16.1.1/bits/locale_classes.tcc:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_int4_sized.hpp:
-
-/usr/include/c++/16.1.1/bits/basic_string.tcc:
-
-/usr/include/c++/16.1.1/bits/stl_multimap.h:
-
-/usr/include/c++/16.1.1/string:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_vec2.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float3x4.hpp:
-
-/usr/include/c++/16.1.1/climits:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float2x3_precision.hpp:
-
-/usr/include/c++/16.1.1/tr1/modified_bessel_func.tcc:
-
-/usr/include/asm-generic/posix_types.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float3x4_precision.hpp:
-
-/usr/include/c++/16.1.1/cerrno:
-
-/usr/include/c++/16.1.1/bits/ptr_traits.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/fwd.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/trigonometric.hpp:
-
-/usr/include/c++/16.1.1/bits/exception_ptr.h:
-
-/usr/include/stdint.h:
-
-/usr/include/endian.h:
-
-/usr/include/c++/16.1.1/bits/new_throw.h:
-
-/usr/include/c++/16.1.1/bits/basic_ios.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/scalar_uint_sized.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/simd/platform.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_vec3.inl:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_vec3.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat2x2.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float4x2.hpp:
-
-/usr/include/bits/types/timer_t.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_double2_precision.hpp:
-
-/usr/include/bits/math-vector.h:
-
-/usr/include/bits/uio_lim.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double2x3.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/mat2x4.hpp:
-
-/usr/include/bits/struct_rwlock.h:
-
-/usr/include/bits/types/struct_itimerspec.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float4x3.hpp:
-
-/usr/include/bits/local_lim.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/packing.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double3x2.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/glm.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/integer.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/compute_vector_decl.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/vec2.hpp:
-
-/usr/include/c++/16.1.1/ostream:
-
-/usr/include/c++/16.1.1/bits/ostream.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/vec3.hpp:
-
-/usr/include/c++/16.1.1/tr1/legendre_function.tcc:
-
-/usr/include/alloca.h:
-
-/usr/include/c++/16.1.1/cassert:
-
-/usr/include/c++/16.1.1/bits/uses_allocator_args.h:
-
-/usr/include/asm-generic/errno-base.h:
-
-/usr/include/asm-generic/bitsperlong.h:
-
-/usr/include/asm-generic/types.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_uint3.hpp:
-
-/usr/include/asm-generic/errno.h:
-
-/usr/include/asm-generic/int-ll64.h:
-
-/usr/include/bits/mathcalls-macros.h:
-
-/usr/include/asm/types.h:
-
-/usr/include/assert.h:
-
-/usr/include/bits/atomic_wide_counter.h:
-
-/usr/include/bits/endian.h:
-
-/usr/include/bits/errno.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_bool3.hpp:
-
-/usr/include/bits/flt-eval-method.h:
-
-/usr/include/linux/posix_types.h:
-
-/usr/include/bits/types/FILE.h:
-
-/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/cpu_defines.h:
-
-/usr/include/bits/iscanonical.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/scene.h:
-
-/usr/include/c++/16.1.1/bits/stl_function.h:
-
-/usr/include/bits/locale.h:
-
-/usr/include/bits/long-double.h:
-
-/usr/include/c++/16.1.1/bits/stringfwd.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_bool3_precision.hpp:
-
-/usr/include/bits/mathcalls-helper-functions.h:
-
-/usr/include/bits/mathcalls-narrow.h:
-
-/usr/include/c++/16.1.1/new:
-
-/usr/include/bits/pthreadtypes-arch.h:
-
-/usr/include/c++/16.1.1/iosfwd:
-
-/usr/include/bits/timex.h:
-
-/usr/include/c++/16.1.1/bits/functexcept.h:
-
-/usr/lib/libc.so:
-
-/usr/include/bits/pthreadtypes.h:
-
-/usr/include/c++/16.1.1/array:
-
-/usr/include/bits/select.h:
-
-/usr/include/bits/setjmp.h:
-
-/usr/include/bits/types/clockid_t.h:
-
-/usr/include/bits/stdint-intn.h:
-
-/usr/include/c++/16.1.1/bits/move.h:
-
-/usr/include/c++/16.1.1/bits/cxxabi_forced.h:
-
-/usr/include/bits/stdint-least.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/mat3x3.hpp:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat3x3.hpp:
-
-/usr/include/asm/errno.h:
-
-/usr/include/bits/stdint-uintn.h:
-
-/usr/include/c++/16.1.1/bits/stl_numeric.h:
-
-/usr/include/c++/16.1.1/debug/debug.h:
-
-/usr/include/bits/stdio.h:
-
-/usr/include/bits/stdio_lim.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/ray.h:
-
-/usr/include/asm/posix_types.h:
-
-/usr/include/bits/time.h:
-
-/usr/include/bits/stdlib-float.h:
-
-/usr/include/bits/time64.h:
-
-/usr/include/bits/struct_mutex.h:
-
-/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/gthr-default.h:
-
-/usr/include/bits/thread-shared-types.h:
-
-/usr/include/bits/timesize.h:
-
-/usr/include/bits/types.h:
-
-/usr/include/features.h:
-
-/usr/include/bits/sched.h:
-
-/usr/include/bits/types/__FILE.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_uint2_sized.hpp:
-
-/usr/include/bits/types/__fpos64_t.h:
-
-/usr/include/bits/types/error_t.h:
-
-/usr/include/bits/types/mbstate_t.h:
-
-/usr/include/bits/types/struct_FILE.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/float.h:
-
-/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/c++locale.h:
-
-/usr/include/bits/wchar.h:
-
-/usr/include/bits/waitstatus.h:
-
-/usr/include/bits/types/struct___jmp_buf_tag.h:
-
-/usr/include/c++/16.1.1/bits/locale_classes.h:
-
-/usr/include/bits/types/struct_tm.h:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double4x4.hpp:
-
-/usr/include/bits/types/time_t.h:
-
-/usr/include/bits/typesizes.h:
-
-/usr/include/stdio.h:
-
-/usr/include/c++/16.1.1/cmath:
-
-/usr/include/bits/wordsize.h:
-
-/usr/lib/libgcc_s.so:
-
-/usr/include/c++/16.1.1/algorithm:
-
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double2x4.hpp:
-
-/usr/include/c++/16.1.1/bits/algorithmfwd.h:
-
-/usr/include/c++/16.1.1/backward/binders.h:
-
-/usr/include/c++/16.1.1/bits/allocator.h:
-
-/usr/include/c++/16.1.1/bits/basic_string.h:
-
-/usr/include/c++/16.1.1/ext/string_conversions.h:
-
-/usr/include/c++/16.1.1/bits/charconv.h:
-
-/usr/include/linux/limits.h:
-
-/usr/include/c++/16.1.1/bits/codecvt.h:
+/usr/include/c++/16.1.1/bits/allocated_ptr.h:
 
 /usr/include/c++/16.1.1/backward/auto_ptr.h:
 
-/usr/include/c++/16.1.1/bits/erase_if.h:
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/kdtree.h:
 
-/usr/include/c++/16.1.1/bits/cxxabi_init_exception.h:
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/kdtree.cpp:
 
-/usr/include/bits/fp-logb.h:
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsavesintrin.h:
 
-/usr/include/c++/16.1.1/bits/enable_special_members.h:
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsaveintrin.h:
 
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_int2_sized.hpp:
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsavecintrin.h:
 
-/usr/include/c++/16.1.1/bits/exception_defines.h:
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xopintrin.h:
 
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float3x3_precision.hpp:
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/x86intrin.h:
 
-/usr/include/c++/16.1.1/bits/fstream.tcc:
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/x86gprintrin.h:
 
-/usr/include/c++/16.1.1/bits/functional_hash.h:
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/wmmintrin.h:
 
-/usr/include/c++/16.1.1/bits/hash_bytes.h:
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/wbnoinvdintrin.h:
 
-/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float4x2_precision.hpp:
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/waitpkgintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/vpclmulqdqintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/vaesintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/usermsrintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/tsxldtrkintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/tmmintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/tbmintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/smmintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sm4intrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/shaintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sgxintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sha512intrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/serializeintrin.h:
+
+/usr/include/c++/16.1.1/bits/hashtable_policy.h:
 
 /usr/include/bits/types/__mbstate_t.h:
 
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float3x3_precision.hpp:
+
+/usr/include/c++/16.1.1/bits/exception_defines.h:
+
+/usr/include/c++/16.1.1/bits/enable_special_members.h:
+
+/usr/include/c++/16.1.1/bits/cxxabi_init_exception.h:
+
+/usr/include/c++/16.1.1/bits/erase_if.h:
+
+/usr/lib/crtn.o:
+
+/usr/include/linux/limits.h:
+
+/usr/include/c++/16.1.1/ext/string_conversions.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vldqintrin.h:
+
+/usr/include/c++/16.1.1/bits/algorithmfwd.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double2x4.hpp:
+
+/usr/include/c++/16.1.1/algorithm:
+
+/usr/include/c++/16.1.1/chrono:
+
+/usr/include/bits/wordsize.h:
+
+/usr/include/c++/16.1.1/cmath:
+
+/usr/include/stdio.h:
+
+/usr/include/c++/16.1.1/bits/hash_bytes.h:
+
+/usr/include/bits/types/struct_tm.h:
+
+/usr/include/c++/16.1.1/bits/locale_classes.h:
+
+/usr/include/bits/types/struct___jmp_buf_tag.h:
+
+/usr/include/bits/waitstatus.h:
+
+/usr/include/bits/wchar.h:
+
+/usr/include/bits/types/time_t.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/popcntintrin.h:
+
+/usr/include/bits/types/struct_FILE.h:
+
+/usr/include/bits/types/mbstate_t.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float4x2_precision.hpp:
+
+/usr/include/bits/types/error_t.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vnnivlintrin.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_uint2_sized.hpp:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2mediaintrin.h:
+
+/usr/include/bits/types/__FILE.h:
+
+/usr/include/features.h:
+
+/usr/include/bits/types.h:
+
+/usr/include/bits/timesize.h:
+
+/usr/include/bits/thread-shared-types.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/scene.h:
+
+/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/gthr-default.h:
+
+/usr/include/bits/struct_mutex.h:
+
+/usr/include/bits/time64.h:
+
+/usr/include/bits/stdlib-float.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/ray.h:
+
+/usr/include/c++/16.1.1/debug/debug.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmiintrin.h:
+
+/usr/include/bits/stdint-uintn.h:
+
+/usr/include/c++/16.1.1/bits/cxxabi_forced.h:
+
+/usr/include/c++/16.1.1/bits/move.h:
+
+/usr/include/bits/setjmp.h:
+
+/usr/include/c++/16.1.1/pstl/glue_memory_defs.h:
+
+/usr/include/bits/pthreadtypes.h:
+
+/usr/include/c++/16.1.1/bits/functexcept.h:
+
+/usr/include/c++/16.1.1/pstl/glue_numeric_defs.h:
+
+/usr/include/bits/timex.h:
+
+/usr/include/c++/16.1.1/iosfwd:
+
+/usr/include/c++/16.1.1/new:
+
+/usr/include/bits/mathcalls-narrow.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/cldemoteintrin.h:
+
+/usr/include/c++/16.1.1/bits/stringfwd.h:
+
+/usr/include/c++/16.1.1/bits/stl_function.h:
+
+/usr/include/bits/iscanonical.h:
+
+/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/cpu_defines.h:
+
+/usr/include/bits/types/FILE.h:
+
+/usr/include/linux/posix_types.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_bool3.hpp:
+
+/usr/include/bits/errno.h:
+
+/usr/include/bits/endian.h:
+
+/usr/include/bits/atomic_wide_counter.h:
+
+/usr/include/assert.h:
+
+/usr/include/c++/16.1.1/bits/unique_ptr.h:
+
+/usr/include/c++/16.1.1/bits/charconv.h:
+
+/usr/include/bits/mathcalls-macros.h:
+
+/usr/include/asm-generic/int-ll64.h:
+
+/usr/include/bits/long-double.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_uint3.hpp:
+
+/usr/lib/libc.so:
+
+/usr/include/asm-generic/types.h:
+
+/usr/include/asm-generic/bitsperlong.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512cdintrin.h:
+
+/usr/include/asm-generic/errno-base.h:
+
+/usr/include/c++/16.1.1/bits/uses_allocator_args.h:
+
+/usr/include/c++/16.1.1/tr1/legendre_function.tcc:
+
+/usr/include/c++/16.1.1/ostream:
+
+/usr/include/c++/16.1.1/bits/fstream.tcc:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/vec2.hpp:
+
+/usr/lib/libatomic.so:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/compute_vector_decl.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/glm.hpp:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xsaveoptintrin.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double3x2.hpp:
+
+/usr/include/bits/local_lim.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/sm3intrin.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float4x3.hpp:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxavx512intrin.h:
+
+CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o:
+
+/usr/include/c++/16.1.1/cassert:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/mat2x4.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double2x3.hpp:
+
+/usr/include/bits/uio_lim.h:
+
+/usr/include/bits/math-vector.h:
+
+/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/messages_members.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/movdirintrin.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float4x2.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat2x2.hpp:
+
+/usr/include/bits/time.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vp2intersectintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/pconfigintrin.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/scalar_uint_sized.hpp:
+
+/usr/include/bits/types/clockid_t.h:
+
+/usr/include/c++/16.1.1/bits/new_throw.h:
+
+/usr/include/endian.h:
+
+/usr/include/stdint.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vpopcntdqintrin.h:
+
+/usr/include/c++/16.1.1/bits/exception_ptr.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/fwd.hpp:
+
+/usr/include/c++/16.1.1/cerrno:
+
+/usr/include/asm-generic/posix_types.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/trigonometric.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float2x3_precision.hpp:
+
+/usr/include/c++/16.1.1/climits:
+
+/usr/include/bits/types/timer_t.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/adxintrin.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float3x4.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_vec2.hpp:
+
+/usr/include/c++/16.1.1/string:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vlbwintrin.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_int4_sized.hpp:
+
+/usr/include/c++/16.1.1/bits/locale_classes.tcc:
+
+/usr/include/c++/16.1.1/bits/ostream_print.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/mat3x2.hpp:
+
+/usr/include/c++/16.1.1/bits/uniform_int_dist.h:
+
+/usr/include/stdc-predef.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat2x3.inl:
+
+/usr/include/bits/waitflags.h:
+
+/usr/include/bits/xopen_lim.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat4x3.inl:
+
+/usr/include/bits/types/struct_sched_param.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/func_exponential.inl:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512fp16vlintrin.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/func_matrix.inl:
+
+/usr/include/c++/16.1.1/bits/stl_multimap.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float2x4.hpp:
+
+/usr/include/bits/types/locale_t.h:
+
+/usr/include/c++/16.1.1/experimental/bits/simd_converter.h:
+
+/usr/include/c++/16.1.1/experimental/simd:
+
+/usr/lib/libstdc++.so:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat4x4.hpp:
+
+/usr/include/bits/typesizes.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_bool4.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_double4.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double4x3.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float3x2.hpp:
+
+/usr/include/bits/types/cookie_io_functions_t.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_vec2.inl:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_int3.hpp:
+
+/usr/include/c++/16.1.1/bits/new_allocator.h:
+
+/usr/include/ctype.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double4x2.hpp:
+
+/usr/include/c++/16.1.1/bits/stl_numeric.h:
+
+/usr/include/bits/stdint-intn.h:
+
+/usr/include/bits/wctype-wchar.h:
+
+/usr/include/c++/16.1.1/pstl/pstl_config.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double4x2_precision.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat3x2.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double3x4.hpp:
+
+/usr/include/sys/select.h:
+
+/usr/include/c++/16.1.1/bits/align.h:
+
+/usr/include/c++/16.1.1/cstring:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double3x3_precision.hpp:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/movrsintrin.h:
+
+/usr/include/bits/types/__sigset_t.h:
+
+/usr/include/c++/16.1.1/tuple:
+
+/usr/include/c++/16.1.1/bits/alloc_traits.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/vec4.hpp:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xmmintrin.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat4x2.inl:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512fintrin.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_vec4.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/func_trigonometric.inl:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double2x3_precision.hpp:
+
+/usr/include/c++/16.1.1/bits/ostream.h:
+
+/usr/include/bits/pthread_stack_min-dynamic.h:
+
+/usr/include/c++/16.1.1/bits/codecvt.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double4x3_precision.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/func_common.inl:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/keylockerintrin.h:
+
+/usr/include/bits/locale.h:
+
+/usr/include/c++/16.1.1/bits/concept_check.h:
+
+/usr/include/c++/16.1.1/bits/exception.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/scalar_int_sized.hpp:
+
+/usr/include/c++/16.1.1/bits/invoke.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/setup.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_vec1.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/_fixes.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/vector_relational.hpp:
+
+/usr/include/bits/sched.h:
+
+/usr/include/bits/struct_rwlock.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/bmi2intrin.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_double2_precision.hpp:
+
+/usr/include/bits/types/clock_t.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vpopcntdqvlintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/uintrintrin.h:
+
+/usr/include/bits/types/__fpos_t.h:
+
+/usr/include/bits/mathcalls.h:
+
+/usr/include/c++/16.1.1/cwchar:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_half.hpp:
+
+/usr/include/c++/16.1.1/experimental/bits/simd_fixed_size.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxcomplexintrin.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_double4_precision.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat3x2.inl:
+
+/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/c++locale.h:
+
+/usr/include/locale.h:
+
+/usr/include/c++/16.1.1/utility:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512dqintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/xtestintrin.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/mat4x3.hpp:
+
+/usr/include/c++/16.1.1/bits/specfun.h:
+
+/usr/include/c++/16.1.1/debug/assertions.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat3x4.hpp:
+
+/usr/include/bits/posix2_lim.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/exponential.hpp:
+
+/usr/include/c++/16.1.1/bits/utility.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/image.cpp:
+
+/usr/include/c++/16.1.1/limits:
+
+/usr/include/c++/16.1.1/bit:
+
+/usr/include/bits/floatn-common.h:
+
+/usr/lib/libc.so.6:
+
+/usr/include/bits/fp-fast.h:
+
+/usr/include/sched.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/vec3.hpp:
+
+/usr/include/wctype.h:
+
+/usr/include/c++/16.1.1/bits/functional_hash.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/func_geometric.inl:
+
+/usr/include/c++/16.1.1/bits/node_handle.h:
+
+/usr/include/c++/16.1.1/bits/new_except.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/geometric.hpp:
+
+/usr/include/c++/16.1.1/bits/streambuf_iterator.h:
+
+/usr/include/bits/types/struct_timespec.h:
+
+/usr/include/c++/16.1.1/tr1/modified_bessel_func.tcc:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmi2vlintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mwaitintrin.h:
+
+/usr/include/c++/16.1.1/bits/cpp_type_traits.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double3x2_precision.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_int2.hpp:
+
+/usr/include/bits/types/sigset_t.h:
+
+/usr/include/c++/16.1.1/random:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/gfniintrin.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat3x3.inl:
+
+/usr/include/c++/16.1.1/bits/version.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double2x4_precision.hpp:
+
+/usr/include/linux/types.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat4x2.hpp:
+
+/usr/include/string.h:
+
+/usr/include/c++/16.1.1/bits/stl_pair.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/mat4x4.hpp:
+
+CMakeFiles/RaytracerLab.dir/src/image.cpp.o:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/pkuintrin.h:
+
+/usr/include/bits/posix1_lim.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat4x3.hpp:
+
+/usr/include/c++/16.1.1/bits/random.h:
+
+/usr/include/bits/libm-simd-decl-stubs.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float4x3_precision.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat4x4.inl:
+
+/usr/include/c++/16.1.1/bits/char_traits.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/func_vector_relational.inl:
+
+/usr/include/c++/16.1.1/bits/stl_tempbuf.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/crtbeginS.o:
+
+/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/basic_file.h:
+
+/usr/include/c++/16.1.1/bits/shared_ptr_base.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat2x3.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat2x4.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float4x4.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float3x2_precision.hpp:
+
+/usr/include/c++/16.1.1/ext/numeric_traits.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/mat3x3.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float4x4_precision.hpp:
+
+/usr/include/bits/types/wint_t.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float3x4_precision.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_int3_sized.hpp:
+
+/usr/include/c++/16.1.1/backward/binders.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/mat2x3.hpp:
+
+/usr/include/c++/16.1.1/bits/stl_uninitialized.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxintrin.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float2x2_precision.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/packet.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/mat3x4.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/mat4x2.hpp:
+
+/usr/include/bits/floatn.h:
+
+/usr/include/bits/types/__locale_t.h:
+
+/usr/include/strings.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxifmaintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/raointintrin.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_float2_precision.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/func_integer.inl:
+
+/usr/include/bits/endianness.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_double2.hpp:
+
+/usr/include/c++/16.1.1/experimental/bits/simd_builtin.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double4x4_precision.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/_vectorize.hpp:
+
+/usr/include/bits/cpu-set.h:
+
+/usr/include/c++/16.1.1/bits/basic_ios.tcc:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat2x2.inl:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double2x2_precision.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double2x2.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/integer.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_int4.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_vec1.inl:
+
+/usr/include/c++/16.1.1/bits/std_abs.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float2x4_precision.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_bool2_precision.hpp:
+
+/usr/include/c++/16.1.1/vector:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bitalgvlintrin.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_bool4_precision.hpp:
+
+/usr/include/c++/16.1.1/bits/allocator.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/image.h:
+
+/usr/include/c++/16.1.1/bits/stdexcept_except.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_double3.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float2x2.hpp:
+
+/usr/include/bits/types/struct_itimerspec.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_double3_precision.hpp:
+
+/usr/include/c++/16.1.1/bits/basic_string.tcc:
+
+/usr/include/c++/16.1.1/bits/stl_iterator_base_funcs.h:
+
+/usr/include/bits/types/struct_timeval.h:
+
+/usr/include/c++/16.1.1/bits/ptr_traits.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_float2.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_bool2.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/func_packing.inl:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxneconvertintrin.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_float4.hpp:
+
+/usr/include/asm/posix_types.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_float4_precision.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_uint2.hpp:
+
+/usr/include/c++/16.1.1/experimental/bits/simd_x86_conversions.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_uint3_sized.hpp:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/qualifier.hpp:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512fp16intrin.h:
+
+/usr/include/c++/16.1.1/bits/istream.tcc:
+
+/usr/include/asm/bitsperlong.h:
+
+/usr/include/bits/flt-eval-method.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_half.inl:
+
+/usr/include/c++/16.1.1/bits/ios_base.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float2x3.hpp:
+
+/usr/include/c++/16.1.1/bits/locale_facets.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bwintrin.h:
+
+/usr/include/c++/16.1.1/bits/localefwd.h:
+
+/usr/include/c++/16.1.1/experimental/bits/simd_math.h:
+
+/usr/include/c++/16.1.1/experimental/bits/simd_scalar.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/lwpintrin.h:
+
+/usr/include/c++/16.1.1/bits/memory_resource.h:
+
+/usr/include/c++/16.1.1/cfloat:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mmintrin.h:
+
+/usr/include/c++/16.1.1/bits/memoryfwd.h:
+
+/usr/include/c++/16.1.1/bits/shared_ptr.h:
+
+/usr/include/c++/16.1.1/bits/postypes.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/common.hpp:
+
+/usr/include/c++/16.1.1/sstream:
+
+/usr/lib/libm.so:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_bool3_precision.hpp:
+
+/usr/include/c++/16.1.1/bits/nested_exception.h:
+
+/usr/include/c++/16.1.1/bits/ostream.tcc:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_vec3.hpp:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx2intrin.h:
+
+/usr/include/c++/16.1.1/bits/predefined_ops.h:
+
+/usr/include/c++/16.1.1/bits/range_access.h:
+
+/usr/include/c++/16.1.1/bits/refwrap.h:
+
+/usr/include/bits/types/__fpos64_t.h:
+
+/usr/include/c++/16.1.1/bits/requires_hosted.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/prfchiintrin.h:
+
+/usr/include/c++/16.1.1/bits/std_function.h:
+
+/usr/include/c++/16.1.1/bits/stdexcept_throw.h:
+
+/usr/include/asm-generic/errno.h:
+
+/usr/include/sys/single_threaded.h:
+
+/usr/include/asm/errno.h:
+
+/usr/include/c++/16.1.1/bits/stdexcept_throwfwd.h:
+
+/usr/include/c++/16.1.1/bits/stl_algobase.h:
+
+/usr/include/c++/16.1.1/iostream:
+
+/usr/include/math.h:
+
+/usr/include/c++/16.1.1/array:
+
+/usr/include/c++/16.1.1/bits/stl_bvector.h:
+
+/usr/include/c++/16.1.1/bits/locale_facets.tcc:
+
+/usr/include/c++/16.1.1/bits/stl_construct.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double3x3.hpp:
+
+/usr/include/c++/16.1.1/bits/stl_heap.h:
+
+/usr/include/c++/16.1.1/bits/stl_iterator.h:
+
+/usr/include/c++/16.1.1/bits/locale_facets_nonio.h:
+
+/usr/include/c++/16.1.1/bits/stl_iterator_base_types.h:
+
+/usr/include/c++/16.1.1/cstdio:
+
+/usr/include/bits/uintn-identity.h:
+
+/usr/include/c++/16.1.1/bits/stl_vector.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double4x4.hpp:
+
+/usr/include/c++/16.1.1/bits/streambuf.tcc:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/syslimits.h:
+
+/usr/include/c++/16.1.1/bits/string_view.tcc:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_int2_sized.hpp:
+
+/usr/include/libintl.h:
+
+/usr/include/c++/16.1.1/bits/unordered_map.h:
+
+/usr/include/c++/16.1.1/bits/uses_allocator.h:
+
+/usr/include/c++/16.1.1/bits/vector.tcc:
+
+/usr/include/c++/16.1.1/bits/basic_string.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/stdarg.h:
+
+/usr/include/bits/stdlib-bsearch.h:
+
+/usr/include/c++/16.1.1/clocale:
+
+/usr/include/c++/16.1.1/compare:
+
+/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/c++io.h:
+
+/usr/include/bits/byteswap.h:
+
+/usr/include/c++/16.1.1/concepts:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxbf16intrin.h:
+
+/usr/include/asm/types.h:
+
+/usr/include/c++/16.1.1/cstdint:
+
+/usr/include/c++/16.1.1/cstdlib:
+
+/usr/include/c++/16.1.1/cwctype:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/fxsrintrin.h:
+
 /usr/include/c++/16.1.1/bits/hashtable.h:
 
-/usr/include/c++/16.1.1/bits/hashtable_policy.h:
+/usr/include/bits/stdint-least.h:
+
+/usr/include/c++/16.1.1/exception:
+
+/usr/include/bits/stdio_lim.h:
+
+/usr/include/c++/16.1.1/type_traits:
+
+/usr/include/bits/stdio.h:
+
+/usr/include/c++/16.1.1/ext/aligned_buffer.h:
+
+/usr/include/c++/16.1.1/ext/alloc_traits.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxtf32intrin.h:
+
+/usr/include/c++/16.1.1/ext/type_traits.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2copyintrin.h:
+
+/usr/include/c++/16.1.1/fstream:
+
+/usr/include/c++/16.1.1/functional:
+
+/usr/include/c++/16.1.1/initializer_list:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_float3x3.hpp:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2convertintrin.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/compute_vector_relational.hpp:
+
+/usr/include/c++/16.1.1/ios:
+
+/usr/include/c++/16.1.1/istream:
+
+/usr/include/c++/16.1.1/pstl/execution_defs.h:
+
+/usr/include/c++/16.1.1/tr1/hypergeometric.tcc:
+
+/usr/include/c++/16.1.1/pstl/glue_algorithm_defs.h:
+
+/usr/include/errno.h:
+
+/usr/include/c++/16.1.1/stdexcept:
+
+/usr/include/c++/16.1.1/streambuf:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/simd/platform.h:
+
+/usr/include/c++/16.1.1/string_view:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/mat2x2.hpp:
+
+/usr/include/c++/16.1.1/system_error:
+
+/usr/include/c++/16.1.1/tr1/bessel_function.tcc:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/intersector.cpp:
+
+/usr/include/c++/16.1.1/tr1/riemann_zeta.tcc:
+
+/usr/include/c++/16.1.1/tr1/beta_function.tcc:
+
+/usr/include/c++/16.1.1/tr1/ell_integral.tcc:
+
+/usr/include/c++/16.1.1/tr1/gamma.tcc:
+
+/usr/include/bits/pthreadtypes-arch.h:
+
+/usr/include/c++/16.1.1/tr1/poly_hermite.tcc:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/rtmintrin.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/compute_common.hpp:
+
+/usr/include/c++/16.1.1/tr1/poly_laguerre.tcc:
+
+/usr/include/c++/16.1.1/typeinfo:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/mesh.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxvnniint16intrin.h:
+
+/usr/include/c++/16.1.1/unordered_map:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_float3.hpp:
+
+/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_uint4.hpp:
+
+/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/c++config.h:
+
+/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/ctype_base.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/hresetintrin.h:
+
+/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/error_constants.h:
+
+/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/gthr.h:
+
+/usr/include/bits/mathcalls-helper-functions.h:
+
+/usr/include/c++/16.1.1/cctype:
+
+/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/os_defines.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/emmintrin.h:
+
+/usr/include/features-time64.h:
+
+/usr/include/c++/16.1.1/experimental/bits/simd.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/ammintrin.h:
+
+/usr/include/gnu/stubs-64.h:
+
+/usr/include/gnu/stubs.h:
+
+/usr/include/limits.h:
+
+/usr/include/linux/sched/types.h:
+
+/usr/lib/libmvec.so.1:
+
+/usr/include/bits/fp-logb.h:
+
+/usr/include/linux/stddef.h:
+
+/usr/include/pthread.h:
+
+/usr/include/stdlib.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/c++/16.1.1/bits/ostream_insert.h:
+
+/usr/include/sys/types.h:
+
+/usr/include/time.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/prfchwintrin.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat3x3.hpp:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/stdint.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/shading.cpp:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mm3dnow.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/intersector.h:
+
+/usr/include/wchar.h:
+
+/usr/include/c++/16.1.1/bits/locale_conv.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/packing.hpp:
+
+/usr/include/c++/16.1.1/bits/locale_facets_nonio.tcc:
+
+/usr/include/c++/16.1.1/bits/quoted_string.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/clwbintrin.h:
+
+/usr/include/c++/16.1.1/bits/sstream.tcc:
+
+/usr/include/c++/16.1.1/bits/stl_relops.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxint8intrin.h:
+
+CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vlintrin.h:
+
+/usr/include/linux/errno.h:
+
+/usr/include/c++/16.1.1/bitset:
+
+/usr/include/c++/16.1.1/ctime:
+
+/usr/include/bits/select.h:
+
+/usr/include/c++/16.1.1/experimental/bits/numeric_traits.h:
+
+/usr/include/c++/16.1.1/experimental/bits/simd_detail.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_vec3.inl:
+
+/usr/include/c++/16.1.1/bits/basic_ios.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat2x4.inl:
+
+/usr/include/c++/16.1.1/experimental/bits/simd_x86.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/rdseedintrin.h:
+
+/usr/include/c++/16.1.1/iomanip:
+
+/usr/include/c++/16.1.1/locale:
+
+/usr/include/bits/libc-header-start.h:
+
+/usr/include/c++/16.1.1/stdlib.h:
+
+/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/time_members.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bf16vlintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxfp16intrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/float.h:
+
+/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/ctype_inline.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxfp8intrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxmovrsintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/amxtileintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2bf16intrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2minmaxintrin.h:
+
+/usr/include/alloca.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/matrix_double3x4_precision.hpp:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx10_2satcvtintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bf16intrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bitalgintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/limits.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bmmintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512bmmvlintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512ifmaintrin.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_mat3x4.inl:
+
+/usr/include/c++/16.1.1/ext/atomicity.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512ifmavlintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmi2intrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vbmivlintrin.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/detail/type_vec4.inl:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vnniintrin.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/matrix.hpp:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avx512vp2intersectvlintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mwaitxintrin.h:
+
+/usr/include/c++/16.1.1/tr1/special_function_util.h:
+
+/usr/include/c++/16.1.1/tr1/exp_integral.tcc:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxvnniint8intrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/avxvnniintrin.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_float3_precision.hpp:
+
+/usr/include/c++/16.1.1/cstddef:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/bmiintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/cetintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/clflushoptintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/clzerointrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/cmpccxaddintrin.h:
+
+/home/arch/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/external/glm/ext/vector_uint4_sized.hpp:
+
+/usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/c++allocator.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/enqcmdintrin.h:
+
+/usr/include/c++/16.1.1/bits/stl_algo.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/stddef.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/f16cintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/fma4intrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/fmaintrin.h:
+
+/usr/include/asm/posix_types_64.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/ia32intrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/immintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/lzcntintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/mm_malloc.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/pmmintrin.h:
