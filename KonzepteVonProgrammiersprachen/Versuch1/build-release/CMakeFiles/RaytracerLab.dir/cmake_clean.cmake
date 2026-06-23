@@ -1,11 +1,11 @@
 file(REMOVE_RECURSE
   "CMakeFiles/RaytracerLab.dir/link.d"
-  "CMakeFiles/RaytracerLab.dir/src/bvh.cpp.o"
-  "CMakeFiles/RaytracerLab.dir/src/bvh.cpp.o.d"
   "CMakeFiles/RaytracerLab.dir/src/image.cpp.o"
   "CMakeFiles/RaytracerLab.dir/src/image.cpp.o.d"
   "CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o"
   "CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o.d"
+  "CMakeFiles/RaytracerLab.dir/src/kdtree.cpp.o"
+  "CMakeFiles/RaytracerLab.dir/src/kdtree.cpp.o.d"
   "CMakeFiles/RaytracerLab.dir/src/main.cpp.o"
   "CMakeFiles/RaytracerLab.dir/src/main.cpp.o.d"
   "CMakeFiles/RaytracerLab.dir/src/mesh.cpp.o"
