@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.10.5)  3 JUN 2026 13:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.10.5)  24 JUN 2026 12:32
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -628,89 +628,137 @@ pdfTeX warning (ext4): destination with the same identifier (name{table.2}) has 
                                                   \__shipout_drop_firstpage_...
 l.293 ...ection{Struktur und Aufbau des k-d-Baums}
                                                   ]
-c:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/doc/Projektbericht.tex:330: Missing $ inserted.
-<inserted text> 
-                $
-l.330         A
-               ufgabe 1: Brute-Force (M.-T.)   & 262182 & {1,50\times} \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
 
-c:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/doc/Projektbericht.tex:330: Missing $ inserted.
-<inserted text> 
-                $
-l.330         A
-               ufgabe 1: Brute-Force (M.-T.)   & 262182 & {1,50\times} \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/doc/Projektbericht.tex:331: Missing $ inserted.
-<inserted text> 
-                $
-l.331         A
-               ufgabe 2: k-d-Baum              & 2222   & {177,4\times} \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/doc/Projektbericht.tex:331: Missing $ inserted.
-<inserted text> 
-                $
-l.331         A
-               ufgabe 2: k-d-Baum              & 2222   & {177,4\times} \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/doc/Projektbericht.tex:332: Missing $ inserted.
-<inserted text> 
-                $
-l.332         A
-               ufgabe 3: AVX Packet Tracing    & {--}   & {--} \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/doc/Projektbericht.tex:332: Missing $ inserted.
-<inserted text> 
-                $
-l.332         A
-               ufgabe 3: AVX Packet Tracing    & {--}   & {--} \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-
-Overfull \hbox (4.26572pt too wide) in paragraph at lines 337--338
-\T1/lmr/m/n/10.95 Die bis-he-ri-ge Im-ple-men-tie-rung stellt ei-ne funk-ti-ons-fä-hi-ge Ba-sis-li-nie dar. Der Badouel-Algorithmus
+[7]
+Overfull \hbox (23.02815pt too wide) in paragraph at lines 325--326
+\T1/lmr/m/n/10.95 wie die Be-rech-nung der Schat-ten-strah-len) un-ter Aus-nut-zung al-ler \T1/lmtt/m/n/10.95 stdx::simd\T1/lmr/m/n/10.95 -Mathematikfunktionen
  []
 
+c:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/doc/Projektbericht.tex:340: Missing $ inserted.
+<inserted text> 
+                $
+l.340         A
+               ufgabe 1: Brute-Force (M.-T.)   & 635870 & {1,5\times} \\
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+c:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/doc/Projektbericht.tex:340: Missing $ inserted.
+<inserted text> 
+                $
+l.340         A
+               ufgabe 1: Brute-Force (M.-T.)   & 635870 & {1,5\times} \\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+c:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/doc/Projektbericht.tex:341: Missing $ inserted.
+<inserted text> 
+                $
+l.341         A
+               ufgabe 2: k-d-Baum (Median)     & 3846   & {248,6\times} \\
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+c:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/doc/Projektbericht.tex:341: Missing $ inserted.
+<inserted text> 
+                $
+l.341         A
+               ufgabe 2: k-d-Baum (Median)     & 3846   & {248,6\times} \\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+c:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/doc/Projektbericht.tex:342: Missing $ inserted.
+<inserted text> 
+                $
+l.342         A
+               ufgabe 2: k-d-Baum (SAH)        & 1802   & {530,7\times} \\
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+c:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/doc/Projektbericht.tex:342: Missing $ inserted.
+<inserted text> 
+                $
+l.342         A
+               ufgabe 2: k-d-Baum (SAH)        & 1802   & {530,7\times} \\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+c:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/doc/Projektbericht.tex:343: Missing $ inserted.
+<inserted text> 
+                $
+l.343         A
+               ufgabe 3: AVX Packet Tracing    & 167    & {5726,0\times} \\
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+c:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/doc/Projektbericht.tex:343: Missing $ inserted.
+<inserted text> 
+                $
+l.343         A
+               ufgabe 3: AVX Packet Tracing    & 167    & {5726,0\times} \\
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+c:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/doc/Projektbericht.tex:344: Missing $ inserted.
+<inserted text> 
+                $
+l.344         \bottomrule
+                         
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+c:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/doc/Projektbericht.tex:344: Missing $ inserted.
+<inserted text> 
+                $
+l.344         \bottomrule
+                         
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
 
 
-[7
-pdfTeX warning (ext4): destination with the same identifier (name{table.3}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.338 
-      ]
-<../build-release/output_moeller.png, id=115, 501.875pt x 501.875pt>
-File: ../build-release/output_moeller.png Graphic file (type png)
-<use ../build-release/output_moeller.png>
-Package pdftex.def Info: ../build-release/output_moeller.png  used on input line 341.
-(pdftex.def)             Requested size: 318.66948pt x 318.68707pt.
+LaTeX Warning: File `../build-release/output_moeller.png' not found on input line 354.
+
+
+c:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/doc/Projektbericht.tex:354: Package pdftex.def Error: File `../build-release/output_moeller.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.354 ...dth]{../build-release/output_moeller.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 
 
 [8
+pdfTeX warning (ext4): destination with the same identifier (name{table.3}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.358 
+      ]
+
+[9
 pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.346 \end{document}
-                     <../build-release/output_moeller.png>] (./Projektbericht.aux)
+l.359 \end{document}
+                    ] (./Projektbericht.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-09-02>
@@ -726,21 +774,21 @@ Package rerunfilecheck Warning: File `Projektbericht.out' has changed.
 
 Package rerunfilecheck Info: Checksums for `Projektbericht.out':
 (rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  EEEA3072FB98A0B13EE1813833E4D0CF;2796.
+(rerunfilecheck)             After:  879A9EFD30ACC7EAC4FAECCF4B0F6236;3056.
  ) 
 Here is how much of TeX's memory you used:
- 18381 strings out of 467748
- 342557 string characters out of 5431138
+ 18406 strings out of 467748
+ 343638 string characters out of 5431138
  1018689 words of memory out of 5000000
- 46788 multiletter control sequences out of 15000+600000
+ 46811 multiletter control sequences out of 15000+600000
  689840 words of font info for 71 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,13n,79p,1274b,1352s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmmi10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmsy8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtk10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt9.pfb>
-Output written on Projektbericht.pdf (9 pages, 495664 bytes).
+Output written on Projektbericht.pdf (10 pages, 442250 bytes).
 PDF statistics:
- 205 PDF objects out of 1000 (max. 8388607)
- 160 compressed objects within 2 object streams
- 71 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 211 PDF objects out of 1000 (max. 8388607)
+ 166 compressed objects within 2 object streams
+ 73 named destinations out of 1000 (max. 500000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

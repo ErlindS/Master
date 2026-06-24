@@ -1,12 +1,12 @@
 # Fdb version 4
-["pdflatex"] 1780486946.16159 "c:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/doc/Projektbericht.tex" "Projektbericht.pdf" "Projektbericht" 1780486947.4775 2
-  "../build-release/output_moeller.png" 1780484195 56624 f9e626fe4169fecf3abb3785f0204fd1 ""
+["pdflatex"] 1782297125.49483 "c:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/doc/Projektbericht.tex" "Projektbericht.pdf" "Projektbericht" 1782297127.03802 2
+  "../build-release/output_moeller.png" 0 -1 0 ""
   "HKA.jpg" 1778098059 111183 109714fd3e8d014f37d8c3c68d4dfe43 ""
-  "Projektbericht.aux" 1780486947 3603 e248f2aa6689da9e6a9523f907dc9e8d "pdflatex"
-  "Projektbericht.out" 1780486947 2796 eeea3072fb98a0b13ee1813833e4d0cf "pdflatex"
-  "Projektbericht.tex" 1780486923 23207 7095eb1cc1fefefc5c33b7de329e21cf ""
-  "Projektbericht.toc" 1780486947 1244 23c6ca471e194dea8ad2cf120746593b "pdflatex"
-  "c:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/doc/Projektbericht.tex" 1780486923 23207 7095eb1cc1fefefc5c33b7de329e21cf ""
+  "Projektbericht.aux" 1782297126 3797 2b186426a375d733be4e6c76140f3920 "pdflatex"
+  "Projektbericht.out" 1782297126 3056 879a9efd30acc7eac4faeccf4b0f6236 "pdflatex"
+  "Projektbericht.tex" 1782297100 26206 08e95f16444955779937b1bac699bd29 ""
+  "Projektbericht.toc" 1782297126 1348 1ca453aa832cb0f9a7df5bd27865231a "pdflatex"
+  "c:/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/doc/Projektbericht.tex" 1782297100 26206 08e95f16444955779937b1bac699bd29 ""
   "c:/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1759674061 2375 baa924870cfb487815765f9094cf3728 ""
   "c:/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc" 1759674061 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
   "c:/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc" 1759674061 2840 216e6e45ad352e2456e1149f28885bee ""

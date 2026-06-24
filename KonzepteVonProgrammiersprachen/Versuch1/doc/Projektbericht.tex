@@ -1,5 +1,5 @@
 % =============================================================================
-% Projektbericht – Konzepte von Programmiersprachen
+% Projektbericht Konzepte von Programmiersprachen
 % Raytracer-Optimierung, SS 2026
 % Hochschule Karlsruhe (HKA)
 % =============================================================================
@@ -276,14 +276,14 @@ Die Zeitmessung erfolgt über \texttt{std::chrono::high\_resolution\_clock} und 
         \toprule
         \textbf{Konfiguration} & {\textbf{Badouel [ms]}} & {\textbf{Möller-Trumbore [ms]}} \\
         \midrule
-        Release (mit \texttt{-O3 -march=native})    & 394279 & 262182 \\
+        Release (mit \texttt{-O3 -march=native})    & 956245 & 635870 \\
         \bottomrule
     \end{tabular}
 \end{table}
 
 Die Messergebnisse zeigen die Ausführungszeiten im vollständig optimierten Release-Modus (Compiler-Flags \texttt{-O3 -march=native}). Die Renderzeiten beinhalten Anti-Aliasing (4$\times$ Multisampling), Blinn-Phong-Beleuchtung mit Normaleninterpolation, Shadow Rays sowie eine Bodenebene für sichtbare Schatten. Es zeigt sich, dass der Möller-Trumbore-Algorithmus unsere Baseline (Badouel) durch Reduktion von Branching und Verzicht auf Ebenenkonstruktion messbar schlägt. Der Geschwindigkeitsvorteil beträgt hierbei etwa den Faktor $1{,}50\times$.
 
-Trotz des Einsatzes des performanteren Algorithmus bleibt die absolute Renderzeit mit rund 394 Sekunden (Badouel) bzw. 262 Sekunden (Möller-Trumbore) sehr hoch. Die Ursache liegt in der linearen Komplexität $\mathcal{O}(n)$ der Brute-Force-Suche pro Strahl, wobei $n$ die Anzahl der Dreiecke in der Szene bezeichnet. Dies motiviert die Einführung einer hierarchischen Beschleunigungsdatenstruktur in der nachfolgenden Aufgabe.
+Trotz des Einsatzes des performanteren Algorithmus bleibt die absolute Renderzeit mit rund 956 Sekunden (Badouel) bzw. 636 Sekunden (Möller-Trumbore) sehr hoch. Die Ursache liegt in der linearen Komplexität $\mathcal{O}(n)$ der Brute-Force-Suche pro Strahl, wobei $n$ die Anzahl der Dreiecke in der Szene bezeichnet. Dies motiviert die Einführung einer hierarchischen Beschleunigungsdatenstruktur in der nachfolgenden Aufgabe.
 
 % =============================================================================
 \section{Aufgabe 2: Beschleunigungsdatenstruktur}
@@ -308,21 +308,21 @@ Verfehlt der Strahl die Bounding Box eines Knotens, können alle darunterliegend
 
 Erreicht die Traversierung einen Blattknoten, werden die enthaltenen Dreiecke mittels Möller-Trumbore-Algorithmus (oder Badouel) auf Schnittpunkte geprüft. Durch die Reduzierung der Komplexität von $\mathcal{O}(n)$ auf den durchschnittlichen Fall von $\mathcal{O}(\log n)$ verringert sich die Anzahl der zwingend notwendigen Strahl-Dreieck-Tests erheblich. Die Renderzeit der 18\,032 Dreiecke fassenden Teekannen-Szene sinkt durch den Einsatz des k-d-Baums drastisch.
 
-% =============================================================================
-\section{Aufgabe 3: Surface-Area-Heuristik (SAH)}
-% =============================================================================
+% -----------------------------------------------------------------------------
+\subsection{Optional: Surface-Area-Heuristik (SAH)}
+% -----------------------------------------------------------------------------
 
 Aufbauend auf dem bestehenden Beschleunigungsbaum mit Median-Split wurde als weitere Optimierung die Surface-Area-Heuristik (SAH) implementiert. Anstatt den Raum in jedem Schritt stur in der Mitte zu teilen, bewertet SAH verschiedene potenzielle Split-Ebenen anhand der daraus resultierenden Bounding-Box-Oberflächen. Da die Wahrscheinlichkeit, dass ein Strahl eine Bounding-Box trifft, proportional zu ihrer Oberfläche ist, minimiert dieser Ansatz die erwarteten Kosten für zukünftige Schnittpunkttests.
 
-Die Implementierung prüft entlang aller drei Achsen mögliche Split-Positionen, die durch die Schwerpunkte der Dreiecke definiert sind. Durch effiziente Vorabberechnungen der Flächen (mittels Sweeps von links nach rechts und umgekehrt) werden die Kosten in linearer Zeit ermittelt. Der Split mit den geringsten Gesamtkosten wird gewählt, sofern er günstiger ist als die Erstellung eines Blattknotens. Der Wechsel zum SAH-Split hat die Renderzeit von 1586\,ms auf 743\,ms weiter drastisch reduziert.
+Die Implementierung prüft entlang aller drei Achsen mögliche Split-Positionen, die durch die Schwerpunkte der Dreiecke definiert sind. Durch effiziente Vorabberechnungen der Flächen (mittels Sweeps von links nach rechts und umgekehrt) werden die Kosten in linearer Zeit ermittelt. Der Split mit den geringsten Gesamtkosten wird gewählt, sofern er günstiger ist als die Erstellung eines Blattknotens. Der Wechsel zum SAH-Split hat die Renderzeit von 3846\,ms auf 1802\,ms weiter drastisch reduziert.
 
 % =============================================================================
-\section{Aufgabe 4: AVX-Optimierung mit Packet Tracing}
+\section{Aufgabe 3: AVX-Optimierung mit Packet Tracing}
 % =============================================================================
 
 Um die Hardware-Ebene der x86-Prozessoren besser auszunutzen, wurde das Tracing der Primärstrahlen mit Hilfe der experimentellen C++ SIMD-Befehle (\texttt{<experimental/simd>}) vektorisiert. Hierbei werden kohärente Primärstrahlen (z.B. 8 Strahlen in einer Bildzeile) zu einem \texttt{RayPacket} im Structure-of-Arrays (SoA) Format gebündelt. 
 
-Dieses Paket wird dann als Einheit durch den Beschleunigungsbaum traversiert. Der Slab-Test in den Bounding-Boxen sowie der Möller-Trumbore-Algorithmus an den Blattknoten werten bis zu 8 Strahlen simultan in Vektorregistern aus. Um Masking-Probleme in den SIMD-Variablen zu umgehen, wird unter anderem der getroffene Dreiecks-Index als \texttt{floatv} in der \texttt{IntersectionPacket}-Struktur abgelegt. Als ultimative Optimierung wurde zudem die gesamte Schattierungslogik (inkl. Normalenberechnung, Beleuchtung via Punkt- und Kreuzprodukten sowie die Berechnung der Schattenstrahlen) unter Ausnutzung aller \texttt{stdx::simd}-Mathematikfunktionen (\texttt{stdx::max}, \texttt{stdx::pow}, \texttt{stdx::clamp} etc.) auf volle Vektorbreite umgestellt. Auch die Schattenstrahlen werden als komplettes Paket parallel auf Okklusion geprüft. Diese tiefgreifende Vektorisierung senkt die Renderzeit auf sagenhafte 77\,ms.
+Dieses Paket wird dann als Einheit durch den Beschleunigungsbaum traversiert. Der Slab-Test in den Bounding-Boxen sowie der Möller-Trumbore-Algorithmus an den Blattknoten werten bis zu 8 Strahlen simultan in Vektorregistern aus. Um Masking-Probleme in den SIMD-Variablen zu umgehen, wird unter anderem der getroffene Dreiecks-Index als \texttt{floatv} in der \texttt{IntersectionPacket}-Struktur abgelegt. Als ultimative Optimierung wurde zudem die gesamte Schattierungslogik (inkl. Normalenberechnung, Beleuchtung via Punkt- und Kreuzprodukten sowie die Berechnung der Schattenstrahlen) unter Ausnutzung aller \texttt{stdx::simd}-Mathematikfunktionen (\texttt{stdx::max}, \texttt{stdx::pow}, \texttt{stdx::clamp} etc.) auf volle Vektorbreite umgestellt. Auch die Schattenstrahlen werden als komplettes Paket parallel auf Okklusion geprüft. Diese tiefgreifende Vektorisierung senkt die Renderzeit auf sagenhafte 167\,ms.
 
 % =============================================================================
 \section{Zusammenfassung und Ausblick}
@@ -336,18 +336,18 @@ Dieses Paket wird dann als Einheit durch den Beschleunigungsbaum traversiert. De
         \toprule
         \textbf{Implementierungsschritt} & {\textbf{Renderzeit [ms]}} & {\textbf{Speedup}} \\
         \midrule
-        Aufgabe 1: Brute-Force (Badouel) & 394279 & {1,0\times} \\
-        Aufgabe 1: Brute-Force (M.-T.)   & 262182 & {1,5\times} \\
-        Aufgabe 2: k-d-Baum (Median)     & 1586   & {248,6\times} \\
-        Aufgabe 3: k-d-Baum (SAH)        & 743    & {530,7\times} \\
-        Aufgabe 4: AVX Packet Tracing    & 77     & {5120,5\times} \\
+        Aufgabe 1: Brute-Force (Badouel) & 956245 & {1,0\times} \\
+        Aufgabe 1: Brute-Force (M.-T.)   & 635870 & {1,5\times} \\
+        Aufgabe 2: k-d-Baum (Median)     & 3846   & {248,6\times} \\
+        Aufgabe 2: k-d-Baum (SAH)        & 1802   & {530,7\times} \\
+        Aufgabe 3: AVX Packet Tracing    & 167    & {5726,0\times} \\
         \bottomrule
     \end{tabular}
 \end{table}
 
 Die Entwicklung dieses Raytracers verdeutlicht eindrucksvoll die kumulative Wirkung algorithmischer und technischer Optimierungen. Während die Auswahl des effizienteren Möller-Trumbore-Schnittpunkttests einen soliden Grundbaustein legte (Faktor 1,5), brachte erst die Umstellung der linearen Suchkomplexität auf eine logarithmische Suche durch den k-d-Baum den entscheidenden Durchbruch (Faktor 248). 
 
-Die verfeinerte Aufbauheuristik (SAH) verdoppelte diese Performance nochmals, indem sie die Baumstruktur optimal an die Strahlenwahrscheinlichkeiten anpasste. Die abschließende Nutzung der Hardware-Vektorisierung (AVX/SIMD) durch paralleles Packet Tracing sowohl für Primär- als auch Schattenstrahlen sowie vektorisiertes Shading reduzierte die Renderzeit auf nahezu in Echtzeit ablaufende 77 Millisekunden – das entspricht einem gigantischen Speedup um den Faktor 5120 gegenüber der ursprünglichen Brute-Force-Variante.
+Die verfeinerte Aufbauheuristik (SAH) verdoppelte diese Performance nochmals, indem sie die Baumstruktur optimal an die Strahlenwahrscheinlichkeiten anpasste. Die abschließende Nutzung der Hardware-Vektorisierung (AVX/SIMD) durch paralleles Packet Tracing sowohl für Primär- als auch Schattenstrahlen sowie vektorisiertes Shading reduzierte die Renderzeit auf nahezu in Echtzeit ablaufende 167 Millisekunden – das entspricht einem gigantischen Speedup um den Faktor 5726 gegenüber der ursprünglichen Brute-Force-Variante.
 
 \begin{figure}[H]
     \centering
