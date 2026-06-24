@@ -1,8 +1,8 @@
 CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o: \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/intersector.cpp \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/intersector.cpp \
  /usr/include/stdc-predef.h \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/intersector.h \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/ray.h \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/intersector.h \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/ray.h \
  /usr/include/glm/glm.hpp /usr/include/glm/detail/_fixes.hpp \
  /usr/include/c++/11/cmath \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
@@ -219,7 +219,7 @@ CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o: \
  /usr/include/glm/detail/type_half.hpp \
  /usr/include/glm/detail/type_half.inl /usr/include/glm/integer.hpp \
  /usr/include/glm/detail/func_integer.inl \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/packet.h \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/packet.h \
  /usr/include/c++/11/experimental/simd \
  /usr/include/c++/11/experimental/bits/simd_detail.h \
  /usr/include/c++/11/experimental/bits/simd.h \

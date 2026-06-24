@@ -1,5 +1,5 @@
 CMakeFiles/RaytracerLab.dir/src/main.cpp.o: \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/main.cpp \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/main.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/11/iostream \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
@@ -153,8 +153,8 @@ CMakeFiles/RaytracerLab.dir/src/main.cpp.o: \
  /usr/include/c++/11/bits/istream.tcc /usr/include/c++/11/chrono \
  /usr/include/c++/11/ratio /usr/include/c++/11/limits \
  /usr/include/c++/11/ctime /usr/include/c++/11/bits/parse_numbers.h \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/scene.h \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/mesh.h \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/scene.h \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/mesh.h \
  /usr/include/c++/11/vector /usr/include/c++/11/bits/stl_uninitialized.h \
  /usr/include/c++/11/bits/stl_vector.h \
  /usr/include/c++/11/bits/stl_bvector.h \
@@ -323,11 +323,11 @@ CMakeFiles/RaytracerLab.dir/src/main.cpp.o: \
  /usr/include/c++/11/backward/auto_ptr.h \
  /usr/include/c++/11/pstl/glue_memory_defs.h \
  /usr/include/c++/11/pstl/execution_defs.h \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/camera.h \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/ray.h \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/shading.h \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/intersector.h \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/packet.h \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/camera.h \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/ray.h \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/shading.h \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/intersector.h \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/packet.h \
  /usr/include/c++/11/experimental/simd \
  /usr/include/c++/11/experimental/bits/simd_detail.h \
  /usr/include/c++/11/experimental/bits/simd.h \
@@ -453,5 +453,5 @@ CMakeFiles/RaytracerLab.dir/src/main.cpp.o: \
  /usr/include/c++/11/bits/locale_conv.h \
  /usr/include/c++/11/bits/quoted_string.h /usr/include/c++/11/sstream \
  /usr/include/c++/11/bits/sstream.tcc \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/renderer.h \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/image.h
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/renderer.h \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/image.h
