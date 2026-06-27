@@ -234,6 +234,11 @@ INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmtt9.tfm
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmr9.tfm
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmr6.tfm
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmtk10.tfm
+INPUT ../build-release/output_moeller.png
+INPUT ../build-release/output_moeller.png
+INPUT ../build-release/output_moeller.png
+INPUT ../build-release/output_moeller.png
+INPUT ../build-release/output_moeller.png
 INPUT Projektbericht.aux
 INPUT ./Projektbericht.out
 INPUT ./Projektbericht.out
