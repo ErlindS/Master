@@ -1,3 +1,66 @@
+\documentclass[11pt]{article}
+
+%%| INCLUDE PACKAGES HERE |%%
+\usepackage[utf8]{inputenc}
+\usepackage[paper=a4paper,left=25mm,right=25mm,top=25mm,bottom=25mm]{geometry}
+\usepackage[english, ngerman]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[autostyle=true,german=quotes]{csquotes}
+\usepackage[backend=biber, style=ieee]{biblatex}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{microtype}
+
+%%| SET PACKAGE PARAMETERS HERE |%%
+\hypersetup{                                                                        
+    colorlinks,
+    citecolor   = black,
+    filecolor   = black,
+    linkcolor   = black,
+    urlcolor    = black,
+    pdftitle    = {Labor ABCDEFGHIJ},                                               % SET FILE PARAMETERS HERE (SHOWN IN PDF PROPERTIES)
+    pdfsubject  = {Einführung in ABCDEFGHIJ},                                       % ...
+    pdfauthor   = {Max Mustermann},                                                 % ...
+    pdfkeywords = {XY-Labor, Laborbericht ...} ,                                    % ...
+    pdfcreator  = {pdflatex},           
+    pdfproducer = {LaTeX with hyperref}
+}
+\setstretch{1.25}                                                                   % SET GENERAL LINE SPACING HERE
+
+%%| SET OTHER PARAMETERS HERE |%%
+\addbibresource{Document/Bibliography/ref.bib}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%| TITLE PAGE |%%
+\begin{document}
+\begin{titlepage}
+    \begin{center}
+        \includegraphics[width=0.55\textwidth]{Images/Template/HsKa_new.png}\\[16ex]
+        \huge{\textbf{Ethik für Informatik}}\\[8ex]
+        \large{\textbf{Take-Home-Aufgabe}}\\[1ex]
+        \normalsize{}
+        \begin{tabular}{lll}
+            Student:            & \quad Erlind Sejdiu                                & 106357 \\[2ex]     % NUMBER IS MAT.NR
+            Universität:        & \quad Hochschule Karlsruhe Technik und Wirtschaft   &       \\[2ex]
+            Studiengang:        & \quad Informatik- und Wirtschaftsinformatik           &       \\[2ex]
+            Studienvertiefung:  & \quad Informatik Master                         &       \\[2ex]
+            Semester:           & \quad Sommersemester 2026                             &       \\[2ex]
+            Dozent:             & \quad Prof. Dr. Ziad Mahayni                       &       \\[2ex]
+            Bearbeitet am:      & \quad 28. Juni 2026                                  &       \\[2ex]
+        \end{tabular}
+    \end{center}
+\end{titlepage}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%| TABLE OF CONTENTS |%%
+\pagenumbering{gobble}    
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+
 1. (450 Wörter)
 Die digitale Ethik beschäftigt sich mit moralischen Fragen von der Nutzung digitaler Techniken. 
 
@@ -27,14 +90,23 @@ Ein weiterer Apspekt bezüglich dem AI-Bias ist die Fairness. Wie oben beschrieb
 
 3. (600 Wörter)
 
-(400 Wörter) AI-Bias
+(400 Wörter) Vorstellung der Studie
+
+    (200 Wörter was das Ziel ist)
+
+    (300 Wie diese erreicht wurden und was erreicht wurde )
 
 
-(200 Wörter) Zuordnung mit Begründung
+(200 Wörter) Zuordnung mit Begründung und Fazit
 
 4. (800 Wörter)
 400 Wörter was ist eine Infokalypse, wodurch diese entsteht
-Ab dem Moment wo synthetische Medieninhalte nicht mehr von der Realität unterschieden werden können, kann von einer Infokalypse gesprochen werden. In der Vergangenheit war das Problem minimaler, da es aufwendiger war synthetische Inhalte zu ersellen, aber schon die ersten Inhalte existierten im Jahr <Stalin Foto>. Die Infokalypse ist erst in den vergangenen Jahr verstärkt aufgetreten, da man mithilfe von KI einfacher solche Inhalte erstellen kann. Darunter zählen KI generierte Texte als auch Deepfakes. Die Erstellung solche Inhalt mehrere Probleme welche Folgen.
+(100 Wörter was Infokalpyse ist)
+Ab dem Moment wo synthetische Medieninhalte nicht mehr von der Realität unterschieden werden können, kann von einer Infokalypse gesprochen werden. In der Vergangenheit war das Problem minimaler, da es aufwendiger war synthetische Inhalte zu ersellen, aber schon die ersten Inhalte existierten im Jahr <Stalin Foto>. Die Infokalypse ist erst in den vergangenen Jahr verstärkt aufgetreten, da man mithilfe von KI einfacher solche Inhalte erstellen kann. Darunter zählen KI generierte Texte als auch Deepfakes. Der Begriff ist demnächst in ... und wurde von erneuert aufgegriffen. 
+
+(300 Wörter folgen?)
+
+Die Erstellung solche Inhalt mehrere Probleme welche Folgen.
 
 
 Das mit einhergehende Problem ist, dass Menschen sich das gerne aussuchen wollen, was sie glauben wollen, da jede Seite argumentative schon vorhanden ist. Wenn ich als Person Stellung zu meiner Position beziehen will, so kann ich einfach nach meiner Position suchen und mir werden Argumente geliefert, welche ich unterstütztend einsetzen kann. Jedoch ist es so, dass die gennanten Argumente auf Falsch Informationen beruhen. 
@@ -46,7 +118,14 @@ Diese Tatsache ist für demokratische Gesellschaften besonders gefährlich. Dami
 Eine demokratische Gesellschaft basiert auf politische partizipationBürgern, welche rational handeln, diskutieren und sich einigen können über konkrete Themen. Mit der Infokalypse werden genau diese Eigenschaft geschwächt. 
 
 (1. Argument)
-Die Gesellschaft wird durch die Informationsflut manipuliert. Eins der Auffälligsten Beispiel, ist die US-Amerikanische Wahl 2016. Dabei hat Donald Trump die Daten von Cambridge Analytica genutzt, um gezielt Falschinformationen an die Bevölkerung zu verbreiten. Das Resultat ist, dass 87 Millionen Wählerprofile manipuliert wurden. Das ist mehr als die Hälfte aller Wahlberechtigten der Vereinigten Staaten. Jedoch existieren ebenfalls Beispiele welche konkret in Deutschland stattfinden. Dabei können schwurbler als auch die AFD als Beispiel genannt werden. 
+Die Gesellschaft wird durch die Informationsflut manipuliert. Eins der Auffälligsten Beispiel, ist die US-Amerikanische Wahl 2016. Dabei hat Donald Trump die Daten von Cambridge Analytica genutzt, um gezielt Falschinformationen an die Bevölkerung zu verbreiten. Das Resultat ist, dass 87 Millionen Wählerprofile manipuliert wurden. Das ist mehr als die Hälfte aller Wahlberechtigten der Vereinigten Staaten. Jedoch existieren ebenfalls Beispiele welche konkret in Deutschland stattfinden. Dabei können schwurbler als auch die AFD als Beispiel genannt werden. Dabei wurden unterschiedliche Beispiele aufgeführt, sodass die Bürger an Wahlen teilgenommen haben, aber letztlich nicht diskustiert haben. 
+
+(2. Argument)
+Die Bürger handeln indirekt irrational handeln. Das meiste handeln basiert auf zugrundeliegenden prämissen. Wenn diese aber falsch sind, dass führt es dazu, dass die Entscheidung letztlich irrational ist. Wenn die Bevölkerung eben auf falschinformation agieren, wird der größte Vorteil der Gesellschaft, dass es eben gemeinsame beschlüsse gibt, welche durch diskurs und rationales denken zustande kommen, in frage gestellt.
+
+
+
+
 
 
 5. (800 Wörter)
@@ -84,3 +163,14 @@ Damit kann ich mir effektiv Zeit sparen und Probleme lösen, welche ich gerne l�
 Gleichzeitig kann ich mit KI Aufgaben delegieren, welche von keiner größeren Bedeutung sind. KI funktioniert gut im Web-Bereich. Das liegt daran, dass die Web-Programmierung 
 stark repetitive Aufgaben sind. HTML und CSS Klassen zu schreiben zeugen von keiner großeren Mentalen Aufgabe, sondern 
 
+
+
+Vorlage Eidesstattliche Erklärung
+Hiermit bestätige ich, dass ich die vorliegende Prüfung zu Wissenschaftstheorie und Ethik vom 28.06.2026 selbständig
+bearbeitet und keine anderen als die erlaubten Hilfsmittel benutzt habe.
+Ich erkläre hiermit explizit, dass auf den Einsatz von KI-gestützten Schreibwerkzeugen
+vollständig verzichtet wurde.
+Erlind Sejdiu, 28.06.2026, Karlsruhe 
+
+
+\end{document}
