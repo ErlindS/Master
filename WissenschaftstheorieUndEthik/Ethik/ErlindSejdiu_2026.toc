@@ -1,1 +1,16 @@
 \babel@toc {ngerman}{}\relax 
+\contentsline {section}{\numberline {1}Verantwortungsdilemma im Digitalenzeitalter}{1}{section.1}%
+\contentsline {paragraph}{Techschnische Realisierbarkeit}{1}{section*.2}%
+\contentsline {paragraph}{Technologieadaption}{1}{section*.3}%
+\contentsline {paragraph}{Verantwortungsdilemma}{1}{section*.4}%
+\contentsline {section}{\numberline {2}Datenethik: AI-Bias}{2}{section.2}%
+\contentsline {section}{\numberline {3}Einsatz von manipulationtechniken von künstlichen Intelligenzen}{3}{section.3}%
+\contentsline {section}{\numberline {4}Die Infokalypse und die Gefähr für demokratische Gesellschaften}{4}{section.4}%
+\contentsline {paragraph}{Infokalpyse}{4}{section*.5}%
+\contentsline {paragraph}{Folgen für eine demokratische Gesellschaft}{5}{section*.6}%
+\contentsline {section}{\numberline {5}KI-Werzeuge im Bildungsprozess}{5}{section.5}%
+\contentsline {paragraph}{Einsatz von KI-Werkzeugen in Bildungsprozessen}{5}{section*.7}%
+\contentsline {paragraph}{Persönlicher Einsatz von KI-Werkzeugen}{6}{section*.8}%
+\contentsline {section}{Literaturverzeichnis}{9}{section*.9}%
+\contentsline {section}{Abbildungsverzeichnis}{10}{section*.10}%
+\contentsline {section}{Tabellenverzeichnis}{11}{section*.11}%
