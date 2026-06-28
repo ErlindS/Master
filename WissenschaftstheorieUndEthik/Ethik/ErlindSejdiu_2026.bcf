@@ -2392,6 +2392,8 @@
     <bcf:citekey order="13" intorder="1">HowFar</bcf:citekey>
     <bcf:citekey order="14" intorder="1">kahneman2011thinking</bcf:citekey>
     <bcf:citekey order="15" intorder="1">noauthor_censorship_2026</bcf:citekey>
+    <bcf:citekey order="16" intorder="1">WozuLernenNochGutIst</bcf:citekey>
+    <bcf:citekey order="17" intorder="1">Mobility</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

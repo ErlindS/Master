@@ -35,6 +35,7 @@
       \strng{authornamehash}{97c3283b2eb17473aa4762770dec761c}
       \strng{authorfullhash}{97c3283b2eb17473aa4762770dec761c}
       \strng{authorfullhashraw}{97c3283b2eb17473aa4762770dec761c}
+      \field{extraname}{1}
       \field{sortinit}{1}
       \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
@@ -286,6 +287,67 @@
       \verb{url}
       \verb https://en.wikipedia.org/w/index.php?title=Censorship_of_images_in_the_Soviet_Union&oldid=1343974753
       \endverb
+    \endentry
+    \entry{WozuLernenNochGutIst}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=97c3283b2eb17473aa4762770dec761c}{%
+           family={Mahayni},
+           familyi={M\bibinitperiod},
+           given={Ziad},
+           giveni={Z\bibinitperiod}}}%
+      }
+      \strng{namehash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{fullhash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{fullhashraw}{97c3283b2eb17473aa4762770dec761c}
+      \strng{bibnamehash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{authorbibnamehash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{authornamehash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{authorfullhash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{authorfullhashraw}{97c3283b2eb17473aa4762770dec761c}
+      \field{extraname}{2}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{03}
+      \field{title}{Wozu lernen, wenn KI alles weiß? - Positionspapier zur Bildung im KI-Zeitalter}
+      \field{year}{2026}
+      \verb{doi}
+      \verb 10.5281/zenodo.19181761
+      \endverb
+    \endentry
+    \entry{Mobility}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=5bd32628f8a80555d67d5ecc79ec0a6d}{%
+           family={Galor},
+           familyi={G\bibinitperiod},
+           given={Oded},
+           giveni={O\bibinitperiod}}}%
+        {{hash=f02f06fc0d5d628ae41ba0bf92b5f749}{%
+           family={Tsiddon},
+           familyi={T\bibinitperiod},
+           given={Daniel},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{94ceec2e48f315919d8a58c660377b98}
+      \strng{fullhash}{94ceec2e48f315919d8a58c660377b98}
+      \strng{fullhashraw}{94ceec2e48f315919d8a58c660377b98}
+      \strng{bibnamehash}{94ceec2e48f315919d8a58c660377b98}
+      \strng{authorbibnamehash}{94ceec2e48f315919d8a58c660377b98}
+      \strng{authornamehash}{94ceec2e48f315919d8a58c660377b98}
+      \strng{authorfullhash}{94ceec2e48f315919d8a58c660377b98}
+      \strng{authorfullhashraw}{94ceec2e48f315919d8a58c660377b98}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{American Economic Review}
+      \field{month}{02}
+      \field{title}{Technological Progress, Mobility, and Economic Growth}
+      \field{volume}{87}
+      \field{year}{1997}
+      \field{pages}{363\bibrangedash 82}
+      \range{pages}{20}
     \endentry
   \enddatalist
 \endrefsection
