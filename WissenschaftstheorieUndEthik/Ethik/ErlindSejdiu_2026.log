@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.10.5)  28 JUN 2026 01:57
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.10.5)  28 JUN 2026 13:29
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -749,10 +749,27 @@ l.77 (
       300 Wörter) [1]
 
 [2]
+Overfull \hbox (1.602pt too wide) in paragraph at lines 99--100
+[]\OT1/cmr/m/n/10.95 (-20) "RQ3: Wel-che ko-gni-ti-ven Ver-zer-run-gen wer-den durch die-se Stra-te-gi-en aus-gel[]ost oder verst[]arkt?" 
+ []
+
+
+Overfull \hbox (9.6083pt too wide) in paragraph at lines 101--102
+[]\OT1/cmr/m/n/10.95 (-20) Das grundl-gen-de Vor-ge-hen der Stu-die be-stand dar-in, dass in den Red-dit Fo-rum r/ChangeMyView
+ []
+
+
+Overfull \hbox (36.63783pt too wide) in paragraph at lines 109--110
+[]\OT1/cmr/m/n/10.95 (-20) Das Er-geb-nis der drit-ten For-schungs-fra-ge, zeigt, dass die KI Verf[]ugbarkeits-, Re-pr[]asentationheuristiken
+ []
+
+
 
 [3]
-c:/Users/erlin/repo/Master/WissenschaftstheorieUndEthik/Ethik/ErlindSejdiu_2026.tex:144: Misplaced alignment tab character &.
-l.144 ...t ist das ökonomische Modell von Galor &
+
+[4]
+c:/Users/erlin/repo/Master/WissenschaftstheorieUndEthik/Ethik/ErlindSejdiu_2026.tex:165: Misplaced alignment tab character &.
+l.165 ...t ist das ökonomische Modell von Galor &
                                                    Tsiddon. Mit fortschreite...
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -763,9 +780,9 @@ might try typing `S' now just to see what is salvageable.
 
 
 
-[4]
+[5]
 
-[5] (./ErlindSejdiu_2026.aux)
+[6] (./ErlindSejdiu_2026.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-09-02>
@@ -792,18 +809,18 @@ Package logreq Info: Writing requests to 'ErlindSejdiu_2026.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 21208 strings out of 467748
- 366064 string characters out of 5431138
+ 21212 strings out of 467748
+ 366115 string characters out of 5431138
  1294877 words of memory out of 5000000
- 49547 multiletter control sequences out of 15000+600000
+ 49550 multiletter control sequences out of 15000+600000
  637030 words of font info for 119 fonts, out of 8000000 for 9000
  1143 hyphenation exceptions out of 8191
  63i,7n,67p,1361b,2389s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb>
-Output written on ErlindSejdiu_2026.pdf (7 pages, 182150 bytes).
+Output written on ErlindSejdiu_2026.pdf (8 pages, 186663 bytes).
 PDF statistics:
- 52 PDF objects out of 1000 (max. 8388607)
- 37 compressed objects within 1 object stream
- 8 named destinations out of 1000 (max. 500000)
+ 56 PDF objects out of 1000 (max. 8388607)
+ 40 compressed objects within 1 object stream
+ 9 named destinations out of 1000 (max. 500000)
  18438 words of extra memory for PDF output out of 20736 (max. 10000000)
 

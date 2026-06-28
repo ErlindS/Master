@@ -1,19 +1,19 @@
 # Fdb version 4
-["biber ErlindSejdiu_2026"] 0 "ErlindSejdiu_2026.bcf" "ErlindSejdiu_2026.bbl" "ErlindSejdiu_2026" 1782604678.66102 0
+["biber ErlindSejdiu_2026"] 0 "ErlindSejdiu_2026.bcf" "ErlindSejdiu_2026.bbl" "ErlindSejdiu_2026" 1782646171.31667 0
   "Document/Bibliography/ref.bib" 0 -1 0 ""
   "ErlindSejdiu_2026.bcf" 0 -1 0 "pdflatex"
   (generated)
   "ErlindSejdiu_2026.bbl"
   "ErlindSejdiu_2026.blg"
   (rewritten before read)
-["pdflatex"] 1782604676.81531 "c:/Users/erlin/repo/Master/WissenschaftstheorieUndEthik/Ethik/ErlindSejdiu_2026.tex" "ErlindSejdiu_2026.pdf" "ErlindSejdiu_2026" 1782604678.66191 2
-  "ErlindSejdiu_2026.aux" 1782604678 414 566f0c4d4d4697d0557c1150e435c4ca "pdflatex"
+["pdflatex"] 1782646169.29359 "c:/Users/erlin/repo/Master/WissenschaftstheorieUndEthik/Ethik/ErlindSejdiu_2026.tex" "ErlindSejdiu_2026.pdf" "ErlindSejdiu_2026" 1782646171.31762 2
+  "ErlindSejdiu_2026.aux" 1782646170 414 341ecbf5795ae9e95c17702047b04fba "pdflatex"
   "ErlindSejdiu_2026.bbl" 0 -1 0 "biber ErlindSejdiu_2026"
-  "ErlindSejdiu_2026.out" 1782604677 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "ErlindSejdiu_2026.tex" 1782604673 18410 58052306985622cb8dd36f7dd26ea0e1 ""
-  "ErlindSejdiu_2026.toc" 1782604678 30 dd9a1bdf2f8dbad8adb0552ea4fb4223 "pdflatex"
+  "ErlindSejdiu_2026.out" 1782646170 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "ErlindSejdiu_2026.tex" 1782646165 21907 5de8fd898c3fefc4f8b4686772805447 ""
+  "ErlindSejdiu_2026.toc" 1782646170 30 dd9a1bdf2f8dbad8adb0552ea4fb4223 "pdflatex"
   "Images/Template/HsKa_new.png" 1782602044 132589 6288627b05a0d437e253aa3e62816651 ""
-  "c:/Users/erlin/repo/Master/WissenschaftstheorieUndEthik/Ethik/ErlindSejdiu_2026.tex" 1782604673 18410 58052306985622cb8dd36f7dd26ea0e1 ""
+  "c:/Users/erlin/repo/Master/WissenschaftstheorieUndEthik/Ethik/ErlindSejdiu_2026.tex" 1782646165 21907 5de8fd898c3fefc4f8b4686772805447 ""
   "c:/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1759672957 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1759671040 1004 54797486969f23fa377b128694d548df ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1759671040 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
