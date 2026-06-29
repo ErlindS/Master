@@ -8,9 +8,7 @@
 \contentsline {section}{\numberline {4}Die Infokalypse und die Gefahr für demokratische Gesellschaften}{4}{section.4}%
 \contentsline {paragraph}{Infokalypse}{4}{section*.5}%
 \contentsline {paragraph}{Folgen für eine demokratische Gesellschaft}{5}{section*.6}%
-\contentsline {section}{\numberline {5}KI-Werkzeuge im Bildungsprozess}{5}{section.5}%
+\contentsline {section}{\numberline {5}KI-Werkzeuge im Bildungsprozess}{6}{section.5}%
 \contentsline {paragraph}{Einsatz von KI-Werkzeugen in Bildungsprozessen}{6}{section*.7}%
 \contentsline {paragraph}{Persönlicher Einsatz von KI-Werkzeugen}{7}{section*.8}%
 \contentsline {section}{Literaturverzeichnis}{9}{section*.9}%
-\contentsline {section}{Abbildungsverzeichnis}{10}{section*.10}%
-\contentsline {section}{Tabellenverzeichnis}{11}{section*.11}%

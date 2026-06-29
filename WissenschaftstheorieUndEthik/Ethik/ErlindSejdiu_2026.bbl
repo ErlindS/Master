@@ -19,6 +19,49 @@
 
 \refsection{0}
   \datalist[entry]{none/global//global/global/global}
+    \entry{bildung_exkurs_2025}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=a94af53bb68b0ab030a324085fdd540e}{%
+           family={Bildung},
+           familyi={B\bibinitperiod},
+           given={Bundeszentrale\bibnamedelimb für\bibnamedelima politische},
+           giveni={B\bibinitperiod\bibinitdelim f\bibinitperiod\bibinitdelim p\bibinitperiod}}}%
+      }
+      \strng{namehash}{a94af53bb68b0ab030a324085fdd540e}
+      \strng{fullhash}{a94af53bb68b0ab030a324085fdd540e}
+      \strng{fullhashraw}{a94af53bb68b0ab030a324085fdd540e}
+      \strng{bibnamehash}{a94af53bb68b0ab030a324085fdd540e}
+      \strng{authorbibnamehash}{a94af53bb68b0ab030a324085fdd540e}
+      \strng{authornamehash}{a94af53bb68b0ab030a324085fdd540e}
+      \strng{authorfullhash}{a94af53bb68b0ab030a324085fdd540e}
+      \strng{authorfullhashraw}{a94af53bb68b0ab030a324085fdd540e}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Bei der Entwicklung von digitalen Technologien und im Umgang mit ihnen entstehen ethische Probleme. Diesen widmet sich die Digitale Ethik. Was das bedeutet, erklärt Dagmar Fenner.}
+      \field{day}{25}
+      \field{langid}{german}
+      \field{month}{11}
+      \field{shorttitle}{Exkurs}
+      \field{title}{Exkurs: Digitale Ethik {|} Bioethik}
+      \field{titleaddon}{bpb.de}
+      \field{urlday}{28}
+      \field{urlmonth}{6}
+      \field{urlyear}{2026}
+      \field{year}{2025}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb Snapshot:C\:\\Users\\erlin\\Zotero\\storage\\WVQ7ACYK\\exkurs-digitale-ethik.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.bpb.de/themen/umwelt/bioethik/572883/exkurs-digitale-ethik/
+      \endverb
+      \verb{url}
+      \verb https://www.bpb.de/themen/umwelt/bioethik/572883/exkurs-digitale-ethik/
+      \endverb
+    \endentry
     \entry{article}{article}{}{}
       \name{author}{1}{}{%
         {{hash=97c3283b2eb17473aa4762770dec761c}{%
@@ -36,8 +79,8 @@
       \strng{authorfullhash}{97c3283b2eb17473aa4762770dec761c}
       \strng{authorfullhashraw}{97c3283b2eb17473aa4762770dec761c}
       \field{extraname}{1}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Weiterdenken. Zeitschrift für Position, Perspektive, Progression}
@@ -52,8 +95,8 @@
       \list{language}{1}{%
         {de}%
       }
-      \field{sortinit}{4}
-      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
       \field{labeltitlesource}{title}
       \field{month}{8}
       \field{title}{Bias in der künstlichen {Intelligenz}}
@@ -262,8 +305,8 @@
       \field{year}{2011}
     \endentry
     \entry{noauthor_censorship_2026}{inreference}{}{}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labeltitlesource}{title}
       \field{abstract}{Censorship of images was widespread in the Soviet Union. Visual censorship was exploited in a political context, particularly during the political purges of Joseph Stalin, where the Soviet government attempted to erase some of the purged figures from Soviet history, and took measures which included altering images and destroying film. The {USSR} curtailed access to pornography, which was specifically prohibited by Soviet law.}
       \field{booktitle}{Wikipedia}
@@ -288,7 +331,7 @@
       \verb https://en.wikipedia.org/w/index.php?title=Censorship_of_images_in_the_Soviet_Union&oldid=1343974753
       \endverb
     \endentry
-    \entry{WozuLernenNochGutIst}{article}{}{}
+    \entry{info}{article}{}{}
       \name{author}{1}{}{%
         {{hash=97c3283b2eb17473aa4762770dec761c}{%
            family={Mahayni},
@@ -305,8 +348,83 @@
       \strng{authorfullhash}{97c3283b2eb17473aa4762770dec761c}
       \strng{authorfullhashraw}{97c3283b2eb17473aa4762770dec761c}
       \field{extraname}{2}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{05}
+      \field{title}{DeepFakes und die 'Infokalypse'. Wie beeinflusst generative Künstliche Intelligenz das Informationsökosystem?}
+      \field{year}{2025}
+    \endentry
+    \entry{lewis_leaked_2018}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=6f7ca45de83c018a4fbe53c311762c1d}{%
+           family={Lewis},
+           familyi={L\bibinitperiod},
+           given={Paul},
+           giveni={P\bibinitperiod}}}%
+        {{hash=98dedf34d4ad0429fba4f384eeceae5c}{%
+           family={Hilder},
+           familyi={H\bibinitperiod},
+           given={Paul},
+           giveni={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{689763857ef2b2c78112f2a1b743e20c}
+      \strng{fullhash}{689763857ef2b2c78112f2a1b743e20c}
+      \strng{fullhashraw}{689763857ef2b2c78112f2a1b743e20c}
+      \strng{bibnamehash}{689763857ef2b2c78112f2a1b743e20c}
+      \strng{authorbibnamehash}{689763857ef2b2c78112f2a1b743e20c}
+      \strng{authornamehash}{689763857ef2b2c78112f2a1b743e20c}
+      \strng{authorfullhash}{689763857ef2b2c78112f2a1b743e20c}
+      \strng{authorfullhashraw}{689763857ef2b2c78112f2a1b743e20c}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Exclusive: Former employee explains how presentation showed techniques used to target voters}
+      \field{day}{23}
+      \field{issn}{0261-3077}
+      \field{journaltitle}{The Guardian}
+      \field{langid}{british}
+      \field{month}{3}
+      \field{shorttitle}{Leaked}
+      \field{title}{Leaked: Cambridge Analytica's blueprint for Trump victory}
+      \field{urlday}{28}
+      \field{urlmonth}{6}
+      \field{urlyear}{2026}
+      \field{year}{2018}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb Snapshot:C\:\\Users\\erlin\\Zotero\\storage\\FG6C7NBL\\leaked-cambridge-analyticas-blueprint-for-trump-victory.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.theguardian.com/uk-news/2018/mar/23/leaked-cambridge-analyticas-blueprint-for-trump-victory
+      \endverb
+      \verb{url}
+      \verb https://www.theguardian.com/uk-news/2018/mar/23/leaked-cambridge-analyticas-blueprint-for-trump-victory
+      \endverb
+      \keyw{Cambridge Analytica,Donald Trump,Facebook,Google,Snapchat,Social media,{US} elections 2016,{US} news,{US} politics,X}
+    \endentry
+    \entry{WozuLernenNochGutIst}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=97c3283b2eb17473aa4762770dec761c}{%
+           family={Mahayni},
+           familyi={M\bibinitperiod},
+           given={Ziad},
+           giveni={Z\bibinitperiod}}}%
+      }
+      \strng{namehash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{fullhash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{fullhashraw}{97c3283b2eb17473aa4762770dec761c}
+      \strng{bibnamehash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{authorbibnamehash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{authornamehash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{authorfullhash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{authorfullhashraw}{97c3283b2eb17473aa4762770dec761c}
+      \field{extraname}{3}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{month}{03}
@@ -337,8 +455,8 @@
       \strng{authornamehash}{94ceec2e48f315919d8a58c660377b98}
       \strng{authorfullhash}{94ceec2e48f315919d8a58c660377b98}
       \strng{authorfullhashraw}{94ceec2e48f315919d8a58c660377b98}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{American Economic Review}
