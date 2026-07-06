@@ -57,8 +57,7 @@ Paar Fragen 6 Punkte
 
 Mahalanobis berechnen 10 Punkte
 PCA 10 Punkte
-Cluster-Algorithmen 10 Punkte
-Einheitskreise 8 Punkte
+Cluster-Algorithmen und Einheitskreise 10 Punkte
 DTW berechnen
 
 Forrest & Prediction au paar Fragen
