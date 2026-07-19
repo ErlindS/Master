@@ -1,0 +1,3493 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IT-Entrepreneurship Klausurvorbereitung — WS 2019/20</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F4EE;
+    --paper-2:#EDEADF;
+    --ink:#20242B;
+    --ink-soft:#565B62;
+    --line: #DAD4C2;
+    --blue:#2F4B7C;
+    --blue-soft:#E7ECF4;
+    --amber:#C9832E;
+    --amber-soft:#F6E9D6;
+    --teal:#1F7A6C;
+    --teal-soft:#E1F0EC;
+    --rust:#A9432E;
+    --rust-soft:#F4E3DD;
+    --green:#2D7A4C;
+    --green-soft:#D8F0E1;
+    --radius: 10px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:920px; margin:0 auto; padding: 0 24px 120px;}
+
+  /* HEADER */
+  header.hero{
+    background:
+      linear-gradient(180deg, rgba(32,36,43,0.02), rgba(32,36,43,0) 60%),
+      var(--paper);
+    border-bottom:1px solid var(--line);
+    padding: 46px 0 30px;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--blue);
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--amber);display:inline-block;}
+  h1.title{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:clamp(30px, 4.4vw, 44px);
+    line-height:1.08;
+    margin:14px 0 8px;
+    letter-spacing:-0.01em;
+  }
+  .subtitle{
+    color:var(--ink-soft);
+    font-size:16px;
+    max-width:640px;
+  }
+  .meta-row{
+    display:flex; flex-wrap:wrap; gap:10px;
+    margin-top:22px;
+  }
+  .meta-chip{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    background:#fff;
+    border:1px solid var(--line);
+    padding:6px 12px;
+    border-radius:999px;
+    color:var(--ink-soft);
+  }
+  .meta-chip b{color:var(--ink); font-weight:600;}
+
+  /* NAV TABS */
+  nav.tabs{
+    position:sticky; top:0; z-index:50;
+    background:rgba(246,244,238,0.94);
+    backdrop-filter: blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .tabs-inner{
+    max-width:920px; margin:0 auto; padding: 0 24px;
+    display:flex; gap:4px; overflow-x:auto;
+  }
+  .tab-btn{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:14.5px;
+    background:none; border:none; cursor:pointer;
+    color:var(--ink-soft);
+    padding:16px 16px 13px;
+    border-bottom:3px solid transparent;
+    white-space:nowrap;
+  }
+  .tab-btn:hover{color:var(--ink);}
+  .tab-btn.active{color:var(--blue); border-bottom-color:var(--blue);}
+
+  section.panel{display:none; padding-top:32px;}
+  section.panel.active{display:block;}
+
+  /* INTRO BOXES */
+  .intro-box{
+    background:#fff; border:1px solid var(--line); border-left:4px solid var(--blue);
+    border-radius:var(--radius);
+    padding:18px 20px; margin-bottom:28px;
+    font-size:14.8px; color:var(--ink-soft);
+  }
+  .intro-box b{color:var(--ink);}
+  .intro-box.amber{border-left-color:var(--amber);}
+  .intro-box.teal{border-left-color:var(--teal);}
+
+  /* CHAPTER GROUPS */
+  .chapter{
+    margin-bottom: 34px;
+  }
+  .chapter-head{
+    display:flex; align-items:baseline; gap:12px;
+    margin-bottom:12px;
+    padding-bottom:10px;
+    border-bottom:2px solid var(--ink);
+  }
+  .chapter-tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px; font-weight:600;
+    background:var(--ink); color:var(--paper);
+    padding:3px 8px; border-radius:5px;
+    flex-shrink:0;
+  }
+  .chapter-title{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600; font-size:20px;
+  }
+  .chapter-count{
+    margin-left:auto;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px; color:var(--ink-soft);
+    flex-shrink:0;
+  }
+
+  /* QUESTION CARD */
+  .qa-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:8px;
+    margin-bottom:12px;
+    padding:16px;
+  }
+  .qa-card.revealed{
+    border-color:var(--green);
+    box-shadow: 0 2px 8px rgba(45,122,76,0.08);
+  }
+  .qa-header{
+    display:flex; align-items:flex-start; gap:10px;
+    margin-bottom:14px;
+  }
+  .qmark{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    color:var(--blue);
+    flex-shrink:0;
+    width:20px; height:20px;
+    border-radius:50%;
+    background:var(--blue-soft);
+    display:flex; align-items:center; justify-content:center;
+    font-size:12px;
+  }
+  .qtext{
+    flex:1;
+    font-weight:500;
+    font-size:14.8px;
+    color:var(--ink);
+  }
+
+  /* ANSWER OPTIONS */
+  .qa-options{
+    margin-top:12px;
+  }
+  .qa-option{
+    padding:10px 14px;
+    margin:6px 0;
+    border-radius:6px;
+    background:var(--paper-2);
+    font-size:14.5px;
+    border:1px solid transparent;
+    transition: all 0.2s ease;
+  }
+  .qa-card.revealed .qa-option.correct{
+    background:var(--green-soft);
+    border-color:var(--green);
+    font-weight:500;
+  }
+  .qa-card.revealed .qa-option.correct::before{
+    content:'✓ ';
+    color:var(--green);
+    font-weight:700;
+    margin-right:6px;
+  }
+
+  /* SHOW ANSWER BUTTON */
+  .show-answer-btn{
+    margin-top:16px;
+    padding:10px 20px;
+    background:var(--blue);
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:14px;
+    cursor:pointer;
+    transition: all 0.2s ease;
+  }
+  .show-answer-btn:hover{
+    background:var(--ink);
+  }
+  .show-answer-btn.hidden{
+    display:none;
+  }
+
+  /* HINT TEXT */
+  .qa-hint{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-top:12px;
+    font-style:italic;
+  }
+
+  footer.pagefoot{
+    text-align:center; color:var(--ink-soft); font-size:13px;
+    padding: 40px 0 10px;
+  }
+
+  @media (max-width:600px){
+    .wrap{padding:0 16px 100px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span> IT-Entrepreneurship · WS 2019/20 · HKA</div>
+    <h1 class="title">Klausurvorbereitung (Interaktiv)</h1>
+    <p class="subtitle">Fragenkatalog IT-Entrepreneurship mit allen Kapiteln: Studentische Selbstständigkeit, IT-Recht und Open Source, Angestellter Nebenerwerb, Geschäftsidee/Geschäftsmodell, Coaching/Finanzierung und Gründung Rechtsformen.</p>
+    <div class="meta-row">
+      <span class="meta-chip"><b>6</b> Kapitel + <b>Klausur</b></span>
+      <span class="meta-chip">Fragen <b>DE</b> · Antworten <b>DE</b></span>
+      <span class="meta-chip"><b>Interaktiv</b> · Antworten aufdecken</span>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabs-inner">
+    <button class="tab-btn active" data-tab="kap10">10 · Studentische Selbstständigkeit</button>
+    <button class="tab-btn" data-tab="kap15">15 · IT-Recht und Open Source</button>
+    <button class="tab-btn" data-tab="kap20">20 · Angestellter Nebenerwerb</button>
+    <button class="tab-btn" data-tab="kap30">30 · Geschäftsidee/Geschäftsmodell</button>
+    <button class="tab-btn" data-tab="kap40">40 · Coaching/Finanzierung</button>
+    <button class="tab-btn" data-tab="kap50">50 · Gründung Rechtsformen</button>
+    <button class="tab-btn" data-tab="klausur">📝 Klausur (60 Fragen)</button>
+    <button class="tab-btn" data-tab="probeklausur2">🎯 Probeklausur 2 (40 Fragen)</button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- ======================= KAPITEL 10 ======================= -->
+  <section class="panel active" id="panel-kap10">
+    <div class="intro-box">
+      <b>Kapitel 10: Studentische Selbstständigkeit</b> — Rechtliche Grundlagen zur studentischen Selbstständigkeit, Rechnungsstellung, Kleinunternehmerregelung, steuerliche Aspekte und freie Berufe.
+    </div>
+
+    <div class="chapter">
+      <div class="chapter-head">
+        <span class="chapter-tag">Kap 10</span>
+        <span class="chapter-title">Studentische Selbstständigkeit</span>
+        <span class="chapter-count">22 Fragen</span>
+      </div>
+
+      <div class="qa-card" data-question="1">
+        <div class="qa-header">
+          <span class="qmark">01</span>
+          <span class="qtext">Wer muss eine Rechnung auf Vollständigkeit und Richtigkeit überprüfen?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Rechnungsersteller</div>
+          <div class="qa-option">Rechnungsempfänger</div>
+          <div class="qa-option correct">Rechnungsaussteller und Rechnungsempfänger</div>
+          <div class="qa-option">Keiner</div>
+          <div class="qa-option">Softwarehersteller des Fakturierungsprogramms</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="2">
+        <div class="qa-header">
+          <span class="qmark">02</span>
+          <span class="qtext">Was muss nach § 14 Abs. 4 UStG nicht auf einer Rechnung vorhanden sein?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Rechnungsersteller</div>
+          <div class="qa-option correct">Genaues Auftragsdatum</div>
+          <div class="qa-option">Vollständiger Namen und Anschrift des Leistungserbringers</div>
+          <div class="qa-option">Steuernummer des Leistungserbringers</div>
+          <div class="qa-option correct">Unterschrift des Leistungserbringers</div>
+          <div class="qa-option">Ausstellungsdatum der Rechnung sowie fortlaufende Rechnungsnummer</div>
+          <div class="qa-option">Art und Menge der gelieferten Leistungen sowie deren Zeitpunkt</div>
+          <div class="qa-option correct">Steuersatz des Leistungsempfängers plus entsprechender Betrag</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="3">
+        <div class="qa-header">
+          <span class="qmark">03</span>
+          <span class="qtext">Die Kleinunternehmerregelung ist eine...</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Vereinfachungsregelung im Umsatzsteuerrecht.</div>
+          <div class="qa-option">Vereinfachungsregelung hinsichtlich den Veröffentlichungspflichten.</div>
+          <div class="qa-option">Vereinfachungsregelung hinsichtlich der Abgabe der Einkommenssteuererklärung</div>
+          <div class="qa-option correct">Vereinfachungsregelung, dass Unternehmer wie Nichtunternehmer behandelt werden.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="4">
+        <div class="qa-header">
+          <span class="qmark">04</span>
+          <span class="qtext">Nach dem Einkommensteuergesetz ist Softwareentwickler ein ...</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Ähnlicher Beruf</div>
+          <div class="qa-option">Tätigkeitsberuf</div>
+          <div class="qa-option">Katalogberuf</div>
+          <div class="qa-option">Schöner Beruf</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="5">
+        <div class="qa-header">
+          <span class="qmark">05</span>
+          <span class="qtext">Was sind die Kerninhalte der Definition freier Berufe?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Besondere berufliche Qualifikation</div>
+          <div class="qa-option correct">Eigenverantwortliche Erbringung von Dienstleistungen</div>
+          <div class="qa-option">Freie Wahl der Arbeitszeiten</div>
+          <div class="qa-option correct">Fachlich unabhängige Erbringung von Dienstleistungen</div>
+          <div class="qa-option">In Eigeninteresse Handelnder</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="6">
+        <div class="qa-header">
+          <span class="qmark">06</span>
+          <span class="qtext">Was ist für einen Freiberufler zutreffend?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Gewerbeanmeldung erforderlich</div>
+          <div class="qa-option correct">Keine Gewerbesteuer</div>
+          <div class="qa-option">Doppelte Buchführung nötig</div>
+          <div class="qa-option correct">Einnahmen-Überschuss-Rechnung erforderlich</div>
+          <div class="qa-option">Bei der Umsatzsteuer stets Soll-Besteuerung</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="7">
+        <div class="qa-header">
+          <span class="qmark">07</span>
+          <span class="qtext">Ein Masterstudierender der Informatik entwickelt Software und verkauft diese an mehrere Kunden.</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Das ist eine freiberufliche Tätigkeit</div>
+          <div class="qa-option correct">Das ist eine gewerbliche Tätigkeit</div>
+          <div class="qa-option">Das ist eine gemischte Tätigkeit.</div>
+          <div class="qa-option">Das ist eine umsatzsteuerpflichtige Tätigkeit</div>
+          <div class="qa-option correct">Das ist eine Handelstätigkeit.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="8">
+        <div class="qa-header">
+          <span class="qmark">08</span>
+          <span class="qtext">Zuordnung Preismodelle: Ordnen Sie die Abbildungen den entsprechenden Begriffen zu.</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">a) Festpreis</div>
+          <div class="qa-option correct">b) Variabel mit Deckelung</div>
+          <div class="qa-option correct">c) Variabel – Abrechnung nach Aufwand</div>
+        </div>
+        <div class="qa-hint">Hinweis: VfCl=Vorlauf Client, VfEl=Vorlauf Entwickler</div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="9">
+        <div class="qa-header">
+          <span class="qmark">09</span>
+          <span class="qtext">Welche Einkunftsarten können für Einkünfte aus Softwareentwicklung relevant sein?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Einkünfte aus Land- und Forstwirtschaft</div>
+          <div class="qa-option correct">Einkünfte aus Gewerbebetrieb</div>
+          <div class="qa-option correct">Einkünfte aus selbständiger Arbeit</div>
+          <div class="qa-option correct">Einkünfte aus nichtselbständiger Arbeit</div>
+          <div class="qa-option">Einkünfte aus Kapitalvermögen</div>
+          <div class="qa-option">Einkünfte aus Vermietung und Verpachtung</div>
+          <div class="qa-option">Sonstige Einkünfte</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="10">
+        <div class="qa-header">
+          <span class="qmark">10</span>
+          <span class="qtext">Wann macht es Sinn, trotz Kleinunternehmer Mehrwertsteuer in Rechnung zu stellen (zu optieren)?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Wenn größere Investitionen getätigt wurden oder anstehen</div>
+          <div class="qa-option">Wenn man primär an Privatkunden Rechnungen stellt.</div>
+          <div class="qa-option">Wenn man primär an Unternehmen Rechnungen stellt.</div>
+          <div class="qa-option">Wenn man mit hohen Gewinnen rechnet.</div>
+          <div class="qa-option correct">Wenn man mit hohen Verlusten rechnet.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="11">
+        <div class="qa-header">
+          <span class="qmark">11</span>
+          <span class="qtext">Kleinunternehmer ist, wer:</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Vorjahresumsatz &lt; 22.000€</div>
+          <div class="qa-option">Vorjahresumsatz &lt; 17.500€</div>
+          <div class="qa-option correct">Umsatz laufendes Kalenderjahr voraussichtlich &lt; 50.000€</div>
+          <div class="qa-option">Umsatz laufendes Kalenderjahr voraussichtlich &lt; 60.000€</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="12">
+        <div class="qa-header">
+          <span class="qmark">12</span>
+          <span class="qtext">Welche Aussagen sind richtig?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Bei Neugründung muss der Umsatz jedes Jahr geschätzt werden</div>
+          <div class="qa-option correct">Bei Neugründung muss der Umsatz für das Gründungsjahr geschätzt werden</div>
+          <div class="qa-option">Die Umsatzschätzung muss mit der Schätzung im Businessplan übereinstimmen</div>
+          <div class="qa-option correct">Bei Neugründung muss der Umsatz laufend überwacht werden</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="13">
+        <div class="qa-header">
+          <span class="qmark">13</span>
+          <span class="qtext">Welche Aussage ist richtig?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Überschreitet der Umsatz im Gründungsjahr 22.000 €, darf die Kleinunternehmerregelung im folgenden Wirtschaftsjahr nicht mehr in Anspruch genommen werden.</div>
+          <div class="qa-option">Überschreitet der Umsatz im Gründungsjahr 22.000 €, darf die Kleinunternehmerregelung im folgenden Wirtschaftsjahr nicht mehr in Anspruch genommen werden.</div>
+          <div class="qa-option">Überschreitet der Umsatz in einem Geschäftsjahr 22.000 €, darf die Kleinunternehmerregelung im folgenden Wirtschaftsjahr nicht mehr in Anspruch genommen werden.</div>
+          <div class="qa-option correct">Überschreitet der Umsatz im einem Geschäftsjahr 60.000 €, darf die Kleinunternehmerregelung im folgenden Wirtschaftsjahr nicht mehr in Anspruch genommen werden.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="14">
+        <div class="qa-header">
+          <span class="qmark">14</span>
+          <span class="qtext">Die Kleinunternehmerregelung befindet sich in § 19 UStG</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">§ 19 UStG</div>
+          <div class="qa-option">§ 14 UStG</div>
+          <div class="qa-option">§ 15 UStG</div>
+          <div class="qa-option">§ 4 UStG</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="15">
+        <div class="qa-header">
+          <span class="qmark">15</span>
+          <span class="qtext">welche Aussagen sind richtig?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Ein Selbständiger kann freiberuflich sein</div>
+          <div class="qa-option correct">Ein Selbständiger kann gewerblich sein</div>
+          <div class="qa-option">Ein Freiberufler kann gewerblich sein</div>
+          <div class="qa-option correct">Ein Freiberufler kann selbstständig sein</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="16">
+        <div class="qa-header">
+          <span class="qmark">16</span>
+          <span class="qtext">Sie entwickeln freiberuflich Software und auf Wunsch beschaffen Sie auch die Hardware dazu, auf der die Software installiert wird. Um welche Tätigkeit handelt es sich hier?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">gewerblich</div>
+          <div class="qa-option">freiberuflich</div>
+          <div class="qa-option">gewerblich und freiberuflich</div>
+          <div class="qa-option">selbstständig</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="17">
+        <div class="qa-header">
+          <span class="qmark">17</span>
+          <span class="qtext">Einkünfte aus freiberuflicher Tätigkeit werden in welche Anlage deklariert?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Anlage S</div>
+          <div class="qa-option">Anlage G</div>
+          <div class="qa-option">Anlage GSE</div>
+          <div class="qa-option">Anlage F</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="18">
+        <div class="qa-header">
+          <span class="qmark">18</span>
+          <span class="qtext">Wieviele Einkunftsarten gibt es?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">7</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="19">
+        <div class="qa-header">
+          <span class="qmark">19</span>
+          <span class="qtext">Welche drei freiberufliche Tätigkeitsgruppen unterscheidet das Einkommensteuergesetz (§18 Abs. 1 Nr. 1)?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">1. Katalogberufe</div>
+          <div class="qa-option correct">2. Ähnliche Berufe</div>
+          <div class="qa-option correct">3. Tätigkeitsberufe</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="20">
+        <div class="qa-header">
+          <span class="qmark">20</span>
+          <span class="qtext">Sie entwickeln Software und verkaufen diese an mehrere Kunden. Ist das gewerblich oder freiberuflich?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">gewerblich</div>
+          <div class="qa-option">freiberuflich</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="21">
+        <div class="qa-header">
+          <span class="qmark">21</span>
+          <span class="qtext">Sie erstellen eine Rechnung über 100T€ mit einer Abschlagszahlung i.H.v. 60T€ mit sofortiger Fälligkeit. Wie ist die Verjährungsfrist für die letzten 40T€.</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">2 Jahre</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="22">
+        <div class="qa-header">
+          <span class="qmark">22</span>
+          <span class="qtext">Welche Aussagen sind richtig</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Überschreitet der Umsatz im Gründungsjahr 17.500 €, darf die Kleinunternehmerregelung im folgenden Wirtschaftsjahr nicht mehr in Anspruch genommen werden.</div>
+          <div class="qa-option">Überschreitet der Umsatz in einem Geschäftsjahr 60.000 €, darf die Kleinunternehmerregelung im folgenden Wirtschaftsjahr nicht mehr in Anspruch genommen werden.</div>
+          <div class="qa-option correct">Überschreitet der Umsatz im Gründungsjahr 22.000 €, darf die Kleinunternehmerregelung im folgenden Wirtschaftsjahr nicht mehr in Anspruch genommen werden.</div>
+          <div class="qa-option">Überschreitet der Umsatz in einem Geschäftsjahr 22.000 €, darf die Kleinunternehmerregelung im folgenden Wirtschaftsjahr nicht mehr in Anspruch genommen werden.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ======================= KAPITEL 15 ======================= -->
+  <section class="panel" id="panel-kap15">
+    <div class="intro-box teal">
+      <b>Kapitel 15: IT-Recht und Open Source</b> — Vertragstypen für Softwareentwicklung, kommerzielle Risiken, Schutzrechte, Patente, Lizenzen und Open Source Software.
+    </div>
+
+    <div class="chapter">
+      <div class="chapter-head">
+        <span class="chapter-tag">Kap 15</span>
+        <span class="chapter-title">IT-Recht und Open Source</span>
+        <span class="chapter-count">34 Fragen</span>
+      </div>
+
+      <div class="qa-card" data-question="01">
+        <div class="qa-header">
+          <span class="qmark">01</span>
+          <span class="qtext">Was sind die gesetzlich relevanten Vertragstypen für einen Softwareentwicklungsvertrag?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Kaufvertrag</div>
+          <div class="qa-option correct">Werkvertrag</div>
+          <div class="qa-option">Supportvertrag</div>
+          <div class="qa-option correct">Werklieferungsvertrag</div>
+          <div class="qa-option correct">Dienstvertrag</div>
+          <div class="qa-option">Softwarevertrag</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="02">
+        <div class="qa-header">
+          <span class="qmark">02</span>
+          <span class="qtext">Wann verhandeln Sie den Vertrag über Softwareentwicklung mit dem Besteller?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Vor Beginn der Entwicklungsarbeit.</div>
+          <div class="qa-option">Bei der Programmierung laufend während der Entwicklung.</div>
+          <div class="qa-option">Sobald ein Diskussionspunkt mit dem Besteller entsteht.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="03">
+        <div class="qa-header">
+          <span class="qmark">03</span>
+          <span class="qtext">Was sind die primären kommerziellen Risiken für den Software-Entwickler, wenn ein Software-Entwicklungsvertrag den Regeln des Werkvertragsrechts unterfällt?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Der Besteller kann bis zur Fertigstellung jederzeit ohne Angabe von Gründen vom Vertrag Abstand nehmen.</div>
+          <div class="qa-option">Der Besteller muss nicht bezahlen, wenn die Software mangelhaft ist.</div>
+          <div class="qa-option correct">Das Gesetz regelt nicht, welche Features die Software genau haben muss.</div>
+          <div class="qa-option correct">Der Endkunde wird erst nach Fertigstellung bezahlt.</div>
+          <div class="qa-option">Der Besteller kann die Software jederzeit zurück geben.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="04">
+        <div class="qa-header">
+          <span class="qmark">04</span>
+          <span class="qtext">Welchem Vertragstyp wird ein "End User License Agreement" rechtlich zugeordnet?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Lizenzvertrag</div>
+          <div class="qa-option correct">Kauf- oder Mietvertrag</div>
+          <div class="qa-option">Werkvertrag</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="05">
+        <div class="qa-header">
+          <span class="qmark">05</span>
+          <span class="qtext">Nennen Sie rechtliche Konsequenzen, wenn Sie Kopien Ihrer Software nicht verkaufen sondern als Software as a Service zur Verfügung stellen.</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Ich kann meine Haftung vertraglich ausschließen.</div>
+          <div class="qa-option">Ich kann eine zusätzliche Gebühr für die laufende Pflege der Software vereinbaren.</div>
+          <div class="qa-option correct">Ich kann bestimmen, ob der Nutzer die Software Dritten zur Verfügung stellen kann.</div>
+          <div class="qa-option correct">Die Haftung Mängel ist nicht auf 2 Jahre begrenzt.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="06">
+        <div class="qa-header">
+          <span class="qmark">06</span>
+          <span class="qtext">Was müssen Sie bedenken, wenn Sie Ihre Software mit einem Kooperationspartner weiter entwickeln wollen?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Jeder Partner darf nach dem Gesetz die Software nutzen, ohne dass er dem Partner eine Vergütung zahlen muss.</div>
+          <div class="qa-option">Bei gemeinsamer Entwicklung der neuen Version gehört auch meine hierfür als Basis dienende ursprüngliche Version beiden Partnern gemeinsam.</div>
+          <div class="qa-option correct">Gegenüber Dritten haften die Kooperationspartner nach dem Gesetz gemeinsam, auch wenn der Partner den Schaden allein verursacht hat.</div>
+          <div class="qa-option">Ohne besondere Vereinbarung dürfen beide Parteien die neue Version nur gemeinsam vermarkten.</div>
+          <div class="qa-option correct">Ohne besondere Regelung gehört die gemeinsam geschaffene neue Software-Version allen Partnern gemeinsam.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="07">
+        <div class="qa-header">
+          <span class="qmark">07</span>
+          <span class="qtext">Muss man als Arbeitgeber mit angestellten Programmierern einen gesonderten Vertrag über die Rechteübertragung schließen?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Ja, über zusetzenden Vertrag.</div>
+          <div class="qa-option">Ja, wegen Urheberrecht.</div>
+          <div class="qa-option correct">Nein, die Rechteübertragung regelt das Urhebergesetz automatisch.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="08">
+        <div class="qa-header">
+          <span class="qmark">08</span>
+          <span class="qtext">Mittels welcher Schutzrechte kann Software geschützt werden?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Verwandte Schutzrechte</div>
+          <div class="qa-option correct">Patentrecht - implementierte Erfindung über das Patentrecht</div>
+          <div class="qa-option correct">Im Wesentlichen der Code über das Urheberrecht.</div>
+          <div class="qa-option">Datenbankrecht</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="09">
+        <div class="qa-header">
+          <span class="qmark">09</span>
+          <span class="qtext">Wer ist erster Inhaber von Software Schutzrechten?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Dies ist immer der Arbeitgeber.</div>
+          <div class="qa-option">Das Unternehmen ist immer erster Inhaber.</div>
+          <div class="qa-option correct">Im Patentrecht der Erfinder, im Urheberrecht der Urheber.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="10">
+        <div class="qa-header">
+          <span class="qmark">10</span>
+          <span class="qtext">Wem gehört nach deutschem Recht eine Software-Erfindung?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Dem, der sie bezahlt hat.</div>
+          <div class="qa-option correct">Bei angestellten Software-Erfindern: dem Erfinder, aber der Arbeitgeber kann für sich in Anspruch nehmen.</div>
+          <div class="qa-option correct">Bei Freiberuflern: ohne besondere vertragliche Regelung dem Freiberufler.</div>
+          <div class="qa-option">Dem Auftraggeber.</div>
+          <div class="qa-option correct">Dem, der die Software geschrieben hat.</div>
+          <div class="qa-option">Dem Arbeitgeber.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="11">
+        <div class="qa-header">
+          <span class="qmark">11</span>
+          <span class="qtext">Warum kann es sinnvoll sein, auf eine neue Software ein Patent anzumelden?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Weil ein Patent die Software länger schützt als das Urheberrecht.</div>
+          <div class="qa-option">Weil man nur durch ein Patent die Software auch im Ausland schützen kann.</div>
+          <div class="qa-option">Weil der Schutz durch ein Patent billiger ist als der urheberrechtliche Schutz.</div>
+          <div class="qa-option correct">Weil der Schutz durch ein Patent breiter ist als der urheberrechtliche Schutz.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="12">
+        <div class="qa-header">
+          <span class="qmark">12</span>
+          <span class="qtext">Für freiberufliche Softwareentwickler sind Haftungsbegrenzungen ein wichtiges Thema. Ordnen sie die folgenden Begriffe den Aussagen zu.</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">a) Fahrlässigkeit: Wenn der Softwareentwickler nach objektiven Maßstäben den Schadenseintritt hätte vorhersehen und vermeiden können. z.B. fehlende naheliegende Testfälle</div>
+          <div class="qa-option correct">b) Vorsatz: Wenn der Softwareentwickler weiß, dass er rechtswidrig handelt, und etwa z.B. Schaden anrichten unter fremden Account.</div>
+          <div class="qa-option correct">c) Kardinalspflichten: Besonders wichtig, die zur Erreichung des Vertragszweckes von erheblicher Bedeutung sind, z.B. Freiheit von Schadprogrammen.</div>
+          <div class="qa-option correct">d) Grobe Fahrlässigkeit: Wenn der Softwareentwickler die im (Geschäfts-)Verkehr erforderliche Sorgfalt in besonders schwerem Maße verletzt. z.B. Auslieferung der Software ohne Tests.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="13">
+        <div class="qa-header">
+          <span class="qmark">13</span>
+          <span class="qtext">Verträge für Softwareentwicklungsprojekte: Die Vorschriften des Kaufrechts finden bei welcher Vertragsart Anwendung.</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Dienstvertrag</div>
+          <div class="qa-option">Werkvertrag</div>
+          <div class="qa-option correct">Werklieferungsvertrag</div>
+          <div class="qa-option">Mietvertrag</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="14">
+        <div class="qa-header">
+          <span class="qmark">14</span>
+          <span class="qtext">Verträge für Softwareentwicklungsprojekte: Bei welcher Vertragsart erfolgt die Zahlung erst nach Abnahme der Software?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Dienstvertrag</div>
+          <div class="qa-option correct">Werkvertrag</div>
+          <div class="qa-option">Werklieferungsvertrag</div>
+          <div class="qa-option">Mietvertrag</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="15">
+        <div class="qa-header">
+          <span class="qmark">15</span>
+          <span class="qtext">Bei welcher Vertragsart muss der Softwareentwickler unentgeltlich 2 Jahre lang Fehler beseitigen?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Dienstvertrag</div>
+          <div class="qa-option">Werkvertrag</div>
+          <div class="qa-option correct">Werklieferungsvertrag</div>
+          <div class="qa-option">Mietvertrag</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="16">
+        <div class="qa-header">
+          <span class="qmark">16</span>
+          <span class="qtext">Bei welcher Vertragsart muss der Softwareentwickler unentgeltlich für die gesamte Vertragslaufzeit Softwarefehler beseitigen?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Dienstvertrag</div>
+          <div class="qa-option">Werkvertrag</div>
+          <div class="qa-option">Werklieferungsvertrag</div>
+          <div class="qa-option correct">Mietvertrag</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="17">
+        <div class="qa-header">
+          <span class="qmark">17</span>
+          <span class="qtext">Bei welcher Vertragsart gilt mit der Zahlung die Software als abgenommen?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Dienstvertrag</div>
+          <div class="qa-option">Werkvertrag</div>
+          <div class="qa-option">Werklieferungsvertrag</div>
+          <div class="qa-option">Mietvertrag</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="18">
+        <div class="qa-header">
+          <span class="qmark">18</span>
+          <span class="qtext">Welche Anforderungen werden an ein Softwarepatent gestellt?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Nicht Stand der Wissenschaft und Technik</div>
+          <div class="qa-option correct">Erfinderische Tätigkeit</div>
+          <div class="qa-option">Internationalität</div>
+          <div class="qa-option correct">Technizität</div>
+          <div class="qa-option correct">Gewerbliche Nutzbarkeit</div>
+          <div class="qa-option correct">Neuheit</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="19">
+        <div class="qa-header">
+          <span class="qmark">19</span>
+          <span class="qtext">Bei welchen der folgenden Softwarearten ist keine Lizenz vorhanden?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Proprietär</div>
+          <div class="qa-option">Kommerziell</div>
+          <div class="qa-option">Shareware</div>
+          <div class="qa-option correct">Public Domain</div>
+          <div class="qa-option">Freeware</div>
+          <div class="qa-option">Free Software</div>
+          <div class="qa-option">Open Source</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="20">
+        <div class="qa-header">
+          <span class="qmark">20</span>
+          <span class="qtext">Bei welchen der folgenden Softwarearten darf der Quelltext nicht kopiert werden?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Proprietär</div>
+          <div class="qa-option correct">Kommerziell</div>
+          <div class="qa-option">Shareware</div>
+          <div class="qa-option">Public Domain</div>
+          <div class="qa-option">Freeware</div>
+          <div class="qa-option">Free Software</div>
+          <div class="qa-option">Open Source</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="21">
+        <div class="qa-header">
+          <span class="qmark">21</span>
+          <span class="qtext">Bei welchen der folgenden Softwarearten darf der Quelltext modifiziert werden?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Proprietär</div>
+          <div class="qa-option">Kommerziell</div>
+          <div class="qa-option">Shareware</div>
+          <div class="qa-option">Freeware</div>
+          <div class="qa-option correct">Free Software</div>
+          <div class="qa-option correct">Open Source</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="22">
+        <div class="qa-header">
+          <span class="qmark">22</span>
+          <span class="qtext">Bei welchen der folgenden Softwarearten ist die Nutzung nicht kostenlos?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Kommerziell</div>
+          <div class="qa-option correct">Shareware</div>
+          <div class="qa-option">Freeware</div>
+          <div class="qa-option">Free Software</div>
+          <div class="qa-option">Open Source</div>
+          <div class="qa-option">Public Domain</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="23">
+        <div class="qa-header">
+          <span class="qmark">23</span>
+          <span class="qtext">Welche Aussagen sind korrekt?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">In den AGBs wird geregelt, dass der Entwickler von Open Source Software nicht haften muss.</div>
+          <div class="qa-option correct">Die Überlassung von Open Source Software ist eine Schenkung.</div>
+          <div class="qa-option correct">Bei der Überlassung von Open Source Software entsteht ein Lizenzvertrag.</div>
+          <div class="qa-option">Open Source Lizenzen werden nicht als Teil der AGB gesehen</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="24">
+        <div class="qa-header">
+          <span class="qmark">24</span>
+          <span class="qtext">Was passiert, wenn Sie gegen einzelne Bedingungen einer Open-Source-Lizenz verstoßen?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Die Nutzungsrechte entfallen über eine auflösende Bedingung.</div>
+          <div class="qa-option">Der Programmierer hat ein Kündigungsrecht.</div>
+          <div class="qa-option">Der Vertrag wird aufgelöst.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="25">
+        <div class="qa-header">
+          <span class="qmark">25</span>
+          <span class="qtext">Was macht das Besondere bei Open Source im Hinblick auf den urheberrechtlichen Schutz aus?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Open Source verzichtet auf den Know-How-Schutz des Urheberrechts, die Quelltexte verschlossen zu halten.</div>
+          <div class="qa-option">Open Source negiert das Urheberrecht.</div>
+          <div class="qa-option">Open Source ersetzt das Urheberrecht.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="26">
+        <div class="qa-header">
+          <span class="qmark">26</span>
+          <span class="qtext">Welche verschiedenen Arten von Open-Source-Lizenzen gibt es?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Non-Copyleft-Lizenzen.</div>
+          <div class="qa-option correct">Lizenzen mit beschränktem Copyleft-Effekt.</div>
+          <div class="qa-option correct">Lizenzen mit strengem Copyleft-Effekt.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="27">
+        <div class="qa-header">
+          <span class="qmark">27</span>
+          <span class="qtext">Welche wichtigen Regeln sollte man bei der Benennung eines Produktes mit einem neuen Namen beachten?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Man sollte aufpassen, dass man nicht mit Drittrechten kollidiert.</div>
+          <div class="qa-option correct">Der Name selbst sollte in einer Fremdsprache, die ggf. verwendet wird, keine abschätzige oder anders negative Bedeutung haben.</div>
+          <div class="qa-option">Ähnliche Namen wie kommerzielle Produkte erhöhen die Downloadzahlen.</div>
+          <div class="qa-option">Eine markenrechtliche Überprüfung des Namens/Logos ist zwingend erforderlich.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="28">
+        <div class="qa-header">
+          <span class="qmark">28</span>
+          <span class="qtext">Der Rechteinhaber der OS-Software kann Namen und Logo markenrechtlich absichern. Welche Aussagen sind richtig?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Die Marke muss auch genutzt werden.</div>
+          <div class="qa-option">Die Marke kann so gesichert werden, damit man diese zu einem späteren Zeitpunkt eventuell nutzen kann.</div>
+          <div class="qa-option correct">Das Markenrecht zwingt nur geschäftliche Tätigkeiten in Bezug auf die mit der Marke.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="29">
+        <div class="qa-header">
+          <span class="qmark">29</span>
+          <span class="qtext">Welche Nutzungsrechtsklausel passt am ehesten zum Vertriebsmodell Software as a Service (SaaS)?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Alleiniges, nicht unterlizenzierbares, nicht übertragbares Nutzungsrecht, beschränkt auf die Laufzeit des Vertrages.</div>
+          <div class="qa-option correct">Einfaches, nicht unterlizenzierbares, nicht übertragbares Nutzungsrecht, beschränkt auf die Laufzeit des Vertrages.</div>
+          <div class="qa-option">Einfaches, unterlizienzierbares, übertragbares Nutzungsrecht, beschränkt auf die Laufzeit des Vertrages.</div>
+          <div class="qa-option">Einfaches, nicht unterlizenzierbares, nicht übertragbares Nutzungsrecht an der Software.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="30">
+        <div class="qa-header">
+          <span class="qmark">30</span>
+          <span class="qtext">Wann endet ein SaaS-Vertrag?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Aus wichtigem Grund jederzeit.</div>
+          <div class="qa-option">Nur wenn eine Kündigung im Vertrag vorgesehen ist.</div>
+          <div class="qa-option correct">Wenn nichts vereinbart ist, jederzeit, sobald er gekündigt wird.</div>
+          <div class="qa-option correct">Mit Ablauf der vereinbarten Zeit.</div>
+          <div class="qa-option">Nach dem Gesetz immer mit einer Frist von einem Monat zum Quartalsende.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="31">
+        <div class="qa-header">
+          <span class="qmark">31</span>
+          <span class="qtext">Was müssen Sie zur Abwicklung gekündigter SaaS-Verträge insbesondere regeln?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Das Verbot weiterer Nutzung der Software.</div>
+          <div class="qa-option">Die Geheimhaltung von Daten, die der Kunde während der Laufzeit des Vertrages erhalten hat.</div>
+          <div class="qa-option correct">Die Migration von Daten des Kunden von Ihren Systemen.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="32">
+        <div class="qa-header">
+          <span class="qmark">32</span>
+          <span class="qtext">Was müssen Sie bei Preisangaben im Software-Kaufvertrag beachten?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Man muss eine Klausel für Verzugszinsen bei Nichtzahlung des Kaufpreises vorsehen.</div>
+          <div class="qa-option correct">Preise für Kauf der Software, Anpassung und Pflege sollten getrennt ausgewiesen werden.</div>
+          <div class="qa-option correct">Auch unter Unternehmern enthält ein Vertrag angegebener Preis schon die Umsatzsteuer.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="33">
+        <div class="qa-header">
+          <span class="qmark">33</span>
+          <span class="qtext">Wenn Sie beim Software-Verkauf ein Update liefern, um Bugs (Mängel) zu beheben, kann dann der Erwerber die ursprünglich gekaufte Version weiter nutzen?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Nein, er muss sie löschen.</div>
+          <div class="qa-option correct">Ja, er muss sie aber auf Verlangen zurückgeben.</div>
+          <div class="qa-option">Ja, da er sie gekauft hat, kann er sie auch weiter verkaufen.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="34">
+        <div class="qa-header">
+          <span class="qmark">34</span>
+          <span class="qtext">Unter welche Vertragstypen passt ein Software-Entwicklungsvertrag am ehesten?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Kaufvertrag</div>
+          <div class="qa-option correct">Werklieferungsvertrag</div>
+          <div class="qa-option">Gesellschaftsvertrag</div>
+          <div class="qa-option correct">Dienstvertrag</div>
+          <div class="qa-option">Softwarevertrag</div>
+          <div class="qa-option correct">Werkvertrag</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ======================= KAPITEL 20 ======================= -->
+  <section class="panel" id="panel-kap20">
+    <div class="intro-box amber">
+      <b>Kapitel 20: Angestellter Nebenerwerb</b> — Regelungen zur Nebentätigkeit, Nebenerwerb, Scheinselbstständigkeit, Sozialversicherung und rechtliche Rahmenbedingungen für Arbeitnehmer.
+    </div>
+
+    <div class="chapter">
+      <div class="chapter-head">
+        <span class="chapter-tag">Kap 20</span>
+        <span class="chapter-title">Angestellter Nebenerwerb</span>
+        <span class="chapter-count">17 Fragen</span>
+      </div>
+
+      <div class="qa-card" data-question="01">
+        <div class="qa-header">
+          <span class="qmark">01</span>
+          <span class="qtext">Existenzgründung aus einem Arbeitsverhältnis heraus: Welche der folgenden Bedingungen treffen bei einer Nebenerwerbsselbständigkeit zu?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Gewerbliche Tätigkeit.</div>
+          <div class="qa-option correct">Zusätzlich zur ersten Erwerbstätigkeit wird eine zweite, selbständige Erwerbstätigkeit in Teilzeit erbracht.</div>
+          <div class="qa-option">Die Einkünfte aus der Nebenerwerbsselbständigkeit sind maximal fünftel des Gesamteinkommens der jeweiligen Person.</div>
+          <div class="qa-option correct">Es ist keine Liebhaberei.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="02">
+        <div class="qa-header">
+          <span class="qmark">02</span>
+          <span class="qtext">Kann ein Arbeitgeber seinem Arbeitnehmer eine Nebenerwerbs­gründung verbieten? Welche Aussagen sind richtig?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Es gibt keine gesetzliche Grundlage für die Aufnahme einer Nebentätigkeit zusätzlich zur Haupttätigkeit.</div>
+          <div class="qa-option correct">Grundsätzlich steht es jedem frei, zusätzlich zu seiner Haupttätigkeit noch weitere Tätigkeiten aufzunehmen.</div>
+          <div class="qa-option">Der Arbeitnehmer muss eine entsprechende Genehmigung beantragen.</div>
+          <div class="qa-option correct">Klauseln im Arbeitsvertrag, die eine Nebentätigkeit verbieten, sind unzulässig.</div>
+          <div class="qa-option">Der Arbeitnehmer darf mit seiner Nebentätigkeit nicht mehr als mit seiner Haupttätigkeit verdienen.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="03">
+        <div class="qa-header">
+          <span class="qmark">03</span>
+          <span class="qtext">Wie viele Stunden darf man im Nebenerwerb pro Woche arbeiten, wenn man einer Vollzeitbeschäftigung hat? Welche Aussagen sind richtig?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Aus Sicht des Finanzamtes beliebig viel.</div>
+          <div class="qa-option">Aus Sicht des Finanzamtes maximal 8 Stunden pro Woche.</div>
+          <div class="qa-option">Aus Sicht des Arbeitsgebers maximal 18 Stunden pro Monat.</div>
+          <div class="qa-option correct">Aus Sicht des Arbeitsgebers Null Stunden, da keine Teilzeitbeschäftigung vorliegt.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="04">
+        <div class="qa-header">
+          <span class="qmark">04</span>
+          <span class="qtext">Für die Prüfung auf Scheinselbstständigkeit werden mehrere Kriterien abgefragt. Welche der folgenden Kriterien werden angewendet?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Sie haben einen sozialversicherungspflichtiger Arbeitnehmer beschäftigt oder mehr als 450€ im Monat verdient.</div>
+          <div class="qa-option correct">Sie sind für mehrere Kunden tätig.</div>
+          <div class="qa-option">Sie gehen beim Kunden einer Tätigkeit nach, die zuvor von einem fest angestellten Mitarbeiter ausgeübt wurde.</div>
+          <div class="qa-option">Sie haben einen festen Arbeitsplatz beim Kunden.</div>
+          <div class="qa-option correct">Sie machen Werbung.</div>
+          <div class="qa-option">Sie haben ein Gewerbe angemeldet oder sind Freiberufler. Ihre Stundensätze orientieren sich an den Stundensätzen des Kunden.</div>
+          <div class="qa-option">Ihre Stundensätze orientieren sich an den Stundensätzen des Kunden.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="05">
+        <div class="qa-header">
+          <span class="qmark">05</span>
+          <span class="qtext">Wann müssen Einkünfte aus freiberuflicher Nebentätigkeit dem Finanzamt gemeldet werden?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Spätestens mit der ersten Rechnungsstellung.</div>
+          <div class="qa-option">Gar nicht, da es eine Quermeldung vom Gewerbeamt gibt.</div>
+          <div class="qa-option correct">Spätestens bei der Jahressteuererklärung.</div>
+          <div class="qa-option correct">Spätestens mit der ersten Umsatzsteuervoranmeldung.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="06">
+        <div class="qa-header">
+          <span class="qmark">06</span>
+          <span class="qtext">Was sind sogenannte Gewinneinkünfte?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Einkünfte aus Land- und Forstwirtschaft</div>
+          <div class="qa-option">Einkünfte aus Kapitalvermögen</div>
+          <div class="qa-option correct">Einkünfte aus selbständiger Arbeit</div>
+          <div class="qa-option">Einkünfte aus nicht selbständiger Arbeit</div>
+          <div class="qa-option">Einkünfte aus Vermietung und Verpachtung</div>
+          <div class="qa-option">Sonstige Einkünfte</div>
+          <div class="qa-option correct">Einkünfte aus Gewerbebetrieb</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="07">
+        <div class="qa-header">
+          <span class="qmark">07</span>
+          <span class="qtext">Was sind sogenannte Überschusseinkünfte?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Einkünfte aus Land- und Forstwirtschaft</div>
+          <div class="qa-option correct">Einkünfte aus Kapitalvermögen</div>
+          <div class="qa-option">Einkünfte aus selbständiger Arbeit</div>
+          <div class="qa-option correct">Einkünfte aus nicht selbständiger Arbeit</div>
+          <div class="qa-option correct">Einkünfte aus Vermietung und Verpachtung</div>
+          <div class="qa-option correct">Sonstige Einkünfte</div>
+          <div class="qa-option">Einkünfte aus Gewerbebetrieb</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="08">
+        <div class="qa-header">
+          <span class="qmark">08</span>
+          <span class="qtext">Welche Einkünfte werden mit der Anlage Einkünfte aus Gewerbebetrieb GSE erklärt?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Einkünfte aus Kapitalvermögen</div>
+          <div class="qa-option correct">Einkünfte aus selbständiger Arbeit</div>
+          <div class="qa-option">Einkünfte aus Vermietung und Verpachtung</div>
+          <div class="qa-option">Einkünfte aus nicht selbständiger Arbeit</div>
+          <div class="qa-option correct">Einkünfte aus Gewerbebetrieb</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="09">
+        <div class="qa-header">
+          <span class="qmark">09</span>
+          <span class="qtext">Bei einer geringfügigen Nebentätigkeit ...</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">zählt man keine Steuer.</div>
+          <div class="qa-option correct">zählt man keine Sozialabgaben auf die Einkünfte aus der Nebentätigkeit.</div>
+          <div class="qa-option">zählt man weniger Sozialversicherung.</div>
+          <div class="qa-option correct">zählt man keine zusätzlichen Krankenversicherungsbeiträge.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="10">
+        <div class="qa-header">
+          <span class="qmark">10</span>
+          <span class="qtext">Die Sozialversicherung besteht aus:</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Arbeitslosenversicherung</div>
+          <div class="qa-option correct">Krankenversicherung</div>
+          <div class="qa-option correct">Rentenversicherung</div>
+          <div class="qa-option">Unfallversicherung</div>
+          <div class="qa-option">Arbeitsunfähigkeitsversicherung</div>
+          <div class="qa-option">Krankenhausversicherung</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="11">
+        <div class="qa-header">
+          <span class="qmark">11</span>
+          <span class="qtext">Geringfügige Nebentätigkeit ist gegeben, wenn ...</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">der Umsatz einen bestimmten Betrag nicht übersteigt</div>
+          <div class="qa-option correct">die Einnahmen einen bestimmten Betrag nicht übersteigt</div>
+          <div class="qa-option correct">die Einnahmen die Ausgaben nicht einen bestimmten Betrag übersteigen</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="12">
+        <div class="qa-header">
+          <span class="qmark">12</span>
+          <span class="qtext">Bei einer geringfügige Nebentätigkeit darf man wieviele Stunden pro Woche dieser Tätigkeit nachgehen arbeiten.</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">18 Stunden</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="13">
+        <div class="qa-header">
+          <span class="qmark">13</span>
+          <span class="qtext">Nebenerwerbsselbständigkeit* liegt vor, wenn</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">zusätzlich zur ersten Erwerbstätigkeit eine zweite, selbständige Erwerbstätigkeit ausgeführt wird, die in Teilzeit erbracht wird</div>
+          <div class="qa-option correct">die Einkünfte aus der Nebenerwerbsselbständigkeit weniger als die Hälfte zum Gesamteinkommen der jeweiligen Person beitragen</div>
+          <div class="qa-option">eine Einkunfts-/Gewinnerzielungsabsicht aus der zweiten, selbständigen Erwerbstätigkeit</div>
+          <div class="qa-option">zusätzlich zur ersten Erwerbstätigkeit eine zweite, unselbständige Erwerbstätigkeit ausgeführt wird, die in Teilzeit erbracht wird</div>
+          <div class="qa-option">Die Einkünfte aus der Nebenerwerbsselbständigkeit weniger als 2/3 des Gesamteinkommens der jeweiligen Person</div>
+          <div class="qa-option">Aus der Nebenerwerbstätigkeit Gewinne erzielt werden</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="14">
+        <div class="qa-header">
+          <span class="qmark">14</span>
+          <span class="qtext">Wann kann der Arbeitgeber eine Nebentätigkeit verbieten?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">gar nicht</div>
+          <div class="qa-option correct">Wenn Haupt- und Nebenjob nicht klar getrennt werden können</div>
+          <div class="qa-option">Wenn dem Arbeitgeber mit der Nebentätigkeit keine Konkurrenz entsteht</div>
+          <div class="qa-option">Wenn in der Nebentätigkeit mehr als 8 Stunden die Woche gearbeitet wird</div>
+          <div class="qa-option correct">Wenn die Nebentätigkeit die Leistung im Hauptjob negativ beeinträchtigt</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="15">
+        <div class="qa-header">
+          <span class="qmark">15</span>
+          <span class="qtext">Als Arbeitnehmer in einem abhängigen Arbeitsverhältnis kann man mit seiner Nebentätigkeit in die Problematik der Scheinselbstständigkeit kommen.</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Richtig</div>
+          <div class="qa-option correct">Falsch</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="16">
+        <div class="qa-header">
+          <span class="qmark">16</span>
+          <span class="qtext">Sie wollen alleine gründen. Welche Rechtsformen sind möglich?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">BGB-Gesellschaft</div>
+          <div class="qa-option correct">Gesellschaft bürgerlichen Rechts (GbR)</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="17">
+        <div class="qa-header">
+          <span class="qmark">17</span>
+          <span class="qtext">Sie sind als Freiberufler für die Soft AG tätig. Ihr Chef bei der Soft AG schlägt Ihnen vor, für Sie extra einen Arbeitsplatz einzurichten damit Sie dort ungestört arbeiten können. Wie reagieren Sie auf dieses nette Angebot?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Super, nehme ich gerne an</div>
+          <div class="qa-option">So etwas lehne ich grundsätzlich ab</div>
+          <div class="qa-option correct">Bei den anderen Auftraggebern habe ich diesen Luxus nicht. Da ich nur ein Tag die Woche für die Soft AG tätig bin, nehme ich das Angebot gerne an.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ======================= KAPITEL 30 ======================= -->
+  <section class="panel" id="panel-kap30">
+    <div class="intro-box">
+      <b>Kapitel 30: Geschäftsidee/Geschäftsmodell</b> — Gartner Hype-Zyklus, Wechselkosten, Brainstorming, Business Model Canvas, Businessplan und Softskills für Unternehmensgründer.
+    </div>
+
+    <div class="chapter">
+      <div class="chapter-head">
+        <span class="chapter-tag">Kap 30</span>
+        <span class="chapter-title">Geschäftsidee/Geschäftsmodell</span>
+        <span class="chapter-count">16 Fragen</span>
+      </div>
+
+      <div class="qa-card" data-question="01">
+        <div class="qa-header">
+          <span class="qmark">01</span>
+          <span class="qtext">Der (Gartner-) Hype-Zyklus durchläuft chronologisch die folgenden 5 Phasen:</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Technologischer Auslöser → Tal der Enttäuschungen → Gipfel der überzogenen Erwartungen → Plateau der Produktivität → Pfad der Erleuchtung</div>
+          <div class="qa-option">Technologischer Auslöser → Tal der Enttäuschungen → Gipfel der überzogenen Erwartungen → Pfad der Erleuchtung → Plateau der Produktivität</div>
+          <div class="qa-option">Erwartungen → Technologischer Auslöser → Gipfel der überzogenen Erwartungen Tal der Enttäuschungen → Plateau der Produktivität</div>
+          <div class="qa-option correct">Technologischer Auslöser → Gipfel der überzogenen Erwartungen → Tal der Enttäuschungen → Pfad der Erleuchtung → Plateau der Produktivität</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="02">
+        <div class="qa-header">
+          <span class="qmark">02</span>
+          <span class="qtext">Das Prinzip der Wechselkosten beschreibt...</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">den Aufwand, der mit dem Wechsel von einem neuen Produkt einhergeht.</div>
+          <div class="qa-option correct">den Aufwand, der mit dem Wechsel von einem bestehenden Produkt auf ein neues Produkt einhergeht.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="03">
+        <div class="qa-header">
+          <span class="qmark">03</span>
+          <span class="qtext">Wichtige Regeln beim Brainstorming sind u.a.</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Qualität vor Quantität</div>
+          <div class="qa-option correct">Ideen visualisieren</div>
+          <div class="qa-option correct">Themen- und Zeitlimit</div>
+          <div class="qa-option">Ideen sofort bewerten</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="04">
+        <div class="qa-header">
+          <span class="qmark">04</span>
+          <span class="qtext">Was sind Nachteile/ ist der Nachteil des Business Model Canvas?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Keine explizite Berücksichtigung der Kunden und Kundenkanäle.</div>
+          <div class="qa-option correct">Keine explizite Berücksichtigung der Markt- und Wettbewerbssituation.</div>
+          <div class="qa-option correct">Keine explizite Berücksichtigung der Unternehmensressourcen und notwendiger Aktivitäten.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="05">
+        <div class="qa-header">
+          <span class="qmark">05</span>
+          <span class="qtext">Der Block "Wertversprechen" des Business Model Canvas gibt u.a. Auskunft über:</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Welchen Wert das Produkt- oder Serviceangebot stiftet.</div>
+          <div class="qa-option correct">Welchen Wert das Unternehmen gegenüber seinen Mitarbeitern stiftet.</div>
+          <div class="qa-option">Welche Kanäle genutzt werden, um Kunden den Wert des Unternehmens zu verdeutlichen.</div>
+          <div class="qa-option">Die Abgrenzung gegenüber anderen Marktangeboten.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="06">
+        <div class="qa-header">
+          <span class="qmark">06</span>
+          <span class="qtext">Womit werden Geschäftsmodelle beschrieben?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Wertschöpfungsketten</div>
+          <div class="qa-option correct">Businessplan</div>
+          <div class="qa-option">Design Thinking</div>
+          <div class="qa-option correct">Business Modell Canvas</div>
+          <div class="qa-option">Methode 635</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="07">
+        <div class="qa-header">
+          <span class="qmark">07</span>
+          <span class="qtext">Der Business Model Canvas umfasst u.a. die folgenden Blöcke:</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Kundensegmente, Kanäle, Kundenbeziehungen</div>
+          <div class="qa-option">Wettbewerb, Markt, Umsatzmodelle</div>
+          <div class="qa-option correct">Ressourcen, Aktivitäten, Partnerschaften</div>
+          <div class="qa-option">Unfair Advantage, Problem, Lösung</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="08">
+        <div class="qa-header">
+          <span class="qmark">08</span>
+          <span class="qtext">Welche Informationen über die Unternehmensgründer bzw. das Management sollte ein Businessplan enthalten?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Vollständige Lebensläufe für alle Unternehmensgründer, Managementmitglieder und sonstige Personen in Schlüsselpositionen.</div>
+          <div class="qa-option correct">Alle Informationen, die für die Umsetzung des Geschäftsmodells relevant sind, wie z.B. Ausbildung, Erfahrungen und sonstige Qualifikationen für die vorgesehenen Aufgabenbereiche.</div>
+          <div class="qa-option">Die wichtigsten Aufgabenbereiche der Unternehmensgründer bzw. der Managementmitglieder genügen.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="09">
+        <div class="qa-header">
+          <span class="qmark">09</span>
+          <span class="qtext">Welche Bestandteile kennzeichnen eine potenzialträchtige Geschäftsidee?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Neben einem klar sichtbaren Kundennutzen sowie Machbarkeit und Profitabilität ...</div>
+          <div class="qa-option">ein neuartiges Produkt und gewerbliche Schutzrechte.</div>
+          <div class="qa-option">ein erfahrenes Management und eine großzügige Kapitalausstattung.</div>
+          <div class="qa-option correct">ein ausreichend großer Markt und ein ausreichender Innovationsgrad.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="10">
+        <div class="qa-header">
+          <span class="qmark">10</span>
+          <span class="qtext">Was stellt Stähler bei seiner Definition eines Geschäftsmodells in den Vordergrund?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Kundengruppen, Wertschöpfungspartner und Erlösformen.</div>
+          <div class="qa-option correct">Nutzenversprechen, Architektur der Wertschöpfung, Ertragsmodell.</div>
+          <div class="qa-option">Finanzierung, Leistungserstellung, Profitabilität.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="11">
+        <div class="qa-header">
+          <span class="qmark">11</span>
+          <span class="qtext">Was sind inhaltliche Anforderungen an einen Businessplan?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Üblicherweise wird ein Zeithorizont von drei bis fünf Jahren betrachtet, ggf. aber auch mehr, wenn die Anlaufphase des Unternehmens länger dauert.</div>
+          <div class="qa-option">Ein Businessplan darf nur belegbare Fakten enthalten und keine Schätzungen.</div>
+          <div class="qa-option">Mögliche Risiken der geplanten Geschäftstätigkeit brauchen im Gegensatz zu den Chancen nicht erlaubt zu werden.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="12">
+        <div class="qa-header">
+          <span class="qmark">12</span>
+          <span class="qtext">Welche formalen Anforderungen werden an einen Businessplan gestellt?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Ein euphorischer Werbeprachstil ist einer trockenen sachlichen Argumentation vorzuziehen.</div>
+          <div class="qa-option">Ein einheitliches Erscheinungsbild und ein einheitlicher Schreibstil sind nur innerhalb der einzelnen Kapitel notwendig.</div>
+          <div class="qa-option correct">Die Verständlichkeit des Dokumentes ist dadurch zu unterstützen, dass der Businessplan zielgruppengerecht und ohne für diese Gruppe unverständliche Fachtermini zu schreiben ist.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="13">
+        <div class="qa-header">
+          <span class="qmark">13</span>
+          <span class="qtext">Was beinhaltet die Executive/Management Summary des Businessplans und wozu dient diese?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Es beschreibt insbesondere detailliert die Qualifikationen des Managements des geplanten Unternehmens, um Kreditgeber von der Seriosität des Unternehmens zu überzeugen.</div>
+          <div class="qa-option correct">Es stellt umfassend, aber kurz die wichtigsten Eckdaten und Aussagen des gesamten Businessplans dar, um das Interesse des Lesers an den detaillierten Aussagen der folgenden Kapitel zu wecken.</div>
+          <div class="qa-option">Es nennt die Titel und Themen der nachfolgenden Kapitel des Businessplans und dient somit vor allem als kurze Inhaltsübersicht.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="14">
+        <div class="qa-header">
+          <span class="qmark">14</span>
+          <span class="qtext">Welche Softskills sollte man unbedingt als Unternehmensgründer besitzen?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Kommunikationsfähigkeit</div>
+          <div class="qa-option correct">Teamfähigkeit</div>
+          <div class="qa-option correct">Entscheidungsfreude</div>
+          <div class="qa-option">Detailliertes betriebswirtschaftliches know-how</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="15">
+        <div class="qa-header">
+          <span class="qmark">15</span>
+          <span class="qtext">In welchen Bereichen sollte man unbedingt Kenntnisse haben, wenn man ein „IT-Start-up" gründen möchte?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Langjährige Erfahrungen als Unternehmensberater</div>
+          <div class="qa-option">Personalwesen</div>
+          <div class="qa-option correct">IT-Know-how</div>
+          <div class="qa-option correct">Branchenkenntnisse</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="16">
+        <div class="qa-header">
+          <span class="qmark">16</span>
+          <span class="qtext">Missverständnisse bei der Ideenfindung sind u.a.:</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Ideen sind teuer.</div>
+          <div class="qa-option correct">Heute ist es schwieriger, Ideen zu finden.</div>
+          <div class="qa-option">"Große Ideen" können klein starten.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ======================= KAPITEL 40 ======================= -->
+  <section class="panel" id="panel-kap40">
+    <div class="intro-box teal">
+      <b>Kapitel 40: Coaching/Finanzierung</b> — Finanzierungsquellen, Gründerkapital, Fördermittel, Business Angels, Venture Capital, Crowdfunding und Bilanzgrundlagen.
+    </div>
+
+    <div class="chapter">
+      <div class="chapter-head">
+        <span class="chapter-tag">Kap 40</span>
+        <span class="chapter-title">Coaching/Finanzierung</span>
+        <span class="chapter-count">13 Fragen</span>
+      </div>
+
+      <div class="qa-card" data-question="01">
+        <div class="qa-header">
+          <span class="qmark">01</span>
+          <span class="qtext">Welche Finanzierungsquellen gibt es für Unternehmen?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Die Reinvestition von Gewinnen als Form der Innenfinanzierung.</div>
+          <div class="qa-option">Kredite von Banken, Lieferanten oder der Familie als Eigenkapitalfinanzierung.</div>
+          <div class="qa-option">Venture Capital oder einen Börsengang als Formen der Fremdkapitalfinanzierung.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="02">
+        <div class="qa-header">
+          <span class="qmark">02</span>
+          <span class="qtext">Gründerkapital ist...</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">monetär (Erspartes) als auch nicht-monetär (Arbeitsleistung).</div>
+          <div class="qa-option">mit hohem bürokratischem Aufwand verbunden.</div>
+          <div class="qa-option">unbegrenzt vorhanden.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="03">
+        <div class="qa-header">
+          <span class="qmark">03</span>
+          <span class="qtext">Fördermittel sind...</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">i.d.R. mit günstigen Finanzierungskonditionen verbunden.</div>
+          <div class="qa-option">für innovative IT-Start-ups schwierig zu erhalten und meistens mit Absagen verbunden.</div>
+          <div class="qa-option">mit geringem bürokratischem Aufwand verbunden.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="04">
+        <div class="qa-header">
+          <span class="qmark">04</span>
+          <span class="qtext">Business Angel sind...</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Privatpersonen, die neben Kapital auch ihr Know-how und Netzwerk zur Verfügung stellen.</div>
+          <div class="qa-option correct">vermögende Privatpersonen, die Kapital in Start-ups investieren.</div>
+          <div class="qa-option">Investoren, die grundsätzlich 500.000 EUR und mehr investieren.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="05">
+        <div class="qa-header">
+          <span class="qmark">05</span>
+          <span class="qtext">Venture Capital Gesellschaften sind...</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Kapitalgeber, die i.d.R. erst bei größeren Finanzierungsvolumen (ca. ab 500.000 EUR) aktiv werden.</div>
+          <div class="qa-option">immer rein profitorientiert.</div>
+          <div class="qa-option correct">Investoren mit jeweils spezifischen Investitionskriterien, z.B. bezüglich Finanzierungsphase und Branche.</div>
+          <div class="qa-option correct">Kapitalgeber, die Geld von originären Investoren (Investmentfonds, Banken, Versicherungen o.ä.) investieren.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="06">
+        <div class="qa-header">
+          <span class="qmark">06</span>
+          <span class="qtext">Bei der Finanzierung mit Venture Capital sind folgende Aussagen korrekt:</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Delegieren Sie das Fundraising (Mittelbeschaffung) an Ihre Mitarbeiter.</div>
+          <div class="qa-option correct">Venture Capital Gesellschaften sichern ihre Investitionen über spezifische Kontroll- und Mitspracherechte ab.</div>
+          <div class="qa-option">Venture Capital Gesellschaften möchten mit Start-ups i.d.R. über 10 Jahre zusammenarbeiten.</div>
+          <div class="qa-option correct">Eine Finanzierung mit Venture Capital sollte i.d.R. 18-24 Monate reichen, in der das Start-up spezifische Meilensteine erreichen muss.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="07">
+        <div class="qa-header">
+          <span class="qmark">07</span>
+          <span class="qtext">Ordnen Sie den folgenden Begriffen die richtigen Betragsgrenzen zu:</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">a) Kleinkapitalgesellschaft: Bilanzsumme < 350T€ und Umsatz < 700T€</div>
+          <div class="qa-option correct">b) Kleinunternehmerregelung: Vorjahresumsatz < 17,5T€ und Umsatz laufendes Kalenderjahr < 50T€</div>
+          <div class="qa-option correct">c) Buchführungspflicht: Gewinn > 60T€ oder Umsatz > 600T€</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="08">
+        <div class="qa-header">
+          <span class="qmark">08</span>
+          <span class="qtext">Crowdfunding ist...</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">mit sozialen Druck für die Unternehmensgründer verbunden.</div>
+          <div class="qa-option">für Start-ups geeignet.</div>
+          <div class="qa-option correct">die „Schwarmfinanzierung" durch eine Vielzahl von Personen über spezielle Internetplattformen.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="09">
+        <div class="qa-header">
+          <span class="qmark">09</span>
+          <span class="qtext">Geld aus dem persönlichen Umfeld („Family, Friends and Fools")...</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">kann zu sozialem Druck gegenüber dem Kapitalgeber führen.</div>
+          <div class="qa-option">ist nur für spezielle Geschäftsmodelle geeignet.</div>
+          <div class="qa-option">ist i.d.R. nur begrenzt vorhanden.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="10">
+        <div class="qa-header">
+          <span class="qmark">10</span>
+          <span class="qtext">Der Jahresabschluss einer Kapitalgesellschaft (UG, GmbH)...</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">erfasst nur wesentliche Geschäftsvorfälle.</div>
+          <div class="qa-option">ist vorhersagend.</div>
+          <div class="qa-option correct">dient zur Dokumentation und Information für z.B. Gesellschafter, Gläubiger und Fiskus.</div>
+          <div class="qa-option correct">besteht gemäß HGB aus der Bilanz, der Gewinn- und Verlustrechnung und dem Anhang.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="11">
+        <div class="qa-header">
+          <span class="qmark">11</span>
+          <span class="qtext">Wie lautet die Grundgleichung der Bilanz richtig?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Vermögen = Fremdkapital</div>
+          <div class="qa-option correct">Vermögen = Eigenkapital + Fremdkapital</div>
+          <div class="qa-option">Eigenkapital = Vermögen + Fremdkapital</div>
+          <div class="qa-option">Vermögen = Eigenkapital</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="12">
+        <div class="qa-header">
+          <span class="qmark">12</span>
+          <span class="qtext">Welche der folgenden Aussagen sollten Sie grundsätzlich bei der Planung Ihrer Ausgaben v.a. aber im Gründungsprozess berücksichtigen?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Beide Kennzahlen sind gleichbedeutsam.</div>
+          <div class="qa-option correct">Liquidität ist wichtiger als Rentabilität.</div>
+          <div class="qa-option">Rentabilität ist wichtiger als Liquidität.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="13">
+        <div class="qa-header">
+          <span class="qmark">13</span>
+          <span class="qtext">Bei der Gründungsfinanzierung...</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">werden keine Finanzierungsmittel benötigt.</div>
+          <div class="qa-option">unterwerfen sich die Unternehmensgründer ihren finanziellen Restriktionen.</div>
+          <div class="qa-option correct">entwickeln die Unternehmensgründer ein Geschäftsmodell unabhängig von ihren vorhandenen finanziellen Restriktionen.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ======================= KAPITEL 50 ======================= -->
+  <section class="panel" id="panel-kap50">
+    <div class="intro-box amber">
+      <b>Kapitel 50: Gründung Rechtsformen</b> — Unterschiede zwischen Personenunternehmen und Kapitalgesellschaften, charakterisierende Merkmale, Rechtsformen wie GmbH, UG, AG, OHG, GbR und deren Eigenschaften.
+    </div>
+
+    <div class="chapter">
+      <div class="chapter-head">
+        <span class="chapter-tag">Kap 50</span>
+        <span class="chapter-title">Gründung Rechtsformen</span>
+        <span class="chapter-count">11 Fragen</span>
+      </div>
+
+      <div class="qa-card" data-question="01">
+        <div class="qa-header">
+          <span class="qmark">01</span>
+          <span class="qtext">Was sind grundlegende Unterschiede zwischen Personenunternehmen und Kapitalgesellschaften?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Die Unternehmensleitung erfolgt bei Kapitalgesellschaften stets durch einen oder mehrere Gesellschafter.</div>
+          <div class="qa-option correct">Bei Personenunternehmen haftet mindestens ein Gesellschafter persönlich mit seinem gesamten Privatvermögen.</div>
+          <div class="qa-option">Kapitalgesellschaften basieren auf der Übereinstimmung von Kapital und Personen, die von möglichen Gläubigern verklagt werden können.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="02">
+        <div class="qa-header">
+          <span class="qmark">02</span>
+          <span class="qtext">Was sind die charakterisierenden Merkmale der verschiedenen Rechtsformen für Unternehmen?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Eine Gesellschaft bürgerlichen Rechts erfordert mindestens zwei Gesellschafter, aber kein Mindestkapital.</div>
+          <div class="qa-option">Die Leitung einer Kommanditgesellschaft erfolgt durch die Kommanditisten.</div>
+          <div class="qa-option">Eine Aktiengesellschaft muss nicht ins Handelsregister eingetragen werden und haftet mit maximal dem doppelten Betrag ihres Gesellschaftsvermögens.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="03">
+        <div class="qa-header">
+          <span class="qmark">03</span>
+          <span class="qtext">Ab wann ist eine GmbH rechtsfähig, d.h. kann Geschäfte tätigen?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Mit Unterzeichnung des Gesellschaftsvertrags.</div>
+          <div class="qa-option correct">Mit Eintrag ins Handelsregister.</div>
+          <div class="qa-option">Mit Verabschiedung der Firmensatzung.</div>
+          <div class="qa-option">Mit Einzahlung der Stammeinlage.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="04">
+        <div class="qa-header">
+          <span class="qmark">04</span>
+          <span class="qtext">Bei welcher Rechtsform haften mindestens zwei kaufmännische Geschäftsführer mit ihrem Privat- und Gesellschaftsvermögen?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">KG</div>
+          <div class="qa-option correct">GmbH</div>
+          <div class="qa-option">AG</div>
+          <div class="qa-option correct">OHG</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="05">
+        <div class="qa-header">
+          <span class="qmark">05</span>
+          <span class="qtext">Bei welcher Rechtsform haften mindestens zwei Personen mit ihrem Privat- und Gesellschaftsvermögen?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">KG</div>
+          <div class="qa-option correct">Partnergesellschaft</div>
+          <div class="qa-option">GmbH</div>
+          <div class="qa-option correct">GbR</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="06">
+        <div class="qa-header">
+          <span class="qmark">06</span>
+          <span class="qtext">Bei der Nils Studi GmbH & Co.KG gibt es einen Vollhafter. Wer ist das?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Der Beirat der Nils Studi GmbH.</div>
+          <div class="qa-option">Die Gesellschafterversammlung.</div>
+          <div class="qa-option correct">Die Nils Studi GmbH.</div>
+          <div class="qa-option">Nils Studi, da er im Firmennamen genannt ist.</div>
+          <div class="qa-option">Es gibt keinen, da es sich um einen GmbH & Co.KG handelt.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="07">
+        <div class="qa-header">
+          <span class="qmark">07</span>
+          <span class="qtext">Die Soft GmbH hat drei Gesellschafter. Nils Studi ist neuer Geschäftsführer geworden. Wer vertritt die GmbH bei einem Arbeitsgerichtstermin?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Je ein Gesellschafter und Geschäftsführer vertreten gemeinsam und solidarisch.</div>
+          <div class="qa-option">Nur die Gesellschafter und solidarisch.</div>
+          <div class="qa-option">Nur die Gesellschafter als eingetragene Eigentümer sind vertretungsberechtigt.</div>
+          <div class="qa-option correct">Der Geschäftsführer alleine.</div>
+          <div class="qa-option">Alle Gesellschafter und der Geschäftsführer.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="08">
+        <div class="qa-header">
+          <span class="qmark">08</span>
+          <span class="qtext">Welche Aussagen treffen für eine UG zu:</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Einmalige Stammeinlage mit 25T€.</div>
+          <div class="qa-option correct">Geringes Stammkapital mit 1€.</div>
+          <div class="qa-option">Ist eine natürliche Person.</div>
+          <div class="qa-option">Unbeschränkte Haftung.</div>
+          <div class="qa-option">Verringerte Stammkapitaleinlage von 12,5T€.</div>
+          <div class="qa-option correct">Haftungsbeschränkt.</div>
+          <div class="qa-option correct">Ist eine juristische Person.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="09">
+        <div class="qa-header">
+          <span class="qmark">09</span>
+          <span class="qtext">Die Nils Studi GmbH hat sich bei der Gründung eine Stammkapitaleinlage vom Notar bescheinigen lassen. Welche Aussagen sind hierzu richtig?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Die Stammeinlage darf nicht unter 12,5T€ sein.</div>
+          <div class="qa-option">Es reicht ein Stammkapital von einem Euro.</div>
+          <div class="qa-option">Es reicht ein Stammkapital von 12,5T€.</div>
+          <div class="qa-option correct">Das Stammkapital muss mindestens 25T€ sein.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="10">
+        <div class="qa-header">
+          <span class="qmark">10</span>
+          <span class="qtext">Welche der folgenden Rechtsformen zählen zu den Kapitalgesellschaften?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Kommanditgesellschaft</div>
+          <div class="qa-option">GmbH & Co.KG</div>
+          <div class="qa-option correct">Aktiengesellschaft</div>
+          <div class="qa-option">OHG</div>
+          <div class="qa-option">GbR</div>
+          <div class="qa-option correct">Limited</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="11">
+        <div class="qa-header">
+          <span class="qmark">11</span>
+          <span class="qtext">Die Geschäftsleitung einer GmbH erfolgt durch ...</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">den Beirat.</div>
+          <div class="qa-option">die Gesellschafterversammlung.</div>
+          <div class="qa-option">den Aufsichtsrat.</div>
+          <div class="qa-option correct">den Geschäftsführer</div>
+          <div class="qa-option">die Eigentümer der GmbH.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ============================================ -->
+  <!--   PANEL KLAUSUR (NEU GENERIERT)             -->
+  <!-- ============================================ -->
+  <section class="panel" id="panel-klausur">
+    <div class="intro-box">
+      <div class="intro-icon">📝</div>
+      <div class="intro-content">
+        <h2 class="intro-title">Klausursimulation</h2>
+        <p class="intro-desc">
+          60 Klausurfragen (Mix aus Single Choice und Multiple Choice) – Alle Kapitel abgedeckt
+        </p>
+      </div>
+    </div>
+
+    <h2 class="chapter-title">Klausurfragen (60 Fragen)</h2>
+
+    <div class="qa-container">
+
+      <div class="qa-card" data-question="01">
+        <div class="qa-header">
+          <span class="qmark">01</span>
+          <span class="qtext">Welche Aussagen zur Kleinunternehmerregelung (§ 19 UStG, Stand 2025) sind korrekt?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Vorjahresumsatz muss ≤ 25.000€ (netto) sein</div>
+          <div class="qa-option correct">Umsatz im laufenden Jahr muss voraussichtlich < 100.000€ sein</div>
+          <div class="qa-option">Bei Überschreitung der 25.000€ hat man bis Jahresende Zeit für den Wechsel</div>
+          <div class="qa-option correct">Bei Überschreitung der 100.000€ muss sofort in Regelbesteuerung gewechselt werden</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="02">
+        <div class="qa-header">
+          <span class="qmark">02</span>
+          <span class="qtext">Ein Softwareentwickler kann als Freiberufler tätig sein, wenn er...</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">keine Trivialsoftware entwickelt</div>
+          <div class="qa-option correct">eine ingenieurmäßige Vorgehensweise nachweisen kann</div>
+          <div class="qa-option">standardisierte Software wie Telefonbücher erstellt</div>
+          <div class="qa-option correct">eine Ausbildung vergleichbar einem Ingenieur hat</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="03">
+        <div class="qa-header">
+          <span class="qmark">03</span>
+          <span class="qtext">Welche Pflichtangaben muss eine Rechnung nach § 14 Abs. 4 UStG enthalten?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Vollständiger Name und Anschrift von Leistungserbringer und Empfänger</div>
+          <div class="qa-option correct">Steuernummer oder 11-stellige Steuer-ID des Leistungserbringers</div>
+          <div class="qa-option">Unterschrift des Leistungserbringers</div>
+          <div class="qa-option correct">Fortlaufende Rechnungsnummer</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="04">
+        <div class="qa-header">
+          <span class="qmark">04</span>
+          <span class="qtext">Welcher Vertragstyp liegt vor, wenn Nutzung der Software auf Dauer gegen einmalige Bezahlung erfolgt?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Kaufvertrag</div>
+          <div class="qa-option">Mietvertrag</div>
+          <div class="qa-option">Lizenzvertrag</div>
+          <div class="qa-option">Dienstvertrag</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="05">
+        <div class="qa-header">
+          <span class="qmark">05</span>
+          <span class="qtext">Was unterscheidet einen Werkvertrag von einem Dienstvertrag in der Softwareentwicklung?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Beim Werkvertrag wird das Bemühen geschuldet</div>
+          <div class="qa-option correct">Beim Werkvertrag wird ein Erfolg geschuldet</div>
+          <div class="qa-option correct">Beim Dienstvertrag gibt es keine unentgeltliche Nachbesserungspflicht</div>
+          <div class="qa-option">Beim Dienstvertrag wird erst nach Abnahme bezahlt</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="06">
+        <div class="qa-header">
+          <span class="qmark">06</span>
+          <span class="qtext">Welche Aussagen zu Open Source Software sind korrekt?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Ohne Urheberrecht ist kein Open Source möglich</div>
+          <div class="qa-option">Open Source negiert das Urheberrecht</div>
+          <div class="qa-option correct">Open Source verzichtet auf den Know-How-Schutz, die Quelltexte verschlossen zu halten</div>
+          <div class="qa-option">Open Source Software hat keine Lizenz</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="07">
+        <div class="qa-header">
+          <span class="qmark">07</span>
+          <span class="qtext">Was ist der Unterschied zwischen GPL und LGPL?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">GPL verhindert Einbindung in proprietäre Software, LGPL erlaubt dies</div>
+          <div class="qa-option">LGPL hat strengeres Copyleft als GPL</div>
+          <div class="qa-option correct">Bei LGPL müssen nur Änderungen an LGPL-Teilen offengelegt werden</div>
+          <div class="qa-option">GPL erlaubt kommerzielle Nutzung, LGPL nicht</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="08">
+        <div class="qa-header">
+          <span class="qmark">08</span>
+          <span class="qtext">Was schließt die AGPL (Affero GPL), das die normale GPL nicht schließt?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Das Patent-Schlupfloch</div>
+          <div class="qa-option correct">Das ASP-Schlupfloch</div>
+          <div class="qa-option">Das Bibliotheks-Schlupfloch</div>
+          <div class="qa-option">Das Kommerzialisierungs-Schlupfloch</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="09">
+        <div class="qa-header">
+          <span class="qmark">09</span>
+          <span class="qtext">Welche Aussagen zu Patenten für Software sind richtig?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Software muss eine "weitere technische Wirkung" erzeugen, um patentierbar zu sein</div>
+          <div class="qa-option correct">Software, die eine Maschine steuert, kann patentierbar sein</div>
+          <div class="qa-option">Alle Programme für Datenverarbeitungsanlagen sind patentierbar</div>
+          <div class="qa-option correct">Ein Patent gewährt 20-jähriges Monopol</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="10">
+        <div class="qa-header">
+          <span class="qmark">10</span>
+          <span class="qtext">Was sind die drei Hauptkomponenten eines Geschäftsmodells nach Stähler?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Marketing, Vertrieb, Support</div>
+          <div class="qa-option correct">Architektur der Wertschöpfung, Nutzenversprechen, Ertragsmodell</div>
+          <div class="qa-option">Kunden, Partner, Ressourcen</div>
+          <div class="qa-option">Einnahmen, Ausgaben, Gewinn</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="11">
+        <div class="qa-header">
+          <span class="qmark">11</span>
+          <span class="qtext">Wie viele Elemente hat der Business Model Canvas?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">7 Elemente</div>
+          <div class="qa-option">8 Elemente</div>
+          <div class="qa-option correct">9 Elemente</div>
+          <div class="qa-option">10 Elemente</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="12">
+        <div class="qa-header">
+          <span class="qmark">12</span>
+          <span class="qtext">Welche Elemente gehören zum Business Model Canvas?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Kunden-Segmente</div>
+          <div class="qa-option correct">Nutzen-Versprechen</div>
+          <div class="qa-option">SWOT-Analyse</div>
+          <div class="qa-option correct">Schlüssel-Partner</div>
+          <div class="qa-option correct">Einnahme-quellen</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="13">
+        <div class="qa-header">
+          <span class="qmark">13</span>
+          <span class="qtext">Was sind Nachteile des Business Model Canvas?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Zu zeitaufwendig</div>
+          <div class="qa-option correct">Keine explizite Berücksichtigung der Markt- und Wettbewerbssituation</div>
+          <div class="qa-option correct">Fehlende Detailtiefe (keine Zahlen, keine konkreten Finanzplanungen)</div>
+          <div class="qa-option">Nur für große Unternehmen geeignet</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="14">
+        <div class="qa-header">
+          <span class="qmark">14</span>
+          <span class="qtext">Welche Voraussetzungen müssen für Nebenerwerbsselbständigkeit erfüllt sein?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Zweite, selbständige Tätigkeit in Teilzeit zusätzlich zur ersten Erwerbstätigkeit</div>
+          <div class="qa-option correct">Einkünfte aus Nebenerwerb < 50% des Gesamteinkommens (2/3-1/3 Regel)</div>
+          <div class="qa-option">Einkünfte aus Nebenerwerb max. 20% des Gesamteinkommens</div>
+          <div class="qa-option correct">Gewinnerzielungsabsicht vorhanden (keine Liebhaberei)</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="15">
+        <div class="qa-header">
+          <span class="qmark">15</span>
+          <span class="qtext">Kann ein Arbeitgeber eine Nebentätigkeit verbieten?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Ja, grundsätzlich immer</div>
+          <div class="qa-option correct">Nur unter bestimmten Bedingungen (z.B. bei Konkurrenz, Leistungsbeeinträchtigung)</div>
+          <div class="qa-option">Nein, niemals</div>
+          <div class="qa-option">Nur wenn es im Arbeitsvertrag steht</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="16">
+        <div class="qa-header">
+          <span class="qmark">16</span>
+          <span class="qtext">Wie viele Stunden/Woche darf man maximal in einer Nebentätigkeit arbeiten (aus Sicht des Arbeitgebers bei Vollzeit)?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">4 Stunden/Woche</div>
+          <div class="qa-option correct">8 Stunden/Woche</div>
+          <div class="qa-option">12 Stunden/Woche</div>
+          <div class="qa-option">18 Stunden/Woche</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="17">
+        <div class="qa-header">
+          <span class="qmark">17</span>
+          <span class="qtext">Welche Kriterien deuten auf Scheinselbständigkeit hin (mind. 3 von 7)?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Kein sozialversicherungspflichtiger Arbeitnehmer > 558€/Monat beschäftigt</div>
+          <div class="qa-option correct">Überwiegend nur für einen Kunden tätig (84% des Umsatzes)</div>
+          <div class="qa-option correct">Keine freie Entscheidung über Arbeitszeit</div>
+          <div class="qa-option">Hoher Stundensatz</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="18">
+        <div class="qa-header">
+          <span class="qmark">18</span>
+          <span class="qtext">Was sind Vorteile von Freiberuflern gegenüber Gewerbetreibenden?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Keine Gewerbesteuer</div>
+          <div class="qa-option correct">Keine Gewerbeanmeldung erforderlich</div>
+          <div class="qa-option correct">EÜR reicht (keine doppelte Buchführung)</div>
+          <div class="qa-option">Höhere Freibeträge</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="19">
+        <div class="qa-header">
+          <span class="qmark">19</span>
+          <span class="qtext">Wie hoch ist die Übungsleiterpauschale (Stand 2025)?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">840€ p.a.</div>
+          <div class="qa-option">2.400€ p.a.</div>
+          <div class="qa-option correct">3.000€ p.a.</div>
+          <div class="qa-option">5.000€ p.a.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="20">
+        <div class="qa-header">
+          <span class="qmark">20</span>
+          <span class="qtext">Was sind Business Angels?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Vermögende private Investoren, die Unternehmensanteile kaufen</div>
+          <div class="qa-option correct">Bringen neben Kapital auch Know-how und Netzwerk mit</div>
+          <div class="qa-option">Investieren meist > 1 Millionen Euro</div>
+          <div class="qa-option correct">Investitionssumme meist < 100.000€</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="21">
+        <div class="qa-header">
+          <span class="qmark">21</span>
+          <span class="qtext">Welche Aussagen zum EXIST-Gründerstipendium sind korrekt?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Zielgruppe: Studierende, Absolventen, Promovierte</div>
+          <div class="qa-option correct">Förderdauer: Max. 1 Jahr</div>
+          <div class="qa-option">Nur für Einzelgründer</div>
+          <div class="qa-option correct">Geschäftsbetrieb darf noch nicht aufgenommen worden sein</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="22">
+        <div class="qa-header">
+          <span class="qmark">22</span>
+          <span class="qtext">Welche Rechtsformen zählen zu den Personengesellschaften?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">GbR (Gesellschaft bürgerlichen Rechts)</div>
+          <div class="qa-option">GmbH</div>
+          <div class="qa-option correct">OHG (Offene Handelsgesellschaft)</div>
+          <div class="qa-option correct">Partnergesellschaft</div>
+          <div class="qa-option">UG (Unternehmergesellschaft)</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="23">
+        <div class="qa-header">
+          <span class="qmark">23</span>
+          <span class="qtext">Was ist der Hauptunterschied zwischen UG und GmbH?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Die Haftung</div>
+          <div class="qa-option correct">Das Mindeststammkapital (UG: 1€, GmbH: 25.000€)</div>
+          <div class="qa-option">Die Buchführungspflicht</div>
+          <div class="qa-option">Die Anzahl der Gesellschafter</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="24">
+        <div class="qa-header">
+          <span class="qmark">24</span>
+          <span class="qtext">Bei welchen Rechtsformen haftet man mit dem Privatvermögen?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Einzelunternehmer</div>
+          <div class="qa-option">GmbH</div>
+          <div class="qa-option correct">GbR</div>
+          <div class="qa-option">UG</div>
+          <div class="qa-option correct">OHG</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="25">
+        <div class="qa-header">
+          <span class="qmark">25</span>
+          <span class="qtext">Welche Vorteile hat die Partnergesellschaft (PartG) gegenüber der GbR für Freiberufler?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Partner haften nur für die eigenen Fehler, nicht für die der Anderen</div>
+          <div class="qa-option">Keine Buchführungspflicht</div>
+          <div class="qa-option correct">Stirbt nicht zwingend bei Ausscheiden eines Gesellschafters</div>
+          <div class="qa-option">Geringere Gründungskosten</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="26">
+        <div class="qa-header">
+          <span class="qmark">26</span>
+          <span class="qtext">Was ist eine Kommanditgesellschaft (KG)?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Alle Gesellschafter haften persönlich</div>
+          <div class="qa-option correct">Komplementäre haften persönlich, Kommanditisten nur mit Einlage</div>
+          <div class="qa-option">Alle Gesellschafter haften nur mit Einlage</div>
+          <div class="qa-option">Eine Kapitalgesellschaft</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="27">
+        <div class="qa-header">
+          <span class="qmark">27</span>
+          <span class="qtext">Welche Aussagen zur E-Rechnung sind korrekt (Stand 2025)?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Ab 1.1.2025 müssen B2B-Unternehmen E-Rechnungen empfangen können</div>
+          <div class="qa-option correct">Ab 1.1.2028 müssen alle E-Rechnungen erstellen können</div>
+          <div class="qa-option">Kleinunternehmer müssen ab 2025 E-Rechnungen erstellen</div>
+          <div class="qa-option correct">Kleinunternehmer dürfen weiterhin PDF/Papier versenden (Ausnahme)</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="28">
+        <div class="qa-header">
+          <span class="qmark">28</span>
+          <span class="qtext">Was ist das Reverse-Charge-Verfahren?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Ein Verfahren für Kleinunternehmer</div>
+          <div class="qa-option correct">Ein Verfahren bei B2B-Geschäften ins Ausland (§ 13b UStG)</div>
+          <div class="qa-option">Ein Verfahren für Rechnungen über 10.000€</div>
+          <div class="qa-option">Ein Verfahren zur Rückerstattung der Umsatzsteuer</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="29">
+        <div class="qa-header">
+          <span class="qmark">29</span>
+          <span class="qtext">Ab welcher Grenze muss ein Freiberufler doppelte Buchführung machen?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">25.000€ Umsatz oder 10.000€ Gewinn</div>
+          <div class="qa-option correct">Nie zwingend, aber ab 60.000€ Gewinn oder 600.000€ Umsatz empfohlen</div>
+          <div class="qa-option">50.000€ Umsatz oder 25.000€ Gewinn</div>
+          <div class="qa-option">100.000€ Umsatz oder 50.000€ Gewinn</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="30">
+        <div class="qa-header">
+          <span class="qmark">30</span>
+          <span class="qtext">Was sind die Phasen des Gartner-Hype-Zyklus in chronologischer Reihenfolge?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Technologischer Auslöser → Gipfel der überzogenen Erwartungen → Tal der Enttäuschungen → Pfad der Erleuchtung → Plateau der Produktivität</div>
+          <div class="qa-option">Gipfel → Tal → Auslöser → Pfad → Plateau</div>
+          <div class="qa-option">Auslöser → Pfad → Gipfel → Tal → Plateau</div>
+          <div class="qa-option">Erwartungen → Auslöser → Gipfel → Tal → Plateau</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="31">
+        <div class="qa-header">
+          <span class="qmark">31</span>
+          <span class="qtext">Was ist der Unterschied zwischen Urheberrecht und Patentrecht für Software?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Urheberrecht schützt den konkreten Code, Patentrecht die technische Lösung</div>
+          <div class="qa-option">Urheberrecht kostet Geld, Patentrecht ist kostenlos</div>
+          <div class="qa-option correct">Patentrecht gewährt 20-jähriges Monopol, Urheberrecht nicht</div>
+          <div class="qa-option">Urheberrecht erfordert Anmeldung, Patentrecht nicht</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="32">
+        <div class="qa-header">
+          <span class="qmark">32</span>
+          <span class="qtext">Wer ist der erste Inhaber von Software-Schutzrechten?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Immer der Arbeitgeber</div>
+          <div class="qa-option">Immer das Unternehmen</div>
+          <div class="qa-option correct">Im Patentrecht der Erfinder, im Urheberrecht der Urheber</div>
+          <div class="qa-option">Derjenige, der es bezahlt hat</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="33">
+        <div class="qa-header">
+          <span class="qmark">33</span>
+          <span class="qtext">Welche Arten von Copyleft gibt es bei Open Source Lizenzen?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Non-Copyleft-Lizenzen</div>
+          <div class="qa-option correct">Lizenzen mit beschränktem Copyleft-Effekt</div>
+          <div class="qa-option correct">Lizenzen mit strengem Copyleft-Effekt</div>
+          <div class="qa-option">Lizenzen mit moderatem Copyleft-Effekt</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="34">
+        <div class="qa-header">
+          <span class="qmark">34</span>
+          <span class="qtext">Was passiert, wenn Sie gegen einzelne Bedingungen einer Open-Source-Lizenz verstoßen?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Der Vertrag wird aufgelöst</div>
+          <div class="qa-option correct">Die Nutzungsrechte entfallen über eine auflösende Bedingung</div>
+          <div class="qa-option">Der Programmierer hat ein Kündigungsrecht</div>
+          <div class="qa-option">Nichts, Open Source ist frei</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="35">
+        <div class="qa-header">
+          <span class="qmark">35</span>
+          <span class="qtext">Welche Softwarearten darf man modifizieren?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Proprietär</div>
+          <div class="qa-option">Freeware</div>
+          <div class="qa-option correct">Free Software</div>
+          <div class="qa-option correct">Open Source</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="36">
+        <div class="qa-header">
+          <span class="qmark">36</span>
+          <span class="qtext">Wie lange beträgt die Gewährleistungsfrist bei einem Werkvertrag?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">1 Jahr</div>
+          <div class="qa-option correct">2 Jahre</div>
+          <div class="qa-option">3 Jahre</div>
+          <div class="qa-option">5 Jahre</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="37">
+        <div class="qa-header">
+          <span class="qmark">37</span>
+          <span class="qtext">Was sind die Anforderungen an ein Patent für Software?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Erfinderische Tätigkeit</div>
+          <div class="qa-option correct">Neuheit</div>
+          <div class="qa-option correct">Technizität</div>
+          <div class="qa-option correct">Gewerbliche Nutzbarkeit</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="38">
+        <div class="qa-header">
+          <span class="qmark">38</span>
+          <span class="qtext">Bei welcher Vertragsart erfolgt die Zahlung erst nach Abnahme der Software?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Dienstvertrag</div>
+          <div class="qa-option correct">Werkvertrag</div>
+          <div class="qa-option">Mietvertrag</div>
+          <div class="qa-option">Kaufvertrag</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="39">
+        <div class="qa-header">
+          <span class="qmark">39</span>
+          <span class="qtext">Was sind Kardinalspflichten im Haftungsrecht?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Pflichten, die man immer erfüllen muss</div>
+          <div class="qa-option correct">Besonders wichtige Pflichten, die zur Erreichung des Vertragszweckes von erheblicher Bedeutung sind</div>
+          <div class="qa-option">Pflichten, die nur bei grober Fahrlässigkeit gelten</div>
+          <div class="qa-option">Pflichten, die man nicht begrenzen kann</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="40">
+        <div class="qa-header">
+          <span class="qmark">40</span>
+          <span class="qtext">Was ist eine IT-Haftpflichtversicherung?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Versicherung, die bei Schäden durch Softwarefehler greift</div>
+          <div class="qa-option">Versicherung für Hardware-Schäden</div>
+          <div class="qa-option correct">Deckt grobe und einfache Fahrlässigkeit ab</div>
+          <div class="qa-option">Ersetzt die Berufshaftpflicht</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="41">
+        <div class="qa-header">
+          <span class="qmark">41</span>
+          <span class="qtext">Wie hoch ist der Grundfreibetrag (Stand 2025)?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">9.408€</div>
+          <div class="qa-option">10.908€</div>
+          <div class="qa-option correct">11.940€</div>
+          <div class="qa-option">13.440€</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="42">
+        <div class="qa-header">
+          <span class="qmark">42</span>
+          <span class="qtext">Was ist der Unterschied zwischen einem Businessplan und dem Business Model Canvas?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Businessplan: 20-50 Seiten, detailliert; Canvas: 1 Seite, visuell</div>
+          <div class="qa-option">Businessplan kostet Geld, Canvas ist kostenlos</div>
+          <div class="qa-option correct">Businessplan für Banken/Investoren, Canvas für Brainstorming/Iteration</div>
+          <div class="qa-option">Canvas enthält mehr Informationen als Businessplan</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="43">
+        <div class="qa-header">
+          <span class="qmark">43</span>
+          <span class="qtext">Was umfasst das Ertragsmodell nach Stähler?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Nur das Erlösmodell</div>
+          <div class="qa-option">Nur das Kostenmodell</div>
+          <div class="qa-option correct">Erlösmodell und Kostenmodell</div>
+          <div class="qa-option">Erlösmodell und Nutzenversprechen</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="44">
+        <div class="qa-header">
+          <span class="qmark">44</span>
+          <span class="qtext">Welche Rechtsformen haben keine Haftungsbeschränkung?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Einzelunternehmer</div>
+          <div class="qa-option">UG</div>
+          <div class="qa-option correct">GbR</div>
+          <div class="qa-option">GmbH</div>
+          <div class="qa-option correct">OHG</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="45">
+        <div class="qa-header">
+          <span class="qmark">45</span>
+          <span class="qtext">Was ist eine GmbH & Co. KG?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Eine reine Kapitalgesellschaft</div>
+          <div class="qa-option correct">Eine Kommanditgesellschaft, bei der der Komplementär eine GmbH ist</div>
+          <div class="qa-option">Eine GmbH mit Kommanditisten</div>
+          <div class="qa-option">Eine Mischform ohne Haftungsbegrenzung</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="46">
+        <div class="qa-header">
+          <span class="qmark">46</span>
+          <span class="qtext">Ab wann kann eine UG in eine GmbH umgewandelt werden?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Ab 5.000€ Stammkapital</div>
+          <div class="qa-option">Ab 10.000€ Stammkapital</div>
+          <div class="qa-option correct">Ab 12.500€ Stammkapital</div>
+          <div class="qa-option">Ab 25.000€ Stammkapital</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="47">
+        <div class="qa-header">
+          <span class="qmark">47</span>
+          <span class="qtext">Welche Rechtsformen erfordern einen Handelsregistereintrag?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">GbR</div>
+          <div class="qa-option correct">GmbH</div>
+          <div class="qa-option">Freiberufler</div>
+          <div class="qa-option correct">OHG</div>
+          <div class="qa-option correct">UG</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="48">
+        <div class="qa-header">
+          <span class="qmark">48</span>
+          <span class="qtext">Was sind die Voraussetzungen für den Gründungszuschuss der Agentur für Arbeit?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Gründung aus Arbeitslosigkeit</div>
+          <div class="qa-option correct">Noch 150 Tage Anspruch auf Arbeitslosengeld</div>
+          <div class="qa-option">Mindestkapital von 5.000€</div>
+          <div class="qa-option">Businessplan muss vorhanden sein</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="49">
+        <div class="qa-header">
+          <span class="qmark">49</span>
+          <span class="qtext">Wie lange bekommt man den Gründungszuschuss?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">3 Monate + evtl. 3 Monate</div>
+          <div class="qa-option correct">6 Monate + evtl. 9 Monate</div>
+          <div class="qa-option">12 Monate fest</div>
+          <div class="qa-option">24 Monate fest</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="50">
+        <div class="qa-header">
+          <span class="qmark">50</span>
+          <span class="qtext">Was bedeutet "Software as a Service" (SaaS) rechtlich?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Kaufvertrag</div>
+          <div class="qa-option correct">Mietvertrag mit Bereitstellungserfolg</div>
+          <div class="qa-option">Dienstvertrag</div>
+          <div class="qa-option">Lizenzvertrag</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="51">
+        <div class="qa-header">
+          <span class="qmark">51</span>
+          <span class="qtext">Welche Aussagen zur GmbH-Gründung sind korrekt?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Notarielle Beurkundung des Gesellschaftsvertrages erforderlich</div>
+          <div class="qa-option correct">Eintragung ins Handelsregister erforderlich</div>
+          <div class="qa-option">Kann innerhalb von 24 Stunden gegründet werden</div>
+          <div class="qa-option correct">Gründungskosten: 1.000-3.000€</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="52">
+        <div class="qa-header">
+          <span class="qmark">52</span>
+          <span class="qtext">Was ist eine Sperrminorität?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">10% der Anteile</div>
+          <div class="qa-option correct">25,1% der Anteile (können wichtige Entscheidungen blockieren)</div>
+          <div class="qa-option">50,1% der Anteile</div>
+          <div class="qa-option">75% der Anteile</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="53">
+        <div class="qa-header">
+          <span class="qmark">53</span>
+          <span class="qtext">Ab welchem Freibetrag zahlt ein Gewerbetreibender Gewerbesteuer?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">10.000€</div>
+          <div class="qa-option">15.000€</div>
+          <div class="qa-option correct">24.500€</div>
+          <div class="qa-option">50.000€</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="54">
+        <div class="qa-header">
+          <span class="qmark">54</span>
+          <span class="qtext">Welche Aussagen zum Reverse Engineering sind korrekt?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Bei Geschäftsgeheimnissen grundsätzlich erlaubt</div>
+          <div class="qa-option correct">Bei Software: Urheberrecht verhindert oft Dekompilierung</div>
+          <div class="qa-option">Bei Software immer erlaubt</div>
+          <div class="qa-option">Immer verboten</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="55">
+        <div class="qa-header">
+          <span class="qmark">55</span>
+          <span class="qtext">Wem gehören die Rechte an einer Abschlussarbeit (Thesis)?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Der Hochschule</div>
+          <div class="qa-option correct">Dem Autor (Studierenden)</div>
+          <div class="qa-option">Dem betreuenden Professor</div>
+          <div class="qa-option">Dem Unternehmen, bei dem die Thesis geschrieben wurde</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="56">
+        <div class="qa-header">
+          <span class="qmark">56</span>
+          <span class="qtext">Was sind die 10 Merkmale der Open Source Definition (OSD)?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Freie Weitergabe</div>
+          <div class="qa-option correct">Verfügbarer Quellcode</div>
+          <div class="qa-option">Kommerzielle Nutzung verboten</div>
+          <div class="qa-option correct">Keine Diskriminierung</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="57">
+        <div class="qa-header">
+          <span class="qmark">57</span>
+          <span class="qtext">Welche Abschreibungsmöglichkeiten gibt es für Computerhardware (seit 2021)?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Nur über 3 Jahre</div>
+          <div class="qa-option">Nur über 5 Jahre</div>
+          <div class="qa-option correct">Über 1 Jahr oder 3 Jahre</div>
+          <div class="qa-option">Sofort abschreibbar (GWG)</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="58">
+        <div class="qa-header">
+          <span class="qmark">58</span>
+          <span class="qtext">Was ist die GWG-Grenze (Geringwertige Wirtschaftsgüter)?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">250€ (netto)</div>
+          <div class="qa-option">500€ (netto)</div>
+          <div class="qa-option correct">800€ (netto) bzw. 952€ (brutto)</div>
+          <div class="qa-option">1.000€ (netto)</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="59">
+        <div class="qa-header">
+          <span class="qmark">59</span>
+          <span class="qtext">Welche Aussagen zu FRAND-Bedingungen sind korrekt?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">FRAND steht für Fair, Reasonable And Non Discriminatory</div>
+          <div class="qa-option correct">Betrifft wesentliche Patente in Standards</div>
+          <div class="qa-option">Nur für Open Source Software relevant</div>
+          <div class="qa-option correct">Verhindert Monopolpreise bei standardrelevanten Patenten</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="60">
+        <div class="qa-header">
+          <span class="qmark">60</span>
+          <span class="qtext">Was ist ein konsekutives Masterstudium?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Ein Master nach mehrjähriger Berufserfahrung</div>
+          <div class="qa-option correct">Ein Master, der direkt auf den Bachelor aufbaut (Teil der Erstausbildung)</div>
+          <div class="qa-option">Ein berufsbegleitender Master</div>
+          <div class="qa-option">Ein Master an einer anderen Hochschule</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================= PROBEKLAUSUR 2 (40 FRAGEN) ======================= -->
+  <section class="panel" id="panel-probeklausur2">
+    <div class="intro-box rust">
+      <b>🎯 Probeklausur 2 (40 Fragen · Realistisches Format)</b><br>
+      Diese Probeklausur simuliert die echte Klausur:<br>
+      • <b>40 Multiple-Choice-Fragen</b> (nah an den Folien)<br>
+      • <b>Schwerpunkt Rechtsformen</b> (eher mehr Fragen aus Rechtsformen)<br>
+      • <b>Finanzierung: nur 2 Fragen</b> (Business Angels & Exit-Förderprogramm)<br>
+      • <b>Anzahl der richtigen Antworten wird NICHT verraten</b><br>
+      • Fragen sind neu und nicht aus dem Pool Ilias<br>
+      • Komplette Klausur "abgeben" (falls Übertragungsfehler, damit Prof kontrollieren kann)
+    </div>
+
+    <div class="chapter">
+      <div class="chapter-head">
+        <span class="chapter-tag">Probeklausur 2</span>
+        <span class="chapter-title">Realistische Klausurvorbereitung mit Schwerpunkt Rechtsformen</span>
+        <span class="chapter-count">40 Fragen</span>
+      </div>
+
+      <!-- BLOCK: RECHTSFORMEN (15 Fragen - Schwerpunkt!) -->
+
+      <div class="qa-card" data-question="1">
+        <div class="qa-header">
+          <span class="qmark">01</span>
+          <span class="qtext">Welche Rechtsform haftet NICHT mit dem Privatvermögen?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Einzelunternehmer</div>
+          <div class="qa-option">GbR</div>
+          <div class="qa-option">OHG</div>
+          <div class="qa-option correct">GmbH</div>
+          <div class="qa-option correct">UG (haftungsbeschränkt)</div>
+          <div class="qa-option">Freiberufler</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="2">
+        <div class="qa-header">
+          <span class="qmark">02</span>
+          <span class="qtext">Welche Rechtsform benötigt KEIN Mindestkapital zur Gründung?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Einzelunternehmer</div>
+          <div class="qa-option correct">GbR</div>
+          <div class="qa-option">GmbH</div>
+          <div class="qa-option correct">OHG</div>
+          <div class="qa-option">UG (haftungsbeschränkt)</div>
+          <div class="qa-option correct">Freiberufler</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+        <div class="qa-hint">Hinweis: UG benötigt mindestens 1€ Stammkapital</div>
+      </div>
+
+      <div class="qa-card" data-question="3">
+        <div class="qa-header">
+          <span class="qmark">03</span>
+          <span class="qtext">Wie viel Stammkapital benötigt eine GmbH mindestens bei Gründung?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">1 Euro</div>
+          <div class="qa-option">10.000 Euro</div>
+          <div class="qa-option correct">12.500 Euro (mindestens bei Gründung, später volle 25.000 Euro)</div>
+          <div class="qa-option correct">25.000 Euro (Mindeststammkapital)</div>
+          <div class="qa-option">50.000 Euro</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="4">
+        <div class="qa-header">
+          <span class="qmark">04</span>
+          <span class="qtext">Was ist bei einer Partnergesellschaft (PartG) korrekt?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Speziell für Freiberufler</div>
+          <div class="qa-option correct">Partner haften nur für eigene Fehler, nicht für die der Anderen</div>
+          <div class="qa-option">Eintrag im Handelsregister erforderlich</div>
+          <div class="qa-option correct">Eintrag im Partnerschaftsregister erforderlich</div>
+          <div class="qa-option">Doppelte Buchführung erforderlich</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="5">
+        <div class="qa-header">
+          <span class="qmark">05</span>
+          <span class="qtext">Bei welcher Rechtsform müssen ALLE Gesellschafter mit ihrem Privatvermögen haften - auch für Fehler der anderen?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">GbR</div>
+          <div class="qa-option correct">OHG</div>
+          <div class="qa-option">PartG</div>
+          <div class="qa-option">KG</div>
+          <div class="qa-option">GmbH</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="6">
+        <div class="qa-header">
+          <span class="qmark">06</span>
+          <span class="qtext">Was charakterisiert die Kommanditgesellschaft (KG)?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Komplementäre haften persönlich</div>
+          <div class="qa-option correct">Kommanditisten haften nur mit ihrer Einlage</div>
+          <div class="qa-option">Alle haften gleich</div>
+          <div class="qa-option correct">Unterschiedliche Mitspracherechte zwischen Komplementären und Kommanditisten</div>
+          <div class="qa-option">Keine doppelte Buchführung erforderlich</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="7">
+        <div class="qa-header">
+          <span class="qmark">07</span>
+          <span class="qtext">Welche Rechtsform ist besonders für Investoren geeignet?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">GbR</div>
+          <div class="qa-option">Einzelunternehmer</div>
+          <div class="qa-option correct">GmbH</div>
+          <div class="qa-option correct">UG (haftungsbeschränkt)</div>
+          <div class="qa-option">OHG</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+        <div class="qa-hint">Haftungsbegrenzung ist für Investoren zentral</div>
+      </div>
+
+      <div class="qa-card" data-question="8">
+        <div class="qa-header">
+          <span class="qmark">08</span>
+          <span class="qtext">Welche Aussagen zur Unternehmergesellschaft (UG) sind korrekt?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Auch "Mini-GmbH" oder "1-Euro-GmbH" genannt</div>
+          <div class="qa-option correct">Mindestkapital 1 Euro</div>
+          <div class="qa-option">Sacheinlagen sind möglich</div>
+          <div class="qa-option correct">Zusatz "UG (haftungsbeschränkt)" muss immer angegeben werden</div>
+          <div class="qa-option correct">Bei Banken nicht so beliebt wie GmbH</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="9">
+        <div class="qa-header">
+          <span class="qmark">09</span>
+          <span class="qtext">Welche Buchführungsart ist für Freiberufler erforderlich?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Einnahmen-Überschuss-Rechnung (EÜR)</div>
+          <div class="qa-option">Doppelte Buchführung</div>
+          <div class="qa-option">Jahresabschluss</div>
+          <div class="qa-option">Bilanzierung</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="10">
+        <div class="qa-header">
+          <span class="qmark">10</span>
+          <span class="qtext">Ab welcher Gewinn- oder Umsatzgrenze besteht für Einzelunternehmer Buchführungspflicht?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">30.000€ Gewinn oder 300.000€ Umsatz</div>
+          <div class="qa-option correct">60.000€ Gewinn oder 600.000€ Umsatz</div>
+          <div class="qa-option">100.000€ Gewinn oder 1.000.000€ Umsatz</div>
+          <div class="qa-option">Keine Grenze, immer Buchführungspflicht</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="11">
+        <div class="qa-header">
+          <span class="qmark">11</span>
+          <span class="qtext">Welche Gründungskosten fallen typischerweise für eine GmbH an?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Etwa 30 Euro</div>
+          <div class="qa-option">Etwa 300 Euro</div>
+          <div class="qa-option correct">1.000 bis 3.000 Euro</div>
+          <div class="qa-option">5.000 bis 10.000 Euro</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="12">
+        <div class="qa-header">
+          <span class="qmark">12</span>
+          <span class="qtext">Welche Phasen durchläuft die GmbH-Gründung?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Vorgründungsgesellschaft</div>
+          <div class="qa-option correct">Vor-GmbH (GmbH i.G.)</div>
+          <div class="qa-option correct">GmbH (nach Handelsregistereintrag)</div>
+          <div class="qa-option">Nur zwei Phasen: Gründung und GmbH</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="13">
+        <div class="qa-header">
+          <span class="qmark">13</span>
+          <span class="qtext">Was gilt für den Gewerbesteuer-Freibetrag?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Kleingewerbetreibende und Personengesellschaften: 24.500€ Freibetrag</div>
+          <div class="qa-option correct">Kapitalgesellschaften: kein Freibetrag</div>
+          <div class="qa-option">Alle Rechtsformen haben 24.500€ Freibetrag</div>
+          <div class="qa-option">Freiberufler zahlen grundsätzlich Gewerbesteuer</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="14">
+        <div class="qa-header">
+          <span class="qmark">14</span>
+          <span class="qtext">Welche Rechtsformen benötigen einen Handelsregistereintrag?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Einzelunternehmer</div>
+          <div class="qa-option correct">OHG</div>
+          <div class="qa-option correct">KG</div>
+          <div class="qa-option correct">GmbH</div>
+          <div class="qa-option">GbR</div>
+          <div class="qa-option correct">UG (haftungsbeschränkt)</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="15">
+        <div class="qa-header">
+          <span class="qmark">15</span>
+          <span class="qtext">Bei welcher Rechtsform kann ein beliebiger Phantasiename gewählt werden?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Einzelunternehmer</div>
+          <div class="qa-option">GbR</div>
+          <div class="qa-option correct">GmbH</div>
+          <div class="qa-option correct">UG</div>
+          <div class="qa-option correct">OHG</div>
+          <div class="qa-option correct">KG</div>
+          <div class="qa-option">Freiberufler</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+        <div class="qa-hint">Alle im Handelsregister eingetragenen Rechtsformen</div>
+      </div>
+
+      <!-- BLOCK: FINANZIERUNG (2 Fragen - wie angegeben!) -->
+
+      <div class="qa-card" data-question="16">
+        <div class="qa-header">
+          <span class="qmark">16</span>
+          <span class="qtext">Was charakterisiert Business Angels?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Vermögende private Investoren, die Unternehmensanteile kaufen</div>
+          <div class="qa-option correct">Bringen neben Kapital auch Know-how und Netzwerk mit</div>
+          <div class="qa-option correct">Investitionssumme meist unter 100.000 Euro</div>
+          <div class="qa-option">Investieren ohne Mitspracherechte</div>
+          <div class="qa-option correct">Hohe Risikobereitschaft</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="17">
+        <div class="qa-header">
+          <span class="qmark">17</span>
+          <span class="qtext">Welche Aussagen zum EXIST-Förderprogramm sind korrekt?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Fördert Existenzgründung aus der Wissenschaft</div>
+          <div class="qa-option correct">EXIST-Gründerstipendium für max. 1 Jahr</div>
+          <div class="qa-option">Geschäftsbetrieb kann bereits aufgenommen sein</div>
+          <div class="qa-option correct">Wichtig: Geschäftsbetrieb darf noch NICHT aufgenommen worden sein</div>
+          <div class="qa-option correct">Zielgruppe: Studierende, Absolventen, Promovierte</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <!-- BLOCK: STUDENTISCHE SELBSTSTÄNDIGKEIT (7 Fragen) -->
+
+      <div class="qa-card" data-question="18">
+        <div class="qa-header">
+          <span class="qmark">18</span>
+          <span class="qtext">Welche Pflichtangaben muss eine Rechnung nach § 14 Abs. 4 UStG enthalten?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Vollständiger Name und Anschrift (Leistender und Leistungsempfänger)</div>
+          <div class="qa-option correct">Steuernummer des Leistungserbringers</div>
+          <div class="qa-option">Unterschrift des Leistungserbringers</div>
+          <div class="qa-option correct">Ausstellungsdatum und fortlaufende Rechnungsnummer</div>
+          <div class="qa-option correct">Art, Menge und Zeitpunkt der gelieferten Leistungen</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="19">
+        <div class="qa-header">
+          <span class="qmark">19</span>
+          <span class="qtext">Welche Grenzen gelten für die Kleinunternehmerregelung (Stand 2025)?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Vorjahresumsatz ≤ 22.000€ (brutto)</div>
+          <div class="qa-option correct">Vorjahresumsatz ≤ 25.000€ (netto)</div>
+          <div class="qa-option">Umsatz laufendes Jahr voraussichtlich < 50.000€</div>
+          <div class="qa-option correct">Umsatz laufendes Jahr voraussichtlich < 100.000€</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="20">
+        <div class="qa-header">
+          <span class="qmark">20</span>
+          <span class="qtext">Wann liegt Trivialsoftware NICHT vor?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Entwicklung qualifizierter Software mit ingenieurmäßiger Vorgehensweise</div>
+          <div class="qa-option correct">Entwickler hat Ausbildung vergleichbar einem Ingenieur</div>
+          <div class="qa-option">Standardisierte Software (z.B. Telefonbücher, Lexika)</div>
+          <div class="qa-option">Einfache Datenbank-Anwendungen ohne Komplexität</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="21">
+        <div class="qa-header">
+          <span class="qmark">21</span>
+          <span class="qtext">Welche Vorteile hat ein Freiberufler gegenüber einem Gewerbetreibenden?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Keine Gewerbesteuer</div>
+          <div class="qa-option correct">Keine Gewerbeanmeldung erforderlich</div>
+          <div class="qa-option correct">EÜR reicht (keine doppelte Buchführung)</div>
+          <div class="qa-option">Höhere Steuerersparnis automatisch</div>
+          <div class="qa-option correct">Ist-Versteuerung (statt Soll-Versteuerung)</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="22">
+        <div class="qa-header">
+          <span class="qmark">22</span>
+          <span class="qtext">Wann ist Software-Verkauf freiberuflich oder gewerblich?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Software entwickeln und verkaufen ist immer freiberuflich</div>
+          <div class="qa-option correct">Software entwickeln auf Auftrag ist freiberuflich (wenn keine Trivialsoftware)</div>
+          <div class="qa-option correct">Software-Verkauf/Handel ist gewerblich</div>
+          <div class="qa-option">Beides ist immer freiberuflich für Informatiker</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="23">
+        <div class="qa-header">
+          <span class="qmark">23</span>
+          <span class="qtext">Wie hoch ist die Übungsleiterpauschale (Stand 2021+)?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">2.400€ p.a.</div>
+          <div class="qa-option correct">3.000€ p.a.</div>
+          <div class="qa-option">3.500€ p.a.</div>
+          <div class="qa-option">5.000€ p.a.</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="24">
+        <div class="qa-header">
+          <span class="qmark">24</span>
+          <span class="qtext">Was ist beim Reverse-Charge-Verfahren (§ 13b UStG) korrekt?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">B2B: Rechnung ohne USt</div>
+          <div class="qa-option">B2C: Rechnung ohne USt</div>
+          <div class="qa-option correct">Vermerk "Reverse Charge Verfahren" erforderlich</div>
+          <div class="qa-option correct">Eigene USt-IdNr. und USt-IdNr. des Abnehmers angeben</div>
+          <div class="qa-option">Gilt nur für inländische Geschäfte</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <!-- BLOCK: ANGESTELLTER NEBENERWERB (6 Fragen) -->
+
+      <div class="qa-card" data-question="25">
+        <div class="qa-header">
+          <span class="qmark">25</span>
+          <span class="qtext">Wann liegt Nebenerwerbsselbständigkeit vor?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Zweite selbständige Tätigkeit in Teilzeit zusätzlich zur ersten Erwerbstätigkeit</div>
+          <div class="qa-option correct">Einkünfte aus Nebenerwerb < 50% des Gesamteinkommens (2/3-1/3 Regel)</div>
+          <div class="qa-option">Einkünfte aus Nebenerwerb < 25% des Gesamteinkommens</div>
+          <div class="qa-option correct">Gewinnerzielungsabsicht vorhanden (keine Liebhaberei)</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="26">
+        <div class="qa-header">
+          <span class="qmark">26</span>
+          <span class="qtext">Kann der Arbeitgeber eine Nebentätigkeit verbieten?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Grundsätzlich keine Genehmigungspflicht (Recht auf freie Berufswahl)</div>
+          <div class="qa-option">Vertragsklauseln, die Nebentätigkeit verbieten, sind zulässig</div>
+          <div class="qa-option correct">Nur wenn Leistung im Hauptjob beeinträchtigt wird</div>
+          <div class="qa-option correct">Nur bei Konkurrenz zum Arbeitgeber</div>
+          <div class="qa-option correct">Nur bei Verstoß gegen Arbeitszeitgrenzen</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="27">
+        <div class="qa-header">
+          <span class="qmark">27</span>
+          <span class="qtext">Wann liegt Scheinselbständigkeit vor (mindestens 3 von 7 Kriterien erfüllt)?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Kein sozialversicherungspflichtiger Arbeitnehmer > 558€/Monat beschäftigt</div>
+          <div class="qa-option correct">Überwiegend nur für einen Kunden tätig (84% des Umsatzes)</div>
+          <div class="qa-option correct">Keine freie Entscheidung über Arbeitszeit</div>
+          <div class="qa-option correct">Fester Arbeitsplatz beim Kunden</div>
+          <div class="qa-option">Werbung um neue Kunden wird gemacht</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="28">
+        <div class="qa-header">
+          <span class="qmark">28</span>
+          <span class="qtext">Welche Arbeitszeitgrenzen gelten bei Vollzeit-Anstellung für Nebenerwerb?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Aus Sicht des Arbeitgebers: max. 8 Stunden/Woche</div>
+          <div class="qa-option">Aus Sicht des Finanzamts: max. 10 Stunden/Woche</div>
+          <div class="qa-option correct">Aus Sicht der Krankenkasse: max. 18 Stunden/Woche</div>
+          <div class="qa-option">Keine Grenze bei Finanzamt</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="29">
+        <div class="qa-header">
+          <span class="qmark">29</span>
+          <span class="qtext">Wie kann Scheinselbständigkeit vermieden werden?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Arbeitnehmer einstellen (> 558€/Monat)</div>
+          <div class="qa-option correct">Für mehrere Kunden tätig sein</div>
+          <div class="qa-option correct">Werbung betreiben (Website, Angebote)</div>
+          <div class="qa-option">Nur einen Kunden haben, aber hohen Umsatz</div>
+          <div class="qa-option correct">Gründung einer GmbH/UG als geschäftsführender Gesellschafter</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="30">
+        <div class="qa-header">
+          <span class="qmark">30</span>
+          <span class="qtext">Was sind die Voraussetzungen für den Gründungszuschuss der Agentur für Arbeit?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Gründung aus Arbeitslosigkeit</div>
+          <div class="qa-option correct">Noch 150 Tage Anspruch auf Arbeitslosengeld</div>
+          <div class="qa-option">Rechtsanspruch auf den Zuschuss</div>
+          <div class="qa-option correct">Ermessensleistung (kein Rechtsanspruch)</div>
+          <div class="qa-option">Antrag kann auch nach Aufnahme der Selbständigkeit gestellt werden</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <!-- BLOCK: IT-RECHT / URHEBERRECHT / VERTRÄGE (6 Fragen) -->
+
+      <div class="qa-card" data-question="31">
+        <div class="qa-header">
+          <span class="qmark">31</span>
+          <span class="qtext">Welche Vertragstypen kommen für Softwareentwicklung in Frage?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Werkvertrag</div>
+          <div class="qa-option correct">Werkliefervertrag</div>
+          <div class="qa-option correct">Dienstvertrag</div>
+          <div class="qa-option">Kaufvertrag</div>
+          <div class="qa-option">Mietvertrag</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="32">
+        <div class="qa-header">
+          <span class="qmark">32</span>
+          <span class="qtext">Was ist beim Werkvertrag korrekt?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Erfolgsbezogen: Schuldet die Herstellung eines Werkes</div>
+          <div class="qa-option correct">Werklohn wird erst nach Abnahme fällig</div>
+          <div class="qa-option">Auftraggeber kann nicht vom Vertrag zurücktreten</div>
+          <div class="qa-option correct">2 Jahre Gewährleistung (unentgeltliche Mängelbeseitigung)</div>
+          <div class="qa-option">Bezahlung erfolgt sofort bei Lieferung</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="33">
+        <div class="qa-header">
+          <span class="qmark">33</span>
+          <span class="qtext">Was unterscheidet Urheberrecht von Patentrecht?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Urheberrecht schützt konkreten Code (gegen 1:1-Kopie)</div>
+          <div class="qa-option correct">Patentrecht schützt technische Lösung (allgemein)</div>
+          <div class="qa-option">Urheberrecht erfordert Anmeldung beim Amt</div>
+          <div class="qa-option correct">Patentrecht: 20-jähriges Monopol</div>
+          <div class="qa-option">Urheberrecht: zeitlich begrenzt auf 10 Jahre</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="34">
+        <div class="qa-header">
+          <span class="qmark">34</span>
+          <span class="qtext">Welche Anforderungen muss ein Patent erfüllen (§1 Abs.1 PatG)?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Erfinderische Tätigkeit</div>
+          <div class="qa-option correct">Neuheit (nirgends auf der Welt veröffentlicht)</div>
+          <div class="qa-option correct">Gewerbliche Anwendbarkeit</div>
+          <div class="qa-option correct">Technische nachbaubare Lösung</div>
+          <div class="qa-option">Muss von mehreren Personen entwickelt worden sein</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="35">
+        <div class="qa-header">
+          <span class="qmark">35</span>
+          <span class="qtext">Wem gehören die Rechte an einer Abschlussarbeit (Thesis)?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Der Hochschule</div>
+          <div class="qa-option correct">Dem Autor (Studierenden) - Urheberrecht bleibt beim Verfasser</div>
+          <div class="qa-option">Dem Unternehmen, bei dem die Thesis geschrieben wurde</div>
+          <div class="qa-option correct">Nutzungsrechte können an Dritte eingeräumt werden</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="36">
+        <div class="qa-header">
+          <span class="qmark">36</span>
+          <span class="qtext">Was gilt für SaaS-Verträge (Software as a Service)?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Kaufvertrag</div>
+          <div class="qa-option correct">Mietvertrag mit Bereitstellungserfolg</div>
+          <div class="qa-option correct">Haftung für Mängel nicht auf 2 Jahre begrenzt (für gesamte Vertragslaufzeit)</div>
+          <div class="qa-option">Kunde kann Software weiterverkaufen</div>
+          <div class="qa-option correct">Vermieter kann Weiterverkauf ausschließen</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <!-- BLOCK: OPEN SOURCE (4 Fragen) -->
+
+      <div class="qa-card" data-question="37">
+        <div class="qa-header">
+          <span class="qmark">37</span>
+          <span class="qtext">Welche Arten von Open Source Lizenzen gibt es?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Non-Copyleft-Lizenzen (BSD, MIT)</div>
+          <div class="qa-option correct">Lizenzen mit beschränktem Copyleft-Effekt (LGPL)</div>
+          <div class="qa-option correct">Lizenzen mit strengem Copyleft-Effekt (GPL, AGPL)</div>
+          <div class="qa-option">Nur eine Art: Freie Lizenzen</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="38">
+        <div class="qa-header">
+          <span class="qmark">38</span>
+          <span class="qtext">Was ist beim Einsatz von GPL-Software in kommerziellen Produkten zu beachten?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option">Ausführen für alle Zwecke ist verboten</div>
+          <div class="qa-option correct">Ausführen für alle Zwecke erlaubt (auch kommerziell)</div>
+          <div class="qa-option correct">Private/interne Nutzung: problemlos, keine Offenlegungspflicht</div>
+          <div class="qa-option correct">Einbauen/kompilieren → Quellcode muss offengelegt werden</div>
+          <div class="qa-option">Einbauen ist ohne Offenlegung möglich</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="39">
+        <div class="qa-header">
+          <span class="qmark">39</span>
+          <span class="qtext">Was unterscheidet AGPL von GPL?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">AGPL schließt das ASP-Schlupfloch</div>
+          <div class="qa-option correct">Auch Netzwerk-Nutzer müssen Zugang zum Quellcode bekommen</div>
+          <div class="qa-option">AGPL ist weniger restriktiv als GPL</div>
+          <div class="qa-option">AGPL gilt nur für Open Source Hardware</div>
+          <div class="qa-option correct">AGPL-Software muss zum Download angeboten werden, wenn als Dienst betrieben</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+      <div class="qa-card" data-question="40">
+        <div class="qa-header">
+          <span class="qmark">40</span>
+          <span class="qtext">Welche Aussagen zur LGPL (Lesser General Public License) sind korrekt?</span>
+        </div>
+        <div class="qa-options">
+          <div class="qa-option correct">Beschränktes Copyleft</div>
+          <div class="qa-option correct">Erlaubt Einbindung in proprietäre Software ohne Offenlegung eigener Software-Teile</div>
+          <div class="qa-option">Verbietet kommerzielle Nutzung</div>
+          <div class="qa-option correct">Meist als dynamische Bibliothek (DLL) verwendet</div>
+          <div class="qa-option">Abgeleitete Produkte müssen derselben Lizenz unterliegen</div>
+        </div>
+        <button class="show-answer-btn" onclick="revealAnswer(this)">Antwort zeigen</button>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="pagefoot">Fragenkatalog IT-Entrepreneurship (WS 2019/20) · Viel Erfolg! 🚀</footer>
+</div>
+
+<script>
+  // Tab switching
+  const tabs = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.panel');
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabs.forEach(b => b.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+      window.scrollTo({top:0, behavior:'instant'});
+    });
+  });
+
+  // Reveal answer function
+  function revealAnswer(button) {
+    const card = button.closest('.qa-card');
+    card.classList.add('revealed');
+    button.classList.add('hidden');
+  }
+</script>
+</body>
+</html>
