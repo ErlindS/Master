@@ -26,5 +26,5 @@ private:
     bool findClosestHit(const Ray& ray, const Mesh& scene, Intersection& closestIsect, Triangle& hitTriangle);
 
     // Berechnet die Farbe für einen einzelnen Strahl
-    glm::vec3 traceRay(const Ray& ray, const Mesh& scene, const Light& light);
+    glm::vec3 traceRay(const Ray& ray, const Mesh& scene, const Light& light, int depth = 0);
 };

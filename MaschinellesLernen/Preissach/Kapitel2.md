@@ -1,0 +1,1 @@
+Distanzmaße - Minkowski Distanz mit unterschiedlichem r - Cityblock, Euklidische und Chebishev

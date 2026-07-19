@@ -1,0 +1,1641 @@
+﻿Total pages: 42
+--- Page 1 ---
+University of Applied Sciences
+Fakult├ñt f├╝r Informatik und Wirtschaftsinformatik
+Maschinelles Lernen
+Aufgabensammlung mit ausf├╝hrlichen L├Âsungen
+Alle Altklausuren neu gel├Âst ┬ÀVorlesungs├╝bungen ┬Àeigene Zusatzaufgaben
+├£bungen zur Kombiklausur
+Sommersemester 2026
+Referenten: Prof. Dr. Christine Preisach
+Prof. Dr. Dennis Janka
+Bearbeiter: Devin Uyan
+Version 1.0┬ÀStand: 30. Juni 2026 ┬Àlebendes Dokument, wird laufend erweitert
+
+--- Page 2 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+Inhaltsverzeichnis
+Hinweise zur Benutzung . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1
+I Aufgaben zum Teil Preisach
+Ma├ƒe┬ÀClustering┬ÀPCA 2
+1 Distanz- und ├ähnlichkeitsma├ƒe . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
+2 Clustering . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8
+3 PCA und Kernel-PCA . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+II Aufgaben zum Teil Janka
+Lineare Modelle ┬ÀNeuronale Netze ┬ÀCNN & Autoencoder 16
+4 Lineare Regression . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+5 Logistische Regression und Klassifikationsmetriken . . . . . . . . . . . . . . . . 19
+6 Regularisierung, Hyperparametersuche, Generalisierung . . . . . . . . . . . . 23
+7 Neuronale Netze: Forward-Pass und SGD . . . . . . . . . . . . . . . . . . . . . . 27
+8 Backpropagation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+9 Faltungsnetze und Autoencoder . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+Hinweise zur Benutzung
+ÔÇóJede Aufgabe tr├ñgt ihre Quelleim Kopf:
+Altklausur (z.B. Klausur SS22, A1, abgewandelt ), Vorlesungs├╝bung
+oderEigene Aufgabe . Klausuraufgaben wurden neu formuliert
+und mitausf├╝hrlicheren L├Âsungswegen versehen als in den offiziellen L├Âsungen.
+ÔÇóErst selbst rechnen, dann L├Âsung ansehen;
+die gr├╝nen Boxen stehen direkt unter der Aufgabe.
+ÔÇóDie blauen Strategie-Boxen am Anfang jedes Abschnitts fassen das L├Âsungsrezept
+und die typischen Fehler zusammen.
+ÔÇóDer Janka-Teil der Klausur dauert 60 Minuten und hat 46 Punkte
+(Ôëê1,3 Minuten pro Punkt); Zeitmanagement ├╝ben!
+1
+
+--- Page 3 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+Teil I
+Aufgaben zum Teil Preisach
+Ma├ƒe┬ÀClustering┬ÀPCA
+1 Distanz- und ├ähnlichkeitsma├ƒe
+Strategie & typische Fehler
+Rezepte: Distanzen stur nach Formel; bei der Kovarianzmatrix immerzuerst Mittelwerte,
+dann zentrieren, Nenner NÔêÆ1; bei Mahalanobis zuerst CÔêÆ1(Diagonalmatrix: Kehrwerte!);
+bei DTW Rand mit Ôê×initialisieren und zellenweise dij=dÔÇ▓
+ij+ min(links,unten,diagonal ).
+Typische Fehler: NennerNstattNÔêÆ1; vergessen, die Wurzel zu ziehen (bzw. zu
+erw├ñhnen, dass mit Quadraten verglichen werden darf); bei Jaccard die f00mitgez├ñhlt.
+Aufgabe 1.1 Eigene Aufgabe┬ÀGrundlagen
+Gegeben seien die Punkte Ôâù x= (1,5)TundÔâù y= (4,1)T.
+(a) Berechnen Sie die euklidische, die Cityblock-
+und die Chebyshev-Distanz zwischen Ôâù xundÔâù y.
+(b) Ordnen Sie die drei Werte der Gr├Â├ƒe nach und begr├╝nden Sie,
+warum diese Ordnung immergilt.
+(c) Der Punkt P= (0,6; 0,9): Liegt er innerhalb
+oder au├ƒerhalb des Einheitskreises der L2-,L1- undLÔê×-Norm?
+L├Âsung
+(a)Differenzvektor: (1ÔêÆ4,5ÔêÆ1) = (ÔêÆ3,4).
+d2=/radical´ú¼ig
+(ÔêÆ3)2+ 42=ÔêÜ
+25 = 5
+d1=|ÔêÆ3|+|4|= 7
+dÔê×= max(3,4) = 4
+(b)dÔê×Ôëñd2Ôëñd1, hier 4Ôëñ5Ôëñ7. Begr├╝ndung: dÔê×nimmt nur die gr├Â├ƒte Komponente; d1
+summiert alle Komponenten voll auf (Umweg ├╝ber das Gitter); d2(Luftlinie) liegt
+dazwischen, denn maxk|vk|Ôëñ/radical´ú¼ig/summationtext
+kv2
+kÔëñ/summationtext
+k|vk|.
+(c)L2:ÔêÜ0,36 + 0,81 =ÔêÜ1,17Ôëê1,08>1ÔçÆau├ƒerhalb .L1:0,6 + 0,9 = 1,5>1ÔçÆ
+au├ƒerhalb .LÔê×:max(0,6; 0,9) = 0,9<1ÔçÆinnerhalb .
+Derselbe Punkt ist je nach Norm ÔÇ×nahÔÇ£ oder ÔÇ×fernÔÇ£.
+2
+
+--- Page 4 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+Aufgabe 1.2 Eigene Aufgabe (Konzept) ┬ÀMetrik-Eigenschaften
+(a) Nennen Sie die drei Eigenschaften, die eine Distanzfunktion zur Metrikmachen.
+(b) Zeigen Sie, dass die Zeitdifferenz auf der 24-Stunden-Uhr, d(t1,t2) =t2ÔêÆt1
+fallst1Ôëñt2, sonst 24 +t2ÔêÆt1,keineMetrik ist.
+(c) Ist DTW eine Metrik? Begr├╝nden Sie kurz.
+L├Âsung
+(a)
+(1) Positive Definitheit: d(Ôâù x,Ôâù y)ÔëÑ0undd(Ôâù x,Ôâù y) = 0ÔçöÔâù x=Ôâù y;
+(2) Symmetrie: d(Ôâù x,Ôâù y) =d(Ôâù y,Ôâù x);
+(3) Dreiecksungleichung: d(Ôâù x,Ôâù z)Ôëñd(Ôâù x,Ôâù y) +d(Ôâù y,Ôâù z).
+(b)Gegenbeispiel zur Symmetrie: d(13:00,14:00) = 1 h, aberd(14:00,13:00) =
+24 + 13ÔêÆ14 = 23h╠©= 1h. Eigenschaft (2) verletzt ÔçÆkeine Metrik.
+(c)Nein. DTW verletzt i.A. die Dreiecksungleichung (und durch das Warping kann
+d(Ôâù s,Ôâùt) = 0auch f├╝rÔâù s╠©=Ôâùtauftreten, z.B. bei gestreckten Versionen derselben Sequenz).
+DTW ist ein Distanzma├ƒ , keine Metrik.
+Aufgabe 1.3 Vorlesungs├╝bung Preisach, ausgearbeitet ┬ÀKovarianzmatrix
+AlterX[Jahre] und K├Ârpergr├Â├ƒe Y[m] von sechs Jugendlichen:
+X 14 16 16 12 15 17
+Y1,60 1,75 1,80 1,50 1,55 1,80
+Berechnen Sie die empirische Kovarianzmatrix Cund interpretieren Sie das Vorzeichen der
+Kovarianz. Warum erlaubt die Kovarianz keine Aussage ├╝ber die St├ñrkedes
+Zusammenhangs, und welches Ma├ƒ behebt das?
+3
+
+--- Page 5 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+L├Âsung
+Mittelwerte: ┬»X=14+16+16+12+15+17
+6= 15,┬»Y=1,60+1,75+1,80+1,50+1,55+1,80
+6= 1,667
+VarianzX(NennerNÔêÆ1 = 5):
+Var(X) =(ÔêÆ1)2+ 12+ 12+ (ÔêÆ3)2+ 02+ 22
+5=16
+5= 3,2
+Kovarianz:
+Cov(X,Y ) =1
+5/bracketleftbig(ÔêÆ1)(ÔêÆ0,067) + 1┬À0,083 + 1┬À0,133
++ (ÔêÆ3)(ÔêÆ0,167) + 0┬À(ÔêÆ0,117) + 2┬À0,133/bracketrightbig=1
+5┬À1,05 = 0,21
+VarianzY:Var(Y) =0,0672+0,0832+0,1332+0,1672+0,1172+0,1332
+5Ôëê0,018
+C=/parenleft´ú¼igg
+3,2 0,21
+0,21 0,018/parenright´ú¼igg
+Interpretation: Cov> 0ÔçÆpositiver linearer Zusammenhang (├ñltere Jugendliche sind
+tendenziell gr├Â├ƒer). Die Kovarianz ist skalenabh├ñngig (Meter vs. Zentimeter ├ñndert den
+Wert um Faktor 100), daher nur Richtungs-, keine St├ñrkeaussage.
+Abhilfe:Pearson-Korrelation r=0,21ÔêÜ3,2┬À0,018Ôëê0,87
+(starker positiver Zusammenhang, Werte in [ÔêÆ1,1]).
+Aufgabe 1.4 Vorlesungs├╝bung Preisach, ausgearbeitet ┬ÀMahalanobis
+Ein zentrierter Datenbestand habe die Kovarianzmatrix C=/parenleft´ú¼igg
+1/2 0
+0 2/parenright´ú¼igg
+.
+(a) Pr├╝fen Sie, ob Cinvertierbar ist, und geben Sie CÔêÆ1an.
+(b) Berechnen Sie die Mahalanobis-Distanz der Punkte Ôâù x= (0,2)TundÔâù y= (1/2,0)T
+jeweils zum Ursprung Ôâù o.
+(c) Vergleichen Sie mit den euklidischen Distanzen
+und erkl├ñren Sie den Unterschied geometrisch.
+4
+
+--- Page 6 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+L├Âsung
+(a)detC=1
+2┬À2ÔêÆ0 = 1╠©= 0ÔçÆinvertierbar (regul├ñr).
+DiagonalmatrixÔçÆKehrwerte: CÔêÆ1=/parenleft´ú¼igg
+2 0
+0 1/2/parenright´ú¼igg
+.
+(b)
+dC(Ôâù x,Ôâù o) =/radicaltp/radicalvertex/radicalvertex/radicalbt(0,2)/parenleft´ú¼igg
+2 0
+01
+2/parenright´ú¼igg/parenleft´ú¼igg
+0
+2/parenright´ú¼igg
+=/radical´ú¼ig
+02┬À2 + 22┬À1
+2=ÔêÜ
+2Ôëê1,41
+dC(Ôâù y,Ôâù o) =/radicalbigg/parenleft´ú¼ig
+1
+2/parenright´ú¼ig2┬À2 + 0 =/radical´ú¼ig
+1
+2Ôëê0,71
+(c)Euklidisch: d2(Ôâù x,Ôâù o) = 2undd2(Ôâù y,Ôâù o) = 0,5, Faktor 4. Mahalanobis: Faktor 2. Grund: In
+y-Richtung streuen die Daten stark ( Var = 2), Abweichungen dort sind ÔÇ×normalÔÇ£ und
+werden heruntergewichtet; in x-Richtung ist die Streuung klein ( Var =1
+2), Abweichungen
+z├ñhlen doppelt. Punkte gleicher Mahalanobis-Distanz liegen auf Ellipsen,
+die der Datenform folgen.
+Aufgabe 1.5 Vorlesungsbeispiel, als Klausuraufgabe ausgearbeitet ┬ÀDTW
+Gegeben die 2D-Sequenzen
+Ôâù s=/parenleftbig(0,0),(1,0),(1,4),(2,5)/parenrightbig,Ôâùt=/parenleftbig(1,0),(3,0),(1,3)/parenrightbig
+mit der Cityblock-Distanz als lokalem Ma├ƒ.
+(a) Stellen Sie die Matrix der lokalen Kosten auf.
+(b) Berechnen Sie die Matrix der kumulierten Kosten und die DTW-Distanz.
+(c) Geben Sie den optimalen Pfad (das Alignment) an.
+(d) Nennen Sie die drei Randbedingungen f├╝r g├╝ltige Warping-Pfade.
+5
+
+--- Page 7 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+L├Âsung
+(a) Lokale Kosten dÔÇ▓
+ij=ÔêÑsiÔêÆtjÔêÑ1, z.B.dÔÇ▓(s1,t1) =|0ÔêÆ1|+|0ÔêÆ0|= 1;
+dÔÇ▓(s3,t3) =|1ÔêÆ1|+|4ÔêÆ3|= 1:
+s1s2s3s4
+t34 3 1 3
+t23 2 6 6
+t11 0 4 6
+(b) Kumulierte Kosten mitdij=dÔÇ▓
+ij+ min(diÔêÆ1,j, di,jÔêÆ1, diÔêÆ1,jÔêÆ1),
+Start links unten, R├ñnder Ôê×:
+s1s2s3s4
+t38 6 4 7
+t2437 11
+t11 1 5 11
+Rechenbeispiele (Vorg├ñnger: links, unten, diagonal): d21= 0 + min(1 ,Ôê×,Ôê×) = 1;
+d22= 2 + min(4 ,1,1) = 3;d33= 1 + min(6 ,7,3) = 4;d43= 3 + min(4 ,11,7) = 7.
+dDTW (Ôâù s,Ôâùt) =d43= 7
+(c) Pfad (fett markiert): (s1,t1)ÔåÆ(s2,t1)ÔåÆ(s2,t2)ÔåÆ(s3,t3)ÔåÆ(s4,t3),
+s2wird auft1undt2gematcht (Stauchung), t3aufs3unds4(Streckung).
+(d)
+(1)Randbedingung : Anfang auf Anfang, Ende auf Ende;
+(2)Monotonie : Indizes monoton steigend, jeder Index kommt mindestens einmal vor;
+(3)Schrittweite : nur (0,1),(1,0),(1,1).
+Aufgabe 1.6 Eigene Aufgabe┬ÀSMC, Jaccard, Kosinus
+Zwei Kunden eines Online-Shops, dargestellt als bin├ñre Kaufvektoren ├╝ber 10 Produkte:
+Ôâù x= (1,0,1,0,0,0,0,0,1,0)TÔâù y= (1,0,0,0,0,0,0,1,1,0)T
+(a) Berechnen Sie SMC und Jaccard-Koeffizient.
+(b) Welches der beiden Ma├ƒe ist hier angemessener? Begr├╝ndung.
+(c) Berechnen Sie zus├ñtzlich die Kosinus-├ähnlichkeit der beiden Vektoren.
+(d) F├╝r welche Datenart ist die Kosinus-├ähnlichkeit das Standardma├ƒ
+und warum ist ihre L├ñngeninvarianz dort erw├╝nscht?
+6
+
+--- Page 8 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+L├Âsung
+(a)Z├ñhlung:f11= 2(Positionen 1, 9); f10= 1(Position 3); f01= 1(Position 8); f00= 6.
+SMC =2 + 6
+10= 0,8JSC=2
+2 + 1 + 1= 0,5
+(b)Jaccard. Kaufdaten sind d├╝nn besetzt , die gemeinsamen Nullen (beide haben Produkt
+knichtgekauft) sagen nichts ├╝ber ├ähnlichkeit aus und bl├ñhen den SMC k├╝nstlich auf.
+(c)Ôƒ¿Ôâù x,Ôâù yÔƒ®= 2;ÔêÑÔâù xÔêÑ=ÔêÜ
+3,ÔêÑÔâù yÔêÑ=ÔêÜ
+3:
+dcos=2ÔêÜ
+3┬ÀÔêÜ
+3=2
+3Ôëê0,67
+(d)F├╝r Dokumente (Bag-of-Words-Vektoren) und Embeddings. Ein doppelt so langes
+Dokument mit denselben Wortanteilen zeigt in dieselbe Richtung, die Kosinus-├ähnlichkeit
+bleibt 1. Inhaltliche ├ähnlichkeit soll nicht von der Dokumentl├ñnge abh├ñngen.
+Aufgabe 1.7 Eigene Aufgabe┬Àk-NN und Ma├ƒwahl
+(a) Gegeben die Trainingspunkte mit Klassen: A(1,1)ÔåÆÔèò,B(2,2)ÔåÆÔèò,C(5,1)ÔåÆÔèû,
+D(6,2)ÔåÆÔèû,E(3,5)ÔåÆÔèò. Klassifizieren Sie den Punkt Q= (4,2)mit 1-NN
+und mit 3-NN (euklidische Distanz).
+(b) W├ñhlen Sie f├╝r folgende Situationen jeweils das passende Ma├ƒ
+und begr├╝nden Sie in einem Satz:
+(i) Vergleich von Gesten-Sequenzen unterschiedlicher L├ñnge,
+(ii) Warenkorb-Vektoren,
+(iii) stark korrelierte Sensormerkmale mit verschiedenen Einheiten,
+(iv) BOW-Dokumentvektoren.
+L├Âsung
+(a)Quadrierte euklidische Distanzen zu Q(4,2)
+(Wurzel f├╝r den Vergleich unn├Âtig, Monotonie!):
+d2(A) = 9 + 1 = 10 ;
+d2(B) = 4 + 0 = 4 ;
+d2(C) = 1 + 1 = 2 ;
+d2(D) = 4 + 0 = 4 ;
+d2(E) = 1 + 9 = 10 .
+1-NN:n├ñchster Nachbar ist C(Ôèû)ÔçÆKlasseÔèû.
+3-NN:die drei n├ñchsten sind C(Ôèû),B(Ôèò),D(Ôèû)ÔçÆMehrheitÔèû.
+(b)
+(i)DTW, einziges Ma├ƒ f├╝r unterschiedlich lange, zeitverzerrte Sequenzen.
+(ii)Jaccard , bin├ñr und d├╝nn besetzt, gemeinsame Nullen ignorieren.
+(iii)Mahalanobis , ber├╝cksichtigt Korrelation und skaliert eingebaut.
+(iv)Kosinus-├ähnlichkeit ÔÇô hochdimensional, d├╝nn besetzt, l├ñngeninvariant.
+7
+
+--- Page 9 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+2 Clustering
+Strategie & typische Fehler
+Rezepte: SSE =erst Zentren (Mittelwert pro Koordinate!), dann quadrierte Abst├ñnde
+summieren, keineWurzel beim SSE! k-Means von Hand: Tabelle mit Distanzen zu allen
+Zentren f├╝hren. DBSCAN: erst alle Kernpunkte markieren
+(>MinPts Nachbarn im ╬Á-Radius), dann Rand, Rest ist Rauschen.
+Typische Fehler: SSE mit Wurzel; beim Zentren-Update einzelne Punkte vergessen;
+bei der Silhouette aundbvertauschen.
+Aufgabe 2.1 Vorlesungs├╝bung Preisach, ausgearbeitet ┬ÀSSE
+Gegeben die Punkte
+A(1,2), B (2,1), C (1,1), D (6,5), E (7,6), F (6,7)
+mit der Clusterzuordnung C1={A,B,C},C2={D,E,F}.
+(a) Berechnen Sie die Clusterzentren.
+(b) Berechnen Sie f├╝r jeden Punkt den quadrierten euklidischen Abstand
+zu seinem Zentrum und daraus den SSE.
+(c) Warum ist der Schwerpunkt (Mittelwert) die SSE-optimale Position des Zentrums?
+L├Âsung
+(a)Ôâù z1=/parenleftbig1+2+1
+3,2+1+1
+3/parenrightbig=/parenleftbig4
+3,4
+3/parenrightbig,Ôâù z2=/parenleftbig6+7+6
+3,5+6+7
+3/parenrightbig=/parenleftbig19
+3,6/parenrightbig
+(b)Cluster 1:
+d2(A) =/parenleftbig1ÔêÆ4
+3/parenrightbig2+/parenleftbig2ÔêÆ4
+3/parenrightbig2=1
+9+4
+9=5
+9d2(B) =4
+9+1
+9=5
+9d2(C) =1
+9+1
+9=2
+9
+Cluster 2:
+d2(D) =/parenleftbig6ÔêÆ19
+3/parenrightbig2+ (5ÔêÆ6)2=1
+9+ 1 =10
+9d2(E) =4
+9+ 0 =4
+9d2(F) =1
+9+ 1 =10
+9
+SSE =12
+9/bracehtipupleft/bracehtipdownright/bracehtipdownleft/bracehtipupright
+C1+24
+9/bracehtipupleft/bracehtipdownright/bracehtipdownleft/bracehtipupright
+C2=36
+9= 4
+(c)Der SSE ist als Funktion der Zentrumskoordinaten eine nach oben ge├Âffnete
+Parabel(-summe); Nullsetzen der AbleitungÔêé
+ÔêéÔâù zk/summationtext
+Ôâù gÔêêCkÔêÑÔâù gÔêÆÔâù zkÔêÑ2=ÔêÆ2/summationtext(Ôâù gÔêÆÔâù zk)!= 0liefert
+genauÔâù zk=1
+|Ck|/summationtext
+Ôâù gÔêêCkÔâù g. Jede andere Position erh├Âht den SSE.
+8
+
+--- Page 10 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+Aufgabe 2.2 Eigene Aufgabe┬Àk-Means von Hand
+Gegeben die 1D-Punkte {2,4,10,12,3,20,30,11,25}
+und die initialen Zentren z1= 2,z2= 4(K= 2).
+(a) F├╝hren Sie k-Means aus, bis sich die Zentren nicht mehr ├ñndern
+(Zuordnung und Zentren je Iteration angeben).
+(b) Charakterisieren Sie k-Means anhand der vier Begriffspaare aus der Vorlesung
+(partitionierend/hierarchisch, exklusiv/├╝berlappend,
+vollst├ñndig/partiell, Kfest/dynamisch).
+L├Âsung
+(a)
+Iteration 1: Zuordnung nach n├ñchstem Zentrum (Grenze bei 3): C1={2,3},
+C2={4,10,12,20,30,11,25}. Neue Zentren: z1= 2,5;z2=4+10+12+20+30+11+25
+7= 16.
+Iteration 2: Grenze bei2,5+16
+2= 9,25:C1={2,3,4},C2={10,11,12,20,25,30}.
+Neue Zentren: z1= 3;z2= 18.
+Iteration 3: Grenze bei 10,5:C1={2,3,4,10},C2={11,12,20,25,30}.
+Neue Zentren: z1= 4,75;z2= 19,6.
+Iteration 4: Grenze bei 12,175:C1={2,3,4,10,11,12},C2={20,25,30}.
+Neue Zentren: z1= 7;z2= 25.
+Iteration 5: Grenze bei 16: Zuordnung unver├ñndert
+ÔçÆKonvergenz mitC1={2,3,4,10,11,12},C2={20,25,30}, Zentren 7und25.
+(b)k-Means ist partitionierend (feste Aufteilung, kein Baum),
+exklusiv(jeder Punkt genau ein Cluster), vollst├ñndig (jeder Punkt wird zugeordnet)
+und arbeitet mit vorgegebener Clusteranzahl K.
+Aufgabe 2.3 Eigene Aufgabe┬ÀSilhouette
+F├╝r einen Punkt Ôâù xwurden berechnet: mittlerer Abstand zum eigenen Cluster a(Ôâù x) = 2,
+mittlerer Abstand zum n├ñchstgelegenen fremden Cluster b(Ôâù x) = 6.
+(a) Berechnen Sie die Silhouette s(Ôâù x)und interpretieren Sie den Wert.
+(b) Welche Werte erg├ñben sich f├╝r (a,b) = (4,4)und(a,b) = (6,2),
+und was bedeuten sie?
+(c) Wozu dient der Silhouettenkoeffizient (Mittel ├╝ber alle Punkte)
+und warum eignet er sich zur Wahl von K?
+9
+
+--- Page 11 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+L├Âsung
+(a)s=bÔêÆa
+max(a,b)=6ÔêÆ2
+6=2
+3Ôëê0,67, nahe +1: Punkt passt gut in sein Cluster
+und ist klar vom Nachbarcluster getrennt.
+(b)(4,4):s= 0, Grenzfall zwischen zwei Clustern. (6,2):s=2ÔêÆ6
+6=ÔêÆ2
+3,
+der Punkt liegt n├ñher am fremden Cluster, vermutlich falsch zugeordnet .
+(c)Der Silhouettenkoeffizient1
+N/summationtext
+Ôâù xs(Ôâù x)Ôêê[ÔêÆ1,1]bewertet die Gesamtqualit├ñt einer
+Clusterung; nahe 1 =gut. Er ist weitgehend unabh├ñngig von Kund erlaubt daher den
+Vergleich von Clusterungen mit verschiedenem K(Rousseeuw: K= 2..ntesten, Maximum
+w├ñhlen), idealerweise kombiniert mit der Elbow-Methode.
+Aufgabe 2.4 Eigene Aufgabe┬ÀDBSCAN
+Gegeben die Punkte auf der Zahlengeraden
+P={1,2,3,7,8,9,15}
+mit╬Á= 1,5undMinPts = 2
+(Bedingung Kernobjekt: mehr alsMinPts Punkte in der ╬Á-Umgebung,
+der Punkt selbst z├ñhlt mit).
+(a) Bestimmen Sie f├╝r jeden Punkt die ╬Á-Umgebung
+und klassifizieren Sie ihn als Kern-, Rand- oder Rauschpunkt.
+(b) Geben Sie die resultierenden Cluster an.
+(c) Erkl├ñren Sie die Begriffe direkt erreichbar ,erreichbar undverbunden
+und geben Sie an, welche dieser Relationen symmetrisch sind.
+(d) Warum kann DBSCAN nichtkonvexe Cluster finden, k-Means aber nicht?
+10
+
+--- Page 12 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+L├Âsung
+(a)Umgebungen (Punkte mit Abstand <1,5, inkl. selbst):
+PunktU╬Á|U╬Á|Typ (>2?)
+1{1,2} 2kein Kern
+2{1,2,3}3Kernpunkt
+3{2,3} 2kein Kern
+7{7,8} 2kein Kern
+8{7,8,9}3Kernpunkt
+9{8,9} 2kein Kern
+15{15} 1kein Kern
+1,3liegen in der Umgebung des Kernpunkts 2ÔçÆRandpunkte ;7,9analog zu Kernpunkt
+8ÔçÆRandpunkte ;15ist weder Kern noch erreichbar ÔçÆRauschpunkt .
+(b)Cluster 1 ={1,2,3}, Cluster 2 ={7,8,9};15bleibt Ausrei├ƒer (DBSCAN ist partiell).
+(c)Direkt erreichbar :Ôâù xÔêêU╬Á(Ôâù y)undÔâù yist Kernobjekt. Erreichbar : Kette direkter
+Erreichbarkeiten (nur das letzte Glied darf Randpunkt sein; transitiv). Verbunden : beide
+Punkte sind von einem gemeinsamen dritten Punkt aus erreichbar. Symmetrie: direkte
+Erreichbarkeit und Erreichbarkeit sind nur f├╝r Kernobjekte symmetrisch;
+Verbundenheit ist immer symmetrisch .
+(d)k-Means ordnet jeden Punkt dem n├ñchsten Zentrum zu ÔÇô die Clustergrenzen sind
+Voronoi-Zellen, also konvex; verschachtelte Ringe oder Halbmonde lassen sich so nicht
+trennen. DBSCAN definiert Cluster ├╝ber Dichteverbundenheit :
+Die Form ergibt sich aus den Daten selbst und kann beliebig sein.
+Aufgabe 2.5 Eigene Aufgabe (Konzept) ┬ÀVerfahrensvergleich
+(a) Erkl├ñren Sie die Elbow-Methode zur Wahl von K(inkl. Skizze der typischen Kurve).
+(b) Single vs. Complete vs. Average vs. Centroid Linkage:
+Ordnen Sie jeder Methode ihre Definition zu.
+(c) Warum ist der Medoidrobuster gegen Ausrei├ƒer als der Schwerpunkt?
+Nennen Sie den zugeh├Ârigen Algorithmus und seine beiden Phasen.
+(d) Nennen Sie zwei Gr├╝nde, warum das k-Means-Ergebnis zweimal hintereinander
+unterschiedlich ausfallen kann, und die Standard-Abhilfe.
+11
+
+--- Page 13 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+L├Âsung
+(a)F├╝rK= 1,2,3,...k-Means laufen lassen und den SSE plotten. Der SSE f├ñllt
+monoton; gew├ñhlt wird das Kam ÔÇ×EllenbogenÔÇ£, wo die Abnahme deutlich abflacht,
+davor bringt jedes zus├ñtzliche Cluster viel, danach kaum noch etwas.
+(b)Single =minimaler paarweiser Abstand zwischen den Clustern; Complete =
+maximaler ; Average =Durchschnitt aller Paare; Centroid =Abstand der Schwerpunkte .
+(c)Der Medoid ist ein echter Datenpunkt mit minimaler durchschnittlicher Distanz zu
+allen Punkten seines Clusters, Extremwerte ziehen ihn nicht wie einen Mittelwert nach
+au├ƒen. Algorithmus: PAMmitBUILD-Phase (initiale Medoids) und SWAP-Phase
+(iterativ Medoid gegen Nicht-Medoid tauschen, solange die Gesamtdistanz sinkt).
+Nachteil: quadratische Laufzeit.
+(d)
+(1) Zuf├ñllige Initialisierung der Zentren
+ÔåÆKonvergenz in unterschiedliche lokaleMinima (das exakte Problem ist NP-hart);
+(2) ggf. zuf├ñllige Reihenfolge/leere Cluster-Behandlung. Abhilfe: mehrfacher Lauf mit
+verschiedenen Initialisierungen, Auswahl des Ergebnisses mit kleinstem SSE.
+3 PCA und Kernel-PCA
+Strategie & typische Fehler
+Rezept PCA-Rechenaufgabe:
+(1) Mittelwert,
+(2) zentrieren,
+(3)C=1
+NÔêÆ1GGT,
+(4)det(CÔêÆ╬╗I) = 0l├Âsen (Eigenwerte absteigend nummerieren!),
+(5)(CÔêÆ╬╗iI)Ôâù ei= 0l├Âsen und normieren ,
+(6) transformieren Ôâù gÔÇ▓=UT(Ôâù gÔêÆÔâù gmean),
+(7) ggf. reduzieren +rekonstruieren.
+Typische Fehler: Zentrierung vergessen; Nenner NstattNÔêÆ1;
+Eigenvektoren nicht normiert; bei der R├╝cktransformation Ôâù gmeanvergessen.
+Aufgabe 3.1 Vorlesungsbeispiel, vollst├ñndig ausgearbeitet ┬ÀPCA komplett
+Gegeben die Merkmalsvektoren
+Ôâù g1=/parenleft´ú¼igg
+3
+3/parenright´ú¼igg
+, Ôâù g 2=/parenleft´ú¼igg
+1
+1/parenright´ú¼igg
+, Ôâù g 3=/parenleft´ú¼igg
+4
+2/parenright´ú¼igg
+, Ôâù g 4=/parenleft´ú¼igg
+2
+4/parenright´ú¼igg
+, Ôâù g 5=/parenleft´ú¼igg
+5
+5/parenright´ú¼igg
+(a) Berechnen Sie Mittelwert, zentrierte Datenmatrix und Kovarianzmatrix.
+(b) Berechnen Sie Eigenwerte und normierte Eigenvektoren;
+stellen Sie die Transformationsmatrix Uauf.
+(c) Wie viel Varianz erkl├ñrt die erste Hauptkomponente?
+(d) Transformieren Sie Ôâù x=/parenleftbig0
+2/parenrightbig, reduzieren Sie auf i0= 1Komponente
+und rekonstruieren Sie den Punkt.
+12
+
+--- Page 14 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+L├Âsung
+(a)Ôâù gmean =1
+5/parenleftbig3+1+4+2+5
+3+1+2+4+5/parenrightbig=/parenleftbig3
+3/parenrightbig. Zentriert:/parenleftbig0
+0/parenrightbig,/parenleftbigÔêÆ2
+ÔêÆ2/parenrightbig,/parenleftbig1
+ÔêÆ1/parenrightbig,/parenleftbigÔêÆ1
+1/parenrightbig,/parenleftbig2
+2/parenrightbig.
+G=/parenleft´ú¼igg
+0ÔêÆ2 1ÔêÆ1 2
+0ÔêÆ2ÔêÆ1 1 2/parenright´ú¼igg
+C=1
+4GGT=1
+4/parenleft´ú¼igg
+10 6
+6 10/parenright´ú¼igg
+=/parenleft´ú¼igg
+2,5 1,5
+1,5 2,5/parenright´ú¼igg
+(KontrolleGGT: Diagonale 0 + 4 + 1 + 1 + 4 = 10 ; Nebendiagonale 0 + 4ÔêÆ1ÔêÆ1 + 4 = 6 .)
+(b)Charakteristisches Polynom:
+det(CÔêÆ╬╗I) = (2,5ÔêÆ╬╗)2ÔêÆ1,52= 0Ôçö╬╗2ÔêÆ5╬╗+ 4 = 0ÔçÆ╬╗1,2=5┬▒ÔêÜ25ÔêÆ16
+2=5┬▒3
+2
+╬╗1= 4, ╬╗ 2= 1 (absteigend! )
+Eigenvektor zu ╬╗1= 4:(CÔêÆ4I)Ôâù e=/parenleft´ú¼igg
+ÔêÆ1,5 1,5
+1,5ÔêÆ1,5/parenright´ú¼igg
+Ôâù e=Ôâù0ÔçÆe1=e2, normiert: Ôâù e1=1ÔêÜ
+2/parenleftbig1
+1/parenrightbig.
+Zu╬╗2= 1:e1=ÔêÆe2, normiertÔâù e2=1ÔêÜ
+2/parenleftbigÔêÆ1
+1/parenrightbig.
+U=1ÔêÜ
+2/parenleft´ú¼igg
+1ÔêÆ1
+1 1/parenright´ú¼igg
+(c)╬╗1
+╬╗1+╬╗2=4
+5= 80 %der Gesamtvarianz ( tr(C) = 5 =╬╗1+╬╗2Ô£ô).
+(d)Transformation:
+Ôâù xÔÇ▓=UT(Ôâù xÔêÆÔâù gmean) =1ÔêÜ
+2/parenleft´ú¼igg
+1 1
+ÔêÆ1 1/parenright´ú¼igg/parenleft´ú¼igg
+ÔêÆ3
+ÔêÆ1/parenright´ú¼igg
+=1ÔêÜ
+2/parenleft´ú¼igg
+ÔêÆ4
+2/parenright´ú¼igg
+Ôëê/parenleft´ú¼igg
+ÔêÆ2,83
+1,41/parenright´ú¼igg
+Reduktion ( i0= 1):Ôâù xÔÇ▓ÔÇ▓=1ÔêÜ
+2/parenleftbigÔêÆ4
+0/parenrightbig. Rekonstruktion:
+Ôâù xrek=Ôâù gmean +UÔâù xÔÇ▓ÔÇ▓=/parenleft´ú¼igg
+3
+3/parenright´ú¼igg
++1ÔêÜ
+2┬À1ÔêÜ
+2/parenleft´ú¼igg
+1ÔêÆ1
+1 1/parenright´ú¼igg/parenleft´ú¼igg
+ÔêÆ4
+0/parenright´ú¼igg
+=/parenleft´ú¼igg
+3
+3/parenright´ú¼igg
++/parenleft´ú¼igg
+ÔêÆ2
+ÔêÆ2/parenright´ú¼igg
+=/parenleft´ú¼igg
+1
+1/parenright´ú¼igg
+Der rekonstruierte Punkt liegt auf der ersten Hauptachse ( y=x),
+die Information senkrecht dazu ging durch die Reduktion verloren.
+Aufgabe 3.2 PCA-Beispiel 2 der Vorlesung, nachgerechnet ┬ÀPCA mit unsymmetrischen Daten
+GegebenÔâù x1=/parenleftbigÔêÆ2
+ÔêÆ1/parenrightbig,Ôâù x2=/parenleftbig0
+1/parenrightbig,Ôâù x3=/parenleftbig2
+1/parenrightbig(n= 3).
+(a) Zentrieren Sie die Daten und stellen Sie die Kovarianzmatrix auf.
+(b) Berechnen Sie die Eigenwerte
+und die relative erkl├ñrte Varianz der ersten Hauptkomponente.
+13
+
+--- Page 15 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+L├Âsung
+(a)Ôâù ┬Á=1
+3/parenleftbigÔêÆ2+0+2
+ÔêÆ1+1+1/parenrightbig=/parenleftbig0
+1/3/parenrightbig. Zentriert:/parenleftbigÔêÆ2
+ÔêÆ4/3/parenrightbig,/parenleftbig0
+2/3/parenrightbig,/parenleftbig2
+2/3/parenrightbig.
+C=1
+2/parenleft´ú¼igg
+(ÔêÆ2)2+ 0 + 22(ÔêÆ2)(ÔêÆ4
+3) + 0 + 2┬À2
+3
+┬À (4
+3)2+ (2
+3)2+ (2
+3)2/parenright´ú¼igg
+=1
+2/parenleft´ú¼igg
+8 4
+48
+3/parenright´ú¼igg
+=/parenleft´ú¼igg
+4 2
+24
+3/parenright´ú¼igg
+(b)det(CÔêÆ╬╗I) = (4ÔêÆ╬╗)(4
+3ÔêÆ╬╗)ÔêÆ4 =╬╗2ÔêÆ16
+3╬╗+4
+3= 0, also 3╬╗2ÔêÆ16╬╗+ 4 = 0:
+╬╗1,2=16┬▒ÔêÜ256ÔêÆ48
+6=16┬▒ÔêÜ
+208
+6ÔçÆ╬╗1Ôëê5,07, ╬╗ 2Ôëê0,26
+Erkl├ñrte Varianz PC1:5,07
+5,33Ôëê95 %, die Projektion auf eine Dimension ist hier fast
+verlustfrei.
+Aufgabe 3.3 Eigene Aufgabe (Konzept) ┬ÀPCA-Verst├ñndnis
+(a) Was sind die Hauptkomponenten einer PCA, geometrisch und algebraisch?
+Welche Eigenschaft haben die transformierten Merkmale untereinander?
+(b) Warum m├╝ssen die Daten vor der PCA skaliert/standardisiert werden?
+Was passiert sonst?
+(c) Ein Datensatz hat N= 40Bilder mit je d= 10 304 Pixeln (Eigenfaces).
+Wie viele Eigenwerte ungleich Null kann die Kovarianzmatrix h├Âchstens haben,
+und welches numerische Problem tritt bei CÔêêR10304├ù10304auf?
+(d) Nennen Sie vier Vorteile und drei Nachteile/Fallstricke der PCA.
+L├Âsung
+(a)Geometrisch: die orthogonalen Richtungen maximaler Varianz der zentrierten Daten
+(neues, gedrehtes Koordinatensystem). Algebraisch: die Eigenvektoren der
+Kovarianzmatrix ; die zugeh├Ârigen Eigenwerte sind die Varianzen entlang dieser
+Richtungen. Die transformierten Merkmale sind unkorreliert , und jeder Merkmalsvektor
+l├ñsst sich als Linearkombination der Eigenvektoren darstellen.
+(b)Die PCA maximiert Varianz, Merkmale mit gro├ƒen Zahlenwerten (z.B. Einkommen in
+Euro) dominieren die Kovarianzmatrix unabh├ñngig von ihrem Informationsgehalt.
+Merkmale mit kleiner Streuung werden ÔÇ×plattgemachtÔÇ£,
+selbst wenn sie trennwirksam sind. Daher vorher Standardisierung (z-Score).
+(c)H├ÂchstensN= 40Eigenwerte╠©= 0(Rang der Datenmatrix ist durch die Anzahl der
+Beispiele beschr├ñnkt). Problem: Chat10 3042Ôëê1,06┬À108Eintr├ñge,
+Speicher/Numerik-Probleme, Singularit├ñten durch d├╝nne Besetzung.
+Ausweg: Singul├ñrwertzerlegung (SVD) der Datenmatrix Gstatt Eigenzerlegung von C.
+(d)Vorteile: Dimensionsreduktion, Rauschreduktion, unkorrelierte Features (oft bessere
+Modelle), bessere Visualisierung (zus├ñtzlich: Kompression). Nachteile: setzt lineare
+Zusammenh├ñnge voraus; empfindlich gegen├╝ber Ausrei├ƒern undSkalierung ;
+Hauptkomponenten inhaltlich schwer interpretierbar;
+Trainingsmenge muss repr├ñsentativ sein.
+14
+
+--- Page 16 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+Aufgabe 3.4 Vorlesungs├╝bung Preisach, ausgearbeitet ┬ÀKernel-Matrix
+Gegeben die Datenpunkte Ôâù g1=/parenleftbig1
+0/parenrightbig,Ôâù g2=/parenleftbig0
+1/parenrightbig,Ôâù g3=/parenleftbig1
+1/parenrightbig.
+(a) Berechnen Sie die Kernelmatrix Kf├╝r denlinearen Kernelk(Ôâù u,Ôâù v) =Ôâù uTÔâù v.
+(b) Welche Dimension hat Kallgemein (bei NPunkten in Rd),
+und worin unterscheidet sie sich von der Kovarianzmatrix?
+(c) Erkl├ñren Sie den Kernel-Trick in zwei S├ñtzen. Warum berechnet man ¤ònie explizit?
+(d) Geben Sie die Formeln des polynomiellen und des RBF-Kernels an.
+Was ist der Spezialfall des polynomiellen Kernels mit c= 0,r= 1?
+L├Âsung
+(a)Kij=Ôâù gT
+iÔâù gj:
+K=´ú½
+´ú¼´ú¼´ú¡1 0 1
+0 1 1
+1 1 2´úÂ
+´úÀ´úÀ´ú©
+(z.B.K13= 1┬À1 + 0┬À1 = 1,K33= 1 + 1 = 2 .)
+(b)KÔêêRN├ùN, ein Eintrag pro Punktepaar ; die Kovarianzmatrix ist d├ùd
+(ein Eintrag pro Merkmalspaar ). Bei der Kernel-PCA wird deshalb
+die (N├ùN) Kernelmatrix zentriert und zerlegt.
+(c)Statt die Daten explizit mit einer nichtlinearen Abbildung ¤òin einen
+h├Âherdimensionalen Raum zu transformieren, ersetzt man ├╝berall das Skalarprodukt durch
+eine Kernelfunktion k(Ôâù u,Ôâù v) =¤ò(Ôâù u)T¤ò(Ôâù v), die dieses Skalarprodukt direktliefert. Das ist
+erheblich effizienter, der Zielraum kann sogar unendlichdimensional sein (RBF), explizites
+¤òw├ñre unm├Âglich.
+(d)Polynomiell: k(Ôâù u,Ôâù v) = (Ôâù uTÔâù v+c)r; RBF/Gau├ƒ: k(Ôâù u,Ôâù v) =eÔêÆÔêÑÔâù uÔêÆÔâù vÔêÑ2/(2¤â2)=eÔêÆ╬│ÔêÑÔâù uÔêÆÔâù vÔêÑ2.
+Spezialfallc= 0,r= 1: derlineare Kernel =gew├Âhnliches Skalarprodukt
+(keine ├änderung gegen├╝ber der normalen PCA).
+15
+
+--- Page 17 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+Teil II
+Aufgaben zum Teil Janka
+Lineare Modelle ┬ÀNeuronale Netze ┬ÀCNN & Autoencoder
+4 Lineare Regression
+Strategie & typische Fehler
+Rezept ÔÇ×Loss aufstellenÔÇ£: pro Datenpunkt eine Klammer/parenleftbigyiÔêÆ(w0+w1xi1+w2xi2)/parenrightbig2,
+alles summieren, Faktor1
+Ndavor. Kategorische Features als 0/1 kodieren
+und die Kodierung hinschreiben .
+Typische Fehler:1
+Nvergessen; Kodierung nicht angegeben;
+bei ÔÇ×w0weglassenÔÇ£ trotzdem w0hingeschrieben;
+Feature- und Labelspalte verwechselt (SS23: Features sind die Vorjahres ums├ñtze!).
+Aufgabe 4.1 Klausur SS22, A1, abgewandelt ┬ÀVorhersage + Loss
+Ein Modell sagt das Jahreseinkommen [T Ôé¼] von Angestellten vorher aus
+x1=Betriebszugeh├Ârigkeit [Monate] und x2=Hochschulabschluss (0 =nein, 1 =ja).
+Lineare Regression ergab w0= 25,w1= 0,1,w2= 15.
+(a) Vorhersage f├╝r eine Angestellte mit Abschluss und 20 Monaten Zugeh├Ârigkeit?
+(b) Stellen Sie die Least-Squares-Verlustfunktion f├╝r folgenden Datensatz auf
+und werten Sie sie f├╝r die gegebenen Parameter aus:
+Zugeh├Ârigkeit [Mon.] Abschluss Gehalt [T Ôé¼]
+P1 20 ja 43
+P2 62 ja 65
+P3 30 nein 32
+(c) Wie pr├╝ft man mathematisch, ob die gegebenen Parameter optimal sind
+(kein Ausrechnen verlangt)?
+16
+
+--- Page 18 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+L├Âsung
+(a)╦åy= 25 + 0,1┬À20 + 15┬À1 = 42ÔçÆdas Modell sagt 42 000 Ôé¼Jahresgehalt vorher.
+(b)Kodierung ja = 1, nein = 0:
+L(w0,w1,w2) =1
+3/bracketleft´ú¼ig/parenleftbig43ÔêÆ(w0+20w1+w2)/parenrightbig2+/parenleftbig65ÔêÆ(w0+62w1+w2)/parenrightbig2+/parenleftbig32ÔêÆ(w0+30w1)/parenrightbig2/bracketright´ú¼ig
+Auswertung mit (25,0,1,15): Vorhersagen 42,46,2,28; Residuen 1,18,8,4:
+L=1
+3/parenleftbig12+ 18,82+ 42/parenrightbig=1
+3(1 + 353,44 + 16) =370,44
+3Ôëê123,5
+(Hinweis: Die offizielle Musterl├Âsung gibt 214,48an, dieser Wert l├ñsst sich mit den
+angegebenen Zahlen nicht reproduzieren (Rechenfehler in der Musterl├Âsung).
+Nachrechnen ergibt 370,44/3 = 123,48.
+Bewertet wird ohnehin prim├ñr der korrekte Aufbau der Verlustfunktion.)
+(c)Notwendige Optimalit├ñtsbedingung pr├╝fen:
+DerGradient der Verlustfunktion muss verschwinden ,
+d.h. alle partiellen AbleitungenÔêéL
+Ôêéw0=ÔêéL
+Ôêéw1=ÔêéL
+Ôêéw2= 0, kompaktÔêçL(w0,w1,w2) =0.
+Aufgabe 4.2 Klausur SS23, A1, abgewandelt ┬ÀLoss mit Zeitreihen-Features
+Eine Firma sagt den Jahresumsatz aus den Ums├ñtzen der beiden Vorjahre vorher
+(x1=Vorjahr,x2=vorletztes Jahr; ohne w0). Umsatzhistorie:
+Jahr 2017 2018 2019 2020 2021
+Umsatz [M Ôé¼]30 45 50 57 60
+(a) Welche Trainingspaare (xi,yi)entstehen aus dieser Tabelle?
+(b) Stellen Sie die Least-Squares-Verlustfunktion auf.
+(c) Beschreiben Sie den allgemeinen Entwicklungsprozess
+eines Supervised-Learning-Modells in vier Schritten.
+L├Âsung
+(a)Eine Vorhersage braucht zwei zur├╝ckliegende Jahre, erst ab 2019 m├Âglich:
+/parenleftbig(45,30),50/parenrightbig,/parenleftbig(50,45),57/parenrightbig,/parenleftbig(57,50),60/parenrightbig
+(b)
+L(w1,w2) =1
+3/bracketleft´ú¼ig/parenleftbig50ÔêÆ(45w1+ 30w2)/parenrightbig2+/parenleftbig57ÔêÆ(50w1+ 45w2)/parenrightbig2+/parenleftbig60ÔêÆ(57w1+ 50w2)/parenrightbig2/bracketright´ú¼ig
+(c)
+(1) Feature-Label-Paare (xi,yi)sammeln;
+(2) Split in Trainings- und Testdaten;
+(3) Training auf den Trainingsdaten: Funktion fmitf(xi)Ôëêyisuchen ( =Loss
+minimieren);
+(4) Evaluation auf den Testdaten mit geeigneter Metrik (z.B. RMSE, R2).
+17
+
+--- Page 19 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+Aufgabe 4.3 Klausur WS23/24, A1, abgewandelt ┬ÀLoss mit kategorischem Feature
+Heizenergieverbrauch [kWh] eines B├╝rogeb├ñudes aus Au├ƒentemperatur [ ┬░C]
+und Nutzung (wenige/viele Personen):
+TagTemperatur Nutzung Verbrauch
+1 4 wenige 800
+2 6 viele 700
+3ÔêÆ1 wenige 1000
+Stellen Sie die Least-Squares-Verlustfunktion f├╝r ein
+gew├Âhnliches lineares Regressionsmodell auf (Kodierung angeben!).
+L├Âsung
+Kodierung: x2= 0f├╝r ÔÇ×wenigeÔÇ£, x2= 1f├╝r ÔÇ×vieleÔÇ£ Personen.
+L(w0,w1,w2) =1
+3/bracketleft´ú¼ig/parenleftbig800ÔêÆ(w0+ 4w1)/parenrightbig2+/parenleftbig700ÔêÆ(w0+ 6w1+w2)/parenrightbig2+/parenleftbig1000ÔêÆ(w0ÔêÆw1)/parenrightbig2/bracketright´ú¼ig
+Achtung: Bei Tag 3 ist die Temperatur negativ, w1┬À(ÔêÆ1)sauber einsetzen.
+Aufgabe 4.4 Eigene Aufgabe┬ÀG├╝tema├ƒe und Bias-Variance
+Ein Regressionsmodell liefert auf dem Testdatensatz die Vorhersagen ╦åy= (10,14,8)
+bei echten Werten y= (12,14,4); der Mittelwert der echten Werte ist ┬»y= 10.
+(a) Berechnen Sie MSE, RMSE und MAE.
+(b) Berechnen Sie R2und interpretieren Sie den Wert.
+(c) Modell A hat Trainings- R2= 0,97/ Test-R2= 0,55;
+Modell B hat 0,78/0,74. Diagnostizieren Sie beide Modelle (Bias/Variance)
+und nennen Sie je zwei Ma├ƒnahmen.
+18
+
+--- Page 20 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+L├Âsung
+(a)Residuen: (12ÔêÆ10,14ÔêÆ14,4ÔêÆ8) = (2,0,ÔêÆ4).
+MSE =4 + 0 + 16
+3=20
+3Ôëê6,67RMSE =/radicalbig
+6,67Ôëê2,58MAE =2 + 0 + 4
+3= 2
+(b)RSS = 20;TSS = (12ÔêÆ10)2+ (14ÔêÆ10)2+ (4ÔêÆ10)2= 4 + 16 + 36 = 56 .
+R2= 1ÔêÆ20
+56Ôëê0,64
+Das Modell erkl├ñrt rund 64% der Varianz der Zielvariablen, deutlich besser als die
+Mittelwert-Vorhersage ( R2= 0), aber nicht perfekt ( R2= 1).
+(c) Modell A: Overfitting (hohe Variance), gro├ƒer Abstand Training/Test.
+Ma├ƒnahmen: mehr/diversere Daten, Komplexit├ñt reduzieren,
+Regularisierung (Ridge/Lasso), Kreuzvalidierung zur Modellwahl.
+Modell B: gut generalisierend , leichter Bias, Training und Test nah beieinander.
+Falls die G├╝te insgesamt nicht reicht (Underfitting): Komplexit├ñt erh├Âhen,
+z.B. nichtlineare Features erg├ñnzen oder flexibleres Modell w├ñhlen.
+5 Logistische Regression und Klassifikationsmetriken
+Strategie & typische Fehler
+Rezepte: Wahrscheinlichkeit =¤â(w0+wTx); Exponent sauber ausrechnen, Vorzeichen
+pr├╝fen (eÔêÆz!). ÔÇ×N├ñher an 0 oder 1?ÔÇ£: Vorzeichen des linearen Arguments zansehen
+(z>0ÔçÆ╦åy>0,5). 50%-Fragen: z= 0setzen. Metriken: erst TP/FP/FN/TN z├ñhlen, dann
+Br├╝che, unvereinfachte Br├╝che reichen oft.
+Typische Fehler: Minuszeichen im Exponenten verschlampt; Precision und Recall
+verwechselt (Merkhilfe: Re call=wie viele der echten Positiven abgerufen wurden).
+Aufgabe 5.1 Probeklausur SS22, A1, abgewandelt ┬ÀLogistische Regression komplett
+Vor einer Klausur wurden erhoben: x1=ÔÇ×Stunden gelerntÔÇ£,
+x2=ÔÇ×bisheriger NotendurchschnittÔÇ£; Label y= 1, falls Klausurnote <2,0.
+Logistische Regression ergab w0=ÔêÆ2,w1= 0,05,w2=ÔêÆ1.
+(a) Mit welcher Wahrscheinlichkeit erreicht ein Studierender mit 40 Lernstunden
+und Schnitt 2,3eine Note besser als 2,0?
+(b) Berechnen Sie den Log-Loss f├╝r den Datensatz/parenleftbig(40; 2,7),0/parenrightbig,/parenleftbig(5; 3,3),0/parenrightbig,/parenleftbig(40; 1,3),1/parenrightbig.
+(c) Wie viele Stunden m├╝sste der Studierende aus (a) lernen,
+um auf 50% Wahrscheinlichkeit zu kommen?
+19
+
+--- Page 21 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+L├Âsung
+(a)z=ÔêÆ2 + 0,05┬À40ÔêÆ2,3 =ÔêÆ2,3:
+╦åy=1
+1 +e2,3Ôëê1
+1 + 9,97Ôëê0,091ÔçÆÔëê 9,1 %
+(b)Vorhersagen:
+╦åy(1)=¤â(ÔêÆ2 + 2ÔêÆ2,7) =¤â(ÔêÆ2,7)Ôëê0,063;
+╦åy(2)=¤â(ÔêÆ2 + 0,25ÔêÆ3,3) =¤â(ÔêÆ5,05)Ôëê0,006;
+╦åy(3)=¤â(ÔêÆ2 + 2ÔêÆ1,3) =¤â(ÔêÆ1,3)Ôëê0,214.
+L=ÔêÆ1
+3/bracketleft´ú¼ig
+log(1ÔêÆ0,063) + log(1ÔêÆ0,006) + log(0 ,214)/bracketright´ú¼ig
+=ÔêÆ1
+3/bracketleftbigÔêÆ0,065ÔêÆ0,006ÔêÆ1,542/bracketrightbigÔëê0,54
+(F├╝ry= 0z├ñhlt log(1ÔêÆ╦åy), f├╝ry= 1z├ñhlt log ╦åy.)
+(c)¤â(z) = 0,5Ôçöz= 0:
+ÔêÆ2 + 0,05TÔêÆ2,3 = 0ÔçöT=4,3
+0,05= 86Stunden
+Aufgabe 5.2 Klausur WS25/26, A1, abgewandelt ┬ÀVorhersage + Einzel-Loss
+Unfallvorhersage an einer Kreuzung:
+x1=Niederschlag [mm], x2=Tageszeit (Tag = 1),x3=Schienen├╝berquerung (ja = 1);
+y= 1bei Unfall. Training ergab w0= 0,w1= 4,w2=ÔêÆ1,w3=ÔêÆ7.
+(a) Unfallwahrscheinlichkeit f├╝r: 2mm Niederschlag, Tag, Schienen├╝berquerung?
+(b) Welche Verlustfunktion wird beim Training verwendet? Berechnen Sie den Verlust
+f├╝r diese Beobachtung, wenn tats├ñchlich keinUnfall passierte.
+(c) Begr├╝nden Sie zweifach, warum die Sigmoid-Funktion verwendet wird.
+L├Âsung
+(a)z= 0 + 4┬À2ÔêÆ1┬À1ÔêÆ7┬À1 = 0:╦åy=¤â(0) =1
+1+e0= 0,5.
+(b) (Bin├ñre) Kreuzentropie / Log-Loss . F├╝ry= 0:
+Ôäô=ÔêÆlog(1ÔêÆ╦åy) =ÔêÆlog(0,5)Ôëê0,69
+(c)
+(1) Sie beschr├ñnkt die Ausgabe auf (0,1), interpretierbar als Wahrscheinlichkeit.
+(2) Sie ist stetig und differenzierbar, Training mit Gradientenverfahren m├Âglich
+(die Stufenfunktion des Perzeptrons w├ñre es nicht).
+20
+
+--- Page 22 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+Aufgabe 5.3 Klausur WS22/23, A1, abgewandelt ┬ÀSchwellwert und Precision
+Fahrradverleih: x1=Temperatur [ ┬░C],x2=Regen (ja = 1);
+y= 1, wennÔëÑ100R├ñder verliehen werden.
+Logistische Regression: w0=ÔêÆ15,w1= 1,w2=ÔêÆ0,1.
+(a) Welche Wahrscheinlichkeit berechnet das Modell f├╝r einen regenfreien Tag mit 8 ┬░C?
+Liegt die Vorhersage n├ñher an 0 oder 1?
+(b) Bei welcher Temperatur (ohne Regen) liegt die Wahrscheinlichkeit bei genau 50%?
+(c) Nennen Sie eine einfache M├Âglichkeit, die Precision des Modells zu erh├Âhen,
+und erkl├ñren Sie den Mechanismus.
+L├Âsung
+(a)z=ÔêÆ15 + 8 =ÔêÆ7:╦åy=1
+1+e7Ôëê0,0009, deutlich n├ñher an 0(z<0ÔçÆ╦åy<0,5).
+(b)ÔêÆ15 +x1= 0ÔçÆx1= 15┬░C.
+(c)DenSchwellwert B(Default 0,5)erh├Âhen : Das Modell sagt nur noch bei sehr hoher
+Sicherheit ÔÇ×positivÔÇ£. Dadurch sinkt die Zahl der False Positives,
+und Precision =TP
+TP+FPsteigt
+(auf Kosten des Recalls, es werden mehr echte Positive verpasst).
+Aufgabe 5.4 Klausur WS25/26, A2, abgewandelt + erweitert ┬ÀKonfusionsmatrix
+Ein bin├ñrer Klassifikator liefert auf 10 Testbeispielen:
+echt 1echt 0
+Vorhersage 1 2 2
+Vorhersage 0 3 3
+(a) Berechnen Sie Accuracy, Precision, Recall und False Positive Rate.
+(b) Erkl├ñren Sie den Unterschied zwischen Precision und Recall
+und welche Fehlklassifikationen jeweils relevant sind.
+(c) Nennen Sie je ein Anwendungsbeispiel mit hoher Relevanz f├╝r Recall bzw. Precision
+(mit Begr├╝ndung).
+(d) Warum kann bei stark unausgewogenen Klassen (99,9% negativ)
+die Accuracy in die Irre f├╝hren?
+21
+
+--- Page 23 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+L├Âsung
+(a)TP= 2,FP= 2,FN= 3,TN= 3:
+Accuracy =2 + 3
+10= 0,5Precision =2
+2 + 2= 0,5
+Recall =2
+2 + 3= 0,4FPR =2
+2 + 3= 0,4
+(b) Precision : Anteil der als positiv klassifizierten Beispiele,
+die tats├ñchlich positiv sind,
+sensibel gegen├╝ber False Positives .
+Recall: Anteil der tats├ñchlich positiven Beispiele,
+die das Modell findet,
+sensibel gegen├╝ber False Negatives .
+(c)Recall: medizinische Diagnostik (Krebsfr├╝herkennung),
+ein ├╝bersehener Kranker (FN) hat schwerwiegende Folgen.
+Precision : Spam-Filter,
+eine wichtige Mail f├ñlschlich im Spam-Ordner (FP)
+ist teurer als gelegentlicher durchgerutschter Spam.
+(d)Der Trivialklassifikator ÔÇ×immer negativÔÇ£ erreicht dort 99,9 %Accuracy, erkennt aber
+keinen einzigen positiven Fall (Recall = 0). Accuracy allein ist bei unausgewogenen
+Klassen ungeeignet, Precision/Recall (oder F1) betrachten.
+Aufgabe 5.5 Eigene Aufgabe┬ÀSoftmax und Mehrklassen-Konfusionsmatrix
+(a) Ein Netz liefert f├╝r 3 Klassen die Scores z= (2,0,ÔêÆ1)T.
+Berechnen Sie softmax (z)(gerundet auf 2 Stellen)
+und die vorhergesagte Klasse.
+(b) Begr├╝nden Sie kurz, warum Softmax-Ausgaben
+als Wahrscheinlichkeitsverteilung gelten d├╝rfen.
+(c) Wettervorhersage mit 3 Klassen,
+Konfusionsmatrix (Zeilen =Vorhersage, Spalten =echt):
+Regen Schnee Sonne
+Regen 70 10 10
+Schnee 20 90 5
+Sonne 10 20 60
+Berechnen Sie die Accuracy sowie Recall f├╝r ÔÇ×SchneeÔÇ£ und ÔÇ×SonneÔÇ£.
+22
+
+--- Page 24 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+L├Âsung
+(a)e2Ôëê7,39,e0= 1,eÔêÆ1Ôëê0,37; SummeÔëê8,76:
+softmax (z)Ôëê(0,84,0,11,0,04)T
+Vorhersage: Klasse 1
+(gr├Â├ƒter Score bleibt gr├Â├ƒte Wahrscheinlichkeit, Softmax ist ordnungserhaltend).
+(b)Alle Komponenten liegen in (0,1)(Exponentialfunktion ist positiv)
+und summieren sich per Konstruktion (Normierung durch/summationtext
+jezj) zu 1.
+(c)N= 295; Diagonale = 70 + 90 + 60 = 220 :
+Accuracy =220
+295Ôëê0,75
+Recall(ÔÇ×SchneeÔÇ£) =90
+10+90+20= 0,75(Spaltensumme!);
+Recall(ÔÇ×SonneÔÇ£) =60
+10+5+60= 0,80.
+6 Regularisierung, Hyperparametersuche, Generalisierung
+Strategie & typische Fehler
+Rezept ÔÇ×Modelle z├ñhlenÔÇ£:
+(1) Testset abziehen ÔåÆTrainingsmenge;
+(2) Anzahl Kandidaten =(╬╗-Werte)├ù(Verfahren);
+(3) malkbeik-facher CV; Trainingsgr├Â├ƒe pro Lauf =kÔêÆ1
+kder Trainingsmenge;
+(4)+ 1finales Modell auf der ganzen Trainingsmenge nicht vergessen!
+Standardantwort Regularisierung (kam in allen 5 Klausuren):
+Ziel ist es, Overfitting (zu starkes Anpassen an die Trainingsdaten) zu vermeiden;
+erreicht wird das, indem beim Training die Modellflexibilit├ñt eingeschr├ñnkt wird.
+Aufgabe 6.1 Klausur SS22, A2, abgewandelt ┬ÀRegularisierung + Gittersuche
+(a) Was ist das Ziel von Regularisierung und wie wird es im Allgemeinen erreicht?
+(b) Nennen Sie zwei M├Âglichkeiten zur Regularisierung von neuronalen Netzen.
+(c) Warum benutzt man zur Hyperparametersuche nicht die Testdaten,
+sondern einen separaten Validierungsdatensatz?
+(d) 10000 Datenpunkte, davon 40% als Testset.
+Gittersuche ├╝ber 10 Werte f├╝r ╬╗, jeweils f├╝r Lasso undRidge,
+mit 3-facher Kreuzvalidierung:
+Wie viele Modelle mit jeweils wie vielen Datenpunkten werden trainiert?
+23
+
+--- Page 25 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+L├Âsung
+(a)Ziel:Overfitting vermeiden (zu starkes Anpassen an die Trainingsdaten). Erreicht
+wird das, indem beim Training die Modellflexibilit├ñt eingeschr├ñnkt wird
+(z.B. Strafterm auf gro├ƒe Koeffizienten).
+(b)Zwei aus:Ôäô1-/Ôäô2-Strafterm (Weight Decay), Dropout ,Early Stopping
+(SGD mit kleiner Batchgr├Â├ƒe, problemabh├ñngig).
+(c)Wer Hyperparameter anhand des Testfehlers w├ñhlt, optimiert implizit auf die
+Testdaten, der Testfehler wird ein zu optimistischer Sch├ñtzer ( Overfitting auf die
+Testdaten ). Das Validierungsset ├╝bernimmt die Auswahl,
+die Testdaten bleiben f├╝r die finale, unverzerrte Bewertung.
+(d)Trainingsmenge: 60 % = 6 000 Punkte. Kandidaten: 10┬À2 = 20; mit 3-facher CV:
+20┬À3 =60Modelle mit je2
+3┬À6 000 = 4 000Trainingspunkten.
+Danach1 finales Modell mit dem besten Hyperparameter auf allen 6 000Punkten.
+Aufgabe 6.2 Klausur WS22/23, A2, abgewandelt ┬ÀGittersuche-Variante + Early Stopping
+(a) 10000 Datenpunkte, 50% Testset. Gittersuche: Ôäô1- vs.Ôäô2-Regularisierung, je 4 Werte
+f├╝r╬╗, 5-fache Kreuzvalidierung. Wie viele Modelle mit wie vielen Punkten?
+(b) Wof├╝r wird Early Stopping eingesetzt? Beschreiben Sie das Vorgehen.
+L├Âsung
+(a)Trainingsmenge 5 000. Kandidaten 2┬À4 = 8; mit 5-facher CV: 8┬À5 =40Modelle mit
+je4
+5┬À5 000 = 4 000Punkten; plus 1 finales Modell auf5 000Punkten.
+(b)Early Stopping ist eine Regularisierungstechnik beim Training neuronaler Netze.
+W├ñhrend des (stochastischen) Gradientenverfahrens beobachtet man Trainings- und
+Validierungs-/Testfehler: Anfangs sinken beide; ab einem Punkt steigt der
+Validierungsfehler wieder, obwohl der Trainingsfehler weiter f├ñllt, ein Zeichen f├╝r
+beginnendes Overfitting. Man stoppt dann das Verfahren und l├ñdt die
+zwischengespeicherten Koeffizienten der Iteration mit dem geringsten Validierungsfehler.
+Aufgabe 6.3 Probeklausur SS22, A2c, abgewandelt ┬ÀValidierungsset vs. CV
+10000 Datenpunkte f├╝r eine regularisierte lineare Regression, 20% als Testset.
+Getestet werden 4 Werte f├╝r ╬╗, jeweils f├╝r Lasso und Ridge.
+(a) Ansatz Validierungsset : 25% der Trainingsdaten als Validierungsmenge.
+Wie viele Modelle mit wie vielen Punkten?
+(b) Ansatz 5-fache Kreuzvalidierung (statt festem Validierungsset):
+Wie viele Modelle mit wie vielen Punkten?
+(c) Nenne Pro und Contra der Kreuzvalidierung gegen├╝ber dem festen Validierungsset.
+24
+
+--- Page 26 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+L├Âsung
+(a)Trainingsmenge 8 000; davon 25 % = 2 000 ValidierungÔçÆ6 000zum Trainieren.
+Kandidaten 4┬À2 = 8ÔçÆ8 Modelle ├á6 000Punkte
++1 finales Modell auf8 000Punkten.
+(b)8┬À5 =40Modelle mit je4
+5┬À8 000 = 6 400Punkten
++1 finales Modell auf8 000Punkten.
+(c)Vorteil:stabilere Fehlersch├ñtzung, jeder Punkt ist genau einmal Validierungspunkt,
+der Einfluss der zuf├ñlligen Aufteilung sinkt. Nachteil:k-fache Rechenzeit.
+Aufgabe 6.4 Klausuren SS23 A2 / WS23/24 A2 / WS25/26 A3, kombiniert ┬ÀRidge vs. Lasso,
+Bias-Variance
+(a) Nennen Sie eine M├Âglichkeit, ein linearesModell zu regularisieren,
+und einen typischen Umstand, der das n├Âtig macht.
+(b) Welche beiden Nachteile entstehen durch die Regularisierung eines linearen Modells?
+(c) Erl├ñutern Sie die Unterschiede zwischen Ridge- und Lasso-Regression
+(Norm, Wirkung auf die Parameter).
+(d) Erkl├ñren Sie den Bias-Variance-Tradeoff und den Einfluss der Modellkomplexit├ñt.
+(e) Beschreiben Sie die Rollen von Trainings-, Validierungs-
+und Testdaten bei der Hyperparametersuche.
+25
+
+--- Page 27 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+L├Âsung
+(a)Addition eines Strafterms ( Ôäô1oderÔäô2) zur Verlustfunktion.
+N├Âtig z.B., wenn es mehr Features als Datenpunkte gibt
+oder bei polynomiellen Features / One-Hot-Encoding mit vielen Auspr├ñgungen.
+(b)
+(1) Die Modellg├╝te auf den Trainingsdaten wird schlechter
+(bewusst eingeschr├ñnkte Flexibilit├ñt);
+(2) die Parameter sind nicht mehr direkt interpretierbar
+(geschrumpfte Koeffizienten spiegeln nicht mehr den ÔÇ×wahrenÔÇ£ Einfluss wider).
+(c)Beide addieren einen Strafterm zum empirischen Fehler.
+Ridgebestraft die quadrierte Ôäô2-NormÔêÑwÔêÑ2
+2:
+alle Koeffizienten werden verkleinert , aber selten exakt Null.
+Lassobestraft die Ôäô1-NormÔêÑwÔêÑ1:
+viele Koeffizienten werden exakt Null , sp├ñrliches Modell,
+automatische Featureauswahl .
+(d) Bias =systematischer Fehler durch zu starke Modellannahmen; Varianz =
+Empfindlichkeit des gelernten Modells gegen├╝ber den (zuf├ñlligen) Trainingsdaten. Mit
+steigender Komplexit├ñt sinkt der Bias, die Varianz steigt (Richtung Overfitting); mit
+sinkender Komplexit├ñt (z.B. st├ñrkere Regularisierung) steigt der Bias,
+die Varianz sinkt (Richtung Underfitting).
+Gesucht ist der Sweet Spot mit minimalem Generalisierungsfehler.
+(e)
+Training : Modell f├╝r jede Hyperparameter-Kombination fitten.
+Validierung : Leistung vergleichen
+und beste Kombination ausw├ñhlen.
+Test: erst ganz am Ende einmalig die endg├╝ltige Modellleistung messen,
+unverzerrte Sch├ñtzung des Generalisierungsfehlers.
+Aufgabe 6.5 Eigene Aufgabe┬ÀData Leakage
+Beurteilen Sie f├╝r jedes Szenario, ob Data Leakage vorliegt,
+und geben Sie die Abhilfe an:
+(a) R├Ântgenbilder mehrerer Patienten werden zuf├ñllig bildweise in Training und Test
+gesplittet; von manchen Patienten liegen mehrere Bilder vor.
+(b) F├╝r die Vorhersage des Jahreseinkommens (USD)
+ist das Feature MonthlySalaryGBP enthalten.
+(c) Bei der Kreditvergabe wird das Feld LatePaymentReminders als Feature genutzt.
+(d) Die Z-Score-Standardisierung wird vor dem Train-Test-Split
+auf dem Gesamtdatensatz berechnet.
+26
+
+--- Page 28 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+L├Âsung
+(a) Leakage (schlechter Split): Dieselben Patienten tauchen in Training und Test auf,
+das Modell kann Patienteneigenheiten wiedererkennen.
+Abhilfe: nach Patienten splitten, nicht nach Bildern.
+(b) Leakage (Stellvertreter-Label): Das Monatsgehalt ist eine (lineare) Funktion
+des Labels, perfekte, aber wertlose Vorhersage.
+Abhilfe: Label-Duplikate/Stellvertreter entfernen.
+(c) Leakage (Zukunftsinformation): Mahnungen existieren zum Zeitpunkt der
+Kreditvergabe noch nicht; das Feld wird erst sp├ñter bef├╝llt.
+Abhilfe: Spalte l├Âschen, nur Informationen verwenden,
+die zum Vorhersagezeitpunkt verf├╝gbar sind.
+(d) Leakage (Vorverarbeitung): ┬»xund¤âenthalten Information aus den Testdaten.
+Abhilfe: Skalierungsparameter nur auf den Trainingsdaten bestimmen
+und dann auf beide Mengen anwenden.
+7 Neuronale Netze: Forward-Pass und SGD
+Strategie & typische Fehler
+Rezept Forward-Pass: Pro verdecktem Neuron: gewichtete Summe der Eing├ñnge +
+Bias, dann ReLU ( = max(0,┬À)); Ergebnisse mit den Output-Gewichten summieren ( +
+Output-Bias). Bei Matrizenform: Zeile ivonW[1]=Gewichte,
+diezumi-ten Neuron f├╝hren.
+Typische Fehler: ReLU auf negative Summe nicht angewendet ( max(0,ÔêÆ3) = 0, nicht
+ÔêÆ3!); Bias vergessen; bei der Funktionsformel Terme mit Gewicht 0 mitgeschleppt.
+SGD-Dimensionen: Summanden =N; Gradientendimension =Anzahl Parameter
+(immer, auch bei Minibatch!); Updates =Epochen├ùN/m.
+Aufgabe 7.1 Klausur SS22, A3, abgewandelt ┬ÀForward-Pass ohne Bias
+Ein Netz hat 2 Eing├ñnge (x1,x2), eine verdeckte Schicht mit 3 ReLU-Neuronen (ohne Bias)
+und ein lineares Output-Neuron (ohne Bias, keine Aktivierung).
+Gewichte:
+W[1]=´ú½
+´ú¼´ú¼´ú¡1 0
+2 0
+ÔêÆ1 3´úÂ
+´úÀ´úÀ´ú©W[2]=/parenleft´ú¼ig
+ÔêÆ2 0 1/parenright´ú¼ig
+(a) Welche Funktion berechnet das Netz f├╝r beliebiges (x1,x2)T?
+(b) Welchen Wert liefert das Netz f├╝r (x1,x2) = (ÔêÆ1,2)?
+(c) Wie m├╝sste die Ausgabeschicht modifiziert werden, um das Netz auf
+Klassifikationsprobleme mit KKlassen anzuwenden?
+27
+
+--- Page 29 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+L├Âsung
+(a)Verdeckte Neuronen: a1= max(0, x1),a2= max(0,2x1),a3= max(0,ÔêÆx1+ 3x2).
+Output:
+f(x1,x2) =ÔêÆ2 max(0, x1) + 0┬Àmax(0,2x1) + 1┬Àmax(0,ÔêÆx1+ 3x2)
+=ÔêÆ2 max(0, x1) + max(0,ÔêÆx1+ 3x2)
+(b)
+f(ÔêÆ1,2) =ÔêÆ2 max(0,ÔêÆ1)/bracehtipupleft/bracehtipdownright/bracehtipdownleft/bracehtipupright
+=0+ max(0,1 + 6) = 0 + 7 = 7
+(c)Ausgabeschicht mit KNeuronen statt einem; als Aktivierung die
+Softmax-Funktion , die dieKScores in eine Wahrscheinlichkeitsverteilung transformiert.
+Aufgabe 7.2 Klausur SS23, A3a, abgewandelt ┬ÀForward-Pass mit Bias
+Wie zuvor, aber: die verdeckten Neuronen haben jeweils Bias ÔêÆ1,
+das Output-Neuron Bias +1.
+Gewichte:
+W[1]=´ú½
+´ú¼´ú¼´ú¡1 0
+2 0
+ÔêÆ1 3´úÂ
+´úÀ´úÀ´ú©W[2]=/parenleft´ú¼ig
+ÔêÆ2ÔêÆ1 1/parenright´ú¼ig
+Welchen Wert liefert das Netz f├╝r (x1,x2) = (ÔêÆ1,2)?
+L├Âsung
+Verdeckte Schicht (ReLU nach Summe inklusive Bias):
+a1= max(0,1┬À(ÔêÆ1) + 0┬À2ÔêÆ1) = max(0 ,ÔêÆ2) = 0
+a2= max(0,2┬À(ÔêÆ1) + 0┬À2ÔêÆ1) = max(0 ,ÔêÆ3) = 0
+a3= max(0,ÔêÆ1┬À(ÔêÆ1) + 3┬À2ÔêÆ1) = max(0 ,6) = 6
+Output: ╦åy=ÔêÆ2┬À0ÔêÆ1┬À0 + 1┬À6 + 1 = 7 (Originalzahlen der Klausur ergeben 6,
+Mechanik identisch: Bias in die Summe, ReLU, dann Output-Bias addieren.)
+28
+
+--- Page 30 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+Aufgabe 7.3 Klausur WS23/24, A3, abgewandelt ┬ÀMatrizen ablesen + 2 Output-Neuronen
+Gegeben ein Netz: 2 Eing├ñnge, verdeckte Schicht mit 3 ReLU-Neuronen,
+Ausgabeschicht mit 2linearen Neuronen (alle ohne Bias).
+Kanten: Neuron 1 erh├ñlt 1┬Àx1;
+Neuron 2 erh├ñltÔêÆ2┬Àx1;
+Neuron 3 erh├ñltÔêÆ1┬Àx1+ 3┬Àx2.
+Output 1 =ÔêÆ2a1ÔêÆa2+ 3a3; Output 2 = 4a3.
+(a) Geben Sie die Koeffizientenmatrizen W[1],W[2]an.
+(b) Berechnen Sie die Ausgabe f├╝r (x1,x2) = (2,1).
+(c) Wie erweitert man das Netz f├╝r ein Mehrklassen-Klassifizierungsproblem?
+L├Âsung
+(a)Zeile =Ziel-Neuron, Spalte =Eingang:
+W[1]=´ú½
+´ú¼´ú¼´ú¡1 0
+ÔêÆ2 0
+ÔêÆ1 3´úÂ
+´úÀ´úÀ´ú©W[2]=/parenleft´ú¼igg
+ÔêÆ2ÔêÆ1 3
+0 0 4/parenright´ú¼igg
+(b)
+Verdeckte Schicht: a1= max(0,2) = 2;a2= max(0,ÔêÆ4) = 0;a3= max(0,ÔêÆ2 + 3) = 1 .
+Output:
+╦åy=/parenleft´ú¼igg
+ÔêÆ2┬À2ÔêÆ1┬À0 + 3┬À1
+4┬À1/parenright´ú¼igg
+=/parenleft´ú¼igg
+ÔêÆ1
+4/parenright´ú¼igg
+(c)An die Ausgabeschicht eine Softmax-Funktion anh├ñngen, sie transformiert die
+Ausgaben in einen Vektor von Klassenwahrscheinlichkeiten
+(beiKKlassen:KOutput-Neuronen).
+Aufgabe 7.4 Klausur WS25/26, A4, abgewandelt ┬ÀVerschachtelte ReLU
+Ein Netz hat 3 Eing├ñnge, einverdecktes ReLU-Neuron
+mit Gewichten (2,3,ÔêÆ3)und Bias 2,
+sowie zwei ReLU-Output-Neuronen mit Gewichten ÔêÆ1bzw. 2(ohne Bias).
+(a) Geben Sie ╦åyals Formel f├╝r beliebiges (x1,x2,x3)Tan.
+(b) Berechnen Sie ╦åyf├╝r(1,1,1)T.
+(c) Was beobachtet man beim SGD, wenn die Lernrate zu gro├ƒ
+bzw. zu klein gew├ñhlt ist?
+29
+
+--- Page 31 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+L├Âsung
+(a)Mith= max/parenleftbig2x1+ 3x2ÔêÆ3x3+ 2,0/parenrightbig:
+╦åy=/parenleft´ú¼igg
+max(ÔêÆ1┬Àh,0)
+max(2┬Àh,0)/parenright´ú¼igg
+(b)h= max(2 + 3ÔêÆ3 + 2,0) = 4:
+╦åy=/parenleft´ú¼igg
+max(ÔêÆ4,0)
+max(8,0)/parenright´ú¼igg
+=/parenleft´ú¼igg
+0
+8/parenright´ú¼igg
+(Bemerkung: Output 1 ist f├╝r jedeEingabe 0
+oderÔêÆhÔëñ0vor ReLU, ein ÔÇ×totesÔÇ£ Neuron, sobald hÔëÑ0.)
+(c)Zu gro├ƒ: Verfahren wird instabil, springt ├╝ber das Minimum hinaus,
+die Kostenfunktion oszilliert oder divergiert .
+Zu klein: stabil, aber sehr langsame Konvergenz (viele Iterationen n├Âtig).
+Aufgabe 7.5 Klausuren SS23 A3b / WS23/24 A3d, kombiniert ┬ÀSGD-Dimensionen
+F├╝r ein bin├ñres Klassifikationsproblem liegen N= 10 000 Trainingsbeispiele
+mit je 200 Features vor.
+Das neuronale Netz hat 1000 Parameter und wird 25 Epochen
+mit stochastischem Gradientenabstieg trainiert.
+(a) Wie viele Summanden hat die Verlustfunktion?
+(b) Welche Dimension hat der Gradient der gesamten Verlustfunktion?
+(c) Welche Dimension hat der Gradient einer Minibatch (Batchgr├Â├ƒe 10)?
+(d) Wie oft wird der Parametervektor bei Minibatchgr├Â├ƒe 100 in 25 Epochen
+aktualisiert?
+(e) Wie oft beim klassischen (Batch-)Gradientenabstieg in 25 Epochen?
+(f) Warum benutzt man f├╝r NN-Training i.d.R. SGD statt Batch-Gradientenabstieg
+(zwei Gr├╝nde)?
+30
+
+--- Page 32 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+L├Âsung
+(a)N=10 000(ein Summand pro Trainingsbeispiel;
+die Featurezahl 200 ist hier irrelevant!).
+(b)1 000, der Gradient lebt im Parameterraum.
+(c)Ebenfalls 1 000, die Batchgr├Â├ƒe ├ñndert nur,
+wie viele Summanden in die Sch├ñtzung eingehen,
+nicht die Dimension.
+(d)Updates pro Epoche =10 000
+100= 100; gesamt 100┬À25 =2 500.
+(e)1 Update pro Epoche ÔçÆ25.
+(f)
+(1)Rechenzeit : SGD ist bei gro├ƒen Datens├ñtzen viel schneller
+(Kosten pro Schritt unabh├ñngig von N,
+Daten m├╝ssen nicht komplett in den Speicher).
+(2) SGD wirkt regularisierend : das Rauschen der wechselnden Teilsummen verhindert
+die Konvergenz in ein Minimum, das nur Eigenheiten der Trainingsdaten abbildet.
+Aufgabe 7.6 Eigene Aufgabe┬ÀParameter z├ñhlen + Konzepte
+(a) Ein vollvernetztes Netz hat die Architektur 784ÔåÆ128ÔåÆ64ÔåÆ10
+(mit Bias in jeder Schicht).
+Wie viele lernbare Parameter hat es insgesamt?
+(b) Warum muss die Aktivierungsfunktion nichtlinear sein?
+(c) Erkl├ñren Sie das Vanishing-Gradient-Problem (Ursache!)
+und nennen Sie zwei Gegenma├ƒnahmen.
+(d) Was besagt das Universal-Approximation-Theorem und was garantiert es nicht?
+31
+
+--- Page 33 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+L├Âsung
+(a)Pro Schicht: Neuronen ├ùEing├ñnge +Neuronen (Bias):
+128┬À784 + 128/bracehtipupleft/bracehtipdownright/bracehtipdownleft/bracehtipupright
+100 480+ 64┬À128 + 64/bracehtipupleft/bracehtipdownright/bracehtipdownleft/bracehtipupright
+8 256+ 10┬À64 + 10/bracehtipupleft/bracehtipdownright/bracehtipdownleft/bracehtipupright
+650= 109 386
+(b)Die Verkettung linearer Funktionen ist wieder linear,
+ohne nichtlineare Aktivierung kollabiert das ganze Netz zu einem einzigen linearen Modell,
+egal wie viele Schichten es hat.
+(c)Die Ableitung nach Gewichten vorderer Schichten ist ein Produkt der
+Aktivierungs-Ableitungen aller nachfolgenden Schichten (Kettenregel). Bei sigmoiden
+Funktionen ist ¤âÔÇ▓fast ├╝berall nahe Null (max. 0,25), das Produkt vieler kleiner Zahlen
+wird winzig, vordere Schichten lernen kaum noch.
+Gegenma├ƒnahmen: (Leaky) ReLUals Aktivierung,
+adaptive Lernraten (Adagrad, RMSProp, Adam),
+Vortrainieren von Schichten (z.B. mit Autoencodern).
+(d)Schon ein Netz mit einerverdeckten Schicht kann (mit gen├╝gend Neuronen)
+jede stetige Funktion beliebig genau approximieren,
+also jedes Regressions-/Klassifikationsproblem mit stetiger Modellfunktion darstellen.
+Es garantiert nicht, dass man die Gewichte effizient findenkann,
+und sagt nichts ├╝ber die n├Âtige Neuronenzahl oder die Generalisierung.
+8 Backpropagation
+Strategie & typische Fehler
+Rezept (immer gleich):
+(1) Graph: jede elementare Operation ein Knoten ximit Funktionsdefinition ;
+(2) Vorw├ñrtsphase: Werte aller Knoten an der gegebenen Stelle;
+(3) R├╝ckw├ñrtsphase: ┬»xN= 1, dann r├╝ckw├ñrts ┬»xi=/summationtext
+jKind┬»xj┬ÀÔêéxj/Ôêéxi,
+Werte aus der Vorw├ñrtsphase einsetzen!
+Typische Fehler:
+bei Verzweigungen (ein Knoten hat mehrere Kinder) die Summe vergessen;
+Ableitungen symbolisch statt numerisch eingesetzt;
+sin/cos-Vorzeichen (d
+dxcosx=ÔêÆsinx).
+Aufgabe 8.1 Klausur SS22, A4, abgewandelt ┬Àf(x,y) =x2ey
+Gegebenf(x,y) =x2exp(y).
+(a) Stellen Sie den Berechnungsgraphen auf (Knoten ximit Funktionsdefinition).
+(b) Vorw├ñrtsphase: Berechnen Sie f(2,0)mit allen Zwischenergebnissen.
+(c) R├╝ckw├ñrtsphase: Berechnen Sie Ôêçf(2,0)mit allen Adjungierten ┬»xi.
+32
+
+--- Page 34 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+L├Âsung
+(a)x1=x;x2=y;x3=x2
+1;x4= exp(x2);x5=x3┬Àx4(Output).
+(b)x1= 2;x2= 0;x3= 4;x4=e0= 1;x5= 4┬À1 = 4.
+(c)
+┬»x5= 1
+┬»x4= ┬»x5┬ÀÔêéx5
+Ôêéx4= 1┬Àx3= 4
+┬»x3= ┬»x5┬ÀÔêéx5
+Ôêéx3= 1┬Àx4= 1
+┬»x2= ┬»x4┬ÀÔêéx4
+Ôêéx2= 4┬Àex2= 4
+┬»x1= ┬»x3┬ÀÔêéx3
+Ôêéx1= 1┬À2x1= 4
+Ôêçf(2,0) = (4,4)Probe:Ôêéxf= 2xey= 4;Ôêéyf=x2ey= 4Ô£ô
+Aufgabe 8.2 Klausur SS23, A4, abgewandelt ┬Àf(x) = (excosx)2, mit Verzweigung
+Gegebenf(x) =/parenleftbigexcosx/parenrightbig2.
+(a) Berechnungsgraph aufstellen.
+(b) Vorw├ñrtsphase bei x= 0.
+(c) R├╝ckw├ñrtsphase: fÔÇ▓(0)├╝ber die Adjungierten.
+L├Âsung
+(a)x1=x;x2=ex1;x3= cosx1;x4=x2┬Àx3;x5=x2
+4.
+Achtung:x1hat zwei Kinder ( x2undx3), Verzweigung!
+(b)x1= 0;x2=e0= 1;x3= cos 0 = 1 ;x4= 1;x5= 1.
+(c)
+┬»x5= 1
+┬»x4= ┬»x5┬À2x4= 2
+┬»x3= ┬»x4┬ÀÔêéx4
+Ôêéx3= 2┬Àx2= 2
+┬»x2= ┬»x4┬ÀÔêéx4
+Ôêéx2= 2┬Àx3= 2
+┬»x1= ┬»x2┬ÀÔêéx2
+Ôêéx1+ ┬»x3┬ÀÔêéx3
+Ôêéx1= 2ex1+ 2┬À(ÔêÆsinx1) = 2ÔêÆ0 = 2
+fÔÇ▓(0) = 2 Probe:fÔÇ▓(x) = 2e2x(cos2xÔêÆsinxcosx), fÔÇ▓(0) = 2 Ô£ô
+33
+
+--- Page 35 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+Aufgabe 8.3 Klausur WS22/23, A4, abgewandelt ┬Àx2
+1cos(x2)+ Ableitung nach Kantengewicht
+Gegeben der Berechnungsgraph: x3=x2
+1;x4= cosx2;x5=x3x4.
+(a) Welche Funktion f(x1,x2)berechnet der Graph?
+(b) Vorw├ñrts- und R├╝ckw├ñrtsphase an der Stelle (ÔêÆ2,0).
+(c) Nun wird die Kante von x3nachx5mit einem Gewicht Wversehen:
+x5=Wx 3x4, wie in einem neuronalen Netz.
+Berechnen Sie Ôêéx5/ÔêéWan der Stelle (x1,x2) = (ÔêÆ2,0),Wbeliebig.
+L├Âsung
+(a)f(x1,x2) =x2
+1cos(x2).
+(b)Vorw├ñrts:x1=ÔêÆ2;x2= 0;x3= 4;x4= 1;x5= 4.
+R├╝ckw├ñrts:
+┬»x5= 1
+┬»x4= ┬»x5┬Àx3= 4
+┬»x3= ┬»x5┬Àx4= 1
+┬»x2= ┬»x4┬À(ÔêÆsinx2) = 4┬À0 = 0
+┬»x1= ┬»x3┬À2x1= 1┬À(ÔêÆ4) =ÔêÆ4
+Ôêçf(ÔêÆ2,0) = (ÔêÆ4,0).
+(c)Erst die Adjungierte am Knoten unmittelbar nachW
+(hier der Produkt-Knoten, ┬»x5= 1), dann nach Wnachdifferenzieren:
+Ôêéx5
+ÔêéW= ┬»x5┬Àx3x4= 1┬À4┬À1 = 4
+(In der Klausurvariante mit x5= (Wx 3x4)in quadrierter Form ergab sich entsprechend
+8W, Mechanik: R├╝ckw├ñrtslauf bis zum Knoten nach W, dann ┬»z┬ÀÔêéz/ÔêéW.)
+Aufgabe 8.4 Klausur WS23/24, A4, abgewandelt ┬Àsin(x1x2) + cos(x1x2), Verzweigung
+Gegebenf(x1,x2) = sin(x1x2) + cos(x1x2).
+(a) Berechnungsgraph aufstellen.
+(b) Vorw├ñrtsphase bei (0,¤Ç).
+(c) R├╝ckw├ñrtsphase: Ôêçf(0,¤Ç).
+34
+
+--- Page 36 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+L├Âsung
+(a)x3=x1x2;x4= sinx3;x5= cosx3;x6=x4+x5. (x3hat zwei Kinder!)
+(b)x1= 0;x2=¤Ç;x3= 0;x4= 0;x5= 1;x6= 1.
+(c)
+┬»x6= 1; ┬»x5= ┬»x6┬À1 = 1; ┬»x4= ┬»x6┬À1 = 1
+┬»x3= ┬»x4cosx3+ ┬»x5┬À(ÔêÆsinx3) = 1┬À1ÔêÆ1┬À0 = 1
+┬»x2= ┬»x3┬Àx1= 1┬À0 = 0
+┬»x1= ┬»x3┬Àx2= 1┬À¤Ç=¤Ç
+Ôêçf(0,¤Ç) = (¤Ç,0)
+Aufgabe 8.5 Klausur WS25/26, A5, abgewandelt ┬À(x1+x2)ex1+x2, doppelte Verzweigung
+Gegeben der Graph: x3=x1+x2;x4=ex3;x5=x3┬Àx4.
+(a) Welche Funktion fstellt der Graph dar?
+(b) Berechnen Sie Ôêçfan der Stelle (0,1)
+per Backpropagation (Vorw├ñrts- und R├╝ckw├ñrtsphase).
+L├Âsung
+(a)f(x1,x2) = (x1+x2)ex1+x2.
+(b) Vorw├ñrts: x1= 0;x2= 1;x3= 1;x4=e;x5=e.
+R├╝ckw├ñrts (x3hat die Kinder x4undx5!):
+┬»x5= 1
+┬»x4= ┬»x5┬ÀÔêéx5
+Ôêéx4=x3= 1
+┬»x3= ┬»x5┬ÀÔêéx5
+Ôêéx3+ ┬»x4┬ÀÔêéx4
+Ôêéx3= 1┬Àx4+ 1┬Àex3=e+e= 2e
+┬»x2= ┬»x3┬À1 = 2e ┬»x1= ┬»x3┬À1 = 2e
+Ôêçf(0,1) = (2e,2e)Ôëê(5,44,5,44)
+Aufgabe 8.6 Eigene Aufgabe┬Àf(x,y) =xsin(xy) +y2
+Berechnen SieÔêçfan der Stelle (1,0)per Backpropagation
+(Graph, Vorw├ñrts-, R├╝ckw├ñrtsphase).
+Vorsicht:xkommt an zwei Stellen vor!
+35
+
+--- Page 37 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+L├Âsung
+Graph:x1=x;x2=y;x3=x1x2;x4= sinx3;x5=x1┬Àx4;x6=x2
+2;x7=x5+x6.
+Verzweigungen: x1(Kinderx3,x5) undx2(Kinderx3,x6).
+Vorw├ñrts bei (1,0):x1= 1;x2= 0;x3= 0;x4= 0;x5= 0;x6= 0;x7= 0.
+R├╝ckw├ñrts:
+┬»x7= 1; ┬»x6= 1; ┬»x5= 1
+┬»x4= ┬»x5┬Àx1= 1
+┬»x3= ┬»x4┬Àcosx3= 1┬À1 = 1
+┬»x2= ┬»x3┬Àx1+ ┬»x6┬À2x2= 1┬À1 + 1┬À0 = 1
+┬»x1= ┬»x3┬Àx2+ ┬»x5┬Àx4= 1┬À0 + 1┬À0 = 0
+Ôêçf(1,0) = (0,1)Probe:Ôêéxf= sin(xy) +xycos(xy) = 0;Ôêéyf=x2cos(xy) + 2y= 1Ô£ô
+Aufgabe 8.7 Eigene Aufgabe (Konzept) ┬ÀWarum Backpropagation?
+(a) Warum berechnet man Gradienten neuronaler Netze nicht einfach symbolisch
+ÔÇ×von HandÔÇ£ mit der Kettenregel?
+(b) Was besagt die Pfad-Interpretation der multivariaten Kettenregel,
+und warum ist direkte Pfad-Summation unpraktikabel?
+(c) Welches Prinzip macht Backpropagation effizient,
+und wie oft wird jeder Knoten dabei bearbeitet?
+(d) Aus welchen zwei Phasen besteht der Algorithmus
+und was wird in jeder Phase gespeichert/berechnet?
+L├Âsung
+(a)Die Verkettungen werden bei tiefen Netzen extrem unhandlich; f├╝r zehntausende
+Parameter ist symbolisches Differenzieren praktisch unm├Âglich und numerisch ineffizient,
+gleiche Teilableitungen w├╝rden zigfach neu berechnet.
+(b)Die Ableitung des Outputs nach einem Eingangsknoten ist die Summe ├╝ber alle Pfade
+zwischen beiden, mit Produkt der lokalen Ableitungen entlang jedes Pfades. Die
+Pfadanzahl w├ñchst exponentiell (3 Schichten ├á 100 Neuronen: 106Pfade),
+direkte Summation scheidet aus.
+(c) Dynamische Programmierung : Die einmal berechnete Ableitung Ôêéf/Ôêéxjeines
+Knotens wird von allen Pfaden wiederverwendet, die durch ihn laufen. Jeder Knoten/jede
+Kante wird nur (zweimal) bearbeitet, kein exponentielles Wachstum.
+(d)Vorw├ñrtsphase : Funktion auswerten, Werte aller Knoten speichern .
+R├╝ckw├ñrtsphase : Graph von hinten traversieren,
+Adjungierte ┬»xi=Ôêéf/Ôêéximit der Kettenregel aus den Kindern berechnen,
+dabei werden die gespeicherten Vorw├ñrtswerte eingesetzt.
+36
+
+--- Page 38 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+9 Faltungsnetze und Autoencoder
+Strategie & typische Fehler
+Die zwei CNN-Formeln auswendig:
+Wout=Ôîè(WinÔêÆWK+ 2P)/SÔîï+ 1
+#Param =K(WKHKDin+ 1).
+Typische Fehler:
+bei RGB die Tiefe Din= 3in der Parameterformel vergessen;
+Bias ( +1pro Filter ) vergessen;
+Pooling-Schicht Parameter zugeschrieben (sie hat keine!);
+beim Falten Kern und Bildausschnitt nicht elementweise multipliziert.
+Aufgabe 9.1 Klausur WS23/24, A5, abgewandelt ┬ÀFaltung von Hand
+Gegeben die Eingabe und der Faltungskern (kein Padding, Stride 1):
+I=´ú½
+´ú¼´ú¼´ú¡2ÔêÆ1 3
+3 1 2
+ÔêÆ1 1ÔêÆ2´úÂ
+´úÀ´úÀ´ú©W=/parenleft´ú¼igg
+1 1
+1 1/parenright´ú¼igg
+(a) Berechnen Sie die Featuremap.
+(b) Die Eingabe sei nun eine 11├ù11-Matrix, der Kern bleibt 2├ù2:
+Welche Dimension hat der Output?
+Wie viele Neuronen-Verbindungen gibt es insgesamt,
+und wie viele Gewichte m├╝ssen trainiert werden?
+L├Âsung
+(a)Vier 2├ù2-Fenster, jeweils elementweise multiplizieren
+(hier: einfach summieren, da alle Kerngewichte 1):
+(1,1) : 2ÔêÆ1 + 3 + 1 = 5 (1 ,2) :ÔêÆ1 + 3 + 1 + 2 = 5
+(2,1) : 3 + 1ÔêÆ1 + 1 = 4 (2 ,2) : 1 + 2 + 1ÔêÆ2 = 2
+Featuremap =/parenleft´ú¼igg
+5 5
+4 2/parenright´ú¼igg
+(b)Output: (11ÔêÆ2 + 0)/1 + 1 = 10 pro RichtungÔçÆ10├ù10 =100 Neuronen .
+Jedes Output-Neuron ist ├╝ber den 2├ù2-Kern mit 4 Input-Neuronen verbunden
+ÔçÆ400 Verbindungen . Aber durch Weight Sharing gibt es nur 4 Gewichte
+(die Kerneintr├ñge; +1Bias, falls vorgesehen),
+das ist der zentrale Effizienzvorteil der Faltungsschicht gegen├╝ber fully connected.
+37
+
+--- Page 39 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+Aufgabe 9.2 Klausur SS23, A5 / Probeklausur A5, kombiniert ┬ÀDimensionen und Parameter
+(a) F├╝r 28├ù28-RGB-Bilder sei eine Faltungsschicht mit 4 Filtern der Gr├Â├ƒe 3├ù3
+definiert (kein Padding, Stride 1). Wie viele Parameter hat die Schicht,
+und welche Dimension hat ihr Output?
+(b) Gleiche Frage f├╝r 100├ù100-RGB-Bilder mit 4 Filtern ├á 5├ù5
+(kein Padding, Stride 1).
+(c) ├ändert sich die Parameteranzahl, wenn man den Stride erh├Âht?
+Was ├ñndert sich stattdessen?
+(d) Erkl├ñren Sie kurz, wie Faltungsschichten Muster in Bildern erkennen.
+L├Âsung
+(a)Parameter: je Filter 3┬À3┬À3 + 1 = 28 (RGBÔçÆDin= 3!);
+gesamt 4┬À28 =112. Output:28ÔêÆ3
+1+ 1 = 26ÔçÆ26├ù26├ù4.
+(b)Je Filter 5┬À5┬À3 + 1 = 76 ; gesamt 4┬À76 =304. Output:100ÔêÆ5
+1+ 1 = 96ÔçÆ96├ù96├ù4.
+(c) Nein , die Parameterzahl h├ñngt nur von Kerngr├Â├ƒe, Tiefe und Filteranzahl ab.
+Es ├ñndert sich die Output-Dimension (bei Stride 2 etwa halbiert),
+weniger Abtastpositionen, gr├Âbere Erkennung.
+(d)Der Kern wird ├╝ber alle Bildausschnitte geschoben; wo ein Ausschnitt dem Kern
+├ñhnelt, entsteht ein hoher Wert in der Featuremap.
+So werden Regionen markiert, die dem gesuchten Muster entsprechen;
+welche Muster n├╝tzlich sind, wird beim Training gelernt.
+Aufgabe 9.3 Klausur WS25/26, A6, abgewandelt ┬ÀCNN-Architektur durchrechnen
+Ein CNN klassifiziert Graustufenbilder der Gr├Â├ƒe 28├ù28:
+ÔÇóConv: 8 Filter 3├ù3, Stride 1, Zero-Padding (P= 1), ReLU
+ÔÇóMaxPool :2├ù2, Stride 2
+ÔÇóFlatten, dannDenseauf 10 Klassen (Softmax)
+(a) Gr├Â├ƒe der Featuremaps nach dem Conv-Layer?
+(b) Wie viele lernbare Parameter hat der Conv-Layer?
+(c) Wie viele lernbare Parameter hat der MaxPool-Layer?
+(d) (Zusatz) Wie viele Parameter hat der Dense-Layer?
+38
+
+--- Page 40 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+L├Âsung
+(a)Wout=Ôîè28ÔêÆ3+2┬À1
+1Ôîï+ 1 = 28ÔçÆ28├ù28├ù8
+(Half-Padding erh├ñlt die Dimension, Tiefe =Filteranzahl).
+(b)8┬À(3┬À3┬À1 + 1) = 80(Graustufen: Din= 1).
+(c)0, Pooling hat keine lernbaren Parameter.
+(d)Nach Pooling: 14├ù14├ù8 = 1568 Werte; Dense auf 10 Klassen:
+10┬À1568 + 10 = 15 690Parameter.
+Aufgabe 9.4 Eigene Aufgabe┬ÀMax-Pooling und Architektur
+(a) Wenden Sie 2├ù2-Max-Pooling mit Stride 2 auf folgende Featuremap an:
+´ú½
+´ú¼´ú¼´ú¼´ú¼´ú¼´ú¡1 3 2 0
+4 2 7 1
+6 0 3 2
+1 2 0 5´úÂ
+´úÀ´úÀ´úÀ´úÀ´úÀ´ú©
+(b) Was leistet Max-Pooling konzeptionell,
+und welchen Vorteil bringt es f├╝r nachfolgende Schichten?
+(c) Geben Sie das typische CNN-Architekturmuster (Schema) an
+und erkl├ñren Sie die Arbeitsteilung zwischen Faltungs- und FC-Schichten.
+L├Âsung
+(a)Blockweise Maxima:
+/parenleft´ú¼igg
+max(1,3,4,2) max(2,0,7,1)
+max(6,0,1,2) max(3,2,0,5)/parenright´ú¼igg
+=/parenleft´ú¼igg
+4 7
+6 5/parenright´ú¼igg
+(b)Es pr├╝ft, obein Feature irgendwo in einer Region vorhanden ist,
+und verwirft die exakte Position (Translations-Toleranz).
+Vorteil: kleinere Featuremaps ÔçÆdeutlich weniger Parameter
+in den nachfolgenden Schichten.
+(c)INPUT -> [[CONV -> RELU]*N -> POOL ?]*M -> [FC -> RELU]*K -> FC .
+Die Faltungs-/Pooling-Bl├Âcke betreiben Feature Learning
+(hierarchisch: Kanten ÔåÆFormenÔåÆkomplexe Muster);
+die Fully-Connected-Schichten gewichten diese Features zur Klassenentscheidung
+(wie ein lineares Modell auf gelernten Features).
+Am Ende bildet eine FC-Schicht (mit Softmax) auf die Klassen ab.
+39
+
+--- Page 41 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+Aufgabe 9.5 Klausur SS22, A5, abgewandelt ┬ÀAutoencoder
+(a) Beschreiben Sie kurz, was ein Autoencoder ist und wof├╝r er eingesetzt wird.
+(b) Geben Sie die Verlustfunktion an, die beim Training minimiert wird.
+(c) Skizzieren Sie einen Autoencoder, der eine zweidimensionale Darstellung eines
+dreidimensionalen Datensatzes lernt,
+die (bis auf Drehung/Spiegelung) der PCA entspricht.
+Wie viele Parameter hat er, und wo flie├ƒen sie ein?
+(d) Beschreiben Sie in einem Satz den Zusammenhang
+zwischen linearem Autoencoder und PCA.
+L├Âsung
+(a)Ein Autoencoder ist ein neuronales Netz, dessen Eingabeschicht dieselbe
+Dimension wie die Ausgabeschicht hat und das darauf trainiert wird, seine Eingabe
+zu rekonstruieren . Da die mittlere Schicht (Code/Bottleneck) weniger Neuronen hat,
+lernt das Netz eine reduzierte Darstellung der Daten.
+Einsatz: Dimensionsreduktion/Feature Learning,
+Vortrainieren tiefer Netze, Anomalieerkennung.
+(b)Mittlerer quadratischer Rekonstruktionsfehler:
+L(w) =1
+NN/summationdisplay
+i=1/vextenddouble/vextenddoublex(i)ÔêÆxÔÇ▓(i)/vextenddouble/vextenddouble2
+(c)Architektur 3ÔåÆ2ÔåÆ3,ohneAktivierungsfunktionen,
+mitgeteilten Gewichten : EncoderUÔêêR2├ù3, DecoderV=UT.
+Damit hat das Netz genau die 6 Parameter der Matrix U=/parenleft´ú¼igg
+w11w12w13
+w21w22w23/parenright´ú¼igg
+, die
+sowohl in der Encoder- als auch (transponiert) in der Decoder-Schicht verwendet werden.
+(d)EinlinearerAutoencoder (ohne Aktivierungsfunktion)
+lernt die gleiche Transformation wie eine PCA,
+er minimiert denselben Rekonstruktionsfehler,
+dessen Optimum die PCA-Projektionsmatrix ist
+(der gelernte Unterraum stimmt ├╝berein, die Basis ist nur nicht zwingend orthonormal).
+Aufgabe 9.6 Eigene Aufgabe┬ÀAutoencoder-Anwendungen
+(a) Beschreiben Sie das Vorgehen der rekonstruktionsbasierten Anomalieerkennung mit
+einem Autoencoder (3 Schritte). Warum bietet sich hier un├╝berwachtes Lernen an?
+(b) Wie funktioniert das Vortrainieren eines tiefen Netzes mit Autoencodern,
+und gegen welches Trainingsproblem hilft es?
+(c) Welche zwei Spezialbausteine braucht der Decoder eines Convolutional
+Autoencoders, und was tun sie?
+40
+
+--- Page 42 ---
+Maschinelles Lernen | Aufgabensammlung SS 2026
+L├Âsung
+(a)
+(1) Autoencoder nur auf normalen Daten trainieren
+und die Statistik des typischen Rekonstruktionsfehlers erheben;
+(2) im Betrieb neue Daten (z.B. rollierendes Zeitfenster) komprimieren und rekonstruieren;
+(3)Alarm, wenn der Rekonstruktionsfehler den Schwellwert ├╝berschreitet ,
+Ungew├Âhnliches passt nicht in die gelernte Kompression.
+Un├╝berwacht, weil meist viele Daten, aber kaum gelabelte Anomalien existieren und
+Labeling teures Fachwissen erfordert.
+(b)Schichtweise: Erst flachen Autoencoder auf den Rohdaten trainieren ÔåÆInitialgewichte
+der ersten Schicht; dann einen zweiten Autoencoder auf der reduzierten Darstellung ÔåÆ
+Gewichte der zweiten Schicht; schlie├ƒlich den Klassifizierer mit diesen Initialisierungen
+normal trainieren (Fine-Tuning). Hilft gegen das Vanishing-Gradient-Problem
+(gute Startwerte statt zuf├ñlliger).
+(c) Unpooling (Upsampling): setzt mithilfe gespeicherter Max-Positionen
+(switch variables) die Werte zur├╝ck an ihre Stelle und f├╝llt mit Nullen auf.
+Transponierte Faltung (Deconvolution): eine Faltung, die Ein-/Ausgabedimension der
+zugeh├Ârigen Faltung vertauscht (├╝ber Padding/eingef├╝gte Nullen);
+ihre Kerngewichte werden mitgelernt, sie ist nichtdie mathematische Inverse der Faltung.
+41
+

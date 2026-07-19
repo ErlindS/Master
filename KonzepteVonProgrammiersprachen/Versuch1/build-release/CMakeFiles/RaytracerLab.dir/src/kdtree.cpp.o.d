@@ -1,7 +1,7 @@
 CMakeFiles/RaytracerLab.dir/src/kdtree.cpp.o: \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/kdtree.cpp \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/kdtree.cpp \
  /usr/include/stdc-predef.h \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/kdtree.h \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/kdtree.h \
  /usr/include/c++/11/vector /usr/include/c++/11/bits/stl_algobase.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
@@ -281,7 +281,7 @@ CMakeFiles/RaytracerLab.dir/src/kdtree.cpp.o: \
  /usr/include/glm/detail/type_half.hpp \
  /usr/include/glm/detail/type_half.inl /usr/include/glm/integer.hpp \
  /usr/include/glm/detail/func_integer.inl \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/mesh.h \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/mesh.h \
  /usr/include/c++/11/string /usr/include/c++/11/bits/char_traits.h \
  /usr/include/c++/11/bits/localefwd.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++locale.h \
@@ -306,9 +306,9 @@ CMakeFiles/RaytracerLab.dir/src/kdtree.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
  /usr/include/c++/11/bits/charconv.h \
  /usr/include/c++/11/bits/basic_string.tcc \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/ray.h \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/intersector.h \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/packet.h \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/ray.h \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/intersector.h \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/packet.h \
  /usr/include/c++/11/experimental/simd \
  /usr/include/c++/11/experimental/bits/simd_detail.h \
  /usr/include/c++/11/experimental/bits/simd.h \
