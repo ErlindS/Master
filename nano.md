@@ -14,25 +14,26 @@ Erstes Semester:
 Wahl:
 1. Software Architektur (vll) -> Vorlesung
 2. Konzepte von Programmierparadigmen (vl) -> Midterm
-3. Graphenalgorithmen (Theorie effizienter Algorithmen) (v) -> Graphenalgorithmen
 4. Machine Learning (vvl) -> Prüfung
----------- 24 ects
+---------- 23 ects
 
 Pflicht: 
-1. Projektarbeit 
 2. Ethik  
 3. IT-Enterpreuneurship 
----------- 9 ects
+---------- 4 ects
 
 Zweites Semester:
 Wahl:
 1. Künstliche Intelligenz
-2. Spezielle Kapitel KI (SAT, embedded und sonst noch was)
-3. Vielleicht noch Game Design
----------- 15 ects
+2. SAT-Solving, Graphenalgorithmen
+3. Game Design
+4. 
+---------- 21 ects
 
 Pflicht:
 1. Projektarbeit
-2. Seminararbeit
-3. IT-Management
----------- 13 ects
+2. Projektarbeit
+3. Seminararbeit
+4. IT-Management
+5. Wissenschaftstheorie
+---------- 21 ects
