@@ -1,5 +1,4 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/RaytracerLab.dir/link.d"
   "CMakeFiles/RaytracerLab.dir/src/image.cpp.o"
   "CMakeFiles/RaytracerLab.dir/src/image.cpp.o.d"
   "CMakeFiles/RaytracerLab.dir/src/intersector.cpp.o"

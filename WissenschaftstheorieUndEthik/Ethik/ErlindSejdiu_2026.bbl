@@ -1,0 +1,473 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{bildung_exkurs_2025}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=a94af53bb68b0ab030a324085fdd540e}{%
+           family={Bildung},
+           familyi={B\bibinitperiod},
+           given={Bundeszentrale\bibnamedelimb für\bibnamedelima politische},
+           giveni={B\bibinitperiod\bibinitdelim f\bibinitperiod\bibinitdelim p\bibinitperiod}}}%
+      }
+      \strng{namehash}{a94af53bb68b0ab030a324085fdd540e}
+      \strng{fullhash}{a94af53bb68b0ab030a324085fdd540e}
+      \strng{fullhashraw}{a94af53bb68b0ab030a324085fdd540e}
+      \strng{bibnamehash}{a94af53bb68b0ab030a324085fdd540e}
+      \strng{authorbibnamehash}{a94af53bb68b0ab030a324085fdd540e}
+      \strng{authornamehash}{a94af53bb68b0ab030a324085fdd540e}
+      \strng{authorfullhash}{a94af53bb68b0ab030a324085fdd540e}
+      \strng{authorfullhashraw}{a94af53bb68b0ab030a324085fdd540e}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Bei der Entwicklung von digitalen Technologien und im Umgang mit ihnen entstehen ethische Probleme. Diesen widmet sich die Digitale Ethik. Was das bedeutet, erklärt Dagmar Fenner.}
+      \field{day}{25}
+      \field{langid}{german}
+      \field{month}{11}
+      \field{shorttitle}{Exkurs}
+      \field{title}{Exkurs: Digitale Ethik {|} Bioethik}
+      \field{titleaddon}{bpb.de}
+      \field{urlday}{28}
+      \field{urlmonth}{6}
+      \field{urlyear}{2026}
+      \field{year}{2025}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb Snapshot:C\:\\Users\\erlin\\Zotero\\storage\\WVQ7ACYK\\exkurs-digitale-ethik.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.bpb.de/themen/umwelt/bioethik/572883/exkurs-digitale-ethik/
+      \endverb
+      \verb{url}
+      \verb https://www.bpb.de/themen/umwelt/bioethik/572883/exkurs-digitale-ethik/
+      \endverb
+    \endentry
+    \entry{article}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=97c3283b2eb17473aa4762770dec761c}{%
+           family={Mahayni},
+           familyi={M\bibinitperiod},
+           given={Ziad},
+           giveni={Z\bibinitperiod}}}%
+      }
+      \strng{namehash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{fullhash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{fullhashraw}{97c3283b2eb17473aa4762770dec761c}
+      \strng{bibnamehash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{authorbibnamehash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{authornamehash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{authorfullhash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{authorfullhashraw}{97c3283b2eb17473aa4762770dec761c}
+      \field{extraname}{1}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Weiterdenken. Zeitschrift für Position, Perspektive, Progression}
+      \field{month}{10}
+      \field{title}{Künstliche Intelligenz und das Verantwortungs dilemma}
+      \field{volume}{4}
+      \field{year}{2025}
+      \field{pages}{77\bibrangedash 80}
+      \range{pages}{4}
+    \endentry
+    \entry{Bias}{article}{}{}
+      \list{language}{1}{%
+        {de}%
+      }
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labeltitlesource}{title}
+      \field{month}{8}
+      \field{title}{Bias in der künstlichen {Intelligenz}}
+      \field{year}{2025}
+      \verb{file}
+      \verb PDF:C\:\\Users\\erlin\\Zotero\\storage\\MS3JJZ7G\\Bias in der künstlichen Intelligenz.pdf:application/pdf
+      \endverb
+    \endentry
+    \entry{dastin_insight_2018}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=fe0a91ed503170165d701447b4c6fbdf}{%
+           family={Dastin},
+           familyi={D\bibinitperiod},
+           given={Jeffrey},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{fe0a91ed503170165d701447b4c6fbdf}
+      \strng{fullhash}{fe0a91ed503170165d701447b4c6fbdf}
+      \strng{fullhashraw}{fe0a91ed503170165d701447b4c6fbdf}
+      \strng{bibnamehash}{fe0a91ed503170165d701447b4c6fbdf}
+      \strng{authorbibnamehash}{fe0a91ed503170165d701447b4c6fbdf}
+      \strng{authornamehash}{fe0a91ed503170165d701447b4c6fbdf}
+      \strng{authorfullhash}{fe0a91ed503170165d701447b4c6fbdf}
+      \strng{authorfullhashraw}{fe0a91ed503170165d701447b4c6fbdf}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Amazon.com Inc's \&lt;{AMZN}.O\&gt; machine-learning specialists uncovered a big problem: their new recruiting engine did not like women.}
+      \field{day}{11}
+      \field{journaltitle}{Reuters}
+      \field{langid}{american}
+      \field{month}{10}
+      \field{title}{Insight - Amazon scraps secret {AI} recruiting tool that showed bias against women}
+      \field{urlday}{28}
+      \field{urlmonth}{6}
+      \field{urlyear}{2026}
+      \field{year}{2018}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb Snapshot:C\:\\Users\\erlin\\Zotero\\storage\\QTXCLMJR\\insight-amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK0AG.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.reuters.com/article/world/insight-amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK0AG/
+      \endverb
+      \verb{url}
+      \verb https://www.reuters.com/article/world/insight-amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK0AG/
+      \endverb
+    \endentry
+    \entry{Fairness360}{online}{}{}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labeltitlesource}{title}
+      \field{abstract}{At {IBM} Research, we’re inventing what’s next in {AI}, quantum computing, and hybrid cloud to shape the world ahead.}
+      \field{day}{9}
+      \field{langid}{american}
+      \field{month}{2}
+      \field{title}{Introducing {AI} Fairness 360}
+      \field{titleaddon}{{IBM} Research}
+      \field{urlday}{28}
+      \field{urlmonth}{6}
+      \field{urlyear}{2026}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb Snapshot:C\:\\Users\\erlin\\Zotero\\storage\\XH83YMIS\\ai-fairness-360.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb https://research.ibm.com/blog/ai-fairness-360
+      \endverb
+      \verb{url}
+      \verb https://research.ibm.com/blog/ai-fairness-360
+      \endverb
+    \endentry
+    \entry{fairlearn}{online}{}{}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labeltitlesource}{title}
+      \field{abstract}{An open source toolkit for assessing and improving fairness in {AI}}
+      \field{langid}{english}
+      \field{title}{Fairlearn}
+      \field{urlday}{28}
+      \field{urlmonth}{6}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb Snapshot:C\:\\Users\\erlin\\Zotero\\storage\\Y45C8VI8\\fairlearn.org.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb https://fairlearn.org
+      \endverb
+      \verb{url}
+      \verb https://fairlearn.org
+      \endverb
+    \endentry
+    \entry{Fairness}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=f84bc2516a7a4fcce2c5e84211cbf770}{%
+           family={Atari},
+           familyi={A\bibinitperiod},
+           given={Mohammad},
+           giveni={M\bibinitperiod}}}%
+        {{hash=caa8ad1cc1ee4d4e0116dd7d62ed143e}{%
+           family={Xue},
+           familyi={X\bibinitperiod},
+           given={Mona},
+           giveni={M\bibinitperiod}}}%
+        {{hash=0fc0b86a39c91bcbfc6ed9bd47d5fcb4}{%
+           family={Park},
+           familyi={P\bibinitperiod},
+           given={Peter},
+           giveni={P\bibinitperiod}}}%
+        {{hash=9264febbfef7722794bcae49f8383275}{%
+           family={Blasi},
+           familyi={B\bibinitperiod},
+           given={Damián},
+           giveni={D\bibinitperiod}}}%
+        {{hash=135deb37dc4a16e2d813922bf87fe654}{%
+           family={Henrich},
+           familyi={H\bibinitperiod},
+           given={Joseph},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{4229ee28c565db2224f17607075ce724}
+      \strng{fullhash}{7a58dc6a18618be84262d6c4b009a286}
+      \strng{fullhashraw}{7a58dc6a18618be84262d6c4b009a286}
+      \strng{bibnamehash}{7a58dc6a18618be84262d6c4b009a286}
+      \strng{authorbibnamehash}{7a58dc6a18618be84262d6c4b009a286}
+      \strng{authornamehash}{4229ee28c565db2224f17607075ce724}
+      \strng{authorfullhash}{7a58dc6a18618be84262d6c4b009a286}
+      \strng{authorfullhashraw}{7a58dc6a18618be84262d6c4b009a286}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{09}
+      \field{title}{Which Humans?}
+      \field{year}{2023}
+      \verb{doi}
+      \verb 10.31234/osf.io/5b26t
+      \endverb
+    \endentry
+    \entry{HowFar}{unknown}{}{}
+      \name{author}{2}{}{%
+        {{hash=b03de1a00e85dea27c13b50c59a52638}{%
+           family={Jaidka},
+           familyi={J\bibinitperiod},
+           given={Kokil},
+           giveni={K\bibinitperiod}}}%
+        {{hash=47cf96f7bdcaeea96c7b095aa7fdd0e1}{%
+           family={Ahmed},
+           familyi={A\bibinitperiod},
+           given={Saifuddin},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{f53923d4b4d1946b4cb6dd088573fb96}
+      \strng{fullhash}{f53923d4b4d1946b4cb6dd088573fb96}
+      \strng{fullhashraw}{f53923d4b4d1946b4cb6dd088573fb96}
+      \strng{bibnamehash}{f53923d4b4d1946b4cb6dd088573fb96}
+      \strng{authorbibnamehash}{f53923d4b4d1946b4cb6dd088573fb96}
+      \strng{authornamehash}{f53923d4b4d1946b4cb6dd088573fb96}
+      \strng{authorfullhash}{f53923d4b4d1946b4cb6dd088573fb96}
+      \strng{authorfullhashraw}{f53923d4b4d1946b4cb6dd088573fb96}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{06}
+      \field{title}{How Far Did They Go? The Persuasive Tactics of Covert LLM Agents in a Discontinued Field Experiment}
+      \field{year}{2026}
+      \verb{doi}
+      \verb 10.48550/arXiv.2606.05256
+      \endverb
+    \endentry
+    \entry{kahneman2011thinking}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=d0dcea81f8587e7d56bb5dbe34a39d6c}{%
+           family={Kahneman},
+           familyi={K\bibinitperiod},
+           given={Daniel},
+           giveni={D\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York}%
+      }
+      \list{publisher}{2}{%
+        {Farrar, Straus}%
+        {Giroux}%
+      }
+      \strng{namehash}{d0dcea81f8587e7d56bb5dbe34a39d6c}
+      \strng{fullhash}{d0dcea81f8587e7d56bb5dbe34a39d6c}
+      \strng{fullhashraw}{d0dcea81f8587e7d56bb5dbe34a39d6c}
+      \strng{bibnamehash}{d0dcea81f8587e7d56bb5dbe34a39d6c}
+      \strng{authorbibnamehash}{d0dcea81f8587e7d56bb5dbe34a39d6c}
+      \strng{authornamehash}{d0dcea81f8587e7d56bb5dbe34a39d6c}
+      \strng{authorfullhash}{d0dcea81f8587e7d56bb5dbe34a39d6c}
+      \strng{authorfullhashraw}{d0dcea81f8587e7d56bb5dbe34a39d6c}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-0374275631}
+      \field{title}{Thinking, Fast and Slow}
+      \field{year}{2011}
+    \endentry
+    \entry{noauthor_censorship_2026}{inreference}{}{}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Censorship of images was widespread in the Soviet Union. Visual censorship was exploited in a political context, particularly during the political purges of Joseph Stalin, where the Soviet government attempted to erase some of the purged figures from Soviet history, and took measures which included altering images and destroying film. The {USSR} curtailed access to pornography, which was specifically prohibited by Soviet law.}
+      \field{booktitle}{Wikipedia}
+      \field{day}{17}
+      \field{langid}{english}
+      \field{month}{3}
+      \field{note}{Page Version {ID}: 1343974753}
+      \field{title}{Censorship of images in the Soviet Union}
+      \field{urlday}{28}
+      \field{urlmonth}{6}
+      \field{urlyear}{2026}
+      \field{year}{2026}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb Snapshot:C\:\\Users\\erlin\\Zotero\\storage\\6QTWU7B9\\index.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb https://en.wikipedia.org/w/index.php?title=Censorship_of_images_in_the_Soviet_Union&oldid=1343974753
+      \endverb
+      \verb{url}
+      \verb https://en.wikipedia.org/w/index.php?title=Censorship_of_images_in_the_Soviet_Union&oldid=1343974753
+      \endverb
+    \endentry
+    \entry{info}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=97c3283b2eb17473aa4762770dec761c}{%
+           family={Mahayni},
+           familyi={M\bibinitperiod},
+           given={Ziad},
+           giveni={Z\bibinitperiod}}}%
+      }
+      \strng{namehash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{fullhash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{fullhashraw}{97c3283b2eb17473aa4762770dec761c}
+      \strng{bibnamehash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{authorbibnamehash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{authornamehash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{authorfullhash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{authorfullhashraw}{97c3283b2eb17473aa4762770dec761c}
+      \field{extraname}{2}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{05}
+      \field{title}{DeepFakes und die 'Infokalypse'. Wie beeinflusst generative Künstliche Intelligenz das Informationsökosystem?}
+      \field{year}{2025}
+    \endentry
+    \entry{lewis_leaked_2018}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=6f7ca45de83c018a4fbe53c311762c1d}{%
+           family={Lewis},
+           familyi={L\bibinitperiod},
+           given={Paul},
+           giveni={P\bibinitperiod}}}%
+        {{hash=98dedf34d4ad0429fba4f384eeceae5c}{%
+           family={Hilder},
+           familyi={H\bibinitperiod},
+           given={Paul},
+           giveni={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{689763857ef2b2c78112f2a1b743e20c}
+      \strng{fullhash}{689763857ef2b2c78112f2a1b743e20c}
+      \strng{fullhashraw}{689763857ef2b2c78112f2a1b743e20c}
+      \strng{bibnamehash}{689763857ef2b2c78112f2a1b743e20c}
+      \strng{authorbibnamehash}{689763857ef2b2c78112f2a1b743e20c}
+      \strng{authornamehash}{689763857ef2b2c78112f2a1b743e20c}
+      \strng{authorfullhash}{689763857ef2b2c78112f2a1b743e20c}
+      \strng{authorfullhashraw}{689763857ef2b2c78112f2a1b743e20c}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Exclusive: Former employee explains how presentation showed techniques used to target voters}
+      \field{day}{23}
+      \field{issn}{0261-3077}
+      \field{journaltitle}{The Guardian}
+      \field{langid}{british}
+      \field{month}{3}
+      \field{shorttitle}{Leaked}
+      \field{title}{Leaked: Cambridge Analytica's blueprint for Trump victory}
+      \field{urlday}{28}
+      \field{urlmonth}{6}
+      \field{urlyear}{2026}
+      \field{year}{2018}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb Snapshot:C\:\\Users\\erlin\\Zotero\\storage\\FG6C7NBL\\leaked-cambridge-analyticas-blueprint-for-trump-victory.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.theguardian.com/uk-news/2018/mar/23/leaked-cambridge-analyticas-blueprint-for-trump-victory
+      \endverb
+      \verb{url}
+      \verb https://www.theguardian.com/uk-news/2018/mar/23/leaked-cambridge-analyticas-blueprint-for-trump-victory
+      \endverb
+      \keyw{Cambridge Analytica,Donald Trump,Facebook,Google,Snapchat,Social media,{US} elections 2016,{US} news,{US} politics,X}
+    \endentry
+    \entry{WozuLernenNochGutIst}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=97c3283b2eb17473aa4762770dec761c}{%
+           family={Mahayni},
+           familyi={M\bibinitperiod},
+           given={Ziad},
+           giveni={Z\bibinitperiod}}}%
+      }
+      \strng{namehash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{fullhash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{fullhashraw}{97c3283b2eb17473aa4762770dec761c}
+      \strng{bibnamehash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{authorbibnamehash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{authornamehash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{authorfullhash}{97c3283b2eb17473aa4762770dec761c}
+      \strng{authorfullhashraw}{97c3283b2eb17473aa4762770dec761c}
+      \field{extraname}{3}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{03}
+      \field{title}{Wozu lernen, wenn KI alles weiß? - Positionspapier zur Bildung im KI-Zeitalter}
+      \field{year}{2026}
+      \verb{doi}
+      \verb 10.5281/zenodo.19181761
+      \endverb
+    \endentry
+    \entry{Mobility}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=5bd32628f8a80555d67d5ecc79ec0a6d}{%
+           family={Galor},
+           familyi={G\bibinitperiod},
+           given={Oded},
+           giveni={O\bibinitperiod}}}%
+        {{hash=f02f06fc0d5d628ae41ba0bf92b5f749}{%
+           family={Tsiddon},
+           familyi={T\bibinitperiod},
+           given={Daniel},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{94ceec2e48f315919d8a58c660377b98}
+      \strng{fullhash}{94ceec2e48f315919d8a58c660377b98}
+      \strng{fullhashraw}{94ceec2e48f315919d8a58c660377b98}
+      \strng{bibnamehash}{94ceec2e48f315919d8a58c660377b98}
+      \strng{authorbibnamehash}{94ceec2e48f315919d8a58c660377b98}
+      \strng{authornamehash}{94ceec2e48f315919d8a58c660377b98}
+      \strng{authorfullhash}{94ceec2e48f315919d8a58c660377b98}
+      \strng{authorfullhashraw}{94ceec2e48f315919d8a58c660377b98}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{American Economic Review}
+      \field{month}{02}
+      \field{title}{Technological Progress, Mobility, and Economic Growth}
+      \field{volume}{87}
+      \field{year}{1997}
+      \field{pages}{363\bibrangedash 82}
+      \range{pages}{20}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

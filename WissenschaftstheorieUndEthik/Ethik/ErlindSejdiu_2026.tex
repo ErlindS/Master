@@ -1,72 +1,174 @@
-1. (450 Wörter)
-Die digitale Ethik beschäftigt sich mit moralischen Fragen von der Nutzung digitaler Techniken. 
+\documentclass[11pt]{article}
 
-Eine festellende Beobachtung ist das immer schnellerer Foranschreiten der Technik. Mit der neu erforschten Technik erweitert sich der Handlungsspielraum der Menschen. In der Vergangenheit ist es typisch gewesen, dass die Menschen nah beinander Lebten, wenn man sich sehen wollte. Heutzutage ist es möglich mit Menschen zu kommunizieren, welche mehrere hundert Kilometer entfernt sind und das aus sehr offentsichlichen Gründen. Wenn ich meine Freunde in der Schule sehen möchte, muss ich nicht mehr zu ihnen fahren, sondern kann einfach mit ihnen über das Internet kommunizieren. Wenn ich diese doch treffen möchte kann ich mit meinem Auto einfach zu ihnen hinfahren. Diese Möglichkeiten waren noch vor 200 jahren stark eingeschränkt. Mit steigenem technologischen Fortschritt erweitert sich die Handlungsmöglichkeiten der Menschen. Gleichzeitig entsteht dabei eine höhere Verantwortung. "With greater power comes greater responsibility" ist ein bekanntes Zitat, welches die Verantwortung beschreibt, die mit der Technologie einhergeht. Je mehr ich in der Lage bin, Dinge zu tun, desto mehr Verantwortung habe ich, diese Dinge auch richtig zu tun.
+%%| INCLUDE PACKAGES HERE |%%
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[paper=a4paper,left=25mm,right=25mm,top=25mm,bottom=25mm]{geometry}
+\usepackage[english, ngerman]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[autostyle=true,german=quotes]{csquotes}
+\usepackage[backend=biber, style=ieee]{biblatex}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{microtype}
 
-Eine weiterer Apspekt ist die Adaptionsgeschwindigkeit der Menschen. In der Vergangenheit war der wechsel von geozentrischen Weltbild zum heliozentrischen Weltbild ein technischer Fortschritt, der anfangs stark verneint worden ist. Die Veränderung, dass die Welt sich um die Sonne dreht wurde am Anfang langsam wahrgenommen. Um genau zu sein hat dieses Paradigmawechsel 150 Jahre gedauert. Im starken Kontrast dazu ist die Digitalisierung, die in den vergangenen Jahren stattgefunden hat und damit neue Technologien erfunden wurden, die in viel kürzerer Zeitspanne stattgefunden hat und wahrgenommen wurden. Das heißt neben der Erfindung neuer Technik und der tatsächlichen Nutzung dieser Technik wird eine gewissen adaptionszeit benötigt. 
+%%| SET PACKAGE PARAMETERS HERE |%%
+\hypersetup{                                                                        
+    colorlinks,
+    citecolor   = black,
+    filecolor   = black,
+    linkcolor   = black,
+    urlcolor    = black,
+    pdftitle    = {Labor ABCDEFGHIJ},                                               % SET FILE PARAMETERS HERE (SHOWN IN PDF PROPERTIES)
+    pdfsubject  = {Einführung in ABCDEFGHIJ},                                       % ...
+    pdfauthor   = {Max Mustermann},                                                 % ...
+    pdfkeywords = {XY-Labor, Laborbericht ...} ,                                    % ...
+    pdfcreator  = {pdflatex},           
+    pdfproducer = {LaTeX with hyperref}
+}
+\setstretch{1.25}                                                                   % SET GENERAL LINE SPACING HERE
 
-Aus diesen zwei Paradigmen ergibt sicht ein Verantwortungsdilemma. Neue Technologien werden schneller in unseren Alltag integriert, aber weil die Adaptionsgeschwindigkeit der Menschen nicht mit der Geschwindigkeit des technologischen Fortschritts mithalten kann, kann diese neu entstandene Technologie im bestimmten Kontext missbraucht werden. Ein Beispiel dafür ist die Deepfake-Technologie. Deepfakes sind synthetische Medieninhalte, die mithilfe von künstlicher Intelligenz erstellt werden und es ermöglichen, realistische Videos oder Audiodateien zu erzeugen, in denen Personen Dinge sagen oder tun, die sie tatsächlich nicht gesagt oder getan haben. Diese Technologie hat das Potenzial, die Art und Weise, wie Informationen verbreitet werden, grundlegend zu verändern. Wenn Menschen nicht in der Lage sind, zwischen echten und gefälschten Inhalten zu unterscheiden, kann dies zu einer Infokalypse führen, in der die Verbreitung von Desinformationen und Falschmeldungen außer Kontrolle gerät. Da diese Technologie so stark vorangeschritten ist, sind Regularien und Gesetze, die den Umgang mit dieser Technologie regeln, nicht mehr ausreichend, um die Verbreitung von Deepfakes zu kontrollieren.
+%%| SET OTHER PARAMETERS HERE |%%
+\addbibresource{Document/Bibliography/ref.bib}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%| TITLE PAGE |%%
+\begin{document}
+\begin{titlepage}
+    \begin{center}
+        \includegraphics[width=0.55\textwidth]{Images/Template/HsKa_new.png}\\[16ex]
+        \huge{\textbf{Ethik für Informatik}}\\[8ex]
+        \normalsize{}
+        \begin{tabular}{lll}
+            Student:            & \quad Erlind Sejdiu                                & 106357 \\[2ex]     % NUMBER IS MAT.NR
+            Universität:        & \quad Hochschule Karlsruhe Technik und Wirtschaft   &       \\[2ex]
+            Studiengang:        & \quad Informatik Master          &       \\[2ex]
+            Semester:           & \quad Sommersemester 2026                             &       \\[2ex]
+            Dozent:             & \quad Prof. Dr. Ziad Mahayni                       &       \\[2ex]
+            Bearbeitet am:      & \quad 28. Juni 2026                                  &       \\[2ex]
+        \end{tabular}
+    \end{center}
+\end{titlepage}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%| TABLE OF CONTENTS |%%
+\pagenumbering{gobble}    
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+\section{Verantwortungsdilemma im digitalen Zeitalter}
+Die Ethik lässt sich in mehrere Kategorien unterteilen. Eine dieser Kategorien ist die digitale Ethik. Die digitale Ethik beschäftigt sich mit moralischen Fragen bezüglich des Umgangs und der Entwicklung von digitalen Technologien \cite{bildung_exkurs_2025}. Dabei hat sich zum Beispiel auch das Verantwortungsdilemma ergeben, aber um dieses Dilemma zu verstehen, werden zunächst zwei Paradigmen eingeführt.
+
+\paragraph{Technische Realisierbarkeit}
+Eine festzustellende Beobachtung ist das immer schnellere Voranschreiten der Technik. Dabei entsteht ein Paradigma, welches besagt, dass sich mit neu erforschter Technik der Handlungsspielraum der Menschen erweitert. Als Beispiel können hier die Lebensumstände in der Vergangenheit angeführt werden. Früher ist es typisch gewesen, dass die Menschen nah beieinander lebten, wenn sie sich sehen wollten. Heutzutage ist es möglich, mit Menschen zu kommunizieren, welche mehrere hundert Kilometer entfernt sind aufgrund der Technologie des Internets. Diese Möglichkeit war noch vor 200 Jahren stark eingeschränkt. Mit steigendem technologischem Fortschritt erweitern sich die Handlungsmöglichkeiten der Menschen. Je mehr Handlungsspielraum besteht, desto mehr Verantwortung wird auch getragen, diese Dinge auch richtig zu tun \cite{article}.
+
+\paragraph{Technologieadaption}
+Ein weiterer Aspekt ist die Adaptionsgeschwindigkeit der Menschen. Dieses Paradigma besagt, dass die Anpassungsfähigkeit an eine Technologie langsamer ist als die Technologieentwicklung. In der Vergangenheit war der Wechsel vom geozentrischen Weltbild zum heliozentrischen Weltbild ein technischer Fortschritt, der anfangs stark verneint worden ist. Die Veränderung, dass die Welt sich um die Sonne dreht, wurde am Anfang langsam wahrgenommen. Um genau zu sein, hat dieser Paradigmenwechsel 150 Jahre gedauert. In der heutigen Zeit existiert die Digitalisierung, die in den vergangenen Jahren stattgefunden hat, wodurch neue Technologien erfunden und in einer kürzeren Zeitspanne wahrgenommen wurden, jedoch hat das trotzdem Zeit benötigt. Das heißt, neben der Erfindung neuer Technik und der tatsächlichen Nutzung dieser Technik wird eine gewisse Adaptionszeit benötigt \cite{article}. 
+
+\paragraph{Verantwortungsdilemma}
+
+Aus diesen zwei Paradigmen ergibt sich ein Verantwortungsdilemma. Neue Technologien werden schneller in unseren Alltag integriert, aber weil die Adaptionsgeschwindigkeit der Menschen nicht mit der Geschwindigkeit des technologischen Fortschritts mithalten kann, kann diese neu entstandene Technologie in bestimmten Kontexten nicht verstanden oder auch missbraucht werden. Dies ist in dem Sinne drastisch, da der Mensch heutzutage mit Technologien viel mehr Verantwortung hat und viel mehr realisieren kann. Ein Beispiel dafür ist die Deepfake-Technologie. Deepfakes sind synthetische Medieninhalte, die mithilfe von künstlicher Intelligenz erstellt werden und es ermöglichen, realistische Videos oder Audiodateien zu erzeugen, in denen Personen Dinge sagen oder tun, die sie tatsächlich nicht gesagt oder getan haben. Diese Technologie hat das Potenzial, die Art und Weise, wie Informationen verbreitet werden, grundlegend zu verändern. Wenn Menschen nicht in der Lage sind, zwischen echten und gefälschten Inhalten zu unterscheiden, kann dies zu einer Infokalypse führen, in der die Verbreitung von Desinformationen und Falschmeldungen außer Kontrolle gerät. Da diese Technologie so stark vorangeschritten ist, folgen Regularien und Gesetze, die den Umgang mit dieser Technologie regeln, viel zu spät, um die Verbreitung von Deepfakes zu kontrollieren. Es existiert also eine Technologie, die sich schnell entwickelt hat, sodass diese nicht richtig verstanden wird und mächtig genug ist, um großen Schaden anzurichten. Es ist ein Dilemma, da der Mensch immer mehr tun kann, aber seine Fähigkeit rechtzeitig dafür Verantwortung zu tragen, weiter schrumpft \cite{article}.
+
+\section{Datenethik: AI-Bias}
+
+Die digitale Ethik lässt sich in weitere Unterkategorien aufteilen. Diese Unterkategorien sind jeweils AI-Bias, digitale Überwachung, Roboterethik und virtuelle Akteure sowie Maschinenethik und das \enquote{Alignment-Problem}. Im Folgenden wird die digitale Ethik bezüglich des AI-Bias genauer beleuchtet.
+
+Der Begriff AI-Bias beschreibt die durch Verzerrungen in den Daten ausgelöste Ungleichbehandlung durch KI-Systeme. Das heißt, dass bestimmte Personen oder Personengruppen systematisch benachteiligt werden. Dabei ist es erst einmal wichtig zu verstehen, dass ein AI-Bias durch unterschiedliche Gründe entstehen kann. Dabei kann der AI-Bias in der Datenerhebung und -präparation, in der Modellentwicklung und dem Training sowie im Deployment und Monitoring stattfinden \cite{Bias}.
+
+Ein Bias bei der Datenerhebung kann durch die Verwendung veralteter Datensätze entstehen, die Stereotypen wiedergeben. Als konkretes Beispiel kann hier das Stereotyp genommen werden, welches Männer als Arbeiter und Frauen als Hausfrauen darstellt. Wird ein KI-Modell mit solchen Daten trainiert, so kann eine Frau bei Bewerbungen systematisch schlechter abschneiden, da das Modell der Auffassung ist, dass Männer die Arbeiter sind, während Frauen nur Hausfrauen sind. Im Jahr 2017 ist genau so ein Fall in einer Software von Amazon passiert. Diese Software hat Menschen abhängig von ihren Qualifikationen vorselektiert bei Bewerbungen und dabei wurden Frauen in bestimmten Berufen schlechter bewertet, weil das Modell auf einem Datensatz trainiert wurde, welcher großtenteils mit Männern gefüllt war \cite{dastin_insight_2018, Bias}.  
+
+Auch während der Entwicklung kann ein Bias entstehen. Wird während der Entwicklung ein Datensatz verwendet, welcher Gesichter aus bestimmten Regionen enthält, können bei einem zu langen Training diese Gesichter überproportional stark gelernt werden. Wenn das KI-Modell zu lange trainiert wurde, wird dies auch als Overfitting (Überanpassung) bezeichnet. Das heißt, dass bestimmte Datenpunkte zu ausführlich betrachtet werden. Wenn jetzt ein überangepasstes Modell auf einen neuen Datensatz angewandt wird, so werden eher die Gesichter bevorzugt, mit denen das Modell trainiert wurde, und so können definierte Bevölkerungsgruppen systematisch benachteiligt werden \cite{Bias}. 
+
+Auch während des Einsetzens kann ein Bias entstehen, wenn KI-Systeme genutzt werden, um Entscheidungen in verschiedenen Bereichen zu treffen und diese Entscheidungen jedoch nicht genauer hinterfragt werden. Als hypothetischer Fall kann ein KI-System bei der Polizei betrachtet werden. Wenn die Polizei zu einer Einsatzstelle geschickt wird, wo ein KI-System geurteilt hat, dass diese Einsatzstelle gefährlich ist, gehen die Polizisten mit einem Vorurteil bzw. einer Voreinstellung, also einem Bias, hin\cite{Bias}.
+
+Ein weiterer Aspekt bezüglich des AI-Bias ist die Fairness. Wie oben beschrieben, kann ein AI-Bias an jeder Stelle des Prozesses entstehen. Es existieren unterschiedliche Ansätze, um Fairness zu beurteilen und damit den Bias zu negieren. Wie zum Beispiel das AI Fairness 360 Tool von IBM oder Fairlearn von Microsoft \cite{Fairness360,fairlearn}. Jedoch unterliegt die Fairness einem grundlegenden Problem. Fairness kann immer nur in Bezug auf bestimmte Gruppen oder Individuen gemessen werden und die Welt ist in unterschiedlichste Gruppen und Individuen aufgeteilt. Zudem weisen praktisch alle aktuellen KI-Modelle einen starken WEIRD-Bias in ihren Trainingsdaten auf. Das Akronym WEIRD steht für Gesellschaften, die westlich (Western), gebildet (Educated), industrialisiert (Industrialized), reich (Rich) und demokratisch (Democratic) geprägt sind. Diese KI-Modelle weisen explizite Werte aus diesem Kulturkreis auf. Gleichzeitig existieren unterschiedliche Definitionen von Fairness aus verschiedenen Kulturkreisen. Das Paper \enquote{Which Humans?} \cite{Fairness} zeigt, dass es unterschiedliche Darstellungen von Kulturen gibt, in denen Fairness auch anders gewichtet wird. Aus ethischer Sicht ist es zum einen schwierig zu sagen, dass bestimmte Situationen überhaupt fair sind, da nicht nur eine einzige Moralethik existiert, und deswegen ist es auch schwieriger, ein KI-Modell zu haben, welches für alle Menschen Fairness bietet \cite{Fairness}. 
+
+\section{Einsatz von Manipulationstechniken durch künstliche Intelligenzen}
+Im Folgenden wird die Studie \enquote{How Far Did They Go? The Persuasive Tactics of Covert LLM Agents in a Discontinued Field Experiment} \cite{HowFar} der Universität Zürich vorgestellt. Diese Studie untersucht, inwiefern LLM-Modelle Menschen in echten Foren und Diskussionen manipulieren können. Die Studie untersucht drei grundlegende Fragestellungen. \textbf{\enquote{RQ1: How does the model target or adopt social identities to establish epistemic authority and influence argumentative uptake?} \cite[S. ~2]{HowFar}}. Diese Forschungsfrage untersucht, wie KI-Modelle sich eigene Identitäten aneignen, um argumentativ besser zu antworten und auch, wie sehr das KI-Modell die Identität des Gegenübers berücksichtigt. \textbf{\enquote{RQ2: What authority and alignment moves structure epistemic positioning in LLM-generated persuasive comments within a live deliberative forum?}\cite[S. ~2]{HowFar}}. Diese Forschungsfrage untersucht, inwiefern das KI-Modell einem zustimmt oder widerspricht, um recht zu haben. \textbf{\enquote{RQ3: What cognitive biases are activated or amplified through these strategies?}\cite[S. ~2]{HowFar}}. Die dritte Forschungsfrage zielt darauf ab, zu untersuchen, inwiefern die KI Texte wiedergibt, sodass das Gehirn nicht mehr logisch, sondern nach Heuristiken denkt, gemäß dem Buch Think, Fast and Slow \cite{kahneman2011thinking}. 
+
+Das grundlegende Vorgehen der Studie bestand darin, dass im Reddit-Forum r/ChangeMyView 33 unterschiedliche KI-Accounts eingeschleust wurden. Diese haben innerhalb von vier Monaten 1532 KI-generierte Kommentare gepostet. Die Auswertung erfolgte mithilfe von LLM-Auswertungsmethoden.
+
+Das Ergebnis der Studie für die erste Forschungsfrage zeigt, dass die KI-Modelle in 67,2 \% der Fälle auf Identitätsmerkmale zurückgriffen, zu 46,1 \% auf die persönlichen Merkmale des Gegenübers eingingen sowie selbst zu 42,9 \% eigene Identitäten annahmen \cite{HowFar}.
+
+Das Ergebnis der zweiten Forschungsfrage zeigt, dass die KI meistens eine negative Einstellung in einer Konversation einnimmt. In 93,3 \% der Fälle hat die KI versucht zu widersprechen, hat aber auch in 72,6 \% der Fälle Zugeständnisse gemacht, um recht zu bekommen. Als weitere Erkenntnis hat die KI sich häufiger auf externe autoritäre Quellen wie Studien oder externe Berichte bezogen \cite{HowFar}.
+
+Das Ergebnis der dritten Forschungsfrage zeigt, dass die KI Verfügbarkeits-, Repräsentationsheuristiken und Attributsubstitution nutzt. Bei der KI-Verfügbarkeitsheuristik werden emotional geladene Beispiele genutzt, um eine Tatsache häufiger darzustellen, als diese wirklich auftaucht. Dies ist in 43,8 \% der Fälle aufgetreten. Bei der Repräsentationsheuristik wurde versucht, mit Stereotypen zu argumentieren. Dies wurde in 40,5 \% der Fälle genutzt. Bei der Attributsubstitution wird versucht, ein komplexes Problem auf einfachere Probleme abzubilden, für die die Antwort schon bekannt ist. Dies wurde in 40,4 \% der Fälle genutzt \cite{HowFar}.
 
 
+Diese Studie kann sowohl der datenethischen Kategorie des AI-Bias als auch dem Alignment-Problem zugeordnet werden. Wie oben schon aufgeführt, unterteilt sich der AI-Bias in die Datenerhebung, das Modelltraining und den Modelleinsatz. In dieser Studie wurde ein KI-Modell aktiv eingesetzt, um Interaktionen in Foren zu manipulieren, weswegen hier von einem kognitiven Bias gesprochen werden kann. Gleichzeitig wird hier das Alignment-Problem dargestellt, indem das Modell versucht, Menschen zu manipulieren, und ethische Bedenken ignoriert. 
 
-- 1. Paradigmenwechsel mit je Beispiel (100 Wörter)
-- 2. Paradigmenwechsel mit je Beispiel (100 Wörter)
-- Verantwortungsdilemma (100)
-- Beispiel (100)
+Als Fazit ist das Ergebnis sowohl erschreckend als auch kontrovers. Zum einen wird mit dieser Studie nochmals betont, wie sehr sich KI-Modelle in unsere Gesellschaft einarbeiten können und explizit genutzt werden können, um Menschen in Foren zu manipulieren. Dass KI-Modelle versuchen, überzeugend zu klingen, ist verständlich, jedoch damit zu rechnen, dass meistens eine manipulative Technik dahintersteckt, ist erschreckend. Zum anderen ist es auch sehr grotesk, da ab davon ausgegangen werden kann, dass sowohl die Konversationen online manipuliert sind als auch von KI-Modellen geführt werden. 
 
+\section{Die Infokalypse und die Gefahr für demokratische Gesellschaften}
 
+\paragraph{Infokalypse}
 
-2.
+Das Verbreiten von Falschinformationen war in der Vergangenheit gängige politische Praxis. Dabei wurden synthetische Inhalte generiert, welche dann verbreitet wurden. Ein bekanntes Beispiel ist die Zensur von Bildern in der Sowjetunion. Dabei wurden aufwendig Gruppenbilder von Stalin bearbeitet, sodass Menschen aus den Bildern entfernt wurden, nachdem diese getötet wurden \cite{noauthor_censorship_2026}. In der Vergangenheit gab es ebenfalls Falschinformationen, jedoch wird heutzutage von einer Infokalypse gesprochen, also einer Apokalypse von Informationen.
+ 
+In der Vergangenheit ist es aufwendiger gewesen, synthetische Inhalte zu erstellen. Die Infokalypse ist erst in den vergangenen Jahren verstärkt aufgetreten, da sich mithilfe von KI einfacher solche Inhalte erstellen lassen. Dazu zählen KI-generierte Texte sowie Deepfakes. Dabei braucht es letztlich nur zwei Bilder, und damit kann schon innerhalb kürzester Zeit ein Deepfake erstellt werden. Der gesamte Prozess ist einfacher geworden \cite{info}.
 
-3.
+Die Verbreitung solcher Inhalte ist mit dem Internet viel einfacher geworden. Gezeigte Inhalte können innerhalb von wenigen Sekunden mehrere tausend Menschen erreichen. Dies konnte ebenfalls nicht jeder in der Vergangenheit \cite{info}.
 
-4. (800 Wörter)
-400 Wörter was ist eine Infokalypse, wodurch diese entsteht
-Ab dem Moment wo synthetische Medieninhalte nicht mehr von der Realität unterschieden werden können, kann von einer Infokalypse gesprochen werden.
+Der letzte Faktor ist, dass die Inhalte jetzt von originalen Werken nicht mehr zu unterscheiden sind. Im Jahr 2023 waren KI-generierte Inhalte noch so schlecht, dass diese direkt erkannt wurden. Heutzutage ist es für viele kaum noch möglich, diese zu erkennen \cite{info}. 
 
-- Das mit einhergehende Problem ist, dass Menschen sich das gerne aussuchen wollen, was sie glauben wollen. Diese Tatsache ist für demokratische Gesellschaften besonders gefährlich
-Sind die vier Reiter der Apokalypse das gleiche wie die Inforkalypse
+Die allgemeinen Folgen der Infokalypse bestehen darin, zum einen die Integrität von jeglichen Informationen aufzulösen und zum anderen Menschen in manipulative Richtungen zu lenken \cite{info}.
 
+Das damit einhergehende Problem ist, dass Menschen sich gerne aussuchen, was sie glauben wollen, da jede Seite argumentativ schon vorhanden ist. Wenn eine Person Stellung zu einer Position beziehen will, so kann einfach nach dieser Position gesucht werden und es werden Argumente geliefert, welche sich unterstützend einsetzen lassen. Jedoch ist es so, dass die genannten Argumente auf Falschinformationen beruhen können \cite{info}.  
 
-
-400 Wörter warum es eine Gefahr für die heutige Gesellschaft ist
-- Warum ist eigentlich 
-
-- Woring unterscheidet sich eine demokratische Gesellschaft von anderen Gesellschaftsformen. 
-
-- Demokratie basiert stark auf austausch. Wenn der Austausch von Informationen nicht mehr funktionieren kann, bricht das System zusammen
+Das Schlimmste ist jedoch, dass sich die Informationen im Internet nicht mehr richtig beurteilen lassen. Wenn Falschinformationen genauso glaubhaft dargestellt werden können wie Echtinformationen, dann muss davon ausgegangen werden, dass beides Falschinformationen sind, und das heißt, dass die Informationen im Internet an Integrität verlieren \cite{info}.
 
 
-5. (800 Wörter)
+\paragraph{Folgen für eine demokratische Gesellschaft}
+Diese Tatsache ist für demokratische Gesellschaften besonders gefährlich. Um zu verstehen, weswegen die Infokalypse so gefährlich für demokratische Gesellschaften ist, sollte erst einmal dargestellt werden, was eine demokratische Gesellschaft ausmacht. Eine demokratische Gesellschaft basiert auf politisch partizipierenden Bürgern, welche rational handeln, diskutieren und sich über konkrete Themen einigen können. Mit der Infokalypse werden genau diese Eigenschaften geschwächt. 
 
-"Argumentieren Sie mit Bezug auf den Vortrag „Wozu ist lernen noch gut, wenn Künstliche Intelligenz alles weiß?“ und die zugehörige Literatur, welche Argumente für bzw. gegen die Nutzung von KI-Werkzeugen in Bildungsprozessen
-sprechen. Ziehen Sie ein persönliches Fazit, wie Sie in Zukunft den Einsatz von KI-Tools handhaben wollen." 
+Die Gesellschaft wird durch die Informationsflut manipuliert. Bei der alltäglichen Nutzung sozialer Medien konsumieren Nutzer Beiträge, die kaum Einfluss zu haben scheinen. Da viele Menschen ihre Meinung jedoch maßgeblich auf Basis dieser Eindrücke bilden, führt die personalisierte Erstellung von Inhalten zu einer Meinungsmanipulation. Eines der auffälligsten Beispiele ist die US-Wahl 2016. Dabei hat Donald Trump die Daten von Cambridge Analytica genutzt, um gezielt Falschinformationen an die Bevölkerung zu verbreiten. Dabei wurden genau den Wählern personalisierte Beiträge vorgestellt, welche die demokratische Partei schlecht oder die Republikanische Partei gut haben dastehen lassen \cite{lewis_leaked_2018}.
 
-(600 Wörter)
+Ein weiteres Argument ist, dass die Bürger indirekt irrational handeln durch eine Informationsüberflutung. Das meiste Handeln basiert auf zugrundeliegenden Prämissen. Wenn diese aber falsch sind, dann führt dies dazu, dass die Entscheidung letztlich irrational ist. Wenn die Bevölkerung auf Basis von Falschinformationen agiert, wird der größte Vorteil der Gesellschaft, dass es eben gemeinsame Beschlüsse gibt, welche durch Diskurs und rationales Denken zustande kommen, vernichtet. Dieses Argument hebt sich mit dem vorherigen Argument in dem Sinne ab, dass hier auf eine Verdummung der Gesellschaft und kein Mikrotargeting abgezielt wird. Ein gutes Beispiel dafür ist das Meme „Six Seven“. Es könnte die Meinung vertreten werden, dass das nichts Schlechtes ist, aber es muss bedacht werden, dass jede Konversation, welche für Sinnloses genutzt wird, eine verpasste Konversation für etwas politisch Sinnvolles war. 
 
-Um den Lösungsraum von KI-Werkzeugen im Bildungsprozess einschätzen zu können, wird zuerst beleuchtet, welche Vor- als auch Nachteile die Nutzung von KI-Werkzeugen abbilden. 
+Das Diskutieren ist Grundbestandteil einer demokratischen Gesellschaft. Das Problem mit der Infokalypse ist, dass die Bürger sich in Echokammern verlieren. Es wird nicht mehr mit neuen Menschen diskutiert, sondern mit denen, die schon dieselbe Meinung haben. Es wird bei dergleichen Meinung versteift. Ein Beispiel dafür ist Social Media. Es werden nur Inhalte vorgeschlagen, die den Benutzer möglichst lange auf der Applikation halten. Beiträge, welchen den Benutzer lange auf der Applikation halten, sind Echokammern.
 
-Das am häufigsten genannte Argument ist, dass das Denken verlernt wird. So existiert die Berühmte Studie von <>, welche belegt, dass schüler welche Aufsätze Mit KI-schreiben und daraufhin ohne KI schreiben, dass jenes Ergebnis deutlich schlechter ausgefallen ist. Es wird ein Gefühl vermittelt, dass etwas gelernt wird und dies nicht überprüft wird. Dabei wird nicht nur das Denken vernachlässigt, sondern das kritische auseinander setzen, also Hinterfragt, weswegen die Ergebnisse zustande kommen ebenso schlechter sind. 
+\section{KI-Werkzeuge im Bildungsprozess}
+Heutzutage ist es möglich, viele Probleme mithilfe von KI zu lösen, deswegen stellt sich die Frage \enquote{Wozu lernen, wenn KI alles weiß?} \cite{WozuLernenNochGutIst}. Um den Lösungsraum von KI-Werkzeugen im Bildungsprozess einschätzen zu können, wird zuerst beleuchtet, welche Vor- und Nachteile die Nutzung von KI-Werkzeugen auf gesellschaftlicher und individueller Ebene mit sich bringt, mit Bezug auf den Vortrag. 
 
-Ein weiteres Argument, was für die Nutzung von KI spricht ist das ökonomische Modell von Galor & Tsiddon. Mit fortschreitender Technologie wird werden alte Strukturen fallen und die Denk-Muster können sich durchsetzen, welche sich anpassen können
+\paragraph{Einsatz von KI-Werkzeugen in Bildungsprozessen}
 
-Gleichzeitig sollte gesagt werden, dass es keine Frage ist, ob KI genutzt wird oder nicht, sondern eine Frage des Wie. Erste 
+Das am häufigsten genannte Argument ist, dass das Denken verlernt wird. Wenn ein Essay mit KI verfasst wird, kann eine 47\% geringere Gehirnaktivität wahrgenommen werden. Gleichzeitig können Schüler oder Studenten, welche einen Aufsatz mit KI verfasst haben, sich nach wenigen Minuten nicht mal an ihren eigenen Text erinnern. Das Argument ist entsprechend, dass beim Denken nicht wirklich gedacht wird. Es wird nur vorgetäuscht, dass gedacht wird \cite{WozuLernenNochGutIst}. 
 
+Dabei wird nicht nur das Denken vernachlässigt, sondern auch die Kompetenz des kritischen Auseinandersetzens. Also das Hinterfragen, weswegen die Ergebnisse zustande gekommen sind. In Bildungseinrichtungen werden bei einem Bildungsprozess nicht nur Informationen vermittelt, sondern auch Kompetenzen. Eine Kompetenz ist das kritische Hinterfragen und Reflektieren von Aufgaben. Mit der Verwendung von KI wird auch diese Kompetenz schlechter \cite{WozuLernenNochGutIst}.
 
+Es existiert die Kompetenz, Tatsachen kritisch zu hinterfragen, aber gleichzeitig existiert auch die Kompetenz zu wissen, wie sich bestenfalls Wissen aneignen lässt. Um zu wissen, wie sich Inhalte bestenfalls aneignen lassen, sodass auch ein tiefes Verständnis vorhanden ist, ist eine Fähigkeit, welche durch das öftere Probieren erst angeeignet werden kann. Ab dem Moment, wenn sich nicht mehr damit auseinandergesetzt wird, wie sich Inhalte bestenfalls beibringen lassen, ist das nicht nur ein Schaden des Verstandes, sondern schadet auch der eigenen Vernunft. Genau der Vernunft, welche uns Menschen von KI-Modellen unterscheidet \cite{WozuLernenNochGutIst}.  
 
+Ein Argument, das hingegen für die Nutzung von KI spricht, stützt sich auf das ökonomische Modell von Galor \& Tsiddon \cite{Mobility}. Mit fortschreitender Technologie brechen alte Strukturen auf. In dieser Zeit können sich vor allem jene Denkmuster und Personen durchsetzen, die anpassungsfähig sind. Durch die neuen technologischen Möglichkeiten entsteht die Chance, bestehende Bildungsunterschiede auszugleichen. Das eigene Wissen ist dann nicht mehr vom Wissensstand der Eltern abhängig, sondern von den elektronischen Geräten.
 
+Gleichzeitig muss betont werden, dass es längst nicht mehr um die Frage geht, ob KI genutzt wird, sondern wie. Erste Studien belegen, dass der gezielte Einsatz im Sinne eines KI-Tutors ebenso gute Lerneffekte erzielt. Wenn die KI als interaktiver Lehrer agiert, bleiben die Leistungsergebnisse vorhanden. Dies hat zwei Vorteile bezüglich der Verfügbarkeit und Schnelligkeit. Familien, die sich keine teure private Nachhilfe leisten können, haben nun die Möglichkeit, ihre Kinder bei den Hausaufgaben mithilfe eines KI-Tutor zu unterstützen \cite{WozuLernenNochGutIst}.
 
-(200 Wörter)
+Aus gesellschaftlicher Sicht ist die bloße nicht bedachte Nutzung von KI die Gefahr, eine Gesellschaft hervorzubringen, die das tiefergehende Denken verlernt. Wenn Aufgaben nur noch blind abgearbeitet werden, um sie abzuhaken, und das persönliche Interesse fehlt, findet kein Lernprozess statt und ohne echtes Lernen gibt es keine Weiterentwicklung.
 
-Als erste Prämisse würde ich gerne festlegen, dass künstliche Intelligenz nur ein Werkzeug ist. 
-Ein Werkzeug, welches universal ist und vielseitige Probleme lösen kann. Der Prozess des Lernens beinhaltet das Lösen von unterschiedlichen Problemen. 
-Auf abstrakter Ebene eben das Hinterfragen von unterschiedlichen Perspektiven, das Verstehen von Zusammenhängen, das Entwickeln von eigenständigen lösungsorientierten Denkweisen.
-Auf technischer Ebene trainiert man solche Kompetenzen durch das Lösen von Aufgaben. Aus persönlichen Erfahrungen kann ich berichten, dass Heraussuchen von Informationen 
-und das Korrigieren von Aufgaben entweder. 
+Aus individueller Sicht sind die neu entstandenen KI-Werkzeuge einige der besten technologischen Fortschritte. Wenn eine Person ehrlich zu sich selbst ist und alle Aufgaben gewissenhaft erledigt, so kann sie sich einen Vorteil gegenüber anderen verschaffen. Dabei ist es unabhängig, aus welchem Elternhaus die Person stammt. Die einzige Fähigkeit, welche benötigt wird, ist es, ehrlich zu sich selbst zu sein.
 
-Mit diesem Universalem Werkzeug kann ich nicht nur Probleme Lösen sondern auch Probleme erzeugen, welche ich lösen kann. 
-Damit kann ich mir effektiv Zeit sparen und Probleme lösen, welche ich gerne lösen möchte.
+\paragraph{Persönlicher Einsatz von KI-Werkzeugen}
 
-Gleichzeitig kann ich mit KI Aufgaben delegieren, welche von keiner größeren Bedeutung sind. KI funktioniert gut im Web-Bereich. Das liegt daran, dass die Web-Programmierung 
-stark repetitive Aufgaben sind. HTML und CSS Klassen zu schreiben zeugen von keiner großeren Mentalen Aufgabe, sondern 
+Der Prozess des Lernens beinhaltet das Lösen von unterschiedlichen Problemen. Auf abstrakter Ebene ist das eben das Hinterfragen aus unterschiedlichen Perspektiven, das Verstehen von Zusammenhängen und das Entwickeln von eigenständigen, lösungsorientierten Denkweisen. Auf technischer Ebene werden solche Kompetenzen durch das konkrete Lösen von Aufgaben trainiert. Dieser Prozess des Lösens von Aufgaben lässt sich in mehrere kleinere Schritte unterteilen, zum Beispiel in das Heraussuchen von Informationen oder das Korrigieren. Aus persönlicher Erfahrung lässt sich sagen, dass das Korrigieren von Aufgaben oft schlechter durchgeführt wird oder das Heraussuchen von Informationen einfach viel zu lange dauert und den eigentlichen Lernprozess beeinträchtigt. Dabei verwende ich aktiv den Tutor-Modus von Gemini. Dies geschieht gezielt, um die Fähigkeiten zu trainieren, welche im Leben von Bedeutung sind. Nämlich das Lösen von Problemen und nicht das Erstellen von Problemen. Mit einem KI-Modell lassen sich auch gezielt neue Probleme erzeugen, welche dann zum Üben gelöst werden können. Damit lässt sich effektiv Zeit sparen, um sich darauf zu konzentrieren, die Probleme zu lösen, welche tatsächlich gelöst werden sollen. Gleichzeitig lassen sich mit einer KI Aufgaben einfach delegieren, welche für den eigenen Lernprozess von keiner größeren Bedeutung sind. Wenn ein Koch- oder Sportplan erstellt wird, ist es gleichgültig, ob dieser selbst erstellt oder mit KI generiert wurde. Natürlich wird dabei wenig gelernt, aber das Ziel ist es eben nicht ein Universalgelehrter zu sein, sondern vernünftig zu sein.
 
+\newpage
+\textbf{Vorlage Eidesstattliche Erklärung}
+\newline
+\newline
+\newline
+
+Hiermit bestätige ich, dass ich die vorliegende Prüfung zu Ethik für Informatik / INFM132 vom 28.06.2026 selbständig
+bearbeitet und keine anderen als die erlaubten Hilfsmittel benutzt habe.
+\newline
+Ich erkläre hiermit explizit, dass auf den Einsatz von KI-gestützten Schreibwerkzeugen
+vollständig verzichtet wurde.
+
+Erlind Sejdiu, 28.06.2026, Karlsruhe 
+\newline
+\includegraphics[width=0.55\textwidth]{Images/Template/Unterschrift.png}\\[16ex]
+
+\newpage
+\printbibliography[heading= bibintoc, title={Literaturverzeichnis}]
+
+\end{document}
