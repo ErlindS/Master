@@ -133,53 +133,106 @@ IntersectionPacket Intersector::intersectPacketTriangle(
     IntersectionPacket result;
     result.hit = maskv(false);
 
+<<<<<<< HEAD
     // Früher Abbruch, falls alle Strahlen im Paket bereits inaktiv sind (z.B. verfehlt Bounding Box)
+=======
+    // Früher Abbruch: Wenn kein einziger Strahl im Paket aktiv ist, abbrechen
+>>>>>>> 297df01412372f1e6ae4b42fe8513090662e9b4f
     if (stdx::none_of(active_mask)) return result;
 
+    // 1. Kanten des Dreiecks berechnen (skalar, da das Dreieck für alle Strahlen gleich ist)
     glm::vec3 edge1 = v1 - v0;
     glm::vec3 edge2 = v2 - v0;
 
+<<<<<<< HEAD
     // Kreuzprodukt (Strahlrichtung x Kante2) für alle Strahlen simultan
+=======
+    // 2. h = cross(ray.direction, edge2)
+    // Führt das Kreuzprodukt für alle 8 Strahlen parallel durch.
+    // floatv(edge2.z) 'broadcasted' den skalaren Z-Wert der Dreieckskante in alle 8 SIMD-Kanäle.
+>>>>>>> 297df01412372f1e6ae4b42fe8513090662e9b4f
     floatv hx = ray.dy * floatv(edge2.z) - ray.dz * floatv(edge2.y);
     floatv hy = ray.dz * floatv(edge2.x) - ray.dx * floatv(edge2.z);
     floatv hz = ray.dx * floatv(edge2.y) - ray.dy * floatv(edge2.x);
 
+<<<<<<< HEAD
     // Skalarprodukt a = dot(edge1, h)
     floatv a = floatv(edge1.x) * hx + floatv(edge1.y) * hy + floatv(edge1.z) * hz;
 
     // Strahlen ignorieren, die parallel zum Dreieck verlaufen
+=======
+    // 3. a = dot(edge1, h) (Determinante)
+    // Skalarprodukt parallel für alle Kanäle berechnen
+    floatv a = floatv(edge1.x) * hx + floatv(edge1.y) * hy + floatv(edge1.z) * hz;
+
+    // Prüfen, ob der Strahl parallel zum Dreieck ist (Determinante nahe 0)
+>>>>>>> 297df01412372f1e6ae4b42fe8513090662e9b4f
     const float EPSILON = 0.0000001f;
     maskv valid_a = (a <= -EPSILON) || (a >= EPSILON);
+    
+    // Maske aktualisieren: Nur Strahlen, die aktiv sind UND nicht parallel verlaufen
     maskv mask = active_mask && valid_a;
 
+    // Früher Abbruch: Wenn alle Strahlen parallel zum Dreieck stehen, abbrechen
     if (stdx::none_of(mask)) return result;
 
     floatv f = 1.0f / a;
     
+<<<<<<< HEAD
     // Vektor vom Ursprung des Strahls zum Eckpunkt v0
+=======
+    // 4. s = ray.origin - v0
+    // Differenz zwischen Strahlursprung und erstem Dreieckseckpunkt berechnen
+>>>>>>> 297df01412372f1e6ae4b42fe8513090662e9b4f
     floatv sx = ray.ox - floatv(v0.x);
     floatv sy = ray.oy - floatv(v0.y);
     floatv sz = ray.oz - floatv(v0.z);
 
+<<<<<<< HEAD
     // Baryzentrische Koordinate u berechnen
     floatv u = f * (sx * hx + sy * hy + sz * hz);
     
     // Maske aktualisieren (u muss zwischen 0.0 und 1.0 liegen)
+=======
+    // 5. u = f * dot(s, h)
+    // Baryzentrische Koordinate u parallel für alle 8 Strahlen berechnen
+    floatv u = f * (sx * hx + sy * hy + sz * hz);
+    
+    // Prüfen, ob u im gültigen Bereich [0.0, 1.0] liegt
+>>>>>>> 297df01412372f1e6ae4b42fe8513090662e9b4f
     mask = mask && (u >= 0.0f) && (u <= 1.0f);
+    
+    // Früher Abbruch: Wenn für alle Strahlen u außerhalb liegt, abbrechen
     if (stdx::none_of(mask)) return result;
 
+<<<<<<< HEAD
     // Kreuzprodukt q = cross(s, edge1)
+=======
+    // 6. q = cross(s, edge1)
+    // Kreuzprodukt für alle 8 Strahlen parallel berechnen
+>>>>>>> 297df01412372f1e6ae4b42fe8513090662e9b4f
     floatv qx = sy * floatv(edge1.z) - sz * floatv(edge1.y);
     floatv qy = sz * floatv(edge1.x) - sx * floatv(edge1.z);
     floatv qz = sx * floatv(edge1.y) - sy * floatv(edge1.x);
 
+<<<<<<< HEAD
     // Baryzentrische Koordinate v berechnen
     floatv v = f * (ray.dx * qx + ray.dy * qy + ray.dz * qz);
 
     // Maske aktualisieren (v muss positiv sein und u + v <= 1.0)
+=======
+    // 7. v = f * dot(ray.direction, q)
+    // Baryzentrische Koordinate v parallel für alle 8 Strahlen berechnen
+    floatv v = f * (ray.dx * qx + ray.dy * qy + ray.dz * qz);
+
+    // Prüfen, ob v im gültigen Bereich liegt (v >= 0.0 und u + v <= 1.0)
+>>>>>>> 297df01412372f1e6ae4b42fe8513090662e9b4f
     mask = mask && (v >= 0.0f) && (u + v <= 1.0f);
+    
+    // Früher Abbruch: Wenn alle Strahlen die Dreiecksfläche verfehlt haben
     if (stdx::none_of(mask)) return result;
 
+<<<<<<< HEAD
     // Distanz t berechnen
     floatv t = f * (floatv(edge2.x) * qx + floatv(edge2.y) * qy + floatv(edge2.z) * qz);
 
@@ -187,6 +240,16 @@ IntersectionPacket Intersector::intersectPacketTriangle(
     mask = mask && (t > EPSILON);
 
     // Ergebnisse für die aktiven und erfolgreichen Strahlen eintragen
+=======
+    // 8. t = f * dot(edge2, q)
+    // Strahl-Treffpunkt-Distanz t parallel berechnen
+    floatv t = f * (floatv(edge2.x) * qx + floatv(edge2.y) * qy + floatv(edge2.z) * qz);
+
+    // Treffer liegt nur in Blickrichtung (t > EPSILON)
+    mask = mask && (t > EPSILON);
+
+    // 9. Ergebnisse sammeln
+>>>>>>> 297df01412372f1e6ae4b42fe8513090662e9b4f
     result.hit = mask;
     result.t = t;
     result.u = u;

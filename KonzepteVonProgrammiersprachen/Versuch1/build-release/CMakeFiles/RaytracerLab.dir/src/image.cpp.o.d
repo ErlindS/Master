@@ -1,7 +1,7 @@
 CMakeFiles/RaytracerLab.dir/src/image.cpp.o: \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/image.cpp \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/image.cpp \
  /usr/include/stdc-predef.h \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/image.h \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/image.h \
  /usr/include/c++/11/vector /usr/include/c++/11/bits/stl_algobase.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \

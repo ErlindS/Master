@@ -1,8 +1,8 @@
 CMakeFiles/RaytracerLab.dir/src/scene.cpp.o: \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/scene.cpp \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/src/scene.cpp \
  /usr/include/stdc-predef.h \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/scene.h \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/mesh.h \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/scene.h \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/mesh.h \
  /usr/include/c++/11/vector /usr/include/c++/11/bits/stl_algobase.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
@@ -306,11 +306,11 @@ CMakeFiles/RaytracerLab.dir/src/scene.cpp.o: \
  /usr/include/c++/11/backward/auto_ptr.h \
  /usr/include/c++/11/pstl/glue_memory_defs.h \
  /usr/include/c++/11/pstl/execution_defs.h \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/camera.h \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/ray.h \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/shading.h \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/intersector.h \
- /home/ubuntu/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/packet.h \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/camera.h \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/ray.h \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/shading.h \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/intersector.h \
+ /mnt/c/Users/erlin/repo/Master/KonzepteVonProgrammiersprachen/Versuch1/include/packet.h \
  /usr/include/c++/11/experimental/simd \
  /usr/include/c++/11/experimental/bits/simd_detail.h \
  /usr/include/c++/11/experimental/bits/simd.h \

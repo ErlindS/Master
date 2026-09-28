@@ -135,32 +135,34 @@ run_raytracer() {
     echo ""
     print_success "${mode}-Modus abgeschlossen."
 
-    # PPM-Ausgabe prüfen und zu PNG konvertieren
-    if [ -f "output.ppm" ]; then
-        local filesize=$(du -h output.ppm | cut -f1)
-        print_info "Ausgabedatei: output.ppm (${filesize})"
-        
-        # Konvertierung zu PNG
-        if command -v magick &> /dev/null; then
-            print_info "Konvertiere output.ppm zu output.png (mit magick)..."
-            magick output.ppm output.png
-            print_success "Erfolgreich konvertiert: output.png"
-        elif command -v convert &> /dev/null; then
-            print_info "Konvertiere output.ppm zu output.png (mit convert)..."
-            convert output.ppm output.png
-            print_success "Erfolgreich konvertiert: output.png"
-        elif command -v ffmpeg &> /dev/null; then
-            print_info "Konvertiere output.ppm zu output.png (mit ffmpeg)..."
-            ffmpeg -y -v quiet -i output.ppm output.png
-            print_success "Erfolgreich konvertiert: output.png"
-        elif command -v pnmtopng &> /dev/null; then
-            print_info "Konvertiere output.ppm zu output.png (mit pnmtopng)..."
-            pnmtopng output.ppm > output.png
-            print_success "Erfolgreich konvertiert: output.png"
-        else
-            print_info "Weder ImageMagick, ffmpeg noch netpbm gefunden. Überspringe die Konvertierung zu PNG."
+    # PPM-Ausgaben prüfen und zu PNG konvertieren
+    local pictures_dir="${PROJECT_DIR}/pictures"
+    mkdir -p "${pictures_dir}"
+
+    for ppm_file in *.ppm; do
+        if [ -f "${ppm_file}" ]; then
+            local basename="${ppm_file%.ppm}"
+            local png_file="${pictures_dir}/${basename}.png"
+            local filesize=$(du -h "${ppm_file}" | cut -f1)
+            print_info "Konvertiere ${ppm_file} (${filesize}) zu ${png_file}..."
+
+            if command -v convert &> /dev/null; then
+                convert "${ppm_file}" "${png_file}"
+                print_success "Erfolgreich konvertiert: ${png_file}"
+            elif command -v magick &> /dev/null; then
+                magick "${ppm_file}" "${png_file}"
+                print_success "Erfolgreich konvertiert: ${png_file}"
+            elif command -v ffmpeg &> /dev/null; then
+                ffmpeg -y -v quiet -i "${ppm_file}" "${png_file}"
+                print_success "Erfolgreich konvertiert: ${png_file}"
+            elif command -v pnmtopng &> /dev/null; then
+                pnmtopng "${ppm_file}" > "${png_file}"
+                print_success "Erfolgreich konvertiert: ${png_file}"
+            else
+                print_info "Kein Konvertierungswerkzeug (convert, magick, ffmpeg, pnmtopng) gefunden."
+            fi
         fi
-    fi
+    done
 
     cd "${PROJECT_DIR}"
 }
