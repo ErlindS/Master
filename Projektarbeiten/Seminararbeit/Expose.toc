@@ -1,0 +1,21 @@
+\babel@toc {ngerman}{}\relax 
+\contentsline {section}{\numberline {1}Motivation}{2}{section.1}%
+\contentsline {section}{\numberline {2}Problemstellung}{2}{section.2}%
+\contentsline {paragraph}{Abgrenzung.}{2}{section*.2}%
+\contentsline {section}{\numberline {3}Stand der Technik}{3}{section.3}%
+\contentsline {paragraph}{Verteiltes Tracing und Sampling.}{3}{section*.3}%
+\contentsline {paragraph}{Overhead von Monitoring-Frameworks.}{3}{section*.4}%
+\contentsline {paragraph}{Angaben von OpenTelemetry.}{3}{section*.5}%
+\contentsline {paragraph}{Benchmark-Systeme und Messmethodik.}{3}{section*.6}%
+\contentsline {paragraph}{Forschungslücke.}{3}{section*.7}%
+\contentsline {section}{\numberline {4}Forschungsfrage}{3}{section.4}%
+\contentsline {section}{\numberline {5}Methodik}{4}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Messaufbauten}{4}{subsection.5.1}%
+\contentsline {paragraph}{Mikrobenchmark.}{4}{section*.8}%
+\contentsline {paragraph}{Makrobenchmark.}{4}{section*.9}%
+\contentsline {subsection}{\numberline {5.2}Untersuchte Faktoren}{4}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Messgrößen}{4}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Versuchsdurchführung}{5}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}Präsentation}{5}{subsection.5.5}%
+\contentsline {section}{\numberline {6}Zeitplan}{5}{section.6}%
+\contentsline {section}{Literaturverzeichnis}{6}{section*.10}%

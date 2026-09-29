@@ -1,0 +1,514 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{otel_cncf}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=0cb2a59444ef04aeca44654441071c35}{%
+           family={{Cloud Native Computing Foundation}},
+           familyi={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{0cb2a59444ef04aeca44654441071c35}
+      \strng{fullhash}{0cb2a59444ef04aeca44654441071c35}
+      \strng{fullhashraw}{0cb2a59444ef04aeca44654441071c35}
+      \strng{bibnamehash}{0cb2a59444ef04aeca44654441071c35}
+      \strng{authorbibnamehash}{0cb2a59444ef04aeca44654441071c35}
+      \strng{authornamehash}{0cb2a59444ef04aeca44654441071c35}
+      \strng{authorfullhash}{0cb2a59444ef04aeca44654441071c35}
+      \strng{authorfullhashraw}{0cb2a59444ef04aeca44654441071c35}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{{OpenTelemetry -- Project Page}}
+      \field{urlday}{28}
+      \field{urlmonth}{9}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.cncf.io/projects/opentelemetry/
+      \endverb
+      \verb{url}
+      \verb https://www.cncf.io/projects/opentelemetry/
+      \endverb
+    \endentry
+    \entry{otel_docs}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=0eb461beebb1085099be94b0796ad6d3}{%
+           family={{OpenTelemetry Authors}},
+           familyi={O\bibinitperiod}}}%
+      }
+      \strng{namehash}{0eb461beebb1085099be94b0796ad6d3}
+      \strng{fullhash}{0eb461beebb1085099be94b0796ad6d3}
+      \strng{fullhashraw}{0eb461beebb1085099be94b0796ad6d3}
+      \strng{bibnamehash}{0eb461beebb1085099be94b0796ad6d3}
+      \strng{authorbibnamehash}{0eb461beebb1085099be94b0796ad6d3}
+      \strng{authornamehash}{0eb461beebb1085099be94b0796ad6d3}
+      \strng{authorfullhash}{0eb461beebb1085099be94b0796ad6d3}
+      \strng{authorfullhashraw}{0eb461beebb1085099be94b0796ad6d3}
+      \field{extraname}{1}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{{OpenTelemetry Documentation}}
+      \field{urlday}{28}
+      \field{urlmonth}{9}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://opentelemetry.io/docs/
+      \endverb
+      \verb{url}
+      \verb https://opentelemetry.io/docs/
+      \endverb
+    \endentry
+    \entry{otel_java_perf}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=0eb461beebb1085099be94b0796ad6d3}{%
+           family={{OpenTelemetry Authors}},
+           familyi={O\bibinitperiod}}}%
+      }
+      \strng{namehash}{0eb461beebb1085099be94b0796ad6d3}
+      \strng{fullhash}{0eb461beebb1085099be94b0796ad6d3}
+      \strng{fullhashraw}{0eb461beebb1085099be94b0796ad6d3}
+      \strng{bibnamehash}{0eb461beebb1085099be94b0796ad6d3}
+      \strng{authorbibnamehash}{0eb461beebb1085099be94b0796ad6d3}
+      \strng{authornamehash}{0eb461beebb1085099be94b0796ad6d3}
+      \strng{authorfullhash}{0eb461beebb1085099be94b0796ad6d3}
+      \strng{authorfullhashraw}{0eb461beebb1085099be94b0796ad6d3}
+      \field{extraname}{2}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{{Java Agent Performance}}
+      \field{urlday}{28}
+      \field{urlmonth}{9}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://opentelemetry.io/docs/zero-code/java/agent/performance/
+      \endverb
+      \verb{url}
+      \verb https://opentelemetry.io/docs/zero-code/java/agent/performance/
+      \endverb
+    \endentry
+    \entry{sigelman2010dapper}{report}{}{}
+      \name{author}{8}{}{%
+        {{hash=eab9780c74232781131c3216d3938840}{%
+           family={Sigelman},
+           familyi={S\bibinitperiod},
+           given={Benjamin\bibnamedelima H.},
+           giveni={B\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+        {{hash=b7b397ec8054ed0ab9f02f1e5685b8d0}{%
+           family={Barroso},
+           familyi={B\bibinitperiod},
+           given={Luiz\bibnamedelima André},
+           giveni={L\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=52bd219ee38c5f14ff2c280e7e4216d1}{%
+           family={Burrows},
+           familyi={B\bibinitperiod},
+           given={Mike},
+           giveni={M\bibinitperiod}}}%
+        {{hash=55ea53762f4b3b84627371e84b2503b5}{%
+           family={Stephenson},
+           familyi={S\bibinitperiod},
+           given={Pat},
+           giveni={P\bibinitperiod}}}%
+        {{hash=fc103b936ff1d8fa40cfdc0b5ee79f52}{%
+           family={Plakal},
+           familyi={P\bibinitperiod},
+           given={Manoj},
+           giveni={M\bibinitperiod}}}%
+        {{hash=8293acfe90aa8eaf9b54bb2d780b215f}{%
+           family={Beaver},
+           familyi={B\bibinitperiod},
+           given={Donald},
+           giveni={D\bibinitperiod}}}%
+        {{hash=8769aaaafced9152f74d947681e81b2b}{%
+           family={Jaspan},
+           familyi={J\bibinitperiod},
+           given={Saul},
+           giveni={S\bibinitperiod}}}%
+        {{hash=fac2ed311ee97c6a34c4ffeafe5b28dd}{%
+           family={Shanbhag},
+           familyi={S\bibinitperiod},
+           given={Chandan},
+           giveni={C\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Google, Inc.}%
+      }
+      \strng{namehash}{251ae6755a5a3e360170f447e0c9538d}
+      \strng{fullhash}{2a7355937041bf15434ec44c709568ff}
+      \strng{fullhashraw}{2a7355937041bf15434ec44c709568ff}
+      \strng{bibnamehash}{251ae6755a5a3e360170f447e0c9538d}
+      \strng{authorbibnamehash}{251ae6755a5a3e360170f447e0c9538d}
+      \strng{authornamehash}{251ae6755a5a3e360170f447e0c9538d}
+      \strng{authorfullhash}{2a7355937041bf15434ec44c709568ff}
+      \strng{authorfullhashraw}{2a7355937041bf15434ec44c709568ff}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{number}{dapper-2010-1}
+      \field{title}{{Dapper, a Large-Scale Distributed Systems Tracing Infrastructure}}
+      \field{type}{techreport}
+      \field{year}{2010}
+    \endentry
+    \entry{lascasas2019sifter}{inproceedings}{}{}
+      \name{author}{4}{}{%
+        {{hash=cdcc80ce2002ea1480eacfaf85f8a28c}{%
+           family={Las-Casas},
+           familyi={L\bibinithyphendelim C\bibinitperiod},
+           given={Pedro},
+           giveni={P\bibinitperiod}}}%
+        {{hash=0a1b36ea6603d1b1edddaae712163250}{%
+           family={Papakerashvili},
+           familyi={P\bibinitperiod},
+           given={Giorgi},
+           giveni={G\bibinitperiod}}}%
+        {{hash=1743240c1a46bfd7de7a72df3fb4a58a}{%
+           family={Anand},
+           familyi={A\bibinitperiod},
+           given={Vaastav},
+           giveni={V\bibinitperiod}}}%
+        {{hash=b7cff53e80ad544b7cfe875cf9594433}{%
+           family={Mace},
+           familyi={M\bibinitperiod},
+           given={Jonathan},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{54e161c3ec8e067bf6c808ea03bc2bd4}
+      \strng{fullhash}{f648add9f838ddea5bf1f702ae08c19f}
+      \strng{fullhashraw}{f648add9f838ddea5bf1f702ae08c19f}
+      \strng{bibnamehash}{f648add9f838ddea5bf1f702ae08c19f}
+      \strng{authorbibnamehash}{f648add9f838ddea5bf1f702ae08c19f}
+      \strng{authornamehash}{54e161c3ec8e067bf6c808ea03bc2bd4}
+      \strng{authorfullhash}{f648add9f838ddea5bf1f702ae08c19f}
+      \strng{authorfullhashraw}{f648add9f838ddea5bf1f702ae08c19f}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the ACM Symposium on Cloud Computing (SoCC '19)}
+      \field{langid}{english}
+      \field{title}{{Sifter: Scalable Sampling for Distributed Traces, without Feature Engineering}}
+      \field{year}{2019}
+      \field{pages}{312\bibrangedash 324}
+      \range{pages}{13}
+      \verb{doi}
+      \verb 10.1145/3357223.3362736
+      \endverb
+    \endentry
+    \entry{vanhoorn2012kieker}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=f22e0405e994ff1d1d4400c03e531d20}{%
+           family={Hoorn},
+           familyi={H\bibinitperiod},
+           given={André},
+           giveni={A\bibinitperiod},
+           prefix={van},
+           prefixi={v\bibinitperiod}}}%
+        {{hash=03b5b06f02fbcb1efe5bbdfdbb426cc8}{%
+           family={Waller},
+           familyi={W\bibinitperiod},
+           given={Jan},
+           giveni={J\bibinitperiod}}}%
+        {{hash=131b9781ee9671d87bd60771bd41a0bc}{%
+           family={Hasselbring},
+           familyi={H\bibinitperiod},
+           given={Wilhelm},
+           giveni={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{e37e9a035d6f8f700520d368fad41477}
+      \strng{fullhash}{1cf1f5934a9f7b2603e3df20b30f12c8}
+      \strng{fullhashraw}{1cf1f5934a9f7b2603e3df20b30f12c8}
+      \strng{bibnamehash}{1cf1f5934a9f7b2603e3df20b30f12c8}
+      \strng{authorbibnamehash}{1cf1f5934a9f7b2603e3df20b30f12c8}
+      \strng{authornamehash}{e37e9a035d6f8f700520d368fad41477}
+      \strng{authorfullhash}{1cf1f5934a9f7b2603e3df20b30f12c8}
+      \strng{authorfullhashraw}{1cf1f5934a9f7b2603e3df20b30f12c8}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 3rd ACM/SPEC International Conference on Performance Engineering (ICPE '12)}
+      \field{langid}{english}
+      \field{title}{{Kieker: A Framework for Application Performance Monitoring and Dynamic Software Analysis}}
+      \field{year}{2012}
+      \field{pages}{247\bibrangedash 248}
+      \range{pages}{2}
+      \verb{doi}
+      \verb 10.1145/2188286.2188326
+      \endverb
+    \endentry
+    \entry{waller2015moobench}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=03b5b06f02fbcb1efe5bbdfdbb426cc8}{%
+           family={Waller},
+           familyi={W\bibinitperiod},
+           given={Jan},
+           giveni={J\bibinitperiod}}}%
+        {{hash=27e79520fb309011167d84b86d422412}{%
+           family={Ehmke},
+           familyi={E\bibinitperiod},
+           given={Nils\bibnamedelima C.},
+           giveni={N\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=131b9781ee9671d87bd60771bd41a0bc}{%
+           family={Hasselbring},
+           familyi={H\bibinitperiod},
+           given={Wilhelm},
+           giveni={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{199795280b2bf52ad31d50b8529141bc}
+      \strng{fullhash}{3e8e9b4f995400037e36644f2236aeef}
+      \strng{fullhashraw}{3e8e9b4f995400037e36644f2236aeef}
+      \strng{bibnamehash}{3e8e9b4f995400037e36644f2236aeef}
+      \strng{authorbibnamehash}{3e8e9b4f995400037e36644f2236aeef}
+      \strng{authornamehash}{199795280b2bf52ad31d50b8529141bc}
+      \strng{authorfullhash}{3e8e9b4f995400037e36644f2236aeef}
+      \strng{authorfullhashraw}{3e8e9b4f995400037e36644f2236aeef}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{ACM SIGSOFT Software Engineering Notes}
+      \field{langid}{english}
+      \field{number}{2}
+      \field{title}{{Including Performance Benchmarks into Continuous Integration to Enable DevOps}}
+      \field{volume}{40}
+      \field{year}{2015}
+      \field{pages}{1\bibrangedash 4}
+      \range{pages}{4}
+      \verb{doi}
+      \verb 10.1145/2735399.2735416
+      \endverb
+    \endentry
+    \entry{kistowski2018teastore}{inproceedings}{}{}
+      \name{author}{6}{}{%
+        {{hash=31410335bdd209f1951d02b659f18720}{%
+           family={Kistowski},
+           familyi={K\bibinitperiod},
+           given={Jóakim},
+           giveni={J\bibinitperiod},
+           prefix={von},
+           prefixi={v\bibinitperiod}}}%
+        {{hash=ae18bd68b582f6b493ecea652b3aa0c1}{%
+           family={Eismann},
+           familyi={E\bibinitperiod},
+           given={Simon},
+           giveni={S\bibinitperiod}}}%
+        {{hash=00616ce9b0b6846a8efa3d105cfa3531}{%
+           family={Schmitt},
+           familyi={S\bibinitperiod},
+           given={Norbert},
+           giveni={N\bibinitperiod}}}%
+        {{hash=1c63d9a6095297f3d0d0a94ad7200de0}{%
+           family={Bauer},
+           familyi={B\bibinitperiod},
+           given={André},
+           giveni={A\bibinitperiod}}}%
+        {{hash=d53ec718fc566c52020626fa6613fa22}{%
+           family={Grohmann},
+           familyi={G\bibinitperiod},
+           given={Johannes},
+           giveni={J\bibinitperiod}}}%
+        {{hash=4de0f4299be144a65505410b920314e7}{%
+           family={Kounev},
+           familyi={K\bibinitperiod},
+           given={Samuel},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{2ab8f41d3f78c419a35479732347b401}
+      \strng{fullhash}{420cb05391144092af131cc19c752953}
+      \strng{fullhashraw}{420cb05391144092af131cc19c752953}
+      \strng{bibnamehash}{420cb05391144092af131cc19c752953}
+      \strng{authorbibnamehash}{420cb05391144092af131cc19c752953}
+      \strng{authornamehash}{2ab8f41d3f78c419a35479732347b401}
+      \strng{authorfullhash}{420cb05391144092af131cc19c752953}
+      \strng{authorfullhashraw}{420cb05391144092af131cc19c752953}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2018 IEEE 26th International Symposium on Modeling, Analysis, and Simulation of Computer and Telecommunication Systems (MASCOTS)}
+      \field{langid}{english}
+      \field{title}{{TeaStore: A Micro-Service Reference Application for Benchmarking, Modeling and Resource Management Research}}
+      \field{year}{2018}
+      \field{pages}{223\bibrangedash 236}
+      \range{pages}{14}
+      \verb{doi}
+      \verb 10.1109/MASCOTS.2018.00030
+      \endverb
+    \endentry
+    \entry{gan2019deathstarbench}{inproceedings}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{3}{}{%
+        {{hash=61690f198459b08aee60106ffba83f46}{%
+           family={Gan},
+           familyi={G\bibinitperiod},
+           given={Yu},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=04cf4a029e5e66c22b7ceeb85b4db71b}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Yanqi},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=1ab2f5b4bd79f0716b728fb66a4b1e4d}{%
+           family={Cheng},
+           familyi={C\bibinitperiod},
+           given={Dailun},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{547736d3e0d4282c2774174aae4d4802}
+      \strng{fullhash}{7f84d887cf47a9a2d9ea726b72a93f0a}
+      \strng{fullhashraw}{7f84d887cf47a9a2d9ea726b72a93f0a}
+      \strng{bibnamehash}{7f84d887cf47a9a2d9ea726b72a93f0a}
+      \strng{authorbibnamehash}{7f84d887cf47a9a2d9ea726b72a93f0a}
+      \strng{authornamehash}{547736d3e0d4282c2774174aae4d4802}
+      \strng{authorfullhash}{7f84d887cf47a9a2d9ea726b72a93f0a}
+      \strng{authorfullhashraw}{7f84d887cf47a9a2d9ea726b72a93f0a}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 24th International Conference on Architectural Support for Programming Languages and Operating Systems (ASPLOS '19)}
+      \field{langid}{english}
+      \field{title}{{An Open-Source Benchmark Suite for Microservices and Their Hardware-Software Implications for Cloud \& Edge Systems}}
+      \field{year}{2019}
+      \field{pages}{3\bibrangedash 18}
+      \range{pages}{16}
+      \verb{doi}
+      \verb 10.1145/3297858.3304013
+      \endverb
+    \endentry
+    \entry{otel_demo}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=0eb461beebb1085099be94b0796ad6d3}{%
+           family={{OpenTelemetry Authors}},
+           familyi={O\bibinitperiod}}}%
+      }
+      \strng{namehash}{0eb461beebb1085099be94b0796ad6d3}
+      \strng{fullhash}{0eb461beebb1085099be94b0796ad6d3}
+      \strng{fullhashraw}{0eb461beebb1085099be94b0796ad6d3}
+      \strng{bibnamehash}{0eb461beebb1085099be94b0796ad6d3}
+      \strng{authorbibnamehash}{0eb461beebb1085099be94b0796ad6d3}
+      \strng{authornamehash}{0eb461beebb1085099be94b0796ad6d3}
+      \strng{authorfullhash}{0eb461beebb1085099be94b0796ad6d3}
+      \strng{authorfullhashraw}{0eb461beebb1085099be94b0796ad6d3}
+      \field{extraname}{3}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{{OpenTelemetry Demo}}
+      \field{urlday}{28}
+      \field{urlmonth}{9}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://opentelemetry.io/docs/demo/
+      \endverb
+      \verb{url}
+      \verb https://opentelemetry.io/docs/demo/
+      \endverb
+    \endentry
+    \entry{jain1991art}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=3322df3ccf4f2b377db993bd64be33aa}{%
+           family={Jain},
+           familyi={J\bibinitperiod},
+           given={Raj},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York}%
+      }
+      \list{publisher}{1}{%
+        {John Wiley \& Sons}%
+      }
+      \strng{namehash}{3322df3ccf4f2b377db993bd64be33aa}
+      \strng{fullhash}{3322df3ccf4f2b377db993bd64be33aa}
+      \strng{fullhashraw}{3322df3ccf4f2b377db993bd64be33aa}
+      \strng{bibnamehash}{3322df3ccf4f2b377db993bd64be33aa}
+      \strng{authorbibnamehash}{3322df3ccf4f2b377db993bd64be33aa}
+      \strng{authornamehash}{3322df3ccf4f2b377db993bd64be33aa}
+      \strng{authorfullhash}{3322df3ccf4f2b377db993bd64be33aa}
+      \strng{authorfullhashraw}{3322df3ccf4f2b377db993bd64be33aa}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{{The Art of Computer Systems Performance Analysis: Techniques for Experimental Design, Measurement, Simulation, and Modeling}}
+      \field{year}{1991}
+    \endentry
+    \entry{georges2007rigorous}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=afcaf0014a240a06ea272b9c4a11fdd1}{%
+           family={Georges},
+           familyi={G\bibinitperiod},
+           given={Andy},
+           giveni={A\bibinitperiod}}}%
+        {{hash=969701142f5132d452592494af5dd1ba}{%
+           family={Buytaert},
+           familyi={B\bibinitperiod},
+           given={Dries},
+           giveni={D\bibinitperiod}}}%
+        {{hash=3f773c993a74aac617cf0d2aa9c6a139}{%
+           family={Eeckhout},
+           familyi={E\bibinitperiod},
+           given={Lieven},
+           giveni={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{2a82658211239d59dd6a3f504fb05b2d}
+      \strng{fullhash}{e1694865a803aed7dd668075bfb42314}
+      \strng{fullhashraw}{e1694865a803aed7dd668075bfb42314}
+      \strng{bibnamehash}{e1694865a803aed7dd668075bfb42314}
+      \strng{authorbibnamehash}{e1694865a803aed7dd668075bfb42314}
+      \strng{authornamehash}{2a82658211239d59dd6a3f504fb05b2d}
+      \strng{authorfullhash}{e1694865a803aed7dd668075bfb42314}
+      \strng{authorfullhashraw}{e1694865a803aed7dd668075bfb42314}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 22nd ACM SIGPLAN Conference on Object-Oriented Programming Systems, Languages and Applications (OOPSLA '07)}
+      \field{langid}{english}
+      \field{title}{{Statistically Rigorous Java Performance Evaluation}}
+      \field{year}{2007}
+      \field{pages}{57\bibrangedash 76}
+      \range{pages}{20}
+      \verb{doi}
+      \verb 10.1145/1297027.1297033
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

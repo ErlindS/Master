@@ -1,15 +1,187 @@
+\documentclass[11pt]{article}
 
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[paper=a4paper,left=25mm,right=25mm,top=25mm,bottom=25mm]{geometry}
+\usepackage[english, ngerman]{babel}
+\usepackage[autostyle=true,german=quotes]{csquotes}
+\usepackage{setspace}
+\usepackage[expansion=false]{microtype}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{pgfgantt}
+\usepackage[backend=biber,style=ieee,urldate=long]{biblatex}
+\addbibresource{literatur.bib}
+\usepackage{hyperref}
 
-OpenTelemetry hat sich in den letzten Jahren als de facto Standard für Observability durchgesetzt. Es bietet eine umfassende Sammlung von APIs, SDKs und Tools zur Erzeugung, Sammlung und Analyse von Telemetriedaten wie Traces, Metrics und Logs. 
+\hypersetup{
+    colorlinks,
+    citecolor   = black,
+    filecolor   = black,
+    linkcolor   = black,
+    urlcolor    = black,
+    pdftitle    = {Expos\'e: Analysierbarkeit der HKA-App durch OpenTelemetry},
+    pdfauthor   = {Erlind Sejdiu},
+    pdfcreator  = {pdflatex},
+    pdfproducer = {LaTeX with hyperref}
+}
+\setstretch{1.25}
 
+% Markierung für Stellen, die noch ergänzt/geprüft werden müssen
+\newcommand{\offen}[1]{\textcolor{red}{[#1]}}
 
-Die einfache Integration von OpenTelemetry in Microservice-Architekturen und Cloud-nativen Anwendungen macht es zu einem unverzichtbaren Werkzeug für moderne Softwareentwicklung und -betrieb. In dieser Arbeit soll eine Analyse der bestehenden OpenTelemetry-Dokumentation und der verfügbaren Tools durchgeführt und die Integration in eine bestehende Microservice-Anwendung evaluiert werden. Ziel ist es, ein Verständnis für die Funktionsweise von OpenTelemetry und die Vorteile seiner Verwendung in der Praxis zu entwickeln.
+\begin{document}
 
-Es existieren qualitiative Aussagen, wie OpenTelemtry eingesetzt werden kann, jedoch existieren keine quantitative Aussagen. Wie gut sich Opentelemetry in komplexen Systemarchitekturen, wie der im Unternehmen einsetzen lässt, ist unklar.
+\begin{titlepage}
+    \raggedright
+    Erlind Sejdiu\\
+    106357
+    \vspace*{3cm}
 
-Deshalb soll in folgender Semniararbeit überprüft werden wie gut unterschiedliche Datenbanken unterschiedliche halten soll.
+    \begin{center}
+        {\LARGE\bfseries Exposé: Verbesserung der Analysierbarkeit\\[0.3em]
+        der HKA-App durch OpenTelemetry --\\[0.3em]
+        eine Fallstudie nach ISO/IEC 25010\par}
+        \vspace{2cm}
+        {\large Projektarbeit\\
+        der Hochschule Karlsruhe\\
+        im Master Studiengang Informatik\\
+        im Wintersemester 2026/27\par}
+    \end{center}
+    \vfill
+    \begin{tabular}{@{}ll}
+        Korrektor: & \offen{Name der betreuenden Person}
+    \end{tabular}
+\end{titlepage}
 
-Das zuzügliche Logging verbraucht performanz als auch Speicherplatz. Eine Forschungsfrage ist die Analyse des Verbrauches und des Speicherplatzes. 
+\tableofcontents
+\newpage
 
-Eine weitere Frage ist die Analyse von Wie und Wo unterschiedliche observabilities Möglichkeiten eingesetzt werden soll. Soll in jeder Funktion ein Traces entstehen. Ist dies im Debugging hilfreich, ist das Logging dann noch sinnvoll? Sollte man Event oder Attributes hinzufügen? Wie stark erfolgt 
+\section{Motivation}
 
+Die HKA-App ist die zentrale mobile Anwendung der Hochschule Karlsruhe und wird im Rahmen studentischer Projektarbeiten kontinuierlich weiterentwickelt. Sie besteht aus mehreren Client-Anwendungen für Android, iOS, Windows und das Web sowie aus einem gemeinsam genutzten Backend, das von eigenen Server- und Admin-Teams betreut wird. Eine einzelne Nutzeraktion, etwa das Abrufen des Mensaplans oder des Stundenplans, durchläuft damit mehrere Komponenten: den jeweiligen Client, das Netzwerk, den Server sowie gegebenenfalls externe Datenquellen der Hochschule.
+
+Tritt in einem solchen System ein Fehler auf oder reagiert die App langsam, ist die Ursache häufig schwer zu lokalisieren. Klassisches Logging erfasst jeweils nur die Sicht einer einzelnen Komponente, und die Log-Einträge von Client und Server lassen sich nicht ohne Weiteres einer gemeinsamen Anfrage zuordnen. Verstärkt wird dies dadurch, dass die Teams der HKA-App semesterweise wechseln: Wissen über das Laufzeitverhalten des Systems geht dabei leicht verloren, und neue Studierende müssen sich bei jedem Fehler erneut in fremden Code und fremde Logs einarbeiten.
+
+Unter dem Begriff \emph{Observability} werden Verfahren zusammengefasst, die den inneren Zustand eines Systems anhand seiner Ausgaben -- Traces, Metriken und Logs -- nachvollziehbar machen \cite{majors2022observability}. OpenTelemetry hat sich als herstellerunabhängiger De-facto-Standard hierfür etabliert und unterstützt neben gängigen Backend-Sprachen auch Browser-, Android- und iOS-Anwendungen \cite{otel_cncf,otel_docs}. Damit ist es grundsätzlich möglich, eine Anfrage vom Client bis in das Backend als zusammenhängenden Trace sichtbar zu machen. Ob dies die Qualität einer Software im Sinne eines anerkannten Qualitätsmodells tatsächlich verbessert, ist die Ausgangsfrage dieser Arbeit.
+
+\section{Problemstellung}
+
+Das Qualitätsmodell ISO/IEC 25010 beschreibt die Produktqualität von Software anhand von Qualitätsmerkmalen und zugehörigen Teilmerkmalen \cite{iso25010}. OpenTelemetry verbessert dabei nicht pauschal \enquote{die Qualität} einer Anwendung. Der unmittelbare Bezug besteht zum Teilmerkmal \emph{Analysierbarkeit} (engl.\ \emph{Analysability}) des Merkmals Wartbarkeit: Es beschreibt, wie effektiv und effizient sich die Auswirkungen von Änderungen abschätzen sowie Mängel und Fehlerursachen diagnostizieren lassen. Indirekt kann eine schnellere Fehlerdiagnose zudem die \emph{Zuverlässigkeit} verbessern, da Störungen schneller erkannt und behoben werden. Gleichzeitig wirkt sich die Instrumentierung negativ auf die \emph{Leistungseffizienz} aus, da sie zusätzliche Rechenzeit, Speicher und Netzwerkbandbreite benötigt. Die Einführung von OpenTelemetry stellt damit einen Zielkonflikt zwischen Qualitätsmerkmalen dar.
+
+Für die HKA-App ergeben sich daraus folgende Probleme:
+\begin{enumerate}[nosep]
+    \item Es ist nicht bekannt, ob und in welchem Maße OpenTelemetry die Analysierbarkeit der HKA-App verbessert, und der Nutzen lässt sich ohne konkrete Messgrößen nicht belegen.
+    \item Die Einführung selbst erfordert Implementierungsaufwand in mehreren Codebasen und eine Reihe von Architekturentscheidungen (Instrumentierungsart, Analyse-Backend, Sampling), für die Alternativen abgewogen werden müssen.
+    \item Da die App von Studierenden genutzt wird, müssen Telemetriedaten datenschutzkonform (DSGVO) erhoben werden.
+\end{enumerate}
+
+\paragraph{Abgrenzung.} Die Quantifizierung des Laufzeit- und Datenoverheads von OpenTelemetry ist Gegenstand einer separaten Seminararbeit des Autors \offen{Titel der Seminararbeit}. Deren Ergebnisse fließen in die Konfigurationsentscheidungen dieser Arbeit ein und werden zitiert, der Overhead wird hier jedoch nicht erneut systematisch untersucht, sondern lediglich stichprobenartig im realen System überprüft. Ebenfalls nicht Ziel der Arbeit ist die vollständige Instrumentierung aller vier Clients: Instrumentiert werden das Backend, die Web-App und der Android-Client; die Übertragbarkeit auf iOS und Windows wird diskutiert.
+
+\section{Stand der Technik}
+
+\paragraph{Verteiltes Tracing.} Die Grundlagen des verteilten Tracings wurden maßgeblich durch Arbeiten wie X-Trace \cite{fonseca2007xtrace} und Googles Dapper \cite{sigelman2010dapper} gelegt, deren Modell aus Traces und Spans die Grundlage von OpenTelemetry bildet. Die Weitergabe des Trace-Kontexts zwischen Komponenten ist durch den W3C-Standard \emph{Trace Context} vereinheitlicht \cite{w3c_tracecontext}. Mit Canopy beschreibt Facebook ein System, das Traces vom Browser bzw.\ der mobilen App bis in das Backend verfolgt, und zeigt, dass gerade die Verbindung von Client- und Serversicht für die Analyse von Problemen wertvoll ist \cite{kaldor2017canopy}. Diese Arbeiten beziehen sich jedoch auf Infrastrukturen großer Unternehmen, deren Größenordnung und Organisationsform mit einer Hochschul-App nicht vergleichbar sind.
+
+\paragraph{OpenTelemetry auf Clients.} OpenTelemetry stellt SDKs für Browser, Android und iOS bereit \cite{otel_js,otel_android,otel_swift}. Die Dokumentation beschreibt überwiegend qualitativ, \emph{wie} instrumentiert werden kann; die mobilen SDKs befinden sich teilweise noch in Entwicklung, sodass Erfahrungswerte rar sind.
+
+\paragraph{Qualitätsmodelle und Messgrößen.} ISO/IEC 25010 definiert die Qualitätsmerkmale selbst, jedoch keine Messverfahren \cite{iso25010}. Messgrößen für die einzelnen Teilmerkmale werden in ISO/IEC 25023 vorgeschlagen, für die Analysierbarkeit unter anderem Maße zur Vollständigkeit der Systemprotokollierung und zur Wirksamkeit von Diagnosefunktionen \cite{iso25023}. \offen{Genaue Bezeichnungen der Analysierbarkeits-Maße in ISO/IEC 25023 prüfen.} Aus der DevOps-Praxis ist zudem die \emph{Time to Restore Service} bzw.\ Mean Time to Recovery als Kennzahl für die Fähigkeit bekannt, Störungen zu beheben \cite{forsgren2018accelerate}. Für das Monitoring im Betrieb haben sich Service Level Indicators und Objectives (SLIs/SLOs) etabliert \cite{beyer2016sre}.
+
+\paragraph{Forschungslücke.} Die Konzepte des verteilten Tracings sind gut untersucht, und die Vorteile von Observability werden in der Praxisliteratur häufig betont \cite{majors2022observability}. Empirische Untersuchungen, die den Effekt auf die Fehlerdiagnose anhand definierter Messgrößen belegen, sind hingegen selten -- insbesondere für kleine, heterogene Systeme mit mehreren nativen Clients und wechselnden Entwicklerteams. \offen{Literatur zu empirischen Studien über Debugging mit Traces vs.\ Logs recherchieren und ergänzen.}
+
+\section{Forschungsfrage}
+
+Aus der Problemstellung und dem Stand der Technik leitet sich folgende zentrale Forschungsfrage ab:
+
+\begin{quote}
+\emph{Wie verändert die Einführung von OpenTelemetry die Analysierbarkeit der HKA-App im Sinne von ISO/IEC 25010, gemessen an Erfolg und Dauer der Fehlerdiagnose, und welcher Aufwand steht dem gegenüber?}
+\end{quote}
+
+Zur Beantwortung wird die Forschungsfrage in folgende Teilfragen gegliedert:
+\begin{enumerate}[label=\textbf{TF\arabic*:}, leftmargin=*, nosep]
+    \item Wie verändern sich Diagnoseerfolg und Diagnosedauer bei Fehlern in der HKA-App, wenn Entwickler neben Logs auch Traces zur Verfügung haben?
+    \item Wie bewerten die Entwicklerinnen und Entwickler der HKA-App die Analysierbarkeit des Systems vor und nach der Einführung?
+    \item Welcher Implementierungs- und Konfigurationsaufwand fällt je Plattform an, und welche Architekturentscheidungen sind dabei zu treffen?
+    \item \emph{(Nebenfrage)} Inwieweit lassen sich auf Basis der erhobenen Telemetrie sinnvolle SLIs und ein Monitoring der HKA-App aufbauen?
+\end{enumerate}
+
+\section{Methodik}\label{sec:methodik}
+
+Die Arbeit ist als Fallstudie an der realen HKA-App angelegt, die durch ein kontrolliertes Experiment (TF1) und eine Befragung (TF2) ergänzt wird.
+
+\subsection{Einführung von OpenTelemetry}
+
+Instrumentiert werden das Backend \offen{Technologie des HKA-Backends eintragen}, die Web-App und der Android-Client. Die Telemetriedaten werden über OTLP an einen OpenTelemetry Collector gesendet und in einem Analyse-Backend für Traces, Metriken und Logs ausgewertet. Die Einführung erfolgt schrittweise: zunächst automatische Instrumentierung des Backends, anschließend durchgängige Traces vom Client bis in das Backend über W3C Trace Context, schließlich gezielte manuelle Spans und die Korrelation von Logs mit Trace-IDs. Granularität und Sampling-Rate werden auf Basis der Ergebnisse der Seminararbeit gewählt.
+
+\paragraph{Architekturentscheidungen (TF3).} Alle wesentlichen Entscheidungen werden als \emph{Architecture Decision Records} (ADR) dokumentiert \cite{nygard2011adr}, jeweils mit betrachteten Alternativen, Bewertungskriterien und Begründung. Mindestens folgende Entscheidungen werden getroffen:
+\begin{itemize}[nosep]
+    \item OpenTelemetry vs.\ bestehende Logging-Lösung bzw.\ spezialisierte Dienste (z.\,B.\ Sentry, Firebase Crashlytics),
+    \item automatische vs.\ manuelle Instrumentierung und Wahl der Granularität,
+    \item Analyse-Backend (z.\,B.\ Jaeger vs.\ Grafana Tempo mit Prometheus und Loki),
+    \item Sampling-Strategie (Head- vs.\ Tail-Sampling) und Sampling-Rate,
+    \item Umgang mit personenbezogenen Daten.
+\end{itemize}
+Der Implementierungsaufwand wird je Plattform über hinzugefügte Codezeilen, Konfigurationsdateien, Abhängigkeiten und aufgewendete Arbeitszeit erfasst.
+
+\subsection{Kontrolliertes Experiment zur Fehlerdiagnose (TF1)}
+
+Die Analysierbarkeit wird anhand von Fehlerszenarien gemessen. Dazu werden in einer Testumgebung gezielt Fehler in die HKA-App eingebracht (Fault Injection), z.\,B.\ eine verzögerte Datenbankabfrage, ein fehlschlagender Aufruf einer externen Datenquelle, ein fehlerhaftes Datenformat zwischen Client und Server oder ein Fehler, der nur auf einem Client auftritt. Teilnehmende aus den Teams der HKA-App (angestrebt: 6--10 Personen) erhalten jeweils eine Fehlerbeschreibung aus Nutzersicht und sollen die Ursache finden.
+
+Es wird ein \emph{Within-Subject}-Design gewählt: Jede Person bearbeitet die Hälfte der Szenarien nur mit Logs (Kontrollbedingung) und die andere Hälfte mit Logs und Traces (Experimentalbedingung). Die Zuordnung von Szenarien und Reihenfolge wird über ein lateinisches Quadrat ausbalanciert, um Lern- und Reihenfolgeeffekte zu verringern. Jedes Szenario ist auf eine feste Zeit begrenzt. Erhoben werden:
+\begin{itemize}[nosep]
+    \item \textbf{Diagnoseerfolg:} Anteil der Szenarien, in denen die Ursache korrekt identifiziert wurde,
+    \item \textbf{Diagnosedauer:} Zeit bis zur korrekten Identifikation der Ursache,
+    \item \textbf{Diagnoseaufwand:} Anzahl der verwendeten Werkzeuge bzw.\ der betrachteten Komponenten.
+\end{itemize}
+Diese Größen werden den Analysierbarkeits-Maßen nach ISO/IEC 25023 zugeordnet \cite{iso25023}. Zusätzlich wird analog die Abdeckung der Instrumentierung erfasst, d.\,h.\ der Anteil der Anwendungsfälle, die als vollständiger Trace sichtbar sind.
+
+\subsection{Befragung (TF2)}
+
+Vor der Einführung und nach dem Experiment werden die Mitglieder der HKA-App-Teams mit einem kurzen Fragebogen (Likert-Skala) zur wahrgenommenen Analysierbarkeit und Nützlichkeit befragt, ergänzt um offene Fragen zu Hindernissen und Verbesserungsvorschlägen.
+
+\subsection{Monitoring (TF4)}
+
+Sofern ein Einsatz im Produktivbetrieb mit den Verantwortlichen der HKA-App vereinbart werden kann, werden für zentrale Anwendungsfälle SLIs (z.\,B.\ Verfügbarkeit und 95.~Perzentil der Antwortzeit) und SLOs definiert \cite{beyer2016sre} und in Dashboards und Alarmen umgesetzt. Ist kein Produktivbetrieb möglich, erfolgt dies in der Testumgebung unter synthetischer Last, und die Aussagekraft wird entsprechend eingeschränkt diskutiert. \offen{Mit den Verantwortlichen der HKA-App klären, ob ein Produktivbetrieb möglich ist.}
+
+\subsection{Datenschutz}
+
+Es werden keine personenbezogenen Daten wie Matrikelnummern, Namen oder vollständige IP-Adressen als Attribute erfasst. Das Experiment findet in einer Testumgebung mit Testkonten statt. Die Teilnahme an Experiment und Befragung ist freiwillig, die Auswertung erfolgt anonymisiert.
+
+\subsection{Validität}
+
+Die Aussagekraft ist durch die geringe Zahl an Teilnehmenden, die künstlich eingebrachten Fehler und die Rolle des Autors als Entwickler der Instrumentierung und Versuchsleiter begrenzt. Die Ergebnisse sind daher als explorativ zu verstehen. Diese Einschränkungen werden in der Ausarbeitung systematisch diskutiert.
+
+\section{Zeitplan}
+
+Den einzelnen Phasen der Arbeit sind konkrete Ziele und Artefakte zugeordnet:
+
+\begin{description}[style=nextline, leftmargin=1.5em]
+    \item[Phase 1: Einarbeitung und Ist-Analyse]
+    \textbf{Ziel:} Verständnis der Architektur der HKA-App und des vorhandenen Loggings, Abstimmung mit den Teams, Vorab-Befragung.\\
+    \textbf{Artefakt:} Architekturübersicht, Liste der betrachteten Anwendungsfälle, Ergebnisse der Vorab-Befragung.
+
+    \item[Phase 2: Architekturentscheidungen und Infrastruktur]
+    \textbf{Ziel:} Abwägung der Alternativen und Aufbau von Collector und Analyse-Backend in einer Testumgebung.\\
+    \textbf{Artefakt:} ADRs, lauffähige Observability-Infrastruktur.
+
+    \item[Phase 3: Instrumentierung von Backend und Clients]
+    \textbf{Ziel:} Instrumentierung von Backend, Web-App und Android-Client mit durchgängigen Traces und Log-Korrelation.\\
+    \textbf{Artefakt:} Instrumentierte Codebasen, Dokumentation des Implementierungsaufwands.
+
+    \item[Phase 4: Experiment und Befragung]
+    \textbf{Ziel:} Vorbereitung der Fehlerszenarien, Durchführung des Experiments und der Abschlussbefragung.\\
+    \textbf{Artefakt:} Fehlerszenarien, Rohdaten des Experiments und der Befragung.
+
+    \item[Phase 5: Monitoring]
+    \textbf{Ziel:} Definition von SLIs/SLOs, Dashboards und Alarmen.\\
+    \textbf{Artefakt:} Monitoring-Konfiguration.
+
+    \item[Phase 6: Evaluation und Ausarbeitung]
+    \textbf{Ziel:} Auswertung, Beantwortung der Forschungsfrage, Handlungsempfehlung für die HKA-App.\\
+    \textbf{Artefakt:} Schriftliche Ausarbeitung, dokumentierter Quellcode im Git-Repository, Leitfaden für nachfolgende Teams.
+\end{description}
+
+\printbibliography[heading=bibintoc, title={Literaturverzeichnis}]
+
+\end{document}

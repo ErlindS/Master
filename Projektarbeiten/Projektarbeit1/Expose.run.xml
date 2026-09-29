@@ -44,10 +44,10 @@
   <internal package="biblatex" priority="9" active="0">
     <generic>latex</generic>
     <provides type="dynamic">
-      <file>ErlindSejdiu_2026.bcf</file>
+      <file>Expose.bcf</file>
     </provides>
     <requires type="dynamic">
-      <file>ErlindSejdiu_2026.bbl</file>
+      <file>Expose.bbl</file>
     </requires>
     <requires type="static">
       <file>blx-dm.def</file>
@@ -69,22 +69,22 @@
     <generic>biber</generic>
     <cmdline>
       <binary>biber</binary>
-      <infile>ErlindSejdiu_2026</infile>
+      <infile>Expose</infile>
     </cmdline>
     <input>
-      <file>ErlindSejdiu_2026.bcf</file>
+      <file>Expose.bcf</file>
     </input>
     <output>
-      <file>ErlindSejdiu_2026.bbl</file>
+      <file>Expose.bbl</file>
     </output>
     <provides type="dynamic">
-      <file>ErlindSejdiu_2026.bbl</file>
+      <file>Expose.bbl</file>
     </provides>
     <requires type="dynamic">
-      <file>ErlindSejdiu_2026.bcf</file>
+      <file>Expose.bcf</file>
     </requires>
     <requires type="editable">
-      <file>Document/Bibliography/ref.bib</file>
+      <file>literatur.bib</file>
     </requires>
   </external>
 </requests>

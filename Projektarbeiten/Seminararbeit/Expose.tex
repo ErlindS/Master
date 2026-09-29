@@ -1,0 +1,206 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[paper=a4paper,left=25mm,right=25mm,top=25mm,bottom=25mm]{geometry}
+\usepackage[english, ngerman]{babel}
+\usepackage[autostyle=true,german=quotes]{csquotes}
+\usepackage{setspace}
+\usepackage[expansion=false]{microtype}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{pgfgantt}
+\usepackage[backend=biber,style=ieee,urldate=long]{biblatex}
+\addbibresource{literatur.bib}
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks,
+    citecolor   = black,
+    filecolor   = black,
+    linkcolor   = black,
+    urlcolor    = black,
+    pdftitle    = {Expos\'e: Quantitative Analyse des Overheads von OpenTelemetry},
+    pdfauthor   = {Erlind Sejdiu},
+    pdfcreator  = {pdflatex},
+    pdfproducer = {LaTeX with hyperref}
+}
+\setstretch{1.25}
+
+% Markierung für Stellen, die noch ergänzt/geprüft werden müssen
+\newcommand{\offen}[1]{\textcolor{red}{[#1]}}
+
+\begin{document}
+
+\begin{titlepage}
+    \raggedright
+    Erlind Sejdiu\\
+    106357
+    \vspace*{3cm}
+
+    \begin{center}
+        {\LARGE\bfseries Exposé: Was kostet Observability?\\[0.3em]
+        Eine quantitative Analyse des Laufzeit- und\\[0.3em]
+        Datenoverheads von OpenTelemetry\par}
+        \vspace{2cm}
+        {\large Seminararbeit\\
+        der Hochschule Karlsruhe\\
+        im Master Studiengang Informatik\\
+        im Wintersemester 2026/27\par}
+    \end{center}
+    \vfill
+    \begin{tabular}{@{}ll}
+        Betreuer: & \offen{Name der betreuenden Person}\\
+        Themengruppe: & \offen{Themengruppe des Seminars}
+    \end{tabular}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Motivation}
+
+Moderne Softwaresysteme bestehen zunehmend aus verteilten Diensten, deren Zusammenspiel sich ohne geeignete Werkzeuge kaum nachvollziehen lässt. Observability -- die Fähigkeit, den inneren Zustand eines Systems anhand von Traces, Metriken und Logs zu verstehen -- gilt daher als Voraussetzung für den zuverlässigen Betrieb solcher Systeme. OpenTelemetry hat sich hierfür als herstellerunabhängiger De-facto-Standard etabliert. Es ist eines der aktivsten Projekte der Cloud Native Computing Foundation und stellt APIs, SDKs und Werkzeuge für zahlreiche Programmiersprachen bereit \cite{otel_cncf,otel_docs}.
+
+Observability ist jedoch nicht kostenlos. Jeder erzeugte Span benötigt Rechenzeit und Speicher, muss serialisiert, über das Netzwerk übertragen und schließlich gespeichert werden. Wie hoch diese Kosten sind, hängt stark davon ab, \emph{wie} instrumentiert wird: Eine automatische Instrumentierung, die nur eingehende und ausgehende Anfragen erfasst, erzeugt wenige Spans pro Anfrage; wird hingegen jede Funktion mit einem eigenen Span versehen, steigt die Anzahl um Größenordnungen. Sampling-Verfahren versprechen, diese Kosten zu begrenzen, indem nur ein Teil der Traces aufgezeichnet wird.
+
+Entwicklerinnen und Entwickler, die OpenTelemetry einführen, stehen damit vor der Frage, welcher Instrumentierungsgrad und welche Sampling-Strategie für ihr System vertretbar sind. Belastbare, vergleichbare Zahlen dazu sind jedoch schwer zu finden.
+
+\section{Problemstellung}
+
+Die Dokumentation von OpenTelemetry beschreibt ausführlich, \emph{wie} Anwendungen instrumentiert werden können, macht aber nur wenige und stark kontextabhängige Angaben dazu, \emph{welche Kosten} dabei entstehen \cite{otel_java_perf}. Aussagen über den Overhead beruhen in der Praxis häufig auf Erfahrungswerten einzelner Unternehmen oder auf Messungen, deren Aufbau nicht nachvollziehbar ist. Insbesondere fehlt eine systematische Betrachtung, wie die Faktoren Instrumentierungsgrad, Sampling und Last \emph{zusammenwirken}: Ein Overhead, der bei geringer Last vernachlässigbar ist, kann nahe der Kapazitätsgrenze eines Systems zu deutlich erhöhten Antwortzeiten führen.
+
+Neben dem Laufzeit-Overhead wird die anfallende \emph{Datenmenge} oft unterschätzt. Sie bestimmt maßgeblich die Kosten für Netzwerk, Speicher und Analyse-Backend und wächst mit der Granularität der Instrumentierung.
+
+\paragraph{Abgrenzung.} Die Arbeit untersucht den Overhead auf Seite der instrumentierten Anwendung sowie die anfallende Datenmenge. Nicht betrachtet werden der diagnostische Nutzen der Telemetrie, die Instrumentierung mobiler Clients sowie der Vergleich verschiedener Analyse-Backends hinsichtlich ihrer Funktionalität. Der Nutzen von OpenTelemetry für die Fehlerdiagnose in einem realen System ist Gegenstand einer separaten Projektarbeit des Autors an der HKA-App, für die diese Seminararbeit die Konfigurationsgrundlage liefert.
+
+\section{Stand der Technik}
+
+\paragraph{Verteiltes Tracing und Sampling.} Googles Dapper zeigt, dass verteiltes Tracing im großen Maßstab mit geringem Overhead möglich ist, stützt sich dafür jedoch wesentlich auf aggressives Sampling und auf eine Instrumentierung weniger zentraler Bibliotheken \cite{sigelman2010dapper}. Arbeiten wie Sifter \cite{lascasas2019sifter} untersuchen, wie Sampling so gestaltet werden kann, dass trotz reduzierter Datenmenge aussagekräftige Traces erhalten bleiben. Der Overhead auf Seite der Anwendung steht dabei nicht im Mittelpunkt.
+
+\paragraph{Overhead von Monitoring-Frameworks.} Im Umfeld des Monitoring-Frameworks Kieker \cite{vanhoorn2012kieker} wurde mit MooBench ein Mikrobenchmark entwickelt, der den Overhead von Instrumentierung auf Methodenebene systematisch misst und in die kontinuierliche Integration eingebunden werden kann \cite{waller2015moobench}. MooBench zerlegt den Overhead in Anteile für Instrumentierung, Datenerfassung und Datenweitergabe und bietet damit eine etablierte Methodik, an der sich diese Arbeit orientiert. \offen{Prüfen, ob es bereits MooBench-Vergleiche mit OpenTelemetry gibt (Arbeitsgruppe Hasselbring), und diese hier einordnen.}
+
+\paragraph{Angaben von OpenTelemetry.} Für den Java-Agent veröffentlicht OpenTelemetry Hinweise und Messergebnisse zum Performance-Overhead, weist jedoch selbst darauf hin, dass dieser stark von Anwendung, Last und Konfiguration abhängt \cite{otel_java_perf}.
+
+\paragraph{Benchmark-Systeme und Messmethodik.} Für realistische Messungen an Microservice-Systemen existieren Referenzanwendungen wie TeaStore \cite{kistowski2018teastore}, DeathStarBench \cite{gan2019deathstarbench} oder die OpenTelemetry Demo \cite{otel_demo}. Für die statistisch belastbare Auswertung von Performance-Messungen, insbesondere auf der JVM mit ihrer Just-in-Time-Kompilierung, liegen methodische Empfehlungen vor \cite{jain1991art,georges2007rigorous}.
+
+\paragraph{Forschungslücke.} Es existieren sowohl Methoden zur Overhead-Messung als auch einzelne Messergebnisse zu OpenTelemetry. Weitgehend offen ist jedoch eine reproduzierbare Untersuchung, die das \emph{Zusammenwirken} von Instrumentierungsgrad, Sampling und Last betrachtet und dabei neben dem Laufzeit-Overhead auch die anfallende Datenmenge quantifiziert.
+
+\section{Forschungsfrage}
+
+Aus der Problemstellung und dem Stand der Technik leitet sich folgende zentrale Forschungsfrage ab:
+
+\begin{quote}
+\emph{Wie wirken sich Instrumentierungsgrad, Sampling-Strategie und Last auf den Laufzeit-Overhead und die anfallende Telemetrie-Datenmenge eines mit OpenTelemetry instrumentierten Systems aus?}
+\end{quote}
+
+Daraus werden folgende Hypothesen abgeleitet, die in der Arbeit überprüft werden:
+\begin{enumerate}[label=\textbf{H\arabic*:}, leftmargin=*, nosep]
+    \item Der Laufzeit-Overhead wächst annähernd linear mit der Anzahl erzeugter Spans pro Anfrage; eine Instrumentierung jeder Funktion verursacht daher einen um ein Vielfaches höheren Overhead als eine automatische Instrumentierung der Systemgrenzen.
+    \item Der Overhead wirkt sich stärker auf hohe Perzentile der Antwortzeit (p95, p99) aus als auf den Median und nimmt mit steigender Last überproportional zu.
+    \item Head-Sampling reduziert nicht nur die Datenmenge, sondern auch den Laufzeit-Overhead deutlich, da nicht aufgezeichnete Spans nur minimale Kosten verursachen.
+    \item Ein wesentlicher Anteil des Overheads entsteht nicht beim Erzeugen der Spans, sondern bei deren Serialisierung und Export.
+\end{enumerate}
+
+\section{Methodik}
+
+Die Forschungsfrage wird experimentell beantwortet. Um sowohl präzise als auch realistische Aussagen zu erhalten, werden zwei sich ergänzende Messaufbauten verwendet.
+
+\subsection{Messaufbauten}
+
+\paragraph{Mikrobenchmark.} In Anlehnung an MooBench \cite{waller2015moobench} wird ein synthetischer Dienst verwendet, dessen Aufruftiefe und damit die Anzahl der Spans pro Anfrage exakt steuerbar ist. So lassen sich die Kosten eines einzelnen Spans isoliert bestimmen. Der Mikrobenchmark wird in zwei Laufzeitumgebungen umgesetzt, um deren Einfluss zu vergleichen: Java mit dem OpenTelemetry-Java-Agent (JIT-kompiliert, automatische Instrumentierung) und Go mit dem OpenTelemetry-SDK (nativ kompiliert, manuelle Instrumentierung). \offen{Auswahl der Sprachen mit Betreuer abstimmen.}
+
+\paragraph{Makrobenchmark.} Als realistisches System wird eine etablierte Microservice-Referenzanwendung unter Last betrieben, voraussichtlich TeaStore \cite{kistowski2018teastore}, alternativ die OpenTelemetry Demo \cite{otel_demo}. Die endgültige Auswahl erfolgt in der ersten Phase anhand der Kriterien Instrumentierbarkeit, Reproduzierbarkeit und Ressourcenbedarf.
+
+\subsection{Untersuchte Faktoren}
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Faktor} & \textbf{Stufen} \\
+\midrule
+Instrumentierungsgrad & G0: keine Instrumentierung (Baseline);\newline
+G1: automatische Instrumentierung der Systemgrenzen (HTTP, Datenbank);\newline
+G2: G1 zuzüglich manueller Spans für fachlich relevante Funktionen;\newline
+G3: ein Span für jede Funktion \\
+\addlinespace
+Sampling & 100\,\%, 10\,\% und 1\,\% (Head-Sampling) \\
+\addlinespace
+Export & aktiv (OTLP an Collector) vs.\ deaktiviert (Spans werden erzeugt, aber verworfen) \\
+\addlinespace
+Last & 25\,\%, 50\,\%, 75\,\% und 90\,\% des in G0 ermittelten maximalen Durchsatzes \\
+\bottomrule
+\end{tabularx}
+\caption{Faktoren und Stufen der Messungen}
+\end{table}
+
+Die Stufe \enquote{Export deaktiviert} dient dazu, die Kosten für das Erzeugen von Spans von denen für Serialisierung und Export zu trennen (H4). Um die Anzahl der Messungen beherrschbar zu halten, werden nicht alle Kombinationen vollständig vermessen: Der Mikrobenchmark variiert Instrumentierungsgrad bzw.\ Aufruftiefe, Sampling und Export bei fester Last; der Makrobenchmark variiert Instrumentierungsgrad, Sampling und Last bei aktivem Export.
+
+\subsection{Messgrößen}
+
+\begin{itemize}[nosep]
+    \item \textbf{Laufzeit:} Antwortzeit (Median, p95, p99), Durchsatz,
+    \item \textbf{Ressourcen:} CPU-Auslastung und Speicherbedarf der Anwendung, bei Java zusätzlich Garbage-Collection-Aktivität,
+    \item \textbf{Datenmenge:} Spans pro Anfrage, Bytes pro Span (OTLP), übertragenes Datenvolumen pro Sekunde, Speicherbedarf im Analyse-Backend hochgerechnet auf eine Million Anfragen,
+    \item \textbf{Infrastruktur:} CPU- und Speicherbedarf des OpenTelemetry Collectors.
+\end{itemize}
+
+\subsection{Versuchsdurchführung}
+
+Die Messungen werden auf dedizierter Hardware durchgeführt, um Störeinflüsse durch geteilte Cloud-Ressourcen zu vermeiden. Alle Komponenten werden containerisiert (Docker Compose), die Last wird reproduzierbar mit einem Lastgenerator (z.\,B.\ k6) erzeugt, und die Durchführung wird skriptgesteuert automatisiert. Gemäß den Empfehlungen von Georges et al.\ \cite{georges2007rigorous} wird jede Konfiguration nach einer Aufwärmphase mehrfach gemessen; die Ergebnisse werden mit Konfidenzintervallen angegeben. Messskripte, Konfigurationen und Rohdaten werden in einem Git-Repository veröffentlicht, sodass die Messungen nachvollziehbar und wiederholbar sind.
+
+\subsection{Präsentation}
+
+Die Ergebnisse werden in einem Abschlussvortrag vorgestellt. Kern des Vortrags sind wenige, aussagekräftige Visualisierungen, insbesondere der Overhead in Abhängigkeit von Spans pro Anfrage sowie von der Last, und daraus abgeleitete Empfehlungen für die Wahl von Instrumentierungsgrad und Sampling.
+
+\section{Zeitplan}
+
+\begin{description}[style=nextline, leftmargin=1.5em]
+    \item[Phase 1: Literaturrecherche und Versuchsplanung]
+    \textbf{Ziel:} Aufarbeitung des Stands der Technik, Auswahl des Makrobenchmarks, Festlegung der Messgrößen.\\
+    \textbf{Artefakt:} Kapitel Grundlagen und Stand der Technik, Versuchsplan.
+
+    \item[Phase 2: Aufbau der Messumgebung]
+    \textbf{Ziel:} Umsetzung des Mikrobenchmarks, Inbetriebnahme des Makrobenchmarks, Automatisierung der Messungen.\\
+    \textbf{Artefakt:} Messumgebung im Git-Repository, Pilotmessung.
+
+    \item[Phase 3: Durchführung der Messungen]
+    \textbf{Ziel:} Vermessung aller geplanten Konfigurationen.\\
+    \textbf{Artefakt:} Rohdaten aller Messreihen.
+
+    \item[Phase 4: Auswertung]
+    \textbf{Ziel:} Statistische Auswertung, Überprüfung der Hypothesen, Ableitung von Empfehlungen.\\
+    \textbf{Artefakt:} Diagramme und Auswertungsskripte.
+
+    \item[Phase 5: Ausarbeitung und Vortrag]
+    \textbf{Ziel:} Schriftliche Ausarbeitung und Vorbereitung des Abschlussvortrags.\\
+    \textbf{Artefakt:} Seminararbeit und Präsentationsfolien.
+\end{description}
+
+\begin{figure}[h]
+\centering
+\begin{ganttchart}[
+    hgrid, vgrid,
+    x unit=0.8cm,
+    y unit chart=0.6cm,
+    bar height=0.5,
+    title label font=\scriptsize,
+    bar label font=\small,
+    bar/.append style={fill=gray!40}
+]{1}{14}
+    \gantttitlelist{1,...,14}{1} \\
+    \ganttbar{Phase 1: Recherche, Planung}{1}{3} \\
+    \ganttbar{Phase 2: Messumgebung}{3}{6} \\
+    \ganttbar{Phase 3: Messungen}{7}{9} \\
+    \ganttbar{Phase 4: Auswertung}{9}{11} \\
+    \ganttbar{Phase 5: Ausarbeitung, Vortrag}{10}{14}
+\end{ganttchart}
+\caption{Zeitplan in Wochen \offen{an Seminartermine anpassen}}
+\end{figure}
+
+\printbibliography[heading=bibintoc, title={Literaturverzeichnis}]
+
+\end{document}
