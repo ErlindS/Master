@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bcf:controlfile version="3.11" bltxversion="3.22a" xmlns:bcf="https://sourceforge.net/projects/biblatex">
+<bcf:controlfile version="3.11" bltxversion="3.21" xmlns:bcf="https://sourceforge.net/projects/biblatex">
   <!-- BIBER OPTIONS -->
   <bcf:options component="biber" type="global">
     <bcf:option type="singlevalued">
@@ -168,7 +168,7 @@
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>sortlocale</bcf:key>
-      <bcf:value>ngerman</bcf:value>
+      <bcf:value>english</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>sortingtemplatename</bcf:key>
@@ -2380,10 +2380,8 @@
     <bcf:citekey order="3" intorder="2">otel_docs</bcf:citekey>
     <bcf:citekey order="4" intorder="1">iso25010</bcf:citekey>
     <bcf:citekey order="5" intorder="1">nygard2011adr</bcf:citekey>
-    <bcf:citekey order="6" intorder="1">webvitals</bcf:citekey>
-    <bcf:citekey order="7" intorder="1">georges2007rigorous</bcf:citekey>
-    <bcf:citekey order="7" intorder="2">kalibera2013rigorous</bcf:citekey>
-    <bcf:citekey order="8" intorder="1">reichelt2023overhead</bcf:citekey>
+    <bcf:citekey order="6" intorder="1">otel_semconv</bcf:citekey>
+    <bcf:citekey order="7" intorder="1">reichelt2023overhead</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

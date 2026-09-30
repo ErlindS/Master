@@ -54,7 +54,7 @@
     linkcolor   = hkared,
     urlcolor    = hkared,
     citecolor   = hkared,
-    pdftitle    = {Expos\'e: Overhead von OpenTelemetry in einer .NET-Microservice-Anwendung},
+    pdftitle    = {Expos\'e: Granularit\"at von Traces und Logs mit OpenTelemetry},
     pdfauthor   = {Erlind Sejdiu},
     pdfcreator  = {pdflatex},
     pdfproducer = {LaTeX with hyperref}
@@ -94,10 +94,10 @@
     {\color{hkared}\rule{\textwidth}{1.5pt}}
 
     \vspace{1.5cm}
-    {\fontsize{24}{30}\selectfont\bfseries\color{hkared} Was kostet Observability?}\\[0.6cm]
+    {\fontsize{24}{30}\selectfont\bfseries\color{hkared} Wie fein muss Observability sein?}\\[0.6cm]
     {\Large Implementierung einer Microservice-Anwendung mit .NET und Angular
-    am Beispiel eines Projektmanagement-Werkzeugs und quantitative Analyse
-    des Overheads von OpenTelemetry\par}
+    am Beispiel eines Projektmanagement-Werkzeugs und Entwicklung einer Methodik
+    für passende Traces und Logs mit OpenTelemetry\par}
     \vspace{.75cm}
     {\LARGE\bfseries Expos\'e}
 
@@ -132,83 +132,84 @@
 
 \section{Motivation}
 
-In Microservice-Architekturen durchläuft eine einzelne Nutzeraktion mehrere Dienste, Datenbanken und Nachrichtenkanäle \cite{newman2021microservices}. Tritt ein Fehler auf oder wird eine Anfrage langsam, ist die Ursache oft nicht in einem einzelnen Dienst zu finden, sondern im Zusammenspiel mehrerer Komponenten. \emph{Observability} macht den inneren Zustand eines solchen Systems anhand von Traces, Metriken und Logs nachvollziehbar \cite{majors2022observability}. OpenTelemetry hat sich dafür als herstellerunabhängiger De-facto-Standard etabliert und bietet einheitliche Schnittstellen für viele Sprachen und Plattformen \cite{otel_cncf,otel_docs}.
+In Microservice-Architekturen durchläuft eine einzelne Nutzeraktion mehrere Dienste, Datenbanken und Nachrichtenkanäle \cite{newman2021microservices}. Tritt ein Fehler auf oder wird eine Anfrage langsam, ist die Ursache oft nicht in einem einzelnen Dienst zu finden, sondern im Zusammenspiel mehrerer Komponenten. Observability macht den inneren Zustand eines solchen Systems anhand von Traces, Metriken und Logs nachvollziehbar \cite{majors2022observability}. OpenTelemetry hat sich dafür als herstellerunabhängiger De-facto-Standard etabliert und bietet einheitliche Schnittstellen für viele Sprachen und Plattformen \cite{otel_cncf,otel_docs}.
 
-Observability ist mit Kosten verbunden. Jeder Span, jede Metrik und jeder Log-Eintrag kostet Rechenzeit und Arbeitsspeicher, erzeugt Netzwerkverkehr und belegt Speicherplatz. Zusätzlich kann die Instrumentierung die Antwortzeiten verlängern, die Nutzerinnen und Nutzer direkt wahrnehmen. Wie umfangreich instrumentiert und wie stark gesampelt wird, wird in der Praxis dennoch nach Erfahrung oder den Voreinstellungen der eingesetzten Bibliotheken entschieden. Qualitative Empfehlungen gibt es viele, belastbare quantitative Aussagen darüber, wie groß der Overhead in einer realistischen Anwendung ist und wovon er abhängt, dagegen kaum.
+Wer eine Anwendung mit OpenTelemetry instrumentiert, muss viele Entscheidungen treffen. Soll in jeder Funktion ein Span entstehen oder nur an den Grenzen der Dienste? Ist Logging noch sinnvoll, wenn es Traces gibt? Wann fügt man einem Span Events oder Attribute hinzu, und wann schreibt man einen Log-Eintrag? Die OpenTelemetry-Dokumentation erklärt ausführlich, \emph{wie} man Spans, Events und Logs erzeugt, aber kaum, \emph{wo} und \emph{wie fein} man sie einsetzen sollte. In der Praxis wird das nach Erfahrung entschieden.
 
-Die Arbeit ist daher zweigeteilt. Im ersten Teil wird ein Projektmanagement-Werkzeug als Microservice-Anwendung mit .NET und Angular entwickelt und mit OpenTelemetry instrumentiert. Im zweiten Teil wird an dieser Anwendung der Einfluss von OpenTelemetry auf Performanz und Speicherbedarf quantitativ gemessen.
+Dabei hat jede Entscheidung zwei Seiten. Zu grobe Traces helfen bei der Fehlersuche wenig. Zu feine Traces kosten Rechenzeit, Arbeitsspeicher und Speicherplatz und werden so unübersichtlich, dass die eigentliche Ursache darin untergeht.
+
+Da es sich um eine Projektarbeit handelt, liegt der Fokus auf der praktischen Umsetzung. Es wird ein Projektmanagement-Werkzeug als Microservice-Anwendung mit .NET und Angular entwickelt. Parallel dazu wird eine Methodik erarbeitet, wie passende Traces und Logs erstellt werden, und direkt an dieser Anwendung angewendet und überprüft.
 
 \section{Problemstellung}
 
-Nach ISO/IEC 25010 verbessert Observability die \emph{Analysierbarkeit} eines Systems, belastet aber die \emph{Leistungseffizienz} mit ihren Teilmerkmalen \emph{Zeitverhalten} und \emph{Ressourcennutzung} \cite{iso25010}. Um beide Qualitätsmerkmale gegeneinander abwägen zu können, muss der Preis der Observability bekannt sein. Offen ist derzeit:
-\begin{enumerate}[nosep]
-    \item um wie viel sich Antwortzeiten, Durchsatz einer .NET-Microservice-Anwendung durch OpenTelemetry verschlechtern,
-    \item wie viel zusätzlichen Arbeitsspeicher die Dienste benötigen und welches Datenvolumen die Telemetriedaten verursachen,
-    \item wie stark Konfigurationsparameter wie die erfassten Signale, die Granularität, das Sampling und die Art des Exports den Overhead beeinflussen.
+Nach dem Qualitätsmodell ISO/IEC 25010 \cite{iso25010} lässt sich Observability so einordnen, dass sie die Analysierbarkeit eines Systems verbessert, aber die Leistungseffizienz mit dem Zeitverhalten und der Ressourcennutzung belastet. Wie stark beides ausfällt, hängt vor allem von der Granularität ab, also davon, an welchen Stellen und wie fein instrumentiert wird. Offen ist derzeit, nach welchen Regeln entschieden werden kann, wo ein Span entsteht, wie fein instrumentiert wird und ob eine Information als Span, Event, Attribut oder Log-Eintrag erfasst wird.
+
+Diese Frage lässt sich nicht an einem minimalen Beispiel beantworten. Welche Traces und Logs passend sind, hängt davon ab, wie viele Dienste an einer Anfrage beteiligt sind, ob sie synchron oder asynchron zusammenarbeiten und welche fachliche Logik in den Diensten steckt. Benötigt wird daher eine Anwendung, die typische Anfragen eines realen Systems abbildet und an der sich unterschiedliche Granularitäten ausprobieren und vergleichen lassen.
+
+\paragraph{Abgrenzung.} Die Anwendung dient als realistisches Beispiel und ist kein produktionsreifes Produkt. Der Schwerpunkt liegt auf Traces und Logs, Metriken werden nur am Rande betrachtet. Nicht betrachtet wird der Vergleich verschiedener Observability-Backends (z.\,B.\ Grafana oder Datadog), da er den Rahmen dieser Projektarbeit sprengen würde. Eine vollständige Performanzstudie ist ebenfalls nicht Ziel der Arbeit. Performanz und Speicherbedarf werden nur so weit gemessen, wie es für den Vergleich der Granularitäten nötig ist.
+
+\section{Forschungsfragen und Ziele}
+
+Die Arbeit soll beantworten, wie man in einer Microservice-Anwendung passende Traces und Logs erstellt und welche Granularität dafür sinnvoll ist. Daraus ergeben sich die folgenden drei Forschungsfragen.
+
+\begin{enumerate}[label=\textbf{FF\arabic*}, leftmargin=*, nosep]
+    \item Nach welchen Regeln wird entschieden, an welchen Stellen ein Span entsteht und wie fein instrumentiert wird?
+    \item Wann wird eine Information als Span, Event, Attribut oder Log-Eintrag erfasst, und wie werden Traces und Logs miteinander verknüpft?
+    \item Wie wirken sich unterschiedliche Granularitäten auf die Fehlersuche und auf Performanz und Speicherbedarf aus?
 \end{enumerate}
 
-Eine Antwort auf diese Fragen lässt sich nicht an einem minimalen Beispiel gewinnen. Der Overhead hängt davon ab, wie viele Dienste an einer Anfrage beteiligt sind, wie viel Arbeit jeder Dienst im Verhältnis zur Instrumentierung leistet und wie viele Datenbank- und Netzwerkaufrufe dabei entstehen. Benötigt wird daher eine Anwendung, die typische Anfragen eines realen Systems abbildet und dennoch kontrolliert und wiederholbar gemessen werden kann.
-
-\paragraph{Abgrenzung.} Die Anwendung dient als realistisches Messobjekt und ist kein produktionsreifes Produkt. Nicht betrachtet werden der Vergleich verschiedener Observability-Backends (Granfa oder Datadog). Die Analyse zwischen unterschiedlichen Observability-Backends würde den Rahmen dieser Projektarbeit sprengen.
-
-\section{Stand der Technik}
-
-//
-
-\section{Ziele}
-
-\begin{enumerate}[label=\textbf{\arabic*:}, leftmargin=*, nosep]
-    \item Wie stark verändern sich Antwortzeit, maximaler Durchsatz und CPU-Auslastung durch OpenTelemetry?
-    \item Wie viel zusätzlichen Arbeitsspeicher benötigen die Dienste, und welches Datenvolumen verursachen die Telemetriedaten?
-    \item Welchen Einfluss haben Signale, Granularität, Sampling-Rate und Exportverfahren auf FF1 und FF2?
-    \item Wie wirkt sich die Instrumentierung des Angular-Frontends auf Bundle-Größe und Ladezeit aus?
-\end{enumerate}
-
-Ergebnis von Teil~1 ist eine lauffähige, in Containern bereitstellbare Anwendung, deren OpenTelemetry-Konfiguration sich ohne Codeänderung umschalten lässt -- bis hin zum Betrieb ganz ohne OpenTelemetry. Ergebnis von Teil~2 sind eine reproduzierbare Messumgebung, die Beantwortung von FF1--FF4 sowie daraus abgeleitete Konfigurationsempfehlungen für Entwicklungsteams.
+Daraus ergeben sich drei Ergebnisse. Erstens eine lauffähige, in Containern bereitstellbare Anwendung, deren Granularität sich ohne Codeänderung umschalten lässt. Zweitens eine Methodik in Form eines Leitfadens mit Regeln und Beispielen aus der Anwendung, die FF1 und FF2 beantwortet. Drittens eine Bewertung dieser Methodik anhand von Fehlerszenarien und einer Messung des Overheads, die FF3 beantwortet.
 
 \section{Vorgehen}\label{sec:vorgehen}
 
-\subsection{Teil 1: Projektmanagement-Werkzeug und Instrumentierung}
+Die Arbeit ist Schritt für Schritt aufgebaut. Die Anwendung wird Anwendungsfall für Anwendungsfall entwickelt, und jeder neue Anwendungsfall wird direkt instrumentiert. Die Erfahrungen daraus fließen laufend in die Methodik ein.
 
-Mehrere Personen planen gemeinsam Projekte: Tasks werden angelegt, mit Abhängigkeiten verknüpft und in einer Kanban-, Wochen- und Monatsansicht dargestellt. Beim Verknüpfen wird geprüft, dass keine zyklischen Abhängigkeiten entstehen. Projekte werden über Rollen mit anderen geteilt; Änderungen erscheinen bei allen Beteiligten in Echtzeit.
+\subsection{Projektmanagement-Werkzeug}
+
+Mehrere Personen planen gemeinsam Projekte. Tasks werden angelegt, mit Abhängigkeiten verknüpft und in einer Kanban-, Wochen- und Monatsansicht dargestellt. Beim Verknüpfen wird geprüft, dass keine Abhängigkeiten im Kreis entstehen. Projekte werden über Rollen mit anderen geteilt. Änderungen erscheinen bei allen Beteiligten in Echtzeit.
 
 Abbildung~\ref{fig:architektur} zeigt die geplante Architektur. Das Angular-Frontend kommuniziert ausschließlich mit einem API-Gateway, das Anfragen authentifiziert und an die zuständigen Dienste weiterleitet. Jeder Dienst verwaltet seine Daten in einer eigenen Datenbank. Zur Berechtigungsprüfung rufen Projekt- und Task-Dienst den Nutzer- und Team-Dienst synchron auf. Änderungen werden zusätzlich als Ereignisse über einen Nachrichtenbroker veröffentlicht. Diese Ereignisse verarbeitet der Benachrichtigungsdienst asynchron und sendet daraus Echtzeit-Updates an das Frontend.
 
 \begin{figure}[htbp]
 \centering
 \resizebox{\textwidth}{!}{\input{architektur.tex}}
-\caption{Geplante Architektur des Projektmanagement-Werkzeugs (vereinfacht). Durchgezogene Pfeile: synchrone Aufrufe; gestrichelt: Ereignisse; gepunktet: Telemetriedaten.}
+\caption{Geplante Architektur des Projektmanagement-Werkzeugs (vereinfacht). Durchgezogene Pfeile zeigen synchrone Aufrufe, gestrichelte Pfeile Ereignisse und gepunktete Pfeile Telemetriedaten.}
 \label{fig:architektur}
 \end{figure}
 
-Die Domäne enthält damit unterschiedliche Anfragepfade, die für die Messung relevant sind: große Lesezugriffe (Kalenderansichten, Board), kurze Schreibzugriffe (Task verschieben), rechenintensive Logik (Zyklusprüfung), synchrone Aufrufketten über mehrere Dienste und asynchrone Verarbeitung.
+Die Domäne enthält damit unterschiedliche Anfragepfade, die für die Instrumentierung interessant sind. Dazu gehören große Lesezugriffe (Kalenderansichten, Board), kurze Schreibzugriffe (Task verschieben), rechenintensive Logik (Zyklusprüfung), synchrone Aufrufketten über mehrere Dienste und asynchrone Verarbeitung. Wichtige Entwurfsentscheidungen werden als Architecture Decision Records dokumentiert \cite{nygard2011adr}.
 
-Instrumentiert wird zunächst automatisch, sodass eingehende und ausgehende Anfragen, Datenbankzugriffe und Nachrichten ohne eigenen Code erfasst werden. Ergänzt wird dies um manuelle Spans und Metriken für fachliche Vorgänge wie die Zyklusprüfung. Das Frontend gibt den Trace-Kontext an das Backend weiter, sodass eine Nutzeraktion vom Klick bis zur Datenbank als ein Trace sichtbar wird. Alle Dienste senden ihre Daten an einen gemeinsamen Collector, der sie an ein Analyse-Backend weiterleitet. Welche Signale erfasst werden, wie fein instrumentiert und wie stark gesampelt wird, lässt sich über Konfiguration umschalten. Wichtige Entwurfsentscheidungen werden als Architecture Decision Records dokumentiert \cite{nygard2011adr}.
+\subsection{Methodik für Traces und Logs}
 
-\subsection{Teil 2: Messung}
+\paragraph{Ausgangspunkt Fehlersuche.} Die Methodik geht von den Fragen aus, die bei der Fehlersuche beantwortet werden müssen, etwa \enquote{Warum dauert das Laden des Boards so lange?} oder \enquote{Welcher Dienst hat die Anfrage abgelehnt?}. Für jede Frage wird festgehalten, welche Information dafür nötig ist und an welcher Stelle sie entsteht. Daraus wird abgeleitet, wo ein Span, ein Event, ein Attribut oder ein Log-Eintrag gebraucht wird.
 
-\paragraph{Versuchsdesign.} Gemessen wird gegen eine Basislinie ohne OpenTelemetry. Ausgehend von einer Standardkonfiguration wird jeweils ein Faktor variiert, um seinen Einfluss isoliert betrachten zu können:
+\paragraph{Granularitätsstufen.} Die Anwendung wird in mehreren Stufen instrumentiert, die sich über Konfiguration umschalten lassen. Die folgende Tabelle zeigt die geplanten Stufen.
 
 \begin{center}
 \small
 \begin{tabularx}{\textwidth}{@{}l X@{}}
 \toprule
-\textbf{Faktor} & \textbf{Stufen} \\
+\textbf{Stufe} & \textbf{Instrumentierung} \\
 \midrule
-Instrumentierung & keine; SDK ohne Export; automatisch; zusätzlich manuell (grob/fein) \\
-Signale & Traces; zusätzlich Metriken; zusätzlich Logs \\
-Sampling & 0\,\%, 1\,\%, 10\,\%, 100\,\% \\
-Export & verschiedene Übertragungsprotokolle; gebündelter vs.\ sofortiger Export \\
-Last & 25\,\%, 50\,\%, 75\,\% des maximalen Durchsatzes der Basislinie \\
+0 & keine Instrumentierung (Basislinie) \\
+1 & nur automatische Instrumentierung von Anfragen, Datenbankzugriffen und Nachrichten \\
+2 & zusätzlich manuelle Spans für fachliche Vorgänge wie Zyklusprüfung und Berechtigungsprüfung \\
+3 & zusätzlich Spans auf Ebene einzelner Funktionen \\
 \bottomrule
 \end{tabularx}
 \end{center}
 
-\paragraph{Messgrößen.} Erfasst werden Antwortzeiten und Durchsatz aus Sicht eines Lastgenerators, CPU und Arbeitsspeicher je Dienst einschließlich Speicherallokationen und Garbage Collection, das Datenvolumen zum Collector und der belegte Speicherplatz im Backend. Im Frontend werden Bundle-Größe und Ladezeit anhand der Core Web Vitals bewertet \cite{webvitals}.
+Quer zu den Stufen wird untersucht, welche Details besser als Attribut oder Event an einem bestehenden Span hängen und welche als eigener Log-Eintrag erfasst werden. Attribute folgen dabei den Semantic Conventions \cite{otel_semconv}. Logs werden über die Trace-ID mit den Traces verknüpft. Das Frontend gibt den Trace-Kontext an das Backend weiter, sodass eine Nutzeraktion vom Klick bis zur Datenbank als ein Trace sichtbar wird. Alle Dienste senden ihre Daten an einen gemeinsamen Collector, der sie an ein Analyse-Backend weiterleitet \offen{Backend festlegen}.
 
-\paragraph{Messumgebung.} Der Lastgenerator führt gewichtete Szenarien aus, die typische Nutzung abbilden: Board laden, Wochen- und Monatsansicht öffnen, Tasks anlegen, verschieben und verknüpfen. Grundlage ist ein fester, generierter Datenbestand, damit alle Konfigurationen unter gleichen Bedingungen gemessen werden. Ressourcen werden mit Werkzeugen erfasst, die unabhängig von OpenTelemetry arbeiten, damit die Messung das Ergebnis nicht verfälscht. Einzelne Operationen werden zusätzlich isoliert per Micro-Benchmark gemessen. Alle Container erhalten feste Ressourcenlimits, jede Konfiguration wird nach einer Aufwärmphase mehrfach und automatisiert gemessen. \offen{Messrechner klären.}
+\paragraph{Leitfaden.} Aus den Erfahrungen entsteht ein Leitfaden mit Regeln für die Wahl der Granularität und für die Entscheidung zwischen Span, Event, Attribut und Log-Eintrag. Jede Regel wird mit einem Beispiel aus der Anwendung belegt.
 
-\paragraph{Auswertung.} Angegeben werden Perzentile mit Konfidenzintervallen und der relative Overhead zur Basislinie; Unterschiede werden mit dem Mann-Whitney-U-Test auf Signifikanz geprüft \cite{georges2007rigorous,kalibera2013rigorous}. Die Ergebnisse werden mit bestehenden Studien verglichen \cite{reichelt2023overhead}. Abschließend werden die Übertragbarkeit auf reale Systeme sowie der Einfluss von Messumgebung und Softwareversionen diskutiert.
+\subsection{Bewertung}
+
+\paragraph{Fehlerszenarien.} In die Anwendung werden gezielt typische Fehler eingebaut, etwa eine langsame Datenbankabfrage, ein ausgefallener Nutzer-Dienst oder eine verlorene Nachricht. Für jede Granularitätsstufe wird geprüft, ob sich die Ursache allein mit Traces und Logs finden lässt und wie viele Schritte dafür nötig sind.
+
+\paragraph{Overhead.} Mit einem Lastgenerator werden typische Szenarien wie das Laden des Boards oder das Verschieben von Tasks für jede Stufe durchgespielt. Gemessen werden Antwortzeit, CPU, Arbeitsspeicher und das Datenvolumen der Telemetriedaten im Vergleich zur Basislinie. Die Ergebnisse werden mit bestehenden Studien verglichen \cite{reichelt2023overhead}.
+
+Aus beiden Teilen ergibt sich für jede Stufe, was sie bei der Fehlersuche bringt und was sie kostet. Auf dieser Grundlage wird die Methodik abschließend überarbeitet.
 
 \section{Zeitplan}
 
@@ -218,13 +219,13 @@ Last & 25\,\%, 50\,\%, 75\,\% des maximalen Durchsatzes der Basislinie \\
 \toprule
 \textbf{Phase} & \textbf{Ziel} & \textbf{Artefakt} \\
 \midrule
-1 Einarbeitung & OpenTelemetry, Messmethodik & Literaturübersicht \\
-2 Implementierung & Dienste und Angular-Frontend & Lauffähige Anwendung, ADRs \\
-3 Instrumentierung & Backend, Frontend, Collector & Umschaltbare Konfiguration \\
-4 Messumgebung & Lastszenarien, Automatisierung, Pilotmessungen & Mess- und Auswertungsskripte \\
-5 Messungen & Alle Konfigurationen messen & Rohdaten \\
-6 Auswertung & Statistik, Empfehlungen & Diagramme, Tabellen \\
-7 Ausarbeitung & Schriftliche Dokumentation & Ausarbeitung, Code und Daten im Repository \\
+1 Einarbeitung & OpenTelemetry, Semantic Conventions, bestehende Empfehlungen & Literaturübersicht \\
+2 Grundgerüst & Dienste, Gateway, Frontend, Collector und Backend aufsetzen & Lauffähige Anwendung, ADRs \\
+3 Erster Anwendungsfall & Ein Anwendungsfall vom Klick bis zur Datenbank instrumentiert & Erster Entwurf der Methodik \\
+4 Ausbau & Weitere Anwendungsfälle entwickeln und nach der Methodik instrumentieren & Umschaltbare Granularitätsstufen, überarbeitete Methodik \\
+5 Bewertung & Fehlerszenarien durchspielen, Overhead messen & Ergebnisse je Stufe \\
+6 Leitfaden & Methodik zusammenfassen und mit Beispielen belegen & Leitfaden für Traces und Logs \\
+7 Ausarbeitung & Schriftliche Dokumentation & Ausarbeitung, Code im Repository \\
 \bottomrule
 \end{tabularx}
 \end{center}
