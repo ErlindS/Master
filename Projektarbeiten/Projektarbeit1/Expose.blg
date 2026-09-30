@@ -1,15 +1,15 @@
 [0] Config.pm:329> INFO - This is Biber 2.22
 [0] Config.pm:332> INFO - Logfile is 'Expose.blg'
-[49] biber:342> INFO - === Mon Sep 28, 2026, 19:57:50
-[58] Biber.pm:421> INFO - Reading 'Expose.bcf'
-[105] Biber.pm:1002> INFO - Found 15 citekeys in bib section 0
-[115] Biber.pm:4487> INFO - Processing section 0
-[122] Biber.pm:4680> INFO - Looking for bibtex file 'literatur.bib' for section 0
-[122] bibtex.pm:1713> INFO - LaTeX decoding ...
-[129] bibtex.pm:1519> INFO - Found BibTeX data source 'literatur.bib'
-[218] UCollate.pm:68> INFO - Overriding locale 'de-DE' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[219] UCollate.pm:68> INFO - Overriding locale 'de-DE' defaults 'variable = shifted' with 'variable = non-ignorable'
-[219] Biber.pm:4307> INFO - Sorting list 'none/global//global/global/global' of type 'entry' with template 'none' and locale 'de-DE'
-[219] Biber.pm:4313> INFO - No sort tailoring available for locale 'de-DE'
-[228] bbl.pm:676> INFO - Writing 'Expose.bbl' with encoding 'UTF-8'
-[234] bbl.pm:779> INFO - Output to Expose.bbl
+[36] biber:342> INFO - === Wed Sep 30, 2026, 10:24:27
+[45] Biber.pm:421> INFO - Reading 'Expose.bcf'
+[84] Biber.pm:1002> INFO - Found 10 citekeys in bib section 0
+[91] Biber.pm:4487> INFO - Processing section 0
+[96] Biber.pm:4680> INFO - Looking for bibtex file 'literatur.bib' for section 0
+[97] bibtex.pm:1713> INFO - LaTeX decoding ...
+[109] bibtex.pm:1519> INFO - Found BibTeX data source 'literatur.bib'
+[153] UCollate.pm:68> INFO - Overriding locale 'de-DE' defaults 'variable = shifted' with 'variable = non-ignorable'
+[153] UCollate.pm:68> INFO - Overriding locale 'de-DE' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[153] Biber.pm:4307> INFO - Sorting list 'none/global//global/global/global' of type 'entry' with template 'none' and locale 'de-DE'
+[153] Biber.pm:4313> INFO - No sort tailoring available for locale 'de-DE'
+[159] bbl.pm:676> INFO - Writing 'Expose.bbl' with encoding 'UTF-8'
+[161] bbl.pm:779> INFO - Output to Expose.bbl

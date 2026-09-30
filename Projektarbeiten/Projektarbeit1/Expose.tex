@@ -1,219 +1,233 @@
-\documentclass[11pt]{article}
+\documentclass[11pt, a4paper]{article}
 
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage[paper=a4paper,left=25mm,right=25mm,top=25mm,bottom=25mm]{geometry}
+% --- Pakete ---
 \usepackage[english, ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry}
 \usepackage[autostyle=true,german=quotes]{csquotes}
-\usepackage{setspace}
-\usepackage[expansion=false]{microtype}
-\usepackage{booktabs}
-\usepackage{tabularx}
-\usepackage{enumitem}
+\usepackage{graphicx}
 \usepackage{xcolor}
-\usepackage{pgfgantt}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{positioning,fit,backgrounds,shapes.geometric,arrows.meta}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage{microtype}
+\usepackage{tocloft}
+\usepackage[document]{ragged2e}
 \usepackage[backend=biber,style=ieee,urldate=long]{biblatex}
 \addbibresource{literatur.bib}
 \usepackage{hyperref}
+\emergencystretch=0.3\textwidth % lange Wörter ohne Trennung nicht über den Rand laufen lassen
+\hyphenpenalty=10000
+\exhyphenpenalty=50 % Umbruch nur an vorhandenen Bindestrichen (z.B. Projektmanagement-Werkzeug)
 
+% X-Spalten in tabularx global linksbündig (kein Blocksatz in Tabellen)
+\renewcommand{\tabularxcolumn}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% --- Farben (HKA Corporate) ---
+\definecolor{hkared}{RGB}{198, 42, 18}
+\definecolor{hkagray}{RGB}{100, 100, 100}
+
+% --- Inhaltsverzeichnis Styling ---
+% Überkapitel: rot und fett
+\renewcommand{\cftsecfont}{\bfseries\color{hkared}}
+\renewcommand{\cftsecpagefont}{\bfseries\color{hkared}}
+% Unterkapitel: schwarz (hidelinks im TOC nötig damit hyperref nicht überschreibt)
+\renewcommand{\cftsubsecfont}{\normalfont\color{black}}
+\renewcommand{\cftsubsecpagefont}{\normalfont\color{black}}
+% Spacing: gleiches Spacing auf allen Ebenen
+\setlength{\cftbeforesecskip}{8pt}
+\setlength{\cftbeforesubsecskip}{8pt}
+\setlength{\cftbeforesubsubsecskip}{8pt}
+% Abstand nach dem Titel "Inhaltsverzeichnis" vor dem ersten Eintrag
+\setlength{\cftaftertoctitleskip}{1.2cm}
+
+% --- Hyperref Setup ---
 \hypersetup{
-    colorlinks,
-    citecolor   = black,
-    filecolor   = black,
-    linkcolor   = black,
-    urlcolor    = black,
-    pdftitle    = {Expos\'e: Observability f\"ur die HKA-App},
+    colorlinks  = true,
+    linkcolor   = hkared,
+    urlcolor    = hkared,
+    citecolor   = hkared,
+    pdftitle    = {Expos\'e: Overhead von OpenTelemetry in einer .NET-Microservice-Anwendung},
     pdfauthor   = {Erlind Sejdiu},
     pdfcreator  = {pdflatex},
     pdfproducer = {LaTeX with hyperref}
 }
-\setstretch{1.25}
+
+% --- Section Styling ---
+\titleformat{\section}{\large\bfseries\color{hkared}}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{hkared}}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{black}}{\thesubsubsection}{1em}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.5em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.3em}
+\titlespacing*{\subsubsection}{0pt}{0.6em}{0.2em}
+
+% --- Header/Footer ---
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{hkagray}Expos\'e -- Projektarbeit}
+\fancyhead[R]{\small\color{hkagray}Master Informatik WS~2026/27}
+\fancyfoot[C]{\small\color{hkagray}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
 
 % Markierung für Stellen, die noch ergänzt/geprüft werden müssen
 \newcommand{\offen}[1]{\textcolor{red}{[#1]}}
 
+% =============================================================================
 \begin{document}
 
+% --- Titelseite ---
 \begin{titlepage}
-    \raggedright
-    Erlind Sejdiu\\
-    106357
-    \vspace*{3cm}
+    \centering
+    \includegraphics[width=0.35\textwidth]{HKA.jpg}
 
-    \begin{center}
-        {\LARGE\bfseries Exposé: Konzeption und Umsetzung\\[0.3em]
-        einer Observability-Lösung für die HKA-App --\\[0.3em]
-        Verbesserung der Analysierbarkeit\\[0.3em]
-        mit OpenTelemetry und Dashboards\par}
-        \vspace{2cm}
-        {\large Projektarbeit\\
-        der Hochschule Karlsruhe\\
-        im Master Studiengang Informatik\\
-        im Wintersemester 2026/27\par}
-    \end{center}
-    \vfill
-    \begin{tabular}{@{}ll}
-        Korrektor: & \offen{Name der betreuenden Person}
+    {\normalsize\color{hkagray} University of Applied Sciences}\\[0.125cm]
+    {\small\color{hkagray} Fakult\"at f\"ur Informatik und Wirtschaftsinformatik}
+
+    \vspace{.5cm}
+    {\color{hkared}\rule{\textwidth}{1.5pt}}
+
+    \vspace{1.5cm}
+    {\fontsize{24}{30}\selectfont\bfseries\color{hkared} Was kostet Observability?}\\[0.6cm]
+    {\Large Implementierung einer Microservice-Anwendung mit .NET und Angular
+    am Beispiel eines Projektmanagement-Werkzeugs und quantitative Analyse
+    des Overheads von OpenTelemetry\par}
+    \vspace{.75cm}
+    {\LARGE\bfseries Expos\'e}
+
+    \vspace{.5cm}
+    {\large Projektarbeit im Master Studiengang Informatik}\\[0.3cm]
+    {\large Wintersemester 2026/27}
+
+    \vspace{.5cm}
+    {\color{hkared}\rule{0.6\textwidth}{0.5pt}}
+    \vspace{1.5cm}
+
+    {\normalsize
+    \begin{tabular}{rl}
+        \textbf{Autor:}          & Erlind Sejdiu \\
+        \textbf{Matrikelnummer:} & 106357 \\[0.5cm]
+        \textbf{Korrektor:}      & \offen{Name der betreuenden Person} \\
     \end{tabular}
+    }
+
+    \vfill
+    {\small\color{hkagray} Stand: \today}
 \end{titlepage}
 
+% --- Inhaltsverzeichnis ---
+\begingroup
+\hypersetup{hidelinks}
 \tableofcontents
+\endgroup
+\thispagestyle{empty}
 \newpage
+\setcounter{page}{1}
 
 \section{Motivation}
 
-Die HKA-App ist die zentrale mobile Anwendung der Hochschule Karlsruhe und wird im Rahmen studentischer Projektarbeiten kontinuierlich weiterentwickelt. Sie besteht aus mehreren Client-Anwendungen für Android, iOS, Windows und das Web sowie aus einem gemeinsam genutzten Backend, das von eigenen Server- und Admin-Teams betreut wird. Eine einzelne Nutzeraktion, etwa das Abrufen des Mensaplans oder des Stundenplans, durchläuft damit mehrere Komponenten: den jeweiligen Client, das Netzwerk, den Server sowie gegebenenfalls externe Datenquellen der Hochschule.
+In Microservice-Architekturen durchläuft eine einzelne Nutzeraktion mehrere Dienste, Datenbanken und Nachrichtenkanäle \cite{newman2021microservices}. Tritt ein Fehler auf oder wird eine Anfrage langsam, ist die Ursache oft nicht in einem einzelnen Dienst zu finden, sondern im Zusammenspiel mehrerer Komponenten. \emph{Observability} macht den inneren Zustand eines solchen Systems anhand von Traces, Metriken und Logs nachvollziehbar \cite{majors2022observability}. OpenTelemetry hat sich dafür als herstellerunabhängiger De-facto-Standard etabliert und bietet einheitliche Schnittstellen für viele Sprachen und Plattformen \cite{otel_cncf,otel_docs}.
 
-Tritt in einem solchen System ein Fehler auf oder reagiert die App langsam, ist die Ursache häufig schwer zu lokalisieren. Klassisches Logging erfasst jeweils nur die Sicht einer einzelnen Komponente, und die Log-Einträge von Client und Server lassen sich nicht ohne Weiteres einer gemeinsamen Anfrage zuordnen. Einen zentralen Überblick darüber, ob die App gerade funktioniert, wie schnell sie antwortet und wo Fehler auftreten, gibt es nicht. Verstärkt wird dies dadurch, dass die Teams der HKA-App semesterweise wechseln: Wissen über das Laufzeitverhalten des Systems geht dabei leicht verloren, und neue Studierende müssen sich bei jedem Fehler erneut in fremden Code und fremde Logs einarbeiten.
+Observability ist mit Kosten verbunden. Jeder Span, jede Metrik und jeder Log-Eintrag kostet Rechenzeit und Arbeitsspeicher, erzeugt Netzwerkverkehr und belegt Speicherplatz. Zusätzlich kann die Instrumentierung die Antwortzeiten verlängern, die Nutzerinnen und Nutzer direkt wahrnehmen. Wie umfangreich instrumentiert und wie stark gesampelt wird, wird in der Praxis dennoch nach Erfahrung oder den Voreinstellungen der eingesetzten Bibliotheken entschieden. Qualitative Empfehlungen gibt es viele, belastbare quantitative Aussagen darüber, wie groß der Overhead in einer realistischen Anwendung ist und wovon er abhängt, dagegen kaum.
 
-Unter dem Begriff \emph{Observability} werden Verfahren zusammengefasst, die den inneren Zustand eines Systems anhand seiner Ausgaben -- Traces, Metriken und Logs -- nachvollziehbar machen \cite{majors2022observability}. OpenTelemetry hat sich als herstellerunabhängiger De-facto-Standard für die Erhebung dieser Daten etabliert und unterstützt neben gängigen Backend-Sprachen auch Browser-, Android- und iOS-Anwendungen \cite{otel_cncf,otel_docs}. Telemetriedaten allein machen ein System jedoch noch nicht analysierbar: Erst durch geeignete Dashboards, Alarme und eine Dokumentation, die auch nachfolgende Teams nutzen können, wird aus den Daten ein Werkzeug für den Alltag. Ziel dieser Projektarbeit ist es, eine solche Observability-Lösung für die HKA-App aufzubauen.
+Die Arbeit ist daher zweigeteilt. Im ersten Teil wird ein Projektmanagement-Werkzeug als Microservice-Anwendung mit .NET und Angular entwickelt und mit OpenTelemetry instrumentiert. Im zweiten Teil wird an dieser Anwendung der Einfluss von OpenTelemetry auf Performanz und Speicherbedarf quantitativ gemessen.
 
 \section{Problemstellung}
 
-Das Qualitätsmodell ISO/IEC 25010 beschreibt die Produktqualität von Software anhand von Qualitätsmerkmalen und zugehörigen Teilmerkmalen \cite{iso25010}. Die hier betrachtete Maßnahme zielt auf das Teilmerkmal \emph{Analysierbarkeit} (engl.\ \emph{Analysability}) des Merkmals Wartbarkeit: Es beschreibt, wie effektiv und effizient sich Mängel und Fehlerursachen diagnostizieren sowie die Auswirkungen von Änderungen abschätzen lassen. Indirekt profitiert die \emph{Zuverlässigkeit}, wenn Störungen schneller erkannt und behoben werden; die zusätzliche Instrumentierung belastet hingegen die \emph{Leistungseffizienz}.
-
-Für die HKA-App ergeben sich derzeit folgende konkrete Probleme:
+Nach ISO/IEC 25010 verbessert Observability die \emph{Analysierbarkeit} eines Systems, belastet aber die \emph{Leistungseffizienz} mit ihren Teilmerkmalen \emph{Zeitverhalten} und \emph{Ressourcennutzung} \cite{iso25010}. Um beide Qualitätsmerkmale gegeneinander abwägen zu können, muss der Preis der Observability bekannt sein. Offen ist derzeit:
 \begin{enumerate}[nosep]
-    \item \textbf{Keine durchgängige Sicht:} Eine Anfrage kann nicht vom Client bis in das Backend und zu externen Datenquellen verfolgt werden.
-    \item \textbf{Kein Überblick über den Systemzustand:} Es gibt keine Dashboards, die Verfügbarkeit, Antwortzeiten und Fehlerraten der zentralen Anwendungsfälle zeigen. Probleme werden meist erst durch Nutzerbeschwerden bekannt.
-    \item \textbf{Keine Alarmierung:} Störungen, etwa der Ausfall einer externen Datenquelle, werden nicht automatisch gemeldet.
-    \item \textbf{Wissensverlust bei Teamwechseln:} Wie das System im Fehlerfall zu analysieren ist, ist nicht dokumentiert und muss von jedem Team neu erarbeitet werden.
-    \item \textbf{Datenschutz:} Da die App von Studierenden genutzt wird, müssen Telemetriedaten datenschutzkonform (DSGVO) erhoben werden.
+    \item um wie viel sich Antwortzeiten, Durchsatz einer .NET-Microservice-Anwendung durch OpenTelemetry verschlechtern,
+    \item wie viel zusätzlichen Arbeitsspeicher die Dienste benötigen und welches Datenvolumen die Telemetriedaten verursachen,
+    \item wie stark Konfigurationsparameter wie die erfassten Signale, die Granularität, das Sampling und die Art des Exports den Overhead beeinflussen.
 \end{enumerate}
 
-\paragraph{Abgrenzung.} Die Quantifizierung des Laufzeit- und Datenoverheads von OpenTelemetry ist Gegenstand einer separaten Seminararbeit des Autors \offen{Titel der Seminararbeit}. Deren Ergebnisse fließen in die Konfigurationsentscheidungen dieser Arbeit ein; der Overhead wird hier lediglich stichprobenartig im realen System überprüft. Ebenfalls nicht Ziel der Arbeit ist die vollständige Instrumentierung aller vier Clients: Instrumentiert werden das Backend, die Web-App und der Android-Client; die Übertragbarkeit auf iOS und Windows wird diskutiert. Die Arbeit versteht sich als Umsetzungsarbeit; eine empirische Studie mit statistisch belastbaren Aussagen ist nicht Ziel.
+Eine Antwort auf diese Fragen lässt sich nicht an einem minimalen Beispiel gewinnen. Der Overhead hängt davon ab, wie viele Dienste an einer Anfrage beteiligt sind, wie viel Arbeit jeder Dienst im Verhältnis zur Instrumentierung leistet und wie viele Datenbank- und Netzwerkaufrufe dabei entstehen. Benötigt wird daher eine Anwendung, die typische Anfragen eines realen Systems abbildet und dennoch kontrolliert und wiederholbar gemessen werden kann.
+
+\paragraph{Abgrenzung.} Die Anwendung dient als realistisches Messobjekt und ist kein produktionsreifes Produkt. Nicht betrachtet werden der Vergleich verschiedener Observability-Backends (Granfa oder Datadog). Die Analyse zwischen unterschiedlichen Observability-Backends würde den Rahmen dieser Projektarbeit sprengen.
 
 \section{Stand der Technik}
 
-\paragraph{Verteiltes Tracing.} Die Grundlagen des verteilten Tracings wurden maßgeblich durch Arbeiten wie X-Trace \cite{fonseca2007xtrace} und Googles Dapper \cite{sigelman2010dapper} gelegt, deren Modell aus Traces und Spans die Grundlage von OpenTelemetry bildet. Die Weitergabe des Trace-Kontexts zwischen Komponenten ist durch den W3C-Standard \emph{Trace Context} vereinheitlicht \cite{w3c_tracecontext}. Mit Canopy beschreibt Facebook ein System, das Traces vom Browser bzw.\ der mobilen App bis in das Backend verfolgt, und zeigt, dass gerade die Verbindung von Client- und Serversicht für die Analyse von Problemen wertvoll ist \cite{kaldor2017canopy}.
+//
 
-\paragraph{OpenTelemetry.} OpenTelemetry stellt SDKs für Browser, Android und iOS bereit \cite{otel_js,otel_android,otel_swift}. Einheitliche Namen und Attribute für Telemetriedaten werden durch die \emph{Semantic Conventions} festgelegt \cite{otel_semconv}, was die Voraussetzung für plattformübergreifende Dashboards ist. Die mobilen SDKs befinden sich teilweise noch in Entwicklung, sodass Erfahrungswerte rar sind.
+\section{Ziele}
 
-\paragraph{Dashboards und Monitoring.} Für den Aufbau von Dashboards haben sich einige Leitlinien etabliert. Google beschreibt mit den \emph{Four Golden Signals} (Latenz, Durchsatz, Fehler, Auslastung) die Kerngrößen, die für jeden nutzerorientierten Dienst überwacht werden sollten \cite{beyer2016sre}. Die \emph{RED-Methode} (Rate, Errors, Duration) verdichtet dies für anfragebasierte Dienste \cite{wilkie2018red}, die \emph{USE-Methode} (Utilization, Saturation, Errors) für Ressourcen wie CPU, Speicher oder Datenbankverbindungen \cite{gregg2013use}. Auf Clientseite beschreiben die \emph{Core Web Vitals} die vom Nutzer wahrgenommene Leistung von Webanwendungen \cite{webvitals}. Für Alarme wird empfohlen, sich an \emph{Service Level Objectives} (SLOs) statt an einzelnen technischen Schwellwerten zu orientieren, um Fehlalarme zu vermeiden \cite{beyer2016sre}.
-
-\paragraph{Bewertung der Analysierbarkeit.} ISO/IEC 25010 definiert die Qualitätsmerkmale selbst, jedoch keine Messverfahren \cite{iso25010}. Messgrößen für die Analysierbarkeit, etwa zur Vollständigkeit der Systemprotokollierung und zur Wirksamkeit von Diagnosefunktionen, werden in ISO/IEC 25023 vorgeschlagen \cite{iso25023}. \offen{Genaue Bezeichnungen der Analysierbarkeits-Maße in ISO/IEC 25023 prüfen.} Aus der DevOps-Praxis ist zudem die \emph{Time to Restore Service} als Kennzahl für die Fähigkeit bekannt, Störungen zu beheben \cite{forsgren2018accelerate}.
-
-\paragraph{Einordnung.} Die genannten Arbeiten und Methoden stammen überwiegend aus großen Unternehmen mit eigenen Betriebsteams. Offen ist, wie sich diese Konzepte mit vertretbarem Aufwand auf ein kleines, heterogenes System mit mehreren nativen Clients und semesterweise wechselnden, studentischen Teams übertragen lassen.
-
-\section{Zielsetzung}
-
-Leitend für die Arbeit ist die Frage:
-
-\begin{quote}
-\emph{Wie lässt sich die Analysierbarkeit der HKA-App mit OpenTelemetry, Dashboards und Alarmierung so verbessern, dass auch nachfolgende Teams Fehler schnell und selbstständig diagnostizieren können?}
-\end{quote}
-
-Daraus ergeben sich folgende Ziele:
-\begin{enumerate}[label=\textbf{Z\arabic*:}, leftmargin=*, nosep]
-    \item \textbf{Instrumentierung:} Backend, Web-App und Android-Client sind mit OpenTelemetry instrumentiert. Die zentralen Anwendungsfälle sind als durchgängiger Trace vom Client bis in das Backend sichtbar, und Logs sind über Trace-IDs mit den Traces verknüpft.
-    \item \textbf{Observability-Infrastruktur:} Ein OpenTelemetry Collector und ein Analyse-Backend für Traces, Metriken und Logs sind reproduzierbar aufgesetzt (Infrastructure as Code).
-    \item \textbf{Dashboards:} Für die verschiedenen Zielgruppen existieren Dashboards, die den Systemzustand auf einen Blick zeigen und einen Drill-down vom Symptom bis zur Ursache ermöglichen.
-    \item \textbf{Alarmierung:} Für die zentralen Anwendungsfälle sind SLIs und SLOs definiert, deren Verletzung automatisch gemeldet wird.
-    \item \textbf{Übergabe:} Architekturentscheidungen, ein Leitfaden zur Instrumentierung und Runbooks für typische Fehlerbilder sind so dokumentiert, dass nachfolgende Teams die Lösung weiterführen können.
+\begin{enumerate}[label=\textbf{\arabic*:}, leftmargin=*, nosep]
+    \item Wie stark verändern sich Antwortzeit, maximaler Durchsatz und CPU-Auslastung durch OpenTelemetry?
+    \item Wie viel zusätzlichen Arbeitsspeicher benötigen die Dienste, und welches Datenvolumen verursachen die Telemetriedaten?
+    \item Welchen Einfluss haben Signale, Granularität, Sampling-Rate und Exportverfahren auf FF1 und FF2?
+    \item Wie wirkt sich die Instrumentierung des Angular-Frontends auf Bundle-Größe und Ladezeit aus?
 \end{enumerate}
+
+Ergebnis von Teil~1 ist eine lauffähige, in Containern bereitstellbare Anwendung, deren OpenTelemetry-Konfiguration sich ohne Codeänderung umschalten lässt -- bis hin zum Betrieb ganz ohne OpenTelemetry. Ergebnis von Teil~2 sind eine reproduzierbare Messumgebung, die Beantwortung von FF1--FF4 sowie daraus abgeleitete Konfigurationsempfehlungen für Entwicklungsteams.
 
 \section{Vorgehen}\label{sec:vorgehen}
 
-Die Umsetzung erfolgt iterativ: Zunächst wird ein einzelner Anwendungsfall (z.\,B.\ der Abruf des Mensaplans) vollständig vom Client über das Backend bis in das Dashboard umgesetzt. Auf Basis der Erfahrungen wird die Lösung anschließend auf weitere Anwendungsfälle und Plattformen ausgeweitet.
+\subsection{Teil 1: Projektmanagement-Werkzeug und Instrumentierung}
 
-\subsection{Ist-Analyse und Anforderungen}
+Mehrere Personen planen gemeinsam Projekte: Tasks werden angelegt, mit Abhängigkeiten verknüpft und in einer Kanban-, Wochen- und Monatsansicht dargestellt. Beim Verknüpfen wird geprüft, dass keine zyklischen Abhängigkeiten entstehen. Projekte werden über Rollen mit anderen geteilt; Änderungen erscheinen bei allen Beteiligten in Echtzeit.
 
-Zu Beginn werden die Architektur der HKA-App, das vorhandene Logging und der bisherige Umgang mit Fehlern erfasst. In kurzen Gesprächen mit den Client-, Server- und Admin-Teams wird ein \emph{Fragenkatalog} erhoben: Welche Fragen müssen im Betrieb und bei der Fehlersuche beantwortet werden können (z.\,B.\ \enquote{Ist der Stundenplan gerade für alle Nutzer erreichbar?}, \enquote{Liegt eine langsame Antwort am Client, am Server oder an der externen Datenquelle?}, \enquote{Seit welcher App-Version tritt ein Fehler auf?})? Dieser Fragenkatalog bildet die Anforderungen an Instrumentierung und Dashboards und dient später als Grundlage der Evaluation.
+Abbildung~\ref{fig:architektur} zeigt die geplante Architektur. Das Angular-Frontend kommuniziert ausschließlich mit einem API-Gateway, das Anfragen authentifiziert und an die zuständigen Dienste weiterleitet. Jeder Dienst verwaltet seine Daten in einer eigenen Datenbank. Zur Berechtigungsprüfung rufen Projekt- und Task-Dienst den Nutzer- und Team-Dienst synchron auf. Änderungen werden zusätzlich als Ereignisse über einen Nachrichtenbroker veröffentlicht. Diese Ereignisse verarbeitet der Benachrichtigungsdienst asynchron und sendet daraus Echtzeit-Updates an das Frontend.
 
-\subsection{Architekturentscheidungen}
+\begin{figure}[htbp]
+\centering
+\resizebox{\textwidth}{!}{\input{architektur.tex}}
+\caption{Geplante Architektur des Projektmanagement-Werkzeugs (vereinfacht). Durchgezogene Pfeile: synchrone Aufrufe; gestrichelt: Ereignisse; gepunktet: Telemetriedaten.}
+\label{fig:architektur}
+\end{figure}
 
-Alle wesentlichen Entscheidungen werden als \emph{Architecture Decision Records} (ADR) dokumentiert \cite{nygard2011adr}, jeweils mit betrachteten Alternativen, Kriterien und Begründung. Dazu zählen mindestens:
-\begin{itemize}[nosep]
-    \item OpenTelemetry vs.\ bestehende Logging-Lösung bzw.\ spezialisierte Dienste (z.\,B.\ Sentry, Firebase Crashlytics),
-    \item Analyse- und Visualisierungs-Backend (z.\,B.\ Grafana mit Tempo, Prometheus und Loki vs.\ Jaeger vs.\ SigNoz),
-    \item automatische vs.\ manuelle Instrumentierung und Wahl der Granularität,
-    \item Sampling-Strategie (Head- vs.\ Tail-Sampling) und Sampling-Rate,
-    \item Betrieb der Infrastruktur (Hosting an der Hochschule, Ressourcenbedarf, Aufbewahrungsdauer der Daten),
-    \item Umgang mit personenbezogenen Daten.
-\end{itemize}
+Die Domäne enthält damit unterschiedliche Anfragepfade, die für die Messung relevant sind: große Lesezugriffe (Kalenderansichten, Board), kurze Schreibzugriffe (Task verschieben), rechenintensive Logik (Zyklusprüfung), synchrone Aufrufketten über mehrere Dienste und asynchrone Verarbeitung.
 
-\subsection{Instrumentierung (Z1, Z2)}
+Instrumentiert wird zunächst automatisch, sodass eingehende und ausgehende Anfragen, Datenbankzugriffe und Nachrichten ohne eigenen Code erfasst werden. Ergänzt wird dies um manuelle Spans und Metriken für fachliche Vorgänge wie die Zyklusprüfung. Das Frontend gibt den Trace-Kontext an das Backend weiter, sodass eine Nutzeraktion vom Klick bis zur Datenbank als ein Trace sichtbar wird. Alle Dienste senden ihre Daten an einen gemeinsamen Collector, der sie an ein Analyse-Backend weiterleitet. Welche Signale erfasst werden, wie fein instrumentiert und wie stark gesampelt wird, lässt sich über Konfiguration umschalten. Wichtige Entwurfsentscheidungen werden als Architecture Decision Records dokumentiert \cite{nygard2011adr}.
 
-Instrumentiert werden das Backend \offen{Technologie des HKA-Backends eintragen}, die Web-App und der Android-Client. Die Telemetriedaten werden über OTLP an einen OpenTelemetry Collector gesendet, der sie filtert, anreichert und an das Analyse-Backend weiterleitet. Die Einführung erfolgt schrittweise: zunächst automatische Instrumentierung des Backends, anschließend durchgängige Traces vom Client bis in das Backend über W3C Trace Context, dann gezielte manuelle Spans und Metriken für fachlich relevante Vorgänge (z.\,B.\ Aufrufe externer Datenquellen, Cache-Treffer) sowie die Korrelation von Logs mit Trace-IDs. Attribute folgen den Semantic Conventions \cite{otel_semconv}, damit alle Plattformen einheitlich ausgewertet werden können. Granularität und Sampling-Rate werden auf Basis der Ergebnisse der Seminararbeit gewählt. Die gesamte Infrastruktur wird als Code (z.\,B.\ Docker Compose oder Kubernetes-Manifeste) im Repository abgelegt.
+\subsection{Teil 2: Messung}
 
-\subsection{Dashboards (Z3)}
-
-Die Dashboards werden aus dem Fragenkatalog abgeleitet und nach den Leitlinien aus dem Stand der Technik aufgebaut. Geplant ist eine Hierarchie von der Übersicht bis ins Detail:
+\paragraph{Versuchsdesign.} Gemessen wird gegen eine Basislinie ohne OpenTelemetry. Ausgehend von einer Standardkonfiguration wird jeweils ein Faktor variiert, um seinen Einfluss isoliert betrachten zu können:
 
 \begin{center}
 \small
-\begin{tabularx}{\textwidth}{@{}l l X@{}}
+\begin{tabularx}{\textwidth}{@{}l X@{}}
 \toprule
-\textbf{Dashboard} & \textbf{Zielgruppe} & \textbf{Inhalt} \\
+\textbf{Faktor} & \textbf{Stufen} \\
 \midrule
-Systemübersicht & alle Teams & Zustand aller Anwendungsfälle auf einen Blick (Ampel), SLO-Erfüllung und verbleibendes Fehlerbudget \\
-Backend-Dienste & Server-Team & RED-Metriken je Endpunkt, Abhängigkeiten zu Datenbank und externen Datenquellen \\
-Infrastruktur & Admin-Team & USE-Metriken für Server, Datenbank und Collector \\
-Web-Client & Web-Team & Core Web Vitals, Ladezeiten, JavaScript-Fehler, Anteil fehlgeschlagener API-Aufrufe \\
-Android-Client & Android-Team & App-Startzeit, Abstürze und Fehler je App-Version und Gerät, Netzwerkfehler \\
-Fehleranalyse & alle Teams & Liste fehlerhafter bzw.\ langsamer Traces mit Sprung in Trace-Ansicht und zugehörige Logs \\
+Instrumentierung & keine; SDK ohne Export; automatisch; zusätzlich manuell (grob/fein) \\
+Signale & Traces; zusätzlich Metriken; zusätzlich Logs \\
+Sampling & 0\,\%, 1\,\%, 10\,\%, 100\,\% \\
+Export & verschiedene Übertragungsprotokolle; gebündelter vs.\ sofortiger Export \\
+Last & 25\,\%, 50\,\%, 75\,\% des maximalen Durchsatzes der Basislinie \\
 \bottomrule
 \end{tabularx}
 \end{center}
 
-Wichtig ist die Verknüpfung der Dashboards untereinander: Von einer Auffälligkeit in der Übersicht soll man über die betroffene Komponente bis zu einzelnen Traces und den zugehörigen Log-Einträgen navigieren können. Die Dashboards werden als Code versioniert (z.\,B.\ über Grafana-Provisioning), damit sie bei Teamwechseln erhalten bleiben und nachvollziehbar weiterentwickelt werden können.
+\paragraph{Messgrößen.} Erfasst werden Antwortzeiten und Durchsatz aus Sicht eines Lastgenerators, CPU und Arbeitsspeicher je Dienst einschließlich Speicherallokationen und Garbage Collection, das Datenvolumen zum Collector und der belegte Speicherplatz im Backend. Im Frontend werden Bundle-Größe und Ladezeit anhand der Core Web Vitals bewertet \cite{webvitals}.
 
-\subsection{Alarmierung (Z4)}
+\paragraph{Messumgebung.} Der Lastgenerator führt gewichtete Szenarien aus, die typische Nutzung abbilden: Board laden, Wochen- und Monatsansicht öffnen, Tasks anlegen, verschieben und verknüpfen. Grundlage ist ein fester, generierter Datenbestand, damit alle Konfigurationen unter gleichen Bedingungen gemessen werden. Ressourcen werden mit Werkzeugen erfasst, die unabhängig von OpenTelemetry arbeiten, damit die Messung das Ergebnis nicht verfälscht. Einzelne Operationen werden zusätzlich isoliert per Micro-Benchmark gemessen. Alle Container erhalten feste Ressourcenlimits, jede Konfiguration wird nach einer Aufwärmphase mehrfach und automatisiert gemessen. \offen{Messrechner klären.}
 
-Für die zentralen Anwendungsfälle werden SLIs (z.\,B.\ Anteil erfolgreicher Anfragen, 95.~Perzentil der Antwortzeit) und SLOs definiert \cite{beyer2016sre}. Darauf aufbauend werden Alarme konfiguriert, die bei drohender Verletzung eines SLOs die zuständigen Teams benachrichtigen, etwa über einen Chat-Kanal. Zu jedem Alarm wird ein Runbook verlinkt, das die ersten Analyseschritte beschreibt. Sofern ein Einsatz im Produktivbetrieb mit den Verantwortlichen der HKA-App vereinbart werden kann, werden SLOs anhand realer Daten kalibriert; andernfalls erfolgt dies in der Testumgebung unter synthetischer Last. \offen{Mit den Verantwortlichen der HKA-App klären, ob ein Produktivbetrieb möglich ist.}
-
-\subsection{Dokumentation und Übergabe (Z5)}
-
-Neben den ADRs entstehen ein Leitfaden, der beschreibt, wie neue Funktionen instrumentiert und in die Dashboards aufgenommen werden, sowie Runbooks für typische Fehlerbilder. Die Übergabe wird in einem kurzen Workshop mit den Teams erprobt.
-
-\subsection{Evaluation}
-
-Die Evaluation soll zeigen, dass die Ziele erreicht wurden und die Analysierbarkeit praktisch verbessert ist. Dazu werden folgende Nachweise erbracht:
-\begin{itemize}[nosep]
-    \item \textbf{Fehlerszenarien:} In der Testumgebung werden gezielt typische Fehler eingebracht (z.\,B.\ eine verzögerte Datenbankabfrage, ein fehlschlagender Aufruf einer externen Datenquelle, ein fehlerhaftes Datenformat zwischen Client und Server, ein Fehler, der nur auf einem Client auftritt). Für jedes Szenario wird geprüft, ob ein Alarm ausgelöst wird, ob die Ursache über die Dashboards gefunden werden kann und wie viele Schritte bzw.\ wie viel Zeit dafür nötig sind -- im Vergleich zur Analyse nur mit den bisherigen Logs.
-    \item \textbf{Abdeckung:} Anteil der Fragen aus dem Fragenkatalog, die mit den Dashboards beantwortet werden können, sowie Anteil der Anwendungsfälle, die als vollständiger Trace sichtbar sind.
-    \item \textbf{Rückmeldung der Teams:} Einige Mitglieder der HKA-App-Teams bearbeiten ausgewählte Fehlerszenarien selbstständig mithilfe der Dashboards und Runbooks und geben anschließend in einem kurzen Fragebogen Rückmeldung zu Nützlichkeit und Verständlichkeit.
-    \item \textbf{Aufwand und Overhead:} Implementierungsaufwand je Plattform (Codezeilen, Abhängigkeiten, Arbeitszeit), Ressourcenbedarf der Infrastruktur sowie stichprobenartige Messung des Laufzeit-Overheads.
-\end{itemize}
-Die Ergebnisse werden, soweit möglich, den Analysierbarkeits-Maßen nach ISO/IEC 25023 zugeordnet \cite{iso25023}. Da die Fehler künstlich eingebracht werden und der Autor die Lösung selbst entwickelt hat, sind die Ergebnisse als qualitative Bewertung zu verstehen; diese Einschränkungen werden in der Ausarbeitung diskutiert.
-
-\subsection{Datenschutz}
-
-Es werden keine personenbezogenen Daten wie Matrikelnummern, Namen oder vollständige IP-Adressen als Attribute erfasst; der Collector entfernt bzw.\ maskiert entsprechende Felder zusätzlich zentral. Aufbewahrungsdauer und Zugriffsrechte auf die Telemetriedaten werden festgelegt und dokumentiert. Tests und Fehlerszenarien werden in einer Testumgebung mit Testkonten durchgeführt; die Teilnahme an der Rückmelderunde ist freiwillig und wird anonym ausgewertet.
+\paragraph{Auswertung.} Angegeben werden Perzentile mit Konfidenzintervallen und der relative Overhead zur Basislinie; Unterschiede werden mit dem Mann-Whitney-U-Test auf Signifikanz geprüft \cite{georges2007rigorous,kalibera2013rigorous}. Die Ergebnisse werden mit bestehenden Studien verglichen \cite{reichelt2023overhead}. Abschließend werden die Übertragbarkeit auf reale Systeme sowie der Einfluss von Messumgebung und Softwareversionen diskutiert.
 
 \section{Zeitplan}
 
-Den einzelnen Phasen der Arbeit sind konkrete Ziele und Artefakte zugeordnet:
-
-\begin{description}[style=nextline, leftmargin=1.5em]
-    \item[Phase 1: Einarbeitung und Ist-Analyse]
-    \textbf{Ziel:} Verständnis der Architektur der HKA-App und des vorhandenen Loggings, Abstimmung mit den Teams.\\
-    \textbf{Artefakt:} Architekturübersicht, Liste der zentralen Anwendungsfälle, Fragenkatalog.
-
-    \item[Phase 2: Architekturentscheidungen und Infrastruktur]
-    \textbf{Ziel:} Abwägung der Alternativen und Aufbau von Collector und Analyse-Backend in einer Testumgebung.\\
-    \textbf{Artefakt:} ADRs, lauffähige Observability-Infrastruktur als Code.
-
-    \item[Phase 3: Durchstich für einen Anwendungsfall]
-    \textbf{Ziel:} Ein Anwendungsfall ist vom Client bis in ein erstes Dashboard durchgängig sichtbar.\\
-    \textbf{Artefakt:} Instrumentierter Anwendungsfall, erstes Dashboard.
-
-    \item[Phase 4: Ausbau der Instrumentierung]
-    \textbf{Ziel:} Instrumentierung weiterer Anwendungsfälle in Backend, Web-App und Android-Client inkl.\ Log-Korrelation.\\
-    \textbf{Artefakt:} Instrumentierte Codebasen, Dokumentation des Implementierungsaufwands.
-
-    \item[Phase 5: Dashboards und Alarmierung]
-    \textbf{Ziel:} Umsetzung der Dashboard-Hierarchie, Definition von SLIs/SLOs und Alarmen.\\
-    \textbf{Artefakt:} Versionierte Dashboards, Alarmregeln, Runbooks.
-
-    \item[Phase 6: Evaluation und Übergabe]
-    \textbf{Ziel:} Durchspielen der Fehlerszenarien, Rückmeldung der Teams, Übergabe-Workshop.\\
-    \textbf{Artefakt:} Evaluationsergebnisse, Leitfaden für nachfolgende Teams.
-
-    \item[Phase 7: Ausarbeitung]
-    \textbf{Ziel:} Schriftliche Dokumentation der Arbeit und Handlungsempfehlungen für die HKA-App.\\
-    \textbf{Artefakt:} Schriftliche Ausarbeitung, dokumentierter Quellcode im Git-Repository.
-\end{description}
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}l X X@{}}
+\toprule
+\textbf{Phase} & \textbf{Ziel} & \textbf{Artefakt} \\
+\midrule
+1 Einarbeitung & OpenTelemetry, Messmethodik & Literaturübersicht \\
+2 Implementierung & Dienste und Angular-Frontend & Lauffähige Anwendung, ADRs \\
+3 Instrumentierung & Backend, Frontend, Collector & Umschaltbare Konfiguration \\
+4 Messumgebung & Lastszenarien, Automatisierung, Pilotmessungen & Mess- und Auswertungsskripte \\
+5 Messungen & Alle Konfigurationen messen & Rohdaten \\
+6 Auswertung & Statistik, Empfehlungen & Diagramme, Tabellen \\
+7 Ausarbeitung & Schriftliche Dokumentation & Ausarbeitung, Code und Daten im Repository \\
+\bottomrule
+\end{tabularx}
+\end{center}
 
 \printbibliography[heading=bibintoc, title={Literaturverzeichnis}]
 

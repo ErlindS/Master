@@ -2374,25 +2374,16 @@
     <bcf:datasource type="file" datatype="bibtex" glob="false">literatur.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1" intorder="1">majors2022observability</bcf:citekey>
-    <bcf:citekey order="2" intorder="1">otel_cncf</bcf:citekey>
-    <bcf:citekey order="2" intorder="2">otel_docs</bcf:citekey>
-    <bcf:citekey order="3" intorder="1">iso25010</bcf:citekey>
-    <bcf:citekey order="4" intorder="1">fonseca2007xtrace</bcf:citekey>
-    <bcf:citekey order="5" intorder="1">sigelman2010dapper</bcf:citekey>
-    <bcf:citekey order="6" intorder="1">w3c_tracecontext</bcf:citekey>
-    <bcf:citekey order="7" intorder="1">kaldor2017canopy</bcf:citekey>
-    <bcf:citekey order="8" intorder="1">otel_js</bcf:citekey>
-    <bcf:citekey order="8" intorder="2">otel_android</bcf:citekey>
-    <bcf:citekey order="8" intorder="3">otel_swift</bcf:citekey>
-    <bcf:citekey order="9" intorder="1">iso25010</bcf:citekey>
-    <bcf:citekey order="10" intorder="1">iso25023</bcf:citekey>
-    <bcf:citekey order="11" intorder="1">forsgren2018accelerate</bcf:citekey>
-    <bcf:citekey order="12" intorder="1">beyer2016sre</bcf:citekey>
-    <bcf:citekey order="13" intorder="1">majors2022observability</bcf:citekey>
-    <bcf:citekey order="14" intorder="1">nygard2011adr</bcf:citekey>
-    <bcf:citekey order="15" intorder="1">iso25023</bcf:citekey>
-    <bcf:citekey order="16" intorder="1">beyer2016sre</bcf:citekey>
+    <bcf:citekey order="1" intorder="1">newman2021microservices</bcf:citekey>
+    <bcf:citekey order="2" intorder="1">majors2022observability</bcf:citekey>
+    <bcf:citekey order="3" intorder="1">otel_cncf</bcf:citekey>
+    <bcf:citekey order="3" intorder="2">otel_docs</bcf:citekey>
+    <bcf:citekey order="4" intorder="1">iso25010</bcf:citekey>
+    <bcf:citekey order="5" intorder="1">nygard2011adr</bcf:citekey>
+    <bcf:citekey order="6" intorder="1">webvitals</bcf:citekey>
+    <bcf:citekey order="7" intorder="1">georges2007rigorous</bcf:citekey>
+    <bcf:citekey order="7" intorder="2">kalibera2013rigorous</bcf:citekey>
+    <bcf:citekey order="8" intorder="1">reichelt2023overhead</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

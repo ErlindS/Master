@@ -19,6 +19,37 @@
 
 \refsection{0}
   \datalist[entry]{none/global//global/global/global}
+    \entry{newman2021microservices}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=b6be43602c2787d279f8522a7d9713db}{%
+           family={Newman},
+           familyi={N\bibinitperiod},
+           given={Sam},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Sebastopol, CA}%
+      }
+      \list{publisher}{1}{%
+        {O'Reilly Media}%
+      }
+      \strng{namehash}{b6be43602c2787d279f8522a7d9713db}
+      \strng{fullhash}{b6be43602c2787d279f8522a7d9713db}
+      \strng{fullhashraw}{b6be43602c2787d279f8522a7d9713db}
+      \strng{bibnamehash}{b6be43602c2787d279f8522a7d9713db}
+      \strng{authorbibnamehash}{b6be43602c2787d279f8522a7d9713db}
+      \strng{authornamehash}{b6be43602c2787d279f8522a7d9713db}
+      \strng{authorfullhash}{b6be43602c2787d279f8522a7d9713db}
+      \strng{authorfullhashraw}{b6be43602c2787d279f8522a7d9713db}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{2}
+      \field{langid}{english}
+      \field{title}{{Building Microservices: Designing Fine-Grained Systems}}
+      \field{year}{2021}
+    \endentry
     \entry{majors2022observability}{book}{}{}
       \name{author}{3}{}{%
         {{hash=63e940eef6903f56792351799ef3f6b8}{%
@@ -51,8 +82,8 @@
       \strng{authornamehash}{46942bb7ca42597917f55964a85c165c}
       \strng{authorfullhash}{0392852ec669e26662fcbfa739d517bb}
       \strng{authorfullhashraw}{0392852ec669e26662fcbfa739d517bb}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{langid}{english}
@@ -73,8 +104,8 @@
       \strng{authornamehash}{0cb2a59444ef04aeca44654441071c35}
       \strng{authorfullhash}{0cb2a59444ef04aeca44654441071c35}
       \strng{authorfullhashraw}{0cb2a59444ef04aeca44654441071c35}
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{langid}{english}
@@ -104,9 +135,8 @@
       \strng{authornamehash}{0eb461beebb1085099be94b0796ad6d3}
       \strng{authorfullhash}{0eb461beebb1085099be94b0796ad6d3}
       \strng{authorfullhashraw}{0eb461beebb1085099be94b0796ad6d3}
-      \field{extraname}{1}
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{langid}{english}
@@ -126,434 +156,12 @@
       \list{organization}{1}{%
         {International Organization for Standardization}%
       }
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
       \field{labeltitlesource}{title}
       \field{langid}{english}
       \field{title}{{ISO/IEC 25010:2023 -- Systems and software engineering -- Systems and software Quality Requirements and Evaluation (SQuaRE) -- Product quality model}}
       \field{year}{2023}
-    \endentry
-    \entry{fonseca2007xtrace}{inproceedings}{}{}
-      \name{author}{5}{}{%
-        {{hash=7ac67101266fa4441ee76cf3a31eb8bc}{%
-           family={Fonseca},
-           familyi={F\bibinitperiod},
-           given={Rodrigo},
-           giveni={R\bibinitperiod}}}%
-        {{hash=7978f980c9c484de16e5f2fcb1a74d7a}{%
-           family={Porter},
-           familyi={P\bibinitperiod},
-           given={George},
-           giveni={G\bibinitperiod}}}%
-        {{hash=9d213316309bd0e96a3d09387dbe799b}{%
-           family={Katz},
-           familyi={K\bibinitperiod},
-           given={Randy\bibnamedelima H.},
-           giveni={R\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
-        {{hash=8d2fd528d2484047352789c731e250a5}{%
-           family={Shenker},
-           familyi={S\bibinitperiod},
-           given={Scott},
-           giveni={S\bibinitperiod}}}%
-        {{hash=51d9ef26181e2e8a9dc546b401e0bb26}{%
-           family={Stoica},
-           familyi={S\bibinitperiod},
-           given={Ion},
-           giveni={I\bibinitperiod}}}%
-      }
-      \strng{namehash}{06bb3a7843d28c7d210872c1b7200c6a}
-      \strng{fullhash}{87c071028e7c64b21e43328ecb7d81c6}
-      \strng{fullhashraw}{87c071028e7c64b21e43328ecb7d81c6}
-      \strng{bibnamehash}{87c071028e7c64b21e43328ecb7d81c6}
-      \strng{authorbibnamehash}{87c071028e7c64b21e43328ecb7d81c6}
-      \strng{authornamehash}{06bb3a7843d28c7d210872c1b7200c6a}
-      \strng{authorfullhash}{87c071028e7c64b21e43328ecb7d81c6}
-      \strng{authorfullhashraw}{87c071028e7c64b21e43328ecb7d81c6}
-      \field{sortinit}{4}
-      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{booktitle}{4th USENIX Symposium on Networked Systems Design \& Implementation (NSDI 07)}
-      \field{langid}{english}
-      \field{title}{{X-Trace: A Pervasive Network Tracing Framework}}
-      \field{year}{2007}
-    \endentry
-    \entry{sigelman2010dapper}{report}{}{}
-      \name{author}{8}{}{%
-        {{hash=eab9780c74232781131c3216d3938840}{%
-           family={Sigelman},
-           familyi={S\bibinitperiod},
-           given={Benjamin\bibnamedelima H.},
-           giveni={B\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
-        {{hash=b7b397ec8054ed0ab9f02f1e5685b8d0}{%
-           family={Barroso},
-           familyi={B\bibinitperiod},
-           given={Luiz\bibnamedelima André},
-           giveni={L\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
-        {{hash=52bd219ee38c5f14ff2c280e7e4216d1}{%
-           family={Burrows},
-           familyi={B\bibinitperiod},
-           given={Mike},
-           giveni={M\bibinitperiod}}}%
-        {{hash=55ea53762f4b3b84627371e84b2503b5}{%
-           family={Stephenson},
-           familyi={S\bibinitperiod},
-           given={Pat},
-           giveni={P\bibinitperiod}}}%
-        {{hash=fc103b936ff1d8fa40cfdc0b5ee79f52}{%
-           family={Plakal},
-           familyi={P\bibinitperiod},
-           given={Manoj},
-           giveni={M\bibinitperiod}}}%
-        {{hash=8293acfe90aa8eaf9b54bb2d780b215f}{%
-           family={Beaver},
-           familyi={B\bibinitperiod},
-           given={Donald},
-           giveni={D\bibinitperiod}}}%
-        {{hash=8769aaaafced9152f74d947681e81b2b}{%
-           family={Jaspan},
-           familyi={J\bibinitperiod},
-           given={Saul},
-           giveni={S\bibinitperiod}}}%
-        {{hash=fac2ed311ee97c6a34c4ffeafe5b28dd}{%
-           family={Shanbhag},
-           familyi={S\bibinitperiod},
-           given={Chandan},
-           giveni={C\bibinitperiod}}}%
-      }
-      \list{institution}{1}{%
-        {Google, Inc.}%
-      }
-      \strng{namehash}{251ae6755a5a3e360170f447e0c9538d}
-      \strng{fullhash}{2a7355937041bf15434ec44c709568ff}
-      \strng{fullhashraw}{2a7355937041bf15434ec44c709568ff}
-      \strng{bibnamehash}{251ae6755a5a3e360170f447e0c9538d}
-      \strng{authorbibnamehash}{251ae6755a5a3e360170f447e0c9538d}
-      \strng{authornamehash}{251ae6755a5a3e360170f447e0c9538d}
-      \strng{authorfullhash}{2a7355937041bf15434ec44c709568ff}
-      \strng{authorfullhashraw}{2a7355937041bf15434ec44c709568ff}
-      \field{sortinit}{5}
-      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{langid}{english}
-      \field{number}{dapper-2010-1}
-      \field{title}{{Dapper, a Large-Scale Distributed Systems Tracing Infrastructure}}
-      \field{type}{techreport}
-      \field{year}{2010}
-    \endentry
-    \entry{w3c_tracecontext}{online}{}{}
-      \name{author}{1}{}{%
-        {{hash=bdea812935506778c291249971f80655}{%
-           family={{World Wide Web Consortium}},
-           familyi={W\bibinitperiod}}}%
-      }
-      \strng{namehash}{bdea812935506778c291249971f80655}
-      \strng{fullhash}{bdea812935506778c291249971f80655}
-      \strng{fullhashraw}{bdea812935506778c291249971f80655}
-      \strng{bibnamehash}{bdea812935506778c291249971f80655}
-      \strng{authorbibnamehash}{bdea812935506778c291249971f80655}
-      \strng{authornamehash}{bdea812935506778c291249971f80655}
-      \strng{authorfullhash}{bdea812935506778c291249971f80655}
-      \strng{authorfullhashraw}{bdea812935506778c291249971f80655}
-      \field{sortinit}{6}
-      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{langid}{english}
-      \field{title}{{Trace Context -- W3C Recommendation}}
-      \field{urlday}{28}
-      \field{urlmonth}{9}
-      \field{urlyear}{2026}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb https://www.w3.org/TR/trace-context/
-      \endverb
-      \verb{url}
-      \verb https://www.w3.org/TR/trace-context/
-      \endverb
-    \endentry
-    \entry{kaldor2017canopy}{inproceedings}{}{}
-      \name{author}{13}{}{%
-        {{hash=aa174605701b17620d884c36eaae91da}{%
-           family={Kaldor},
-           familyi={K\bibinitperiod},
-           given={Jonathan},
-           giveni={J\bibinitperiod}}}%
-        {{hash=b7cff53e80ad544b7cfe875cf9594433}{%
-           family={Mace},
-           familyi={M\bibinitperiod},
-           given={Jonathan},
-           giveni={J\bibinitperiod}}}%
-        {{hash=d2d81b5551f325127420c3ecfb2f44ca}{%
-           family={Bejda},
-           familyi={B\bibinitperiod},
-           given={Micha{ł}},
-           giveni={M\bibinitperiod}}}%
-        {{hash=361f2a576284fd2a3b58df6a94f730f1}{%
-           family={Gao},
-           familyi={G\bibinitperiod},
-           given={Edison},
-           giveni={E\bibinitperiod}}}%
-        {{hash=599897ed69bd433393e5f2fcc3f60e22}{%
-           family={Kuropatwa},
-           familyi={K\bibinitperiod},
-           given={Wiktor},
-           giveni={W\bibinitperiod}}}%
-        {{hash=f0cd13d1bfe1eb2032bd0751e67ec494}{%
-           family={O'Neill},
-           familyi={O\bibinitperiod},
-           given={Joe},
-           giveni={J\bibinitperiod}}}%
-        {{hash=965900ba13048906a4a28a757b60985a}{%
-           family={Ong},
-           familyi={O\bibinitperiod},
-           given={Kian\bibnamedelima Win},
-           giveni={K\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
-        {{hash=9a9a03375eed96b258ebddcf1024cfbb}{%
-           family={Schaller},
-           familyi={S\bibinitperiod},
-           given={Bill},
-           giveni={B\bibinitperiod}}}%
-        {{hash=690e6884ac7f464de6a16d50b31fa0f6}{%
-           family={Shan},
-           familyi={S\bibinitperiod},
-           given={Pingjia},
-           giveni={P\bibinitperiod}}}%
-        {{hash=69db760b679aea05d02030d4617a1a51}{%
-           family={Viscomi},
-           familyi={V\bibinitperiod},
-           given={Brendan},
-           giveni={B\bibinitperiod}}}%
-        {{hash=2c2b368f0db5a2e07f0743aa21168910}{%
-           family={Venkataraman},
-           familyi={V\bibinitperiod},
-           given={Vinod},
-           giveni={V\bibinitperiod}}}%
-        {{hash=f2c1fa48fb8bfe45a582cdb42d0f3d96}{%
-           family={Veeraraghavan},
-           familyi={V\bibinitperiod},
-           given={Kaushik},
-           giveni={K\bibinitperiod}}}%
-        {{hash=0b0b507e6e4b3350d8de60f59b6c36e4}{%
-           family={Song},
-           familyi={S\bibinitperiod},
-           given={Yee\bibnamedelima Jiun},
-           giveni={Y\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
-      }
-      \strng{namehash}{1081f5d60df3d2d85a543b7cc688d599}
-      \strng{fullhash}{e7ae85a372246feb79011642df20d2ba}
-      \strng{fullhashraw}{e7ae85a372246feb79011642df20d2ba}
-      \strng{bibnamehash}{1081f5d60df3d2d85a543b7cc688d599}
-      \strng{authorbibnamehash}{1081f5d60df3d2d85a543b7cc688d599}
-      \strng{authornamehash}{1081f5d60df3d2d85a543b7cc688d599}
-      \strng{authorfullhash}{e7ae85a372246feb79011642df20d2ba}
-      \strng{authorfullhashraw}{e7ae85a372246feb79011642df20d2ba}
-      \field{sortinit}{7}
-      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{booktitle}{Proceedings of the 26th Symposium on Operating Systems Principles (SOSP '17)}
-      \field{langid}{english}
-      \field{title}{{Canopy: An End-to-End Performance Tracing And Analysis System}}
-      \field{year}{2017}
-      \field{pages}{34\bibrangedash 50}
-      \range{pages}{17}
-      \verb{doi}
-      \verb 10.1145/3132747.3132749
-      \endverb
-    \endentry
-    \entry{otel_js}{online}{}{}
-      \name{author}{1}{}{%
-        {{hash=0eb461beebb1085099be94b0796ad6d3}{%
-           family={{OpenTelemetry Authors}},
-           familyi={O\bibinitperiod}}}%
-      }
-      \strng{namehash}{0eb461beebb1085099be94b0796ad6d3}
-      \strng{fullhash}{0eb461beebb1085099be94b0796ad6d3}
-      \strng{fullhashraw}{0eb461beebb1085099be94b0796ad6d3}
-      \strng{bibnamehash}{0eb461beebb1085099be94b0796ad6d3}
-      \strng{authorbibnamehash}{0eb461beebb1085099be94b0796ad6d3}
-      \strng{authornamehash}{0eb461beebb1085099be94b0796ad6d3}
-      \strng{authorfullhash}{0eb461beebb1085099be94b0796ad6d3}
-      \strng{authorfullhashraw}{0eb461beebb1085099be94b0796ad6d3}
-      \field{extraname}{2}
-      \field{sortinit}{8}
-      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{langid}{english}
-      \field{title}{{OpenTelemetry JavaScript -- Browser}}
-      \field{urlday}{28}
-      \field{urlmonth}{9}
-      \field{urlyear}{2026}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb https://opentelemetry.io/docs/languages/js/getting-started/browser/
-      \endverb
-      \verb{url}
-      \verb https://opentelemetry.io/docs/languages/js/getting-started/browser/
-      \endverb
-    \endentry
-    \entry{otel_android}{online}{}{}
-      \name{author}{1}{}{%
-        {{hash=0eb461beebb1085099be94b0796ad6d3}{%
-           family={{OpenTelemetry Authors}},
-           familyi={O\bibinitperiod}}}%
-      }
-      \strng{namehash}{0eb461beebb1085099be94b0796ad6d3}
-      \strng{fullhash}{0eb461beebb1085099be94b0796ad6d3}
-      \strng{fullhashraw}{0eb461beebb1085099be94b0796ad6d3}
-      \strng{bibnamehash}{0eb461beebb1085099be94b0796ad6d3}
-      \strng{authorbibnamehash}{0eb461beebb1085099be94b0796ad6d3}
-      \strng{authornamehash}{0eb461beebb1085099be94b0796ad6d3}
-      \strng{authorfullhash}{0eb461beebb1085099be94b0796ad6d3}
-      \strng{authorfullhashraw}{0eb461beebb1085099be94b0796ad6d3}
-      \field{extraname}{3}
-      \field{sortinit}{8}
-      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{langid}{english}
-      \field{title}{{OpenTelemetry Android}}
-      \field{urlday}{28}
-      \field{urlmonth}{9}
-      \field{urlyear}{2026}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb https://github.com/open-telemetry/opentelemetry-android
-      \endverb
-      \verb{url}
-      \verb https://github.com/open-telemetry/opentelemetry-android
-      \endverb
-    \endentry
-    \entry{otel_swift}{online}{}{}
-      \name{author}{1}{}{%
-        {{hash=0eb461beebb1085099be94b0796ad6d3}{%
-           family={{OpenTelemetry Authors}},
-           familyi={O\bibinitperiod}}}%
-      }
-      \strng{namehash}{0eb461beebb1085099be94b0796ad6d3}
-      \strng{fullhash}{0eb461beebb1085099be94b0796ad6d3}
-      \strng{fullhashraw}{0eb461beebb1085099be94b0796ad6d3}
-      \strng{bibnamehash}{0eb461beebb1085099be94b0796ad6d3}
-      \strng{authorbibnamehash}{0eb461beebb1085099be94b0796ad6d3}
-      \strng{authornamehash}{0eb461beebb1085099be94b0796ad6d3}
-      \strng{authorfullhash}{0eb461beebb1085099be94b0796ad6d3}
-      \strng{authorfullhashraw}{0eb461beebb1085099be94b0796ad6d3}
-      \field{extraname}{4}
-      \field{sortinit}{8}
-      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{langid}{english}
-      \field{title}{{OpenTelemetry Swift}}
-      \field{urlday}{28}
-      \field{urlmonth}{9}
-      \field{urlyear}{2026}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb https://github.com/open-telemetry/opentelemetry-swift
-      \endverb
-      \verb{url}
-      \verb https://github.com/open-telemetry/opentelemetry-swift
-      \endverb
-    \endentry
-    \entry{iso25023}{standard}{}{}
-      \list{organization}{1}{%
-        {International Organization for Standardization}%
-      }
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
-      \field{labeltitlesource}{title}
-      \field{langid}{english}
-      \field{title}{{ISO/IEC 25023:2016 -- Systems and software engineering -- Systems and software Quality Requirements and Evaluation (SQuaRE) -- Measurement of system and software product quality}}
-      \field{year}{2016}
-    \endentry
-    \entry{forsgren2018accelerate}{book}{}{}
-      \name{author}{3}{}{%
-        {{hash=0dc9ac8a967e13c60fcfaedde74976f2}{%
-           family={Forsgren},
-           familyi={F\bibinitperiod},
-           given={Nicole},
-           giveni={N\bibinitperiod}}}%
-        {{hash=9e89d796d06f74d6551850b1c3bff900}{%
-           family={Humble},
-           familyi={H\bibinitperiod},
-           given={Jez},
-           giveni={J\bibinitperiod}}}%
-        {{hash=8e1c949be5801a6f56b7ac5df47a58a9}{%
-           family={Kim},
-           familyi={K\bibinitperiod},
-           given={Gene},
-           giveni={G\bibinitperiod}}}%
-      }
-      \list{location}{1}{%
-        {Portland, OR}%
-      }
-      \list{publisher}{1}{%
-        {IT Revolution Press}%
-      }
-      \strng{namehash}{6182ff2ce3d65afe566932add04e4d0a}
-      \strng{fullhash}{b3a03bdb03f26ee6030a135e12ea135c}
-      \strng{fullhashraw}{b3a03bdb03f26ee6030a135e12ea135c}
-      \strng{bibnamehash}{b3a03bdb03f26ee6030a135e12ea135c}
-      \strng{authorbibnamehash}{b3a03bdb03f26ee6030a135e12ea135c}
-      \strng{authornamehash}{6182ff2ce3d65afe566932add04e4d0a}
-      \strng{authorfullhash}{b3a03bdb03f26ee6030a135e12ea135c}
-      \strng{authorfullhashraw}{b3a03bdb03f26ee6030a135e12ea135c}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{langid}{english}
-      \field{title}{{Accelerate: The Science of Lean Software and DevOps}}
-      \field{year}{2018}
-    \endentry
-    \entry{beyer2016sre}{book}{}{}
-      \name{editor}{4}{}{%
-        {{hash=804009dd6ea3185359156e228afc3f35}{%
-           family={Beyer},
-           familyi={B\bibinitperiod},
-           given={Betsy},
-           giveni={B\bibinitperiod}}}%
-        {{hash=f5e3bc5ee6025ef3a58750c6498c5553}{%
-           family={Jones},
-           familyi={J\bibinitperiod},
-           given={Chris},
-           giveni={C\bibinitperiod}}}%
-        {{hash=1e5b9f6a7c8eeb221b19889433ae21a3}{%
-           family={Petoff},
-           familyi={P\bibinitperiod},
-           given={Jennifer},
-           giveni={J\bibinitperiod}}}%
-        {{hash=a07a7a3144d96f35e13fdc8d88a76f72}{%
-           family={Murphy},
-           familyi={M\bibinitperiod},
-           given={Niall\bibnamedelima Richard},
-           giveni={N\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
-      }
-      \list{location}{1}{%
-        {Sebastopol, CA}%
-      }
-      \list{publisher}{1}{%
-        {O'Reilly Media}%
-      }
-      \strng{namehash}{1935d8b85de3cefa8cd9d7b767730ec7}
-      \strng{fullhash}{8b6ad8d483b2b55b622328efa5b8dca7}
-      \strng{fullhashraw}{8b6ad8d483b2b55b622328efa5b8dca7}
-      \strng{bibnamehash}{8b6ad8d483b2b55b622328efa5b8dca7}
-      \strng{editorbibnamehash}{8b6ad8d483b2b55b622328efa5b8dca7}
-      \strng{editornamehash}{1935d8b85de3cefa8cd9d7b767730ec7}
-      \strng{editorfullhash}{8b6ad8d483b2b55b622328efa5b8dca7}
-      \strng{editorfullhashraw}{8b6ad8d483b2b55b622328efa5b8dca7}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
-      \field{labelnamesource}{editor}
-      \field{labeltitlesource}{title}
-      \field{langid}{english}
-      \field{title}{{Site Reliability Engineering: How Google Runs Production Systems}}
-      \field{year}{2016}
     \endentry
     \entry{nygard2011adr}{online}{}{}
       \name{author}{1}{}{%
@@ -571,8 +179,8 @@
       \strng{authornamehash}{805f671f51b7cd396e6e34d568b451b0}
       \strng{authorfullhash}{805f671f51b7cd396e6e34d568b451b0}
       \strng{authorfullhashraw}{805f671f51b7cd396e6e34d568b451b0}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{langid}{english}
@@ -588,6 +196,137 @@
       \verb{url}
       \verb https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions
       \endverb
+    \endentry
+    \entry{webvitals}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=8b36e9207c24c76e6719268e49201d94}{%
+           family={{Google}},
+           familyi={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{fullhash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{fullhashraw}{8b36e9207c24c76e6719268e49201d94}
+      \strng{bibnamehash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{authorbibnamehash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{authornamehash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{authorfullhash}{8b36e9207c24c76e6719268e49201d94}
+      \strng{authorfullhashraw}{8b36e9207c24c76e6719268e49201d94}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{{Web Vitals}}
+      \field{urlday}{29}
+      \field{urlmonth}{9}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://web.dev/articles/vitals
+      \endverb
+      \verb{url}
+      \verb https://web.dev/articles/vitals
+      \endverb
+    \endentry
+    \entry{georges2007rigorous}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=afcaf0014a240a06ea272b9c4a11fdd1}{%
+           family={Georges},
+           familyi={G\bibinitperiod},
+           given={Andy},
+           giveni={A\bibinitperiod}}}%
+        {{hash=969701142f5132d452592494af5dd1ba}{%
+           family={Buytaert},
+           familyi={B\bibinitperiod},
+           given={Dries},
+           giveni={D\bibinitperiod}}}%
+        {{hash=3f773c993a74aac617cf0d2aa9c6a139}{%
+           family={Eeckhout},
+           familyi={E\bibinitperiod},
+           given={Lieven},
+           giveni={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{2a82658211239d59dd6a3f504fb05b2d}
+      \strng{fullhash}{e1694865a803aed7dd668075bfb42314}
+      \strng{fullhashraw}{e1694865a803aed7dd668075bfb42314}
+      \strng{bibnamehash}{e1694865a803aed7dd668075bfb42314}
+      \strng{authorbibnamehash}{e1694865a803aed7dd668075bfb42314}
+      \strng{authornamehash}{2a82658211239d59dd6a3f504fb05b2d}
+      \strng{authorfullhash}{e1694865a803aed7dd668075bfb42314}
+      \strng{authorfullhashraw}{e1694865a803aed7dd668075bfb42314}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 22nd ACM SIGPLAN Conference on Object-Oriented Programming Systems, Languages and Applications (OOPSLA '07)}
+      \field{langid}{english}
+      \field{title}{{Statistically Rigorous Java Performance Evaluation}}
+      \field{year}{2007}
+    \endentry
+    \entry{kalibera2013rigorous}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=9aeaaaffd9b9f0bfa8dcc11c4c98813b}{%
+           family={Kalibera},
+           familyi={K\bibinitperiod},
+           given={Tomas},
+           giveni={T\bibinitperiod}}}%
+        {{hash=686f63784177f089204782d110bd55f1}{%
+           family={Jones},
+           familyi={J\bibinitperiod},
+           given={Richard},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{d8b20a11f935fcb80a3b833e3fe31ad2}
+      \strng{fullhash}{d8b20a11f935fcb80a3b833e3fe31ad2}
+      \strng{fullhashraw}{d8b20a11f935fcb80a3b833e3fe31ad2}
+      \strng{bibnamehash}{d8b20a11f935fcb80a3b833e3fe31ad2}
+      \strng{authorbibnamehash}{d8b20a11f935fcb80a3b833e3fe31ad2}
+      \strng{authornamehash}{d8b20a11f935fcb80a3b833e3fe31ad2}
+      \strng{authorfullhash}{d8b20a11f935fcb80a3b833e3fe31ad2}
+      \strng{authorfullhashraw}{d8b20a11f935fcb80a3b833e3fe31ad2}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 2013 International Symposium on Memory Management (ISMM '13)}
+      \field{langid}{english}
+      \field{title}{{Rigorous Benchmarking in Reasonable Time}}
+      \field{year}{2013}
+    \endentry
+    \entry{reichelt2023overhead}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=57b8c34cf4c1093fab81fa771f438432}{%
+           family={Reichelt},
+           familyi={R\bibinitperiod},
+           given={David\bibnamedelima Georg},
+           giveni={D\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+        {{hash=1bc9eedac4f776cd51a67284999645bd}{%
+           family={Kühne},
+           familyi={K\bibinitperiod},
+           given={Stefan},
+           giveni={S\bibinitperiod}}}%
+        {{hash=131b9781ee9671d87bd60771bd41a0bc}{%
+           family={Hasselbring},
+           familyi={H\bibinitperiod},
+           given={Wilhelm},
+           giveni={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{787a224928fff2fa98727b1f2c82b413}
+      \strng{fullhash}{0c4582b5b3f9603ef38a6c78b2efef16}
+      \strng{fullhashraw}{0c4582b5b3f9603ef38a6c78b2efef16}
+      \strng{bibnamehash}{0c4582b5b3f9603ef38a6c78b2efef16}
+      \strng{authorbibnamehash}{0c4582b5b3f9603ef38a6c78b2efef16}
+      \strng{authornamehash}{787a224928fff2fa98727b1f2c82b413}
+      \strng{authorfullhash}{0c4582b5b3f9603ef38a6c78b2efef16}
+      \strng{authorfullhashraw}{0c4582b5b3f9603ef38a6c78b2efef16}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Companion of the 2023 ACM/SPEC International Conference on Performance Engineering (ICPE '23 Companion)}
+      \field{langid}{english}
+      \field{title}{{Towards Solving the Challenge of Minimal Overhead Monitoring}}
+      \field{year}{2023}
     \endentry
   \enddatalist
 \endrefsection

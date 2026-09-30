@@ -1,0 +1,72 @@
+% Vereinfachte Architektur des Projektmanagement-Werkzeugs (eingebunden in Expose.tex)
+\begin{tikzpicture}[
+    font=\small,
+    >={Stealth[length=2mm]},
+    comp/.style={draw=hkagray, fill=white, rounded corners=3pt, align=center,
+                 minimum height=9mm, inner sep=3pt},
+    svc/.style={draw=hkared, fill=hkared!12, rounded corners=3pt, align=center,
+                minimum width=4.2cm, minimum height=6.5mm},
+    db/.style={cylinder, shape border rotate=90, aspect=0.25, draw=hkagray,
+               fill=hkagray!15, minimum width=1.3cm, minimum height=8mm, inner sep=1pt},
+    box/.style={draw=hkagray!60, fill=hkagray!6, rounded corners=4pt, inner sep=5pt},
+    group/.style={draw=hkared, line width=0.8pt, rounded corners=6pt, inner sep=9pt},
+    grouptitle/.style={fill=white, inner sep=2pt, font=\small\bfseries\color{hkared}},
+    sync/.style={->, draw=black!75},
+    event/.style={->, dashed, draw=black!75},
+    telemetry/.style={->, dotted, thick, draw=hkagray},
+]
+
+% --- Client ---
+\node[comp, minimum width=2.4cm] (fe) at (0,2) {Browser\\[1pt]\textbf{Angular-}\\\textbf{Frontend}};
+
+% --- API-Gateway ---
+\node[comp, minimum width=2.2cm] (gw) at (3.5,2) {\textbf{API-Gateway}\\[1pt]\footnotesize Authentifizierung};
+
+% --- Dienste (je mit eigener Datenbank) ---
+\foreach \name/\label/\y in {user/Nutzer- und Team-Dienst/3.8, proj/Projekt-Dienst/2.6,
+                              task/Task-Dienst/1.4, notif/Benachrichtigungsdienst/0.2} {
+    \node[svc] (\name) at (7.5,\y) {\label};
+    \node[db] (\name db) at (10.6,\y) {\footnotesize DB};
+    \draw[sync] (\name.east) -- (\name db.west);
+    \begin{scope}[on background layer]
+        \node[box, fit=(\name)(\name db)] (\name box) {};
+    \end{scope}
+}
+
+% --- Nachrichtenbroker ---
+\node[comp, minimum width=2.2cm, minimum height=1.4cm] (bus) at (13.8,2) {\textbf{Nachrichten-}\\\textbf{broker}\\[1pt]\footnotesize Ereignisse};
+
+% --- Observability ---
+\node[comp, minimum width=2.6cm] (col) at (6.2,-2.5) {\textbf{Collector}};
+\node[comp, minimum width=3.4cm] (obs) at (10.6,-2.5) {\textbf{Analyse-Backend}\\[1pt]\footnotesize Traces, Metriken, Logs};
+
+% --- Gruppen ---
+\begin{scope}[on background layer]
+    \node[group, fit=(fe)] (gclient) {};
+    \node[group, fit=(gw)(userbox)(notifbox)(bus)] (gbackend) {};
+    \node[group, draw=hkagray, fit=(col)(obs)] (gobs) {};
+\end{scope}
+\node[grouptitle] at (gclient.north) {Client};
+\node[grouptitle] at (gbackend.north) {Backend (Container)};
+\node[grouptitle, text=hkagray] at (gobs.north) {Observability};
+
+% --- Synchrone Aufrufe ---
+\draw[sync] (fe.east) -- (gw.west);
+\draw (gw.east) -- (5.0,2);
+\draw (5.0,3.8) -- (5.0,0.2);
+\foreach \name/\y in {userbox/3.8, projbox/2.6, taskbox/1.4, notifbox/0.2}
+    \draw[sync] (5.0,\y) -- (\name.west |- 0,\y);
+
+% --- Ereignisse ---
+\draw[dashed, draw=black!75] (projbox.east |- 0,2.6) -| (12.0,0.2);
+\draw[dashed, draw=black!75] (taskbox.east |- 0,1.4) -- (12.0,1.4);
+\draw[event] (12.0,2) -- (bus.west);
+\draw[event] (12.0,0.2) -- (notifbox.east |- 0,0.2);
+\draw[event] ([xshift=-4mm]notifbox.south) -- ++(0,-0.95) -| node[pos=0.25, below, inner sep=2pt, font=\footnotesize] {Echtzeit-Updates} ([xshift=-5mm]gclient.south);
+
+% --- Telemetrie ---
+\draw[telemetry] ([xshift=5mm]gclient.south) |- (col.west);
+\draw[telemetry] (col.north |- gbackend.south) -- (col.north);
+\draw[telemetry] (col.east) -- node[above, font=\footnotesize, text=hkagray] {OTLP} (obs.west);
+
+\end{tikzpicture}
