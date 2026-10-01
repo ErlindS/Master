@@ -163,136 +163,6 @@
       \field{title}{{ISO/IEC 25010:2023 -- Systems and software engineering -- Systems and software Quality Requirements and Evaluation (SQuaRE) -- Product quality model}}
       \field{year}{2023}
     \endentry
-    \entry{nygard2011adr}{online}{}{}
-      \name{author}{1}{}{%
-        {{hash=805f671f51b7cd396e6e34d568b451b0}{%
-           family={Nygard},
-           familyi={N\bibinitperiod},
-           given={Michael},
-           giveni={M\bibinitperiod}}}%
-      }
-      \strng{namehash}{805f671f51b7cd396e6e34d568b451b0}
-      \strng{fullhash}{805f671f51b7cd396e6e34d568b451b0}
-      \strng{fullhashraw}{805f671f51b7cd396e6e34d568b451b0}
-      \strng{bibnamehash}{805f671f51b7cd396e6e34d568b451b0}
-      \strng{authorbibnamehash}{805f671f51b7cd396e6e34d568b451b0}
-      \strng{authornamehash}{805f671f51b7cd396e6e34d568b451b0}
-      \strng{authorfullhash}{805f671f51b7cd396e6e34d568b451b0}
-      \strng{authorfullhashraw}{805f671f51b7cd396e6e34d568b451b0}
-      \field{sortinit}{5}
-      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{langid}{english}
-      \field{title}{{Documenting Architecture Decisions}}
-      \field{urlday}{28}
-      \field{urlmonth}{9}
-      \field{urlyear}{2026}
-      \field{year}{2011}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions
-      \endverb
-      \verb{url}
-      \verb https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions
-      \endverb
-    \endentry
-    \entry{webvitals}{online}{}{}
-      \name{author}{1}{}{%
-        {{hash=8b36e9207c24c76e6719268e49201d94}{%
-           family={{Google}},
-           familyi={G\bibinitperiod}}}%
-      }
-      \strng{namehash}{8b36e9207c24c76e6719268e49201d94}
-      \strng{fullhash}{8b36e9207c24c76e6719268e49201d94}
-      \strng{fullhashraw}{8b36e9207c24c76e6719268e49201d94}
-      \strng{bibnamehash}{8b36e9207c24c76e6719268e49201d94}
-      \strng{authorbibnamehash}{8b36e9207c24c76e6719268e49201d94}
-      \strng{authornamehash}{8b36e9207c24c76e6719268e49201d94}
-      \strng{authorfullhash}{8b36e9207c24c76e6719268e49201d94}
-      \strng{authorfullhashraw}{8b36e9207c24c76e6719268e49201d94}
-      \field{sortinit}{6}
-      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{langid}{english}
-      \field{title}{{Web Vitals}}
-      \field{urlday}{29}
-      \field{urlmonth}{9}
-      \field{urlyear}{2026}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb https://web.dev/articles/vitals
-      \endverb
-      \verb{url}
-      \verb https://web.dev/articles/vitals
-      \endverb
-    \endentry
-    \entry{georges2007rigorous}{inproceedings}{}{}
-      \name{author}{3}{}{%
-        {{hash=afcaf0014a240a06ea272b9c4a11fdd1}{%
-           family={Georges},
-           familyi={G\bibinitperiod},
-           given={Andy},
-           giveni={A\bibinitperiod}}}%
-        {{hash=969701142f5132d452592494af5dd1ba}{%
-           family={Buytaert},
-           familyi={B\bibinitperiod},
-           given={Dries},
-           giveni={D\bibinitperiod}}}%
-        {{hash=3f773c993a74aac617cf0d2aa9c6a139}{%
-           family={Eeckhout},
-           familyi={E\bibinitperiod},
-           given={Lieven},
-           giveni={L\bibinitperiod}}}%
-      }
-      \strng{namehash}{2a82658211239d59dd6a3f504fb05b2d}
-      \strng{fullhash}{e1694865a803aed7dd668075bfb42314}
-      \strng{fullhashraw}{e1694865a803aed7dd668075bfb42314}
-      \strng{bibnamehash}{e1694865a803aed7dd668075bfb42314}
-      \strng{authorbibnamehash}{e1694865a803aed7dd668075bfb42314}
-      \strng{authornamehash}{2a82658211239d59dd6a3f504fb05b2d}
-      \strng{authorfullhash}{e1694865a803aed7dd668075bfb42314}
-      \strng{authorfullhashraw}{e1694865a803aed7dd668075bfb42314}
-      \field{sortinit}{7}
-      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{booktitle}{Proceedings of the 22nd ACM SIGPLAN Conference on Object-Oriented Programming Systems, Languages and Applications (OOPSLA '07)}
-      \field{langid}{english}
-      \field{title}{{Statistically Rigorous Java Performance Evaluation}}
-      \field{year}{2007}
-    \endentry
-    \entry{kalibera2013rigorous}{inproceedings}{}{}
-      \name{author}{2}{}{%
-        {{hash=9aeaaaffd9b9f0bfa8dcc11c4c98813b}{%
-           family={Kalibera},
-           familyi={K\bibinitperiod},
-           given={Tomas},
-           giveni={T\bibinitperiod}}}%
-        {{hash=686f63784177f089204782d110bd55f1}{%
-           family={Jones},
-           familyi={J\bibinitperiod},
-           given={Richard},
-           giveni={R\bibinitperiod}}}%
-      }
-      \strng{namehash}{d8b20a11f935fcb80a3b833e3fe31ad2}
-      \strng{fullhash}{d8b20a11f935fcb80a3b833e3fe31ad2}
-      \strng{fullhashraw}{d8b20a11f935fcb80a3b833e3fe31ad2}
-      \strng{bibnamehash}{d8b20a11f935fcb80a3b833e3fe31ad2}
-      \strng{authorbibnamehash}{d8b20a11f935fcb80a3b833e3fe31ad2}
-      \strng{authornamehash}{d8b20a11f935fcb80a3b833e3fe31ad2}
-      \strng{authorfullhash}{d8b20a11f935fcb80a3b833e3fe31ad2}
-      \strng{authorfullhashraw}{d8b20a11f935fcb80a3b833e3fe31ad2}
-      \field{sortinit}{7}
-      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{booktitle}{Proceedings of the 2013 International Symposium on Memory Management (ISMM '13)}
-      \field{langid}{english}
-      \field{title}{{Rigorous Benchmarking in Reasonable Time}}
-      \field{year}{2013}
-    \endentry
     \entry{reichelt2023overhead}{inproceedings}{}{}
       \name{author}{3}{}{%
         {{hash=57b8c34cf4c1093fab81fa771f438432}{%
@@ -319,8 +189,8 @@
       \strng{authornamehash}{787a224928fff2fa98727b1f2c82b413}
       \strng{authorfullhash}{0c4582b5b3f9603ef38a6c78b2efef16}
       \strng{authorfullhashraw}{0c4582b5b3f9603ef38a6c78b2efef16}
-      \field{sortinit}{8}
-      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{booktitle}{Companion of the 2023 ACM/SPEC International Conference on Performance Engineering (ICPE '23 Companion)}

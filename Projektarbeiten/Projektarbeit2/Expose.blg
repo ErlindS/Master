@@ -1,0 +1,15 @@
+[0] Config.pm:329> INFO - This is Biber 2.22
+[0] Config.pm:332> INFO - Logfile is 'Expose.blg'
+[47] biber:342> INFO - === Wed Sep 30, 2026, 18:01:18
+[57] Biber.pm:421> INFO - Reading 'Expose.bcf'
+[98] Biber.pm:1002> INFO - Found 10 citekeys in bib section 0
+[106] Biber.pm:4487> INFO - Processing section 0
+[111] Biber.pm:4680> INFO - Looking for bibtex file 'literatur.bib' for section 0
+[112] bibtex.pm:1713> INFO - LaTeX decoding ...
+[117] bibtex.pm:1519> INFO - Found BibTeX data source 'literatur.bib'
+[170] UCollate.pm:68> INFO - Overriding locale 'de-DE' defaults 'variable = shifted' with 'variable = non-ignorable'
+[170] UCollate.pm:68> INFO - Overriding locale 'de-DE' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[170] Biber.pm:4307> INFO - Sorting list 'none/global//global/global/global' of type 'entry' with template 'none' and locale 'de-DE'
+[170] Biber.pm:4313> INFO - No sort tailoring available for locale 'de-DE'
+[176] bbl.pm:676> INFO - Writing 'Expose.bbl' with encoding 'UTF-8'
+[179] bbl.pm:779> INFO - Output to Expose.bbl

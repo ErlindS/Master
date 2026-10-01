@@ -1,0 +1,234 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- Pakete ---
+\usepackage[english, ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage[autostyle=true,german=quotes]{csquotes}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{positioning,fit,backgrounds,shapes.geometric,arrows.meta}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage{microtype}
+\usepackage{tocloft}
+\usepackage[document]{ragged2e}
+\usepackage[backend=biber,style=ieee,urldate=long]{biblatex}
+\addbibresource{literatur.bib}
+\usepackage{hyperref}
+\emergencystretch=0.3\textwidth % lange Wörter ohne Trennung nicht über den Rand laufen lassen
+\hyphenpenalty=10000
+\exhyphenpenalty=50 % Umbruch nur an vorhandenen Bindestrichen (z.B. IMU-Sensorsystem)
+
+% X-Spalten in tabularx global linksbündig (kein Blocksatz in Tabellen)
+\renewcommand{\tabularxcolumn}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% --- Farben (HKA Corporate) ---
+\definecolor{hkared}{RGB}{198, 42, 18}
+\definecolor{hkagray}{RGB}{100, 100, 100}
+
+% --- Inhaltsverzeichnis Styling ---
+% Überkapitel: rot und fett
+\renewcommand{\cftsecfont}{\bfseries\color{hkared}}
+\renewcommand{\cftsecpagefont}{\bfseries\color{hkared}}
+% Unterkapitel: schwarz (hidelinks im TOC nötig damit hyperref nicht überschreibt)
+\renewcommand{\cftsubsecfont}{\normalfont\color{black}}
+\renewcommand{\cftsubsecpagefont}{\normalfont\color{black}}
+% Spacing: gleiches Spacing auf allen Ebenen
+\setlength{\cftbeforesecskip}{8pt}
+\setlength{\cftbeforesubsecskip}{8pt}
+\setlength{\cftbeforesubsubsecskip}{8pt}
+% Abstand nach dem Titel "Inhaltsverzeichnis" vor dem ersten Eintrag
+\setlength{\cftaftertoctitleskip}{1.2cm}
+
+% --- Hyperref Setup ---
+\hypersetup{
+    colorlinks  = true,
+    linkcolor   = hkared,
+    urlcolor    = hkared,
+    citecolor   = hkared,
+    pdftitle    = {Ein modulares, beliebig erweiterbares IMU-Sensorsystem},
+    pdfauthor   = {Erlind Sejdiu},
+    pdfcreator  = {pdflatex},
+    pdfproducer = {LaTeX with hyperref}
+}
+
+% --- Section Styling ---
+\titleformat{\section}{\large\bfseries\color{hkared}}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{hkared}}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{black}}{\thesubsubsection}{1em}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.5em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.3em}
+\titlespacing*{\subsubsection}{0pt}{0.6em}{0.2em}
+
+% --- Header/Footer ---
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{hkagray}Projektarbeit}
+\fancyhead[R]{\small\color{hkagray}Master Informatik WS~2026/27}
+\fancyfoot[C]{\small\color{hkagray}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Markierung für Stellen, die noch ergänzt/geprüft werden müssen
+\newcommand{\offen}[1]{\textcolor{red}{[#1]}}
+
+% =============================================================================
+\begin{document}
+
+% --- Titelseite ---
+\begin{titlepage}
+    \centering
+    \includegraphics[width=0.35\textwidth]{HKA.jpg}
+
+    {\normalsize\color{hkagray} University of Applied Sciences}\\[0.125cm]
+    {\small\color{hkagray} Fakult\"at f\"ur Informatik und Wirtschaftsinformatik}
+
+    \vspace{.5cm}
+    {\color{hkared}\rule{\textwidth}{1.5pt}}
+
+    \vspace{1.5cm}
+    {\fontsize{24}{30}\selectfont\bfseries\color{hkared} Ein Sensor mehr -- und dann?}\\[0.6cm]
+    {\Large Entwicklung eines modularen, beliebig erweiterbaren IMU-Sensorsystems
+    mit Zephyr RTOS und Bluetooth Low Energy, in das sich neue Sensorknoten
+    ohne Änderung der bestehenden Software einbinden lassen\par}
+    \vspace{.75cm}
+
+    \vspace{.5cm}
+    {\large Projektarbeit im Master Studiengang Informatik}\\[0.3cm]
+    {\large Wintersemester 2026/27}
+
+    \vspace{.5cm}
+    {\color{hkared}\rule{0.6\textwidth}{0.5pt}}
+    \vspace{1.5cm}
+
+    {\normalsize
+    \begin{tabular}{rl}
+        \textbf{Autor:}          & Erlind Sejdiu \\
+        \textbf{Matrikelnummer:} & 106357 \\[0.5cm]
+        \textbf{Korrektor:}      & \offen{Hier könnte ihr Name stehen!!!} \\
+    \end{tabular}
+    }
+
+    \vfill
+    {\small\color{hkagray} Stand: \today}
+\end{titlepage}
+
+% --- Inhaltsverzeichnis ---
+\begingroup
+\hypersetup{hidelinks}
+\tableofcontents
+\endgroup
+\thispagestyle{empty}
+\newpage
+\setcounter{page}{1}
+
+\section{Motivation}
+
+Inertiale Messeinheiten (Inertial Measurement Units, IMUs) messen Beschleunigung und Drehrate und sind heute klein, günstig und energiesparsam genug, um direkt am Körper getragen zu werden. Mit ihnen lassen sich Bewegungen außerhalb eines Labors erfassen, etwa in der Physiotherapie, im Sport oder in der Ergonomie \cite{filippeschi2017survey}. Ein einzelner Sensor sagt dabei wenig über eine Bewegung aus. Erst mehrere Sensoren an verschiedenen Körpersegmenten zeigen, wie sich etwa Ober- und Unterarm zueinander bewegen. Kommerzielle Systeme zur Ganzkörpererfassung setzen dafür 17 und mehr Sensoren gleichzeitig ein \cite{roetenberg2009xsens}.
+
+Wie viele Sensoren gebraucht werden, hängt vom Anwendungsfall ab. Für eine Armübung genügen zwei, für die Analyse eines Gangbilds sind es mehr, und oft zeigt sich erst im Laufe eines Projekts, dass ein weiterer Sensor oder ein anderer Sensortyp nötig ist. Ein Sensorsystem sollte deshalb mitwachsen können, ohne dass bei jedem neuen Sensor Firmware und Auswertungssoftware angepasst werden müssen.
+
+In der vorangegangenen Projektarbeit \enquote{MoveLink} wurde ein Prototyp mit zwei Sensorknoten auf Basis des nRF52840 und Zephyr RTOS entwickelt, die ihre Bewegungsdaten per Bluetooth Low Energy (BLE) an eine Zentraleinheit senden \offen{Verweis auf MoveLink prüfen}. Dieser Prototyp ist auf genau zwei Knoten mit einem festen Sensortyp zugeschnitten. Daran knüpft diese Projektarbeit an. Da es sich um eine Projektarbeit handelt, liegt der Fokus auf der praktischen Umsetzung. Es wird ein IMU-Sensorsystem entwickelt, das sich nach Belieben um weitere Sensorknoten und Sensortypen erweitern lässt, und es wird geprüft, wie gut diese Erweiterbarkeit in der Praxis gelingt.
+
+\section{Problemstellung}
+
+Nach dem Qualitätsmodell ISO/IEC 25010 \cite{iso25010} gehören Modularität und Modifizierbarkeit zur Wartbarkeit eines Systems. Ein System ist modular, wenn sich einzelne Teile ändern oder ergänzen lassen, ohne die übrigen Teile zu beeinflussen \cite{parnas1972criteria}. Für ein verteiltes Sensorsystem heißt das: Ein neuer Sensorknoten soll sich anmelden, beschreiben und Daten liefern können, ohne dass an der Zentraleinheit oder an den anderen Knoten etwas geändert wird.
+
+In der Praxis stehen dem mehrere Hürden entgegen. Die Zentraleinheit muss neue Knoten zur Laufzeit erkennen und wissen, welche Daten sie liefern, in welcher Einheit und mit welcher Abtastrate. Verschiedene IMU-Typen haben unterschiedliche Treiber, Messbereiche und Datenformate, die hinter einer gemeinsamen Schnittstelle verborgen werden müssen. Die Messwerte mehrerer Knoten müssen zeitlich zueinander passen, obwohl jeder Knoten seinen eigenen Takt hat \cite{elson2002rbs,maroti2004ftsp}. Und die Funkverbindung setzt Grenzen, denn mit jedem weiteren Knoten teilen sich mehr Teilnehmer die verfügbare Bandbreite \cite{bt_core}.
+
+Offen ist daher, wie ein solches System aufgebaut sein muss, damit das Hinzufügen eines Sensors tatsächlich nur eine Konfigurationsfrage ist, und bis zu welcher Anzahl an Knoten dies mit BLE zuverlässig funktioniert.
+
+\paragraph{Abgrenzung.} Das System ist ein Prototyp und kein Medizinprodukt. Es werden keine medizinisch oder sportwissenschaftlich validen Messdaten erhoben. Hardware- und Platinendesign sind nicht Teil der Arbeit, es werden verfügbare Entwicklungsboards verwendet. Als Übertragungsweg wird BLE betrachtet, andere Funktechnologien werden nicht verglichen. Die Schätzung der Orientierung aus den Rohdaten wird mit einem etablierten Filter umgesetzt \cite{madgwick2011orientation}, die Entwicklung eigener Fusionsverfahren oder einer Bewegungserkennung ist nicht Ziel der Arbeit. Sicherheitsaspekte wie Verschlüsselung und Pairing werden nur am Rande betrachtet.
+
+\section{Ziele}
+
+Ziel der Arbeit ist es, ein IMU-Sensorsystem zu entwickeln, das sich ohne Änderung der bestehenden Software um weitere Sensorknoten und Sensortypen erweitern lässt, und die Grenzen dieser Erweiterbarkeit zu bestimmen. Daraus ergeben sich die folgenden drei Ziele.
+
+\begin{enumerate}[label=\textbf{Z\arabic*}, leftmargin=*, nosep]
+    \item Eine Architektur entwerfen, in der sich Sensorknoten selbst beschreiben und zur Laufzeit an- und abmelden, sodass die Zentraleinheit sie ohne Codeänderung einbindet.
+    \item Eine einheitliche Schnittstelle für unterschiedliche IMU-Typen und ein gemeinsames, versioniertes Datenformat mit synchronisierten Zeitstempeln festlegen.
+    \item Bewerten, wie hoch der Aufwand für das Hinzufügen eines Knotens oder Sensortyps ist und wie sich Datenverlust, Latenz und zeitlicher Versatz mit steigender Knotenzahl verhalten.
+\end{enumerate}
+
+Daraus ergeben sich drei Ergebnisse. Erstens eine gemeinsame Firmware für alle Sensorknoten, die sich für neue IMU-Typen allein über Konfiguration anpassen lässt. Zweitens eine Software für die Zentraleinheit, die beliebig viele Knoten erkennt, deren Daten zeitlich zusammenführt und über austauschbare Module weiterverarbeitet. Beides setzt Z1 und Z2 um. Drittens eine Bewertung der Erweiterbarkeit und Skalierbarkeit, die Z3 umsetzt.
+
+\section{Vorgehen}\label{sec:vorgehen}
+
+Die Arbeit ist Schritt für Schritt aufgebaut. Ausgehend von einem Knoten wird das System schrittweise auf mehrere Knoten und weitere Sensortypen erweitert. Jede Erweiterung wird dabei selbst als Test der Architektur genutzt. Was sich nicht ohne Codeänderung einbinden lässt, zeigt eine Schwachstelle, die in der nächsten Iteration behoben wird.
+
+\subsection{Systemaufbau}
+
+Abbildung~\ref{fig:architektur} zeigt die geplante Architektur. Jeder Sensorknoten besteht aus einem nRF52840-Board mit mindestens einer IMU und läuft mit derselben Zephyr-Firmware \cite{zephyr_docs,ncs_docs}. Die Sensoren werden über die Sensor-Schnittstelle von Zephyr angesprochen, sodass der Applikationscode unabhängig vom konkreten Sensortyp bleibt. Welcher Sensor verbaut ist, wird über DeviceTree und Kconfig festgelegt.
+
+Jeder Knoten macht sich per BLE-Advertising mit einer gemeinsamen Service-UUID bekannt. Nach dem Verbindungsaufbau liest die Zentraleinheit eine Selbstbeschreibung des Knotens aus. Sie enthält unter anderem Knoten-ID, Sensortyp, verfügbare Kanäle, Einheiten, Messbereich und Abtastrate. Danach abonniert die Zentraleinheit den Datenstrom des Knotens. Alle Knoten senden ihre Messwerte im selben Paketformat mit Knoten-ID, Sequenznummer und Zeitstempel.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\textwidth}{!}{\input{architektur.tex}}
+\caption{Geplante Architektur des modularen IMU-Sensorsystems (vereinfacht). Gestrichelt dargestellt sind Erweiterungen, die ohne Änderung der bestehenden Software hinzukommen. Knoten~N steht für beliebig viele weitere Knoten.}
+\label{fig:architektur}
+\end{figure}
+
+Die Software der Zentraleinheit ist in Schichten aufgebaut. Eine Transportschicht kapselt die BLE-Verbindungen. Ein Register verwaltet alle angemeldeten Knoten und ihre Selbstbeschreibungen und erkennt, wenn ein Knoten ausfällt oder neu hinzukommt. Eine Synchronisationsschicht bringt die Messwerte aller Knoten auf eine gemeinsame Zeitachse. Darauf setzt eine Verarbeitungskette aus austauschbaren Modulen auf, etwa für die Orientierungsschätzung, die Live-Visualisierung oder die Aufzeichnung in eine Datei. Welcher Knoten an welchem Körpersegment sitzt, wird in einer Konfigurationsdatei festgelegt und nicht im Code.
+
+\subsection{Erweiterbarkeit}
+
+\paragraph{Erweiterungsstufen.} Das System wird in mehreren Stufen aufgebaut. Jede Stufe fügt eine Form der Erweiterung hinzu, die ohne Codeänderung an der bestehenden Software gelingen soll. Die folgende Tabelle zeigt die geplanten Stufen.
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}l X@{}}
+\toprule
+\textbf{Stufe} & \textbf{Erweiterung} \\
+\midrule
+1 & ein Knoten mit Selbstbeschreibung und einheitlichem Datenformat (Basislinie) \\
+2 & mehrere gleichartige Knoten, die sich zur Laufzeit an- und abmelden \\
+3 & ein weiterer IMU-Typ, der nur über DeviceTree und Kconfig eingebunden wird \\
+4 & mehrere IMUs an einem Knoten sowie ein neues Verarbeitungsmodul in der Zentraleinheit \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\paragraph{Zeitsynchronisation.} Damit die Daten verschiedener Knoten gemeinsam ausgewertet werden können, müssen ihre Zeitstempel vergleichbar sein. Dazu verteilt die Zentraleinheit regelmäßig eine Referenzzeit, aus der jeder Knoten den Versatz und die Drift seines eigenen Takts berechnet. Als Grundlage dienen bekannte Verfahren aus drahtlosen Sensornetzen \cite{elson2002rbs,maroti2004ftsp}. Der verbleibende Versatz wird in der Bewertung gemessen.
+
+\paragraph{Erweiterungsleitfaden.} Aus den Erfahrungen entsteht ein kurzer Leitfaden, der beschreibt, welche Schritte nötig sind, um einen neuen Knoten, einen neuen Sensortyp oder ein neues Verarbeitungsmodul einzubinden. Jeder Schritt wird mit einem Beispiel aus dem System belegt.
+
+\subsection{Bewertung}
+
+\paragraph{Erweiterungsaufwand.} Für jede Erweiterungsstufe wird festgehalten, welche Dateien geändert oder hinzugefügt werden mussten, wie viele Zeilen davon Code und wie viele Konfiguration sind und wie lange die Einbindung gedauert hat. Ziel ist, dass ab Stufe~2 an der bestehenden Software keine Codeänderung mehr nötig ist.
+
+\paragraph{Skalierbarkeit.} Die Anzahl der Knoten wird schrittweise erhöht, bis die Grenze der BLE-Verbindungen oder der Bandbreite erreicht ist. Das wird für mehrere Abtastraten wiederholt. Gemessen werden der Anteil verlorener Pakete, die Latenz vom Messzeitpunkt bis zur Zentraleinheit, der zeitliche Versatz zwischen den Knoten und die Stromaufnahme eines Knotens. \offen{Anzahl verfügbarer Boards klären}
+
+\paragraph{Robustheit.} Es wird geprüft, wie das System reagiert, wenn ein Knoten während einer Aufzeichnung ausfällt, außer Reichweite gerät oder neu hinzukommt, und ob die übrigen Datenströme davon unbeeinträchtigt bleiben.
+
+Aus allen drei Teilen ergibt sich, wie gut die Architektur die Erweiterung in der Praxis unterstützt und wo ihre Grenzen liegen. Auf dieser Grundlage wird die Architektur abschließend überarbeitet.
+
+\section{Zeitplan}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}l X X@{}}
+\toprule
+\textbf{Phase} & \textbf{Ziel} & \textbf{Artefakt} \\
+\midrule
+1 Einarbeitung & Zephyr-Sensor-API, BLE-GATT, Zeitsynchronisation, bestehende Systeme & Literaturübersicht \\
+2 Grundgerüst & Firmware und Zentraleinheit für einen Knoten mit Selbstbeschreibung und Datenformat & Lauffähige Basislinie, ADRs \\
+3 Mehrere Knoten & An- und Abmeldung zur Laufzeit, Register, Zeitsynchronisation & System mit N gleichartigen Knoten \\
+4 Neue Sensortypen & Weiteren IMU-Typ und mehrere IMUs pro Knoten per Konfiguration einbinden & Sensorunabhängige Firmware \\
+5 Verarbeitung & Austauschbare Module für Orientierung, Visualisierung und Aufzeichnung & Modulare Verarbeitungskette \\
+6 Bewertung & Erweiterungsaufwand, Skalierbarkeit und Robustheit messen & Ergebnisse je Stufe, Erweiterungsleitfaden \\
+7 Ausarbeitung & Schriftliche Dokumentation & Ausarbeitung, Code im Repository \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\printbibliography[heading=bibintoc, title={Literaturverzeichnis}]
+
+\end{document}

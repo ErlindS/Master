@@ -54,7 +54,7 @@
     linkcolor   = hkared,
     urlcolor    = hkared,
     citecolor   = hkared,
-    pdftitle    = {Expos\'e: Granularit\"at von Traces und Logs mit OpenTelemetry},
+    pdftitle    = {Granularit\"at von Traces und Logs mit OpenTelemetry},
     pdfauthor   = {Erlind Sejdiu},
     pdfcreator  = {pdflatex},
     pdfproducer = {LaTeX with hyperref}
@@ -71,7 +71,7 @@
 % --- Header/Footer ---
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\color{hkagray}Expos\'e -- Projektarbeit}
+\fancyhead[L]{\small\color{hkagray}Projektarbeit}
 \fancyhead[R]{\small\color{hkagray}Master Informatik WS~2026/27}
 \fancyfoot[C]{\small\color{hkagray}\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
@@ -94,12 +94,11 @@
     {\color{hkared}\rule{\textwidth}{1.5pt}}
 
     \vspace{1.5cm}
-    {\fontsize{24}{30}\selectfont\bfseries\color{hkared} Wie fein muss Observability sein?}\\[0.6cm]
+    {\fontsize{24}{30}\selectfont\bfseries\color{hkared} Wie feingranular muss Observability sein?}\\[0.6cm]
     {\Large Implementierung einer Microservice-Anwendung mit .NET und Angular
     am Beispiel eines Projektmanagement-Werkzeugs und Entwicklung einer Methodik
     für passende Traces und Logs mit OpenTelemetry\par}
     \vspace{.75cm}
-    {\LARGE\bfseries Expos\'e}
 
     \vspace{.5cm}
     {\large Projektarbeit im Master Studiengang Informatik}\\[0.3cm]
@@ -113,7 +112,7 @@
     \begin{tabular}{rl}
         \textbf{Autor:}          & Erlind Sejdiu \\
         \textbf{Matrikelnummer:} & 106357 \\[0.5cm]
-        \textbf{Korrektor:}      & \offen{Name der betreuenden Person} \\
+        \textbf{Korrektor:}      & \offen{Hier könnte ihr Name stehen!!!} \\
     \end{tabular}
     }
 
@@ -134,7 +133,7 @@
 
 In Microservice-Architekturen durchläuft eine einzelne Nutzeraktion mehrere Dienste, Datenbanken und Nachrichtenkanäle \cite{newman2021microservices}. Tritt ein Fehler auf oder wird eine Anfrage langsam, ist die Ursache oft nicht in einem einzelnen Dienst zu finden, sondern im Zusammenspiel mehrerer Komponenten. Observability macht den inneren Zustand eines solchen Systems anhand von Traces, Metriken und Logs nachvollziehbar \cite{majors2022observability}. OpenTelemetry hat sich dafür als herstellerunabhängiger De-facto-Standard etabliert und bietet einheitliche Schnittstellen für viele Sprachen und Plattformen \cite{otel_cncf,otel_docs}.
 
-Wer eine Anwendung mit OpenTelemetry instrumentiert, muss viele Entscheidungen treffen. Soll in jeder Funktion ein Span entstehen oder nur an den Grenzen der Dienste? Ist Logging noch sinnvoll, wenn es Traces gibt? Wann fügt man einem Span Events oder Attribute hinzu, und wann schreibt man einen Log-Eintrag? Die OpenTelemetry-Dokumentation erklärt ausführlich, \emph{wie} man Spans, Events und Logs erzeugt, aber kaum, \emph{wo} und \emph{wie fein} man sie einsetzen sollte. In der Praxis wird das nach Erfahrung entschieden.
+Wer eine Anwendung mit OpenTelemetry instrumentiert, muss viele Entscheidungen treffen. Soll in jeder Funktion ein Span entstehen oder nur an den Grenzen der Dienste? Ist Logging noch sinnvoll, wenn es Traces gibt? Wann fügt man einem Span Events oder Attribute hinzu, und wann schreibt man einen Log-Eintrag? Die OpenTelemetry-Dokumentation erklärt ausführlich, wie man Spans, Events und Logs erzeugt, aber kaum, wo und wie fein man sie einsetzen sollte. In der Praxis wird das nach Erfahrung entschieden.
 
 Dabei hat jede Entscheidung zwei Seiten. Zu grobe Traces helfen bei der Fehlersuche wenig. Zu feine Traces kosten Rechenzeit, Arbeitsspeicher und Speicherplatz und werden so unübersichtlich, dass die eigentliche Ursache darin untergeht.
 
@@ -148,17 +147,17 @@ Diese Frage lässt sich nicht an einem minimalen Beispiel beantworten. Welche Tr
 
 \paragraph{Abgrenzung.} Die Anwendung dient als realistisches Beispiel und ist kein produktionsreifes Produkt. Der Schwerpunkt liegt auf Traces und Logs, Metriken werden nur am Rande betrachtet. Nicht betrachtet wird der Vergleich verschiedener Observability-Backends (z.\,B.\ Grafana oder Datadog), da er den Rahmen dieser Projektarbeit sprengen würde. Eine vollständige Performanzstudie ist ebenfalls nicht Ziel der Arbeit. Performanz und Speicherbedarf werden nur so weit gemessen, wie es für den Vergleich der Granularitäten nötig ist.
 
-\section{Forschungsfragen und Ziele}
+\section{Ziele}
 
-Die Arbeit soll beantworten, wie man in einer Microservice-Anwendung passende Traces und Logs erstellt und welche Granularität dafür sinnvoll ist. Daraus ergeben sich die folgenden drei Forschungsfragen.
+Ziel der Arbeit ist es, zu zeigen, wie man in einer Microservice-Anwendung passende Traces und Logs erstellt und welche Granularität dafür sinnvoll ist. Daraus ergeben sich die folgenden drei Ziele.
 
-\begin{enumerate}[label=\textbf{FF\arabic*}, leftmargin=*, nosep]
-    \item Nach welchen Regeln wird entschieden, an welchen Stellen ein Span entsteht und wie fein instrumentiert wird?
-    \item Wann wird eine Information als Span, Event, Attribut oder Log-Eintrag erfasst, und wie werden Traces und Logs miteinander verknüpft?
-    \item Wie wirken sich unterschiedliche Granularitäten auf die Fehlersuche und auf Performanz und Speicherbedarf aus?
+\begin{enumerate}[label=\textbf{Z\arabic*}, leftmargin=*, nosep]
+    \item Regeln festlegen, nach denen entschieden wird, an welchen Stellen ein Span entsteht und wie fein instrumentiert wird.
+    \item Festlegen, wann eine Information als Span, Event, Attribut oder Log-Eintrag erfasst wird und wie Traces und Logs miteinander verknüpft werden.
+    \item Bewerten, wie sich unterschiedliche Granularitäten auf die Fehlersuche und auf Performanz und Speicherbedarf auswirken.
 \end{enumerate}
 
-Daraus ergeben sich drei Ergebnisse. Erstens eine lauffähige, in Containern bereitstellbare Anwendung, deren Granularität sich ohne Codeänderung umschalten lässt. Zweitens eine Methodik in Form eines Leitfadens mit Regeln und Beispielen aus der Anwendung, die FF1 und FF2 beantwortet. Drittens eine Bewertung dieser Methodik anhand von Fehlerszenarien und einer Messung des Overheads, die FF3 beantwortet.
+Daraus ergeben sich drei Ergebnisse. Erstens eine lauffähige, in Containern bereitstellbare Anwendung, deren Granularität sich ohne Codeänderung umschalten lässt. Zweitens eine Methodik in Form eines Leitfadens mit Regeln und Beispielen aus der Anwendung, die Z1 und Z2 umsetzt. Drittens eine Bewertung dieser Methodik anhand von Fehlerszenarien und einer Messung des Overheads, die Z3 umsetzt.
 
 \section{Vorgehen}\label{sec:vorgehen}
 
@@ -177,7 +176,7 @@ Abbildung~\ref{fig:architektur} zeigt die geplante Architektur. Das Angular-Fron
 \label{fig:architektur}
 \end{figure}
 
-Die Domäne enthält damit unterschiedliche Anfragepfade, die für die Instrumentierung interessant sind. Dazu gehören große Lesezugriffe (Kalenderansichten, Board), kurze Schreibzugriffe (Task verschieben), rechenintensive Logik (Zyklusprüfung), synchrone Aufrufketten über mehrere Dienste und asynchrone Verarbeitung. Wichtige Entwurfsentscheidungen werden als Architecture Decision Records dokumentiert \cite{nygard2011adr}.
+Die Domäne enthält damit unterschiedliche Anfragepfade, die für die Instrumentierung interessant sind. Dazu gehören große Lesezugriffe (Kalenderansichten, Board), kurze Schreibzugriffe (Task verschieben), rechenintensive Logik (Zyklusprüfung), synchrone Aufrufketten über mehrere Dienste und asynchrone Verarbeitung.
 
 \subsection{Methodik für Traces und Logs}
 
@@ -199,7 +198,7 @@ Die Domäne enthält damit unterschiedliche Anfragepfade, die für die Instrumen
 \end{tabularx}
 \end{center}
 
-Quer zu den Stufen wird untersucht, welche Details besser als Attribut oder Event an einem bestehenden Span hängen und welche als eigener Log-Eintrag erfasst werden. Attribute folgen dabei den Semantic Conventions \cite{otel_semconv}. Logs werden über die Trace-ID mit den Traces verknüpft. Das Frontend gibt den Trace-Kontext an das Backend weiter, sodass eine Nutzeraktion vom Klick bis zur Datenbank als ein Trace sichtbar wird. Alle Dienste senden ihre Daten an einen gemeinsamen Collector, der sie an ein Analyse-Backend weiterleitet \offen{Backend festlegen}.
+Quer zu den Stufen wird untersucht, welche Details besser als Attribut oder Event an einem bestehenden Span hängen und welche als eigener Log-Eintrag erfasst werden. Logs werden über die Trace-ID mit den Traces verknüpft. Das Frontend gibt den Trace-Kontext an das Backend weiter, sodass eine Nutzeraktion vom Klick bis zur Datenbank als ein Trace sichtbar wird. Alle Dienste senden ihre Daten an einen gemeinsamen Collector, der sie an ein Analyse-Backend weiterleitet.
 
 \paragraph{Leitfaden.} Aus den Erfahrungen entsteht ein Leitfaden mit Regeln für die Wahl der Granularität und für die Entscheidung zwischen Span, Event, Attribut und Log-Eintrag. Jede Regel wird mit einem Beispiel aus der Anwendung belegt.
 

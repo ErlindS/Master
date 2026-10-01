@@ -1,0 +1,376 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{filippeschi2017survey}{article}{}{}
+      \name{author}{6}{}{%
+        {{hash=a062549a22f94e10daf8941f09f151d2}{%
+           family={Filippeschi},
+           familyi={F\bibinitperiod},
+           given={Alessandro},
+           giveni={A\bibinitperiod}}}%
+        {{hash=abe7deb26f77b1b5ef821fb9e57f54a4}{%
+           family={Schmitz},
+           familyi={S\bibinitperiod},
+           given={Norbert},
+           giveni={N\bibinitperiod}}}%
+        {{hash=09f3a65813a6f85f2a663ad25eaf4909}{%
+           family={Miezal},
+           familyi={M\bibinitperiod},
+           given={Markus},
+           giveni={M\bibinitperiod}}}%
+        {{hash=57677dc843a44f6c5fed9d5039135a0a}{%
+           family={Bleser},
+           familyi={B\bibinitperiod},
+           given={Gabriele},
+           giveni={G\bibinitperiod}}}%
+        {{hash=a48d7b9849a87133cc4582c83c891f99}{%
+           family={Ruffaldi},
+           familyi={R\bibinitperiod},
+           given={Emanuele},
+           giveni={E\bibinitperiod}}}%
+        {{hash=c0478ee9487d25a73d22d36eaf6bffa8}{%
+           family={Stricker},
+           familyi={S\bibinitperiod},
+           given={Didier},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{f9b652a563a9efebe65ae630fc6a9c6c}
+      \strng{fullhash}{e6993d67cc66bce8e457615d8baf670f}
+      \strng{fullhashraw}{e6993d67cc66bce8e457615d8baf670f}
+      \strng{bibnamehash}{e6993d67cc66bce8e457615d8baf670f}
+      \strng{authorbibnamehash}{e6993d67cc66bce8e457615d8baf670f}
+      \strng{authornamehash}{f9b652a563a9efebe65ae630fc6a9c6c}
+      \strng{authorfullhash}{e6993d67cc66bce8e457615d8baf670f}
+      \strng{authorfullhashraw}{e6993d67cc66bce8e457615d8baf670f}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Sensors}
+      \field{langid}{english}
+      \field{number}{6}
+      \field{title}{{Survey of Motion Tracking Methods Based on Inertial Sensors: A Focus on Upper Limb Human Motion}}
+      \field{volume}{17}
+      \field{year}{2017}
+      \field{pages}{1257}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.3390/s17061257
+      \endverb
+    \endentry
+    \entry{roetenberg2009xsens}{report}{}{}
+      \name{author}{3}{}{%
+        {{hash=09225dbf4948ab98a598b1c2652c2d0d}{%
+           family={Roetenberg},
+           familyi={R\bibinitperiod},
+           given={Daniel},
+           giveni={D\bibinitperiod}}}%
+        {{hash=b71297588ff832c576f748c480b84337}{%
+           family={Luinge},
+           familyi={L\bibinitperiod},
+           given={Henk},
+           giveni={H\bibinitperiod}}}%
+        {{hash=425e6a40a958f248a5d4490e8fa5e27c}{%
+           family={Slycke},
+           familyi={S\bibinitperiod},
+           given={Per},
+           giveni={P\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Xsens Technologies B.V.}%
+      }
+      \strng{namehash}{1409d64553251d91723f551daa3a2fd8}
+      \strng{fullhash}{39657aa277dd10f0f4ffa6ba94bd006b}
+      \strng{fullhashraw}{39657aa277dd10f0f4ffa6ba94bd006b}
+      \strng{bibnamehash}{39657aa277dd10f0f4ffa6ba94bd006b}
+      \strng{authorbibnamehash}{39657aa277dd10f0f4ffa6ba94bd006b}
+      \strng{authornamehash}{1409d64553251d91723f551daa3a2fd8}
+      \strng{authorfullhash}{39657aa277dd10f0f4ffa6ba94bd006b}
+      \strng{authorfullhashraw}{39657aa277dd10f0f4ffa6ba94bd006b}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{{Xsens MVN: Full 6DOF Human Motion Tracking Using Miniature Inertial Sensors}}
+      \field{type}{techreport}
+      \field{year}{2009}
+    \endentry
+    \entry{iso25010}{standard}{}{}
+      \list{organization}{1}{%
+        {International Organization for Standardization}%
+      }
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{{ISO/IEC 25010:2023 -- Systems and software engineering -- Systems and software Quality Requirements and Evaluation (SQuaRE) -- Product quality model}}
+      \field{year}{2023}
+    \endentry
+    \entry{parnas1972criteria}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=4125dab477eb52a2cfd72abc04be3e73}{%
+           family={Parnas},
+           familyi={P\bibinitperiod},
+           given={David\bibnamedelima L.},
+           giveni={D\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+      }
+      \strng{namehash}{4125dab477eb52a2cfd72abc04be3e73}
+      \strng{fullhash}{4125dab477eb52a2cfd72abc04be3e73}
+      \strng{fullhashraw}{4125dab477eb52a2cfd72abc04be3e73}
+      \strng{bibnamehash}{4125dab477eb52a2cfd72abc04be3e73}
+      \strng{authorbibnamehash}{4125dab477eb52a2cfd72abc04be3e73}
+      \strng{authornamehash}{4125dab477eb52a2cfd72abc04be3e73}
+      \strng{authorfullhash}{4125dab477eb52a2cfd72abc04be3e73}
+      \strng{authorfullhashraw}{4125dab477eb52a2cfd72abc04be3e73}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Communications of the ACM}
+      \field{langid}{english}
+      \field{number}{12}
+      \field{title}{{On the Criteria to Be Used in Decomposing Systems into Modules}}
+      \field{volume}{15}
+      \field{year}{1972}
+      \field{pages}{1053\bibrangedash 1058}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.1145/361598.361623
+      \endverb
+    \endentry
+    \entry{elson2002rbs}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=755910485ac3d84498a6441a62763faa}{%
+           family={Elson},
+           familyi={E\bibinitperiod},
+           given={Jeremy},
+           giveni={J\bibinitperiod}}}%
+        {{hash=2d35e1db618022a3e3c01f891560fa25}{%
+           family={Girod},
+           familyi={G\bibinitperiod},
+           given={Lewis},
+           giveni={L\bibinitperiod}}}%
+        {{hash=222e100454bced2fd8e9e786fce92f41}{%
+           family={Estrin},
+           familyi={E\bibinitperiod},
+           given={Deborah},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{0a4fe899f4872830c6836dd7b53e13b0}
+      \strng{fullhash}{b8ebd03acaed4cbb3e0734f2e94fdb62}
+      \strng{fullhashraw}{b8ebd03acaed4cbb3e0734f2e94fdb62}
+      \strng{bibnamehash}{b8ebd03acaed4cbb3e0734f2e94fdb62}
+      \strng{authorbibnamehash}{b8ebd03acaed4cbb3e0734f2e94fdb62}
+      \strng{authornamehash}{0a4fe899f4872830c6836dd7b53e13b0}
+      \strng{authorfullhash}{b8ebd03acaed4cbb3e0734f2e94fdb62}
+      \strng{authorfullhashraw}{b8ebd03acaed4cbb3e0734f2e94fdb62}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 5th Symposium on Operating Systems Design and Implementation (OSDI '02)}
+      \field{langid}{english}
+      \field{title}{{Fine-Grained Network Time Synchronization Using Reference Broadcasts}}
+      \field{year}{2002}
+      \field{pages}{147\bibrangedash 163}
+      \range{pages}{17}
+    \endentry
+    \entry{maroti2004ftsp}{inproceedings}{}{}
+      \name{author}{4}{}{%
+        {{hash=b700ac19ae290650c5fe5791b8dd6846}{%
+           family={Maróti},
+           familyi={M\bibinitperiod},
+           given={Miklós},
+           giveni={M\bibinitperiod}}}%
+        {{hash=9097e2415b6035664aa2e19273158cbf}{%
+           family={Kusy},
+           familyi={K\bibinitperiod},
+           given={Branislav},
+           giveni={B\bibinitperiod}}}%
+        {{hash=cd6ff0789a5d327d84b87d002fb549bc}{%
+           family={Simon},
+           familyi={S\bibinitperiod},
+           given={Gyula},
+           giveni={G\bibinitperiod}}}%
+        {{hash=54b790105f9ff17e8dfdbd5ff959e99e}{%
+           family={Lédeczi},
+           familyi={L\bibinitperiod},
+           given={Ákos},
+           giveni={Á\bibinitperiod}}}%
+      }
+      \strng{namehash}{bd51dfb0aebdf73898c15f5dd4f2a697}
+      \strng{fullhash}{e9d2a7d2447f9fdf078be31f7f9baf22}
+      \strng{fullhashraw}{e9d2a7d2447f9fdf078be31f7f9baf22}
+      \strng{bibnamehash}{e9d2a7d2447f9fdf078be31f7f9baf22}
+      \strng{authorbibnamehash}{e9d2a7d2447f9fdf078be31f7f9baf22}
+      \strng{authornamehash}{bd51dfb0aebdf73898c15f5dd4f2a697}
+      \strng{authorfullhash}{e9d2a7d2447f9fdf078be31f7f9baf22}
+      \strng{authorfullhashraw}{e9d2a7d2447f9fdf078be31f7f9baf22}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 2nd International Conference on Embedded Networked Sensor Systems (SenSys '04)}
+      \field{langid}{english}
+      \field{title}{{The Flooding Time Synchronization Protocol}}
+      \field{year}{2004}
+      \field{pages}{39\bibrangedash 49}
+      \range{pages}{11}
+      \verb{doi}
+      \verb 10.1145/1031495.1031501
+      \endverb
+    \endentry
+    \entry{bt_core}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=84539b4780dccc038d9b9cfd67f039cf}{%
+           family={{Bluetooth SIG}},
+           familyi={B\bibinitperiod}}}%
+      }
+      \strng{namehash}{84539b4780dccc038d9b9cfd67f039cf}
+      \strng{fullhash}{84539b4780dccc038d9b9cfd67f039cf}
+      \strng{fullhashraw}{84539b4780dccc038d9b9cfd67f039cf}
+      \strng{bibnamehash}{84539b4780dccc038d9b9cfd67f039cf}
+      \strng{authorbibnamehash}{84539b4780dccc038d9b9cfd67f039cf}
+      \strng{authornamehash}{84539b4780dccc038d9b9cfd67f039cf}
+      \strng{authorfullhash}{84539b4780dccc038d9b9cfd67f039cf}
+      \strng{authorfullhashraw}{84539b4780dccc038d9b9cfd67f039cf}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{{Bluetooth Core Specification}}
+      \field{urlday}{30}
+      \field{urlmonth}{9}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.bluetooth.com/specifications/specs/core-specification/
+      \endverb
+      \verb{url}
+      \verb https://www.bluetooth.com/specifications/specs/core-specification/
+      \endverb
+    \endentry
+    \entry{madgwick2011orientation}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=907c1fecd31054023a0459215498ad74}{%
+           family={Madgwick},
+           familyi={M\bibinitperiod},
+           given={Sebastian\bibnamedelimb O.\bibnamedelimi H.},
+           giveni={S\bibinitperiod\bibinitdelim O\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+        {{hash=c69bf9c458890c8420c2873ead4dc352}{%
+           family={Harrison},
+           familyi={H\bibinitperiod},
+           given={Andrew\bibnamedelimb J.\bibnamedelimi L.},
+           giveni={A\bibinitperiod\bibinitdelim J\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+        {{hash=8386d6fdb31b7d08180eba6d9b36c82a}{%
+           family={Vaidyanathan},
+           familyi={V\bibinitperiod},
+           given={Ravi},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{a02f4c1839f52030ec0bf0d418296c9e}
+      \strng{fullhash}{c5811219bd0bac5e88358a71c6bf74f9}
+      \strng{fullhashraw}{c5811219bd0bac5e88358a71c6bf74f9}
+      \strng{bibnamehash}{c5811219bd0bac5e88358a71c6bf74f9}
+      \strng{authorbibnamehash}{c5811219bd0bac5e88358a71c6bf74f9}
+      \strng{authornamehash}{a02f4c1839f52030ec0bf0d418296c9e}
+      \strng{authorfullhash}{c5811219bd0bac5e88358a71c6bf74f9}
+      \strng{authorfullhashraw}{c5811219bd0bac5e88358a71c6bf74f9}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2011 IEEE International Conference on Rehabilitation Robotics (ICORR)}
+      \field{langid}{english}
+      \field{title}{{Estimation of IMU and MARG Orientation Using a Gradient Descent Algorithm}}
+      \field{year}{2011}
+      \verb{doi}
+      \verb 10.1109/ICORR.2011.5975346
+      \endverb
+    \endentry
+    \entry{zephyr_docs}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=10f74321565e3536f33df54f6008729a}{%
+           family={{Zephyr Project}},
+           familyi={Z\bibinitperiod}}}%
+      }
+      \strng{namehash}{10f74321565e3536f33df54f6008729a}
+      \strng{fullhash}{10f74321565e3536f33df54f6008729a}
+      \strng{fullhashraw}{10f74321565e3536f33df54f6008729a}
+      \strng{bibnamehash}{10f74321565e3536f33df54f6008729a}
+      \strng{authorbibnamehash}{10f74321565e3536f33df54f6008729a}
+      \strng{authornamehash}{10f74321565e3536f33df54f6008729a}
+      \strng{authorfullhash}{10f74321565e3536f33df54f6008729a}
+      \strng{authorfullhashraw}{10f74321565e3536f33df54f6008729a}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{{Zephyr Project Documentation}}
+      \field{urlday}{30}
+      \field{urlmonth}{9}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://docs.zephyrproject.org/latest/
+      \endverb
+      \verb{url}
+      \verb https://docs.zephyrproject.org/latest/
+      \endverb
+    \endentry
+    \entry{ncs_docs}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=af5e4455ba6301bed1741b8796304f18}{%
+           family={{Nordic Semiconductor}},
+           familyi={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{af5e4455ba6301bed1741b8796304f18}
+      \strng{fullhash}{af5e4455ba6301bed1741b8796304f18}
+      \strng{fullhashraw}{af5e4455ba6301bed1741b8796304f18}
+      \strng{bibnamehash}{af5e4455ba6301bed1741b8796304f18}
+      \strng{authorbibnamehash}{af5e4455ba6301bed1741b8796304f18}
+      \strng{authornamehash}{af5e4455ba6301bed1741b8796304f18}
+      \strng{authorfullhash}{af5e4455ba6301bed1741b8796304f18}
+      \strng{authorfullhashraw}{af5e4455ba6301bed1741b8796304f18}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{{nRF Connect SDK Documentation}}
+      \field{urlday}{30}
+      \field{urlmonth}{9}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://docs.nordicsemi.com/bundle/ncs-latest/page/nrf/index.html
+      \endverb
+      \verb{url}
+      \verb https://docs.nordicsemi.com/bundle/ncs-latest/page/nrf/index.html
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

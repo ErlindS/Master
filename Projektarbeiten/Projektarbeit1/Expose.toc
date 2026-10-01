@@ -1,8 +1,8 @@
-\babel@toc {english}{}\relax 
+\babel@toc {ngerman}{}\relax 
 \contentsline {section}{\numberline {1}Motivation}{1}{section.1}%
 \contentsline {section}{\numberline {2}Problemstellung}{1}{section.2}%
 \contentsline {paragraph}{Abgrenzung.}{1}{paragraph*.1}%
-\contentsline {section}{\numberline {3}Forschungsfragen und Ziele}{1}{section.3}%
+\contentsline {section}{\numberline {3}Ziele}{1}{section.3}%
 \contentsline {section}{\numberline {4}Vorgehen}{2}{section.4}%
 \contentsline {subsection}{\numberline {4.1}Projektmanagement-Werkzeug}{2}{subsection.4.1}%
 \contentsline {subsection}{\numberline {4.2}Methodik für Traces und Logs}{3}{subsection.4.2}%

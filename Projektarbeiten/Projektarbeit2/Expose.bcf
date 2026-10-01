@@ -2374,12 +2374,18 @@
     <bcf:datasource type="file" datatype="bibtex" glob="false">literatur.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1" intorder="1">newman2021microservices</bcf:citekey>
-    <bcf:citekey order="2" intorder="1">majors2022observability</bcf:citekey>
-    <bcf:citekey order="3" intorder="1">otel_cncf</bcf:citekey>
-    <bcf:citekey order="3" intorder="2">otel_docs</bcf:citekey>
-    <bcf:citekey order="4" intorder="1">iso25010</bcf:citekey>
-    <bcf:citekey order="5" intorder="1">reichelt2023overhead</bcf:citekey>
+    <bcf:citekey order="1" intorder="1">filippeschi2017survey</bcf:citekey>
+    <bcf:citekey order="2" intorder="1">roetenberg2009xsens</bcf:citekey>
+    <bcf:citekey order="3" intorder="1">iso25010</bcf:citekey>
+    <bcf:citekey order="4" intorder="1">parnas1972criteria</bcf:citekey>
+    <bcf:citekey order="5" intorder="1">elson2002rbs</bcf:citekey>
+    <bcf:citekey order="5" intorder="2">maroti2004ftsp</bcf:citekey>
+    <bcf:citekey order="6" intorder="1">bt_core</bcf:citekey>
+    <bcf:citekey order="7" intorder="1">madgwick2011orientation</bcf:citekey>
+    <bcf:citekey order="8" intorder="1">zephyr_docs</bcf:citekey>
+    <bcf:citekey order="8" intorder="2">ncs_docs</bcf:citekey>
+    <bcf:citekey order="9" intorder="1">elson2002rbs</bcf:citekey>
+    <bcf:citekey order="9" intorder="2">maroti2004ftsp</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

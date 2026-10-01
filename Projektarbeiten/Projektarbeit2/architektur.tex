@@ -1,0 +1,69 @@
+% Vereinfachte Architektur des modularen IMU-Sensorsystems (eingebunden in Expose.tex)
+\begin{tikzpicture}[
+    font=\small,
+    >={Stealth[length=2mm]},
+    comp/.style={draw=hkagray, fill=white, rounded corners=3pt, align=center,
+                 minimum height=9mm, inner sep=3pt},
+    layer/.style={draw=hkared, fill=hkared!12, rounded corners=3pt, align=center,
+                  minimum width=5.2cm, minimum height=7mm},
+    mod/.style={draw=hkagray, fill=hkagray!10, rounded corners=3pt, align=center,
+                minimum width=2.0cm, minimum height=7mm, font=\footnotesize},
+    part/.style={draw=hkagray, fill=white, rounded corners=2pt, align=center,
+                 minimum width=1.5cm, minimum height=6mm, font=\footnotesize},
+    group/.style={draw=hkared, line width=0.8pt, rounded corners=6pt, inner sep=7pt},
+    newgroup/.style={draw=hkared, dashed, line width=0.8pt, rounded corners=6pt, inner sep=7pt},
+    grouptitle/.style={fill=white, inner sep=2pt, font=\small\bfseries\color{hkared}},
+    data/.style={->, draw=black!75},
+    register/.style={->, dashed, draw=black!75},
+]
+
+% --- Sensorknoten ---
+\foreach \name/\label/\y in {k1/Knoten 1/4.2, k2/Knoten 2/1.8, kn/Knoten N/-0.6} {
+    \node[part] (\name imu) at (0,\y) {IMU};
+    \node[part, minimum width=2.4cm] (\name fw) at (2.6,\y) {Zephyr-Firmware\\Sensor-API};
+    \node[part] (\name ble) at (5.0,\y) {BLE};
+    \draw[->, draw=black!75] (\name imu) -- (\name fw);
+    \draw[->, draw=black!75] (\name fw) -- (\name ble);
+}
+\begin{scope}[on background layer]
+    \node[group, fit=(k1imu)(k1ble)] (g1) {};
+    \node[group, fit=(k2imu)(k2ble)] (g2) {};
+    \node[newgroup, fit=(knimu)(knble)] (gn) {};
+\end{scope}
+\node[grouptitle] at (g1.north) {Knoten 1 (Oberarm)};
+\node[grouptitle] at (g2.north) {Knoten 2 (Unterarm)};
+\node[grouptitle] at (gn.north) {Knoten N (neu)};
+\node[font=\Large, text=hkagray] at (2.6,0.65) {$\vdots$};
+
+% --- Zentraleinheit ---
+\node[layer] (trans) at (10.5,4.2) {\textbf{Transport} (BLE)};
+\node[layer] (reg)   at (10.5,3.0) {\textbf{Register}\\[-1pt]\footnotesize Selbstbeschreibungen};
+\node[layer] (sync)  at (10.5,1.8) {\textbf{Synchronisation}\\[-1pt]\footnotesize gemeinsame Zeitachse};
+\node[mod] (m1) at (8.3,0.4) {Orientierung};
+\node[mod] (m2) at (10.5,0.4) {Visualisierung};
+\node[mod] (m3) at (12.7,0.4) {Aufzeichnung};
+\node[mod, dashed, draw=hkared] (m4) at (10.5,-0.6) {weiteres Modul};
+\node[comp, minimum width=2.0cm] (cfg) at (15.6,3.0) {\textbf{Konfiguration}\\[1pt]\footnotesize Knoten $\to$ Segment};
+
+\draw[data] (trans) -- (reg);
+\draw[data] (reg) -- (sync);
+\draw[data] (sync.south) -- ++(0,-0.35) -| (m1.north);
+\draw[data] (sync.south) -- (m2.north);
+\draw[data] (sync.south) -- ++(0,-0.35) -| (m3.north);
+\draw[->, draw=hkagray] (cfg.west) -- (reg.east);
+
+\begin{scope}[on background layer]
+    \node[group, fit=(trans)(m1)(m3)(m4)] (gz) {};
+\end{scope}
+\node[grouptitle] at (gz.north) {Zentraleinheit (PC/Smartphone)};
+
+% --- Verbindungen Knoten -> Zentraleinheit ---
+\draw (k1ble.east) -- (6.6,4.2);
+\draw (k2ble.east) -- (6.6,1.8);
+\draw[dashed] (knble.east) -- (6.6,-0.6);
+\draw (6.6,4.2) -- (6.6,-0.6);
+\draw[data] (6.6,4.2) -- (trans.west);
+\node[font=\footnotesize, align=center, text=hkagray, fill=white, inner sep=1pt] at (6.6,2.9)
+    {Anmeldung\\+ Daten};
+
+\end{tikzpicture}
