@@ -1,0 +1,343 @@
+{
+  "main": {
+    "id": "9e8740db5f806371",
+    "type": "split",
+    "children": [
+      {
+        "id": "59fb47ed90f39e93",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b0d01aadb5a50038",
+            "type": "leaf",
+            "state": {
+              "type": "pdf",
+              "state": {
+                "file": "Projektarbeiten/Seminararbeit/Expose.pdf"
+              },
+              "icon": "lucide-file-text",
+              "title": "Expose"
+            }
+          },
+          {
+            "id": "081a23e6b0a6ba8f",
+            "type": "leaf",
+            "state": {
+              "type": "bases",
+              "state": {
+                "file": "Untitled 1.base",
+                "viewName": "View"
+              },
+              "icon": "lucide-table",
+              "title": "Untitled 1"
+            }
+          },
+          {
+            "id": "a3b8b1c697a814e2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "TaskNotes/Start Here.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Start Here"
+            }
+          },
+          {
+            "id": "79f4cc131f1937a1",
+            "type": "leaf",
+            "state": {
+              "type": "bases",
+              "state": {
+                "file": "TaskNotes/Views/tasks-default.base",
+                "viewName": "Manual Order"
+              },
+              "icon": "tasknotes-simple",
+              "title": "tasks-default"
+            }
+          },
+          {
+            "id": "50d6b0c55f938be9",
+            "type": "leaf",
+            "state": {
+              "type": "bases",
+              "state": {
+                "file": "TaskNotes/Views/calendar-default.base",
+                "viewName": "Calendar"
+              },
+              "icon": "tasknotes-simple",
+              "title": "calendar-default"
+            }
+          },
+          {
+            "id": "ad85997acc5bf49d",
+            "type": "leaf",
+            "state": {
+              "type": "bases",
+              "state": {
+                "file": "TaskNotes/Views/agenda-default.base",
+                "viewName": "Agenda"
+              },
+              "icon": "tasknotes-simple",
+              "title": "agenda-default"
+            }
+          },
+          {
+            "id": "c078fcf0a4f00b20",
+            "type": "leaf",
+            "state": {
+              "type": "bases",
+              "state": {
+                "file": "TaskNotes/Views/kanban-default.base",
+                "viewName": "Kanban Board"
+              },
+              "icon": "tasknotes-simple",
+              "title": "kanban-default"
+            }
+          },
+          {
+            "id": "9a31d24fe3c8fa73",
+            "type": "leaf",
+            "state": {
+              "type": "tasknotes-pomodoro-view",
+              "state": {},
+              "icon": "clock",
+              "title": "Pomodoro"
+            }
+          },
+          {
+            "id": "db30a074adb65ae4",
+            "type": "leaf",
+            "state": {
+              "type": "tasknotes-pomodoro-stats-view",
+              "state": {},
+              "icon": "bar-chart",
+              "title": "Pomodoro stats"
+            }
+          },
+          {
+            "id": "b133237995172a21",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Anforderungen.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Anforderungen"
+            }
+          }
+        ],
+        "currentTab": 9
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "6ea76e44bc7653c1",
+    "type": "split",
+    "children": [
+      {
+        "id": "7e373ccedd1accfa",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1a0dea40e2786d90",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "852e176978e076c3",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "45b28801f4aae61d",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "7a17fdbb29dcc770",
+    "type": "split",
+    "children": [
+      {
+        "id": "909e26b7811232ca",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "393abc31d7d78c7b",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "5fced337deb0350f",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "21270613c460c367",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "3ad8146f56d7af18",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "d62b1401426b86e6",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false,
+      "tasknotes:Open mini calendar view": false,
+      "tasknotes:Open calendar view": false,
+      "tasknotes:Open tasks view": false,
+      "tasknotes:Open agenda view": false,
+      "tasknotes:Open Kanban board": false,
+      "tasknotes:Open Pomodoro timer": false,
+      "tasknotes:Open Pomodoro statistics": false,
+      "tasknotes:Create new task": false
+    }
+  },
+  "active": "b133237995172a21",
+  "lastOpenFiles": [
+    "KünstlicheIntelligenz/Labor/Künstliche Intelligenz.md",
+    "KünstlicheIntelligenz/Labor/test.ipynb",
+    "KünstlicheIntelligenz/Labor/results/optimizer.pth",
+    "KünstlicheIntelligenz/Labor/results/model.pth",
+    "KünstlicheIntelligenz/Labor/results",
+    "KünstlicheIntelligenz/Labor/data/MNIST/raw/train-labels-idx1-ubyte.gz",
+    "KünstlicheIntelligenz/Labor/data/MNIST/raw/train-labels-idx1-ubyte",
+    "KünstlicheIntelligenz/Labor/data/MNIST/raw/train-images-idx3-ubyte.gz",
+    "KünstlicheIntelligenz/Labor/data/MNIST/raw/train-images-idx3-ubyte",
+    "KünstlicheIntelligenz/Labor/data/MNIST/raw/t10k-labels-idx1-ubyte.gz",
+    "KünstlicheIntelligenz/Labor/data/MNIST/raw/t10k-labels-idx1-ubyte",
+    "TaskNotes/Start Here.md",
+    "Anforderungen.md",
+    "plan.md",
+    "Projektarbeiten/Projektarbeit1/mail.md",
+    "Projektarbeiten/Projektarbeit1/HKA.jpg",
+    "Projektarbeiten/Projektarbeit2/HKA.jpg",
+    "Künstliche Intelligenz/Künstliche Intelligenz.md",
+    "TheorieEffizienterAlgorithmen/SatSolving/Labor/cadical/test/cnf/README.md",
+    "TheorieEffizienterAlgorithmen/SatSolving/Labor/cadical/test/trace/README.md",
+    "TheorieEffizienterAlgorithmen/SatSolving/Labor/cadical/test/usage/README.md",
+    "TheorieEffizienterAlgorithmen/SatSolving/Labor/cadical/test/mbt/README.md",
+    "TheorieEffizienterAlgorithmen/SatSolving/Labor/cadical/test/api/README.md",
+    "TheorieEffizienterAlgorithmen/SatSolving/Labor/cadical/test/contrib/README.md",
+    "TheorieEffizienterAlgorithmen/SatSolving/Labor/cadical/test/README.md",
+    "TheorieEffizienterAlgorithmen/SatSolving/Labor/cadical/src/README.md",
+    "TheorieEffizienterAlgorithmen/SatSolving/Labor/cadical/scripts/README.md",
+    "TheorieEffizienterAlgorithmen/SatSolving/Labor/cadical/contrib/craigtracer.md",
+    "TheorieEffizienterAlgorithmen/SatSolving/Labor/cadical/README.md",
+    "TheorieEffizienterAlgorithmen/SatSolving/Labor/cadical/NEWS.md",
+    "TheorieEffizienterAlgorithmen/SatSolving/Labor/cadical/CONTRIBUTING.md",
+    "TheorieEffizienterAlgorithmen/SatSolving/Labor/cadical/BUILD.md"
+  ]
+}
