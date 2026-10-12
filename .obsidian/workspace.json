@@ -104,8 +104,8 @@
             "state": {
               "type": "tasknotes-pomodoro-view",
               "state": {},
-              "icon": "clock",
-              "title": "Pomodoro"
+              "icon": "lucide-ghost",
+              "title": "tasknotes-pomodoro-view"
             }
           },
           {
@@ -114,8 +114,8 @@
             "state": {
               "type": "tasknotes-pomodoro-stats-view",
               "state": {},
-              "icon": "bar-chart",
-              "title": "Pomodoro stats"
+              "icon": "lucide-ghost",
+              "title": "tasknotes-pomodoro-stats-view"
             }
           },
           {
@@ -124,16 +124,29 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Anforderungen.md",
+                "file": "README.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Anforderungen"
+              "title": "README"
+            }
+          },
+          {
+            "id": "06b1e7861c8ee191",
+            "type": "leaf",
+            "state": {
+              "type": "bases",
+              "state": {
+                "file": "TaskNotes/Views/mini-calendar-default.base",
+                "viewName": "Due"
+              },
+              "icon": "tasknotes-simple",
+              "title": "mini-calendar-default"
             }
           }
         ],
-        "currentTab": 9
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -305,22 +318,27 @@
       "tasknotes:Create new task": false
     }
   },
-  "active": "b133237995172a21",
+  "active": "50d6b0c55f938be9",
   "lastOpenFiles": [
-    "KünstlicheIntelligenz/Labor/Künstliche Intelligenz.md",
-    "KünstlicheIntelligenz/Labor/test.ipynb",
-    "KünstlicheIntelligenz/Labor/results/optimizer.pth",
-    "KünstlicheIntelligenz/Labor/results/model.pth",
-    "KünstlicheIntelligenz/Labor/results",
-    "KünstlicheIntelligenz/Labor/data/MNIST/raw/train-labels-idx1-ubyte.gz",
-    "KünstlicheIntelligenz/Labor/data/MNIST/raw/train-labels-idx1-ubyte",
-    "KünstlicheIntelligenz/Labor/data/MNIST/raw/train-images-idx3-ubyte.gz",
-    "KünstlicheIntelligenz/Labor/data/MNIST/raw/train-images-idx3-ubyte",
-    "KünstlicheIntelligenz/Labor/data/MNIST/raw/t10k-labels-idx1-ubyte.gz",
-    "KünstlicheIntelligenz/Labor/data/MNIST/raw/t10k-labels-idx1-ubyte",
+    "TaskNotes/Views/mini-calendar-default.base",
+    "TaskNotes/Views/kanban-default.base",
+    "TaskNotes/Views/tasks-default.base",
+    "TaskNotes/Views/calendar-default.base",
+    "README.md",
+    "teste.md",
+    "Untitled.base",
     "TaskNotes/Start Here.md",
-    "Anforderungen.md",
+    "TaskNotes/Tasks/asdfasdf.md",
     "plan.md",
+    "Untitled 1.base",
+    "Anforderungen.md",
+    "TaskNotes/Tasks/aufgaben.md",
+    "TaskNotes/Tasks",
+    "KünstlicheIntelligenz/Labor/Assigment.ipynb.tmp.101867.c34f73f81568",
+    "KünstlicheIntelligenz/Labor/Assigment.ipynb.tmp.101867.b059bfa4acc1",
+    "KünstlicheIntelligenz/Labor/Assigment.ipynb.tmp.101867.ff0e4e37e4a5",
+    "KünstlicheIntelligenz/Labor/Assigment.ipynb.tmp.101867.04312e16483f",
+    "KünstlicheIntelligenz/Labor/Künstliche Intelligenz.md",
     "Projektarbeiten/Projektarbeit1/mail.md",
     "Projektarbeiten/Projektarbeit1/HKA.jpg",
     "Projektarbeiten/Projektarbeit2/HKA.jpg",

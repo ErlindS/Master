@@ -11,7 +11,11 @@
 - Analytics Board
 - Aufgaben
 	- Können offen sein
-	- 
+	- Priorität
+	- Deadline
+	- geplant
+	- set recurrence
+	- set reminders/notification
 
 Wenn etwas bearbeitet wird, dann erscheint ein Pop-Up Fenster
 
@@ -23,10 +27,9 @@ Jeweils ein Service für
 - Kalendar
 - Analytics
 - Authentication
-- Kaban(?), Dashboard(?)
+- Kaban
+- Dashboard
+
+Grundsätzlich 
 
 
-
------------ 
-Bereich mit
-----------------------
