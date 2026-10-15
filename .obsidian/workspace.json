@@ -146,7 +146,7 @@
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -318,12 +318,15 @@
       "tasknotes:Create new task": false
     }
   },
-  "active": "50d6b0c55f938be9",
+  "active": "1a0dea40e2786d90",
   "lastOpenFiles": [
-    "TaskNotes/Views/mini-calendar-default.base",
+    "KünstlicheIntelligenz/Labor/assignment2/Assigment2 copy.ipynb",
+    "TaskNotes/Views/agenda-default.base",
     "TaskNotes/Views/kanban-default.base",
-    "TaskNotes/Views/tasks-default.base",
     "TaskNotes/Views/calendar-default.base",
+    "TaskNotes/Tasks/Heute zeige ich meine TOdo APp.md",
+    "TaskNotes/Views/mini-calendar-default.base",
+    "TaskNotes/Views/tasks-default.base",
     "README.md",
     "teste.md",
     "Untitled.base",
@@ -336,8 +339,6 @@
     "TaskNotes/Tasks",
     "KünstlicheIntelligenz/Labor/Assigment.ipynb.tmp.101867.c34f73f81568",
     "KünstlicheIntelligenz/Labor/Assigment.ipynb.tmp.101867.b059bfa4acc1",
-    "KünstlicheIntelligenz/Labor/Assigment.ipynb.tmp.101867.ff0e4e37e4a5",
-    "KünstlicheIntelligenz/Labor/Assigment.ipynb.tmp.101867.04312e16483f",
     "KünstlicheIntelligenz/Labor/Künstliche Intelligenz.md",
     "Projektarbeiten/Projektarbeit1/mail.md",
     "Projektarbeiten/Projektarbeit1/HKA.jpg",
