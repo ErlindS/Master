@@ -1,6 +1,6 @@
-PWD /home/debian/repo/Master/Projektarbeiten/Projektarbeit3
+PWD /home/debian/repo/Master/Projektarbeiten/Projektarbeit3/SchriftlicheAusarbeitung
 INPUT /home/debian/.miktex/texmfs/data/miktex/data/le/pdftex/pdflatex.fmt
-INPUT /home/debian/repo/Master/Projektarbeiten/Projektarbeit3/Expose_Entwurf_alt.tex
+INPUT /home/debian/repo/Master/Projektarbeiten/Projektarbeit3/SchriftlicheAusarbeitung/Expose_Entwurf_alt.tex
 OUTPUT Expose_Entwurf_alt.log
 INPUT /home/debian/.miktex/texmfs/install/tex/latex/base/article.cls
 INPUT /home/debian/.miktex/texmfs/install/tex/latex/base/article.cls

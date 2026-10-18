@@ -1,0 +1,7 @@
+nach oben beschränkt. Die Anzahl der APs ist damit
+
+$$\#\text{AP} = \sum_{d=1}^{D} \bigl(n-(k-1)d\bigr) = nD - (k-1)\frac{D(D+1)}{2}.$$
+
+Da jede AP zwei Klauseln liefert, ergibt sich
+
+$$\boxed{\#\text{Klauseln} = 2nD - (k-1)\,D(D+1), \qquad D = \left\lfloor \tfrac{n-1}{k-1} \right\rfloor}$$

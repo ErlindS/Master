@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.9.28)  18 OCT 2026 17:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.9.28)  18 OCT 2026 20:13
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/home/debian/repo/Master/Projektarbeiten/Projektarbeit3/Expose_Entwurf_alt.tex
-(/home/debian/repo/Master/Projektarbeiten/Projektarbeit3/Expose_Entwurf_alt.tex
+**/home/debian/repo/Master/Projektarbeiten/Projektarbeit3/SchriftlicheAusarbeitung/Expose_Entwurf_alt.tex
+(/home/debian/repo/Master/Projektarbeiten/Projektarbeit3/SchriftlicheAusarbeitung/Expose_Entwurf_alt.tex
 LaTeX2e <2026-06-01>
 L3 programming layer <2026-09-09>
 (/home/debian/.miktex/texmfs/install/tex/latex/base/article.cls
@@ -434,20 +434,20 @@ LaTeX2e <2026-06-01>
 L3 programming layer <2026-09-09>
  ***********
 Package rerunfilecheck Info: File `Expose_Entwurf_alt.out' has not changed.
-(rerunfilecheck)             Checksum: 2596F966269DFEEE97AF99FD765197E7;546.
+(rerunfilecheck)             Checksum: 6438668267620E3619BAE6FB912B0B84;182.
  ) 
 Here is how much of TeX's memory you used:
- 14052 strings out of 469329
- 227495 string characters out of 5457592
- 693794 words of memory out of 5000000
- 43022 multiletter control sequences out of 15000+600000
+ 14046 strings out of 469329
+ 227610 string characters out of 5457592
+ 692794 words of memory out of 5000000
+ 43019 multiletter control sequences out of 15000+600000
  632633 words of font info for 46 fonts, out of 8000000 for 9000
  0 hyphenation exceptions out of 8191
- 74i,5n,79p,1071b,523s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 74i,5n,79p,1096b,523s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </home/debian/.miktex/texmfs/data/fonts/pk/ljfour/jknappen/ec/dpi600/ecrm1095.pk> </home/debian/.miktex/texmfs/data/fonts/pk/ljfour/jknappen/ec/dpi600/ecbx1440.pk> </home/debian/.miktex/texmfs/data/fonts/pk/ljfour/jknappen/ec/dpi600/ecrm1200.pk> </home/debian/.miktex/texmfs/data/fonts/pk/ljfour/jknappen/ec/dpi600/ecrm1728.pk>
-Output written on Expose_Entwurf_alt.pdf (1 page, 26277 bytes).
+Output written on Expose_Entwurf_alt.pdf (1 page, 18696 bytes).
 PDF statistics:
- 107 PDF objects out of 1000 (max. 8388607)
- 7 named destinations out of 1000 (max. 500000)
- 2601 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 75 PDF objects out of 1000 (max. 8388607)
+ 4 named destinations out of 1000 (max. 500000)
+ 2577 words of extra memory for PDF output out of 10000 (max. 10000000)
 
