@@ -1,16 +1,2 @@
 stufe;geraet;n;erster_lauf_ms;median_ms;transfer_ms;gflops;korrekt
-0_sequentiell;CPU (1 Kern);256;32.006;27.749;0.000;1.21;ja
-1_usm_shared;AdaptiveCpp OpenMP host device;256;10.077;12.515;0.000;2.68;ja
-2_usm_device;AdaptiveCpp OpenMP host device;256;37.087;27.399;0.509;1.22;ja
-3_tiling_T16;AdaptiveCpp OpenMP host device;256;11.781;2.813;0.740;11.93;ja
-0_sequentiell;CPU (1 Kern);512;334.154;328.997;0.000;0.82;ja
-1_usm_shared;AdaptiveCpp OpenMP host device;512;65.054;46.604;0.000;5.76;ja
-2_usm_device;AdaptiveCpp OpenMP host device;512;250.623;78.762;0.386;3.41;ja
-3_tiling_T16;AdaptiveCpp OpenMP host device;512;28.165;19.930;0.463;13.47;ja
-0_sequentiell;CPU (1 Kern);1024;9557.314;9337.861;0.000;0.23;ja
-1_usm_shared;AdaptiveCpp OpenMP host device;1024;1023.665;787.730;0.000;2.73;ja
-2_usm_device;AdaptiveCpp OpenMP host device;1024;1155.409;812.000;2.018;2.64;ja
-3_tiling_T16;AdaptiveCpp OpenMP host device;1024;211.000;124.766;4.405;17.21;ja
-1_usm_shared;AdaptiveCpp OpenMP host device;2048;8573.193;8149.169;0.000;2.11;ja
-2_usm_device;AdaptiveCpp OpenMP host device;2048;8556.844;8148.181;10.515;2.11;ja
-3_tiling_T16;AdaptiveCpp OpenMP host device;2048;759.832;501.544;10.455;34.25;ja
+0_sequentiell;CPU (1 Kern);256;17.356;17.611;0.000;1.91;ja

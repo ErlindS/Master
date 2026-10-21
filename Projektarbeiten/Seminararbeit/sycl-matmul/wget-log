@@ -1,0 +1,17 @@
+--2026-10-21 17:12:44--  https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
+Resolving apt.repos.intel.com (apt.repos.intel.com)... 23.212.200.200, 2a02:26f0:1700:799::a87, 2a02:26f0:1700:792::a87
+Connecting to apt.repos.intel.com (apt.repos.intel.com)|23.212.200.200|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 4738 (4.6K) [application/vnd.exstream-package]
+Saving to: ‘STDOUT’
+
+-                                       0%[                                                                         ]       0  --.-KB/s               -                                     100%[========================================================================>]   4.63K  --.-KB/s    in 0s      
+
+2026-10-21 17:12:44 (425 MB/s) - written to stdout [4738/4738]
+
+--2026-10-21 17:12:44--  http://%20/
+Resolving   ( )... failed: Name or service not known.
+wget: unable to resolve host address ‘ ’
+FINISHED --2026-10-21 17:12:44--
+Total wall clock time: 0.1s
+Downloaded: 1 files, 4.6K in 0s (425 MB/s)
