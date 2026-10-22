@@ -19,3 +19,5 @@
 *.userprefs
 *.pidb
 *.booproj
+# Heruntergeladene Datensätze
+KünstlicheIntelligenz/Labor/assignment3/data/
