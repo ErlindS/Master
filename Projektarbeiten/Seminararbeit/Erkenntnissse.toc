@@ -1,0 +1,6 @@
+\babel@toc {ngerman}{}\relax 
+\contentsline {subsection}{\numberline {0.1}Messgrößen}{2}{subsection.0.1}%
+\contentsline {subsection}{\numberline {0.2}Versuchsdurchführung}{2}{subsection.0.2}%
+\contentsline {subsection}{\numberline {0.3}Präsentation}{2}{subsection.0.3}%
+\contentsline {section}{\numberline {1}Zeitplan}{3}{section.1}%
+\contentsline {section}{Literaturverzeichnis}{3}{section*.2}%

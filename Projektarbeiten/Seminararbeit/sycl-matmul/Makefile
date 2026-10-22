@@ -3,6 +3,7 @@
 #   make                         -> Intel oneAPI DPC++ (icpx)
 #   make COMPILER=acpp           -> AdaptiveCpp
 #   make TILE=32                 -> andere Kachelgröße für Stufe 3
+#   make kacheln                 -> Stufe 3 einmal pro Kachelgröße (TILES)
 #
 # NVIDIA-GPU mit DPC++ (braucht das CUDA-Plugin für oneAPI):
 #   make SYCL_TARGETS=nvptx64-nvidia-cuda
@@ -11,6 +12,7 @@
 
 COMPILER ?= dpcpp
 TILE     ?= 16
+TILES    ?= 8 16 32 64
 SEQ_CXX  ?= g++
 
 ifeq ($(COMPILER),acpp)
@@ -42,7 +44,13 @@ stufe2_usm_device: stufe2_usm_device.cpp common.hpp
 stufe3_tiling: stufe3_tiling.cpp common.hpp
 	$(CXX) $(SYCL_FLAGS) -DTILE=$(TILE) -o $@ $<
 
-clean:
-	rm -f $(BINS)
+# Kachelgrößen-Experiment (Performance-Portabilität): stufe3_tiling_T8, _T16, …
+kacheln: $(addprefix stufe3_tiling_T,$(TILES))
 
-.PHONY: all clean
+stufe3_tiling_T%: stufe3_tiling.cpp common.hpp
+	$(CXX) $(SYCL_FLAGS) -DTILE=$* -o $@ $<
+
+clean:
+	rm -f $(BINS) stufe3_tiling_T*
+
+.PHONY: all clean kacheln

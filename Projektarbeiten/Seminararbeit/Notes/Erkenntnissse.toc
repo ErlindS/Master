@@ -1,0 +1,17 @@
+\babel@toc {ngerman}{}\relax 
+\contentsline {section}{\numberline {1}Worum geht es?}{1}{section.1}%
+\contentsline {section}{\numberline {2}Die wichtigsten Begriffe in einfachen Worten}{2}{section.2}%
+\contentsline {section}{\numberline {3}Vorgehen}{2}{section.3}%
+\contentsline {paragraph}{Messumgebung.}{3}{section*.2}%
+\contentsline {section}{\numberline {4}Erkenntnisse}{3}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Derselbe Code läuft auf CPU und GPU}{3}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Der Einstieg ist klein, der Effekt groß}{3}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Der erste Lauf ist deutlich langsamer}{4}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Bei kleinen Aufgaben dominiert der Datentransport}{4}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Automatische und manuelle Speicherverwaltung sind gleich schnell}{4}{subsection.4.5}%
+\contentsline {subsection}{\numberline {4.6}Hardwarenahe Optimierung wirkt je nach Gerät sehr unterschiedlich}{4}{subsection.4.6}%
+\contentsline {subsection}{\numberline {4.7}Portabilität ist nicht gleich Performance-Portabilität}{5}{subsection.4.7}%
+\contentsline {subsection}{\numberline {4.8}Praktische Hürden}{6}{subsection.4.8}%
+\contentsline {section}{\numberline {5}Grenzen der bisherigen Messungen}{6}{section.5}%
+\contentsline {section}{\numberline {6}Nächste Schritte und Fragen für das Gespräch}{6}{section.6}%
+\contentsline {paragraph}{Fragen an den Betreuer:}{7}{section*.3}%

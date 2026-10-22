@@ -56,6 +56,22 @@ Verfügbare Geräte: `sycl-ls` (DPC++) bzw. `acpp-info` (AdaptiveCpp).
 Weitere Optionen über Umgebungsvariablen: `SIZES="512 1024"`, `REPS=10`,
 `SEQ_MAX=2048` (bis zu welchem n Stufe 0 mitläuft).
 
+## Kachelgrößen-Experiment: Portabilität ≠ Performance-Portabilität
+
+Stufe 3 wird einmal pro Kachelgröße gebaut und auf jedem Gerät gemessen:
+
+```bash
+make kacheln                                # stufe3_tiling_T8 … _T64
+./run_kacheln.sh                            # -> kacheln.csv
+python3 portabilitaet.py kacheln.csv        # Tabelle + PP-Kennzahl
+```
+
+Geräte, Kachelgrößen und n über `DEVICES`, `TILES`, `SIZES` (siehe Kopf
+von `run_kacheln.sh`). `portabilitaet.py` berechnet je Gerät die Effizienz
+(GFLOPS / beste Kachelgröße auf diesem Gerät) und daraus die
+Performance-Portabilität nach Pennycook et al. (2016): den harmonischen
+Mittelwert über alle Geräte, 0 sobald ein Gerät gar nicht läuft.
+
 ## Die CSV-Spalten
 
 | Spalte | Bedeutung |
