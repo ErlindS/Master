@@ -1,0 +1,306 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- Pakete ---
+\usepackage[english, ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage[autostyle=true,german=quotes]{csquotes}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{positioning,fit,backgrounds,shapes.geometric,arrows.meta,calc}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage{microtype}
+\usepackage{tocloft}
+\usepackage[document]{ragged2e}
+\usepackage[backend=biber,style=ieee,urldate=long]{biblatex}
+\addbibresource{literatur.bib}
+\usepackage{hyperref}
+\emergencystretch=0.3\textwidth % lange Wörter ohne Trennung nicht über den Rand laufen lassen
+\hyphenpenalty=10000
+\exhyphenpenalty=50 % Umbruch nur an vorhandenen Bindestrichen (z.B. MQTT-Broker)
+
+% X-Spalten in tabularx global linksbündig (kein Blocksatz in Tabellen)
+\renewcommand{\tabularxcolumn}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% --- Farben (HKA Corporate) ---
+\definecolor{hkared}{RGB}{198, 42, 18}
+\definecolor{hkagray}{RGB}{100, 100, 100}
+
+% --- Inhaltsverzeichnis Styling ---
+\renewcommand{\cftsecfont}{\bfseries\color{hkared}}
+\renewcommand{\cftsecpagefont}{\bfseries\color{hkared}}
+\renewcommand{\cftsubsecfont}{\normalfont\color{black}}
+\renewcommand{\cftsubsecpagefont}{\normalfont\color{black}}
+\setlength{\cftbeforesecskip}{8pt}
+\setlength{\cftbeforesubsecskip}{8pt}
+\setlength{\cftbeforesubsubsecskip}{8pt}
+\setlength{\cftaftertoctitleskip}{1.2cm}
+
+% --- Hyperref Setup ---
+\hypersetup{
+    colorlinks  = true,
+    linkcolor   = hkared,
+    urlcolor    = hkared,
+    citecolor   = hkared,
+    pdftitle    = {Fehlertoleranz und deterministische Zustandsrekonstruktion in MQTT-basierten IIoT- und MES-Architekturen},
+    pdfauthor   = {Erlind Sejdiu},
+    pdfcreator  = {pdflatex},
+    pdfproducer = {LaTeX with hyperref}
+}
+
+% --- Section Styling ---
+\titleformat{\section}{\large\bfseries\color{hkared}}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{hkared}}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{black}}{\thesubsubsection}{1em}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.5em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.3em}
+\titlespacing*{\subsubsection}{0pt}{0.6em}{0.2em}
+
+% --- Header/Footer ---
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{hkagray}Exposé Masterarbeit}
+\fancyhead[R]{\small\color{hkagray}Master Informatik}
+\fancyfoot[C]{\small\color{hkagray}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Markierung für Stellen, die noch ergänzt/geprüft werden müssen
+\newcommand{\offen}[1]{\textcolor{red}{[#1]}}
+\newcommand{\firma}{\offen{Firma}}
+
+% =============================================================================
+\begin{document}
+
+% --- Titelseite ---
+\begin{titlepage}
+    \centering
+    \includegraphics[width=0.35\textwidth]{HKA.jpg}
+
+    {\normalsize\color{hkagray} University of Applied Sciences}\\[0.125cm]
+    {\small\color{hkagray} Fakult\"at f\"ur Informatik und Wirtschaftsinformatik}
+
+    \vspace{.5cm}
+    {\color{hkared}\rule{\textwidth}{1.5pt}}
+
+    \vspace{1.2cm}
+    {\fontsize{22}{28}\selectfont\bfseries\color{hkared} Fehlertoleranz und deterministische Zustandsrekonstruktion in MQTT-basierten IIoT- und MES-Architekturen\par}\vspace{0.6cm}
+    {\Large State of the Art, Fehlermodelle und Architekturvergleich\par}
+    \vspace{1cm}
+
+    {\large Exposé und Antrag auf Durchführung einer Masterarbeit\\[0.2cm] in Kooperation mit der \firma}\\[0.3cm]
+    {\large Master Studiengang Informatik}
+
+    \vspace{.5cm}
+    {\color{hkared}\rule{0.6\textwidth}{0.5pt}}
+    \vspace{1.2cm}
+
+    {\normalsize
+    \begin{tabular}{rl}
+        \textbf{Autor:}                  & Erlind Sejdiu \\
+        \textbf{Matrikelnummer:}         & 106357 \\[0.5cm]
+        \textbf{Betreuer Hochschule:}    & \offen{Name} \\
+        \textbf{Betreuer Unternehmen:}   & \offen{Name, Abteilung} \\
+        \textbf{Geplanter Zeitraum:}     & \offen{TT.MM.JJJJ} -- \offen{TT.MM.JJJJ} (6 Monate) \\
+    \end{tabular}
+    }
+
+    \vfill
+    {\small\color{hkagray} Stand: \today}
+\end{titlepage}
+
+% --- Inhaltsverzeichnis ---
+\begingroup
+\hypersetup{hidelinks}
+\tableofcontents
+\endgroup
+\thispagestyle{empty}
+\newpage
+\setcounter{page}{1}
+
+\section{Motivation}
+
+Die industrielle Prozessdatenerfassung über Message Queuing Telemetry Transport (MQTT) bildet das nachrichtentechnische Rückgrat moderner Architekturen für das Industrial Internet of Things (IIoT), Fertigungsmanagementsysteme (Manufacturing Execution Systems, MES) sowie Unified Namespaces (UNS) \cite{mishra2020mqttsurvey}. Maschinen, Steuerungen und Edge-Gateways veröffentlichen ihre Daten auf einem zentralen Broker, und MES, Historian oder Dashboards abonnieren genau die Daten, die sie brauchen. Diese lose Kopplung ist der Grund für die Verbreitung von MQTT, denn Erzeuger und Verbraucher müssen sich nicht kennen \cite{eugster2003pubsub}.
+
+Ein MES arbeitet aber nicht mit einzelnen Messwerten, sondern mit Zuständen. Es muss wissen, welcher Auftrag gerade auf welcher Maschine läuft, wie viele Gutteile gefertigt wurden und ob eine Maschine steht oder produziert \cite{iec62264}. Geht eine Nachricht verloren, kommt sie doppelt oder in falscher Reihenfolge an, dann ist dieser Zustand falsch. Ein verpasstes \enquote{Auftrag beendet} oder ein doppelt gezählter Stückzähler wirkt sich direkt auf Kennzahlen, Rückmeldungen an das ERP-System und Nachweise gegenüber Kunden aus.
+
+Die wissenschaftliche Literatur offenbart eine signifikante Diskrepanz zwischen den elementaren Transportgarantien des MQTT-Standards und den deterministischen Anforderungen zustandsbehafteter Automatisierungsprozesse. MQTT sichert die Zustellung nur zwischen einem Client und dem Broker ab, nicht von Ende zu Ende \cite{mqtt5}. Was nach einem Broker-Neustart, einem Netzwerkausfall oder dem Neustart eines Verbrauchers mit dem Zustand passiert, regelt der Standard nicht. Erweiterungen wie Sparkplug~B \cite{sparkplug3} und Muster aus verteilten Systemen wie Event Sourcing \cite{fowler2005eventsourcing} oder Log-basierte Plattformen \cite{kreps2011kafka} schließen einen Teil dieser Lücke, jeweils mit eigenen Annahmen und Kosten.
+
+Bei der \firma{} ist MQTT \offen{kurz beschreiben, wo und wie MQTT im Unternehmen eingesetzt wird, z.\,B. Anbindung von Maschinen an das MES, UNS-Aufbau}. Die Masterarbeit soll klären, wie zuverlässig solche Architekturen den Zustand der Fertigung nach Fehlern wiederherstellen können und welche Architektur dafür am besten geeignet ist.
+
+\section{Problemstellung}
+
+\subsection{Was MQTT garantiert und was nicht}
+
+MQTT bietet drei Dienstgüten (Quality of Service, QoS) \cite{mqtt311,mqtt5}. QoS~0 stellt höchstens einmal zu, QoS~1 mindestens einmal und QoS~2 genau einmal. Diese Garantien gelten aber jeweils nur für eine Strecke, also vom Publisher zum Broker und getrennt davon vom Broker zum Subscriber. Ob eine Nachricht beim Verbraucher tatsächlich verarbeitet wurde, ist damit nicht gesichert. Die Reihenfolge wird nur innerhalb eines Topics und einer Dienstgüte garantiert, bei Shared Subscriptions in MQTT~5 auch das nicht.
+
+Für den Wiederanlauf gibt es zwei Mechanismen. \emph{Retained Messages} speichern pro Topic genau die letzte Nachricht, und \emph{persistente Sessions} puffern Nachrichten für einen getrennten Client. Beide sind kein Verlauf. Wer nach einem Ausfall wissen will, was in der Zwischenzeit passiert ist, bekommt bestenfalls den letzten Wert, und auch das nur, solange Puffergrenzen und Ablaufzeiten des Brokers nicht überschritten sind. Wie ein Broker seine Daten persistiert und ob er im Cluster betrieben werden kann, ist nicht standardisiert, sondern produktspezifisch.
+
+\subsection{Was zustandsbehaftete Prozesse brauchen}
+
+Ein MES leitet seinen Zustand aus einer Folge von Ereignissen ab, zum Beispiel Auftragsstart, Statuswechsel und Stückmeldungen. Damit dieser Zustand nach einem Fehler korrekt wiederhergestellt werden kann, muss er \emph{deterministisch} aus den Ereignissen folgen, also bei gleicher Eingabe immer gleich sein \cite{schneider1990statemachine}. Dafür braucht es eine eindeutige Reihenfolge der Ereignisse \cite{lamport1978time}, eine idempotente Verarbeitung von Duplikaten und einen Punkt, ab dem nach einem Ausfall weitergemacht werden kann \cite{elnozahy2002rollback,chandy1985snapshots}.
+
+\subsection{Die Lücke}
+
+Zwischen diesen beiden Seiten gibt es eine Lücke, die in der Praxis meist anwendungsspezifisch und oft ungeprüft geschlossen wird. Es fehlt eine zusammenhängende Darstellung,
+\begin{itemize}[nosep]
+    \item welche Fehler in MQTT-basierten IIoT- und MES-Architekturen tatsächlich auftreten,
+    \item welche davon von MQTT, Sparkplug~B oder dem Broker abgefangen werden und welche nicht,
+    \item und welche Architektur unter welchen Fehlern den Zustand korrekt rekonstruiert.
+\end{itemize}
+
+\paragraph{Abgrenzung.} Die Arbeit betrachtet Fehlertoleranz und Zustandsrekonstruktion. IT-Sicherheit (Authentifizierung, Verschlüsselung, Angriffe) ist nicht Gegenstand der Arbeit, ebenso wenig harte Echtzeitanforderungen auf Feldebene. Andere Protokolle wie OPC~UA werden nur als Quelle der Daten berücksichtigt, nicht als Alternative zu MQTT verglichen. Es wird kein neues MES entwickelt. Die Untersuchung erfolgt in einer Testumgebung und nicht im laufenden Produktivbetrieb.
+
+\section{Forschungsfragen und Ziele}
+
+Ziel der Arbeit ist es, den Stand der Technik zur Fehlertoleranz in MQTT-basierten Architekturen aufzuarbeiten, die relevanten Fehler in einem Fehlermodell festzuhalten und verbreitete Architekturen daran zu messen. Daraus ergeben sich drei Forschungsfragen.
+
+\begin{enumerate}[label=\textbf{FF\arabic*}, leftmargin=*, nosep]
+    \item Welche Ansätze zur Fehlertoleranz und Zustandsrekonstruktion in MQTT-basierten IIoT- und MES-Architekturen beschreibt die Literatur, und welche Garantien bieten sie?
+    \item Welche Fehler treten in solchen Architekturen auf, und welche Auswirkung haben sie auf den rekonstruierten Zustand eines MES?
+    \item Wie gut rekonstruieren verbreitete Architekturvarianten den Zustand unter diesen Fehlern, und mit welchem Aufwand?
+\end{enumerate}
+
+Die Arbeit liefert drei Ergebnisse. Erstens eine strukturierte Übersicht über den Stand der Technik und verwandte Arbeiten (FF1). Zweitens ein Fehlermodell, das Fehlerorte, Fehlerarten und ihre Auswirkung auf den Zustand beschreibt (FF2). Drittens einen Architekturvergleich mit Messergebnissen aus einer Testumgebung und einer Empfehlung für die \firma{} (FF3).
+
+\section{Vorgehen}
+
+\subsection{State of the Art und Related Work}
+
+Die Literaturrecherche folgt den Leitlinien für systematische Literaturreviews nach Kitchenham und Charters \cite{kitchenham2007slr}. Durchsucht werden IEEE Xplore, ACM Digital Library, ScienceDirect und SpringerLink. Hinzu kommen die Standards selbst (MQTT~3.1.1 und~5.0 \cite{mqtt311,mqtt5}, Sparkplug \cite{sparkplug3}, IEC~62264 \cite{iec62264}) sowie Dokumentationen verbreiteter Broker, da viele für die Praxis wichtige Eigenschaften nur dort beschrieben sind. Die Ergebnisse werden in vier Bereiche gegliedert:
+\begin{itemize}[nosep]
+    \item Zuverlässigkeit von MQTT: Dienstgüten, Sessions, Retained Messages, Broker-Clustering,
+    \item Zustandsmodelle in der Industrie: Sparkplug~B, UNS, ISA-95/IEC~62264,
+    \item Grundlagen aus verteilten Systemen: Ordnung, Idempotenz, Checkpointing, Event Sourcing \cite{kleppmann2017ddia},
+    \item bestehende Untersuchungen und Messungen zu Ausfällen in MQTT-Systemen.
+\end{itemize}
+
+\subsection{Fehlermodell}
+
+Abbildung~\ref{fig:referenz} zeigt die Referenzarchitektur, auf die sich das Fehlermodell bezieht. Das Fehlermodell verwendet die Begriffe Fehlerursache, Fehlerzustand und Ausfall nach Avižienis et al.\ \cite{avizienis2004taxonomy}. Für jeden Ort in der Architektur wird festgehalten, welche Fehler dort auftreten können, wie sie sich bemerkbar machen und welchen Einfluss sie auf den Zustand im MES haben. Beispiele sind:
+\begin{itemize}[nosep]
+    \item Absturz und Neustart des Brokers, mit und ohne persistierte Sessions,
+    \item Verbindungsabbruch zwischen Edge-Gateway und Broker, kurz und über längere Zeit,
+    \item Neustart oder Überlastung eines Verbrauchers wie dem MES,
+    \item doppelte, verspätete oder umgeordnete Nachrichten,
+    \item Überlauf von Warteschlangen und abgelaufene Sessions,
+    \item Netzwerkpartition in einem Broker-Cluster.
+\end{itemize}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    node distance=0.6cm and 1.1cm,
+    box/.style={draw, rounded corners=2pt, minimum width=2.4cm, minimum height=0.9cm, align=center, font=\small},
+    fault/.style={circle, fill=hkared, text=white, inner sep=1pt, font=\scriptsize\bfseries},
+    arr/.style={-{Stealth[length=2mm]}, thick}
+]
+    \node[box] (sps) {SPS /\\Maschine};
+    \node[box, right=of sps] (edge) {Edge-\\Gateway};
+    \node[box, right=of edge, minimum height=2.2cm, fill=hkared!8] (broker) {MQTT-\\Broker\\(UNS)};
+    \node[box, right=of broker, yshift=0.65cm] (mes) {MES};
+    \node[box, right=of broker, yshift=-0.65cm] (hist) {Historian /\\Dashboard};
+
+    \draw[arr] (sps) -- (edge);
+    \draw[arr] (edge) -- (broker);
+    \draw[arr] (broker.east |- mes) -- (mes);
+    \draw[arr] (broker.east |- hist) -- (hist);
+
+    \node[fault] at ($(sps)!0.5!(edge)+(0,0.35)$) {1};
+    \node[fault] at ($(edge.north)+(0.9,0.05)$) {2};
+    \node[fault] at ($(edge)!0.5!(broker)+(0,0.35)$) {3};
+    \node[fault] at ($(broker.north)+(0,0.25)$) {4};
+    \node[fault] at ($(broker.east |- mes)+(0.45,0.3)$) {5};
+    \node[fault] at ($(mes.north)+(0.9,0.05)$) {6};
+\end{tikzpicture}
+\caption{Vereinfachte Referenzarchitektur. Die Markierungen zeigen Fehlerorte: (1) Feldverbindung, (2) Edge-Gateway, (3) Verbindung zum Broker, (4) Broker bzw.\ Cluster, (5) Verbindung zum Verbraucher, (6) Verbraucher.}
+\label{fig:referenz}
+\end{figure}
+
+\subsection{Architekturvergleich}
+
+Auf Basis der Literatur werden Architekturvarianten ausgewählt, die in der Praxis verbreitet sind. Die folgende Tabelle zeigt eine vorläufige Auswahl, die nach der Literaturrecherche und in Abstimmung mit der \firma{} angepasst wird.
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}l X X@{}}
+\toprule
+\textbf{Variante} & \textbf{Prinzip} & \textbf{Zustand nach Fehler} \\
+\midrule
+A & Reines MQTT mit QoS~1/2, persistenten Sessions und Retained Messages & letzter Wert pro Topic, Puffer im Broker \\
+B & Sparkplug~B mit Birth-/Death-Nachrichten und Sequenznummern & Neuaufbau über Rebirth, Lücken werden erkannt \\
+C & MQTT mit Store-and-Forward im Edge-Gateway und idempotenten Verbrauchern & Nachlieferung aus dem Edge-Puffer \\
+D & MQTT mit Anbindung an ein persistentes Ereignislog (z.\,B.\ Kafka) und Event Sourcing & Wiederholung der Ereignisse ab einem Checkpoint \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Die Varianten werden zunächst qualitativ angelehnt an die Architecture Tradeoff Analysis Method (ATAM) \cite{kazman2000atam} bewertet. Danach werden sie in einer containerisierten Testumgebung aufgebaut, in der eine Fertigung mit mehreren Maschinen und einem vereinfachten MES simuliert wird. Fehler aus dem Fehlermodell werden gezielt eingespielt, etwa durch Beenden von Containern oder Störung des Netzwerks, angelehnt an das Vorgehen im Chaos Engineering \cite{basiri2016chaos}.
+
+\subsection{Bewertung}
+
+Für jede Variante und jeden Fehlerfall wird der rekonstruierte Zustand mit einem bekannten Sollzustand verglichen. Gemessen werden:
+\begin{itemize}[nosep]
+    \item \textbf{Korrektheit:} Stimmt der Zustand nach dem Fehler mit dem Sollzustand überein? Wie viele Ereignisse fehlen, sind doppelt oder in falscher Reihenfolge?
+    \item \textbf{Determinismus:} Führt derselbe Fehler bei Wiederholung zum selben Ergebnis?
+    \item \textbf{Wiederherstellungszeit:} Wie lange dauert es, bis der Zustand wieder korrekt ist?
+    \item \textbf{Aufwand:} Wie hoch sind Latenz, Durchsatz, Ressourcenbedarf und Komplexität im Betrieb?
+\end{itemize}
+Daraus entsteht eine Zuordnung, welche Variante gegen welche Fehler schützt, und eine Empfehlung, welche Variante sich für welche Anforderungen eignet.
+
+\section{Nutzen für die \firma}
+
+Die Arbeit liefert der \firma{} eine belastbare Grundlage für Architekturentscheidungen rund um MQTT, UNS und MES. Im Einzelnen:
+\begin{itemize}[nosep]
+    \item ein Fehlermodell, mit dem sich bestehende und geplante Anlagen systematisch auf Schwachstellen prüfen lassen,
+    \item einen messbasierten Vergleich von Architekturvarianten statt einer Entscheidung nach Erfahrung oder Herstellerangaben,
+    \item eine wiederverwendbare Testumgebung, mit der sich Broker, Konfigurationen und Updates vor dem Einsatz unter Fehlerbedingungen testen lassen,
+    \item konkrete Handlungsempfehlungen, zum Beispiel zu QoS-Einstellungen, Session-Konfiguration, Puffergrößen und Idempotenz in Verbrauchern.
+\end{itemize}
+Gerade weil Fehler im Datenfluss in der Fertigung oft erst spät bemerkt werden, etwa als falsche Kennzahl oder fehlende Rückmeldung, ist ein systematischer Blick auf diese Fehler auch für den Betrieb wertvoll.
+
+\section{Rahmenbedingungen}
+
+\paragraph{Unterstützung durch das Unternehmen.} Für die Durchführung wäre Folgendes hilfreich:
+\begin{itemize}[nosep]
+    \item eine Ansprechperson als Betreuung im Unternehmen und regelmäßige kurze Abstimmungen,
+    \item Einblick in die eingesetzte Architektur (Broker-Produkt, Topic-Struktur, Datenmodell, Verbraucher),
+    \item wenn möglich anonymisierte Beispieldaten oder Logs zu bisherigen Störungen, um das Fehlermodell an realen Fällen zu prüfen,
+    \item Zugang zu einer Test- oder Entwicklungsumgebung bzw.\ die Freigabe, Broker-Software in einer eigenen Umgebung zu nutzen.
+\end{itemize}
+
+\paragraph{Kein Eingriff in die Produktion.} Alle Fehlerexperimente finden ausschließlich in einer isolierten Testumgebung statt. Produktivsysteme werden nicht verändert.
+
+\paragraph{Vertraulichkeit.} Unternehmensinterne Informationen werden nur in Abstimmung mit der \firma{} verwendet. Bei Bedarf wird die Arbeit mit einem Sperrvermerk versehen. Die wissenschaftlichen Ergebnisse, also Literaturübersicht, Fehlermodell und Vergleich, werden so formuliert, dass sie ohne interne Details nachvollziehbar sind. \offen{Sperrvermerk und Veröffentlichung mit Unternehmen und Hochschule klären}
+
+\section{Zeitplan}
+
+Die Bearbeitungszeit beträgt sechs Monate.
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}l l X X@{}}
+\toprule
+\textbf{Phase} & \textbf{Monat} & \textbf{Ziel} & \textbf{Artefakt} \\
+\midrule
+1 Einarbeitung & 1 & Bestehende Architektur bei der \firma{} verstehen, Recherche planen & Recherche-Protokoll \\
+2 State of the Art & 1--2 & Literatur und Standards auswerten & Literaturübersicht (FF1) \\
+3 Fehlermodell & 2--3 & Fehlerorte, Fehlerarten und Auswirkungen festhalten & Fehlermodell (FF2) \\
+4 Testumgebung & 3--4 & Varianten A--D und Fehlerinjektion aufbauen & Lauffähige Testumgebung \\
+5 Experimente & 4--5 & Fehlerfälle durchspielen und messen & Messergebnisse (FF3) \\
+6 Auswertung & 5 & Vergleich und Empfehlung ableiten & Bewertung, Empfehlung \\
+7 Ausarbeitung & 5--6 & Schriftliche Arbeit und Abschlusspräsentation & Masterarbeit, Code im Repository \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\printbibliography[heading=bibintoc, title={Literaturverzeichnis}]
+
+\end{document}

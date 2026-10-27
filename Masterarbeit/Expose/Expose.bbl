@@ -1,0 +1,668 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{mishra2020mqttsurvey}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=bac2ded7b877e8c16ea47e1c4b1f76c2}{%
+           family={Mishra},
+           familyi={M\bibinitperiod},
+           given={Biswajeeban},
+           giveni={B\bibinitperiod}}}%
+        {{hash=2fc009e570c65d8140bcbf2f1c7ba313}{%
+           family={Kertesz},
+           familyi={K\bibinitperiod},
+           given={Attila},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{3fe12eb71769ee6953535c480cf65061}
+      \strng{fullhash}{3fe12eb71769ee6953535c480cf65061}
+      \strng{fullhashraw}{3fe12eb71769ee6953535c480cf65061}
+      \strng{bibnamehash}{3fe12eb71769ee6953535c480cf65061}
+      \strng{authorbibnamehash}{3fe12eb71769ee6953535c480cf65061}
+      \strng{authornamehash}{3fe12eb71769ee6953535c480cf65061}
+      \strng{authorfullhash}{3fe12eb71769ee6953535c480cf65061}
+      \strng{authorfullhashraw}{3fe12eb71769ee6953535c480cf65061}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Access}
+      \field{langid}{english}
+      \field{title}{{The Use of MQTT in M2M and IoT Systems: A Survey}}
+      \field{volume}{8}
+      \field{year}{2020}
+      \field{pages}{201071\bibrangedash 201086}
+      \range{pages}{16}
+      \verb{doi}
+      \verb 10.1109/ACCESS.2020.3035849
+      \endverb
+    \endentry
+    \entry{eugster2003pubsub}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=114d652649a732dac58619b76d540fa5}{%
+           family={Eugster},
+           familyi={E\bibinitperiod},
+           given={Patrick\bibnamedelima Th.},
+           giveni={P\bibinitperiod\bibinitdelim T\bibinitperiod}}}%
+        {{hash=55851113066d84ac05821bbb2e3c80cc}{%
+           family={Felber},
+           familyi={F\bibinitperiod},
+           given={Pascal\bibnamedelima A.},
+           giveni={P\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=6d84b5e8da24c645eb6bc438af7621c4}{%
+           family={Guerraoui},
+           familyi={G\bibinitperiod},
+           given={Rachid},
+           giveni={R\bibinitperiod}}}%
+        {{hash=43b428701b71e726f0f4000ea91297c8}{%
+           family={Kermarrec},
+           familyi={K\bibinitperiod},
+           given={Anne-Marie},
+           giveni={A\bibinithyphendelim M\bibinitperiod}}}%
+      }
+      \strng{namehash}{3a86d602e7957220bf8115648c1dd4ac}
+      \strng{fullhash}{e09ee5f427b3c033e9b42e6bd57fd0d3}
+      \strng{fullhashraw}{e09ee5f427b3c033e9b42e6bd57fd0d3}
+      \strng{bibnamehash}{e09ee5f427b3c033e9b42e6bd57fd0d3}
+      \strng{authorbibnamehash}{e09ee5f427b3c033e9b42e6bd57fd0d3}
+      \strng{authornamehash}{3a86d602e7957220bf8115648c1dd4ac}
+      \strng{authorfullhash}{e09ee5f427b3c033e9b42e6bd57fd0d3}
+      \strng{authorfullhashraw}{e09ee5f427b3c033e9b42e6bd57fd0d3}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{ACM Computing Surveys}
+      \field{langid}{english}
+      \field{number}{2}
+      \field{title}{{The Many Faces of Publish/Subscribe}}
+      \field{volume}{35}
+      \field{year}{2003}
+      \field{pages}{114\bibrangedash 131}
+      \range{pages}{18}
+      \verb{doi}
+      \verb 10.1145/857076.857078
+      \endverb
+    \endentry
+    \entry{iec62264}{standard}{}{}
+      \list{organization}{1}{%
+        {International Electrotechnical Commission}%
+      }
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{{IEC 62264-1:2013 -- Enterprise-control system integration -- Part 1: Models and terminology}}
+      \field{year}{2013}
+    \endentry
+    \entry{mqtt5}{standard}{}{}
+      \name{editor}{4}{}{%
+        {{hash=cfd3c6c4bb8d76ddc340f7df27a7dc8e}{%
+           family={Banks},
+           familyi={B\bibinitperiod},
+           given={Andrew},
+           giveni={A\bibinitperiod}}}%
+        {{hash=9d87a395b00fd8b477ec233bb6b125c5}{%
+           family={Briggs},
+           familyi={B\bibinitperiod},
+           given={Ed},
+           giveni={E\bibinitperiod}}}%
+        {{hash=3ba0bffaa2be019134e055acc20dce07}{%
+           family={Borgendale},
+           familyi={B\bibinitperiod},
+           given={Ken},
+           giveni={K\bibinitperiod}}}%
+        {{hash=91614d6ba26aab8a0c8ea57ccbaed0b1}{%
+           family={Gupta},
+           familyi={G\bibinitperiod},
+           given={Rahul},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {OASIS}%
+      }
+      \strng{namehash}{b0fb3ebdaac8940dc69f2db43ddc33b1}
+      \strng{fullhash}{62d0b73c18ba223abd31321e678539e1}
+      \strng{fullhashraw}{62d0b73c18ba223abd31321e678539e1}
+      \strng{bibnamehash}{62d0b73c18ba223abd31321e678539e1}
+      \strng{editorbibnamehash}{62d0b73c18ba223abd31321e678539e1}
+      \strng{editornamehash}{b0fb3ebdaac8940dc69f2db43ddc33b1}
+      \strng{editorfullhash}{62d0b73c18ba223abd31321e678539e1}
+      \strng{editorfullhashraw}{62d0b73c18ba223abd31321e678539e1}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{editor}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{{MQTT Version 5.0}}
+      \field{type}{OASIS Standard}
+      \field{urlday}{27}
+      \field{urlmonth}{10}
+      \field{urlyear}{2026}
+      \field{year}{2019}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://docs.oasis-open.org/mqtt/mqtt/v5.0/mqtt-v5.0.html
+      \endverb
+      \verb{url}
+      \verb https://docs.oasis-open.org/mqtt/mqtt/v5.0/mqtt-v5.0.html
+      \endverb
+    \endentry
+    \entry{sparkplug3}{manual}{}{}
+      \list{organization}{1}{%
+        {Eclipse Foundation}%
+      }
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{{Sparkplug Specification, Version 3.0.0}}
+      \field{urlday}{27}
+      \field{urlmonth}{10}
+      \field{urlyear}{2026}
+      \field{year}{2022}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://sparkplug.eclipse.org/specification/
+      \endverb
+      \verb{url}
+      \verb https://sparkplug.eclipse.org/specification/
+      \endverb
+    \endentry
+    \entry{fowler2005eventsourcing}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=312ac886938a9b2be4f8eb607567fe4c}{%
+           family={Fowler},
+           familyi={F\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{312ac886938a9b2be4f8eb607567fe4c}
+      \strng{fullhash}{312ac886938a9b2be4f8eb607567fe4c}
+      \strng{fullhashraw}{312ac886938a9b2be4f8eb607567fe4c}
+      \strng{bibnamehash}{312ac886938a9b2be4f8eb607567fe4c}
+      \strng{authorbibnamehash}{312ac886938a9b2be4f8eb607567fe4c}
+      \strng{authornamehash}{312ac886938a9b2be4f8eb607567fe4c}
+      \strng{authorfullhash}{312ac886938a9b2be4f8eb607567fe4c}
+      \strng{authorfullhashraw}{312ac886938a9b2be4f8eb607567fe4c}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{{Event Sourcing}}
+      \field{urlday}{27}
+      \field{urlmonth}{10}
+      \field{urlyear}{2026}
+      \field{year}{2005}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://martinfowler.com/eaaDev/EventSourcing.html
+      \endverb
+      \verb{url}
+      \verb https://martinfowler.com/eaaDev/EventSourcing.html
+      \endverb
+    \endentry
+    \entry{kreps2011kafka}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=1eb7552c6ea712a30e5b05e6f943e688}{%
+           family={Kreps},
+           familyi={K\bibinitperiod},
+           given={Jay},
+           giveni={J\bibinitperiod}}}%
+        {{hash=f0758f2b7b5ca25d25bfae9f9629d17d}{%
+           family={Narkhede},
+           familyi={N\bibinitperiod},
+           given={Neha},
+           giveni={N\bibinitperiod}}}%
+        {{hash=762632644bfb48406439c48609c9497c}{%
+           family={Rao},
+           familyi={R\bibinitperiod},
+           given={Jun},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{d009307c8a7d167729aa617586c9fd8a}
+      \strng{fullhash}{410d77ed28aaaef357bb86242898553b}
+      \strng{fullhashraw}{410d77ed28aaaef357bb86242898553b}
+      \strng{bibnamehash}{410d77ed28aaaef357bb86242898553b}
+      \strng{authorbibnamehash}{410d77ed28aaaef357bb86242898553b}
+      \strng{authornamehash}{d009307c8a7d167729aa617586c9fd8a}
+      \strng{authorfullhash}{410d77ed28aaaef357bb86242898553b}
+      \strng{authorfullhashraw}{410d77ed28aaaef357bb86242898553b}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 6th International Workshop on Networking Meets Databases (NetDB)}
+      \field{langid}{english}
+      \field{title}{{Kafka: A Distributed Messaging System for Log Processing}}
+      \field{year}{2011}
+    \endentry
+    \entry{mqtt311}{standard}{}{}
+      \name{editor}{2}{}{%
+        {{hash=cfd3c6c4bb8d76ddc340f7df27a7dc8e}{%
+           family={Banks},
+           familyi={B\bibinitperiod},
+           given={Andrew},
+           giveni={A\bibinitperiod}}}%
+        {{hash=91614d6ba26aab8a0c8ea57ccbaed0b1}{%
+           family={Gupta},
+           familyi={G\bibinitperiod},
+           given={Rahul},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {OASIS}%
+      }
+      \strng{namehash}{1c72cfe9338477f90293a80bbdc39067}
+      \strng{fullhash}{1c72cfe9338477f90293a80bbdc39067}
+      \strng{fullhashraw}{1c72cfe9338477f90293a80bbdc39067}
+      \strng{bibnamehash}{1c72cfe9338477f90293a80bbdc39067}
+      \strng{editorbibnamehash}{1c72cfe9338477f90293a80bbdc39067}
+      \strng{editornamehash}{1c72cfe9338477f90293a80bbdc39067}
+      \strng{editorfullhash}{1c72cfe9338477f90293a80bbdc39067}
+      \strng{editorfullhashraw}{1c72cfe9338477f90293a80bbdc39067}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{editor}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{{MQTT Version 3.1.1}}
+      \field{type}{OASIS Standard}
+      \field{urlday}{27}
+      \field{urlmonth}{10}
+      \field{urlyear}{2026}
+      \field{year}{2014}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html
+      \endverb
+      \verb{url}
+      \verb https://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html
+      \endverb
+    \endentry
+    \entry{schneider1990statemachine}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=bd4d942d672b1b6dfd97fa9db7d08ddb}{%
+           family={Schneider},
+           familyi={S\bibinitperiod},
+           given={Fred\bibnamedelima B.},
+           giveni={F\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+      }
+      \strng{namehash}{bd4d942d672b1b6dfd97fa9db7d08ddb}
+      \strng{fullhash}{bd4d942d672b1b6dfd97fa9db7d08ddb}
+      \strng{fullhashraw}{bd4d942d672b1b6dfd97fa9db7d08ddb}
+      \strng{bibnamehash}{bd4d942d672b1b6dfd97fa9db7d08ddb}
+      \strng{authorbibnamehash}{bd4d942d672b1b6dfd97fa9db7d08ddb}
+      \strng{authornamehash}{bd4d942d672b1b6dfd97fa9db7d08ddb}
+      \strng{authorfullhash}{bd4d942d672b1b6dfd97fa9db7d08ddb}
+      \strng{authorfullhashraw}{bd4d942d672b1b6dfd97fa9db7d08ddb}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{ACM Computing Surveys}
+      \field{langid}{english}
+      \field{number}{4}
+      \field{title}{{Implementing Fault-Tolerant Services Using the State Machine Approach: A Tutorial}}
+      \field{volume}{22}
+      \field{year}{1990}
+      \field{pages}{299\bibrangedash 319}
+      \range{pages}{21}
+      \verb{doi}
+      \verb 10.1145/98163.98167
+      \endverb
+    \endentry
+    \entry{lamport1978time}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=5d77435450d10a850a5b58577b9a456b}{%
+           family={Lamport},
+           familyi={L\bibinitperiod},
+           given={Leslie},
+           giveni={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{5d77435450d10a850a5b58577b9a456b}
+      \strng{fullhash}{5d77435450d10a850a5b58577b9a456b}
+      \strng{fullhashraw}{5d77435450d10a850a5b58577b9a456b}
+      \strng{bibnamehash}{5d77435450d10a850a5b58577b9a456b}
+      \strng{authorbibnamehash}{5d77435450d10a850a5b58577b9a456b}
+      \strng{authornamehash}{5d77435450d10a850a5b58577b9a456b}
+      \strng{authorfullhash}{5d77435450d10a850a5b58577b9a456b}
+      \strng{authorfullhashraw}{5d77435450d10a850a5b58577b9a456b}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Communications of the ACM}
+      \field{langid}{english}
+      \field{number}{7}
+      \field{title}{{Time, Clocks, and the Ordering of Events in a Distributed System}}
+      \field{volume}{21}
+      \field{year}{1978}
+      \field{pages}{558\bibrangedash 565}
+      \range{pages}{8}
+      \verb{doi}
+      \verb 10.1145/359545.359563
+      \endverb
+    \endentry
+    \entry{elnozahy2002rollback}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=1144f439c9bdb36d091c933636657712}{%
+           family={Elnozahy},
+           familyi={E\bibinitperiod},
+           given={E.\bibnamedelimi N.},
+           giveni={E\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
+        {{hash=b837a18883176d2f82d17c4fcb2a300b}{%
+           family={Alvisi},
+           familyi={A\bibinitperiod},
+           given={Lorenzo},
+           giveni={L\bibinitperiod}}}%
+        {{hash=7a8ed369967263051b70dfeeaf3ec863}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Yi-Min},
+           giveni={Y\bibinithyphendelim M\bibinitperiod}}}%
+        {{hash=ee85ad853a0a33e86bd6882acd75c4ff}{%
+           family={Johnson},
+           familyi={J\bibinitperiod},
+           given={David\bibnamedelima B.},
+           giveni={D\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+      }
+      \strng{namehash}{de23ac18a71636e0eaa347c37e2d1a31}
+      \strng{fullhash}{6e12a0c89398de13caf2fe1b657f71df}
+      \strng{fullhashraw}{6e12a0c89398de13caf2fe1b657f71df}
+      \strng{bibnamehash}{6e12a0c89398de13caf2fe1b657f71df}
+      \strng{authorbibnamehash}{6e12a0c89398de13caf2fe1b657f71df}
+      \strng{authornamehash}{de23ac18a71636e0eaa347c37e2d1a31}
+      \strng{authorfullhash}{6e12a0c89398de13caf2fe1b657f71df}
+      \strng{authorfullhashraw}{6e12a0c89398de13caf2fe1b657f71df}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{ACM Computing Surveys}
+      \field{langid}{english}
+      \field{number}{3}
+      \field{title}{{A Survey of Rollback-Recovery Protocols in Message-Passing Systems}}
+      \field{volume}{34}
+      \field{year}{2002}
+      \field{pages}{375\bibrangedash 408}
+      \range{pages}{34}
+      \verb{doi}
+      \verb 10.1145/568522.568525
+      \endverb
+    \endentry
+    \entry{chandy1985snapshots}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=c282283eaae8c0adc4d84b92cdb74dee}{%
+           family={Chandy},
+           familyi={C\bibinitperiod},
+           given={K.\bibnamedelimi Mani},
+           giveni={K\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+        {{hash=5d77435450d10a850a5b58577b9a456b}{%
+           family={Lamport},
+           familyi={L\bibinitperiod},
+           given={Leslie},
+           giveni={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{c815c8f9ddee9ecbaf1672cb2729c6a4}
+      \strng{fullhash}{c815c8f9ddee9ecbaf1672cb2729c6a4}
+      \strng{fullhashraw}{c815c8f9ddee9ecbaf1672cb2729c6a4}
+      \strng{bibnamehash}{c815c8f9ddee9ecbaf1672cb2729c6a4}
+      \strng{authorbibnamehash}{c815c8f9ddee9ecbaf1672cb2729c6a4}
+      \strng{authornamehash}{c815c8f9ddee9ecbaf1672cb2729c6a4}
+      \strng{authorfullhash}{c815c8f9ddee9ecbaf1672cb2729c6a4}
+      \strng{authorfullhashraw}{c815c8f9ddee9ecbaf1672cb2729c6a4}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{ACM Transactions on Computer Systems}
+      \field{langid}{english}
+      \field{number}{1}
+      \field{title}{{Distributed Snapshots: Determining Global States of Distributed Systems}}
+      \field{volume}{3}
+      \field{year}{1985}
+      \field{pages}{63\bibrangedash 75}
+      \range{pages}{13}
+      \verb{doi}
+      \verb 10.1145/214451.214456
+      \endverb
+    \endentry
+    \entry{kitchenham2007slr}{report}{}{}
+      \name{author}{2}{}{%
+        {{hash=19919e365e4f12f6028593c952a9bacf}{%
+           family={Kitchenham},
+           familyi={K\bibinitperiod},
+           given={Barbara},
+           giveni={B\bibinitperiod}}}%
+        {{hash=e3aec3b248f01d4d14bbd3f116591257}{%
+           family={Charters},
+           familyi={C\bibinitperiod},
+           given={Stuart},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{institution}{2}{%
+        {Keele University}%
+        {Durham University}%
+      }
+      \strng{namehash}{bfd5bed68d4e3feb5cdc7e00ae82b588}
+      \strng{fullhash}{bfd5bed68d4e3feb5cdc7e00ae82b588}
+      \strng{fullhashraw}{bfd5bed68d4e3feb5cdc7e00ae82b588}
+      \strng{bibnamehash}{bfd5bed68d4e3feb5cdc7e00ae82b588}
+      \strng{authorbibnamehash}{bfd5bed68d4e3feb5cdc7e00ae82b588}
+      \strng{authornamehash}{bfd5bed68d4e3feb5cdc7e00ae82b588}
+      \strng{authorfullhash}{bfd5bed68d4e3feb5cdc7e00ae82b588}
+      \strng{authorfullhashraw}{bfd5bed68d4e3feb5cdc7e00ae82b588}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{number}{EBSE-2007-01}
+      \field{title}{{Guidelines for Performing Systematic Literature Reviews in Software Engineering}}
+      \field{type}{techreport}
+      \field{year}{2007}
+    \endentry
+    \entry{kleppmann2017ddia}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=34b8d5b1d29d175527a6642f3ec8a76d}{%
+           family={Kleppmann},
+           familyi={K\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Sebastopol, CA}%
+      }
+      \list{publisher}{1}{%
+        {O'Reilly Media}%
+      }
+      \strng{namehash}{34b8d5b1d29d175527a6642f3ec8a76d}
+      \strng{fullhash}{34b8d5b1d29d175527a6642f3ec8a76d}
+      \strng{fullhashraw}{34b8d5b1d29d175527a6642f3ec8a76d}
+      \strng{bibnamehash}{34b8d5b1d29d175527a6642f3ec8a76d}
+      \strng{authorbibnamehash}{34b8d5b1d29d175527a6642f3ec8a76d}
+      \strng{authornamehash}{34b8d5b1d29d175527a6642f3ec8a76d}
+      \strng{authorfullhash}{34b8d5b1d29d175527a6642f3ec8a76d}
+      \strng{authorfullhashraw}{34b8d5b1d29d175527a6642f3ec8a76d}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{{Designing Data-Intensive Applications}}
+      \field{year}{2017}
+    \endentry
+    \entry{avizienis2004taxonomy}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=b5cc48326c4baf9bdea81ca0637c0b38}{%
+           family={Avižienis},
+           familyi={A\bibinitperiod},
+           given={Algirdas},
+           giveni={A\bibinitperiod}}}%
+        {{hash=88ac1497be18842438f286d0b41a2c06}{%
+           family={Laprie},
+           familyi={L\bibinitperiod},
+           given={Jean-Claude},
+           giveni={J\bibinithyphendelim C\bibinitperiod}}}%
+        {{hash=76332c6371627eade995a45d9e642654}{%
+           family={Randell},
+           familyi={R\bibinitperiod},
+           given={Brian},
+           giveni={B\bibinitperiod}}}%
+        {{hash=186c616f1893ab90fedbb256a5d7d55d}{%
+           family={Landwehr},
+           familyi={L\bibinitperiod},
+           given={Carl},
+           giveni={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{e7bf45b09be88561d649bdd3634465f7}
+      \strng{fullhash}{323409242df0ca3767020b1bb088de8a}
+      \strng{fullhashraw}{323409242df0ca3767020b1bb088de8a}
+      \strng{bibnamehash}{323409242df0ca3767020b1bb088de8a}
+      \strng{authorbibnamehash}{323409242df0ca3767020b1bb088de8a}
+      \strng{authornamehash}{e7bf45b09be88561d649bdd3634465f7}
+      \strng{authorfullhash}{323409242df0ca3767020b1bb088de8a}
+      \strng{authorfullhashraw}{323409242df0ca3767020b1bb088de8a}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Dependable and Secure Computing}
+      \field{langid}{english}
+      \field{number}{1}
+      \field{title}{{Basic Concepts and Taxonomy of Dependable and Secure Computing}}
+      \field{volume}{1}
+      \field{year}{2004}
+      \field{pages}{11\bibrangedash 33}
+      \range{pages}{23}
+      \verb{doi}
+      \verb 10.1109/TDSC.2004.2
+      \endverb
+    \endentry
+    \entry{kazman2000atam}{report}{}{}
+      \name{author}{3}{}{%
+        {{hash=4a2e06c3fa40bc2221536e74ab90b7ec}{%
+           family={Kazman},
+           familyi={K\bibinitperiod},
+           given={Rick},
+           giveni={R\bibinitperiod}}}%
+        {{hash=e176fa0d1bf255faf7f3fa84dc45393d}{%
+           family={Klein},
+           familyi={K\bibinitperiod},
+           given={Mark},
+           giveni={M\bibinitperiod}}}%
+        {{hash=806866eee4e5b55ba7360bfe43f4f397}{%
+           family={Clements},
+           familyi={C\bibinitperiod},
+           given={Paul},
+           giveni={P\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Software Engineering Institute, Carnegie Mellon University}%
+      }
+      \strng{namehash}{b8444517bcdf8c697b339a996f283a96}
+      \strng{fullhash}{a2ecd4a8a43dec47d95eabe591067965}
+      \strng{fullhashraw}{a2ecd4a8a43dec47d95eabe591067965}
+      \strng{bibnamehash}{a2ecd4a8a43dec47d95eabe591067965}
+      \strng{authorbibnamehash}{a2ecd4a8a43dec47d95eabe591067965}
+      \strng{authornamehash}{b8444517bcdf8c697b339a996f283a96}
+      \strng{authorfullhash}{a2ecd4a8a43dec47d95eabe591067965}
+      \strng{authorfullhashraw}{a2ecd4a8a43dec47d95eabe591067965}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{number}{CMU/SEI-2000-TR-004}
+      \field{title}{{ATAM: Method for Architecture Evaluation}}
+      \field{type}{techreport}
+      \field{year}{2000}
+    \endentry
+    \entry{basiri2016chaos}{article}{}{}
+      \name{author}{7}{}{%
+        {{hash=e7faee0d0a1cc9d1733f2f2d92d1cada}{%
+           family={Basiri},
+           familyi={B\bibinitperiod},
+           given={Ali},
+           giveni={A\bibinitperiod}}}%
+        {{hash=5d2264553bbdc98fc337112f75b98ae7}{%
+           family={Behnam},
+           familyi={B\bibinitperiod},
+           given={Niosha},
+           giveni={N\bibinitperiod}}}%
+        {{hash=e46d9c7c9eea15faac3e04885aca1aed}{%
+           family={Rooij},
+           familyi={R\bibinitperiod},
+           given={Ruud},
+           giveni={R\bibinitperiod},
+           prefix={de},
+           prefixi={d\bibinitperiod}}}%
+        {{hash=5fe09c0f911233f89ffef51d0c464e08}{%
+           family={Hochstein},
+           familyi={H\bibinitperiod},
+           given={Lorin},
+           giveni={L\bibinitperiod}}}%
+        {{hash=776b574daa2e1469f0bf2a8bd88feacb}{%
+           family={Kosewski},
+           familyi={K\bibinitperiod},
+           given={Luke},
+           giveni={L\bibinitperiod}}}%
+        {{hash=ad73dc861545c745de2fbdccbec17f7f}{%
+           family={Reynolds},
+           familyi={R\bibinitperiod},
+           given={Justin},
+           giveni={J\bibinitperiod}}}%
+        {{hash=93900aa4dc160e91623e0a400a30423f}{%
+           family={Rosenthal},
+           familyi={R\bibinitperiod},
+           given={Casey},
+           giveni={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{e94852f07d81abd04b990d0970e5a519}
+      \strng{fullhash}{85dcafaeea17391aa4813aff5c11585f}
+      \strng{fullhashraw}{85dcafaeea17391aa4813aff5c11585f}
+      \strng{bibnamehash}{e94852f07d81abd04b990d0970e5a519}
+      \strng{authorbibnamehash}{e94852f07d81abd04b990d0970e5a519}
+      \strng{authornamehash}{e94852f07d81abd04b990d0970e5a519}
+      \strng{authorfullhash}{85dcafaeea17391aa4813aff5c11585f}
+      \strng{authorfullhashraw}{85dcafaeea17391aa4813aff5c11585f}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Software}
+      \field{langid}{english}
+      \field{number}{3}
+      \field{title}{{Chaos Engineering}}
+      \field{volume}{33}
+      \field{year}{2016}
+      \field{pages}{35\bibrangedash 41}
+      \range{pages}{7}
+      \verb{doi}
+      \verb 10.1109/MS.2016.60
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
