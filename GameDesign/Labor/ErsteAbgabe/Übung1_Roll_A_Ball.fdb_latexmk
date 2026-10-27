@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1793134216.13366 "/home/debian/repo/Master/GameDesign/Labor/ErsteAbgabe/Übung1_Roll_A_Ball.tex" "Übung1_Roll_A_Ball.pdf" "Übung1_Roll_A_Ball" 1793134216.60075 0
+["pdflatex"] 1793137018.41633 "/home/debian/repo/Master/GameDesign/Labor/ErsteAbgabe/Übung1_Roll_A_Ball.tex" "Übung1_Roll_A_Ball.pdf" "Übung1_Roll_A_Ball" 1793137018.92505 0
   "/home/debian/.miktex/texmfs/data/fonts/map/pdftex/pdftex.map" 1792940229.49859 117676 85fbf6d6f02035c7f23095504b31663f ""
   "/home/debian/.miktex/texmfs/data/miktex/data/le/pdftex/pdflatex.fmt" 1790604329.05341 10201911 01f8db5683a2ebaa16a60c5d18d0e04a ""
   "/home/debian/.miktex/texmfs/install/fonts/enc/dvips/lm/lm-ec.enc" 1790759091.64153 2375 baa924870cfb487815765f9094cf3728 ""
@@ -105,11 +105,11 @@
   "/home/debian/.miktex/texmfs/install/tex/latex/tools/tabularx.sty" 1790620539.41924 7243 98a9e0737a56460d15d6b41be1ecc3b8 ""
   "/home/debian/.miktex/texmfs/install/tex/latex/url/url.sty" 1790604377.61296 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "/home/debian/.miktex/texmfs/install/tex/latex/xcolor/xcolor.sty" 1790620454.17572 55384 b454dec21c2d9f45ec0b793f0995b992 ""
-  "/home/debian/repo/Master/GameDesign/Labor/ErsteAbgabe/Übung1_Roll_A_Ball.tex" 1793134215.32749 8194 f61a32e3117db02ce29a760641e98d45 ""
-  "HKA.jpg" 1793125548.63621 111183 c71442442068103000f25c726cfec89a ""
-  "Übung1_Roll_A_Ball.aux" 1793134216.51548 941 87452e3f3cdd26bc22c6153a5409e49a "pdflatex"
-  "Übung1_Roll_A_Ball.out" 1793134216.51548 1038 695a546789747fff3344201c418b8f16 "pdflatex"
-  "Übung1_Roll_A_Ball.tex" 1793134215.32749 8194 f61a32e3117db02ce29a760641e98d45 ""
+  "/home/debian/repo/Master/GameDesign/Labor/ErsteAbgabe/Übung1_Roll_A_Ball.tex" 1793137017.94615 7524 2017ce717d1862d0da39bc915a43981d ""
+  "HKA.jpg" 1793137017.93015 111183 c71442442068103000f25c726cfec89a ""
+  "Übung1_Roll_A_Ball.aux" 1793137018.83015 925 c5283f1d8d81217d834e919aa424075c "pdflatex"
+  "Übung1_Roll_A_Ball.out" 1793137018.83015 954 85764e650171a4814b80b67ca84957f2 "pdflatex"
+  "Übung1_Roll_A_Ball.tex" 1793137017.94615 7524 2017ce717d1862d0da39bc915a43981d ""
   (generated)
   "Übung1_Roll_A_Ball.aux"
   "Übung1_Roll_A_Ball.log"
