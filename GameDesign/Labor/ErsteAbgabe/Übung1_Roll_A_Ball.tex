@@ -1,0 +1,178 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- Pakete ---
+\usepackage[english, ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage[autostyle=true,german=quotes]{csquotes}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{positioning,fit,backgrounds,shapes.geometric,arrows.meta}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage{microtype}
+\usepackage{tocloft}
+\usepackage[document]{ragged2e}
+\usepackage[backend=biber,style=ieee,urldate=long]{biblatex}
+\addbibresource{literatur.bib}
+\usepackage{hyperref}
+\emergencystretch=0.3\textwidth % lange Wörter ohne Trennung nicht über den Rand laufen lassen
+\hyphenpenalty=10000
+\exhyphenpenalty=50 % Umbruch nur an vorhandenen Bindestrichen (z.B. IMU-Sensorsystem)
+
+% X-Spalten in tabularx global linksbündig (kein Blocksatz in Tabellen)
+\renewcommand{\tabularxcolumn}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% --- Farben (HKA Corporate) ---
+\definecolor{hkared}{RGB}{198, 42, 18}
+\definecolor{hkagray}{RGB}{100, 100, 100}
+
+% --- Inhaltsverzeichnis Styling ---
+% Überkapitel: rot und fett
+\renewcommand{\cftsecfont}{\bfseries\color{hkared}}
+\renewcommand{\cftsecpagefont}{\bfseries\color{hkared}}
+% Unterkapitel: schwarz (hidelinks im TOC nötig damit hyperref nicht überschreibt)
+\renewcommand{\cftsubsecfont}{\normalfont\color{black}}
+\renewcommand{\cftsubsecpagefont}{\normalfont\color{black}}
+% Spacing: gleiches Spacing auf allen Ebenen
+\setlength{\cftbeforesecskip}{8pt}
+\setlength{\cftbeforesubsecskip}{8pt}
+\setlength{\cftbeforesubsubsecskip}{8pt}
+% Abstand nach dem Titel "Inhaltsverzeichnis" vor dem ersten Eintrag
+\setlength{\cftaftertoctitleskip}{1.2cm}
+
+% --- Hyperref Setup ---
+\hypersetup{
+    colorlinks  = true,
+    linkcolor   = hkared,
+    urlcolor    = hkared,
+    citecolor   = hkared,
+    pdftitle    = {Ein modulares, beliebig erweiterbares IMU-Sensorsystem},
+    pdfauthor   = {Erlind Sejdiu},
+    pdfcreator  = {pdflatex},
+    pdfproducer = {LaTeX with hyperref}
+}
+
+% --- Section Styling ---
+\titleformat{\section}{\large\bfseries\color{hkared}}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{hkared}}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{black}}{\thesubsubsection}{1em}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.5em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.3em}
+\titlespacing*{\subsubsection}{0pt}{0.6em}{0.2em}
+
+% --- Header/Footer ---
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{hkagray}Projektarbeit}
+\fancyhead[R]{\small\color{hkagray}Master Informatik WS~2026/27}
+\fancyfoot[C]{\small\color{hkagray}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Markierung für Stellen, die noch ergänzt/geprüft werden müssen
+\newcommand{\offen}[1]{\textcolor{red}{[#1]}}
+
+% =============================================================================
+\begin{document}
+
+% --- Titelseite ---
+\begin{titlepage}
+    \centering
+    \includegraphics[width=0.35\textwidth]{HKA.jpg}
+
+    {\normalsize\color{hkagray} University of Applied Sciences}\\[0.125cm]
+    {\small\color{hkagray} Fakult\"at f\"ur Informatik und Wirtschaftsinformatik}
+
+    \vspace{.5cm}
+    {\color{hkared}\rule{\textwidth}{1.5pt}}
+
+    \vspace{1.5cm}
+    {\fontsize{24}{30}\selectfont\bfseries\color{hkared} Roll a Ball - Modifikation 1}\\[0.6cm]
+    \vspace{.75cm}
+
+    \vspace{.5cm}
+    {\large Labor Game Design}\\[0.3cm]
+    {\large Wintersemester 2026/27}
+
+    \vspace{.5cm}
+    {\color{hkared}\rule{0.6\textwidth}{0.5pt}}
+    \vspace{1.5cm}
+
+    {\normalsize
+    \begin{tabular}{rl}
+        \textbf{Autor:}          & Erlind Sejdiu \\
+        \textbf{Matrikelnummer:} & 106357 \\[0.5cm]
+    \end{tabular}
+    }
+
+    \vfill
+    {\small\color{hkagray} Stand: \today}
+\end{titlepage}
+
+\thispagestyle{empty}
+\newpage
+\setcounter{page}{1}
+
+Die Aufgabe des ersten Labors besteht darin nur ein Element von folgenden vier Element zu verändern
+
+\begin{enumerate}
+  \item Spielziel
+  \item Spielmechanik
+  \item Hindernis
+  \item Spieler
+\end{enumerate}
+
+Das ist per se eine nicht so einfache Aufgabe, denn schon kleinere Veränderungen können zwei Elemente direkt beeinflussen. 
+Deshalb folgt zuerst eine Definition von mir wie jeder Punkt zu verstehen ist, und dabei noch eine Entscheidung mit folgenden Abwägungen
+
+\section{Definition}
+
+Hier sind die Abstrakten Definition:
+\begin{enumerate}
+  \item Spielziel: Das Spielziel ist das was gemacht werden muss um zu gewinnen.
+  \item Spielmechanik: Mithilfe der Spielmechanik erreicht man das Spielziel.
+  \item Hindernis: Das Hindernis blockiert den Spieler um zu gewinnen.
+  \item Spieler: Die Instanz die aussuchen darf wie die Spielmechanik ausgeführt wird.
+\end{enumerate}
+
+Und jetzt auf das Roll a Ball spiel angewandt
+
+\begin{enumerate}
+  \item Spielziel: Einsammeln aller Sterne.
+  \item Spielmechanik: Das Bewegen nach Links, rechts, oben und unten.
+  \item Hindernis: Die Verteilung der Sterne.
+  \item Spieler: Die rollende Kugel.
+\end{enumerate}
+
+\section{Entscheidung}
+
+Meine Entscheidung ist, dass man statts der Kugel plötzlich den Raum bewegt. Das auf den ersten Blick merkwürdig, da man denken würde, dass man ein Element verletzten würde, aber wenn man genauer darüber nachdenkt, tut man das nicht.
+
+\begin{enumerate}
+  \item Spielziel: Es bleibt das einsammeln von Sternen
+  \item Spielmechanik: Man bewegt sich nach Links, rechts, oben und unten.
+  \item Hindernis: Die Verteilung der Sterne.
+  \item Spieler: Der Raum, welcher sich bewegt. Hier wurde was verändert. Es nicht mehr die rollende Kugel.
+\end{enumerate}
+
+\section{Abwägungen}
+
+Hier sind Ideen, die mir gekommen sind und warum diese nicht klappen:
+
+\begin{enumerate}
+    \item Man muss die Sterne verteilen -> klappt nicht weil weil spielziel und Hindernis vereletzt wird
+    \item Durch das Einsammeln der Sterne kann man sich anders bewegen -> Klappt nicht weil die Spielmechanik und die Hindersnisse anders gesetzt werden müssen
+    \item Der Spieler ist dann ein Block -> würde glaube ich klappen, wäre aber arg langweilig
+\end{enumerate}
+
+
+
+
+\end{document}

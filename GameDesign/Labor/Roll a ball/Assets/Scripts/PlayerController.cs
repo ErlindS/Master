@@ -1,74 +1,53 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using TMPro;
 
-public class PlayerController : MonoBehaviour
+public class BallGameLogic : MonoBehaviour
 {
-    public float speed = 0; 
     public TextMeshProUGUI countText;
     public GameObject winTextObject;
-    private Rigidbody rb; 
-    private float movementX;
-    private float movementY;
 
-    private int count;
+    private int count = 0;
 
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        rb = GetComponent <Rigidbody>(); 
-        count = 0;
-
         SetCountText();
-        winTextObject.SetActive(false);
-    }
-
-    void FixedUpdate() 
-    {
-        Vector3 movement = new Vector3 (movementX, 0.0f, movementY);
-
-        rb.AddForce(movement * speed); 
-    }
-
-    void OnMove(InputValue movementValue)
-    {
-        // Function Body
-        Vector2 movementVector = movementValue.Get<Vector2>(); 
-
-        movementX = movementVector.x; 
-        movementY = movementVector.y;
+        if (winTextObject != null)
+            winTextObject.SetActive(false);
     }
 
     void SetCountText()
     {
-        countText.text = "Count: " + count.ToString();
-        if(count >= 12)
+        if (countText != null)
+            countText.text = "Count: " + count.ToString();
+
+        if (count >= 12 && winTextObject != null)
         {
             winTextObject.SetActive(true);
+            winTextObject.GetComponent<TextMeshProUGUI>().text = "You Win!";
         }
     }
 
-   void OnTriggerEnter (Collider other) 
-   {
-       if (other.gameObject.CompareTag("PickUp")) 
-       {
-           other.gameObject.SetActive(false);
-           count++;
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("PickUp"))
+        {
+            other.gameObject.SetActive(false);
+            count++;
+            SetCountText();
+        }
+    }
 
-           SetCountText();
-       }
-   }
-
-   private void OnCollisionEnter(Collision collision)
-{
-   if (collision.gameObject.CompareTag("Enemy"))
-   {
-       // Destroy the current object
-       Destroy(gameObject); 
-       // Update the winText to display "You Lose!"
-       winTextObject.gameObject.SetActive(true);
-       winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
-   }
-}
+    void OnCollisionEnter(Collision collision)
+    {
+        // Nur wenn der Ball selbst den Enemy berührt:
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Destroy(gameObject); // Zerstört nur den Ball
+            if (winTextObject != null)
+            {
+                winTextObject.SetActive(true);
+                winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
+            }
+        }
+    }
 }
