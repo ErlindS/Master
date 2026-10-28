@@ -1,0 +1,780 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- Pakete ---
+\usepackage[english, ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[left=2.2cm, right=2.2cm, top=2.2cm, bottom=2.2cm]{geometry}
+\usepackage[autostyle=true,german=quotes]{csquotes}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{microtype}
+\usepackage{pdflscape}
+\usepackage{float}
+\usepackage[font=small, labelfont={bf,color=hkared}, skip=6pt]{caption}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, calc, fit, backgrounds, shapes.geometric}
+\usepackage[document]{ragged2e}
+\usepackage{hyperref}
+
+\emergencystretch=0.3\textwidth
+\hyphenpenalty=1000
+\exhyphenpenalty=50
+
+% X-Spalten in tabularx linksbündig
+\renewcommand{\tabularxcolumn}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% --- Farben (HKA Corporate) ---
+\definecolor{hkared}{RGB}{198, 42, 18}
+\definecolor{hkagray}{RGB}{100, 100, 100}
+
+% --- Farben der Themencluster ---
+\definecolor{clA}{RGB}{31, 95, 155}   % Zeitgeist
+\definecolor{clB}{RGB}{198, 42, 18}   % Akteure
+\definecolor{clC}{RGB}{46, 125, 50}   % Ressourcen
+\definecolor{clD}{RGB}{200, 120, 0}   % Umwelt & Friktionen
+
+% --- TikZ-Stile ---
+% Jede Kante ist gerichtet und beschriftet (Vorgabe Themenlandschaftskarte)
+\tikzset{
+    rel/.style   = {-{Stealth[length=2.4mm, width=1.8mm]}, semithick, draw=hkagray!85},
+    lbl/.style   = {font=\scriptsize\itshape, fill=white, inner sep=1.2pt,
+                    align=center, text=black!80},
+    box/.style   = {draw=#1, fill=#1!8, rounded corners=3pt, line width=0.8pt,
+                    align=center, font=\footnotesize, inner sep=4pt},
+    box/.default = hkagray,
+    knoten/.style= {box=#1, text width=3.0cm, minimum height=1.05cm},
+    lane/.style  = {font=\small\bfseries, text=#1, align=center},
+}
+
+% --- Hyperref Setup ---
+\hypersetup{
+    colorlinks  = true,
+    linkcolor   = hkared,
+    urlcolor    = hkared,
+    citecolor   = hkared,
+    pdftitle    = {Zeitgeist und Themenkarte -- Tauschhandel},
+    pdfauthor   = {Erlind Sejdiu},
+    pdfsubject  = {Game Design -- Game Concept Document, Kapitel 1},
+    pdfcreator  = {pdflatex},
+    pdfproducer = {LaTeX with hyperref}
+}
+
+% --- Section Styling ---
+\titleformat{\section}{\large\bfseries\color{hkared}}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{hkared}}{\thesubsection}{0.8em}{}
+\titlespacing*{\section}{0pt}{0.85em}{0.25em}
+\titlespacing*{\subsection}{0pt}{0.5em}{0.15em}
+
+% --- Header/Footer ---
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{hkagray}Labor Game Design}
+\fancyhead[R]{\small\color{hkagray}Master Informatik WS~2026/27}
+\fancyfoot[C]{\small\color{hkagray}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Listenabstände straffen
+\setlist{noitemsep, topsep=2pt, parsep=1pt, partopsep=0pt}
+
+% =============================================================================
+\begin{document}
+
+% --- Titelseite ---
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+    \centering
+    \includegraphics[width=0.35\textwidth]{HKA.jpg}
+
+    {\normalsize\color{hkagray} University of Applied Sciences}\\[0.125cm]
+    {\small\color{hkagray} Fakultät für Informatik und Wirtschaftsinformatik}
+
+    \vspace{.5cm}
+    {\color{hkared}\rule{\textwidth}{1.5pt}}
+
+    \vspace{1.5cm}
+    {\fontsize{24}{30}\selectfont\bfseries\color{hkared} Zeitgeist und Themenkarte -- Tauschhandel}\\[0.6cm]
+    {\large\color{hkagray} Game Concept Document -- Kapitel 1}
+    \vspace{.75cm}
+
+    \vspace{.5cm}
+    {\large Labor Game Design}\\[0.3cm]
+    {\large Wintersemester 2026/27}
+
+    \vspace{.5cm}
+    {\color{hkared}\rule{0.6\textwidth}{0.5pt}}
+    \vspace{1.5cm}
+
+    {\normalsize
+    \begin{tabular}{rl}
+        \textbf{Autor:}          & Erlind Sejdiu \\
+        \textbf{Matrikelnummer:} & 106357 \\[0.5cm]
+    \end{tabular}
+    }
+
+    \vfill
+    {\small\color{hkagray} Stand: \today}
+\end{titlepage}
+
+\newpage
+\hypersetup{pageanchor=true}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\tableofcontents
+\listoffigures
+\newpage
+
+% =============================================================================
+\section{Zeitgeist und Themenkarte: Tauschhandel}
+
+Das Thema dieses Spiels ist der \emph{Tauschhandel}. Damit daraus ein tragfähiges
+Spielsystem entsteht, betrachtet dieses Kapitel das Thema aus zwei Blickwinkeln:
+\begin{itemize}
+    \item \textbf{Was Tauschhandel tatsächlich ist} -- die ökonomische Definition
+          und der Befund der Anthropologie (Abschnitte~\ref{sec:definition}
+          und~\ref{sec:mythos}).
+    \item \textbf{Wie die Gesellschaft Tauschhandel heute wahrnimmt} -- der
+          subjektive, kulturell aufgeladene Zeitgeist und seine Spiegelung in
+          Videospielen (Abschnitt~\ref{sec:zeitgeist}).
+\end{itemize}
+Beide Perspektiven münden in die Themenlandschaftskarte
+(Abschnitt~\ref{sec:karte}), deren beschriftete Pfeile direkt in
+Spielsysteme übersetzt werden (Abschnitte~\ref{sec:schleifen}
+und~\ref{sec:synthese}).
+
+% -----------------------------------------------------------------------------
+\subsection{Was ist Tauschhandel? -- Die ökonomische Definition}
+\label{sec:definition}
+
+In der neoklassischen Wirtschaftslehre bezeichnet Tauschhandel (engl.\
+\emph{barter}) den \textbf{unmittelbaren, bilateralen Austausch von Gütern oder
+Dienstleistungen ohne Geld} als Wertüberträger. Das Modell geht auf Adam
+Smith~\cite{smith1776} und Carl Menger~\cite{menger1892} zurück: Mit
+zunehmender Arbeitsteilung müssen Menschen tauschen, stoßen dabei aber auf die
+\textbf{doppelte Koinzidenz der Bedürfnisse} (\emph{double coincidence of
+wants}). Ein Tausch kommt nur zustande, wenn A genau das besitzt, was B will --
+und B gleichzeitig genau das, was A will (Abbildung~\ref{fig:koinzidenz}).
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+    \node[knoten=clB] (F) at (0,0)     {\textbf{Fischerin}\\ hat: Fisch\\ will: Schuhe};
+    \node[knoten=clB] (S) at (8,0)     {\textbf{Schuster}\\ hat: Schuhe\\ will: Brot};
+    \node[knoten=clB] (B) at (4,-3.6)  {\textbf{Bäckerin}\\ hat: Brot\\ will: Fisch};
+
+    \draw[rel, dashed, draw=hkared] (F.15) -- node[lbl, above=1pt]{bietet Fisch an -- \textbf{abgelehnt}}
+          node[lbl, below=1pt]{(Schuster braucht keinen Fisch)} (S.165);
+    \draw[rel, draw=clC] (F.south) -- node[lbl, sloped, above]{liefert Fisch an} (B.west);
+    \draw[rel, draw=clC] (B.east) -- node[lbl, sloped, above]{liefert Brot an} (S.south);
+    \draw[rel, draw=clC] (S.195) -- node[lbl, below=1pt, yshift=-8pt]{liefert Schuhe an} (F.345);
+\end{tikzpicture}
+\caption[Doppelte Koinzidenz der Bedürfnisse]{Doppelte Koinzidenz der
+Bedürfnisse: Kein Paar kann bilateral tauschen (rot gestrichelt). Erst eine
+\emph{Tauschkette} über drei Beteiligte (grün) -- oder ein Zwischengut als
+Warengeld -- löst die Blockade. Genau diese Kettenbildung ist ein
+naheliegendes Rätselprinzip für das Spiel.}
+\label{fig:koinzidenz}
+\end{figure}
+
+Laut Lehrbuch erzeugt diese Hürde hohe Such- und Transaktionskosten. Um sie zu
+umgehen, hätten Menschen haltbare, teilbare und begehrte Güter wie Vieh, Salz,
+Getreide oder Muscheln als \emph{Warengeld} gewählt, aus dem sich später Münz-
+und Fiatgeld entwickelt habe.
+
+% -----------------------------------------------------------------------------
+\subsection{Lehrbuchmythos versus anthropologische Realität}
+\label{sec:mythos}
+
+Die Anthropologie widerspricht diesem Modell grundlegend. Caroline
+Humphrey~\cite{humphrey1985} hält fest, dass kein ethnografischer Beleg für
+eine reine Tauschhandelsgesellschaft existiert -- geschweige denn dafür, dass
+Geld aus einer solchen hervorgegangen ist. David Graeber~\cite{graeber2011}
+zeigt, dass vorkapitalistische Gemeinschaften nicht über punktuelle
+Wertgleichungen funktionierten, sondern über \textbf{Gaben, Reziprozität und
+informelle Schulden}: Wer Überschüsse weitergab, stiftete Bindungen und
+unausgesprochene Verpflichtungen statt einer sofortigen Gegenleistung.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    node distance=1.25cm,
+    k/.style={box=#1, text width=4.6cm, minimum height=0.95cm}]
+
+    % --- linke Spalte: Lehrbuch ---
+    \node[lane=hkagray] (Lh) {Lehrbuchmodell\\[-1pt]\normalfont\scriptsize(Smith 1776, Menger 1892)};
+    \node[k=hkagray, below=0.35cm of Lh] (L1) {Arbeitsteilung \& Spezialisierung};
+    \node[k=hkagray, below=of L1] (L2) {Tauschhandel als\\ \enquote{natürlicher Urzustand}};
+    \node[k=hkagray, below=of L2] (L3) {Doppelte Koinzidenz\\ blockiert Tausch};
+    \node[k=hkagray, below=of L3] (L4) {Warengeld\\ (Vieh, Salz, Muscheln)};
+    \node[k=hkagray, below=of L4] (L5) {Münz- und Fiatgeld};
+
+    \draw[rel] (L1) -- node[lbl, right=2pt]{erzwingt} (L2);
+    \draw[rel] (L2) -- node[lbl, right=2pt]{scheitert an} (L3);
+    \draw[rel] (L3) -- node[lbl, right=2pt]{wird gelöst durch} (L4);
+    \draw[rel] (L4) -- node[lbl, right=2pt]{entwickelt sich zu} (L5);
+
+    % --- rechte Spalte: Befund ---
+    \node[lane=clA, right=4.2cm of Lh] (Rh) {Empirischer Befund\\[-1pt]\normalfont\scriptsize(Humphrey 1985, Graeber 2011)};
+    \node[k=clA, below=0.35cm of Rh] (R1) {Gemeinschaft mit\\ sozialen Bindungen};
+    \node[k=clA, below=of R1] (R2) {Gabe, Reziprozität \&\\ informelle Schuld};
+    \node[k=clA, below=of R2] (R3) {Rechengeld als Schuldmaß\\ (Tempel, Palast)};
+    \node[k=clA, below=of R3] (R4) {Münzgeld\\ (Heer, Fernhandel, Steuern)};
+
+    \draw[rel] (R1) -- node[lbl, right=2pt]{versorgt sich über} (R2);
+    \draw[rel] (R2) -- node[lbl, right=2pt]{wird bilanziert in} (R3);
+    \draw[rel] (R3) -- node[lbl, right=2pt]{materialisiert sich in} (R4);
+
+    % --- Tauschhandel als Randphänomen ---
+    \node[k=hkared, below=1.1cm of R4, text width=4.6cm] (T) {\textbf{Tauschhandel als Randphänomen}};
+    \node[k=hkared, below left=0.9cm and -1.4cm of T, text width=3.1cm] (T1) {Kontakt mit Fremden\\ ohne Vertrauen};
+    \node[k=hkared, below right=0.9cm and -1.4cm of T, text width=3.1cm] (T2) {Zusammenbruch von\\ Währung \& Staat};
+    \draw[rel] (T1) -- node[lbl, left=3pt]{nutzt zur\\ Risikominimierung} (T);
+    \draw[rel] (T2) -- node[lbl, right=3pt]{erzwingt Rückfall in} (T);
+
+    % --- Querbezug ---
+    \draw[rel, dashed, draw=hkared] (R1.west) -- node[lbl, above]{\textbf{widerlegt} ethnografisch} (L2.east);
+\end{tikzpicture}
+\caption[Lehrbuchmodell versus anthropologischer Befund]{Lehrbuchmodell
+(links) und anthropologischer Befund (rechts). Echter Tauschhandel erscheint
+historisch nicht als Urstufe, sondern nur unter zwei Ausnahmebedingungen
+(unten).}
+\label{fig:mythos}
+\end{figure}
+
+Tauschhandel im engeren Sinn trat historisch vor allem unter zwei
+\textbf{Ausnahmebedingungen} auf (Abbildung~\ref{fig:mythos}, unten):
+\begin{enumerate}
+    \item \textbf{Kontakt mit Fremden oder Feinden:} Ohne gemeinsame Bindung,
+          Vertrauen und Schlichtungsinstanz minimiert der simultane Tausch das
+          Risiko. Die Begegnung endet ohne offene Verpflichtung.
+    \item \textbf{Zusammenbruch der Geldordnung:} Nach Kriegen, Währungsreformen
+          oder Hyperinflation kehren monetarisierte Gesellschaften mangels
+          Vertrauen ins Papiergeld zum Warentausch zurück -- etwa im
+          Nachkriegsdeutschland 1945--1948 mit Zigaretten als Ersatzwährung.
+\end{enumerate}
+Für das Spiel bedeutet das: Der Wert eines Gutes ist im Tausch nicht
+mathematisch-objektiv, sondern \textbf{situativ und existenziell}. Die
+eigentliche Transaktionshürde ist weniger die Suche nach dem passenden Partner
+als \textbf{fehlendes Vertrauen}, Fremdheit und Gewaltpotenzial.
+
+% -----------------------------------------------------------------------------
+\subsection{Zeitgeist: die subjektive Wahrnehmung der Gesellschaft}
+\label{sec:zeitgeist}
+
+Heute besteht eine auffällige Diskrepanz: Der Alltag ist geprägt von
+digitalen, entmaterialisierten Zahlungsströmen, Kartenzahlung und Algorithmen.
+Gleichzeitig erlebt der Tauschhandel kulturell eine \textbf{Renaissance}. Die
+gesellschaftliche Wahrnehmung schwankt dabei zwischen zwei gegensätzlichen
+Polen (Abbildung~\ref{fig:zeitgeist}).
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    pol/.style={box=#1, text width=3.95cm, minimum height=1.6cm, font=\footnotesize},
+    klein/.style={box=#1, text width=3.9cm, font=\scriptsize}]
+
+    \node[box=hkared, text width=2.6cm, minimum height=1.5cm, font=\footnotesize] (T) at (0,0)
+        {\textbf{Tauschhandel}\\ in der Wahrnehmung\\ der Gesellschaft};
+
+    \node[pol=clC] (P1) at (-5.75,0) {\textbf{Ökologisch-progressiv}\\ Tausch als Gemeinschaft,\\ Authentizität \& Solidarität};
+    \node[pol=clD] (P2) at (5.75,0)  {\textbf{Dystopisch-resilient}\\ Tausch als Überleben,\\ Misstrauen \& Knappheit};
+
+    \node[klein=clC] (U1) at (-5.6,3.2) {\textbf{Treiber:} Klimakrise, Konsumkritik,\\ Degrowth~\cite{paech2012}, Sharing Economy~\cite{botsman2010}};
+    \node[klein=clD] (U2) at (5.6,3.2)  {\textbf{Treiber:} Pandemie, Krieg, Inflation,\\ Lieferengpässe, Blackout-Angst};
+
+    \node[klein=clC] (Q1) at (-5.6,-3.2) {\textbf{Praktiken:} Kleidertausch, Repair-Café,\\ Saatgutbörse, Werkzeugbibliothek,\\ Nachbarschaftshilfe};
+    \node[klein=clD] (Q2) at (5.6,-3.2)  {\textbf{Praktiken:} Vorratshaltung, Prepper-\\ Subkultur, Sachwerte statt Geld\\ (Nahrung, Medizin, Werkzeug)};
+
+    \node[box=hkagray, text width=3.4cm, font=\scriptsize] (G) at (0,3.2)
+        {\textbf{Realer Alltag:}\\ digitales Geld, Karte,\\ Algorithmen};
+
+    \draw[rel] (U1) -- node[lbl, right=2pt]{nährt} (P1);
+    \draw[rel] (U2) -- node[lbl, left=2pt]{nährt} (P2);
+    \draw[rel] (P1) -- node[lbl, right=2pt]{zeigt sich in} (Q1);
+    \draw[rel] (P2) -- node[lbl, left=2pt]{zeigt sich in} (Q2);
+    \draw[rel] (P1) -- node[lbl, above=3pt]{deutet als\\ Befreiung vom\\ Konsumzwang} (T);
+    \draw[rel] (P2) -- node[lbl, above=3pt]{deutet als\\ ultimatives\\ Überlebens-\\regime} (T);
+    \draw[rel, dashed] (G) -- node[lbl, right=2pt]{steht im\\ Kontrast zu} (T);
+\end{tikzpicture}
+\caption[Doppelte Codierung des Tauschhandels im Zeitgeist]{Doppelte Codierung
+des Tauschhandels im Zeitgeist: Dieselbe Praxis wird je nach Treiber als
+solidarische Alternative oder als harter Überlebensmodus gedeutet.}
+\label{fig:zeitgeist}
+\end{figure}
+
+\paragraph{Ökologisch-progressiver Pol.}
+Kritik an Wachstum, Ressourcenverbrauch und entfremdetem Konsum führt zu
+Postwachstumsideen~\cite{paech2012} und kollaborativem
+Konsum~\cite{botsman2010}. Kleidertauschpartys, Repair-Cafés oder
+Saatgutbörsen gelten als \emph{menschliche, authentische und solidarische}
+Alternative zum anonymen Geldmarkt. Gegenstände erhalten durch die Weitergabe
+eine eigene Geschichte zurück.
+
+\paragraph{Dystopisch-resilienter Pol.}
+Pandemie, geopolitische Konflikte, Versorgungsengpässe und Inflation nähren
+ein krisenaffines Denken, das von der Prepper-Szene bis in breite Schichten
+reicht. Geld erscheint als fragiles Konstrukt, das bei einem Systemausfall
+wertlos wird; greifbare Sachwerte wie Nahrung, Wasserfilter, Medikamente oder
+Werkzeug werden zu \enquote{echten} Werten. Tausch ist hier kein
+harmonisches Ritual, sondern \emph{zähes Verhandeln unter Misstrauen und
+Knappheit}.
+
+\paragraph{Spiegelung in Videospielen.}
+Spiele greifen genau diese doppelte Codierung auf: Tausch erzeugt entweder
+moralischen Druck und Mangelmanagement oder dient friedlicher Erkundung und
+Beziehungsaufbau. Abbildung~\ref{fig:landkarte} verortet reale Praktiken und
+Spiele in diesem Spannungsfeld.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1.75cm, y=1.15cm,
+    praxis/.style={circle, fill=clC, inner sep=2.2pt},
+    spiel/.style={rectangle, fill=hkared, inner sep=2.8pt},
+    pl/.style={font=\scriptsize, align=left, text=black!85}]
+
+    % Quadranten-Hintergrund
+    \fill[clC!7]  (-4,-4) rectangle (0,0);
+    \fill[clD!9]  (0,0)   rectangle (4,4);
+    \fill[black!3] (-4,0) rectangle (0,4);
+    \fill[black!3] (0,-4) rectangle (4,0);
+
+    % Achsen
+    \draw[-{Stealth[length=2.4mm]}, semithick] (-4,0) -- (4.15,0)
+        node[right, font=\scriptsize, align=left]{Misstrauen,\\ Distanz};
+    \draw[-{Stealth[length=2.4mm]}, semithick] (0,-4) -- (0,4.15)
+        node[above, font=\scriptsize, align=center]{Mangel, Existenznot};
+    \node[left, font=\scriptsize, align=right] at (-4,0) {Beziehung,\\ Vertrauen};
+    \node[below, font=\scriptsize] at (0,-4) {Überfluss, Entschleunigung};
+
+    % Quadrantentitel
+    \node[font=\scriptsize\bfseries, text=clC, anchor=south west] at (-3.95,-3.95) {Gemeinschaftlicher Tausch};
+    \node[font=\scriptsize\bfseries, text=clD!90!black, anchor=north east] at (3.95,3.95) {Überlebenstausch};
+    \node[font=\scriptsize\bfseries, text=hkagray, anchor=north west] at (-3.95,3.95) {Solidarität in der Krise};
+    \node[font=\scriptsize\bfseries, text=hkagray, anchor=south east] at (3.95,-3.95) {Anonymer Gelegenheitstausch};
+
+    % Reale Praktiken
+    \node[praxis] (p1) at (-3.0,-2.6) {}; \node[pl, right] at (p1) {Kleidertauschparty};
+    \node[praxis] (p2) at (-2.4,-1.4) {}; \node[pl, right] at (p2) {Repair-Café,\\ Werkzeugbibliothek};
+    \node[praxis] (p3) at (-3.4,-0.5) {}; \node[pl, right] at (p3) {Tauschring / Zeitbank};
+    \node[praxis] (p4) at (-2.2, 1.6) {}; \node[pl, right] at (p4) {Nachbarschaftshilfe\\ (Pandemie 2020)};
+    \node[praxis] (p5) at ( 1.2,-2.2) {}; \node[pl, right] at (p5) {Kleinanzeigen\\ \enquote{Tausche gegen \dots}};
+    \node[praxis] (p6) at ( 1.3, 0.8) {}; \node[pl, right] at (p6) {Prepper-Vorratshaltung};
+    \node[praxis] (p7) at ( 2.2, 3.1) {}; \node[pl, left] at (p7) {Schwarzmarkt 1945--48\\ (Zigarettenwährung)};
+
+    % Spiele
+    \node[spiel] (s1) at (-2.8,-3.3) {}; \node[pl, right] at (s1) {\textbf{Time on Frog Island}};
+    \node[spiel] (s2) at ( 0.9, 2.3) {}; \node[pl, left]  at (s2) {\textbf{Fallout}};
+    \node[spiel] (s3) at ( 3.0, 3.0) {}; \node[pl, right] at (s3) {\bfseries This War\\ of Mine};
+    \node[spiel] (s4) at ( 3.3, 1.9) {}; \node[pl, below] at (s4) {\bfseries Escape from\\ Tarkov};
+
+    % Legende
+    \node[praxis] at (-3.9,-4.75) {}; \node[pl, right] at (-3.85,-4.75) {reale Praxis};
+    \node[spiel]  at (-2.2,-4.75) {}; \node[pl, right] at (-2.15,-4.75) {Videospiel};
+\end{tikzpicture}
+\caption[Zeitgeist-Landkarte: reale Praktiken und Spiele]{Zeitgeist-Landkarte
+(qualitative Einordnung des Autors): Reale Tauschpraktiken und Spiele zwischen
+Gemeinschaft und Misstrauen sowie zwischen Überfluss und Mangel.}
+\label{fig:landkarte}
+\end{figure}
+
+Die Spiele besetzen dabei unterschiedliche Positionen:
+\begin{itemize}
+    \item \textbf{This War of Mine}~\cite{twom}: Tausch ohne Geld an der
+          Haustür, Bewertung nach akutem Grenznutzen (Medizin gegen
+          Brennstoff) -- Ausbeutung von Notlagen und moralische Zerrüttung.
+    \item \textbf{Time on Frog Island}~\cite{frogisland}: verschachtelte
+          Tauschketten mit Inselbewohnern ohne Geldsystem -- Neugier,
+          Beziehungsaufbau und Entschleunigung.
+    \item \textbf{Fallout}~\cite{fallout}: direkter Sachwertausgleich im
+          Handelsmenü, Kronkorken als Behelfswährung -- Fragilität von
+          Währungen und Improvisationsökonomie.
+    \item \textbf{Escape from Tarkov}~\cite{tarkov}: reiner Item-Tausch bei
+          Händlern für seltene Ausrüstung -- Prepper-Mentalität und
+          hyperrealistische Taxierung von Gebrauchsgütern.
+\end{itemize}
+
+% -----------------------------------------------------------------------------
+\subsection{Ludische Übersetzung: warum Tausch mehr Tiefe als Geld erzeugt}
+\label{sec:ludisch}
+
+In klassischen Spielökonomien reduziert Geld jedes Objekt auf \emph{eine}
+lineare Wertskala; Handel wird zur trivialen Rechenaufgabe. Tauschhandel macht
+den Wert dagegen \textbf{mehrdimensional}: Er hängt vom Kontext und Bedarf des
+jeweiligen Gegenübers ab (Abbildung~\ref{fig:wert}). Wer friert, schätzt
+Brennholz höher als Gold; wer verletzt ist, zahlt für Antibiotika jeden Preis.
+Spielende müssen daher Motive, Dringlichkeit und Psychologie der NPCs lesen.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1cm, y=1cm]
+    \def\items{{"Brennholz","Antibiotika","Gold","Munition","Tabak"}}
+
+    % --- Geldskala ---
+    \node[font=\small\bfseries, anchor=west, text=hkagray] at (-0.2,2.55) {Geldökonomie: ein Preis pro Gut};
+    \draw[semithick, hkagray] (0,1.6) -- (14,1.6);
+    \foreach \x/\n/\a in {1.4/Brennholz/below, 3.5/Tabak/above, 5.6/Munition/below, 8.4/Antibiotika/above, 12.6/Gold/below} {
+        \fill[hkagray] (\x,1.6) circle (2.4pt);
+        \node[font=\scriptsize, \a=2pt] at (\x,1.6) {\n};
+    }
+    \node[font=\scriptsize, text=hkagray, anchor=east] at (0,1.6) {billig};
+    \node[font=\scriptsize, text=hkagray, anchor=west] at (14,1.6) {teuer};
+
+    % --- Tauschmatrix ---
+    \node[font=\small\bfseries, anchor=west, text=hkared] at (-0.2,0.25) {Tauschökonomie: Wert hängt vom Gegenüber ab};
+    \foreach \n [count=\i from 0] in {Brennholz, Antibiotika, Gold, Munition, Tabak}
+        \node[font=\scriptsize\bfseries, anchor=south] at (5.2+\i*1.8, -0.55) {\n};
+
+    \foreach \row/\npc/\vals in {
+        0/{Frierende Familie (Winter)}/{5,3,1,1,2},
+        1/{Verletzter Söldner}/{1,5,2,4,3},
+        2/{Händler in Neutralzone}/{2,3,4,3,4}} {
+        \node[font=\scriptsize, anchor=east] at (4.2,-1.05-\row*0.85) {\npc};
+        \foreach \v [count=\c from 0] in \vals {
+            \pgfmathsetmacro{\shade}{\v*18}
+            \fill[hkared!\shade, draw=white, line width=1pt]
+                (4.3+\c*1.8,-1.45-\row*0.85) rectangle ++(1.8,0.8);
+            \pgfmathsetmacro{\txt}{\v>3 ? "white" : "black"}
+            \node[font=\scriptsize\bfseries, text=\txt] at (5.2+\c*1.8,-1.05-\row*0.85) {\v};
+        }
+    }
+    \node[font=\scriptsize, text=hkagray, anchor=north west, align=left] at (4.3,-3.95)
+        {Subjektiver Nutzen: 1 = gering \;\dots\; 5 = existenziell (illustrative Werte)};
+\end{tikzpicture}
+\caption[Eindimensionaler Geldwert versus kontextabhängiger Tauschwert]{Oben:
+Geld ordnet alle Güter auf einer Skala. Unten: Im Tausch bewertet jeder NPC
+dieselben Güter anders -- daraus entsteht die strategische Tiefe des Spiels.}
+\label{fig:wert}
+\end{figure}
+
+Zwei weitere Effekte verstärken diese Tiefe:
+\begin{itemize}
+    \item \textbf{Physische Friktion:} Tauschwaren sind keine gewichtslosen
+          Kontostände. Gewicht, Volumen und Verderblichkeit belasten das
+          Inventar; wertvolle Ware zu transportieren ist riskant (Überfälle,
+          Erpressung).
+    \item \textbf{Beziehungsarbeit:} Ohne staatliche Absicherung wird
+          \emph{Reputation} zur harten Währung. Faires Handeln eröffnet
+          Kooperation und Kredit im Sinne der Schenkökonomie; das Ausnutzen von
+          Notlagen zerstört Verhandlungsspielräume und provoziert Gewalt.
+\end{itemize}
+
+% -----------------------------------------------------------------------------
+\subsection{Die Themenlandschaftskarte des Tauschhandels}
+\label{sec:karte}
+
+Die Themenlandschaftskarte zeigt alle Elemente, die aus Sicht des Autors zum
+Thema gehören. Anders als bei einer Mind-Map nach Buzan~\cite{buzan1974} ist
+\textbf{jede Verbindung ein gerichteter Pfeil mit einer Beschriftung}, die die
+Beziehung definiert. Die Elemente gliedern sich in vier Cluster
+(Abbildung~\ref{fig:uebersicht}):
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    cl/.style={box=#1, text width=4.6cm, font=\scriptsize, align=left, inner sep=5pt}]
+
+    \node[box=hkared, text width=2.2cm, minimum height=1.3cm, font=\normalsize\bfseries,
+          ellipse, inner sep=1pt] (T) at (0,0) {Tausch-\\handel};
+
+    \node[cl=clA, anchor=south east] (A) at (-1.6, 1.9) {\textbf{\color{clA}A -- Soziokultureller Zeitgeist}\\[2pt]
+        A1 Postwachstum \& Degrowth\\ A2 Krisenresilienz \& Prepper\\ A3 Vertrauenskrise in Fiatgeld\\ A4 Sehnsucht nach Gemeinschaft};
+    \node[cl=clB, anchor=south west] (B) at ( 1.6, 1.9) {\textbf{\color{clB}B -- Akteure \& Verhandlung}\\[2pt]
+        B1 Tauschende Individuen\\ B2 Subjektive Nutzenfunktion\\ B3 Verhandlungsgeschick \& Rhetorik\\ B4 Vertrauen \& Reputation};
+    \node[cl=clC, anchor=north west] (C) at ( 1.6,-1.9) {\textbf{\color{clC}C -- Ressourcen \& Werte}\\[2pt]
+        C1 Überlebensgüter (Nahrung, Medizin)\\ C2 Luxus- \& Suchtgüter (Tabak)\\ C3 Handwerk, Dienste \& Schutz\\ C4 Kulturelle \& symbolische Artefakte};
+    \node[cl=clD, anchor=north east] (D) at (-1.6,-1.9) {\textbf{\color{clD!90!black}D -- Umwelt \& Systemfriktionen}\\[2pt]
+        D1 Doppelte Koinzidenz\\ D2 Marktplätze \& Neutralzonen\\ D3 Transaktions- \& Transportrisiko\\ D4 Gewaltandrohung \& Machtgefälle};
+
+    \draw[rel] (A.south east) -- node[lbl, pos=0.45]{prägt Wahr-\\nehmung \&\\ Motive von} (T);
+    \draw[rel] (B.south west) -- node[lbl, pos=0.45]{führen aus} (T);
+    \draw[rel] (T) -- node[lbl, pos=0.55]{bringt in\\ Umlauf} (C.north west);
+    \draw[rel] (D.north east) -- node[lbl, pos=0.45]{begrenzt\\ \& rahmt} (T);
+
+    \draw[rel] (A.east) -- node[lbl]{formt Wert-\\haltungen von} (A.east -| B.west);
+    \draw[rel] (C.north) -- node[lbl]{bestimmt Bedarf\\ \& Nutzen von} (C.north |- B.south);
+    \draw[rel] (D.east) -- node[lbl]{setzt Kosten \&\\ Risiken für\\ den Erwerb von} (D.east -| C.west);
+    \draw[rel] (A.south) -- node[lbl]{verschärft bzw.\\ entschärft} (A.south |- D.north);
+\end{tikzpicture}
+\caption[Übersicht der Themenlandschaft (Cluster-Ebene)]{Übersicht der
+Themenlandschaft auf Cluster-Ebene. Abbildung~\ref{fig:karte} zeigt die
+Beziehungen zwischen den einzelnen Elementen.}
+\label{fig:uebersicht}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{\color{clA}A -- Soziokultureller Zeitgeist:} die
+          gesellschaftliche Meta-Ebene, die die Motive der Akteure speist.
+    \item \textbf{\color{clB}B -- Akteure und Verhandlungspsychologie:} die
+          Mikro-Ebene des einzelnen Handelsakts.
+    \item \textbf{\color{clC}C -- Tauschbare Ressourcen und Werte:} die
+          materielle und immaterielle Basis des Umlaufs.
+    \item \textbf{\color{clD!90!black}D -- Institutionelle Umwelt und
+          Systemfriktionen:} strukturelle Schranken und Rahmenbedingungen.
+\end{itemize}
+Die vollständige Karte mit allen 16~Elementen und 22~beschrifteten Beziehungen
+folgt auf der nächsten Seite (Abbildung~\ref{fig:karte}); die
+Kantenliste mit den ausführlichen Definitionen steht in
+Anhang~\ref{sec:kanten}.
+
+% --- Detailkarte (Querformat) ---
+\begin{landscape}
+\begin{figure}[p]
+\centering
+\begin{tikzpicture}[x=0.98cm, y=1.12cm,
+    every node/.append style={font=\scriptsize},
+    n/.style={knoten=#1, text width=2.95cm, minimum height=0.9cm, font=\scriptsize}]
+
+    % --- Knoten ---
+    \node[n=clA] (A3) at (0,10)    {\textbf{A3} Vertrauenskrise\\ in Fiatgeld};
+    \node[n=clA] (A1) at (5.5,10)  {\textbf{A1} Postwachstum\\ \& Degrowth};
+    \node[n=clC] (C1) at (11,10)   {\textbf{C1} Überlebensgüter\\ (Nahrung, Wasser, Medizin)};
+    \node[n=clA] (A2) at (16.5,10) {\textbf{A2} Krisenresilienz\\ \& Prepper-Mentalität};
+    \node[n=clA] (A4) at (22,10)   {\textbf{A4} Sehnsucht\\ nach Gemeinschaft};
+
+    \node[n=clB] (B1) at (5.5,6.5) {\textbf{B1} Tauschende\\ Individuen \& Fraktionen};
+    \node[n=clB] (B2) at (11,6.5)  {\textbf{B2} Subjektive\\ Nutzenfunktion};
+    \node[n=clD] (D4) at (16.5,6.5){\textbf{D4} Gewaltandrohung\\ \& Machtasymmetrie};
+    \node[n=clB] (B4) at (22,6.5)  {\textbf{B4} Vertrauen\\ \& Reputation};
+
+    \node[n=clC] (C2) at (0,3)     {\textbf{C2} Luxus- \& Suchtgüter\\ (Tabak, Alkohol)};
+    \node[n=clD] (D2) at (5.5,3)   {\textbf{D2} Marktplätze\\ \& Neutralzonen};
+    \node[n=clB] (B3) at (11,3)    {\textbf{B3} Verhandlungsgeschick\\ \& Rhetorik};
+    \node[n=clD] (D3) at (16.5,3)  {\textbf{D3} Transaktionskosten\\ \& Transportrisiko};
+    \node[n=clC] (C4) at (22,3)    {\textbf{C4} Kulturelle\\ \& symbolische Artefakte};
+
+    \node[n=clD] (D1) at (11,-0.5) {\textbf{D1} Doppelte Koinzidenz\\ der Bedürfnisse};
+    \node[n=clC] (C3) at (16.5,-0.5){\textbf{C3} Handwerk, Dienste\\ \& Schutzversprechen};
+
+    % --- Kanten: Cluster A ---
+    \draw[rel] (A1) -- node[lbl, above=1pt]{fördert\\ Reparatur \&\\ Schonung von} (C1);
+    \draw[rel] (A1.north) |- ($(A4.north)+(0,0.75)$) node[lbl, pos=0.75]{verstärkt ideell das Streben nach} -- (A4.north);
+    \draw[rel] (A2) -- node[lbl, above=1pt]{erzwingt\\ Vorrats-\\haltung von} (C1);
+    \draw[rel] (A2) -- node[lbl]{reagiert präventiv\\ auf} (D4);
+    \draw[rel] (A3) -- node[lbl, pos=0.6]{entkoppelt Werte\\ vom Geld in} (B2);
+    \draw[rel] (A3) -- node[lbl, pos=0.45]{zwingt zur\\ Sachwert-\\verhandlung} (B1);
+    \draw[rel] (A4) -- node[lbl]{motiviert\\ Aufbau von} (B4);
+
+    % --- Kanten: Cluster B ---
+    \draw[rel] (B1) -- node[lbl, pos=0.68]{erleben als\\ Einstiegshürde} (D1);
+    \draw[rel] (B1) -- node[lbl, left=1pt, pos=0.25]{konvergieren zur\\ Risikominimierung auf} (D2);
+    \draw[rel] ($(B2.south)+(-0.4,0)$) to[bend right=40] node[lbl, anchor=east, pos=0.5]{definiert\\ Schmerzgrenze für} ($(B3.north)+(-0.4,0)$);
+    \draw[rel] ($(B3.north)+(0.4,0)$) to[bend right=40] node[lbl, anchor=west, pos=0.5]{verschiebt beim\\ Gegenüber die} ($(B2.south)+(0.4,0)$);
+    \draw[rel] (B4) -- node[lbl, pos=0.4]{senkt durch\\ Verlässlichkeit} (D3);
+    \draw[rel] (B4) -- node[lbl]{deeskaliert} (D4);
+
+    % --- Kanten: Cluster C ---
+    \draw[rel] (C1) -- node[lbl]{steigert bei Mangel\\ den Wert in} (B2);
+    \draw[rel] (C2) -- node[lbl, pos=0.4]{erzeugt Zahlungs-\\ bereitschaft in} (B2);
+    \draw[rel] (C2) -- node[lbl, pos=0.4]{umgeht als\\ Quasi-Währung} (D1);
+    \draw[rel] (C3) -- node[lbl, above=1pt]{überwindet\\ durch Maß-\\arbeit} (D1);
+    \draw[rel] (C4) -- node[lbl]{festigen als\\ emotionale Pfänder} (B4);
+
+    % --- Kanten: Cluster D ---
+    \draw[rel] (D1) -- node[lbl, pos=0.55]{erhöht durch\\ Suchzeit} (D3);
+    \draw[rel] (D2) -- node[lbl, pos=0.86]{unterdrücken durch\\ Sicherheitsregeln} (D4);
+    \draw[rel] (D3.south) |- (2.6,-2.0) node[lbl, pos=0.75]{beschränken den Aktionsradius von} |- (B1.west);
+    \draw[rel] (D4) -- node[lbl, above=1pt]{erzwingt\\ Zugeständ-\\nisse in} (B2);
+
+    % --- Legende ---
+    \begin{scope}[shift={(0,-2.9)}]
+        \foreach \c/\t [count=\i from 0] in {clA/A -- Soziokultureller Zeitgeist, clB/B -- Akteure \& Verhandlung, clC/C -- Ressourcen \& Werte, clD/D -- Umwelt \& Friktionen} {
+            \node[box=\c, minimum width=0.5cm, minimum height=0.3cm, inner sep=0pt] at (\i*5.2+4.2,0) {};
+            \node[anchor=west, font=\scriptsize] at (\i*5.2+4.55,0) {\t};
+        }
+    \end{scope}
+\end{tikzpicture}
+\caption[Themenlandschaftskarte des Tauschhandels]{Themenlandschaftskarte des
+Tauschhandels: 16~Elemente aus vier Clustern, verbunden durch 22~gerichtete
+und beschriftete Beziehungen. Ein Pfeil ist als Satz zu lesen:
+\enquote{\emph{Startknoten -- Beschriftung -- Zielknoten}}, z.\,B.
+\enquote{Überlebensgüter \emph{steigern bei Mangel den Wert in} der
+subjektiven Nutzenfunktion}.}
+\label{fig:karte}
+\end{figure}
+\end{landscape}
+
+% -----------------------------------------------------------------------------
+\subsection{Kausalschleifen als Spielmechaniken}
+\label{sec:schleifen}
+
+Aus dem Zusammenspiel der Pfeile ergeben sich drei Kreisläufe, die als
+Kernregelsysteme in das Spiel übernommen werden. Das Symbol \textbf{R}
+markiert eine selbstverstärkende, \textbf{B} eine ausgleichende Schleife.
+
+\newcommand{\schleifenmarke}[2]{%
+    \node[circle, draw=#1, line width=1pt, text=#1, font=\large\bfseries,
+          minimum size=0.9cm] at (#2) {\phantom{R}};}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[k/.style={box=#1, text width=3.3cm, minimum height=1.0cm, font=\scriptsize}]
+    \node[k=clC] (a) at (0,2.4)   {\textbf{C1} Überlebensgüter\\ werden knapp};
+    \node[k=clB] (b) at (6.6,2.4) {\textbf{B2} Nutzen des Bedürftigen\\ wird existenziell};
+    \node[k=clD] (c) at (13.2,1.2){\textbf{B3/D4} Anbieter nutzt\\ Notlage maximal aus};
+    \node[k=clB] (d) at (6.6,0)   {\textbf{B4} Vertrauen \&\\ Reputation sinken};
+    \node[k=clD] (e) at (0,0)     {\textbf{D3} Transaktionskosten\\ \& Vergeltung steigen};
+
+    \draw[rel] (a) -- node[lbl, above]{verschiebt ins\\ Verzweifelte} (b);
+    \draw[rel] (b) -- node[lbl, sloped, above]{vergrößert Hebel\\ für} (c);
+    \draw[rel] (c) -- node[lbl, sloped, below]{zerstört\\ nachhaltig} (d);
+    \draw[rel] (d) -- node[lbl, below]{verteuert künftige\\ Begegnungen} (e);
+    \draw[rel] (e) -- node[lbl, left=2pt]{verschärft} (a);
+    \node[circle, draw=hkared, line width=1pt, text=hkared, font=\large\bfseries, minimum size=0.8cm] at (3.3,1.2) {R};
+\end{tikzpicture}
+\caption[Schleife 1: Die existenzielle Feilsch-Spirale]{Schleife~1 -- Die
+existenzielle Feilsch-Spirale (verstärkend): Kurzfristiger Gewinn durch
+Ausbeutung erzeugt langfristig Misstrauen, höhere Kosten und Gewalt.}
+\label{fig:loop1}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[k/.style={box=#1, text width=3.1cm, minimum height=1.0cm, font=\scriptsize}]
+    \node[k=clD] (a) at (0,2.6)    {\textbf{D1} Doppelte Koinzidenz\\ blockiert Tausch};
+    \node[k=clD] (b) at (5.4,2.6)  {\textbf{D3} Such- \&\\ Wegekosten steigen};
+    \node[k=clD] (c) at (10.8,2.6) {\textbf{D2} Marktplatz \&\\ Neutralzone entstehen};
+    \node[k=clD] (d) at (10.8,0)   {\textbf{D4} Gewalt wird\\ kollektiv unterbunden};
+    \node[k=clB] (e) at (5.4,0)    {\textbf{B4} Reputation\\ wächst};
+    \node[k=clA] (f) at (0,0)      {\textbf{A4} Gemeinschaft,\\ Kredit \& Gabe};
+
+    \draw[rel] (a) -- node[lbl, above]{verursacht} (b);
+    \draw[rel] (b) -- node[lbl, above]{schafft Anreiz\\ für} (c);
+    \draw[rel] (c) -- node[lbl, right=2pt]{ermöglichen} (d);
+    \draw[rel] (d) -- node[lbl, below]{verstetigt faire\\ Tauschakte} (e);
+    \draw[rel] (e) -- node[lbl, below=2pt]{erlaubt\\ Übergang zu} (f);
+    \draw[rel] (f) -- node[lbl, left=2pt]{macht exakte\\ Gegenleistung\\ überflüssig} (a);
+    \node[circle, draw=clA, line width=1pt, text=clA, font=\large\bfseries, minimum size=0.8cm] at (5.4,1.3) {B};
+\end{tikzpicture}
+\caption[Schleife 2: Der institutionelle Kooperationszyklus]{Schleife~2 -- Der
+institutionelle Kooperationszyklus (ausgleichend): Sichere Marktorte erzeugen
+Vertrauen, aus dem Tausch wird Kredit im Sinne Graebers, die Friktion der
+doppelten Koinzidenz verschwindet.}
+\label{fig:loop2}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[k/.style={box=#1, text width=3.3cm, minimum height=1.0cm, font=\scriptsize}]
+    \node[k=clB] (a) at (0,2.5)   {\textbf{B4} Vertrauen\\ bleibt niedrig};
+    \node[k=clD] (b) at (6.6,2.5) {\textbf{D1} Doppelte Koinzidenz\\ blockiert Tausch};
+    \node[k=clC] (c) at (13.2,1.25){\textbf{C2} Teilbare, haltbare Güter\\ werden gehortet};
+    \node[k=hkared] (d) at (6.6,0)   {\textbf{Warengeld}\\ (Tabak, Munition, Alkohol)};
+
+    \draw[rel] (a) -- node[lbl, above]{verhindert Kredit,\\ verschärft} (b);
+    \draw[rel] (b) -- node[lbl, sloped, above]{motiviert\\ Akkumulation von} (c);
+    \draw[rel] (c) -- node[lbl, sloped, below]{lösen sich vom\\ Konsumwert zu} (d);
+    \draw[rel] (d) -- node[lbl, sloped, below]{macht Vertrauen\\ zwischen Fremden\\ entbehrlich} (a);
+    \node[circle, draw=hkared, line width=1pt, text=hkared, font=\large\bfseries, minimum size=0.8cm] at (6.6,1.25) {R};
+\end{tikzpicture}
+\caption[Schleife 3: Die Emergenz von Warengeld]{Schleife~3 -- Die Emergenz von
+Warengeld (verstärkend): Das Spiel reproduziert Smiths Entwicklung, bettet sie
+aber realistisch ein -- Warengeld entsteht als Werkzeug gegen Misstrauen
+zwischen Fremden, nicht in idyllischer Eintracht.}
+\label{fig:loop3}
+\end{figure}
+
+% -----------------------------------------------------------------------------
+\subsection{Synthese für die Spielkonzeption}
+\label{sec:synthese}
+
+Tauschhandel wird in diesem Spiel nicht als fehlerhafte Vorstufe des Geldes
+verstanden, sondern als dynamisches \textbf{Krisen- und Beziehungsregime}. Damit
+berührt das Spiel zentrale Fragen der Gegenwart: \emph{Wie verhandeln
+Menschen Wert, wenn institutionelle Sicherheiten wegfallen? Welche Ressourcen
+sind existenziell, welche nur sozial konstruiert?}
+
+Die Themenlandschaftskarte bildet das Fundament für das folgende
+Game-Design-Kapitel: Jeder beschriftete Pfeil wird zu einer konkreten
+Systemanforderung (Abbildung~\ref{fig:systeme}).
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[s/.style={box=#1, text width=5.6cm, font=\scriptsize, align=left, minimum height=1.1cm}]
+    \node[box=hkared, text width=3.0cm, minimum height=2cm, font=\small] (K) at (0,0)
+        {\textbf{Themen-\\landschafts-\\karte}\\ \scriptsize(Abb.~\ref{fig:karte})};
+
+    \node[s=clB] (S1) at (9.2, 3.0)  {\textbf{NPC-Bewertungsalgorithmus}\\ individuelle Nutzenfunktion je NPC (B2, C1, C2)};
+    \node[s=clD] (S2) at (9.2, 1.0)  {\textbf{Inventar- \& Tragesystem}\\ Gewicht, Volumen, Verderb, Überfallrisiko (D3)};
+    \node[s=clB] (S3) at (9.2,-1.0)  {\textbf{Dynamische Preisspannen}\\ Feilschen, Rhetorik, Machtgefälle (B3, D4)};
+    \node[s=clA] (S4) at (9.2,-3.0)  {\textbf{Reputations- \& Moralsystem}\\ Vertrauen, Kredit, Gemeinschaft (B4, A4)};
+
+    \foreach \z/\t in {S1/Bewertungsregeln, S2/Restriktionen, S3/Verhandlungslogik, S4/Rückkopplung}
+        \draw[rel] (K.east) -- ++(0.5,0) |- node[lbl, pos=0.78, above=1pt]{liefert \t\ für} (\z.west);
+\end{tikzpicture}
+\caption[Übersetzung der Themenkarte in Spielsysteme]{Übersetzung der
+Themenlandschaftskarte in die vier Kernsysteme des Spiels.}
+\label{fig:systeme}
+\end{figure}
+
+% =============================================================================
+\appendix
+\section{Anhang: Kantenliste der Themenlandschaftskarte}
+\label{sec:kanten}
+
+{\small
+\begin{longtable}{@{}p{4.2cm}p{4.2cm}p{7.6cm}@{}}
+\toprule
+\textbf{Startknoten} & \textbf{Zielknoten} & \textbf{Beschriftung (Relation)} \\
+\midrule
+\endhead
+A1 Postwachstum \& Degrowth & C1 Überlebensgüter & fördert zirkuläre Reparatur und Schonung von \\
+A1 Postwachstum \& Degrowth & A4 Sehnsucht nach Gemeinschaft & verstärkt ideell das kollektive Streben nach \\
+A2 Krisenresilienz & C1 Überlebensgüter & erzwingt physische Vorratshaltung und Hortung von \\
+A2 Krisenresilienz & D4 Gewaltandrohung & reagiert präventiv auf antizipierte \\
+A3 Vertrauenskrise in Fiatgeld & B2 Subjektive Nutzenfunktion & entkoppelt Wertvorstellungen von Währungsmetriken in \\
+A3 Vertrauenskrise in Fiatgeld & B1 Tauschende Individuen & zwingt zur Rückkehr auf direkte Sachwertverhandlung \\
+A4 Sehnsucht nach Gemeinschaft & B4 Vertrauen \& Reputation & motiviert den nachhaltigen Aufbau von \\
+B1 Tauschende Individuen & D1 Doppelte Koinzidenz & erleben als initiale Transaktionshürde \\
+B1 Tauschende Individuen & D2 Marktplätze & konvergieren zur Risikominimierung auf \\
+B2 Subjektive Nutzenfunktion & B3 Verhandlungsgeschick & definiert Schmerzgrenze und Basishaltung für \\
+B3 Verhandlungsgeschick & B2 Subjektive Nutzenfunktion & manipuliert und verschiebt beim Tauschpartner die \\
+B4 Vertrauen \& Reputation & D3 Transaktionskosten & senkt durch Verlässlichkeit und Garantien die \\
+B4 Vertrauen \& Reputation & D4 Gewaltandrohung & deeskaliert und neutralisiert potenzielle \\
+C1 Überlebensgüter & B2 Subjektive Nutzenfunktion & steigert bei akutem Mangel exponentiell den Wert in \\
+C2 Luxus- \& Suchtgüter & B2 Subjektive Nutzenfunktion & erzeugt bei Abhängigkeit hohe Zahlungsbereitschaft in \\
+C2 Luxus- \& Suchtgüter & D1 Doppelte Koinzidenz & umgeht als Quasi-Währung die \\
+C3 Handwerk \& Dienste & D1 Doppelte Koinzidenz & überwindet durch maßgeschneiderte Problemlösung die \\
+C4 Kulturelle Artefakte & B4 Vertrauen \& Reputation & festigen als emotionale Pfänder \\
+D1 Doppelte Koinzidenz & D3 Transaktionskosten & erhöht durch zeitintensive Suchprozesse die \\
+D2 Marktplätze & D4 Gewaltandrohung & unterdrücken durch lokale Sicherheitsregeln die \\
+D3 Transaktionskosten & B1 Tauschende Individuen & beschränken den physischen Aktionsradius von \\
+D4 Gewaltandrohung & B2 Subjektive Nutzenfunktion & erzwingt nachteilige Zugeständnisse in \\
+\bottomrule
+\end{longtable}
+}
+
+% =============================================================================
+\begin{thebibliography}{99}
+\addcontentsline{toc}{section}{Literatur}
+\small
+\bibitem{botsman2010} Botsman, R.; Rogers, R. (2010): \emph{What's Mine Is
+    Yours. The Rise of Collaborative Consumption}. New York: HarperBusiness.
+\bibitem{buzan1974} Buzan, T. (1974): \emph{Use Your Head}. London: BBC Books.
+\bibitem{graeber2011} Graeber, D. (2011): \emph{Debt: The First 5000 Years}.
+    New York: Melville House.
+\bibitem{humphrey1985} Humphrey, C. (1985): Barter and Economic
+    Disintegration. In: \emph{Man}, New Series, 20(1), S.~48--72.
+\bibitem{menger1892} Menger, C. (1892): On the Origin of Money. In:
+    \emph{The Economic Journal}, 2(6), S.~239--255.
+\bibitem{paech2012} Paech, N. (2012): \emph{Befreiung vom Überfluss. Auf dem
+    Weg in die Postwachstumsökonomie}. München: oekom.
+\bibitem{smith1776} Smith, A. (1776): \emph{An Inquiry into the Nature and
+    Causes of the Wealth of Nations}. London: W.~Strahan \& T.~Cadell.
+\bibitem{twom} 11 bit studios (2014): \emph{This War of Mine} [Videospiel].
+\bibitem{frogisland} Half Past Yellow (2022): \emph{Time on Frog Island}
+    [Videospiel]. Merge Games.
+\bibitem{fallout} Interplay / Bethesda Softworks (1997--): \emph{Fallout}-Reihe
+    [Videospiele].
+\bibitem{tarkov} Battlestate Games (2017--): \emph{Escape from Tarkov} [Videospiel].
+\end{thebibliography}
+
+
+\end{document}

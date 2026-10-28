@@ -1,0 +1,14 @@
+\babel@toc {ngerman}{}\relax 
+\contentsline {section}{\numberline {1}Zeitgeist und Themenkarte: Tauschhandel}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Was ist Tauschhandel? -- Die ökonomische Definition}{2}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Lehrbuchmythos versus anthropologische Realität}{2}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Zeitgeist: die subjektive Wahrnehmung der Gesellschaft}{3}{subsection.1.3}%
+\contentsline {paragraph}{Ökologisch-progressiver Pol.}{4}{paragraph*.4}%
+\contentsline {paragraph}{Dystopisch-resilienter Pol.}{4}{paragraph*.5}%
+\contentsline {paragraph}{Spiegelung in Videospielen.}{4}{paragraph*.6}%
+\contentsline {subsection}{\numberline {1.4}Ludische Übersetzung: warum Tausch mehr Tiefe als Geld erzeugt}{5}{subsection.1.4}%
+\contentsline {subsection}{\numberline {1.5}Die Themenlandschaftskarte des Tauschhandels}{6}{subsection.1.5}%
+\contentsline {subsection}{\numberline {1.6}Kausalschleifen als Spielmechaniken}{9}{subsection.1.6}%
+\contentsline {subsection}{\numberline {1.7}Synthese für die Spielkonzeption}{9}{subsection.1.7}%
+\contentsline {section}{\numberline {A}Anhang: Kantenliste der Themenlandschaftskarte}{10}{appendix.A}%
+\contentsline {section}{Literatur}{11}{table.1}%

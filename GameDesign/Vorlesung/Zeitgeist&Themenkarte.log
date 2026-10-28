@@ -1,0 +1,1219 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.9.28)  28 OCT 2026 17:55
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**./Zeitgeist&Themenkarte.tex
+(Zeitgeist&Themenkarte.tex
+LaTeX2e <2026-06-01>
+L3 programming layer <2026-09-09>
+(/home/debian/.miktex/texmfs/install/tex/latex/base/article.cls
+Document Class: article 2025/01/22 v1.4n Standard LaTeX document class
+(/home/debian/.miktex/texmfs/install/tex/latex/base/size11.clo
+File: size11.clo 2025/01/22 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count276
+\c@section=\count277
+\c@subsection=\count278
+\c@subsubsection=\count279
+\c@paragraph=\count280
+\c@subparagraph=\count281
+\c@figure=\count282
+\c@table=\count283
+\abovecaptionskip=\skip49
+\belowcaptionskip=\skip50
+\bibindent=\dimen150
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/babel/babel.sty
+Package: babel 2026/09/09 v26.12 The multilingual framework for LuaLaTeX, pdfLa
+TeX and XeLaTeX
+\babel@savecnt=\count284
+LaTeX Encoding Info:    Redeclaring text command \ij (encoding OT1) on input li
+ne 2095.
+LaTeX Encoding Info:    Redeclaring text command \IJ (encoding OT1) on input li
+ne 2097.
+LaTeX Encoding Info:    Redeclaring text command \ij (encoding T1) on input lin
+e 2099.
+LaTeX Encoding Info:    Redeclaring text command \IJ (encoding T1) on input lin
+e 2100.
+LaTeX Encoding Info:    Ignoring declaration for text command \ij (encoding ?) 
+on input line 2101.
+LaTeX Encoding Info:    Ignoring declaration for text command \IJ (encoding ?) 
+on input line 2103.
+LaTeX Encoding Info:    Ignoring declaration for text command \SS (encoding ?) 
+on input line 2128.
+\U@D=\dimen151
+\l@unhyphenated=\language1
+
+(/home/debian/.miktex/texmfs/install/tex/generic/babel/txtbabel.def)
+\bbl@readstream=\read2
+\bbl@dirlevel=\count285
+Package babel Info: Configuration files are deprecated, as
+(babel)             they can break document portability.
+(babel)             Reported on input line 4331.
+
+*************************************
+* Local config file bblopts.cfg used
+*
+(/home/debian/.miktex/texmfs/install/tex/latex/arabi/bblopts.cfg
+File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of
+ babel
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/babel/locale/en/babel-english.
+tex)
+(/home/debian/.miktex/texmfs/install/tex/generic/babel/locale/invalid/babel-nge
+rman.tex)
+Package babel Info: Importing font and identification data for 'english'
+(babel)             from babel-en.ini. Reported on input line 4459.
+
+(/home/debian/.miktex/texmfs/install/tex/latex/babel-english/english.ldf
+Language: english 2017/06/06 v3.3r English support from the babel system
+)
+Package babel Info: Importing font and identification data for 'ngerman'
+(babel)             from babel-de.ini. Reported on input line 4459.
+
+(/home/debian/.miktex/texmfs/install/tex/latex/babel-german/ngerman.ldf
+Language: ngerman 
+
+(/home/debian/.miktex/texmfs/install/tex/latex/babel-german/babel-german.def
+
+Package babel Warning: No hyphenation patterns were preloaded for
+(babel)                the language 'German (current orthography)' into the for
+mat.
+(babel)                Please, configure your TeX system to add them and
+(babel)                rebuild the format. Now I will use the patterns
+(babel)                preloaded for \language=0 instead on input line 179.
+
+Package babel Info: Making " an active character on input line 500.
+))) (/home/debian/.miktex/texmfs/install/tex/latex/base/inputenc.sty
+Package: inputenc 2024/02/08 v1.3d Input encoding file
+\inpenc@prehook=\toks17
+\inpenc@posthook=\toks18
+)
+(/home/debian/.miktex/texmfs/install/tex/latex/base/fontenc.sty
+Package: fontenc 2025/07/18 v2.1d Standard LaTeX package
+)
+(/home/debian/.miktex/texmfs/install/tex/latex/lm/lmodern.sty
+Package: lmodern 2015/05/01 v1.6.1 Latin Modern Fonts
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/lmr/m/n on input line 22.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/lmm/m/it on input line 23.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/lmsy/m/n on input line 24.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 25.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 26.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/lmm/b/it on input line 27.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/lmsy/b/n on input line 28.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 29.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 31.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
+(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 32.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/lmr/m/it on input line 33.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
+(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 34.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 35.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
+(Font)                  OT1/cmss/bx/n --> OT1/lmss/bx/n on input line 36.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/lmr/bx/it on input line 37.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
+)
+(/home/debian/.miktex/texmfs/install/tex/latex/geometry/geometry.sty
+Package: geometry 2026/03/07 v6.0 Page Geometry
+
+(/home/debian/.miktex/texmfs/install/tex/latex/graphics/keyval.sty
+Package: keyval 2026-05-17 v1.15 key=value parser (DPC)
+\KV@toks@=\toks19
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+
+(/home/debian/.miktex/texmfs/install/tex/generic/iftex/iftex.sty
+Package: iftex 2024/12/12 v1.0g TeX engine tests
+))
+\Gm@cnth=\count286
+\Gm@cntv=\count287
+\c@Gm@tempcnt=\count288
+\Gm@bindingoffset=\dimen152
+\Gm@wd@mp=\dimen153
+\Gm@odd@mp=\dimen154
+\Gm@even@mp=\dimen155
+\Gm@layoutwidth=\dimen156
+\Gm@layoutheight=\dimen157
+\Gm@layouthoffset=\dimen158
+\Gm@layoutvoffset=\dimen159
+\Gm@dimlist=\toks20
+
+(/home/debian/.miktex/texmfs/install/tex/latex/geometry/geometry.cfg))
+(/home/debian/.miktex/texmfs/install/tex/latex/csquotes/csquotes.sty
+Package: csquotes 2026-05-19 v5.2p context-sensitive quotations (JAW)
+
+(/home/debian/.miktex/texmfs/install/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2025/10/02 v2.5m e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count289
+)
+\csq@reset=\count290
+\csq@gtype=\count291
+\csq@glevel=\count292
+\csq@qlevel=\count293
+\csq@maxlvl=\count294
+\csq@tshold=\count295
+\csq@ltx@everypar=\toks21
+
+(/home/debian/.miktex/texmfs/install/tex/latex/csquotes/csquotes.def
+File: csquotes.def 2026-05-19 v5.2p csquotes generic definitions (JAW)
+)
+Package csquotes Info: Trying to load configuration file 'csquotes.cfg'...
+Package csquotes Info: ... configuration file loaded successfully.
+
+(/home/debian/.miktex/texmfs/install/tex/latex/csquotes/csquotes.cfg
+File: csquotes.cfg 
+)
+Package csquotes Info: Enabling multilingual quotes.
+Package csquotes Info: Redefining alias 'german' -> 'german/quotes'.
+)
+(/home/debian/.miktex/texmfs/install/tex/latex/graphics/graphicx.sty
+Package: graphicx 2026-05-17 v1.2e Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/home/debian/.miktex/texmfs/install/tex/latex/graphics/graphics.sty
+Package: graphics 2026-05-17 v1.4h Standard LaTeX Graphics (DPC,SPQR)
+
+(/home/debian/.miktex/texmfs/install/tex/latex/graphics/trig.sty
+Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
+)
+(/home/debian/.miktex/texmfs/install/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 106.
+
+(/home/debian/.miktex/texmfs/install/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2025/09/29 v1.2d Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen160
+\Gin@req@width=\dimen161
+)
+(/home/debian/.miktex/texmfs/install/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2024/09/29 v3.02 LaTeX color extensions (UK)
+
+(/home/debian/.miktex/texmfs/install/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 274.
+
+(/home/debian/.miktex/texmfs/install/tex/latex/graphics/mathcolor.ltx)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1349.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1353.
+Package xcolor Info: Model `RGB' extended on input line 1365.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1367.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1370.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1371.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
+)
+(/home/debian/.miktex/texmfs/install/tex/latex/enumitem/enumitem.sty
+Package: enumitem 2025/02/06 v3.11 Customized lists
+\labelindent=\skip51
+\enit@outerparindent=\dimen162
+\enit@toks=\toks22
+\enit@inbox=\box53
+\enit@count@id=\count296
+\enitdp@description=\count297
+)
+(/home/debian/.miktex/texmfs/install/tex/latex/tools/tabularx.sty
+Package: tabularx 2023/12/11 v2.12a `tabularx' package (DPC)
+
+(/home/debian/.miktex/texmfs/install/tex/latex/tools/array.sty
+Package: array 2026/02/24 v2.7b Tabular extension package (FMi)
+\col@sep=\dimen163
+\ar@mcellbox=\box54
+\extrarowheight=\dimen164
+\NC@list=\toks23
+\extratabsurround=\skip52
+\backup@length=\skip53
+\ar@cellbox=\box55
+)
+\TX@col@width=\dimen165
+\TX@old@table=\dimen166
+\TX@old@col=\dimen167
+\TX@target=\dimen168
+\TX@delta=\dimen169
+\TX@cols=\count298
+\TX@ftn=\toks24
+)
+(/home/debian/.miktex/texmfs/install/tex/latex/booktabs/booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen170
+\lightrulewidth=\dimen171
+\cmidrulewidth=\dimen172
+\belowrulesep=\dimen173
+\belowbottomsep=\dimen174
+\aboverulesep=\dimen175
+\abovetopsep=\dimen176
+\cmidrulesep=\dimen177
+\cmidrulekern=\dimen178
+\defaultaddspace=\dimen179
+\@cmidla=\count299
+\@cmidlb=\count300
+\@aboverulesep=\dimen180
+\@belowrulesep=\dimen181
+\@thisruleclass=\count301
+\@lastruleclass=\count302
+\@thisrulewidth=\dimen182
+)
+(/home/debian/.miktex/texmfs/install/tex/latex/tools/longtable.sty
+Package: longtable 2026-01-28 v4.27 Multi-page Table package (DPC)
+\LTleft=\skip54
+\LTright=\skip55
+\LTpre=\skip56
+\LTpost=\skip57
+\LTchunksize=\count303
+\LTcapwidth=\dimen183
+\LT@head=\box56
+\LT@firsthead=\box57
+\LT@foot=\box58
+\LT@lastfoot=\box59
+\LT@gbox=\box60
+\LT@cols=\count304
+\LT@rows=\count305
+\c@LT@tables=\count306
+\c@LT@chunks=\count307
+\LT@p@ftn=\toks25
+)
+(/home/debian/.miktex/texmfs/install/tex/latex/fancyhdr/fancyhdr.sty
+Package: fancyhdr 2025/02/07 v5.2 Extensive control of page headers and footers
+
+\f@nch@headwidth=\skip58
+\f@nch@offset@elh=\skip59
+\f@nch@offset@erh=\skip60
+\f@nch@offset@olh=\skip61
+\f@nch@offset@orh=\skip62
+\f@nch@offset@elf=\skip63
+\f@nch@offset@erf=\skip64
+\f@nch@offset@olf=\skip65
+\f@nch@offset@orf=\skip66
+\f@nch@height=\skip67
+\f@nch@footalignment=\skip68
+\f@nch@widthL=\skip69
+\f@nch@widthC=\skip70
+\f@nch@widthR=\skip71
+\@temptokenb=\toks26
+)
+(/home/debian/.miktex/texmfs/install/tex/latex/titlesec/titlesec.sty
+Package: titlesec 2025/01/04 v2.17 Sectioning titles
+\ttl@box=\box61
+\beforetitleunit=\skip72
+\aftertitleunit=\skip73
+\ttl@plus=\dimen184
+\ttl@minus=\dimen185
+\ttl@toksa=\toks27
+\titlewidth=\dimen186
+\titlewidthlast=\dimen187
+\titlewidthfirst=\dimen188
+)
+(/home/debian/.miktex/texmfs/install/tex/latex/microtype/microtype.sty
+Package: microtype 2026/03/01 v3.2d Micro-typographical refinements (RS)
+\MT@toks=\toks28
+\MT@tempbox=\box62
+\MT@count=\count308
+LaTeX Info: Redefining \noprotrusionifhmode on input line 1084.
+LaTeX Info: Redefining \leftprotrusion on input line 1085.
+\MT@prot@toks=\toks29
+LaTeX Info: Redefining \rightprotrusion on input line 1104.
+LaTeX Info: Redefining \textls on input line 1449.
+\MT@outer@kern=\dimen189
+LaTeX Info: Redefining \microtypecontext on input line 2053.
+LaTeX Info: Redefining \textmicrotypecontext on input line 2070.
+\MT@listname@count=\count309
+
+(/home/debian/.miktex/texmfs/install/tex/latex/microtype/microtype-pdftex.def
+File: microtype-pdftex.def 2026/03/01 v3.2d Definitions specific to pdftex (RS)
+
+LaTeX Info: Redefining \lsstyle on input line 944.
+LaTeX Info: Redefining \lslig on input line 944.
+\MT@outer@space=\skip74
+)
+Package microtype Info: Loading configuration file microtype.cfg.
+
+(/home/debian/.miktex/texmfs/install/tex/latex/microtype/microtype.cfg
+File: microtype.cfg 2026/03/01 v3.2d microtype main configuration file (RS)
+)
+LaTeX Info: Redefining \microtypesetup on input line 3065.
+)
+(/home/debian/.miktex/texmfs/install/tex/latex/pdflscape/pdflscape.sty
+Package: pdflscape 2022-10-27 v0.13 Display of landscape pages in PDF
+
+(/home/debian/.miktex/texmfs/install/tex/latex/pdflscape/pdflscape-nometadata.s
+ty
+Package: pdflscape-nometadata 2022-10-28 v0.13 Display of landscape pages in PD
+F (HO)
+ (/home/debian/.miktex/texmfs/install/tex/latex/graphics/lscape.sty
+Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
+)
+Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
+))
+(/home/debian/.miktex/texmfs/install/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count310
+\float@exts=\toks30
+\float@box=\box63
+\@float@everytoks=\toks31
+\@floatcapt=\box64
+)
+(/home/debian/.miktex/texmfs/install/tex/latex/caption/caption.sty
+Package: caption 2023/08/05 v3.6o Customizing captions (AR)
+
+(/home/debian/.miktex/texmfs/install/tex/latex/caption/caption3.sty
+Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
+\caption@tempdima=\dimen190
+\captionmargin=\dimen191
+\caption@leftmargin=\dimen192
+\caption@rightmargin=\dimen193
+\caption@width=\dimen194
+\caption@indent=\dimen195
+\caption@parindent=\dimen196
+\caption@hangindent=\dimen197
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count311
+\c@continuedfloat=\count312
+Package caption Info: float package is loaded.
+Package caption Info: longtable package is loaded.
+
+(/home/debian/.miktex/texmfs/install/tex/latex/caption/ltcaption.sty
+Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
+))
+(/home/debian/.miktex/texmfs/install/tex/latex/pgf/frontendlayer/tikz.sty
+(/home/debian/.miktex/texmfs/install/tex/latex/pgf/basiclayer/pgf.sty
+(/home/debian/.miktex/texmfs/install/tex/latex/pgf/utilities/pgfrcs.sty
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/utilities/pgfutil-common.t
+ex
+\pgfutil@everybye=\toks32
+\pgfutil@tempdima=\dimen198
+\pgfutil@tempdimb=\dimen199
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/utilities/pgfutil-latex.de
+f
+\pgfutil@abb=\box65
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/utilities/pgfrcs.code.tex
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/pgf.revision.tex)
+Package: pgfrcs 2026-08-01 v3.1.12 (3.1.12)
+))
+Package: pgf 2026-08-01 v3.1.12 (3.1.12)
+
+(/home/debian/.miktex/texmfs/install/tex/latex/pgf/basiclayer/pgfcore.sty
+(/home/debian/.miktex/texmfs/install/tex/latex/pgf/systemlayer/pgfsys.sty
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/systemlayer/pgfsys.code.te
+x
+Package: pgfsys 2026-08-01 v3.1.12 (3.1.12)
+
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/utilities/pgfkeys.code.tex
+\pgfkeys@pathtoks=\toks33
+\pgfkeys@temptoks=\toks34
+
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/utilities/pgfkeyslibraryfi
+ltered.code.tex
+\pgfkeys@tmptoks=\toks35
+))
+\pgf@x=\dimen256
+\pgf@y=\dimen257
+\pgf@xa=\dimen258
+\pgf@ya=\dimen259
+\pgf@xb=\dimen260
+\pgf@yb=\dimen261
+\pgf@xc=\dimen262
+\pgf@yc=\dimen263
+\pgf@xd=\dimen264
+\pgf@yd=\dimen265
+\w@pgf@writea=\write3
+\r@pgf@reada=\read3
+\c@pgf@counta=\count313
+\c@pgf@countb=\count314
+\c@pgf@countc=\count315
+\c@pgf@countd=\count316
+\t@pgf@toka=\toks36
+\t@pgf@tokb=\toks37
+\t@pgf@tokc=\toks38
+\pgf@sys@id@count=\count317
+
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/systemlayer/pgf.cfg
+File: pgf.cfg 2026-08-01 v3.1.12 (3.1.12)
+)
+Driver file for pgf: pgfsys-pdftex.def
+
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/systemlayer/pgfsys-pdftex.
+def
+File: pgfsys-pdftex.def 2026-08-01 v3.1.12 (3.1.12)
+
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/systemlayer/pgfsys-common-
+pdf.def
+File: pgfsys-common-pdf.def 2026-08-01 v3.1.12 (3.1.12)
+)))
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/systemlayer/pgfsyssoftpath
+.code.tex
+File: pgfsyssoftpath.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgfsyssoftpath@smallbuffer@items=\count318
+\pgfsyssoftpath@bigbuffer@items=\count319
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/systemlayer/pgfsysprotocol
+.code.tex
+File: pgfsysprotocol.code.tex 2026-08-01 v3.1.12 (3.1.12)
+))
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/basiclayer/pgfcore.code.te
+x
+Package: pgfcore 2026-08-01 v3.1.12 (3.1.12)
+ (/home/debian/.miktex/texmfs/install/tex/generic/pgf/math/pgfmath.code.tex
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/math/pgfmathutil.code.tex)
+
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/math/pgfmathparser.code.te
+x
+\pgfmath@dimen=\dimen266
+\pgfmath@count=\count320
+\pgfmath@box=\box66
+\pgfmath@toks=\toks39
+\pgfmath@stack@operand=\toks40
+\pgfmath@stack@operation=\toks41
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/math/pgfmathfunctions.code
+.tex)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/math/pgfmathfunctions.basi
+c.code.tex)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/math/pgfmathfunctions.trig
+onometric.code.tex)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/math/pgfmathfunctions.rand
+om.code.tex)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/math/pgfmathfunctions.comp
+arison.code.tex)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/math/pgfmathfunctions.base
+.code.tex)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/math/pgfmathfunctions.roun
+d.code.tex)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/math/pgfmathfunctions.misc
+.code.tex)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/math/pgfmathfunctions.inte
+gerarithmetics.code.tex)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/math/pgfmathcalc.code.tex)
+
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/math/pgfmathfloat.code.tex
+\c@pgfmathroundto@lastzeros=\count321
+)) (/home/debian/.miktex/texmfs/install/tex/generic/pgf/math/pgfint.code.tex)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/basiclayer/pgfcorepoints.c
+ode.tex
+File: pgfcorepoints.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgf@picminx=\dimen267
+\pgf@picmaxx=\dimen268
+\pgf@picminy=\dimen269
+\pgf@picmaxy=\dimen270
+\pgf@pathminx=\dimen271
+\pgf@pathmaxx=\dimen272
+\pgf@pathminy=\dimen273
+\pgf@pathmaxy=\dimen274
+\pgf@xx=\dimen275
+\pgf@xy=\dimen276
+\pgf@yx=\dimen277
+\pgf@yy=\dimen278
+\pgf@zx=\dimen279
+\pgf@zy=\dimen280
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/basiclayer/pgfcorepathcons
+truct.code.tex
+File: pgfcorepathconstruct.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgf@path@lastx=\dimen281
+\pgf@path@lasty=\dimen282
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/basiclayer/pgfcorepathusag
+e.code.tex
+File: pgfcorepathusage.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgf@shorten@end@additional=\dimen283
+\pgf@shorten@start@additional=\dimen284
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/basiclayer/pgfcorescopes.c
+ode.tex
+File: pgfcorescopes.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgfpic=\box67
+\pgf@hbox=\box68
+\pgf@layerbox@main=\box69
+\pgf@picture@serial@count=\count322
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/basiclayer/pgfcoregraphics
+tate.code.tex
+File: pgfcoregraphicstate.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgflinewidth=\dimen285
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/basiclayer/pgfcoretransfor
+mations.code.tex
+File: pgfcoretransformations.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgf@pt@x=\dimen286
+\pgf@pt@y=\dimen287
+\pgf@pt@temp=\dimen288
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/basiclayer/pgfcorequick.co
+de.tex
+File: pgfcorequick.code.tex 2026-08-01 v3.1.12 (3.1.12)
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/basiclayer/pgfcoreobjects.
+code.tex
+File: pgfcoreobjects.code.tex 2026-08-01 v3.1.12 (3.1.12)
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/basiclayer/pgfcorepathproc
+essing.code.tex
+File: pgfcorepathprocessing.code.tex 2026-08-01 v3.1.12 (3.1.12)
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/basiclayer/pgfcorearrows.c
+ode.tex
+File: pgfcorearrows.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgfarrowsep=\dimen289
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/basiclayer/pgfcoreshade.co
+de.tex
+File: pgfcoreshade.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgf@max=\dimen290
+\pgf@sys@shading@range@num=\count323
+\pgf@shadingcount=\count324
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/basiclayer/pgfcoreimage.co
+de.tex
+File: pgfcoreimage.code.tex 2026-08-01 v3.1.12 (3.1.12)
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/basiclayer/pgfcoreexternal
+.code.tex
+File: pgfcoreexternal.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgfexternal@startupbox=\box70
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/basiclayer/pgfcorelayers.c
+ode.tex
+File: pgfcorelayers.code.tex 2026-08-01 v3.1.12 (3.1.12)
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/basiclayer/pgfcoretranspar
+ency.code.tex
+File: pgfcoretransparency.code.tex 2026-08-01 v3.1.12 (3.1.12)
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/basiclayer/pgfcorepatterns
+.code.tex
+File: pgfcorepatterns.code.tex 2026-08-01 v3.1.12 (3.1.12)
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/basiclayer/pgfcorerdf.code
+.tex
+File: pgfcorerdf.code.tex 2026-08-01 v3.1.12 (3.1.12)
+)))
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/modules/pgfmoduleshapes.co
+de.tex
+File: pgfmoduleshapes.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgfnodeparttextbox=\box71
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/modules/pgfmoduleplot.code
+.tex
+File: pgfmoduleplot.code.tex 2026-08-01 v3.1.12 (3.1.12)
+)
+(/home/debian/.miktex/texmfs/install/tex/latex/pgf/compatibility/pgfcomp-versio
+n-0-65.sty
+Package: pgfcomp-version-0-65 2026-08-01 v3.1.12 (3.1.12)
+\pgf@nodesepstart=\dimen291
+\pgf@nodesepend=\dimen292
+)
+(/home/debian/.miktex/texmfs/install/tex/latex/pgf/compatibility/pgfcomp-versio
+n-1-18.sty
+Package: pgfcomp-version-1-18 2026-08-01 v3.1.12 (3.1.12)
+))
+(/home/debian/.miktex/texmfs/install/tex/latex/pgf/utilities/pgffor.sty
+(/home/debian/.miktex/texmfs/install/tex/latex/pgf/utilities/pgfkeys.sty
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/utilities/pgfkeys.code.tex
+)) (/home/debian/.miktex/texmfs/install/tex/latex/pgf/math/pgfmath.sty
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/math/pgfmath.code.tex))
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/utilities/pgffor.code.tex
+Package: pgffor 2026-08-01 v3.1.12 (3.1.12)
+\pgffor@iter=\dimen293
+\pgffor@skip=\dimen294
+\pgffor@stack=\toks42
+\pgffor@toks=\toks43
+))
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/frontendlayer/tikz/tikz.co
+de.tex
+Package: tikz 2026-08-01 v3.1.12 (3.1.12)
+
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/libraries/pgflibraryplotha
+ndlers.code.tex
+File: pgflibraryplothandlers.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgf@plot@mark@count=\count325
+\pgfplotmarksize=\dimen295
+)
+\tikz@lastx=\dimen296
+\tikz@lasty=\dimen297
+\tikz@lastxsaved=\dimen298
+\tikz@lastysaved=\dimen299
+\tikz@lastmovetox=\dimen300
+\tikz@lastmovetoy=\dimen301
+\tikzleveldistance=\dimen302
+\tikzsiblingdistance=\dimen303
+\tikz@figbox=\box72
+\tikz@figbox@bg=\box73
+\tikz@tempbox=\box74
+\tikz@tempbox@bg=\box75
+\tikztreelevel=\count326
+\tikznumberofchildren=\count327
+\tikznumberofcurrentchild=\count328
+\tikz@fig@count=\count329
+
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/modules/pgfmodulematrix.co
+de.tex
+File: pgfmodulematrix.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgfmatrixcurrentrow=\count330
+\pgfmatrixcurrentcolumn=\count331
+\pgf@matrix@numberofcolumns=\count332
+)
+\tikz@expandcount=\count333
+
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/frontendlayer/tikz/librari
+es/tikzlibrarytopaths.code.tex
+File: tikzlibrarytopaths.code.tex 2026-08-01 v3.1.12 (3.1.12)
+)))
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/libraries/pgflibraryarrows
+.meta.code.tex
+File: pgflibraryarrows.meta.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgfarrowinset=\dimen304
+\pgfarrowlength=\dimen305
+\pgfarrowwidth=\dimen306
+\pgfarrowlinewidth=\dimen307
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/frontendlayer/tikz/librari
+es/tikzlibrarypositioning.code.tex
+File: tikzlibrarypositioning.code.tex 2026-08-01 v3.1.12 (3.1.12)
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/frontendlayer/tikz/librari
+es/tikzlibrarycalc.code.tex
+File: tikzlibrarycalc.code.tex 2026-08-01 v3.1.12 (3.1.12)
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/frontendlayer/tikz/librari
+es/tikzlibraryfit.code.tex
+File: tikzlibraryfit.code.tex 2026-08-01 v3.1.12 (3.1.12)
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/frontendlayer/tikz/librari
+es/tikzlibrarybackgrounds.code.tex
+File: tikzlibrarybackgrounds.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgf@layerbox@background=\box76
+\pgf@layerboxsaved@background=\box77
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/frontendlayer/tikz/librari
+es/tikzlibraryshapes.geometric.code.tex
+File: tikzlibraryshapes.geometric.code.tex 2026-08-01 v3.1.12 (3.1.12)
+
+(/home/debian/.miktex/texmfs/install/tex/generic/pgf/libraries/shapes/pgflibrar
+yshapes.geometric.code.tex
+File: pgflibraryshapes.geometric.code.tex 2026-08-01 v3.1.12 (3.1.12)
+))
+(/home/debian/.miktex/texmfs/install/tex/latex/ragged2e/ragged2e.sty
+Package: ragged2e 2023/06/22 v3.6 ragged2e Package
+
+(/home/debian/.miktex/texmfs/install/tex/latex/footmisc/footmisc.sty
+Package: footmisc 2025/05/09 v7.0b a miscellany of footnote facilities
+\FN@temptoken=\toks44
+\footnotemargin=\dimen308
+Package footmisc Info: Declaring symbol style bringhurst on input line 549.
+Package footmisc Info: Declaring symbol style chicago on input line 557.
+Package footmisc Info: Declaring symbol style wiley on input line 566.
+Package footmisc Info: Declaring symbol style lamport-robust on input line 577.
+
+Package footmisc Info: Declaring symbol style lamport* on input line 597.
+Package footmisc Info: Declaring symbol style lamport*-robust on input line 618
+.
+)
+\CenteringLeftskip=\skip75
+\RaggedLeftLeftskip=\skip76
+\RaggedRightLeftskip=\skip77
+\CenteringRightskip=\skip78
+\RaggedLeftRightskip=\skip79
+\RaggedRightRightskip=\skip80
+\CenteringParfillskip=\skip81
+\RaggedLeftParfillskip=\skip82
+\RaggedRightParfillskip=\skip83
+\JustifyingParfillskip=\skip84
+\CenteringParindent=\skip85
+\RaggedLeftParindent=\skip86
+\RaggedRightParindent=\skip87
+\JustifyingParindent=\skip88
+)
+(/home/debian/.miktex/texmfs/install/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2026-06-17 v7.01r Hypertext links for LaTeX
+
+(/home/debian/.miktex/texmfs/install/tex/latex/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/kvdefinekeys/kvdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+) (/home/debian/.miktex/texmfs/install/tex/generic/pdfescape/pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+
+(/home/debian/.miktex/texmfs/install/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/home/debian/.miktex/texmfs/install/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+))
+(/home/debian/.miktex/texmfs/install/tex/latex/hycolor/hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+)
+(/home/debian/.miktex/texmfs/install/tex/latex/hyperref/nameref.sty
+Package: nameref 2026-01-29 v2.58 Cross-referencing by name of section
+
+(/home/debian/.miktex/texmfs/install/tex/latex/refcount/refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/gettitlestring/gettitlestring.
+sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+ (/home/debian/.miktex/texmfs/install/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
+))
+\c@section@level=\count334
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/stringenc/stringenc.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
+)
+)
+\@linkdim=\dimen309
+\Hy@linkcounter=\count335
+\Hy@pagecounter=\count336
+
+(/home/debian/.miktex/texmfs/install/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2026-06-17 v7.01r Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+)
+(/home/debian/.miktex/texmfs/install/tex/generic/intcalc/intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+)
+\Hy@SavedSpaceFactor=\count337
+
+(/home/debian/.miktex/texmfs/install/tex/latex/hyperref/puenc.def
+File: puenc.def 2026-06-17 v7.01r Hyperref: PDF Unicode definition (HO)
+Now handling font encoding PU ...
+... no UTF-8 mapping file for font encoding PU
+)
+Package hyperref Info: Hyper figures OFF on input line 4199.
+Package hyperref Info: Link nesting OFF on input line 4204.
+Package hyperref Info: Hyper index ON on input line 4207.
+Package hyperref Info: Plain pages OFF on input line 4214.
+Package hyperref Info: Backreferencing OFF on input line 4219.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4466.
+\c@Hy@tempcnt=\count338
+
+(/home/debian/.miktex/texmfs/install/tex/latex/url/url.sty
+\Urlmuskip=\muskip17
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 4805.
+\XeTeXLinkMargin=\dimen310
+
+(/home/debian/.miktex/texmfs/install/tex/generic/bitset/bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+
+(/home/debian/.miktex/texmfs/install/tex/generic/bigintcalc/bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
+))
+\Fld@menulength=\count339
+\Field@Width=\dimen311
+\Fld@charsize=\dimen312
+Package hyperref Info: Hyper figures OFF on input line 6091.
+Package hyperref Info: Link nesting OFF on input line 6096.
+Package hyperref Info: Hyper index ON on input line 6099.
+Package hyperref Info: backreferencing OFF on input line 6106.
+Package hyperref Info: Link coloring OFF on input line 6111.
+Package hyperref Info: Link coloring with OCG OFF on input line 6116.
+Package hyperref Info: PDF/A mode OFF on input line 6121.
+\Hy@abspage=\count340
+\c@Item=\count341
+\c@Hfootnote=\count342
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+
+(/home/debian/.miktex/texmfs/install/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2026-06-17 v7.01r Hyperref driver for pdfTeX
+\Fld@listcount=\count343
+\c@bookmark@seq@number=\count344
+
+(/home/debian/.miktex/texmfs/install/tex/latex/rerunfilecheck/rerunfilecheck.st
+y
+Package: rerunfilecheck 2025-06-21 v1.11 Rerun checks for auxiliary files (HO)
+
+(/home/debian/.miktex/texmfs/install/tex/generic/uniquecounter/uniquecounter.st
+y
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+84.
+)
+\Hy@SectionHShift=\skip89
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 68.
+Package csquotes Info: Checking for multilingual support...
+Package csquotes Info: ... found 'babel' package.
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 88
+.
+ (/home/debian/.miktex/texmfs/install/tex/latex/lm/t1lmr.fd
+File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+(/home/debian/.miktex/texmfs/install/tex/latex/l3kernel/l3backend-pdftex.def
+File: l3backend-pdftex.def 2026-09-09 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count345
+)
+(Zeitgeist&Themenkarte.aux
+Package babel Info: 'ngerman' activates 'german' shorthands.
+(babel)             Reported on input line 8.
+)
+\openout1 = `Zeitgeist&Themenkarte.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(62.59596pt, 472.31595pt, 62.59596pt)
+* v-part:(T,H,B)=(62.59596pt, 719.85492pt, 62.59596pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=472.31595pt
+* \textheight=719.85492pt
+* \oddsidemargin=-9.67403pt
+* \evensidemargin=-9.67403pt
+* \topmargin=-46.67403pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=11.0pt
+* \footskip=30.0pt
+* \marginparwidth=50.0pt
+* \marginparsep=10.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+(/home/debian/.miktex/texmfs/install/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count346
+\scratchdimen=\dimen313
+\scratchbox=\box78
+\nofMPsegments=\count347
+\nofMParguments=\count348
+\everyMPshowfont=\toks45
+\MPscratchCnt=\count349
+\MPscratchDim=\dimen314
+\MPnumerator=\count350
+\makeMPintoPDFobject=\count351
+\everyMPtoPDFconversion=\toks46
+) (/home/debian/.miktex/texmfs/install/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+(/home/debian/.miktex/texmfs/install/tex/latex/00miktex/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
+))
+LaTeX Info: Redefining \microtypecontext on input line 88.
+Package microtype Info: Applying patch `item' on input line 88.
+Package microtype Info: Applying patch `toc' on input line 88.
+Package microtype Info: Applying patch `eqnum' on input line 88.
+Package microtype Info: Applying patch `footnote' on input line 88.
+Package microtype Info: Applying patch `verbatim' on input line 88.
+LaTeX Info: Redefining \microtypesetup on input line 88.
+Package microtype Info: Generating PDF output.
+Package microtype Info: Character protrusion enabled (level 2).
+Package microtype Info: Using default protrusion set `alltext'.
+Package microtype Info: Automatic font expansion enabled (level 2),
+(microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
+Package microtype Info: Using default expansion set `alltext-nott'.
+Package microtype Info: Patching command `\showhyphens'.
+Package microtype Info: No adjustment of tracking.
+Package microtype Info: No adjustment of interword spacing.
+Package microtype Info: No adjustment of character kerning.
+
+(/home/debian/.miktex/texmfs/install/tex/latex/microtype/mt-cmr.cfg
+File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
+(RS)
+)
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: hyperref package is loaded.
+Package caption Info: End \AtBeginDocument code.
+Package ragged2e Info: ABD: executing \RaggedRight on input line 88.
+Package hyperref Info: Link coloring ON on input line 88.
+
+(Zeitgeist&Themenkarte.out) (Zeitgeist&Themenkarte.out)
+\@outlinefile=\write4
+\openout4 = `Zeitgeist&Themenkarte.out'.
+
+Package babel Info: Main language set to 'ngerman'.
+Package hyperref Info: Option `pageanchor' set `false' on input line 91.
+<HKA.jpg, id=46, 1505.625pt x 1102.1175pt>
+File: HKA.jpg Graphic file (type jpg)
+<use HKA.jpg>
+Package pdftex.def Info: HKA.jpg  used on input line 94.
+(pdftex.def)             Requested size: 165.31346pt x 120.99786pt.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 1
+16.
+
+(/home/debian/.miktex/texmfs/install/tex/latex/lm/ot1lmr.fd
+File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
+16.
+
+(/home/debian/.miktex/texmfs/install/tex/latex/lm/omllmm.fd
+File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
+116.
+
+(/home/debian/.miktex/texmfs/install/tex/latex/lm/omslmsy.fd
+File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
+116.
+
+(/home/debian/.miktex/texmfs/install/tex/latex/lm/omxlmex.fd
+File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10.95> on input line 116.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <8> on input line 116.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <6> on input line 116.
+ [1
+
+{/home/debian/.miktex/texmfs/data/fonts/map/pdftex/pdftex.map}{/home/debian/.mi
+ktex/texmfs/install/fonts/enc/dvips/lm/lm-ec.enc} <./HKA.jpg>]
+Package hyperref Info: Option `pageanchor' set `true' on input line 127.
+ (Zeitgeist&Themenkarte.toc)
+\tf@toc=\write5
+\openout5 = `Zeitgeist&Themenkarte.toc'.
+
+
+(Zeitgeist&Themenkarte.lof)
+\tf@lof=\write6
+\openout6 = `Zeitgeist&Themenkarte.lof'.
+
+ [1]
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 1
+41.
+
+(/home/debian/.miktex/texmfs/install/tex/latex/lm/ts1lmr.fd
+File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+Underfull \hbox (badness 3568) in paragraph at lines 157--165
+\T1/lmr/m/n/10.95 (+20) In der neoklassischen Wirtschaftslehre bezeichnet Tausc
+hhandel (engl. \T1/lmr/m/it/10.95 (+20) barter\T1/lmr/m/n/10.95 (+20) ) den 
+ []
+
+[2{/home/debian/.miktex/texmfs/install/fonts/enc/dvips/lm/lm-ts1.enc}]
+Underfull \hbox (badness 1577) in paragraph at lines 258--262
+[]\T1/lmr/bx/n/10.95 (+20) Zusammenbruch der Geldordnung: \T1/lmr/m/n/10.95 (+2
+0) Nach Kriegen, Währungsreformen oder 
+ []
+
+[3]
+Underfull \hbox (badness 1178) in paragraph at lines 314--320
+\T1/lmr/m/n/10.95 (+20) Repair-Cafés oder Saatgutbörsen gelten als \T1/lmr/m/it
+/10.95 (+20) menschliche, authentische und solidarische 
+ []
+
+
+Overfull \hbox (32.14633pt too wide) in paragraph at lines 381--384
+ [][] 
+ []
+
+[4] [5]
+Underfull \hbox (badness 6047) in paragraph at lines 493--493
+[][][]\T1/lmr/bx/n/8 (+20) D -- Umwelt & 
+ []
+
+
+Underfull \hbox (badness 3536) in paragraph at lines 494--494
+[]\T1/lmr/m/n/8 (+20) D3 Transaktions- & 
+ []
+
+
+Underfull \hbox (badness 1348) in paragraph at lines 494--494
+[]\T1/lmr/m/n/8 (+20) D4 Gewaltandrohung & 
+ []
+
+[6]
+Underfull \hbox (badness 1142) in paragraph at lines 515--517
+[][]\T1/lmr/bx/n/10.95 (+20) B -- Akteure und Verhandlungspsychologie:[] \T1/lm
+r/m/n/10.95 (+20) die Mikro-Ebene des einzelnen 
+ []
+
+[7]
+
+LaTeX Warning: Float too large for page by 17.00964pt on input line 601.
+
+[8]
+Overfull \hbox (5.95433pt too wide) in paragraph at lines 631--634
+ [][] 
+ []
+
+
+Overfull \hbox (5.95433pt too wide) in paragraph at lines 676--680
+ [][] 
+ []
+
+[9
+
+
+]
+Overfull \hbox (6.92812pt too wide) in alignment at lines 723--727
+ [] [] [] 
+ []
+
+
+Underfull \hbox (badness 1796) in paragraph at lines 732--732
+[]|\T1/lmr/m/n/10 (+20) B2 Subjektive 
+ []
+
+
+Underfull \hbox (badness 2717) in paragraph at lines 732--733
+[]|\T1/lmr/m/n/10 (+20) entkoppelt Wertvorstellungen von 
+ []
+
+
+Underfull \hbox (badness 3701) in paragraph at lines 733--734
+[]|\T1/lmr/m/n/10 (+20) zwingt zur Rückkehr auf direkte 
+ []
+
+
+Underfull \hbox (badness 1087) in paragraph at lines 734--734
+[]|\T1/lmr/m/n/10 (+20) B4 Vertrauen & 
+ []
+
+
+Underfull \hbox (badness 1796) in paragraph at lines 737--737
+[]|\T1/lmr/m/n/10 (+20) B2 Subjektive 
+ []
+
+
+Underfull \hbox (badness 1796) in paragraph at lines 738--738
+[]|\T1/lmr/m/n/10 (+20) B2 Subjektive 
+ []
+
+
+Underfull \hbox (badness 1087) in paragraph at lines 739--739
+[]|\T1/lmr/m/n/10 (+20) B4 Vertrauen & 
+ []
+
+
+Underfull \hbox (badness 1087) in paragraph at lines 740--740
+[]|\T1/lmr/m/n/10 (+20) B4 Vertrauen & 
+ []
+
+
+Underfull \hbox (badness 1796) in paragraph at lines 741--741
+[]|\T1/lmr/m/n/10 (+20) B2 Subjektive 
+ []
+
+
+Underfull \hbox (badness 1796) in paragraph at lines 742--742
+[]|\T1/lmr/m/n/10 (+20) B2 Subjektive 
+ []
+
+
+Underfull \hbox (badness 5022) in paragraph at lines 742--743
+[]|\T1/lmr/m/n/10 (+20) erzeugt bei Abhängigkeit hohe 
+ []
+
+
+Underfull \hbox (badness 1708) in paragraph at lines 744--745
+[]|\T1/lmr/m/n/10 (+20) überwindet durch maÿgeschneiderte 
+ []
+
+
+Underfull \hbox (badness 1087) in paragraph at lines 745--745
+[]|\T1/lmr/m/n/10 (+20) B4 Vertrauen & 
+ []
+
+
+Underfull \hbox (badness 1796) in paragraph at lines 749--749
+[]|\T1/lmr/m/n/10 (+20) B2 Subjektive 
+ []
+
+
+Overfull \hbox (6.92812pt too wide) in alignment at lines 727--751
+ [] [] [] 
+ []
+
+[10] [11] (Zeitgeist&Themenkarte.aux)
+ ***********
+LaTeX2e <2026-06-01>
+L3 programming layer <2026-09-09>
+ ***********
+Package rerunfilecheck Info: File `Zeitgeist&Themenkarte.out' has not changed.
+(rerunfilecheck)             Checksum: 53FB0FD5D03ABF3B19C1FED632C92F32;2741.
+ ) 
+Here is how much of TeX's memory you used:
+ 29003 strings out of 469329
+ 551641 string characters out of 5457592
+ 1021381 words of memory out of 5000000
+ 57472 multiletter control sequences out of 15000+600000
+ 700455 words of font info for 137 fonts, out of 8000000 for 9000
+ 0 hyphenation exceptions out of 8191
+ 92i,12n,94p,1020b,1016s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</home/debian/.miktex/texmfs/install/fonts/type1/public/lm/lmbx10.pfb></home/
+debian/.miktex/texmfs/install/fonts/type1/public/lm/lmbx12.pfb></home/debian/.m
+iktex/texmfs/install/fonts/type1/public/lm/lmbx8.pfb></home/debian/.miktex/texm
+fs/install/fonts/type1/public/lm/lmbx9.pfb></home/debian/.miktex/texmfs/install
+/fonts/type1/public/lm/lmbxi10.pfb></home/debian/.miktex/texmfs/install/fonts/t
+ype1/public/lm/lmr10.pfb></home/debian/.miktex/texmfs/install/fonts/type1/publi
+c/lm/lmr12.pfb></home/debian/.miktex/texmfs/install/fonts/type1/public/lm/lmr8.
+pfb></home/debian/.miktex/texmfs/install/fonts/type1/public/lm/lmr9.pfb></home/
+debian/.miktex/texmfs/install/fonts/type1/public/lm/lmri10.pfb></home/debian/.m
+iktex/texmfs/install/fonts/type1/public/lm/lmri8.pfb>
+Output written on Zeitgeist&Themenkarte.pdf (12 pages, 520054 bytes).
+PDF statistics:
+ 251 PDF objects out of 1000 (max. 8388607)
+ 49 named destinations out of 1000 (max. 500000)
+ 41058 words of extra memory for PDF output out of 42996 (max. 10000000)
+
