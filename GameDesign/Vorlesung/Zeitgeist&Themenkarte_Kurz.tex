@@ -1,0 +1,315 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- Pakete ---
+\usepackage[english, ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[left=2.2cm, right=2.2cm, top=2.2cm, bottom=2.2cm]{geometry}
+\usepackage[autostyle=true,german=quotes]{csquotes}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{microtype}
+\usepackage{pdflscape}
+\usepackage{float}
+\usepackage[font=small, labelfont={bf,color=hkared}, skip=6pt]{caption}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc, shapes.symbols}
+\usepackage[document]{ragged2e}
+\usepackage{hyperref}
+\usepackage{xurl}
+
+\emergencystretch=0.3\textwidth
+\hyphenpenalty=1000
+\exhyphenpenalty=50
+
+% --- Farben (HKA Corporate) ---
+\definecolor{hkared}{RGB}{198, 42, 18}
+\definecolor{hkagray}{RGB}{100, 100, 100}
+
+% --- TikZ-Stile (angelehnt an die Themenlandkarten-Beispiele der Vorlesung) ---
+% Jede Kante ist gerichtet und beschriftet
+\tikzset{
+    begriff/.style = {draw=black, line width=1.3pt, fill=white, align=center,
+                      font=\small\bfseries, minimum width=2.8cm, minimum height=0.95cm},
+    pfeil/.style   = {-{Stealth[length=2.4mm, width=1.8mm]}, thin, draw=black},
+    txt/.style     = {font=\scriptsize, fill=white, inner sep=1.5pt, align=center},
+    kbox/.style    = {begriff, fill=#1!12, text width=2.8cm, minimum width=0cm,
+                      font=\footnotesize\bfseries, minimum height=0.9cm},
+}
+
+% --- Farben der Bereiche (ausführliche Karte) ---
+\definecolor{clA}{RGB}{31, 95, 155}   % Gesellschaft
+\definecolor{clB}{RGB}{198, 42, 18}   % Menschen
+\definecolor{clC}{RGB}{46, 125, 50}   % Waren
+\definecolor{clD}{RGB}{200, 120, 0}   % Hindernisse
+
+% --- Hyperref Setup ---
+\hypersetup{
+    colorlinks  = true,
+    linkcolor   = hkared,
+    urlcolor    = hkared,
+    citecolor   = hkared,
+    pdftitle    = {Zeitgeist und Themenkarte -- Tauschhandel (Kurzfassung)},
+    pdfauthor   = {Erlind Sejdiu},
+    pdfsubject  = {Game Design -- Game Concept Document, Kapitel 1},
+    pdfcreator  = {pdflatex},
+    pdfproducer = {LaTeX with hyperref}
+}
+
+% --- Section Styling ---
+\titleformat{\section}{\large\bfseries\color{hkared}}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{hkared}}{\thesubsection}{0.8em}{}
+\titlespacing*{\section}{0pt}{0.85em}{0.25em}
+\titlespacing*{\subsection}{0pt}{0.5em}{0.15em}
+
+% --- Header/Footer ---
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{hkagray}Labor Game Design}
+\fancyhead[R]{\small\color{hkagray}Master Informatik WS~2026/27}
+\fancyfoot[C]{\small\color{hkagray}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Listenabstände straffen
+\setlist{noitemsep, topsep=2pt, parsep=1pt, partopsep=0pt}
+
+% Abstand zwischen Absätzen
+\setlength{\parskip}{0.6em}
+
+% =============================================================================
+\begin{document}
+
+% --- Titelseite ---
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+    \centering
+    \includegraphics[width=0.35\textwidth]{HKA.jpg}
+
+    {\normalsize\color{hkagray} University of Applied Sciences}\\[0.125cm]
+    {\small\color{hkagray} Fakultät für Informatik und Wirtschaftsinformatik}
+
+    \vspace{.5cm}
+    {\color{hkared}\rule{\textwidth}{1.5pt}}
+
+    \vspace{1.5cm}
+    {\fontsize{24}{30}\selectfont\bfseries\color{hkared} Zeitgeist und Themenkarte -- Tauschhandel}\\[0.6cm]
+    {\large\color{hkagray} Game Concept Document -- Kapitel 1 (Kurzfassung)}
+    \vspace{.75cm}
+
+    \vspace{.5cm}
+    {\large Labor Game Design}\\[0.3cm]
+    {\large Wintersemester 2026/27}
+
+    \vspace{.5cm}
+    {\color{hkared}\rule{0.6\textwidth}{0.5pt}}
+    \vspace{1.5cm}
+
+    {\normalsize
+    \begin{tabular}{rl}
+        \textbf{Autor:}          & Erlind Sejdiu \\
+        \textbf{Matrikelnummer:} & 106357 \\[0.5cm]
+    \end{tabular}
+    }
+
+    \vfill
+    {\small\color{hkagray} Stand: \today}
+\end{titlepage}
+
+\newpage
+\hypersetup{pageanchor=true}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% =============================================================================
+\section{Was ist Tauschhandel?}
+
+Tauschhandel ist der direkte Austausch von Waren oder Leistungen ohne Geld.
+Ware wechselt gegen Ware, Leistung gegen Leistung. Es gibt keinen festen
+Preis, der Wert wird bei jedem Tausch neu ausgehandelt.
+
+Smith~\cite{smith1776} und Menger~\cite{menger1892} beschreiben den Tausch als
+Vorstufe des Geldes. Ein Tausch kommt nur zustande, wenn beide Seiten genau
+das besitzen, was die andere Seite will. Dieses Problem heißt doppelte
+Koinzidenz der Bedürfnisse. Als Lösung entstand nach diesem Modell Warengeld,
+also Güter wie Salz, Getreide oder Vieh, die fast jeder annimmt.
+
+Humphrey~\cite{humphrey1985} stellt fest, dass keine Gesellschaft belegt ist,
+die allein auf Tauschhandel beruhte. Graeber~\cite{graeber2011} zeigt, dass
+Gemeinschaften ihre Versorgung über Geschenke und Schulden regelten.
+Tauschhandel ist vor allem in zwei Fällen belegt: beim Handel mit Fremden und
+nach dem Zusammenbruch einer Währung. Beispiele für den zweiten Fall:
+
+\begin{itemize}
+    \item Deutschland 1945 bis 1948: Die Reichsmark verlor ihren Wert,
+          Zigaretten dienten als Ersatzwährung. Die Währungsreform vom
+          20.~Juni 1948 führte die D-Mark ein.
+    \item Argentinien 2002: Nach der Finanzkrise gab es rund 4.500
+          Tauschclubs in allen 23~Provinzen. Etwa 2,5~Millionen Menschen
+          nutzten sie zur Versorgung~\cite{ambito2002}.
+\end{itemize}
+
+% =============================================================================
+\section{Soziale Auffassung (Zeitgeist)}
+
+Bargeld verliert an Bedeutung. 2023 wurden 51~Prozent der Einkäufe in
+Deutschland bar bezahlt, 2021 waren es 58~Prozent. Mobiles Bezahlen stieg im
+selben Zeitraum von 2 auf 6~Prozent. Nach Umsatz liegt die Debitkarte mit
+32~Prozent vor dem Bargeld mit 26~Prozent~\cite{bundesbank2024}.
+
+Tausch und Weitergabe von Dingen treten heute in zwei Formen auf: im Alltag
+aus Spar- oder Umweltgründen und als Vorsorge für Krisen.
+
+Zahlen zum Alltag:
+\begin{itemize}
+    \item Rund ein Viertel der Deutschen kauft aus zweiter Hand, Hauptgrund
+          ist das Sparen (Kantar, 2.004~Befragte, 2024)~\cite{idealo2024}.
+    \item 2024 wurden in Deutschland über 6,5~Milliarden Euro für
+          Secondhand-Artikel ausgegeben, 52~Prozent davon für
+          Kleidung~\cite{cebr2025}.
+    \item Weltweit gibt es über 4.000 aktive Repair-Cafés und ähnliche
+          Gruppen mit rund 190.000 erfolgreichen Reparaturen pro
+          Jahr~\cite{nltimes2024}. Der Bund fördert solche Initiativen seit
+          Dezember 2024 mit bis zu 3.000~Euro~\cite{heise2024}.
+\end{itemize}
+
+Zahlen zur Krise:
+\begin{itemize}
+    \item Die Inflationsrate lag 2022 bei 6,9~Prozent, dem höchsten Wert seit
+          der Wiedervereinigung, und 2023 bei 5,9~Prozent~\cite{statistikportal}.
+    \item Steigende Lebenshaltungskosten sind 2025 zum 15.~Mal die größte
+          Sorge der Deutschen (52~Prozent von 2.400~Befragten)~\cite{ruv2025}.
+    \item Im Oktober 2022 hatten 38~Prozent Lebensmittelvorräte angelegt,
+          17~Prozent hatten keine Vorsorge getroffen~\cite{lmpraxis2022}.
+          Das BBK empfiehlt einen Vorrat für zehn Tage. In Stuttgart
+          erfüllen 29~Prozent diese Empfehlung~\cite{stuttgart2024}.
+    \item Wegen der Sanktionen tauschen Russland und China wieder Waren
+          direkt. Reuters zählte 2025 mindestens acht solcher Geschäfte,
+          etwa chinesische Autos gegen russischen Weizen~\cite{reuters2025}.
+\end{itemize}
+
+% =============================================================================
+\begin{landscape}
+
+\newpage
+\section{Themenkarte}
+
+Die Karte zeigt, welche Begriffe zum Thema gehören und wie sie
+zusammenhängen. Die Farben ordnen die Begriffe vier Bereichen zu. Jeder Pfeil
+lässt sich als Satz lesen, vom Startbegriff über die Beschriftung zum
+Zielbegriff.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=0.98cm, y=0.9cm]
+    % --- Begriffe ---
+    \node[kbox=clA] (A3) at (0,10)     {Misstrauen\\ in Geld};
+    \node[kbox=clA] (A1) at (5.5,10)   {Weniger\\ konsumieren};
+    \node[kbox=clC] (C1) at (11,10)    {Lebenswichtiges\\ (Essen, Medizin)};
+    \node[kbox=clA] (A2) at (16.5,10)  {Für Krisen\\ vorsorgen};
+    \node[kbox=clA] (A4) at (22,10)    {Wunsch nach\\ Gemeinschaft};
+
+    \node[kbox=clB] (B1) at (5.5,6.5)  {Tauschpartner};
+    \node[kbox=clB] (B2) at (11,6.5)   {Persönlicher\\ Wert};
+    \node[kbox=clD] (D4) at (16.5,6.5) {Drohung\\ \& Gewalt};
+    \node[kbox=clB] (B4) at (22,6.5)   {Vertrauen\\ \& guter Ruf};
+
+    \node[kbox=clC] (C2) at (0,3)      {Genussmittel\\ (Tabak, Alkohol)};
+    \node[kbox=clD] (D2) at (5.5,3)    {Sichere\\ Marktplätze};
+    \node[kbox=clB] (B3) at (11,3)     {Feilschen};
+    \node[kbox=clD] (D3) at (16.5,3)   {Weg \&\\ Transportrisiko};
+    \node[kbox=clC] (C4) at (22,3)     {Erinnerungs-\\stücke};
+
+    \node[kbox=clD] (D1) at (11,-0.5)  {Partnersuche\\ (Wer will was?)};
+    \node[kbox=clC] (C3) at (16.5,-0.5){Arbeit \& Hilfe\\ (Reparieren, Schützen)};
+
+    % --- Gesellschaft ---
+    \draw[pfeil] (A1) -- node[txt]{schont} (C1);
+    \draw[pfeil] (A1.north) |- ($(A4.north)+(0,0.75)$) node[txt, pos=0.75]{stärkt den} -- (A4.north);
+    \draw[pfeil] (A2) -- node[txt]{hortet} (C1);
+    \draw[pfeil] (A2) -- node[txt]{schützt vor} (D4);
+    \draw[pfeil] (A3) -- node[txt, pos=0.6]{stärkt den} (B2);
+    \draw[pfeil] (A3) -- node[txt, pos=0.45]{bringt zum\\ Tauschen} (B1);
+    \draw[pfeil] (A4) -- node[txt]{baut auf} (B4);
+
+    % --- Menschen ---
+    \draw[pfeil] (B1) -- node[txt, pos=0.68]{beginnen mit\\ der} (D1);
+    \draw[pfeil] (B1) -- node[txt, left=1pt, pos=0.25]{treffen sich auf} (D2);
+    \draw[pfeil] ($(B2.south)+(-0.4,0)$) to[bend right=40] node[txt, anchor=east, pos=0.5]{setzt die\\ Grenze beim} ($(B3.north)+(-0.4,0)$);
+    \draw[pfeil] ($(B3.north)+(0.4,0)$) to[bend right=40] node[txt, anchor=west, pos=0.5]{verändert\\ den} ($(B2.south)+(0.4,0)$);
+    \draw[pfeil] (B4) -- node[txt, pos=0.4]{senkt} (D3);
+    \draw[pfeil] (B4) -- node[txt]{verhindert} (D4);
+
+    % --- Waren ---
+    \draw[pfeil] (C1) -- node[txt]{erhöht bei\\ Mangel den} (B2);
+    \draw[pfeil] (C2) -- node[txt, pos=0.4]{erhöhen durch\\ Sucht den} (B2);
+    \draw[pfeil] (C2) -- node[txt, pos=0.4]{erleichtern als\\ Ersatzgeld die} (D1);
+    \draw[pfeil] (C3) -- node[txt]{erleichtert\\ die} (D1);
+    \draw[pfeil] (C4) -- node[txt]{stärken\\ als Pfand} (B4);
+
+    % --- Hindernisse ---
+    \draw[pfeil] (D1) -- node[txt, pos=0.55]{verlängert\\ den} (D3);
+    \draw[pfeil] (D2) -- node[txt, pos=0.86]{verbieten} (D4);
+    \draw[pfeil] (D3.south) |- (2.6,-2.0) node[txt, pos=0.75]{bremst die} |- (B1.west);
+    \draw[pfeil] (D4) -- node[txt]{drückt\\ den} (B2);
+
+    % --- Legende ---
+    \foreach \c/\t [count=\i from 0] in {clA/Gesellschaft, clB/Menschen, clC/Waren, clD/Hindernisse} {
+        \node[draw=black, line width=1pt, fill=\c!12, minimum width=0.5cm, minimum height=0.3cm, inner sep=0pt] at (\i*4+6,-2.8) {};
+        \node[anchor=west, font=\scriptsize] at (\i*4+6.4,-2.8) {\t};
+    }
+\end{tikzpicture}
+\caption{Themenkarte zum Thema Tauschhandel. Beispiel für das Lesen eines
+Pfeils: \enquote{Lebenswichtiges erhöht bei Mangel den persönlichen Wert}.}
+\end{figure}
+\end{landscape}
+
+% =============================================================================
+\begin{thebibliography}{99}
+\small
+\bibitem{smith1776} Smith, A. (1776): \emph{An Inquiry into the Nature and
+    Causes of the Wealth of Nations}. London: W.~Strahan \& T.~Cadell.
+\bibitem{menger1892} Menger, C. (1892): On the Origin of Money. In:
+    \emph{The Economic Journal}, 2(6), S.~239--255.
+\bibitem{humphrey1985} Humphrey, C. (1985): Barter and Economic
+    Disintegration. In: \emph{Man}, New Series, 20(1), S.~48--72.
+\bibitem{graeber2011} Graeber, D. (2011): \emph{Debt: The First 5000 Years}.
+    New York: Melville House.
+\bibitem{ambito2002} Ámbito (2002): El trueque mueve ya 1.200 millones
+    anuales en el país. Artikel vom 15.02.2002.
+    \url{https://www.ambito.com/portada-principal/el-trueque-mueve-ya-1200-millones-anuales-el-pais-n3159776}
+\bibitem{bundesbank2024} Deutsche Bundesbank (2024): Zahlungsverhalten in
+    Deutschland 2023. Pressemitteilung vom 23.07.2024.
+    \url{https://www.bundesbank.de/de/presse/pressemitteilungen/zahlungsverhalten-in-deutschland-2023-934828}
+\bibitem{idealo2024} FashionUnited (2024): Ein Viertel der Deutschen kauft
+    Secondhand (idealo Sparreport 2024).
+    \url{https://fashionunited.de/nachrichten/mode/ein-viertel-der-deutschen-kauft-secondhand/2024072457455/}
+\bibitem{cebr2025} Amazon / Centre for Economics and Business Research (2025):
+    Second-Hand boomt. Pressemitteilung, Juli 2025.
+    \url{https://press.aboutamazon.com/de/2025/7/second-hand-boomt-der-online-markt-in-europa-betraegt-21-6-milliarden-euro-trend-zeigt-weiter-nach-oben}
+\bibitem{nltimes2024} NL Times (2024): Repair Café in Amsterdam celebrates
+    15th anniversary. \url{https://nltimes.nl/node/75879}
+\bibitem{heise2024} heise online (2024): Recht auf Reparatur: Repair-Cafés
+    können ab Dezember Förderung beantragen. \url{https://heise.de/-9988463}
+\bibitem{statistikportal} Statistische Ämter des Bundes und der Länder:
+    Inflation. \url{https://www.statistikportal.de/de/inflation}
+\bibitem{ruv2025} R+V Versicherung (2025): Die Ängste der Deutschen 2025.
+    Pressemitteilung vom 18.09.2025.
+    \url{https://www.ruv.de/newsroom/themenspezial-die-aengste-der-deutschen/pressemitteilungen/2025-09-18-studie-aengste-der-deutschen}
+\bibitem{lmpraxis2022} Lebensmittel Praxis (2022): Menschen sorgen für
+    Notvorräte vor dem Winter. Bericht vom 24.10.2022.
+    \url{https://lebensmittelpraxis.de/handel-aktuell/35199-katastrophenschutz-menschen-sorgen-fuer-notvorraete-vor-dem-winter.html}
+\bibitem{stuttgart2024} Landeshauptstadt Stuttgart (2024): Bevölkerungsumfrage
+    zur Krisenvorsorge.
+    \url{https://www.domino1.stuttgart.de/web/komunis/komunissde.nsf/a9830f07fd8c0e7dc1257cb70033e711/c66c90de6d4dd9a2c1258b040022ec33/$FILE/cwt01_.PDF}
+\bibitem{reuters2025} Kyiv Independent (2025): Russia brings back barter trade
+    to bypass sanctions, Reuters reports.
+    \url{https://kyivindependent.com/russia-brings-back-barter-trade-to-bypass-sanctions-reuters-reports/}
+\end{thebibliography}
+
+\noindent{\small Alle Internetquellen abgerufen am 29.10.2026.}
+
+\end{document}
