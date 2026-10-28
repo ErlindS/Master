@@ -1,0 +1,704 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- Pakete ---
+\usepackage[english, ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage[autostyle=true,german=quotes]{csquotes}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{positioning,fit,backgrounds,shapes.geometric,arrows.meta,decorations.pathreplacing,calc}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage{microtype}
+\usepackage{tocloft}
+\usepackage[document]{ragged2e}
+\usepackage[most]{tcolorbox}
+\usepackage{float}
+\usepackage[backend=biber,style=ieee,urldate=long]{biblatex}
+\addbibresource{literatur.bib}
+\usepackage{hyperref}
+\emergencystretch=0.3\textwidth
+\hyphenpenalty=10000
+\exhyphenpenalty=50
+
+\renewcommand{\tabularxcolumn}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% --- Farben (HKA Corporate) ---
+\definecolor{hkared}{RGB}{198, 42, 18}
+\definecolor{hkagray}{RGB}{100, 100, 100}
+
+% --- Inhaltsverzeichnis Styling ---
+\renewcommand{\cftsecfont}{\bfseries\color{hkared}}
+\renewcommand{\cftsecpagefont}{\bfseries\color{hkared}}
+\renewcommand{\cftsubsecfont}{\normalfont\color{black}}
+\renewcommand{\cftsubsecpagefont}{\normalfont\color{black}}
+\setlength{\cftbeforesecskip}{8pt}
+\setlength{\cftbeforesubsecskip}{8pt}
+\setlength{\cftaftertoctitleskip}{1.2cm}
+
+% --- Hyperref Setup ---
+\hypersetup{
+    colorlinks  = true,
+    linkcolor   = hkared,
+    urlcolor    = hkared,
+    citecolor   = hkared,
+    pdftitle    = {Versuchsaufbau und Methodik},
+    pdfauthor   = {Erlind Sejdiu},
+    pdfcreator  = {pdflatex},
+    pdfproducer = {LaTeX with hyperref}
+}
+
+% --- Section Styling ---
+\titleformat{\section}{\large\bfseries\color{hkared}}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{hkared}}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{black}}{\thesubsubsection}{1em}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.5em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.3em}
+\titlespacing*{\subsubsection}{0pt}{0.6em}{0.2em}
+
+% --- Header/Footer ---
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{hkagray}Projektarbeit -- Versuchsdesign}
+\fancyhead[R]{\small\color{hkagray}Master Informatik WS~2026/27}
+\fancyfoot[C]{\small\color{hkagray}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Markierung für Stellen, die noch ergänzt/geprüft werden müssen
+\newcommand{\offen}[1]{\textcolor{red}{[#1]}}
+
+% Kernaussage am Anfang eines Abschnitts
+\newtcolorbox{kernaussage}{colback=hkared!5, colframe=hkared, boxrule=0.6pt, arc=2pt,
+    left=6pt, right=6pt, top=4pt, bottom=4pt, fontupper=\small}
+
+% --- Einheitliche Bildsprache für alle Messaufbauten ---
+\tikzset{
+    >={Stealth[length=2mm]},
+    every picture/.style={font=\footnotesize},
+    box/.style={rounded corners=3pt, align=center, minimum height=10mm, text width=2.45cm, inner sep=3pt},
+    lastn/.style={box, draw=hkagray, fill=hkagray!12},
+    fehlern/.style={box, draw=hkared, fill=hkared!15},
+    varn/.style={box, draw=black!70, fill=yellow!15},
+    sysn/.style={box, draw=black!80, fill=white, line width=0.9pt},
+    teln/.style={box, draw=hkagray, fill=hkagray!5},
+    auswn/.style={box, draw=hkared!70!black, fill=hkared!30},
+    ergn/.style={box, draw=hkared!70!black, fill=white, line width=0.9pt},
+    leer/.style={box, draw=hkagray!60, dashed, text=hkagray},
+    kopf/.style={font=\scriptsize\bfseries, text=hkagray},
+}
+
+% Messaufbau als Pipeline:
+% {Last}{Fehler}{Variiert}{System}{Telemetrie}{Auswertung}{Ergebnis}{Stil Fehler}{Stil Variiert}
+\newcommand{\pipeline}[9]{%
+\begin{tikzpicture}
+    \node[lastn] (L) at (0,0) {#1};
+    \node[#8, anchor=south] (F) at (3.3,0.95) {#2};
+    \node[sysn] (S) at (3.3,0) {#4};
+    \node[#9, anchor=north] (V) at (3.3,-0.95) {#3};
+    \node[teln] (T) at (6.6,0) {#5};
+    \node[auswn] (A) at (9.9,0) {#6};
+    \node[ergn] (E) at (13.2,0) {#7};
+    \draw[->] (L) -- (S);
+    \draw[->, hkared, thick] (F) -- (S);
+    \draw[->, thick] (V) -- (S);
+    \draw[->] (S) -- (T);
+    \draw[->] (T) -- (A);
+    \draw[->] (A) -- (E);
+    \node[kopf, above=1pt] at (L.north) {Last};
+    \node[kopf, above=1pt] at (F.north) {Fehler};
+    \node[kopf, below=1pt] at (V.south) {Was wird variiert?};
+    \node[kopf, above=1pt] at (T.north) {Telemetrie};
+    \node[kopf, above=1pt] at (A.north) {Auswertung};
+    \node[kopf, above=1pt] at (E.north) {Ergebnis};
+\end{tikzpicture}}
+
+% =============================================================================
+\begin{document}
+
+% --- Titelseite ---
+\begin{titlepage}
+    \centering
+    \includegraphics[width=0.35\textwidth]{HKA.jpg}
+
+    {\normalsize\color{hkagray} University of Applied Sciences}\\[0.125cm]
+    {\small\color{hkagray} Fakult\"at f\"ur Informatik und Wirtschaftsinformatik}
+
+    \vspace{.5cm}
+    {\color{hkared}\rule{\textwidth}{1.5pt}}
+
+    \vspace{1.5cm}
+    {\fontsize{24}{30}\selectfont\bfseries\color{hkared} Versuchsaufbau und Methodik}\\[0.6cm]
+    {\Large Wie die Projektarbeit \enquote{Wie feingranular muss Observability sein?}
+    ihre Ergebnisse überprüfbar gewinnt\par}
+    \vspace{.75cm}
+
+    \vspace{.5cm}
+    {\large Begleitdokument zum Exposé}\\[0.3cm]
+    {\large Wintersemester 2026/27}
+
+    \vspace{.5cm}
+    {\color{hkared}\rule{0.6\textwidth}{0.5pt}}
+    \vspace{1.5cm}
+
+    {\normalsize
+    \begin{tabular}{rl}
+        \textbf{Autor:}          & Erlind Sejdiu \\
+        \textbf{Matrikelnummer:} & 106357 \\
+    \end{tabular}
+    }
+
+    \vfill
+    {\small\color{hkagray} Stand: \today}
+\end{titlepage}
+
+\begingroup
+\hypersetup{hidelinks}
+\tableofcontents
+\listoffigures
+\endgroup
+\thispagestyle{empty}
+\newpage
+\setcounter{page}{1}
+
+% =============================================================================
+\section{Auf einen Blick}
+
+\begin{kernaussage}
+\textbf{Leitfrage:} Wie fein muss eine .NET-Microservice-Anwendung mit OpenTelemetry instrumentiert werden, damit sich Fehler finden lassen, ohne dass die Instrumentierung zu viel kostet?\\[3pt]
+\textbf{Antwortweg:} Dieselbe Anwendung in vier Stufen instrumentieren, Fehler einbauen und je Stufe \emph{Kosten} und \emph{Nutzen} messen. Der Messaufbau wird aus bestehenden Arbeiten übernommen.
+\end{kernaussage}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    blk/.style={draw=hkared, fill=hkared!10, rounded corners=3pt, align=center, minimum width=3.2cm, minimum height=1.1cm},
+    inst/.style={draw=hkagray, fill=hkagray!10, rounded corners=3pt, align=center, minimum width=3.2cm, minimum height=1.1cm},
+]
+% obere Reihe: Methodik (rot), untere Reihe: Versuchsaufbau (grau)
+\node[blk] (meth) at (5,0) {Methodik\\\scriptsize Stufen S0--S3};
+\node[inst] (load) at (0,-2.4) {Last + Fehler\\\scriptsize Fehlerkatalog};
+\node[inst] (sut) at (5,-2.4) {Testsystem\\\scriptsize eShop (.NET)};
+\node[inst] (mess) at (10,-2.4) {Messung\\\scriptsize Kosten und Nutzen};
+\draw[->] (meth) -- node[right, font=\scriptsize] {instrumentiert} (sut);
+\draw[->] (load) -- (sut);
+\draw[->] (sut) -- (mess);
+\end{tikzpicture}
+\caption{Ablauf der Arbeit. Rot: Methodik (wird untersucht und verbessert). Grau: Versuchsaufbau (Messinstrument, bleibt unverändert).}
+\label{fig:ueberblick}
+\end{figure}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}l X@{}}
+\toprule
+\textbf{Forschungsfrage} & \textbf{Erwartung (Hypothese)} \\
+\midrule
+FF1 Was kosten die Stufen S1--S3? & H1: Kosten steigen, von S2 auf S3 überproportional. \\
+FF2 Woher kommen die Kosten? & H2: Das Versenden der Daten ist der größte Anteil \cite{nou2025tracing}. \\
+FF3 Ab welcher Stufe werden Fehler auffindbar? & H3: S2 findet fast so viel wie S3, kostet aber deutlich weniger. \\
+FF4 Span, Event, Attribut oder Log? & H4: Events und Attribute sind günstiger als eigene Spans. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+% =============================================================================
+\section{Wie messen andere Arbeiten?}\label{sec:verwandt}
+
+\begin{kernaussage}
+Alle vier Arbeiten folgen demselben Muster: \emph{Last} erzeugen, \emph{Fehler} einbauen, \emph{eine Stellschraube} verändern, Telemetrie \emph{auswerten}. Die Abbildungen verwenden deshalb dieselbe Darstellung. Leere, gestrichelte Kästen zeigen, was eine Arbeit nicht untersucht.
+\end{kernaussage}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\scriptsize]
+\node[lastn, text width=1.6cm, minimum height=6mm] at (0,0) {Last};
+\node[fehlern, text width=1.6cm, minimum height=6mm] at (2.2,0) {Fehler};
+\node[varn, text width=1.6cm, minimum height=6mm] at (4.4,0) {variiert};
+\node[sysn, text width=1.6cm, minimum height=6mm] at (6.6,0) {System};
+\node[auswn, text width=1.6cm, minimum height=6mm] at (8.8,0) {Auswertung};
+\node[leer, text width=1.6cm, minimum height=6mm] at (11,0) {nicht\\untersucht};
+\end{tikzpicture}
+\caption{Legende für die Abbildungen~\ref{fig:nou} bis~\ref{fig:eigen}}
+\label{fig:legende}
+\end{figure}
+
+\subsection{Nõu et al.\ 2025: Kosten von Tracing}
+
+\begin{figure}[H]
+\centering
+\pipeline
+  {k6\\\texttt{constant-}\\\texttt{arrival-rate}}
+  {keine Fehler}
+  {ohne / OpenTelemetry / Elastic APM\\(nur automatisch)}
+  {TechEmpower:\\Flask, Spring,\\Go, Node.js}
+  {Export an\\Backend}
+  {Vergleich mit\\Basislinie,\\Zerlegung in Phasen}
+  {Durchsatz,\\Latenz,\\Anteil je Phase}
+  {leer}{varn}
+\caption[Messaufbau Nõu et al.]{Messaufbau von Nõu et al.\ \cite{nou2025tracing}. Gemessen werden nur Kosten, kein Nutzen.}
+\label{fig:nou}
+\end{figure}
+
+\subsection{Borges et al.\ 2024 (OXN): Sichtbarkeit von Fehlern}
+
+\begin{figure}[H]
+\centering
+\pipeline
+  {Locust\\50 Nutzer\\(geschlossen)}
+  {Pause, Paketverlust, Netzverzögerung}
+  {Trace-Sampling\\1 / 5 / 10\,\%,\\Metrik-Intervall}
+  {OpenTelemetry Demo\\(Recommendation)}
+  {Traces,\\Metriken\\(keine Logs)}
+  {Klassifikator:\\\enquote{Fehler\\erkennbar?}}
+  {Fault Coverage,\\OFO,\\CPU-Zeit}
+  {fehlern}{varn}
+\caption[Messaufbau OXN]{Messaufbau von OXN \cite{borges2024oxn}. Variiert wird, \emph{wie viele} Traces aufgezeichnet werden.}
+\label{fig:oxn}
+\end{figure}
+
+\subsection{Zhou et al.\ (TrainTicket): Fehlersuche durch Menschen}
+
+\begin{figure}[H]
+\centering
+\pipeline
+  {Nachstellen\\des Fehlerfalls}
+  {22 Fehler aus einer Industrie-\\befragung, im Code}
+  {Hilfsmittel: Logs /\\+ Tracing /\\+ Visualisierung}
+  {TrainTicket\\(Java)}
+  {Logs,\\Traces}
+  {Entwickler\\suchen die Ursache}
+  {Erfolg und\\Aufwand der\\Fehlersuche}
+  {fehlern}{varn}
+\caption[Messaufbau TrainTicket]{Messaufbau von Zhou et al.\ \cite{zhou2021trainticket}. Bewertet wird der Nutzen durch Menschen, nicht die Kosten.}
+\label{fig:trainticket}
+\end{figure}
+
+\subsection{Pham et al.\ (RCAEval): automatische Ursachenanalyse}
+
+\begin{figure}[H]
+\centering
+\pipeline
+  {Last-\\generator}
+  {CPU, Speicher, Netz, Disk, Code\\(11 Arten)}
+  {Instrumentierung\\fest}
+  {Online Boutique,\\Sock Shop,\\TrainTicket}
+  {Metriken, Logs, Traces\\(735 Fälle)}
+  {15 Verfahren zur Ursachen-\\analyse}
+  {AC@k: richtige Ursache unter den Top-k?}
+  {fehlern}{leer}
+\caption[Messaufbau RCAEval]{Messaufbau von RCAEval \cite{pham2024rcaeval}. Variiert wird das Auswerteverfahren, nicht die Instrumentierung.}
+\label{fig:rcaeval}
+\end{figure}
+
+\subsection{Diese Arbeit im Vergleich}
+
+\begin{figure}[H]
+\centering
+\pipeline
+  {k6\\\texttt{constant-}\\\texttt{arrival-rate},\\TPC-W-Mix}
+  {F1--F7: Infrastruktur und Code}
+  {\textbf{Stufen S0--S3,}\\\textbf{Erfassungsform}\\(Sampling 100\,\%)}
+  {eShop\\(.NET)}
+  {Traces\\\textbf{und Logs}}
+  {Basislinie + Zerlegung;\\Klassifikator + Mensch}
+  {Latenz, CPU, RAM, Volumen;\\FC/OFO, Lokalisierung}
+  {fehlern}{varn}
+\caption[Messaufbau dieser Arbeit]{Messaufbau dieser Arbeit. Last und Kostenmessung nach Nõu et al., Fehler nach TrainTicket und RCAEval, Sichtbarkeit nach OXN, Fehlersuche durch Menschen nach TrainTicket.}
+\label{fig:eigen}
+\end{figure}
+
+\begin{kernaussage}
+\textbf{Abgrenzung:} OXN verändert, \emph{wie viele} Traces aufgezeichnet werden. Diese Arbeit verändert, \emph{was in einem Trace steht}. Nõu et al.\ messen nur Kosten, TrainTicket und RCAEval nur Nutzen. Diese Arbeit misst beides am selben System.
+\end{kernaussage}
+
+% =============================================================================
+\section{Methodik und Versuchsaufbau}\label{sec:trennung}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}l X X@{}}
+\toprule
+ & \textbf{Methodik} (wird untersucht) & \textbf{Versuchsaufbau} (misst) \\
+\midrule
+Inhalt & Stufen S0--S3, Erfassungsform, Leitfaden & Testsystem, Last, Fehler, Messung \\
+Herkunft & Literatur & bestehende Studien und Benchmarks \\
+Änderbar? & ja, nach jeder Iteration & nein, vor der Bewertung eingefroren \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\textbf{R1} Der Aufbau wird nicht passend zur Methodik gewählt. \textbf{R2} Er wird vor der Bewertung in Git markiert. \textbf{R3} Jede Messung ist per Skript wiederholbar.
+
+% =============================================================================
+\section{Methodik: Was wird verändert?}\label{sec:methodik}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=0.95cm, y=0.42cm,
+    sp/.style={draw=black!60, rounded corners=1pt, minimum height=0.32cm, inner sep=0pt},
+    lab/.style={font=\tiny, anchor=west, inner sep=1pt},
+]
+% Hilfsmakro: Zeile y, Start, Ende, Text, Farbe
+\newcommand{\spanbar}[5]{\fill[#5] (#2,-#1-0.35) rectangle (#3,-#1+0.35); \draw[black!60] (#2,-#1-0.35) rectangle (#3,-#1+0.35); \ifnum#1=0 \node[lab] at (#2,-#1) {#4};\else \node[lab] at (#3,-#1) {#4};\fi}
+% --- S1 ---
+\begin{scope}
+\node[kopf] at (2,1.4) {S1: automatisch};
+\spanbar{0}{0}{4.2}{POST /api/orders}{hkagray!25}
+\spanbar{1}{1.2}{2.7}{INSERT orders}{hkagray!15}
+\spanbar{2}{2.8}{3.8}{publish OrderStarted}{hkagray!15}
+\end{scope}
+% --- S2 ---
+\begin{scope}[xshift=5.4cm]
+\node[kopf] at (2,1.4) {S2: + fachliche Schritte};
+\spanbar{0}{0}{4.2}{POST /api/orders}{hkagray!25}
+\spanbar{1}{0.2}{1.1}{prüfen}{hkared!25}
+\spanbar{2}{1.15}{2.75}{speichern}{hkared!25}
+\spanbar{3}{1.2}{2.7}{INSERT orders}{hkagray!15}
+\spanbar{4}{2.8}{3.9}{Ereignis senden}{hkared!25}
+\spanbar{5}{2.85}{3.8}{publish}{hkagray!15}
+\end{scope}
+% --- S3 ---
+\begin{scope}[xshift=10.8cm]
+\node[kopf] at (2,1.4) {S3: + Methoden};
+\spanbar{0}{0}{4.2}{POST /api/orders}{hkagray!25}
+\spanbar{1}{0.2}{1.1}{prüfen}{hkared!25}
+\spanbar{2}{0.25}{0.6}{Adr.}{hkared!55}
+\spanbar{3}{0.65}{1.05}{Pos.}{hkared!55}
+\spanbar{4}{1.15}{2.75}{speichern}{hkared!25}
+\spanbar{5}{1.18}{1.5}{Map}{hkared!55}
+\spanbar{6}{1.5}{2.7}{INSERT orders}{hkagray!15}
+\spanbar{7}{2.8}{3.9}{Ereignis senden}{hkared!25}
+\spanbar{8}{2.85}{3.8}{publish}{hkagray!15}
+\end{scope}
+\draw[->, hkagray] (0,-3.6) -- node[below, font=\tiny] {Zeit} (4.2,-3.6);
+\end{tikzpicture}
+\caption[Granularitätsstufen am Beispiel]{Derselbe Vorgang \enquote{Bestellung abschicken} als Trace in den Stufen S1--S3. Grau: automatisch erzeugte Spans, rot: manuell ergänzte Spans. S0 erzeugt keinen Trace.}
+\label{fig:stufen}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1cm, y=1cm,
+    par/.style={draw=black!60, fill=hkagray!25, minimum height=0.35cm, inner sep=0pt},
+    chi/.style={draw=black!60, fill=hkared!25, minimum height=0.35cm, inner sep=0pt},
+    tt/.style={font=\scriptsize\bfseries, anchor=west},
+    lab/.style={font=\tiny, anchor=west, inner sep=1pt},
+]
+% (a) eigener Span
+\node[tt] at (0,0.6) {a) eigener Span};
+\draw[par] (0,0) rectangle (6,0.35); \node[lab] at (0,0.175) {prüfen};
+\draw[chi] (1.5,-0.5) rectangle (3.2,-0.15); \node[lab] at (1.5,-0.325) {Lagerprüfung};
+% (b) Event
+\node[tt] at (8,0.6) {b) Event};
+\draw[par] (8,0) rectangle (14,0.35); \node[lab] at (8,0.175) {prüfen};
+\fill[hkared] (11.2,0.175) +(0,0.2) -- +(0.2,0) -- +(0,-0.2) -- +(-0.2,0) -- cycle;
+\node[font=\tiny, below] at (11.2,-0.05) {\enquote{Artikel nicht verfügbar}};
+% (c) Attribut
+\node[tt] at (0,-1.4) {c) Attribut};
+\draw[par] (0,-2) rectangle (6,-1.65); \node[lab] at (0,-1.825) {prüfen};
+\node[draw=hkared, fill=hkared!10, font=\tiny, rounded corners=1pt] at (3,-2.45) {\texttt{stock.available = false}};
+\draw[hkared] (3,-2.3) -- (3,-2);
+% (d) Log
+\node[tt] at (8,-1.4) {d) Log-Eintrag};
+\draw[par] (8,-2) rectangle (14,-1.65); \node[lab] at (8,-1.825) {prüfen};
+\node[draw=hkagray, fill=white, font=\tiny\ttfamily, align=left, anchor=north west] (log) at (8,-2.3) {WARN Artikel nicht verfügbar trace\_id=4bf9\ldots};
+\draw[hkagray, dashed] (11,-2) -- (11,-2.3);
+\end{tikzpicture}
+\caption[Vier Erfassungsformen]{Dieselbe Information in vier Formen (Stufe S2). Gemessen wird, was jede Form kostet und ob sie bei der Fehlersuche hilft.}
+\label{fig:erfassung}
+\end{figure}
+
+Die Regeln des Leitfadens stammen aus den Semantic Conventions \cite{otel_semconv}, Dapper \cite{sigelman2010dapper}, Canopy \cite{kaldor2017canopy}, Sambasivan et al.\ \cite{sambasivan2014trace} und Majors et al.\ \cite{majors2022observability}. Jede Regel erhält eine Quelle, ein Beispiel aus eShop und ein Messergebnis.
+
+% =============================================================================
+\clearpage
+\section{Versuchsaufbau in diesem Beispiel}\label{sec:aufbau}
+
+\subsection{Gesamtaufbau}
+
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+    svc/.style={draw=black!80, fill=white, rounded corners=2pt, minimum width=2.6cm, minimum height=6mm, font=\scriptsize},
+    db/.style={cylinder, shape border rotate=90, aspect=0.25, draw=hkagray, fill=hkagray!15, minimum width=1.6cm, minimum height=9mm, font=\scriptsize, align=center},
+    tool/.style={draw=hkagray, fill=hkagray!12, rounded corners=2pt, align=center, font=\scriptsize, minimum height=9mm},
+    flt/.style={draw=hkared, fill=hkared!15, rounded corners=2pt, align=center, font=\scriptsize, minimum height=9mm},
+    grp/.style={draw=black!50, rounded corners=5pt, inner sep=7pt},
+    gt/.style={fill=white, inner sep=2pt, font=\scriptsize\bfseries},
+]
+% Last
+\node[tool, text width=2.2cm] (k6) at (0,1) {\textbf{k6}\\feste Ankunftsrate\\TPC-W-Mix};
+% Dienste
+\node[svc] (cat) at (4,2.4) {Catalog.API (REST)};
+\node[svc] (bas) at (4,1.6) {Basket.API (gRPC)};
+\node[svc] (ord) at (4,0.8) {Ordering.API (REST)};
+\node[svc] (op)  at (4,0.0) {OrderProcessor};
+\node[svc] (pay) at (4,-0.8) {PaymentProcessor};
+% Toxiproxy
+\node[flt, text width=1.7cm, minimum height=3.6cm] (tox) at (7.3,0.8) {\textbf{Toxiproxy}\\[2pt]Verzögerung,\\Abbruch};
+% Datenhaltung
+\node[db] (pg) at (10,2.2) {PostgreSQL};
+\node[db] (rd) at (10,0.8) {Redis};
+\node[db] (mq) at (10,-0.6) {RabbitMQ};
+% Fehlersteuerung
+\node[flt, text width=4.4cm] (fc) at (6.6,4.6) {\textbf{Fehlersteuerung (Skript)}\\Fehler + Stufe zufällig, verdeckte Notiz};
+% Telemetrie und Messung
+\node[tool, text width=2.4cm] (col) at (4,-2.9) {\textbf{OTel Collector}\\Spans/Logs zählen};
+\node[tool, text width=2.4cm] (be)  at (7.3,-2.9) {\textbf{Backend}\\Traces + Logs};
+\node[tool, text width=2.4cm] (cad) at (10.3,-2.9) {\textbf{cAdvisor}\\CPU, RAM je Container};
+\node[flt, text width=2.2cm, fill=hkared!30] (ana) at (0,-2.9) {\textbf{Auswertung}\\Skripte};
+% Gruppen
+\begin{scope}[on background layer]
+\node[grp, fit={(cat)(pay)(tox)(pg)(mq)(2.7,3.25)}] (eshop) {};
+\end{scope}
+\node[font=\scriptsize\bfseries, anchor=north west] at ([xshift=3pt,yshift=-3pt]eshop.north west) {eShop (Docker Compose)};
+% Pfeile Last
+\draw[->] (k6.east) -- ++(0.6,0) |- (cat.west);
+\draw[->] (k6.east) -- ++(0.6,0) |- (bas.west);
+\draw[->] (k6.east) -- ++(0.6,0) |- (ord.west);
+% Dienste -> Toxiproxy -> Daten
+\foreach \s in {cat,bas,ord,op,pay} \draw[->, black!60] (\s.east) -- (\s.east -| tox.west);
+\draw[->, black!60] (tox.east |- pg) -- (pg.west);
+\draw[->, black!60] (tox.east |- rd) -- (rd.west);
+\draw[->, black!60] (tox.east |- mq) -- (mq.west);
+% Fehler
+\draw[->, hkared, thick, dashed] (fc.south -| tox.north) -- node[right, font=\tiny] {Toxiproxy-API} (tox.north);
+\coordinate (fx) at (5.4,0); \draw[->, hkared, thick, dashed] (fc.south -| fx) -- node[right, font=\tiny, align=left] {stop/pause,\\Feature-Flag} (fx |- eshop.north);
+% Telemetrie
+\draw[->, dotted, thick, hkagray] (eshop.south -| col.north) -- node[left, font=\tiny] {OTLP} (col.north);
+\draw[->, dotted, thick, hkagray] (col) -- (be);
+\draw[->, dotted, thick, hkagray] (eshop.south -| cad.north) -- (cad.north);
+% Messdaten zur Auswertung
+\draw[->, hkared] (k6.south) -- node[left, font=\tiny, align=right] {Latenz,\\Durchsatz} (ana.north);
+\draw[->, hkared] (col.west) -- (ana.east);
+\draw[->, hkared] (cad.south) -- ++(0,-0.5) -| (ana.south);
+\draw[->, hkared] (fc.north) -- ++(0,0.4) -| node[pos=0.25, above, font=\tiny] {Ground Truth} (-1.4,-2.9) -- (ana.west);
+\end{tikzpicture}}
+\caption[Gesamtaufbau]{Versuchsaufbau mit eShop. Schwarz: Anwendung, rot gestrichelt: Fehler, grau gepunktet: Telemetrie, rot durchgezogen: Messdaten für die Auswertung. Lastgenerator und Messwerkzeuge laufen getrennt von eShop.}
+\label{fig:aufbau}
+\end{figure}
+
+\subsection{Last}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+% offenes vs geschlossenes Modell
+\begin{scope}
+\node[kopf] at (2.2,1.6) {geschlossen (OXN, Locust)};
+\foreach \i in {0,1,2} \node[circle, draw=hkagray, fill=hkagray!20, minimum size=4mm, inner sep=0] (u\i) at (0,0.9-\i*0.6) {};
+\node[sysn, text width=1.4cm, minimum height=1.6cm] (s1) at (3.4,0.3) {System};
+\foreach \i in {0,1,2} {\draw[->] (u\i.east) -- (s1.west |- u\i); }
+\draw[->, hkagray] (s1.south) -- ++(0,-0.4) -| node[pos=0.25, below, font=\tiny] {Antwort abwarten, dann neue Anfrage} (u2.south);
+\node[font=\tiny, align=center, text=hkared] at (1.8,-2.0) {System langsamer $\Rightarrow$ weniger Anfragen\\$\Rightarrow$ Overhead wird unterschätzt};
+\end{scope}
+% offen
+\begin{scope}[xshift=7.6cm]
+\node[kopf] at (2.2,1.6) {offen (Nõu et al., diese Arbeit)};
+\foreach \i in {0,...,5} \fill[hkared] (\i*0.32,0.3) circle (0.07);
+\draw[->] (1.9,0.3) -- node[above, font=\tiny] {z.\,B.\ 200/s} (2.6,0.3);
+\node[sysn, text width=1.4cm, minimum height=1.6cm] (s2) at (3.4,0.3) {System};
+\node[font=\tiny, align=center, text=hkared] at (1.8,-2.0) {Rate bleibt konstant\\$\Rightarrow$ Verlangsamung wird sichtbar};
+\end{scope}
+\end{tikzpicture}
+\caption[Offenes und geschlossenes Lastmodell]{Warum eine feste Ankunftsrate verwendet wird \cite{schroeder2006openclosed}.}
+\label{fig:lastmodell}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+% Stufentest
+\begin{scope}
+\draw[->] (0,0) -- (5.2,0) node[below left, font=\tiny] {Rate};
+\draw[->] (0,0) -- (0,2.4) node[above, font=\tiny] {p99};
+\draw[thick, black] (0.2,0.3) .. controls (3,0.4) and (3.8,0.6) .. (4.5,2.2);
+\draw[dashed, hkared] (4.05,0) node[below, font=\tiny] {$X_{max}$} -- (4.05,1.2);
+\foreach \p/\l in {1.01/25\,\%, 2.02/50\,\%, 3.04/75\,\%} {\draw[hkared, thick] (\p,0) -- (\p,0.1); \node[below, font=\tiny, text=hkared] at (\p,0) {\l};}
+\node[kopf] at (2.6,2.6) {1. Kalibrierung auf S0};
+\end{scope}
+% Ablauf
+\begin{scope}[xshift=6.6cm, yshift=0.6cm]
+\fill[hkagray!25] (0,0) rectangle (2,0.6);
+\fill[hkared!30] (2,0) rectangle (7,0.6);
+\fill[hkagray!25] (7,0) rectangle (8,0.6);
+\node at (1,0.3) {Aufwärmen};
+\node at (4.5,0.3) {\textbf{Messung}};
+\node at (7.5,0.3) {Ende};
+\node[below, font=\tiny] at (1,0) {2 min};
+\node[below, font=\tiny] at (4.5,0) {5 min, nur dieser Teil zählt};
+\node[below, font=\tiny] at (7.5,0) {1 min};
+\node[kopf] at (4,2) {2. ein Messlauf};
+\end{scope}
+\end{tikzpicture}
+\caption[Kalibrierung und Ablauf eines Messlaufs]{Links: maximaler Durchsatz $X_{max}$ ohne Instrumentierung, gemessen wird bei 25, 50 und 75\,\%. Rechts: Ablauf eines Laufs.}
+\label{fig:lastablauf}
+\end{figure}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}X l l@{}}
+\toprule
+\textbf{Nutzerpfad} & \textbf{Aufruf} & \textbf{Anteil nach TPC-W \cite{tpcw}} \\
+\midrule
+Katalog durchsuchen, Artikel ansehen & Catalog.API (REST) & ca.\ 80\,\% \offen{prüfen} \\
+Warenkorb ändern, bestellen & Basket.API (gRPC), Ordering.API (REST) & ca.\ 20\,\% \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Fehler}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}l X X l@{}}
+\toprule
+\textbf{ID} & \textbf{Fehler} & \textbf{Eingebaut über} & \textbf{Vorbild} \\
+\midrule
+F1 & Datenbank langsam & Toxiproxy & RCAEval, OXN \\
+F2 & Basket.API ausgefallen & \texttt{docker stop} & RCAEval, OXN \\
+F3 & OrderProcessor hängt & \texttt{docker pause} & OXN \\
+F4 & Fehler in Geschäftslogik verschluckt & Feature-Flag & TrainTicket, RCAEval \\
+F5 & Dienst rechnet zu lange & Feature-Flag & RCAEval \\
+F6 & Redis nicht erreichbar & Toxiproxy & RCAEval \\
+F7 & falsche Konfiguration & Umgebungsvariable & TrainTicket \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\fill[hkagray!20] (0,0) rectangle (4,0.6);
+\fill[hkared!25] (4,0) rectangle (13.5,0.6);
+\node[font=\scriptsize] at (2,0.3) {Normalbetrieb (2 min)};
+\node[font=\scriptsize] at (8.7,0.3) {Fehler aktiv};
+\draw[->] (0,-0.2) -- (14,-0.2) node[right, font=\tiny] {Zeit};
+% Ereignisse
+\draw[hkared, very thick] (4,-0.35) -- (4,0.8);
+\node[font=\tiny, align=right, text=hkared, anchor=east] at (4.05,1.1) {Fehler an\\(zufälliger Zeitpunkt)};
+\draw[black, thick] (6.4,-0.35) -- (6.4,0.8);
+\node[font=\tiny, align=center] at (6.4,1.1) {Symptom\\\enquote{Bestellungen langsam}};
+\draw[decorate, decoration={brace, mirror, amplitude=5pt}] (6.4,-0.5) -- node[below=5pt, font=\tiny, align=center] {Diagnose nach Checkliste (max.\ 15 min)\\Schritte und Zeit werden gezählt} (12,-0.5);
+\draw[black, thick] (12.6,-0.35) -- (12.6,0.8);
+\node[font=\tiny, align=center] at (12.6,1.1) {Abgleich mit\\verdeckter Notiz};
+% Skript
+\node[fehlern, text width=3.4cm, font=\tiny, minimum height=7mm] (skr) at (1.7,2.3) {Skript: Fehler + Stufe zufällig, Notiz verdeckt};
+\draw[->, hkared, dashed] (skr.east) -| (4,1.45);
+\draw[->, hkared, dashed] (skr.east) -- (12.6,2.3) -- (12.6,1.45);
+\end{tikzpicture}
+\caption[Ablauf eines Fehlerversuchs]{Ablauf eines Fehlerversuchs nach dem Muster des Chaos Engineering \cite{basiri2016chaos}. Die diagnostizierende Person kennt den aktiven Fehler nicht.}
+\label{fig:fehlerablauf}
+\end{figure}
+
+\subsection{Messung und Auswertung}
+
+\begin{kernaussage}
+Kosten werden von außen gemessen (k6, cAdvisor), nie aus den Traces selbst, denn S0 hat keine Traces.
+\end{kernaussage}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+% Treppe der Varianten
+\begin{scope}
+\node[kopf] at (2.6,3.5) {vier Varianten je Stufe};
+\foreach \y/\t in {0/S0: ohne OpenTelemetry, 0.8/eingerichtet{,} nichts aufgezeichnet, 1.6/aufgezeichnet{,} nicht verschickt, 2.4/aufgezeichnet und verschickt}
+  \node[draw=black!60, fill=white, font=\tiny, minimum width=4.4cm, minimum height=5mm, anchor=west] at (0,\y) {\t};
+\foreach \y/\t/\c in {0.4/Einrichten/hkagray!40, 1.2/Aufzeichnen/hkared!40, 2.0/Versenden/hkared!80}
+  \node[font=\tiny, anchor=west, fill=\c, inner sep=2pt] at (4.7,\y) {$\Delta$ \t};
+\end{scope}
+% schematische gestapelte Balken
+\begin{scope}[xshift=8.6cm]
+\node[kopf] at (2.6,3.5) {erwartete Form (schematisch, keine Daten)};
+\draw[->] (0,0) -- (4.8,0);
+\draw[->] (0,0) -- (0,3) node[left, font=\tiny] {Overhead};
+\foreach \x/\a/\b/\c/\l in {0.6/0.15/0.25/0.5/S1, 2.0/0.15/0.5/0.9/S2, 3.4/0.15/1.1/1.4/S3} {
+  \fill[hkagray!40] (\x,0) rectangle (\x+0.8,\a);
+  \fill[hkared!40] (\x,\a) rectangle (\x+0.8,\a+\b);
+  \fill[hkared!80] (\x,\a+\b) rectangle (\x+0.8,\a+\b+\c);
+  \node[below, font=\tiny] at (\x+0.4,0) {\l};
+}
+\end{scope}
+\end{tikzpicture}
+\caption[Zerlegung der Kosten]{Zerlegung der Kosten wie bei Nõu et al.\ \cite{nou2025tracing}. Die Differenz zweier benachbarter Varianten ergibt den Anteil einer Phase.}
+\label{fig:zerlegung}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1.5cm, y=0.5cm]
+\newcommand{\zelle}[3]{%
+  \ifcase#3 \def\fc{white}\def\tx{nein}\or \def\fc{hkared!20}\def\tx{teils}\or \def\fc{hkared!60}\def\tx{ja}\fi
+  \fill[fill=\fc] (#1,-#2) rectangle (#1+1,-#2-1); \draw[black!40] (#1,-#2) rectangle (#1+1,-#2-1);
+  \node[font=\tiny] at (#1+0.5,-#2-0.5) {\tx};}
+\foreach \s [count=\i from 0] in {S1,S2,S3} \node[kopf] at (\i+1.5,0.5) {\s};
+\foreach \f/\n [count=\j from 0] in {F1/DB langsam,F2/Dienst aus,F3/Prozessor hängt,F4/Logik verschluckt,F5/Rechenlast,F6/Redis weg,F7/Konfiguration}
+  \node[font=\tiny, anchor=east] at (1,-\j-0.5) {\f\ \n};
+\foreach \j/\a/\b/\c in {0/2/2/2, 1/2/2/2, 2/0/1/1, 3/0/2/2, 4/1/2/2, 5/2/2/2, 6/1/1/1}
+  {\zelle{1}{\j}{\a}\zelle{2}{\j}{\b}\zelle{3}{\j}{\c}}
+\node[font=\tiny, align=left, anchor=west, text=hkagray] at (4.3,-3.5) {Zelle = Ursache gefunden?\\Erhoben automatisch (FC/OFO \cite{borges2024oxn})\\und durch Menschen (\cite{zhou2021trainticket}).\\[3pt]Hier: \textbf{erwartetes} Muster,\\keine Messdaten.};
+\end{tikzpicture}
+\caption[Ergebnis-Matrix Nutzen]{Form des Ergebnisses für den Nutzen. Zusammen mit Abbildung~\ref{fig:zerlegung} zeigt sie je Stufe, was sie kostet und was sie bringt.}
+\label{fig:matrix}
+\end{figure}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}l X@{}}
+\toprule
+\textbf{Kosten} & Latenz p50/p95/p99 (k6), max.\ Durchsatz, CPU und RAM (cAdvisor), Spans/Logs/Bytes pro Anfrage (Collector) \\
+\textbf{Nutzen} & Fault Coverage und OFO (automatisch), gefunden ja/nein, Schritte, Zeit (Mensch) \\
+\textbf{Gültigkeit} & Fehlerquote $<$ 1\,\%, Rate erreicht, Lastgenerator nicht ausgelastet, keine verworfenen Spans \\
+\textbf{Statistik} & $\ge$ 10 Läufe in zufälliger Reihenfolge \offen{im Pilot bestätigen}, ein Lauf = ein Datenpunkt, Median mit Konfidenzintervall, Mann-Whitney-U und Cliff's Delta \cite{georges2007rigorous,kalibera2013rigorous} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+% =============================================================================
+\section{Versuchsplan, Risiken, offene Punkte}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}X l l@{}}
+\toprule
+\textbf{Versuchsblock} & \textbf{Läufe} & \textbf{Frage} \\
+\midrule
+S0--S3 $\times$ 3 Lastniveaus $\times$ 10 & 120 & FF1 \\
+Zerlegung S1--S3 $\times$ 2 Zusatzvarianten $\times$ 10 (50\,\% Last) & 60 & FF2 \\
+4 Erfassungsformen $\times$ 10 (50\,\% Last) & 40 & FF4 \\
+7 Fehler $\times$ 4 Stufen, mehrfach & \offen{offen} & FF3 \\
+\midrule
+\textbf{Leistungsmessung gesamt} & \textbf{220} $\approx$ \textbf{30\,h} & \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}l X@{}}
+\toprule
+\textbf{Risiko \cite{wohlin2012experimentation}} & \textbf{Gegenmaßnahme} \\
+\midrule
+eigene Bewertung der eigenen Methodik & R1--R3, verdeckte Fehlerauswahl, OXN-Metriken \\
+Lerneffekt bei der Diagnose & zufällige Reihenfolge, Varianten je Fehler, zweite Person \\
+nur eShop und .NET & ausdrücklich benennen, optional zweites System \\
+Messrauschen & eigener Rechner, getrennte CPU-Kerne, Wiederholungen \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\textbf{Zur Abstimmung:} Blazor statt Angular in eShop? OXN als Werkzeug wiederverwenden? Analyse-Backend (Jaeger oder Tempo und Loki)? Zweite Person für die Diagnose?
+
+\printbibliography[heading=bibintoc, title={Literaturverzeichnis}]
+
+\end{document}

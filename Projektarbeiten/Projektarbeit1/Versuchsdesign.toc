@@ -1,0 +1,17 @@
+\babel@toc {ngerman}{}\relax 
+\contentsline {section}{\numberline {1}Auf einen Blick}{1}{section.1}%
+\contentsline {section}{\numberline {2}Wie messen andere Arbeiten?}{1}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Nõu et al.\ 2025: Kosten von Tracing}{2}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Borges et al.\ 2024 (OXN): Sichtbarkeit von Fehlern}{2}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Zhou et al.\ (TrainTicket): Fehlersuche durch Menschen}{2}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Pham et al.\ (RCAEval): automatische Ursachenanalyse}{3}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Diese Arbeit im Vergleich}{3}{subsection.2.5}%
+\contentsline {section}{\numberline {3}Methodik und Versuchsaufbau}{3}{section.3}%
+\contentsline {section}{\numberline {4}Methodik: Was wird verändert?}{4}{section.4}%
+\contentsline {section}{\numberline {5}Versuchsaufbau in diesem Beispiel}{5}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Gesamtaufbau}{5}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Last}{5}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Fehler}{6}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Messung und Auswertung}{6}{subsection.5.4}%
+\contentsline {section}{\numberline {6}Versuchsplan, Risiken, offene Punkte}{7}{section.6}%
+\contentsline {section}{Literaturverzeichnis}{8}{section.6}%
