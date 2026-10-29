@@ -1,0 +1,139 @@
+% =============================================================================
+% Practical SAT Solving - Uebungsblatt 2
+% Dozent: Prof. Dr. Carsten Sinz
+% Autor: Erlind Sejdiu
+% =============================================================================
+\documentclass[11pt, a4paper]{article}
+
+% --- Sprache und Layout ---
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[left=2.0cm, right=2.0cm, top=1.8cm, bottom=1.8cm]{geometry}
+\usepackage{parskip}
+
+% --- Mathe und Tabellen ---
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+
+% --- Hyperref ---
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black,
+    urlcolor=blue
+}
+
+% --- Kurzschreibweisen ---
+\newcommand{\nx}[1]{\overline{x_{#1}}}
+\newcommand{\n}[1]{\overline{#1}}
+
+\begin{document}
+
+% --- Header ---
+\begin{flushleft}
+    \textbf{Practical SAT Solving} -- WS 2026/27 \hfill \textbf{Erlind Sejdiu \& Johannes Ott}\\
+    Prof. Dr. Carsten Sinz \hfill Hochschule Karlsruhe (HKA)\\
+    \rule{\textwidth}{0.4pt}
+\end{flushleft}
+
+\begin{center}
+    {\Large\bfseries Übungsblatt 2: Aufgaben 1 \& 2}
+\end{center}
+\vspace{0.2em}
+
+% =============================================================================
+\section*{Aufgabe 1: Resolutionsbeweis}
+% =============================================================================
+
+Gegeben ist die Formel
+\begin{equation*}
+    \underbrace{(x_3 \lor x_4 \lor \nx1 \lor x_5)}_{(1)} \land
+    \underbrace{(\nx3 \lor x_4 \lor x_5)}_{(2)} \land
+    \underbrace{(x_3 \lor \nx4 \lor \nx1)}_{(3)} \land
+    \underbrace{(x_1 \lor x_2)}_{(4)} \land
+    \underbrace{(x_1 \lor \nx2)}_{(5)} \land
+    \underbrace{(\nx1 \lor \nx5)}_{(6)} \land
+    \underbrace{(\nx3 \lor \nx4 \lor x_5)}_{(7)}
+\end{equation*}
+
+Durch wiederholte Resolution wird die leere Klausel $\square$ abgeleitet:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}r>{$}l<{$}ll@{}}
+    \toprule
+    Nr. & \text{Resolvente} & aus & Variable \\
+    \midrule
+    (8)  & (x_1)                    & (4), (5)   & $x_2$ \\
+    (9)  & (\nx5)                   & (6), (8)   & $x_1$ \\
+    (10) & (x_3 \lor \nx4)          & (3), (8)   & $x_1$ \\
+    (11) & (\nx4 \lor x_5)          & (7), (10)  & $x_3$ \\
+    (12) & (\nx3 \lor x_5)          & (2), (11)  & $x_4$ \\
+    (13) & (x_3 \lor x_4 \lor x_5)  & (1), (8)   & $x_1$ \\
+    (14) & (x_3 \lor x_5)           & (13), (11) & $x_4$ \\
+    (15) & (x_5)                    & (12), (14) & $x_3$ \\
+    (16) & \square                  & (9), (15)  & $x_5$ \\
+    \bottomrule
+\end{tabular}
+\end{center}
+
+Da die leere Klausel ableitbar ist, ist die Formel \textbf{unerfüllbar}.
+
+\newpage
+% =============================================================================
+\section*{Aufgabe 2: Tseitin-Transformation}
+% =============================================================================
+
+Gegeben ist die Formel
+\begin{equation*}
+    F = \bigl(\nx1 \land \overline{(x_3 \Leftrightarrow x_2)}\bigr) \lor
+        \bigl((x_3 \Rightarrow \nx4) \land (x_1 \Rightarrow (x_2 \land \nx3)) \land x_4\bigr)
+\end{equation*}
+
+\subsection*{Hilfsvariablen}
+
+Für jede Teilformel wird eine neue Variable eingeführt:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}>{$}l<{$}@{\quad}>{$}l<{$}@{}}
+    a \Leftrightarrow (x_3 \Leftrightarrow x_2) & d \Leftrightarrow (x_2 \land \nx3) \\
+    b \Leftrightarrow (\nx1 \land \n{a})        & e \Leftrightarrow (x_1 \Rightarrow d) \\
+    c \Leftrightarrow (x_3 \Rightarrow \nx4)    & g \Leftrightarrow (c \land e) \\
+    h \Leftrightarrow (g \land x_4)             & f \Leftrightarrow (b \lor h)
+\end{tabular}
+\end{center}
+
+\subsection*{Tseitin-KNF}
+
+\begin{equation*}
+    T(F) = f \land T_\text{def}(f) \land T_\text{def}(a) \land T_\text{def}(b) \land T_\text{def}(c)
+    \land T_\text{def}(d) \land T_\text{def}(e) \land T_\text{def}(g) \land T_\text{def}(h)
+\end{equation*}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}l>{$}l<{$}@{}}
+    \toprule
+    Definition & \text{Klauseln} \\
+    \midrule
+    Wurzel & (f) \\
+    $f \Leftrightarrow (b \lor h)$ & (\n f \lor b \lor h) \land (f \lor \n b) \land (f \lor \n h) \\
+    $a \Leftrightarrow (x_3 \Leftrightarrow x_2)$ &
+        (\n a \lor \nx3 \lor x_2) \land (\n a \lor x_3 \lor \nx2) \land (a \lor x_3 \lor x_2) \land (a \lor \nx3 \lor \nx2) \\
+    $b \Leftrightarrow (\nx1 \land \n a)$ & (\n b \lor \nx1) \land (\n b \lor \n a) \land (b \lor x_1 \lor a) \\
+    $c \Leftrightarrow (x_3 \Rightarrow \nx4)$ & (\n c \lor \nx3 \lor \nx4) \land (c \lor x_3) \land (c \lor x_4) \\
+    $d \Leftrightarrow (x_2 \land \nx3)$ & (\n d \lor x_2) \land (\n d \lor \nx3) \land (d \lor \nx2 \lor x_3) \\
+    $e \Leftrightarrow (x_1 \Rightarrow d)$ & (\n e \lor \nx1 \lor d) \land (e \lor x_1) \land (e \lor \n d) \\
+    $g \Leftrightarrow (c \land e)$ & (\n g \lor c) \land (\n g \lor e) \land (g \lor \n c \lor \n e) \\
+    $h \Leftrightarrow (g \land x_4)$ & (\n h \lor g) \land (\n h \lor x_4) \land (h \lor \n g \lor \nx4) \\
+    \bottomrule
+\end{tabular}
+\end{center}
+\end{document}
