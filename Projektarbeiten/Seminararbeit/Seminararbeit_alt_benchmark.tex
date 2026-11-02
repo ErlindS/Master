@@ -1,0 +1,582 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[left=30mm,right=25mm,top=25mm,bottom=25mm]{geometry}
+\usepackage[english, ngerman]{babel}
+\usepackage[autostyle=true,german=quotes]{csquotes}
+\usepackage[onehalfspacing]{setspace}
+\usepackage[expansion=false]{microtype}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{etoolbox}
+\usepackage{caption}
+\usepackage{tikz}
+\usetikzlibrary{positioning,patterns}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+% Diagrammfarben (geprüft auf Farbsehschwächen), zusätzlich Marker/Strichart
+\definecolor{cblue}{HTML}{2A78D6}
+\definecolor{corange}{HTML}{EB6834}
+\definecolor{ctext}{HTML}{52514E}
+\usepackage[backend=biber,style=ieee,urldate=long]{biblatex}
+\addbibresource{sycl.bib}
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks,
+    citecolor   = black,
+    filecolor   = black,
+    linkcolor   = black,
+    urlcolor    = black,
+    pdftitle    = {Von C++ zu SYCL: Aufwand, Leistung und Portabilität},
+    pdfauthor   = {Erlind Sejdiu},
+    pdfcreator  = {pdflatex},
+    pdfproducer = {LaTeX with hyperref}
+}
+
+% Tabellen, Abbildungen und Literaturverzeichnis einzeilig
+\AtBeginEnvironment{tabular}{\singlespacing}
+\AtBeginEnvironment{tabularx}{\singlespacing}
+\AtBeginEnvironment{tikzpicture}{\singlespacing}
+\captionsetup{font=small, labelfont=bf}
+\AtBeginBibliography{\singlespacing}
+
+% Markierung für Stellen, die noch ergänzt/geprüft werden müssen
+\newcommand{\offen}[1]{\textcolor{red}{[#1]}}
+
+\begin{document}
+
+% ---------------------------------------------------------------------------
+% Titelei (römische Seitenzahlen, Titelblatt ohne Nummer)
+% ---------------------------------------------------------------------------
+\pagenumbering{Roman}
+
+\begin{titlepage}
+    \raggedright
+    Erlind Sejdiu\\
+    106357
+    \vspace*{3cm}
+
+    \begin{center}
+        {\LARGE\bfseries Von C++ zu SYCL\\[0.3em]
+        Umstellungsaufwand, Leistung und Portabilität\\[0.3em]
+        am Beispiel der Matrixmultiplikation\par}
+        \vspace{2cm}
+        {\large Seminararbeit\\
+        der Hochschule Karlsruhe\\
+        im Master Studiengang Informatik\\
+        im Wintersemester 2026/27\par}
+    \end{center}
+    \vfill
+    \begin{tabular}{@{}ll}
+        Betreuer: & \offen{Name der betreuenden Person}\\
+        Themengruppe: & \offen{Themengruppe des Seminars}\\
+        Abgabedatum: & \offen{Datum}
+    \end{tabular}
+\end{titlepage}
+
+\setcounter{page}{1}
+\tableofcontents
+\newpage
+\listoffigures
+\listoftables
+\newpage
+
+% ---------------------------------------------------------------------------
+% Hauptteil (arabische Seitenzahlen ab 1)
+% ---------------------------------------------------------------------------
+\pagenumbering{arabic}
+
+\section{Einleitung}
+
+Moderne Rechner sind heterogen: Neben der CPU stehen GPUs zur Verfügung, die
+bei datenparallelen Aufgaben um Größenordnungen schneller rechnen. Ihre
+Programmierung ist jedoch herstellerspezifisch. CUDA läuft nur auf
+NVIDIA-Hardware \cite{nickolls2008cuda}, OpenCL ist zwar offen, trennt aber
+Host- und Kernel-Code in verschiedene Sprachen \cite{stone2010opencl}, und
+Bibliotheken wie Kokkos \cite{edwards2014kokkos} oder RAJA
+\cite{beckingsale2019raja} verlagern das Problem in eine zusätzliche
+Abstraktionsschicht. SYCL verspricht, mit reinem C++ und einem einzigen
+Quellcode CPUs und GPUs verschiedener Hersteller zu nutzen
+\cite{khronos2020sycl}. Diese Arbeit prüft das Versprechen anhand der
+Leitfrage:
+
+\begin{quote}
+\emph{Wie aufwendig ist die Umstellung eines C++-Programms auf SYCL, welche
+Leistung bringt sie, und gilt die Portabilität auch für die Leistung?}
+\end{quote}
+
+\noindent Dazu wird ein sequentielles C++-Programm zur Matrixmultiplikation in
+mehreren Stufen nach SYCL überführt und jede Stufe auf einer CPU und einer
+NVIDIA-GPU vermessen.
+
+% ---------------------------------------------------------------------------
+\section{Grundlagen von SYCL}\label{sec:grundlagen}
+% ---------------------------------------------------------------------------
+
+\paragraph{Standard und Single-Source.}
+SYCL ist eine Spezifikation der Khronos Group, kein Compiler. Seit SYCL~2020
+baut sie auf C++17 auf und ist nicht mehr an OpenCL gebunden
+\cite{khronos2020sycl}. Implementierungen wie DPC++ von Intel
+\cite{intel_llvm}, das auch Teil der oneAPI-Werkzeuge ist, und AdaptiveCpp
+(früher hipSYCL) der Universität Heidelberg \cite{alpay2020hipsycl} bilden das Programm auf Backends wie CUDA, HIP,
+Level~Zero, OpenCL oder OpenMP ab (Abbildung~\ref{fig:stack}a). Grundprinzip
+ist \emph{Single-Source}: Der Kernel, also der Gerätecode, ist ein
+gewöhnliches C++-Lambda in derselben Datei wie das Hauptprogramm. Er wird
+beim Übersetzen in eine Zwischendarstellung gebracht und beim ersten Start
+\emph{just in time} für das konkrete Gerät kompiliert
+\cite{alpay2023sscp}. Im Kernel sind Ausnahmen, virtuelle Aufrufe, Rekursion
+und dynamischer Speicher verboten, und Daten werden per Wertkopie übernommen.
+Weil Host- und Gerätecode in einer Datei stehen, kann der Compiler Typen,
+Templates und Hilfsfunktionen auf beiden Seiten gemeinsam prüfen. Anders als
+bei OpenCL entfallen damit getrennte Kernel-Dateien und das Übergeben von
+Kernel-Argumenten über eine eigene Schnittstelle, anders als bei CUDA werden
+keine Spracherweiterungen benötigt.
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}[b]{0.47\textwidth}\centering
+\begin{tikzpicture}[
+    box/.style={draw, minimum width=6.4cm, minimum height=0.55cm, align=center, fill=gray!10, font=\scriptsize},
+    node distance=0.3cm
+]
+    \node[box] (src) {C++17-Quellcode mit SYCL};
+    \node[box, below=of src] (impl) {Implementierung: DPC++ \,|\, AdaptiveCpp};
+    \node[box, below=of impl] (be) {Backend: OpenCL \,|\, CUDA \,|\, HIP \,|\, Level Zero \,|\, OpenMP};
+    \node[box, below=of be] (hw) {Hardware: CPU \,|\, NVIDIA- \,|\, AMD- \,|\, Intel-GPU};
+    \draw[->] (src) -- (impl);
+    \draw[->] (impl) -- (be);
+    \draw[->] (be) -- (hw);
+\end{tikzpicture}\\[0.3em]
+{\small (a) Schichtenmodell}
+\end{minipage}\hfill
+\begin{minipage}[b]{0.5\textwidth}\centering
+\begin{tikzpicture}[scale=0.7, font=\scriptsize]
+    \fill[cblue!15] (1,2) rectangle (2,3);
+    \draw[step=0.25, gray!60] (1,2) grid (2,3);
+    \fill[cblue] (1.25,2.5) rectangle (1.5,2.75);
+    \draw[step=1, gray] (0,0) grid (4,4);
+    \draw[thick] (0,0) rectangle (4,4);
+    \draw[thick, cblue] (1,2) rectangle (2,3);
+    \draw[->] (4.3,3.4) node[right, align=left] {Work-Group\\($T \times T$)} -- (2.05,2.85);
+    \draw[->] (4.3,1.6) node[right, align=left] {Work-Item} -- (1.45,2.55);
+    \node[below] at (2,0) {Indexraum der \texttt{nd\_range} ($n \times n$)};
+\end{tikzpicture}\\[0.3em]
+{\small (b) Gliederung des Indexraums}
+\end{minipage}
+\caption{Aufbau von SYCL und Ausführungsmodell}
+\label{fig:stack}
+\end{figure}
+
+\paragraph{Queues und Geräte.}
+Der Host, meist die CPU, reicht Arbeit über eine \emph{Queue} an genau ein
+\emph{Gerät} ein. Welches Gerät das ist, bestimmt ein Device Selector oder
+von außen eine Umgebungsvariable, ohne den Quellcode zu ändern. Über die
+Abfrageschnittstelle \texttt{get\_info} kann ein Programm zur Laufzeit
+Eigenschaften des Geräts wie Name, Anzahl der Recheneinheiten oder maximale
+Work-Group-Größe auslesen und sich daran anpassen. Die
+Ausführung ist asynchron: Jeder Auftrag liefert ein \emph{Event}, auf das der
+Host warten kann. Die Laufzeit baut aus den Aufträgen einen
+Abhängigkeitsgraphen und kann voneinander unabhängige Transfers und
+Berechnungen überlappen, ohne dass der Programmierer Threads verwaltet
+\cite{reinders2023dpcpp}.
+
+\paragraph{Ausführungsmodell.}
+Ein Kernel wird mit \texttt{parallel\_for} für jeden Punkt eines Indexraums
+einmal ausgeführt; eine Ausführung heißt \emph{Work-Item}. Bei einer
+\texttt{nd\_range} werden Work-Items zu \emph{Work-Groups} gebündelt, die
+gemeinsam auf einer Recheneinheit laufen, schnellen lokalen Speicher teilen
+und sich über Barrieren synchronisieren (Abbildung~\ref{fig:stack}b). Auf NVIDIA-GPUs entspricht eine
+Work-Group einem Thread-Block mit höchstens 1024 Threads
+\cite{nvidia_cuda_guide}, auf der CPU wird sie von einem Kern vektorisiert
+abgearbeitet. Seit SYCL~2020 gibt es zusätzlich \emph{Sub-Groups}, die auf der
+GPU einem Warp und auf der CPU den SIMD-Lanes entsprechen
+\cite{khronos2020sycl}.
+
+\paragraph{Speichermodell.}
+Daten zwischen Host und Gerät werden entweder über Buffer und Accessoren oder
+über zeigerbasiertes \emph{Unified Shared Memory} (USM) verwaltet. Bei Buffern
+leitet die Laufzeit aus den deklarierten Zugriffen ab, wann sie Daten kopieren
+muss; USM entspricht dagegen dem gewohnten Umgang mit Zeigern in C++. Bei USM
+\emph{shared} verschiebt die Laufzeit die Daten automatisch, bei USM
+\emph{device} kopiert der Programmierer selbst. Auf dem Gerät unterscheidet
+SYCL zwischen globalem Speicher, der für alle Work-Items sichtbar, groß, aber
+langsam ist, lokalem Speicher, den sich die Work-Items einer Work-Group teilen
+und der klein, aber schnell ist, sowie privatem Speicher in den Registern
+eines Work-Items \cite{reinders2023dpcpp}. Diese Hierarchie gezielt zu
+nutzen ist, wie bei CUDA, der wichtigste Hebel für Leistung
+\cite{hwu2022pmpp}.
+
+% ---------------------------------------------------------------------------
+\section{Vorgehen}\label{sec:vorgehen}
+% ---------------------------------------------------------------------------
+
+\subsection{Beispielproblem}
+
+Untersucht wird die Multiplikation $C = A \cdot B$ zweier $n \times
+n$-Matrizen in einfacher Genauigkeit. Jeder Eintrag $C_{ij}$ ist das
+Skalarprodukt der Zeile $i$ von $A$ mit der Spalte $j$ von $B$. Die Rechnung
+benötigt $2n^3$ Gleitkommaoperationen bei nur $3n^2$ Werten Datenvolumen, und
+alle Einträge von $C$ sind voneinander unabhängig. Damit ist das Problem gut
+parallelisierbar, rechenintensiv und leicht auf Korrektheit prüfbar. Es gilt
+als Standardbeispiel der GPU-Programmierung \cite{hwu2022pmpp} und ist seit
+Langem Gegenstand der Leistungsoptimierung auf GPUs \cite{volkov2008gemm}.
+
+\subsection{Stufenmodell}
+
+Ein sequentielles C++-Programm wird schrittweise nach SYCL überführt. Jede
+Stufe führt genau ein neues Konzept ein (Tabelle~\ref{tab:stufen}). So lässt
+sich der Umstellungsaufwand pro Konzept beziffern und die Wirkung jedes
+Schritts getrennt messen. Die Reihenfolge folgt dem Weg, den ein Entwickler
+bei der Portierung typischerweise geht: zuerst die Parallelisierung mit
+möglichst wenig Änderung, dann die Kontrolle über den Speicher und zuletzt
+die hardwarenahe Optimierung. Stufe~4 enthält bewusst keinen neuen Code: Sie
+prüft, ob die Programme der Stufen~1 bis~3 unverändert auf einem anderen
+Gerät laufen. Alle Stufen verwenden dieselben Hilfsfunktionen für
+Initialisierung, Zeitmessung und Ergebnisprüfung, sodass sich ihre
+Messwerte direkt vergleichen lassen.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}c>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Stufe} & \textbf{Änderung} & \textbf{Neue Konzepte} \\
+\midrule
+0 & Ausgangsprogramm, drei Schleifen, ein CPU-Kern & -- \\
+1 & Äußere Schleifen durch \texttt{parallel\_for} ersetzt & Queue, Kernel, \texttt{range}, USM \emph{shared} \\
+2 & Getrennter Gerätespeicher, explizites Kopieren & USM \emph{device}, \texttt{memcpy} \\
+3 & Kachelung im lokalen Speicher & \texttt{nd\_range}, Work-Group, Barriere \\
+4 & Kein neuer Code, Stufen 1--3 auf anderem Gerät & Geräteauswahl, Backends \\
+\bottomrule
+\end{tabularx}
+\caption{Stufen der Umstellung}
+\label{tab:stufen}
+\end{table}
+
+\subsection{Bewertung der Performance-Portabilität}\label{sec:pp}
+
+Für die Bewertung werden drei Ebenen getrennt: \emph{funktionale
+Portabilität} (das Programm läuft überall korrekt),
+\emph{Implementierungseffizienz} (wie gut eine Variante ein einzelnes Gerät
+ausnutzt) und \emph{Performance-Portabilität} (ob ein ähnlich hoher Anteil der
+erreichbaren Leistung auf allen Geräten erzielt wird). Pennycook, Sewall und Lee messen dies als harmonischen
+Mittelwert der Effizienzen $e_i$ über eine Plattformmenge $H$
+\cite{pennycook2016metric}:
+\[
+    \mathrm{PP}(a, p, H) =
+    \begin{cases}
+        |H| \,\big/ \sum_{i \in H} 1/e_i(a,p) & \text{falls $a$ auf allen $i \in H$ läuft,}\\
+        0 & \text{sonst.}
+    \end{cases}
+\]
+Dabei ist $a$ die Anwendung und $p$ das Problem. Als Effizienz wird hier die
+\emph{Anwendungseffizienz} verwendet, also die Leistung relativ zur besten
+gemessenen Variante auf dem jeweiligen Gerät. Eine einzelne schwache
+Plattform senkt den Wert stark, und der Wert gilt nur für die gewählte
+Plattformmenge \cite{pennycook2019implications}. Frühere Studien fanden
+SYCL auf vielen Plattformen konkurrenzfähig, aber deutlich abhängig von
+Implementierung und Parametrierung \cite{deakin2020sycl, breyer2022svm}.
+Diese Arbeit ergänzt sie um eine kleine Fallstudie, die nicht fertige
+Implementierungen vergleicht, sondern misst, welcher Schritt der Umstellung
+welchen Effekt auf welchem Gerät hat.
+
+\subsection{Messumgebung und Methodik}
+
+Gemessen wird auf einem AMD Ryzen~5 5600X mit sechs Kernen und einer NVIDIA
+GeForce RTX~5060~Ti. Als SYCL-Compiler dient DPC++ in Version~7.2 aus dem
+Open-Source-Repository \cite{intel_llvm}. Die CPU wird über das
+OpenCL-Backend, die GPU über das CUDA-Backend angesprochen. Stufe~0 wird mit
+\texttt{g++ -O3} übersetzt.
+
+Jede Stufe wird für $n \in \{256, 512, 1024, 2048\}$ ausgeführt. Der erste
+Durchlauf wird getrennt erfasst, weil er JIT-Kompilierung und
+Geräteinitialisierung enthält. Danach folgen fünf Messläufe, von denen der
+Median berichtet wird. Bei den Stufen~2 und~3 werden Kernel- und Transferzeit
+getrennt gemessen. Jedes Ergebnis wird an 64 zufälligen Einträgen gegen eine
+Referenzrechnung in doppelter Genauigkeit geprüft; die zulässige Abweichung
+wächst mit $\sqrt{n}$, um Rundungsfehler in einfacher Genauigkeit zu
+berücksichtigen. Die Leistung wird in GFLOPS angegeben, also $2n^3$ geteilt
+durch die Kernel-Zeit.
+
+Die Matrizen werden mit festen Startwerten zufällig im Intervall $[-1, 1]$
+belegt, sodass jeder Lauf dieselben Eingaben verarbeitet. Gemessen wird mit
+\texttt{std::chrono::steady\_clock} auf dem Host, wobei jede Messung erst
+nach dem Warten auf das Ende des Kernels endet. Der Median ist gegenüber
+einzelnen Ausreißern, etwa durch Hintergrundprozesse, robuster als der
+Mittelwert. Sämtliche Messungen werden über Skripte automatisiert und als
+CSV-Dateien abgelegt.
+
+% ---------------------------------------------------------------------------
+\section{Umsetzung}\label{sec:umsetzung}
+% ---------------------------------------------------------------------------
+
+\subsection{Werkzeugkette}
+
+Die Standardinstallation von Intel oneAPI erkannte auf dem Testsystem nur die
+CPU. Für die NVIDIA-GPU war ein eigener Build von DPC++ mit CUDA-Unterstützung
+nötig. Beim Übersetzen müssen alle Zielarchitekturen angegeben werden
+(\texttt{-fsycl-targets}); ein nur für NVIDIA übersetztes Programm bricht auf
+der CPU zur Laufzeit ab, weil kein passendes Geräteabbild vorhanden ist. Der
+Einrichtungsaufwand war damit größer als der Programmieraufwand der ersten
+Stufe. Für die Stufen~1 bis~3 werden die Programme deshalb einmal für beide
+Ziele zugleich übersetzt, sodass dieselbe ausführbare Datei auf CPU und GPU
+läuft.
+
+\subsection{Stufe 1: Der erste Kernel}
+
+Gegenüber dem sequentiellen Programm ändern sich drei Dinge: Es wird eine
+Queue angelegt, die Matrizen werden als USM \emph{shared} reserviert, und die
+beiden äußeren Schleifen über Zeilen und Spalten entfallen zugunsten eines
+zweidimensionalen \texttt{parallel\_for} über $n \times n$ Work-Items. Die
+innere Schleife und damit die Rechenvorschrift bleiben unverändert; jedes
+Work-Item berechnet einen Eintrag $C_{ij}$. Insgesamt betrifft der Umbau etwa
+fünf Zeilen. Einzige Stolperstelle ist die Wertübernahme in den Kernel: Die
+Matrizen müssen als Zeiger, nicht als Referenzen auf Host-Objekte übergeben
+werden.
+
+Die Queue wird ohne Angabe eines Geräts angelegt, die Laufzeit wählt also das
+als am leistungsfähigsten eingeschätzte Gerät. Da der Kernel asynchron
+startet, wartet der Host anschließend ausdrücklich auf sein Ende. Weil USM
+\emph{shared} auf Host und Gerät gültig ist, kann das Ergebnis danach ohne
+weiteren Schritt auf dem Host geprüft werden. Der Programmierer muss sich in
+dieser Stufe also weder um Datentransfers noch um die Aufteilung der Arbeit
+auf die Hardware kümmern.
+
+\subsection{Stufe 2: Expliziter Gerätespeicher}
+
+Die Matrizen werden als USM \emph{device} angelegt. Die Eingaben werden vor
+dem Kernel ausdrücklich auf das Gerät und das Ergebnis danach zurück kopiert.
+Der Kernel bleibt identisch. Ziel dieser Stufe ist Transparenz: Die
+Transferkosten, die bei USM \emph{shared} unsichtbar anfallen, werden
+getrennt messbar. Zugleich gewinnt der Programmierer Kontrolle darüber, wann
+Daten bewegt werden. In einer realen Anwendung ließen sich so Eingaben
+einmalig kopieren und für mehrere Kernel wiederverwenden oder Transfers über
+die asynchrone Queue mit Berechnungen überlappen.
+
+\subsection{Stufe 3: Kachelung im lokalen Speicher}
+
+In den Stufen~1 und~2 liest jedes Work-Item eine ganze Zeile von $A$ und eine
+ganze Spalte von $B$ aus dem globalen Speicher. Benachbarte Work-Items lesen
+dabei immer wieder dieselben Werte. Die etablierte Gegenmaßnahme ist die
+Kachelung \cite{hwu2022pmpp, volkov2008gemm}. Der Kernel wird dazu mit einer
+\texttt{nd\_range} gestartet, sodass Work-Groups von $T \times T$ Work-Items
+entstehen. Wie Abbildung~\ref{fig:tiling} zeigt, lädt jede Work-Group in einer
+Schleife gemeinsam je einen $T \times T$-Block von $A$ und $B$ in den lokalen
+Speicher, wartet an einer Barriere, bis alle Werte geladen sind, rechnet damit
+weiter und wartet an einer zweiten Barriere, bevor die nächsten Blöcke die
+alten überschreiben.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[font=\scriptsize]
+    \def\s{2.4}
+    % A
+    \fill[cblue!15] (0,1.2) rectangle (\s,1.6);
+    \fill[cblue] (0.4,1.2) rectangle (0.8,1.6);
+    \draw[step=0.4, gray!60] (0,1.2) grid (\s,1.6);
+    \draw (0,0) rectangle (\s,\s);
+    \draw[->, thick] (0.6,1.0) -- (1.8,1.0);
+    \node[above] at (\s/2,\s) {$A$};
+    \node[below, align=center] at (\s/2,-0.05) {Zeilenband,\\Block wandert $\rightarrow$};
+    \node at (\s+0.45,\s/2) {\large$\cdot$};
+    % B
+    \begin{scope}[xshift=3.3cm]
+    \fill[cblue!15] (1.2,0) rectangle (1.6,\s);
+    \fill[cblue] (1.2,1.6) rectangle (1.6,2.0);
+    \draw[step=0.4, gray!60] (1.2,0) grid (1.6,\s);
+    \draw (0,0) rectangle (\s,\s);
+    \draw[->, thick] (1.8,1.8) -- (1.8,0.6);
+    \node[above] at (\s/2,\s) {$B$};
+    \node[below, align=center] at (\s/2,-0.05) {Spaltenband,\\Block wandert $\downarrow$};
+    \node at (\s+0.45,\s/2) {\large$=$};
+    \end{scope}
+    % C
+    \begin{scope}[xshift=6.6cm]
+    \fill[corange] (1.2,1.2) rectangle (1.6,1.6);
+    \draw (0,0) rectangle (\s,\s);
+    \node[above] at (\s/2,\s) {$C$};
+    \node[below, align=center] at (\s/2,-0.05) {Ergebnisblock\\einer Work-Group};
+    \end{scope}
+\end{tikzpicture}
+\caption{Kachelung: Die dunklen Blöcke liegen gerade im lokalen Speicher}
+\label{fig:tiling}
+\end{figure}
+
+Jeder Wert wird so pro Work-Group nur einmal statt $T$-mal aus dem globalen
+Speicher gelesen. Die Stufe setzt deutlich mehr Hardwareverständnis voraus.
+Fehlt etwa die zweite Barriere, überschreiben schnelle Work-Items den Block,
+während langsamere noch daraus lesen. Das führt nicht zum Absturz, sondern zu
+sporadisch falschen Ergebnissen.
+
+Zwei Details sind zu beachten. Erstens muss der globale Indexraum einer
+\texttt{nd\_range} ein Vielfaches der Work-Group-Größe sein. Er wird daher
+auf das nächste Vielfache von $T$ aufgerundet, und Werte außerhalb der Matrix
+werden beim Laden durch null ersetzt. Zweitens belegt jede Work-Group
+$2 \cdot T^2$ Gleitkommazahlen im lokalen Speicher, bei $T = 16$ also 2\,KiB
+und bei $T = 64$ bereits 32\,KiB. Die Kachelgröße wirkt sich damit nicht nur
+auf die Wiederverwendung der Daten aus, sondern auch darauf, wie viele
+Work-Groups gleichzeitig auf einer Recheneinheit Platz finden.
+
+\subsection{Stufe 4: Geräteauswahl und Kachelgrößen}
+
+Für Stufe~4 werden dieselben Programme nur mit anderer Umgebungsvariable
+gestartet, \texttt{ONEAPI\_DEVICE\_SELECTOR=opencl:cpu} für die CPU und
+\texttt{cuda:gpu} für die GPU. Um die Performance-Portabilität zu bewerten,
+wird Stufe~3 zusätzlich mit den Kachelgrößen $T \in \{8, 16, 32, 64\}$
+übersetzt. Die Kachelgröße ist ein Übersetzungsparameter, der Quellcode
+bleibt also gleich. Als Standardwert dient $T = 16$, weil damit eine
+Work-Group 256 Work-Items umfasst, eine auf GPUs übliche Größe. Jede Variante wird auf beiden Geräten für $n = 1024$ und
+$n = 2048$ gemessen. Die Effizienzen und die PP-Kennzahl werden
+anschließend per Skript aus den Messdaten berechnet.
+
+% ---------------------------------------------------------------------------
+\section{Ergebnisse und Diskussion}\label{sec:ergebnisse}
+% ---------------------------------------------------------------------------
+
+\subsection{Leistung, Anlauf und Transfer}
+
+Alle Stufen rechneten auf beiden Geräten korrekt. Tabelle~\ref{tab:leistung}
+zeigt die Kernel-Zeiten für $n = 1024$. Schon Stufe~1 erreicht auf der GPU
+rund 80\,\% der Leistung von Stufe~3. Der Faktor von etwa 3000 gegenüber
+Stufe~0 ist kein fairer CPU-GPU-Vergleich, da Stufe~0 nur einen Kern nutzt.
+Die Kachelung wirkt je Gerät sehr unterschiedlich: auf der GPU rund 30\,\%,
+auf der CPU ein Faktor~4,5. Vermutlich fängt die GPU redundante Zugriffe
+schon über Caches und gebündelte Speicherzugriffe ab, während die CPU erst
+durch die Kachelung cachefreundlich wird \cite{hwu2022pmpp}. Bei
+$n = 256$ ist Stufe~3 auf der GPU sogar etwas langsamer als Stufe~2, weil der
+Aufwand für die Barrieren bei so wenig Arbeit nicht aufgewogen wird. 
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{@{}lrr@{}}
+\toprule
+\textbf{Stufe ($n = 1024$)} & \textbf{CPU} & \textbf{GPU} \\
+\midrule
+0 sequentiell (1 Kern) & 4484\,ms & -- \\
+1 USM \emph{shared}    & 87{,}0\,ms & 1{,}94\,ms (1105 GFLOPS) \\
+2 USM \emph{device}    & 83{,}1\,ms & 1{,}97\,ms \\
+3 Kachelung, $T = 16$  & 18{,}4\,ms & 1{,}54\,ms (1395 GFLOPS) \\
+\bottomrule
+\end{tabular}
+\caption{Kernel-Zeit ohne Transfer, Median aus fünf Läufen}
+\label{tab:leistung}
+\end{table}
+
+Der erste Lauf ist durch die JIT-Kompilierung deutlich langsamer: bei
+$n = 256$ auf der GPU 0,75\,ms statt 0,04\,ms, auf der CPU sogar 118\,ms statt
+0,4\,ms. Stufe~1 und~2 sind im Median
+gleich schnell (1,94 gegenüber 1,97\,ms), da USM \emph{shared} die Daten nur
+beim ersten Zugriff verschiebt.  Bei kleinen Matrizen dominiert
+zudem der Transfer (Abbildung~\ref{fig:ergebnisse}a), der bei $n = 256$ 82\,\% und bei $n = 2048$ nur noch
+20\,\% der Gesamtzeit ausmacht, weil die Rechnung mit $n^3$, die Datenmenge
+aber nur mit $n^2$ wächst. Ob sich die GPU lohnt, hängt also von der
+Problemgröße ab.
+
+\subsection{Performance-Portabilität}
+
+Abbildung~\ref{fig:ergebnisse}b zeigt die Effizienz je Kachelgröße für
+$n = 2048$ relativ zum besten Wert des Geräts. Das Optimum ist
+geräteabhängig: $T = 16$ auf der GPU, $T = 32$ auf der CPU. Bei $T = 64$
+umfasst eine Work-Group 4096 Work-Items, mehr als NVIDIA erlaubt; der Kernel
+startet dort nicht, und die PP ist null, obwohl die CPU 91\,\% erreicht. Mit
+$T = 32$ gibt es für diese zwei Geräte einen guten Kompromiss
+(PP~0,99, bei $n = 1024$ 0,96), der sich aber nur durch Messen auf allen
+Geräten finden lässt. Eine falsche Wahl trifft die Geräte zudem ungleich:
+$T = 8$ kostet die GPU 17\,\%, die CPU 55\,\% ihrer Leistung.
+
+\begin{figure}[htbp]
+\centering
+\pgfplotsset{
+    every axis/.append style={
+        font=\scriptsize, width=7cm, height=4.8cm,
+        axis line style={ctext}, tick style={ctext},
+        grid style={gray!20}, ymajorgrids,
+        legend style={draw=none, fill=none, font=\scriptsize},
+        legend cell align=left,
+    }
+}
+\begin{minipage}[t]{0.49\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[
+    xmode=log, ymode=log, log basis x=2,
+    xtick={256,512,1024,2048}, xticklabels={256,512,1024,2048},
+    xlabel={Matrixgröße $n$}, ylabel={Zeit in ms},
+    legend pos=north west,
+    title={(a) Rechnung und Transfer, Stufe 2, GPU},
+]
+\addplot[cblue, line width=1.2pt, mark=*, mark size=2pt]
+    coordinates {(256,0.038) (512,0.263) (1024,1.974) (2048,15.869)};
+\addlegendentry{Rechnung}
+\addplot[corange, line width=1.2pt, dashed, mark=square*, mark size=2pt, mark options={solid}]
+    coordinates {(256,0.173) (512,0.405) (1024,1.344) (2048,3.934)};
+\addlegendentry{Transfer}
+\end{axis}
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.49\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar, bar width=7pt, enlarge x limits=0.18,
+    ymin=0, ymax=115, ytick={0,25,50,75,100},
+    symbolic x coords={8,16,32,64}, xtick=data,
+    xticklabels={{$T{=}8$\\PP 0{,}59},{$T{=}16$\\PP 0{,}93},{$T{=}32$\\PP 0{,}99},{$T{=}64$\\PP 0}},
+    xticklabel style={align=center},
+    ylabel={Effizienz in \%},
+    legend style={at={(0.5,1.0)}, anchor=south, legend columns=2},
+    title style={yshift=3ex},
+    title={(b) Effizienz je Kachelgröße, $n = 2048$},
+]
+\addplot[fill=cblue, draw=white, line width=0.8pt]
+    coordinates {(8,83) (16,100) (32,99) (64,0)};
+\addlegendentry{GPU}
+\addplot[fill=corange, draw=white, line width=0.8pt, postaction={pattern=north east lines, pattern color=white}]
+    coordinates {(8,45) (16,88) (32,100) (64,91)};
+\addlegendentry{CPU}
+\node[font=\scriptsize, text=ctext, rotate=90, anchor=west] at ([xshift=-4.5pt]axis cs:64,2) {startet nicht};
+\end{axis}
+\end{tikzpicture}
+\end{minipage}
+\caption{Transferanteil (a) und Performance-Portabilität der Kachelgrößen (b)}
+\label{fig:ergebnisse}
+\end{figure}
+
+\subsection{Diskussion und Fazit}
+
+Der Einstieg in SYCL ist klein: Wenige Zeilen genügen für einen Großteil der
+GPU-Leistung, und derselbe Code läuft ohne Änderung auf CPU und GPU. Die
+funktionale Portabilität ist damit erreicht. Aufwendig wurden erst die
+Werkzeugkette und hardwarenahe Optimierungen, deren Wissen aber auch für CUDA
+nötig ist. Performance-Portabilität stellt sich dagegen nicht automatisch
+ein: SYCL abstrahiert die Schnittstelle, nicht die Hardware. Parameter wie
+die Kachelgröße müssen pro Gerät bestimmt werden, und eine ungünstige Wahl
+kann ein Gerät ganz ausschließen. Das bestätigt im Kleinen die Ergebnisse von
+\cite{deakin2020sycl, breyer2022svm}.
+
+Die Beweiskraft der Fallstudie ist allerdings begrenzt. Erstens fehlt eine
+starke \emph{Baseline}: Stufe~0 ist bewusst naiv, und die Effizienzen
+beziehen sich auf die beste eigene Variante statt auf optimierte Bibliotheken
+wie cuBLAS oder oneMKL. Zweitens gilt der PP-Wert
+nur für die gewählte Menge aus zwei Geräten \cite{pennycook2019implications}.
+Drittens ist die dichte Matrixmultiplikation rechenintensiv und regelmäßig,
+was nicht für alle Anwendungen gilt. Viertens wurden nur ein Compiler und eine Messreihe
+untersucht, sodass Effekte der Toolchain nicht von denen der Hardware
+getrennt sind und kleine Unterschiede im Messrauschen liegen können
+\cite{georges2007rigorous}. Ein belastbareres Versuchsdesign würde daher
+weitere Geräte und Hersteller, mindestens zwei SYCL-Implementierungen,
+Bibliotheken als Referenz, Kernel mit unterschiedlichem Rechen-zu-Speicher-%
+Verhältnis und wiederholte Messreihen mit Konfidenzintervallen umfassen.
+
+Im untersuchten Rahmen hält das Versprechen \enquote{einmal schreiben,
+überall ausführen} für die Korrektheit, nicht aber für die Leistung.
+
+\newpage
+\printbibliography[heading=bibintoc, title={Literaturverzeichnis}]
+
+\end{document}

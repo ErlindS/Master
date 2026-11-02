@@ -1,0 +1,10 @@
+\babel@toc {ngerman}{}\relax 
+\contentsline {figure}{\numberline {1}{\ignorespaces Mehrere herstellerspezifische Codebasen (links) gegenüber einer SYCL-Codebasis, die über Backends wie CUDA, HIP, Level~Zero oder OpenCL auf verschiedener Hardware läuft (rechts)}}{1}{figure.caption.4}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Geräteauswahl: Der Selector bewertet jedes Gerät, die Queue wird an das bestbewertete gebunden}}{3}{figure.caption.7}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Abhängigkeitsgraph: Die Kopie von $D$ kann parallel zu Kernel~1 laufen}}{4}{figure.caption.8}%
+\contentsline {figure}{\numberline {4}{\ignorespaces Gliederung des Indexraums in Work-Groups und Work-Items}}{5}{figure.caption.9}%
+\contentsline {figure}{\numberline {5}{\ignorespaces Typische Abbildung der SYCL-Ausführungshierarchie auf GPU und CPU}}{5}{figure.caption.10}%
+\contentsline {figure}{\numberline {6}{\ignorespaces Buffer-Modell: Aus den Accessoren leitet die Laufzeit Kopien und Abhängigkeiten selbst ab (orange)}}{5}{figure.caption.12}%
+\contentsline {figure}{\numberline {7}{\ignorespaces Speicherhierarchie von Host und Gerät und die Wege des Datentransfers}}{6}{figure.caption.13}%
+\contentsline {figure}{\numberline {8}{\ignorespaces Synchrone Fehler werden beim Einreichen geworfen, asynchrone erst, wenn der Host wartet}}{7}{figure.caption.14}%
+\contentsline {figure}{\numberline {9}{\ignorespaces Datentransfer (a) und Leistung je Kachelgröße mit Performance-Portabilität (b)}}{8}{figure.caption.15}%

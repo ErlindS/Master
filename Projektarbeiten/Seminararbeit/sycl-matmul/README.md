@@ -99,3 +99,35 @@ Mittelwert über alle Geräte, 0 sobald ein Gerät gar nicht läuft.
   ersten Zugriff automatisch verschoben; der Median enthält das nicht
   mehr. Das erklärt, warum Stufe 1 im Median oft genauso schnell ist
   wie Stufe 2.
+
+## Ein-Befehl-Setup (Docker, jedes Betriebssystem)
+
+Wer nichts selbst installieren möchte, startet einfach:
+
+```bash
+./setup.sh                      # Linux, macOS, WSL2
+```
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\setup.ps1     # Windows
+```
+
+Das Skript installiert bei Bedarf Docker (nach Rückfrage), erkennt eine
+NVIDIA-GPU (unter Linux inkl. NVIDIA Container Toolkit), baut einmalig ein
+Image mit LLVM 20 und AdaptiveCpp und führt danach Stufe 0–3 sowie das
+Kachelgrößen-Experiment auf CPU und – falls vorhanden – GPU aus. Ergebnisse
+landen in `ergebnisse/<datum>_<cpu|cuda>/` (`stufen_*.csv`, `kacheln.csv`,
+`portabilitaet.txt`, `system.txt`).
+
+| Option | Wirkung |
+|---|---|
+| `--yes` / `-Yes` | keine Rückfragen |
+| `--cpu` / `-Cpu` | GPU ignorieren |
+| `--rebuild` / `-Rebuild` | Image neu bauen |
+| `SIZES`, `REPS`, `TILES`, `SEQ_MAX` | werden an die Benchmarks durchgereicht, z. B. `SIZES="512 1024" REPS=3 ./setup.sh` |
+
+Hinweise: Im Container wird **AdaptiveCpp** statt DPC++ verwendet (frei
+verfügbar, ohne Lizenz-Downloads). Die Zahlen sind daher nicht direkt mit
+den DPC++-Messungen der Arbeit vergleichbar. Unter macOS ist nur die CPU
+messbar. Für die GPU braucht der Host einen aktuellen NVIDIA-Treiber
+(für CUDA 12.9: ≥ 575).

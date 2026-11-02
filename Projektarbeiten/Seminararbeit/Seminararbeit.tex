@@ -1,0 +1,655 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[left=30mm,right=25mm,top=25mm,bottom=25mm]{geometry}
+\usepackage[english, ngerman]{babel}
+\usepackage[autostyle=true,german=quotes]{csquotes}
+\usepackage[onehalfspacing]{setspace}
+\usepackage[expansion=false]{microtype}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{pifont}
+\usepackage{etoolbox}
+\usepackage{caption}
+\usepackage{tikz}
+\usetikzlibrary{positioning,patterns,arrows.meta}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+% Diagrammfarben (geprüft auf Farbsehschwächen), zusätzlich Marker/Strichart
+\definecolor{cblue}{HTML}{2A78D6}
+\definecolor{corange}{HTML}{EB6834}
+\definecolor{ctext}{HTML}{52514E}
+\usepackage[backend=biber,style=ieee,urldate=long]{biblatex}
+\addbibresource{sycl.bib}
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks,
+    citecolor   = black,
+    filecolor   = black,
+    linkcolor   = black,
+    urlcolor    = black,
+    pdftitle    = {SYCL: Portable heterogene Programmierung mit C++},
+    pdfauthor   = {Erlind Sejdiu},
+    pdfcreator  = {pdflatex},
+    pdfproducer = {LaTeX with hyperref}
+}
+
+% Tabellen, Abbildungen und Literaturverzeichnis einzeilig
+\AtBeginEnvironment{tabular}{\singlespacing}
+\AtBeginEnvironment{tabularx}{\singlespacing}
+\AtBeginEnvironment{tikzpicture}{\singlespacing}
+\captionsetup{font=small, labelfont=bf}
+\AtBeginBibliography{\singlespacing}
+
+% Markierung für Stellen, die noch ergänzt/geprüft werden müssen
+\newcommand{\offen}[1]{\textcolor{red}{[#1]}}
+
+\begin{document}
+
+% ---------------------------------------------------------------------------
+% Titelei (römische Seitenzahlen, Titelblatt ohne Nummer)
+% ---------------------------------------------------------------------------
+\pagenumbering{Roman}
+
+\begin{titlepage}
+    \raggedright
+    Erlind Sejdiu\\
+    106357
+    \vspace*{3cm}
+
+    \begin{center}
+        {\LARGE\bfseries SYCL\\[0.3em]
+        Portable heterogene Programmierung mit C++\\[0.3em]
+        \large Problemstellung, Anwendungsfälle und Programmiermodell\par}
+        \vspace{2cm}
+        {\large Seminararbeit\\
+        der Hochschule Karlsruhe\\
+        im Master Studiengang Informatik\\
+        im Wintersemester 2026/27\par}
+    \end{center}
+    \vfill
+    \begin{tabular}{@{}ll}
+        Betreuer: & \offen{Name der betreuenden Person}\\
+        Themengruppe: & \offen{Themengruppe des Seminars}\\
+        Abgabedatum: & \offen{Datum}
+    \end{tabular}
+\end{titlepage}
+
+\setcounter{page}{1}
+\tableofcontents
+\newpage
+\listoffigures
+\listoftables
+\newpage
+
+% ---------------------------------------------------------------------------
+% Hauptteil (arabische Seitenzahlen ab 1)
+% ---------------------------------------------------------------------------
+\pagenumbering{arabic}
+
+\section{Einleitung}
+
+Rechenleistung wächst heute vor allem durch Spezialisierung: Neben der CPU
+stehen in fast jedem Rechner GPUs und andere Beschleuniger, die datenparallele
+Aufgaben um Größenordnungen schneller bearbeiten. Die Software hält mit dieser
+Vielfalt jedoch nur schwer Schritt, denn jeder Hersteller bringt sein eigenes
+Programmiermodell mit. SYCL ist ein offener Standard der Khronos Group, der
+dieses Problem lösen will: Ein einziger Quellcode in Standard-C++ soll auf CPUs
+und GPUs verschiedener Hersteller laufen \cite{khronos2020sycl}.
+
+Diese Arbeit erklärt, welches Problem SYCL adressiert, für welche
+Anwendungsfälle es gedacht ist und wie sein Programmiermodell diese erfüllt.
+Ein kurzes Beispiel macht die Konzepte greifbar.
+
+% ---------------------------------------------------------------------------
+\section{Problemstellung}\label{sec:problem}
+% ---------------------------------------------------------------------------
+
+Heutige Systeme kombinieren CPUs mit GPUs unterschiedlicher Hersteller. Für
+die Software ergeben sich daraus drei Probleme:
+
+\begin{enumerate}[nosep]
+    \item \textbf{Herstellerbindung:} CUDA läuft nur auf NVIDIA-GPUs
+    \cite{nickolls2008cuda}; AMD (HIP) und Intel (Level~Zero) haben eigene
+    Schnittstellen.
+    \item \textbf{Mehrfache Codebasen:} Wer mehrere Hersteller unterstützen
+    will, pflegt mehrere Implementierungen parallel
+    (Abbildung~\ref{fig:codebasen}, links).
+    \item \textbf{Abstraktion gegen Kontrolle:} Offene Alternativen sind
+    entweder sehr hardwarenah und aufwendig wie OpenCL
+    \cite{stone2010opencl} oder lassen wie OpenMP-Direktiven wenig Kontrolle
+    über Speicher und Ausführung.
+\end{enumerate}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    code/.style={draw, rounded corners=2pt, minimum width=2.3cm, minimum height=0.55cm, font=\scriptsize, fill=gray!10},
+    hw/.style={draw, minimum width=1.25cm, minimum height=0.6cm, align=center, font=\scriptsize, fill=corange!15, draw=corange},
+    >={Stealth[length=1.8mm]}
+]
+    \node[font=\footnotesize\bfseries] at (1.9,2.75) {Herstellerspezifisch};
+    \node[code] (c1) at (0.9,2) {CUDA-Code};
+    \node[code] (c2) at (0.9,1) {HIP-Code};
+    \node[code] (c3) at (0.9,0) {OpenMP-Code};
+    \node[hw, minimum width=1.6cm] (h1) at (3.6,2) {NVIDIA-GPU};
+    \node[hw, minimum width=1.6cm] (h2) at (3.6,1) {AMD-GPU};
+    \node[hw, minimum width=1.6cm] (h3) at (3.6,0) {CPU};
+    \draw[->] (c1) -- (h1); \draw[->] (c2) -- (h2); \draw[->] (c3) -- (h3);
+    \draw[dashed, gray] (5.1,-0.4) -- (5.1,2.9);
+    \node[font=\footnotesize\bfseries] at (9.3,2.75) {Mit SYCL};
+    \node[code, fill=cblue!15, draw=cblue, minimum width=4.2cm] (s) at (9.3,2) {ein SYCL-Quellcode (C++17)};
+    \node[code, minimum width=4.2cm] (i) at (9.3,1) {DPC++ \;|\; AdaptiveCpp};
+    \node[hw] (g1) at (6.7,0) {NVIDIA};
+    \node[hw] (g2) at (8.43,0) {AMD};
+    \node[hw] (g3) at (10.17,0) {Intel};
+    \node[hw] (g4) at (11.9,0) {CPU};
+    \draw[->] (s) -- (i);
+    \foreach \g in {g1,g2,g3,g4} \draw[->] (i.south) -- (\g.north);
+\end{tikzpicture}
+\caption{Mehrere herstellerspezifische Codebasen (links) gegenüber einer SYCL-Codebasis, die über Backends wie CUDA, HIP, Level~Zero oder OpenCL auf verschiedener Hardware läuft (rechts)}
+\label{fig:codebasen}
+\end{figure}
+
+% ---------------------------------------------------------------------------
+\section{SYCL als Lösungsansatz}\label{sec:sycl}
+% ---------------------------------------------------------------------------
+
+SYCL ist ein offener Standard der Khronos Group auf Basis von C++17
+\cite{khronos2020sycl}. Implementierungen wie DPC++ \cite{intel_llvm} und
+AdaptiveCpp \cite{alpay2020hipsycl, adaptivecpp} bilden ihn über Backends wie
+CUDA, HIP, Level~Zero, OpenCL oder OpenMP auf die Hardware ab und übersetzen
+den Gerätecode meist erst beim ersten Start \emph{just in time} für das
+konkrete Gerät \cite{alpay2023sscp}. Den drei Problemen setzt SYCL vier
+Entwurfsziele entgegen:
+
+\begin{description}[style=sameline, leftmargin=1.5em, nosep]
+    \item[Portabilität:] Ein Quellcode, viele Backends; das Gerät wird erst
+    beim Übersetzen bzw.\ zur Laufzeit gewählt.
+    \item[Offenheit:] Ein offener Standard mit mehreren unabhängigen
+    Implementierungen statt eines Herstellerprodukts.
+    \item[Produktivität:] \emph{Single-Source} in Standard-C++: Host- und
+    Gerätecode stehen in einer Datei, Kernel sind gewöhnliche Lambdas, und
+    Templates und Typen werden geteilt.
+    \item[Kontrolle:] Wo nötig, legt das Modell Hardwarekonzepte wie
+    Work-Groups und lokalen Speicher offen, um gezielt optimieren zu können.
+\end{description}
+
+\noindent Tabelle~\ref{tab:vergleich} vergleicht SYCL entlang dieser Ziele mit
+den Alternativen. Kokkos \cite{edwards2014kokkos} und RAJA
+\cite{beckingsale2019raja} verfolgen ähnliche Ziele, sind aber kein offener
+Industriestandard.
+
+\begin{table}[htbp]
+\centering
+\small
+\newcommand{\ja}{\ding{51}}
+\newcommand{\nein}{--}
+\newcommand{\teils}{($\checkmark$)}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+ & \textbf{herstellerunabh.} & \textbf{offener Standard} & \textbf{Standard-C++} & \textbf{Kontrolle} \\
+\midrule
+CUDA            & \nein   & \nein   & \teils & \ja \\
+OpenCL          & \ja     & \ja     & \nein  & \ja \\
+OpenMP-Offload  & \ja     & \ja     & \ja    & \teils \\
+Kokkos/RAJA     & \ja     & \nein   & \ja    & \teils \\
+\textbf{SYCL}   & \ja     & \ja     & \ja    & \ja \\
+\bottomrule
+\end{tabular}
+\caption{SYCL im Vergleich zu anderen Programmiermodellen (($\checkmark$) = eingeschränkt)}
+\label{tab:vergleich}
+\end{table}
+
+% ---------------------------------------------------------------------------
+\section{Anwendungsfälle}\label{sec:usecases}
+% ---------------------------------------------------------------------------
+
+Aus den Entwurfszielen ergeben sich vier typische Einsatzfelder
+(Tabelle~\ref{tab:usecases}): wissenschaftliches Rechnen auf Systemen
+verschiedener Hersteller, etwa auf dem Supercomputer Aurora mit Intel-GPUs
+oder in der Molekulardynamik-Software GROMACS
+\cite{deakin2020sycl, breyer2022svm}; die Migration bestehender
+CUDA-Anwendungen, unterstützt durch das Werkzeug SYCLomatic; die gemeinsame
+Nutzung von CPU und GPU in einem Rechner; und portable Bibliotheken wie
+oneMKL oder oneDPL \cite{reinders2023dpcpp}. Die Tabelle zeigt, welche
+Anforderung jedes Feld stellt und welcher Teil des Programmiermodells sie
+erfüllt.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Anwendungsfall} & \textbf{Anforderung} & \textbf{Antwort im Programmiermodell} \\
+\midrule
+Rechnen über Herstellergrenzen & ein Code für viele Systeme, hohe Leistung & Backends und Geräteauswahl (\ref{sec:geraete}); hardwarenahe Hierarchie (\ref{sec:ausfuehrung}); Interoperabilität mit Herstellerbibliotheken (\ref{sec:erweitert}) \\
+Migration von CUDA & vertraute Konzepte, schrittweiser Umbau & Work-Group/Sub-Group analog zu Block/Warp (\ref{sec:ausfuehrung}); zeigerbasiertes USM (\ref{sec:speicher}) \\
+CPU und GPU gemeinsam & Überlappung, Ausweichgerät & asynchrone Queues und Abhängigkeitsgraph (\ref{sec:queues}); CPU als Gerät (\ref{sec:geraete}) \\
+Portable Bibliotheken & generischer Code, Anpassung je Gerät & Single-Source mit Templates (\ref{sec:sycl}); \texttt{get\_info}, Aspekte, Spezialisierungskonstanten (\ref{sec:geraete}, \ref{sec:erweitert}) \\
+\bottomrule
+\end{tabularx}
+\caption{Anwendungsfälle, ihre Anforderungen und die Mechanismen, die sie erfüllen}
+\label{tab:usecases}
+\end{table}
+
+% ---------------------------------------------------------------------------
+\section{Das Programmiermodell}\label{sec:modell}
+% ---------------------------------------------------------------------------
+
+\subsection{Plattformen, Geräte und Geräteauswahl}\label{sec:geraete}
+
+SYCL unterscheidet den \emph{Host}, auf dem das Hauptprogramm läuft, und
+\emph{Geräte}, auf denen Kernel ausgeführt werden. Geräte sind nach
+\emph{Plattformen} gruppiert, wobei jede Plattform einem Backend entspricht;
+auch die CPU kann als Gerät auftreten. Welches Gerät verwendet wird, bestimmt
+ein \emph{Device Selector}. Vordefiniert sind Selektoren für das als am
+leistungsfähigsten eingeschätzte Gerät, für GPUs und für CPUs; eigene
+Selektoren vergeben Punktwerte anhand von Geräteeigenschaften. Über
+\emph{Aspekte} kann ein Programm zudem prüfen, ob ein Gerät optionale
+Fähigkeiten wie doppelte Genauigkeit oder bestimmte USM-Arten unterstützt,
+und mit \texttt{get\_info} Eigenschaften wie die maximale Work-Group-Größe
+abfragen \cite{khronos2020sycl}. Implementierungen erlauben außerdem eine
+Auswahl von außen, etwa über Umgebungsvariablen, sodass derselbe Code ohne
+Neuübersetzung auf einem anderen Gerät läuft. Dass auch die CPU als
+vollwertiges Gerät gilt, macht sie zum Ausweichgerät, wenn kein
+Beschleuniger vorhanden ist, und erlaubt die Entwicklung ohne GPU.
+Abbildung~\ref{fig:selektor} veranschaulicht die Auswahl.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    dev/.style={draw, rounded corners=2pt, minimum width=3.9cm, minimum height=0.55cm, font=\scriptsize, fill=gray!10, anchor=west},
+    score/.style={font=\scriptsize, text=ctext, anchor=west},
+    >={Stealth[length=1.8mm]}
+]
+    \node[font=\footnotesize\bfseries, anchor=west] at (0,2.2) {verfügbare Geräte (Backend)};
+    \node[dev, fill=cblue!15, draw=cblue, very thick] (d1) at (0,1.5) {NVIDIA-GPU (CUDA)};
+    \node[dev] (d2) at (0,0.75) {Intel-GPU (Level Zero)};
+    \node[dev] (d3) at (0,0) {CPU (OpenCL / OpenMP)};
+    \node[score] at (4.05,1.5) {Wertung 900};
+    \node[score] at (4.05,0.75) {Wertung 700};
+    \node[score] at (4.05,0) {Wertung 300};
+    \node[draw, rounded corners=2pt, align=center, font=\scriptsize, minimum height=1.2cm, fill=white] (sel) at (8.2,0.75) {Device Selector\\[1pt]bewertet Eigenschaften\\und Aspekte};
+    \node[draw, rounded corners=2pt, font=\scriptsize, fill=cblue!15, draw=cblue, minimum height=0.6cm] (q) at (12.0,0.75) {Queue};
+    \draw[->] (5.95,1.5) -- (sel.west |- 0,1.05);
+    \draw[->] (5.95,0.75) -- (sel.west);
+    \draw[->] (5.95,0) -- (sel.west |- 0,0.45);
+    \draw[->, thick, cblue] (sel) -- node[above, font=\scriptsize, text=black, align=center] {höchste\\Wertung} (q);
+\end{tikzpicture}
+\caption{Geräteauswahl: Der Selector bewertet jedes Gerät, die Queue wird an das bestbewertete gebunden}
+\label{fig:selektor}
+\end{figure}
+
+\subsection{Queues, Command Groups und Abhängigkeiten}\label{sec:queues}
+
+Die Verbindung zu einem Gerät stellt eine \emph{Queue} her. Arbeit wird in
+Form von \emph{Command Groups} eingereicht: Eine Command Group beschreibt eine
+Aktion, etwa einen Kernel oder eine Kopie, zusammen mit den Daten, die sie
+benötigt. Technisch ist eine Command Group eine Funktion, die
+ein \emph{Handler}-Objekt erhält: Über den Handler deklariert sie ihre
+Datenzugriffe und Abhängigkeiten und startet genau eine Aktion. Das Einreichen
+kehrt sofort zurück und liefert ein \emph{Event}. Die Ausführung ist also
+asynchron, und der Host wartet nur, wenn er es ausdrücklich verlangt.
+Abhängigkeiten zu früheren Aufträgen lassen sich über deren Events angeben.
+Mit \emph{Host-Tasks} kann zudem gewöhnlicher Host-Code als Knoten in den
+Graphen eingereiht werden, etwa um nach einer Berechnung eine Datei zu
+schreiben, ohne den Rest des Programms zu blockieren.
+
+Aus den Datenzugriffen und Events baut die Laufzeitumgebung einen gerichteten
+azyklischen Abhängigkeitsgraphen auf (Abbildung~\ref{fig:dag}). Voneinander
+unabhängige Aufträge darf sie parallel oder in anderer Reihenfolge ausführen,
+abhängige startet sie erst, wenn ihre Vorgänger fertig sind
+\cite{reinders2023dpcpp}. So lassen sich Datentransfers, Berechnungen und
+Host-Arbeit überlappen, ohne Threads oder Streams von Hand zu verwalten. Wer
+eine strikte Reihenfolge bevorzugt, legt die Queue als \emph{in-order} an.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    node/.style={draw, rounded corners=2pt, minimum height=0.6cm, inner sep=3pt, font=\scriptsize, fill=gray!10},
+    kern/.style={node, fill=cblue!15, draw=cblue},
+    >={Stealth[length=2mm]}
+]
+    \node[node] (ca) at (0,0.5) {Kopie $A$ $\rightarrow$ Gerät};
+    \node[node] (cb) at (0,-0.5) {Kopie $B$ $\rightarrow$ Gerät};
+    \node[kern] (k1) at (3.7,0) {Kernel 1: $C = A \cdot B$};
+    \node[node] (cd) at (3.7,-1.2) {Kopie $D$ $\rightarrow$ Gerät};
+    \node[kern] (k2) at (7.4,-0.6) {Kernel 2: $E = C + D$};
+    \node[node] (ce) at (10.9,-0.6) {Kopie $E$ $\rightarrow$ Host};
+    \draw[->] (ca) -- (k1);
+    \draw[->] (cb) -- (k1);
+    \draw[->] (k1) -- (k2);
+    \draw[->] (cd) -- (k2);
+    \draw[->] (k2) -- (ce);
+\end{tikzpicture}
+\caption{Abhängigkeitsgraph: Die Kopie von $D$ kann parallel zu Kernel~1 laufen}
+\label{fig:dag}
+\end{figure}
+
+\subsection{Ausführungsmodell}\label{sec:ausfuehrung}
+
+Ein datenparalleler Kernel wird mit \texttt{parallel\_for} für jeden Punkt
+eines ein- bis dreidimensionalen Indexraums einmal ausgeführt; eine einzelne
+Ausführung heißt \emph{Work-Item}. Bei einer einfachen \texttt{range} gibt der
+Programmierer nur die Gesamtgröße an und überlässt die Aufteilung der
+Implementierung. Bei einer \texttt{nd\_range} legt er zusätzlich fest, wie
+die Work-Items zu \emph{Work-Groups} gebündelt werden
+(Abbildung~\ref{fig:ndrange}). Die Work-Items einer Gruppe laufen gemeinsam
+auf einer Recheneinheit, teilen sich schnellen lokalen Speicher und können
+sich über Barrieren synchronisieren. Seit SYCL~2020 gibt es darunter
+\emph{Sub-Groups}, deren Work-Items im Gleichschritt laufen und Daten direkt
+austauschen können \cite{khronos2020sycl}.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.75, font=\footnotesize]
+    \fill[cblue!15] (1,2) rectangle (2,3);
+    \draw[step=0.25, gray!60] (1,2) grid (2,3);
+    \fill[cblue] (1.25,2.5) rectangle (1.5,2.75);
+    \draw[step=1, gray] (0,0) grid (4,4);
+    \draw[thick] (0,0) rectangle (4,4);
+    \draw[thick, cblue] (1,2) rectangle (2,3);
+    \draw[->] (4.4,3.4) node[right, align=left] {Work-Group: teilt lokalen Speicher,\\synchronisiert über Barrieren} -- (2.05,2.85);
+    \draw[->] (4.4,1.6) node[right, align=left] {Work-Item: eine Ausführung\\des Kernels} -- (1.45,2.55);
+    \node[below] at (2,0) {Indexraum der \texttt{nd\_range}};
+\end{tikzpicture}
+\caption{Gliederung des Indexraums in Work-Groups und Work-Items}
+\label{fig:ndrange}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    sy/.style={draw, rounded corners=2pt, minimum width=2.8cm, minimum height=0.55cm, font=\scriptsize, fill=cblue!15, draw=cblue},
+    hw/.style={draw, rounded corners=2pt, minimum width=3.6cm, minimum height=0.55cm, font=\scriptsize, fill=gray!10},
+]
+    \node[font=\footnotesize\bfseries] at (0,3.0) {SYCL};
+    \node[font=\footnotesize\bfseries] at (4.6,3.0) {NVIDIA-GPU};
+    \node[font=\footnotesize\bfseries] at (9.2,3.0) {CPU};
+    \foreach \y/\s/\g/\c in {2.3/nd\_range/Grid (gesamte GPU)/alle Kerne,
+                              1.5/Work-Group/Thread-Block auf einem SM/ein Kern (Thread),
+                              0.7/Sub-Group/Warp (32 Threads)/SIMD-Vektor,
+                              -0.1/Work-Item/Thread/eine SIMD-Lane} {
+        \node[sy] (s) at (0,\y) {\s};
+        \node[hw] (g) at (4.6,\y) {\g};
+        \node[hw] (c) at (9.2,\y) {\c};
+        \draw[dashed, gray] (s) -- (g);
+        \draw[dashed, gray] (g) -- (c);
+    }
+\end{tikzpicture}
+\caption{Typische Abbildung der SYCL-Ausführungshierarchie auf GPU und CPU}
+\label{fig:abbildung}
+\end{figure}
+
+Diese Hierarchie bildet die Hardware ab (Abbildung~\ref{fig:abbildung}) und
+entspricht weitgehend dem Modell von CUDA \cite{nickolls2008cuda}: Auf einer NVIDIA-GPU wird eine Work-Group zu
+einem Thread-Block mit höchstens 1024 Threads \cite{nvidia_cuda_guide}, eine
+Sub-Group zu einem Warp. Auf einer CPU arbeitet typischerweise ein Kern eine
+Work-Group ab, und die Sub-Group entspricht den Lanes der Vektoreinheit.
+Neben \texttt{parallel\_for} bietet SYCL~2020 fertige Gruppenalgorithmen, etwa
+um innerhalb einer Work-Group einen Wert zu verteilen oder zu summieren, sowie
+\emph{Reduktionen}, mit denen sich Ergebnisse aller Work-Items, etwa eine
+Summe oder ein Maximum, ohne eigene Synchronisation zusammenfassen lassen.
+
+Für den Gerätecode gelten Einschränkungen, weil er auf Hardware ohne
+vollständige C++-Laufzeitumgebung laufen muss: Ausnahmen, virtuelle
+Funktionsaufrufe, Rekursion und dynamische Speicherreservierung sind im Kernel
+nicht erlaubt, und Daten werden per Wertkopie übernommen
+\cite{khronos2020sycl}.
+
+\subsection{Speichermodell}\label{sec:speicher}
+
+GPUs besitzen meist eigenen Speicher, der vom Hauptspeicher des Hosts getrennt
+ist. SYCL bietet zwei Modelle, um Daten zwischen beiden zu bewegen
+(Tabelle~\ref{tab:speicher}).
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+ & \textbf{Buffer und Accessoren} & \textbf{Unified Shared Memory (USM)} \\
+\midrule
+Zugriff        & über Accessor-Objekte mit Zugriffsmodus & über gewöhnliche Zeiger \\
+Datentransfer  & automatisch durch die Laufzeit & \emph{shared}: automatisch; \emph{device}: explizit mit \texttt{memcpy} \\
+Abhängigkeiten & automatisch aus den Accessoren & selbst über Events oder in-order-Queue \\
+Stärke         & sicher, wenig Fehlerquellen & vertraut aus C++, leicht zu portieren \\
+\bottomrule
+\end{tabularx}
+\caption{Die beiden Speichermodelle von SYCL}
+\label{tab:speicher}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    box/.style={draw, rounded corners=2pt, minimum height=0.6cm, inner sep=3pt, font=\scriptsize, fill=gray!10},
+    kern/.style={box, fill=cblue!15, draw=cblue},
+    lab/.style={font=\scriptsize, align=center},
+    lz/.style={font=\scriptsize\itshape, text=corange, align=center},
+    >={Stealth[length=1.8mm]}
+]
+    \node[box] (h) at (0,1.2) {Host-Daten};
+    \node[box] (b) at (2.3,1.2) {Buffer $X$};
+    \node[kern] (k1) at (6.5,1.2) {Kernel 1: schreibt $X$};
+    \node[kern] (k2) at (11.3,1.2) {Kernel 2: liest $X$};
+    \node[box] (ha) at (11.3,-0.4) {Host-Accessor};
+    \node[box] (h2) at (6.5,-0.4) {Ergebnis auf dem Host};
+    \draw[->] (h) -- (b);
+    \draw[->] (b) -- node[lab, above] {Accessor\\(write)} node[lz, below] {Kopie zum\\Gerät} (k1);
+    \draw[->] (k1) -- node[lab, above] {Accessor\\(read)} node[lz, below] {Abhängigkeit} (k2);
+    \draw[->] (k2) -- node[lz, right] {Kopie zurück} (ha);
+    \draw[->] (ha) -- (h2);
+\end{tikzpicture}
+\caption{Buffer-Modell: Aus den Accessoren leitet die Laufzeit Kopien und Abhängigkeiten selbst ab (orange)}
+\label{fig:buffer}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[font=\scriptsize, >={Stealth[length=2mm]}]
+    \draw[fill=gray!8, rounded corners=2pt] (0,0) rectangle (3.2,3.2);
+    \node[anchor=north, font=\footnotesize\bfseries] at (1.6,3.15) {Host (CPU)};
+    \draw[fill=white] (0.3,0.3) rectangle (2.9,2.5);
+    \node[align=center] at (1.6,1.4) {Hauptspeicher\\[2pt]USM \emph{host}};
+    \draw[fill=gray!8, rounded corners=2pt] (6.0,0) rectangle (12.6,3.2);
+    \node[anchor=north, font=\footnotesize\bfseries] at (9.3,3.15) {Gerät (GPU)};
+    \draw[fill=white] (6.3,0.3) rectangle (12.3,2.5);
+    \node[anchor=north] at (9.3,2.48) {globaler Speicher (USM \emph{device})};
+    \foreach \x in {6.55,9.4} {
+        \draw[fill=cblue!15, draw=cblue] (\x,0.5) rectangle (\x+2.65,1.95);
+        \node at (\x+1.325,1.7) {lokaler Speicher};
+        \node at (\x+1.325,1.4) {(Work-Group)};
+        \foreach \i in {0,1,2,3}
+            \draw[fill=cblue, draw=cblue] (\x+0.3+\i*0.55,0.65) rectangle (\x+0.7+\i*0.55,0.95);
+    }
+    \node[below] at (9.3,0) {dunkel: privater Speicher je Work-Item};
+    \draw[<->, thick] (2.9,1.9) -- node[above] {\texttt{memcpy}} (6.3,1.9);
+    \draw[<->, thick, dashed, corange] (2.9,0.9) -- node[below, align=center, text=black] {USM \emph{shared}:\\automatische Migration} (6.3,0.9);
+\end{tikzpicture}
+\caption{Speicherhierarchie von Host und Gerät und die Wege des Datentransfers}
+\label{fig:speicher}
+\end{figure}
+
+Beim \emph{Buffer-Modell} kapselt ein Buffer die Daten, und Kernel greifen über
+\emph{Accessoren} darauf zu, die angeben, ob gelesen oder geschrieben wird.
+Daraus leitet die Laufzeit sowohl die nötigen Kopien als auch die
+Abhängigkeiten im Graphen ab. Die Daten gehören während der Lebensdauer des
+Buffers der Laufzeit; erst wenn der Buffer zerstört wird oder der Host über
+einen \emph{Host-Accessor} zugreift, sind die Ergebnisse wieder im
+Hauptspeicher sichtbar (Abbildung~\ref{fig:buffer}). Dieses Modell ist sicher,
+verlangt aber ein Umdenken gegenüber gewöhnlichen Zeigern. Beim zeigerbasierten \emph{USM}, das mit
+SYCL~2020 eingeführt wurde, wird Speicher ähnlich wie mit \texttt{malloc}
+angelegt. Es gibt drei Arten: \emph{device} (nur auf dem Gerät),
+\emph{host} (im Hauptspeicher, vom Gerät aus lesbar) und \emph{shared}
+(auf beiden Seiten gültig, die Laufzeit migriert die Daten bei Bedarf)
+\cite{reinders2023dpcpp}. USM erleichtert die Portierung bestehender
+Programme, überträgt aber die Verantwortung für Abhängigkeiten auf den
+Programmierer.
+
+Auf dem Gerät unterscheidet SYCL zudem (Abbildung~\ref{fig:speicher})
+\emph{globalen} Speicher (für alle
+Work-Items sichtbar, groß, aber langsam), \emph{lokalen} Speicher (pro
+Work-Group, klein und schnell) und \emph{privaten} Speicher (Register). Diese
+Hierarchie gezielt zu nutzen ist, wie bei CUDA, der wichtigste Hebel für
+Leistung \cite{hwu2022pmpp}.
+
+\subsection{Fehlerbehandlung, Spezialisierung und Interoperabilität}\label{sec:erweitert}
+
+Fehler meldet SYCL als C++-Ausnahmen. Synchrone Fehler, etwa eine ungültige
+Work-Group-Größe beim Einreichen, werden sofort geworfen. Asynchrone Fehler,
+die erst während der Ausführung auf dem Gerät auftreten, sammelt die
+Laufzeit und übergibt sie einem \emph{Async Handler}, sobald der Host
+wartet. Diese Trennung ist eine Folge der asynchronen Ausführung: Ein Fehler
+in einem Kernel kann erst sichtbar werden, wenn der Host längst weitere
+Aufträge eingereicht hat (Abbildung~\ref{fig:fehler}). \emph{Spezialisierungskonstanten} erlauben es, Werte wie eine
+Kachelgröße erst zur Laufzeit festzulegen und dennoch vom Compiler als
+Konstante behandeln zu lassen, was zur JIT-Kompilierung passt. Über die
+\emph{Backend-Interoperabilität} lassen sich schließlich native Objekte des
+Backends abrufen, um etwa herstellerspezifische Bibliotheken direkt auf
+SYCL-Daten aufzurufen \cite{khronos2020sycl}.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    ev/.style={draw, rounded corners=2pt, minimum height=0.55cm, inner sep=3pt, font=\scriptsize, fill=gray!10, align=center},
+    lz/.style={font=\scriptsize\itshape, text=corange, align=center},
+    >={Stealth[length=1.8mm]}
+]
+    \node[font=\footnotesize\bfseries, anchor=east] at (-0.2,1.2) {Host};
+    \node[font=\footnotesize\bfseries, anchor=east] at (-0.2,0) {Gerät};
+    \draw[->, gray] (0,1.2) -- (13,1.2) node[right, font=\scriptsize, text=ctext] {Zeit};
+    \draw[->, gray] (0,0) -- (13,0);
+    \node[ev] (s1) at (1.1,1.2) {Kernel 1\\einreichen};
+    \node[ev, fill=cblue!15, draw=cblue, minimum width=3.6cm] (k1) at (4.4,0) {Kernel 1 läuft \;\textcolor{corange}{\ding{55}} Fehler};
+    \node[ev, fill=corange!15, draw=corange] (s2) at (4.4,1.2) {Kernel 2 einreichen\\(ungültige Work-Group)};
+    \node[ev] (h) at (7.9,1.2) {weitere\\Host-Arbeit};
+    \node[ev] (w) at (11.0,1.2) {\texttt{wait\_and\_throw()}\\$\rightarrow$ Async Handler};
+    \draw[->] (s1.south) -- (2.6,0.28);
+    \node[lz, above=1pt of s2] {synchron: Ausnahme sofort};
+    \draw[->, dashed, corange, thick] (k1.east) to[out=0, in=-90] node[lz, below right, pos=0.45] {asynchron: erst beim Warten} (w.south);
+\end{tikzpicture}
+\caption{Synchrone Fehler werden beim Einreichen geworfen, asynchrone erst, wenn der Host wartet}
+\label{fig:fehler}
+\end{figure}
+
+% ---------------------------------------------------------------------------
+\section{Anwendungsbeispiel: Matrixmultiplikation}\label{sec:beispiel}
+% ---------------------------------------------------------------------------
+
+Zur Veranschaulichung wurde ein sequentielles C++-Programm für die
+Matrixmultiplikation $C = A \cdot B$ \cite{hwu2022pmpp} schrittweise nach
+SYCL portiert und
+mit DPC++ auf einer CPU (AMD Ryzen~5 5600X) und einer GPU (NVIDIA GeForce
+RTX~5060~Ti) ausgeführt. Der Weg entspricht dem Anwendungsfall der Migration:
+Zuerst wurden die äußeren Schleifen durch ein \texttt{parallel\_for} über
+USM \emph{shared} ersetzt, wobei die Rechenvorschrift unverändert zum Kernel
+wurde. Danach wurden die Daten mit USM \emph{device} explizit kopiert, und
+schließlich lud jede Work-Group Blöcke der Matrizen in den lokalen Speicher.
+
+Alle Stufen liefen ohne Codeänderung auf beiden Geräten; gewechselt wurde nur
+das Gerät beim Programmstart. Abbildung~\ref{fig:ergebnisse} zeigt zwei
+Beobachtungen. Erstens kostet bei kleinen Matrizen der Datentransfer mehr als
+die Rechnung, weshalb das Überlappen über den Abhängigkeitsgraphen wichtig
+ist (a). Zweitens ist die beste Work-Group-Größe geräteabhängig: Auf der GPU
+ist eine Kachelgröße von $T = 16$ am schnellsten, auf der CPU $T = 32$, und
+bei $T = 64$ überschreitet die Work-Group die Grenze von 1024 Threads der
+NVIDIA-GPU, sodass der Kernel dort nicht startet (b). Die Kennzahl für
+Performance-Portabilität nach Pennycook et~al.\ \cite{pennycook2016metric}
+fällt dann auf null.
+
+\begin{figure}[htbp]
+\centering
+\pgfplotsset{
+    every axis/.append style={
+        font=\scriptsize, width=7cm, height=4.8cm,
+        axis line style={ctext}, tick style={ctext},
+        grid style={gray!20}, ymajorgrids,
+        legend style={draw=none, fill=none, font=\scriptsize},
+        legend cell align=left,
+    }
+}
+\begin{minipage}[t]{0.49\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[
+    xmode=log, ymode=log, log basis x=2,
+    xtick={256,512,1024,2048}, xticklabels={256,512,1024,2048},
+    xlabel={Matrixgröße $n$}, ylabel={Zeit in ms},
+    legend pos=north west,
+    title={(a) Rechnung und Transfer, GPU},
+]
+\addplot[cblue, line width=1.2pt, mark=*, mark size=2pt]
+    coordinates {(256,0.038) (512,0.263) (1024,1.974) (2048,15.869)};
+\addlegendentry{Rechnung}
+\addplot[corange, line width=1.2pt, dashed, mark=square*, mark size=2pt, mark options={solid}]
+    coordinates {(256,0.173) (512,0.405) (1024,1.344) (2048,3.934)};
+\addlegendentry{Transfer}
+\end{axis}
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.49\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar, bar width=7pt, enlarge x limits=0.18,
+    ymin=0, ymax=115, ytick={0,25,50,75,100},
+    symbolic x coords={8,16,32,64}, xtick=data,
+    xticklabels={{$T{=}8$\\PP 0{,}59},{$T{=}16$\\PP 0{,}93},{$T{=}32$\\PP 0{,}99},{$T{=}64$\\PP 0}},
+    xticklabel style={align=center},
+    ylabel={Effizienz in \%},
+    legend style={at={(0.5,1.0)}, anchor=south, legend columns=2},
+    title style={yshift=3ex},
+    title={(b) Effizienz je Kachelgröße, $n = 2048$},
+]
+\addplot[fill=cblue, draw=white, line width=0.8pt]
+    coordinates {(8,83) (16,100) (32,99) (64,0)};
+\addlegendentry{GPU}
+\addplot[fill=corange, draw=white, line width=0.8pt, postaction={pattern=north east lines, pattern color=white}]
+    coordinates {(8,45) (16,88) (32,100) (64,91)};
+\addlegendentry{CPU}
+\node[font=\scriptsize, text=ctext, rotate=90, anchor=west] at ([xshift=-4.5pt]axis cs:64,2) {startet nicht};
+\end{axis}
+\end{tikzpicture}
+\end{minipage}
+\caption{Datentransfer (a) und Leistung je Kachelgröße mit Performance-Portabilität (b)}
+\label{fig:ergebnisse}
+\end{figure}
+
+% ---------------------------------------------------------------------------
+\section{Bewertung und Fazit}\label{sec:fazit}
+% ---------------------------------------------------------------------------
+
+SYCL löst das Problem der Herstellerbindung und der mehrfachen Codebasen
+überzeugend: Ein Quellcode in Standard-C++ läuft auf CPUs und GPUs
+verschiedener Hersteller, und mehrere unabhängige Implementierungen sichern
+die Offenheit. Die Anwendungsfälle tragen dabei verschiedene Teile des
+Programmiermodells. Für die Migration aus CUDA sind die enge
+Verwandtschaft der Ausführungshierarchie und das zeigerbasierte USM
+entscheidend, für die gemeinsame Nutzung von CPU und GPU die asynchronen
+Queues mit ihrem Abhängigkeitsgraphen und für portable Bibliotheken
+Single-Source mit Templates sowie die Geräteabfragen.
+
+Die Grenze liegt im dritten Problem, dem Zielkonflikt zwischen Abstraktion und
+Kontrolle. SYCL abstrahiert die Schnittstelle, nicht die Hardware: Für hohe
+Leistung muss der Programmierer Work-Groups und lokalen Speicher ebenso
+verstehen wie bei CUDA, und Parameter wie die Work-Group-Größe bleiben
+gerätespezifisch, wie das Beispiel zeigt. Hinzu kommen eine merkliche Abhängigkeit von der
+Implementierung \cite{deakin2020sycl} und eine anspruchsvolle
+Werkzeugkette.
+
+Insgesamt erfüllt SYCL sein Versprechen \enquote{einmal schreiben, überall
+ausführen} für die Korrektheit. Für hohe Leistung auf allen Geräten stellt es
+mit Geräteabfragen und Spezialisierungskonstanten die Werkzeuge bereit, nimmt
+dem Programmierer die gerätespezifische Abstimmung aber nicht ab.
+
+\newpage
+\printbibliography[heading=bibintoc, title={Literaturverzeichnis}]
+
+\end{document}
