@@ -1,0 +1,23 @@
+---
+config:
+  look: handDrawn
+  theme: neutral
+---
+flowchart LR
+  subgraph host["Host (CPU)"]
+    hs["Hauptspeicher (USM host)"]
+  end
+  subgraph geraet["Gerät (GPU)"]
+    subgraph glob["globaler Speicher (USM device)"]
+      subgraph wg1["lokaler Speicher (Work-Group 1)"]
+        p1["privat (Work-Item)"]
+        p2["privat (Work-Item)"]
+      end
+      subgraph wg2["lokaler Speicher (Work-Group 2)"]
+        p3["privat (Work-Item)"]
+        p4["privat (Work-Item)"]
+      end
+    end
+  end
+  hs <-->|"memcpy"| glob
+  hs <-.->|"USM shared: automatische Migration"| glob

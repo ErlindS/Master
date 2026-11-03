@@ -1,0 +1,6 @@
+übersprungen: bin/sycl_gemm_dpcpp fehlt
+übersprungen: bin/sycl_gemm_acpp fehlt
+übersprungen: bin/cuda_gemm fehlt
+übersprungen: bin/cuda_triad fehlt
+übersprungen: bin/cpu_blas fehlt
+übersprungen: bin/cpu_triad fehlt

@@ -1,0 +1,67 @@
+Zeitpunkt: 2026-11-03T20:03:45+01:00
+
+== System
+Linux debian 6.12.113+deb13-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.12.113-1 (2026-10-15) x86_64 GNU/Linux
+
+== CPU
+CPU(s):                                  12
+Model name:                              AMD Ryzen 5 5600X 6-Core Processor
+Thread(s) per core:                      2
+Core(s) per socket:                      6
+Socket(s):                               1
+CPU(s) scaling MHz:                      83%
+CPU max MHz:                             4651.0000
+CPU min MHz:                             550.0000
+L1d cache:                               192 KiB (6 instances)
+L1i cache:                               192 KiB (6 instances)
+L2 cache:                                3 MiB (6 instances)
+L3 cache:                                32 MiB (1 instance)
+Vulnerability L1tf:                      Not affected
+
+== CPU-Governor
+powersave
+
+== Speicher
+               total        used        free      shared  buff/cache   available
+Mem:            31Gi        12Gi       5.7Gi       699Mi        13Gi        19Gi
+Swap:           31Gi        12Mi        31Gi
+
+== GPU
+name, driver_version, clocks.max.sm [MHz], clocks.max.memory [MHz], memory.total [MiB], power.limit [W]
+NVIDIA GeForce RTX 5060 Ti, 615.71.10, 3090 MHz, 14001 MHz, 16311 MiB, 180.00 W
+
+== CUDA
+./systeminfo.sh: line 11: nvcc: command not found
+(nicht verfügbar)
+
+== DPC++
+bash: line 1: icpx: command not found
+(nicht verfügbar)
+
+== SYCL-Geräte (DPC++)
+./systeminfo.sh: line 11: sycl-ls: command not found
+(nicht verfügbar)
+
+== AdaptiveCpp
+./systeminfo.sh: line 11: acpp: command not found
+(nicht verfügbar)
+
+== SYCL-Geräte (AdaptiveCpp)
+./systeminfo.sh: line 11: acpp-info: command not found
+(nicht verfügbar)
+
+== GCC
+g++ (Debian 14.2.0-19) 14.2.0
+Copyright (C) 2024 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+== OpenBLAS
+(nicht verfügbar)
+
+== Git-Stand
+0bedfca0225981c80ce0e3aaa1f5a756c232e32a Tue Nov 3 14:53:54 2026 +0100
+
+== Uncommitted
+?? messdaten/

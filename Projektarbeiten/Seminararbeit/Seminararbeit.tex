@@ -94,26 +94,13 @@
 % ---------------------------------------------------------------------------
 \pagenumbering{arabic}
 
-\section{Einleitung}
-
-Rechenleistung wächst heute vor allem durch Spezialisierung: Neben der CPU
-stehen in fast jedem Rechner GPUs und andere Beschleuniger, die datenparallele
-Aufgaben um Größenordnungen schneller bearbeiten. Die Software hält mit dieser
-Vielfalt jedoch nur schwer Schritt, denn jeder Hersteller bringt sein eigenes
-Programmiermodell mit. SYCL ist ein offener Standard der Khronos Group, der
-dieses Problem lösen will: Ein einziger Quellcode in Standard-C++ soll auf CPUs
-und GPUs verschiedener Hersteller laufen \cite{khronos2020sycl}.
-
-Diese Arbeit erklärt, welches Problem SYCL adressiert, für welche
-Anwendungsfälle es gedacht ist und wie sein Programmiermodell diese erfüllt.
-Ein kurzes Beispiel macht die Konzepte greifbar.
-
-% ---------------------------------------------------------------------------
 \section{Problemstellung}\label{sec:problem}
 % ---------------------------------------------------------------------------
 
-Heutige Systeme kombinieren CPUs mit GPUs unterschiedlicher Hersteller. Für
-die Software ergeben sich daraus drei Probleme:
+Rechenleistung liegt heutzutage in verschiedenen Formen vor. Neben der CPU
+stehen in fast jedem Rechner GPUs und andere technischen Komponenten zur Verfügung, die datenparallele
+Aufgaben schneller bearbeiten können. Die Software um diese Geräte jeweils anzusprechen kann varrieren, denn jeder Hersteller bringt sein eigenes
+Programmiermodell mit. Für die Software ergeben sich daraus drei Probleme:
 
 \begin{enumerate}[nosep]
     \item \textbf{Herstellerbindung:} CUDA läuft nur auf NVIDIA-GPUs
@@ -159,31 +146,43 @@ die Software ergeben sich daraus drei Probleme:
 \end{figure}
 
 % ---------------------------------------------------------------------------
-\section{SYCL als Lösungsansatz}\label{sec:sycl}
+\section{Forschungsfrage}\label{sec:frage}
 % ---------------------------------------------------------------------------
 
-SYCL ist ein offener Standard der Khronos Group auf Basis von C++17
-\cite{khronos2020sycl}. Implementierungen wie DPC++ \cite{intel_llvm} und
-AdaptiveCpp \cite{alpay2020hipsycl, adaptivecpp} bilden ihn über Backends wie
-CUDA, HIP, Level~Zero, OpenCL oder OpenMP auf die Hardware ab und übersetzen
-den Gerätecode meist erst beim ersten Start \emph{just in time} für das
-konkrete Gerät \cite{alpay2023sscp}. Den drei Problemen setzt SYCL vier
-Entwurfsziele entgegen:
+SYCL ist ein offener Standard der Khronos Group, der diese oben genannten Probleme lösen
+will. Mithilfe eines heterogenen Code im Standard-C++ sollen auf CPUs und GPUs
+verschiedener Hersteller das selbe Programm laufen \cite{khronos2020sycl}. Ob ein Programm
+überall läuft, ist jedoch etwas anderes, als ob es überall
+schnell läuft. Diese Arbeit untersucht deshalb:
 
-\begin{description}[style=sameline, leftmargin=1.5em, nosep]
-    \item[Portabilität:] Ein Quellcode, viele Backends; das Gerät wird erst
-    beim Übersetzen bzw.\ zur Laufzeit gewählt.
-    \item[Offenheit:] Ein offener Standard mit mehreren unabhängigen
-    Implementierungen statt eines Herstellerprodukts.
-    \item[Produktivität:] \emph{Single-Source} in Standard-C++: Host- und
-    Gerätecode stehen in einer Datei, Kernel sind gewöhnliche Lambdas, und
-    Templates und Typen werden geteilt.
-    \item[Kontrolle:] Wo nötig, legt das Modell Hardwarekonzepte wie
-    Work-Groups und lokalen Speicher offen, um gezielt optimieren zu können.
-\end{description}
+\begin{quote}
+Wie adressiert das Programmiermodell von SYCL die drei genannten
+Probleme, und erreicht ein schrittweise nach SYCL portiertes Programm neben
+funktionaler Portabilität auch Performance-Portabilität zwischen CPU und
+GPU?
+\end{quote}
 
-\noindent Tabelle~\ref{tab:vergleich} vergleicht SYCL entlang dieser Ziele mit
-den Alternativen. Kokkos \cite{edwards2014kokkos} und RAJA
+\noindent Daraus ergeben sich zwei Teilfragen. (F1) Welche Konzepte des
+Programmiermodells werden bei einer Portierung benötigt, und welches der
+drei Probleme lösen sie? (F2) Welche Stufen einer Portierung lassen sich
+unverändert auf verschiedenen Geräten ausführen, und welche Parameter
+bleiben gerätespezifisch?
+
+% ---------------------------------------------------------------------------
+\section{Stand der Technik}\label{sec:stand}
+% ---------------------------------------------------------------------------
+
+SYCL basiert auf C++17 \cite{khronos2020sycl}. Konkrete Implementierungen des Standards wie DPC++
+\cite{intel_llvm} und AdaptiveCpp \cite{alpay2020hipsycl, adaptivecpp} bilden
+die Grundlage über Backends wie CUDA, HIP, Level~Zero, OpenCL oder OpenMP auf
+die Hardware ab und übersetzen den Gerätecode meist erst beim ersten Start
+just in time für das konkrete Gerät \cite{alpay2023sscp}. Den drei
+Problemen setzt SYCL vier Entwurfsziele entgegen. Portabilität (ein
+Quellcode, viele Backends), Offenheit (ein Standard mit mehreren
+unabhängigen Implementierungen), Produktivität (Host- und Gerätecode
+in einer Datei in Standard-C++) und Kontrolle (Hardwarekonzepte wie
+lokaler Speicher bleiben zugänglich). Tabelle~\ref{tab:vergleich} ordnet
+SYCL entlang dieser Ziele ein. Kokkos \cite{edwards2014kokkos} und RAJA
 \cite{beckingsale2019raja} verfolgen ähnliche Ziele, sind aber kein offener
 Industriestandard.
 
@@ -208,108 +207,126 @@ Kokkos/RAJA     & \ja     & \nein   & \ja    & \teils \\
 \label{tab:vergleich}
 \end{table}
 
+Eingesetzt wird SYCL vor allem im wissenschaftlichen Rechnen auf Systemen
+verschiedener Hersteller, etwa auf dem Supercomputer Aurora oder in GROMACS,
+bei der Migration von CUDA-Anwendungen mit dem Werkzeug SYCLomatic und in
+portablen Bibliotheken wie oneMKL \cite{reinders2023dpcpp}. Frühere Studien
+fanden SYCL auf vielen Plattformen konkurrenzfähig mit herstellerspezifischem
+Code, aber deutlich abhängig von Implementierung und Parametrierung
+\cite{deakin2020sycl, breyer2022svm}. Als Maß für Performance-Portabilität hat
+sich die Kennzahl von Pennycook, Sewall und Lee etabliert
+\cite{pennycook2016metric}. Offen bleibt in diesen Arbeiten meist,
+welcher Schritt einer Portierung welchen Effekt auf welchem Gerät hat.
+Hier setzt folgende Seminararbeit an.
+
 % ---------------------------------------------------------------------------
-\section{Anwendungsfälle}\label{sec:usecases}
+\section{Methode}\label{sec:methode}
 % ---------------------------------------------------------------------------
 
-Aus den Entwurfszielen ergeben sich vier typische Einsatzfelder
-(Tabelle~\ref{tab:usecases}): wissenschaftliches Rechnen auf Systemen
-verschiedener Hersteller, etwa auf dem Supercomputer Aurora mit Intel-GPUs
-oder in der Molekulardynamik-Software GROMACS
-\cite{deakin2020sycl, breyer2022svm}; die Migration bestehender
-CUDA-Anwendungen, unterstützt durch das Werkzeug SYCLomatic; die gemeinsame
-Nutzung von CPU und GPU in einem Rechner; und portable Bibliotheken wie
-oneMKL oder oneDPL \cite{reinders2023dpcpp}. Die Tabelle zeigt, welche
-Anforderung jedes Feld stellt und welcher Teil des Programmiermodells sie
-erfüllt.
+Untersucht wird die Multiplikation $C = A \cdot B$ zweier $n \times
+n$-Matrizen in einfacher Genauigkeit \cite{hwu2022pmpp}. Das Problem benötigt
+$2n^3$ Gleitkommaoperationen bei $3n^2$ Werten Datenvolumen, ist gut
+parallelisierbar und leicht auf Korrektheit prüfbar. Ein sequentielles
+C++-Programm wird in Stufen nach SYCL überführt, wobei jede Stufe nur so viele
+neue Konzepte einführt, wie für ihren Schritt nötig sind
+(Tabelle~\ref{tab:stufen}). Die Konzepte des Programmiermodells werden
+deshalb in Abschnitt~\ref{sec:untersuchung} jeweils an der Stufe erklärt, in
+der sie zum ersten Mal gebraucht werden. Das beantwortet F1. Zugleich lässt
+sich die Wirkung jedes Schritts getrennt messen, was F2 beantwortet.
 
 \begin{table}[htbp]
 \centering
-\footnotesize
-\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\small
+\begin{tabularx}{\textwidth}{@{}c>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
 \toprule
-\textbf{Anwendungsfall} & \textbf{Anforderung} & \textbf{Antwort im Programmiermodell} \\
+\textbf{Stufe} & \textbf{Änderung} & \textbf{Neue Konzepte} \\
 \midrule
-Rechnen über Herstellergrenzen & ein Code für viele Systeme, hohe Leistung & Backends und Geräteauswahl (\ref{sec:geraete}); hardwarenahe Hierarchie (\ref{sec:ausfuehrung}); Interoperabilität mit Herstellerbibliotheken (\ref{sec:erweitert}) \\
-Migration von CUDA & vertraute Konzepte, schrittweiser Umbau & Work-Group/Sub-Group analog zu Block/Warp (\ref{sec:ausfuehrung}); zeigerbasiertes USM (\ref{sec:speicher}) \\
-CPU und GPU gemeinsam & Überlappung, Ausweichgerät & asynchrone Queues und Abhängigkeitsgraph (\ref{sec:queues}); CPU als Gerät (\ref{sec:geraete}) \\
-Portable Bibliotheken & generischer Code, Anpassung je Gerät & Single-Source mit Templates (\ref{sec:sycl}); \texttt{get\_info}, Aspekte, Spezialisierungskonstanten (\ref{sec:geraete}, \ref{sec:erweitert}) \\
+0 & Ausgangsprogramm, drei Schleifen, ein CPU-Kern & -- \\
+1 & Äußere Schleifen durch \texttt{parallel\_for} ersetzt & Host und Gerät, Queue, Kernel, \texttt{range}, USM shared \\
+2 & Getrennter Gerätespeicher, explizites Kopieren & USM device, \texttt{memcpy}, Events, Abhängigkeiten, Buffer \\
+3 & Kachelung im lokalen Speicher & Command Group, \texttt{nd\_range}, Work-Group, lokaler Speicher, Barriere \\
+4 & Kein neuer Code: Gerätewechsel und Variation der Kachelgröße & Geräteauswahl, Backends, Geräteabfragen, Fehlerbehandlung \\
 \bottomrule
 \end{tabularx}
-\caption{Anwendungsfälle, ihre Anforderungen und die Mechanismen, die sie erfüllen}
-\label{tab:usecases}
+\caption{Stufen der Portierung und die dabei eingeführten Konzepte}
+\label{tab:stufen}
 \end{table}
 
+Bewertet werden zwei Ebenen: funktionale Portabilität (das Programm
+läuft unverändert und korrekt auf jedem Gerät) und
+Performance-Portabilität. Letztere wird als harmonischer Mittelwert
+der Effizienzen $e_i$ über die Gerätemenge $H$ berechnet
+\cite{pennycook2016metric}:
+\[
+    \mathrm{PP}(a, p, H) =
+    \begin{cases}
+        |H| \,\big/ \sum_{i \in H} 1/e_i(a,p) & \text{falls $a$ auf allen $i \in H$ läuft,}\\
+        0 & \text{sonst.}
+    \end{cases}
+\]
+Als Effizienz dient die Anwendungseffizienz, also die Leistung relativ zur
+besten gemessenen Variante auf dem jeweiligen Gerät.
+
+Gemessen wird auf einem AMD Ryzen~5 5600X (sechs Kerne, OpenCL-Backend) und
+einer NVIDIA GeForce RTX~5060~Ti (CUDA-Backend) mit DPC++ \cite{intel_llvm}.
+Jede Stufe läuft für $n \in \{256, 512, 1024, 2048\}$; nach einem getrennt
+erfassten ersten Lauf, der die JIT-Kompilierung enthält, folgen fünf
+Messläufe, von denen der Median berichtet wird. Kernel- und Transferzeit
+werden getrennt erfasst, und jedes Ergebnis wird stichprobenartig gegen eine
+Referenzrechnung in doppelter Genauigkeit geprüft.
+
 % ---------------------------------------------------------------------------
-\section{Das Programmiermodell}\label{sec:modell}
+\section{Untersuchung}\label{sec:untersuchung}
 % ---------------------------------------------------------------------------
 
-\subsection{Plattformen, Geräte und Geräteauswahl}\label{sec:geraete}
+Die größte Hürde war die Werkzeugkette: Die Standardinstallation von oneAPI
+erkannte nur die CPU, für die NVIDIA-GPU war ein eigener Build von DPC++
+nötig. Alle Programme wurden einmal für beide Geräte zugleich übersetzt.
 
-SYCL unterscheidet den \emph{Host}, auf dem das Hauptprogramm läuft, und
-\emph{Geräte}, auf denen Kernel ausgeführt werden. Geräte sind nach
-\emph{Plattformen} gruppiert, wobei jede Plattform einem Backend entspricht;
-auch die CPU kann als Gerät auftreten. Welches Gerät verwendet wird, bestimmt
-ein \emph{Device Selector}. Vordefiniert sind Selektoren für das als am
-leistungsfähigsten eingeschätzte Gerät, für GPUs und für CPUs; eigene
-Selektoren vergeben Punktwerte anhand von Geräteeigenschaften. Über
-\emph{Aspekte} kann ein Programm zudem prüfen, ob ein Gerät optionale
-Fähigkeiten wie doppelte Genauigkeit oder bestimmte USM-Arten unterstützt,
-und mit \texttt{get\_info} Eigenschaften wie die maximale Work-Group-Größe
-abfragen \cite{khronos2020sycl}. Implementierungen erlauben außerdem eine
-Auswahl von außen, etwa über Umgebungsvariablen, sodass derselbe Code ohne
-Neuübersetzung auf einem anderen Gerät läuft. Dass auch die CPU als
-vollwertiges Gerät gilt, macht sie zum Ausweichgerät, wenn kein
-Beschleuniger vorhanden ist, und erlaubt die Entwicklung ohne GPU.
-Abbildung~\ref{fig:selektor} veranschaulicht die Auswahl.
+\subsection{Stufe 1: Der erste Kernel}\label{sec:stufe1}
 
-\begin{figure}[htbp]
-\centering
-\begin{tikzpicture}[
-    dev/.style={draw, rounded corners=2pt, minimum width=3.9cm, minimum height=0.55cm, font=\scriptsize, fill=gray!10, anchor=west},
-    score/.style={font=\scriptsize, text=ctext, anchor=west},
-    >={Stealth[length=1.8mm]}
-]
-    \node[font=\footnotesize\bfseries, anchor=west] at (0,2.2) {verfügbare Geräte (Backend)};
-    \node[dev, fill=cblue!15, draw=cblue, very thick] (d1) at (0,1.5) {NVIDIA-GPU (CUDA)};
-    \node[dev] (d2) at (0,0.75) {Intel-GPU (Level Zero)};
-    \node[dev] (d3) at (0,0) {CPU (OpenCL / OpenMP)};
-    \node[score] at (4.05,1.5) {Wertung 900};
-    \node[score] at (4.05,0.75) {Wertung 700};
-    \node[score] at (4.05,0) {Wertung 300};
-    \node[draw, rounded corners=2pt, align=center, font=\scriptsize, minimum height=1.2cm, fill=white] (sel) at (8.2,0.75) {Device Selector\\[1pt]bewertet Eigenschaften\\und Aspekte};
-    \node[draw, rounded corners=2pt, font=\scriptsize, fill=cblue!15, draw=cblue, minimum height=0.6cm] (q) at (12.0,0.75) {Queue};
-    \draw[->] (5.95,1.5) -- (sel.west |- 0,1.05);
-    \draw[->] (5.95,0.75) -- (sel.west);
-    \draw[->] (5.95,0) -- (sel.west |- 0,0.45);
-    \draw[->, thick, cblue] (sel) -- node[above, font=\scriptsize, text=black, align=center] {höchste\\Wertung} (q);
-\end{tikzpicture}
-\caption{Geräteauswahl: Der Selector bewertet jedes Gerät, die Queue wird an das bestbewertete gebunden}
-\label{fig:selektor}
-\end{figure}
+SYCL unterscheidet den Host, auf dem das Hauptprogramm läuft, und
+Geräte, auf denen Kernel ausgeführt werden. Die Verbindung zu einem
+Gerät stellt eine Queue her; ohne weitere Angabe wählt sie das als am
+leistungsfähigsten eingeschätzte Gerät. Für Stufe~1 genügen daneben zwei
+weitere Konzepte. Mit \texttt{malloc\_shared}
+angelegter Unified Shared Memory (USM) ist auf Host und Gerät über
+denselben Zeiger gültig; die Laufzeit migriert die Daten bei Bedarf.
+\texttt{parallel\_for} führt einen Kernel, hier ein gewöhnliches
+C++-Lambda, für jeden Punkt eines ein- bis dreidimensionalen Indexraums
+(\texttt{range}) einmal aus; eine einzelne Ausführung heißt
+Work-Item. Die beiden äußeren Schleifen des Ausgangsprogramms
+entfallen, die innere Rechenvorschrift wird unverändert übernommen. Host-
+und Gerätecode stehen in derselben Datei (Single-Source).
 
-\subsection{Queues, Command Groups und Abhängigkeiten}\label{sec:queues}
+Das Einreichen kehrt sofort zurück; die Ausführung ist asynchron, und der Host
+wartet nur, wenn er es wie hier mit \texttt{wait()} verlangt. Für den
+Gerätecode gelten Einschränkungen, weil er auf Hardware ohne vollständige
+C++-Laufzeitumgebung laufen muss: Ausnahmen, virtuelle Funktionsaufrufe,
+Rekursion und dynamische Speicher\-reser\-vierung sind im Kernel nicht erlaubt,
+und Daten werden per Wertkopie übernommen \cite{khronos2020sycl}. Bei einer
+einfachen \texttt{range} überlässt der Programmierer die Aufteilung der
+Work-Items vollständig der Implementierung.
 
-Die Verbindung zu einem Gerät stellt eine \emph{Queue} her. Arbeit wird in
-Form von \emph{Command Groups} eingereicht: Eine Command Group beschreibt eine
-Aktion, etwa einen Kernel oder eine Kopie, zusammen mit den Daten, die sie
-benötigt. Technisch ist eine Command Group eine Funktion, die
-ein \emph{Handler}-Objekt erhält: Über den Handler deklariert sie ihre
-Datenzugriffe und Abhängigkeiten und startet genau eine Aktion. Das Einreichen
-kehrt sofort zurück und liefert ein \emph{Event}. Die Ausführung ist also
-asynchron, und der Host wartet nur, wenn er es ausdrücklich verlangt.
-Abhängigkeiten zu früheren Aufträgen lassen sich über deren Events angeben.
-Mit \emph{Host-Tasks} kann zudem gewöhnlicher Host-Code als Knoten in den
-Graphen eingereiht werden, etwa um nach einer Berechnung eine Datei zu
-schreiben, ohne den Rest des Programms zu blockieren.
+\subsection{Stufe 2: Expliziter Gerätespeicher}\label{sec:stufe2}
 
-Aus den Datenzugriffen und Events baut die Laufzeitumgebung einen gerichteten
-azyklischen Abhängigkeitsgraphen auf (Abbildung~\ref{fig:dag}). Voneinander
-unabhängige Aufträge darf sie parallel oder in anderer Reihenfolge ausführen,
-abhängige startet sie erst, wenn ihre Vorgänger fertig sind
-\cite{reinders2023dpcpp}. So lassen sich Datentransfers, Berechnungen und
-Host-Arbeit überlappen, ohne Threads oder Streams von Hand zu verwalten. Wer
-eine strikte Reihenfolge bevorzugt, legt die Queue als \emph{in-order} an.
+GPUs besitzen meist eigenen Speicher, der vom Hauptspeicher des Hosts getrennt
+ist. Bei USM shared bleibt verborgen, wann Daten wandern. Stufe~2 legt
+die Matrizen deshalb mit \texttt{malloc\_device} nur auf dem Gerät an und
+kopiert sie mit \texttt{q.memcpy} explizit hin und zurück. Neben
+device und shared gibt es als dritte USM-Art host
+(im Hauptspeicher, vom Gerät aus lesbar) \cite{reinders2023dpcpp}. So lassen
+sich Transfer- und Rechenzeit erstmals getrennt messen.
+
+Mit expliziten Kopien wird die Reihenfolge wichtig: Der Kernel darf erst
+starten, wenn $A$ und $B$ angekommen sind. Jedes Einreichen liefert ein
+Event, über das sich Abhängigkeiten zu früheren Aufträgen angeben
+lassen. Aus diesen baut die Laufzeit einen gerichteten azyklischen
+Abhängigkeitsgraphen auf (Abbildung~\ref{fig:dag}). Voneinander unabhängige
+Aufträge darf sie parallel ausführen, abhängige startet sie erst, wenn ihre
+Vorgänger fertig sind \cite{reinders2023dpcpp}. So lassen sich Transfers und
+Berechnungen überlappen, ohne Threads von Hand zu verwalten. Die Fallstudie
+wartet der Einfachheit halber nach jedem Schritt.
 
 \begin{figure}[htbp]
 \centering
@@ -334,19 +351,76 @@ eine strikte Reihenfolge bevorzugt, legt die Queue als \emph{in-order} an.
 \label{fig:dag}
 \end{figure}
 
-\subsection{Ausführungsmodell}\label{sec:ausfuehrung}
+Bei USM liegt die Verantwortung für diese Abhängigkeiten beim Programmierer.
+SYCL bietet mit Buffern und Accessoren eine Alternative
+(Tabelle~\ref{tab:speicher}): Ein Buffer kapselt die Daten, und Kernel greifen
+über Accessoren darauf zu, die angeben, ob gelesen oder geschrieben wird.
+Daraus leitet die Laufzeit Kopien und Abhängigkeiten selbst ab. Die Fallstudie bleibt bei USM, weil es dem Ausgangsprogramm mit
+seinen Zeigern am nächsten ist.
 
-Ein datenparalleler Kernel wird mit \texttt{parallel\_for} für jeden Punkt
-eines ein- bis dreidimensionalen Indexraums einmal ausgeführt; eine einzelne
-Ausführung heißt \emph{Work-Item}. Bei einer einfachen \texttt{range} gibt der
-Programmierer nur die Gesamtgröße an und überlässt die Aufteilung der
-Implementierung. Bei einer \texttt{nd\_range} legt er zusätzlich fest, wie
-die Work-Items zu \emph{Work-Groups} gebündelt werden
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+ & \textbf{Buffer und Accessoren} & \textbf{Unified Shared Memory (USM)} \\
+\midrule
+Zugriff        & über Accessor-Objekte mit Zugriffsmodus & über gewöhnliche Zeiger \\
+Datentransfer  & automatisch durch die Laufzeit & shared: automatisch; device: explizit mit \texttt{memcpy} \\
+Abhängigkeiten & automatisch aus den Accessoren & selbst über Events oder in-order-Queue \\
+Stärke         & sicher, wenig Fehlerquellen & vertraut aus C++, leicht zu portieren \\
+\bottomrule
+\end{tabularx}
+\caption{Die beiden Speichermodelle von SYCL}
+\label{tab:speicher}
+\end{table}
+
+\subsection{Stufe 3: Kachelung im lokalen Speicher}\label{sec:stufe3}
+
+In Stufe~2 liest jedes Work-Item eine ganze Zeile von $A$ und Spalte von $B$
+aus dem langsamen globalen Speicher. Stufe~3 nutzt die Speicherhierarchie
+des Geräts (Abbildung~\ref{fig:speicher}): Neben dem globalen Speicher
+(für alle Work-Items sichtbar, groß, aber langsam) gibt es lokalen
+Speicher (pro Work-Group, klein und schnell) und privaten Speicher
+(Register). Diese Hierarchie gezielt zu nutzen ist, wie bei CUDA, der
+wichtigste Hebel für Leistung \cite{hwu2022pmpp}.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[font=\scriptsize, >={Stealth[length=2mm]}]
+    \draw[fill=gray!8, rounded corners=2pt] (0,0) rectangle (3.2,3.2);
+    \node[anchor=north, font=\footnotesize\bfseries] at (1.6,3.15) {Host (CPU)};
+    \draw[fill=white] (0.3,0.3) rectangle (2.9,2.5);
+    \node[align=center] at (1.6,1.4) {Hauptspeicher\\[2pt]USM host};
+    \draw[fill=gray!8, rounded corners=2pt] (6.0,0) rectangle (12.6,3.2);
+    \node[anchor=north, font=\footnotesize\bfseries] at (9.3,3.15) {Gerät (GPU)};
+    \draw[fill=white] (6.3,0.3) rectangle (12.3,2.5);
+    \node[anchor=north] at (9.3,2.48) {globaler Speicher (USM device)};
+    \foreach \x in {6.55,9.4} {
+        \draw[fill=cblue!15, draw=cblue] (\x,0.5) rectangle (\x+2.65,1.95);
+        \node at (\x+1.325,1.7) {lokaler Speicher};
+        \node at (\x+1.325,1.4) {(Work-Group)};
+        \foreach \i in {0,1,2,3}
+            \draw[fill=cblue, draw=cblue] (\x+0.3+\i*0.55,0.65) rectangle (\x+0.7+\i*0.55,0.95);
+    }
+    \node[below] at (9.3,0) {dunkel: privater Speicher je Work-Item};
+    \draw[<->, thick] (2.9,1.9) -- node[above] {\texttt{memcpy}} (6.3,1.9);
+    \draw[<->, thick, dashed, corange] (2.9,0.9) -- node[below, align=center, text=black] {USM shared:\\automatische Migration} (6.3,0.9);
+\end{tikzpicture}
+\caption{Speicherhierarchie von Host und Gerät und die Wege des Datentransfers}
+\label{fig:speicher}
+\end{figure}
+
+Lokaler Speicher setzt voraus, dass der Programmierer festlegt, welche
+Work-Items zusammenarbeiten. Statt einer \texttt{range} verwendet Stufe~3
+deshalb eine \texttt{nd\_range}, die den Indexraum zusätzlich in
+Work-Groups der Größe $T \times T$ gliedert
 (Abbildung~\ref{fig:ndrange}). Die Work-Items einer Gruppe laufen gemeinsam
-auf einer Recheneinheit, teilen sich schnellen lokalen Speicher und können
-sich über Barrieren synchronisieren. Seit SYCL~2020 gibt es darunter
-\emph{Sub-Groups}, deren Work-Items im Gleichschritt laufen und Daten direkt
-austauschen können \cite{khronos2020sycl}.
+auf einer Recheneinheit, teilen sich den lokalen Speicher und können sich
+über Barrieren synchronisieren. Jede Work-Group lädt nacheinander
+$T \times T$-Kacheln von $A$ und $B$ in den lokalen Speicher, wartet an
+einer Barriere, bis alle Werte geladen sind, und rechnet dann nur noch mit
+den schnellen Kopien.
 
 \begin{figure}[htbp]
 \centering
@@ -364,6 +438,23 @@ austauschen können \cite{khronos2020sycl}.
 \caption{Gliederung des Indexraums in Work-Groups und Work-Items}
 \label{fig:ndrange}
 \end{figure}
+
+Um lokalen Speicher anzufordern, reicht der vereinfachte Aufruf aus Stufe~1
+nicht mehr aus. Die Arbeit wird nun als Command Group mit
+\texttt{q.submit} eingereicht: einer Funktion, die ein Handler-Objekt
+erhält, über das sie Ressourcen wie den lokalen Speicher
+(\texttt{local\_accessor}) und Abhängigkeiten deklariert und genau eine
+Aktion startet. Der Kernel erhält statt einer \texttt{id} ein
+\texttt{nd\_item}, das globale und lokale Position sowie die Gruppe liefert.
+
+Diese Hierarchie bildet die Hardware ab (Abbildung~\ref{fig:abbildung}) und
+entspricht weitgehend dem Modell von CUDA \cite{nickolls2008cuda}: Auf einer
+NVIDIA-GPU wird eine Work-Group zu einem Thread-Block mit höchstens 1024
+Threads \cite{nvidia_cuda_guide}. Auf einer CPU arbeitet typischerweise ein
+Kern eine Work-Group ab. Seit SYCL~2020 gibt es darunter zudem
+Sub-Groups, die einem Warp bzw.\ den Lanes einer Vektoreinheit
+entsprechen, sowie fertige Gruppenalgorithmen und Reduktionen
+\cite{khronos2020sycl}. Diese Verwandtschaft erleichtert die Migration aus CUDA.
 
 \begin{figure}[htbp]
 \centering
@@ -389,139 +480,34 @@ austauschen können \cite{khronos2020sycl}.
 \label{fig:abbildung}
 \end{figure}
 
-Diese Hierarchie bildet die Hardware ab (Abbildung~\ref{fig:abbildung}) und
-entspricht weitgehend dem Modell von CUDA \cite{nickolls2008cuda}: Auf einer NVIDIA-GPU wird eine Work-Group zu
-einem Thread-Block mit höchstens 1024 Threads \cite{nvidia_cuda_guide}, eine
-Sub-Group zu einem Warp. Auf einer CPU arbeitet typischerweise ein Kern eine
-Work-Group ab, und die Sub-Group entspricht den Lanes der Vektoreinheit.
-Neben \texttt{parallel\_for} bietet SYCL~2020 fertige Gruppenalgorithmen, etwa
-um innerhalb einer Work-Group einen Wert zu verteilen oder zu summieren, sowie
-\emph{Reduktionen}, mit denen sich Ergebnisse aller Work-Items, etwa eine
-Summe oder ein Maximum, ohne eigene Synchronisation zusammenfassen lassen.
+\subsection{Stufe 4: Gerätewechsel und Kachelgröße}\label{sec:stufe4}
 
-Für den Gerätecode gelten Einschränkungen, weil er auf Hardware ohne
-vollständige C++-Laufzeitumgebung laufen muss: Ausnahmen, virtuelle
-Funktionsaufrufe, Rekursion und dynamische Speicherreservierung sind im Kernel
-nicht erlaubt, und Daten werden per Wertkopie übernommen
-\cite{khronos2020sycl}.
+Stufe~4 enthält keinen neuen Code. Sie prüft, ob die Programme der Stufen~1
+bis~3 unverändert auf einem anderen Gerät laufen. Dafür ist die
+Geräteauswahl nötig: Geräte sind nach Plattformen gruppiert, wobei
+jede Plattform einem Backend entspricht; auch die CPU tritt als Gerät auf.
+Welches Gerät eine Queue verwendet, bestimmt ein Device Selector, der
+jedes Gerät anhand seiner Eigenschaften bewertet und das bestbewertete wählt.
+Implementierungen erlauben außerdem eine Auswahl von außen; in der Fallstudie
+wurde nur die Umgebungsvariable \texttt{ONEAPI\_DEVICE\_SELECTOR} zwischen
+\texttt{opencl:cpu} und \texttt{cuda:gpu} gewechselt. Dass die CPU ein
+vollwertiges Gerät ist, macht sie zum Ausweichgerät und erlaubt die
+Entwicklung ohne GPU.
 
-\subsection{Speichermodell}\label{sec:speicher}
-
-GPUs besitzen meist eigenen Speicher, der vom Hauptspeicher des Hosts getrennt
-ist. SYCL bietet zwei Modelle, um Daten zwischen beiden zu bewegen
-(Tabelle~\ref{tab:speicher}).
-
-\begin{table}[htbp]
-\centering
-\small
-\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
-\toprule
- & \textbf{Buffer und Accessoren} & \textbf{Unified Shared Memory (USM)} \\
-\midrule
-Zugriff        & über Accessor-Objekte mit Zugriffsmodus & über gewöhnliche Zeiger \\
-Datentransfer  & automatisch durch die Laufzeit & \emph{shared}: automatisch; \emph{device}: explizit mit \texttt{memcpy} \\
-Abhängigkeiten & automatisch aus den Accessoren & selbst über Events oder in-order-Queue \\
-Stärke         & sicher, wenig Fehlerquellen & vertraut aus C++, leicht zu portieren \\
-\bottomrule
-\end{tabularx}
-\caption{Die beiden Speichermodelle von SYCL}
-\label{tab:speicher}
-\end{table}
-
-\begin{figure}[htbp]
-\centering
-\begin{tikzpicture}[
-    box/.style={draw, rounded corners=2pt, minimum height=0.6cm, inner sep=3pt, font=\scriptsize, fill=gray!10},
-    kern/.style={box, fill=cblue!15, draw=cblue},
-    lab/.style={font=\scriptsize, align=center},
-    lz/.style={font=\scriptsize\itshape, text=corange, align=center},
-    >={Stealth[length=1.8mm]}
-]
-    \node[box] (h) at (0,1.2) {Host-Daten};
-    \node[box] (b) at (2.3,1.2) {Buffer $X$};
-    \node[kern] (k1) at (6.5,1.2) {Kernel 1: schreibt $X$};
-    \node[kern] (k2) at (11.3,1.2) {Kernel 2: liest $X$};
-    \node[box] (ha) at (11.3,-0.4) {Host-Accessor};
-    \node[box] (h2) at (6.5,-0.4) {Ergebnis auf dem Host};
-    \draw[->] (h) -- (b);
-    \draw[->] (b) -- node[lab, above] {Accessor\\(write)} node[lz, below] {Kopie zum\\Gerät} (k1);
-    \draw[->] (k1) -- node[lab, above] {Accessor\\(read)} node[lz, below] {Abhängigkeit} (k2);
-    \draw[->] (k2) -- node[lz, right] {Kopie zurück} (ha);
-    \draw[->] (ha) -- (h2);
-\end{tikzpicture}
-\caption{Buffer-Modell: Aus den Accessoren leitet die Laufzeit Kopien und Abhängigkeiten selbst ab (orange)}
-\label{fig:buffer}
-\end{figure}
-
-\begin{figure}[htbp]
-\centering
-\begin{tikzpicture}[font=\scriptsize, >={Stealth[length=2mm]}]
-    \draw[fill=gray!8, rounded corners=2pt] (0,0) rectangle (3.2,3.2);
-    \node[anchor=north, font=\footnotesize\bfseries] at (1.6,3.15) {Host (CPU)};
-    \draw[fill=white] (0.3,0.3) rectangle (2.9,2.5);
-    \node[align=center] at (1.6,1.4) {Hauptspeicher\\[2pt]USM \emph{host}};
-    \draw[fill=gray!8, rounded corners=2pt] (6.0,0) rectangle (12.6,3.2);
-    \node[anchor=north, font=\footnotesize\bfseries] at (9.3,3.15) {Gerät (GPU)};
-    \draw[fill=white] (6.3,0.3) rectangle (12.3,2.5);
-    \node[anchor=north] at (9.3,2.48) {globaler Speicher (USM \emph{device})};
-    \foreach \x in {6.55,9.4} {
-        \draw[fill=cblue!15, draw=cblue] (\x,0.5) rectangle (\x+2.65,1.95);
-        \node at (\x+1.325,1.7) {lokaler Speicher};
-        \node at (\x+1.325,1.4) {(Work-Group)};
-        \foreach \i in {0,1,2,3}
-            \draw[fill=cblue, draw=cblue] (\x+0.3+\i*0.55,0.65) rectangle (\x+0.7+\i*0.55,0.95);
-    }
-    \node[below] at (9.3,0) {dunkel: privater Speicher je Work-Item};
-    \draw[<->, thick] (2.9,1.9) -- node[above] {\texttt{memcpy}} (6.3,1.9);
-    \draw[<->, thick, dashed, corange] (2.9,0.9) -- node[below, align=center, text=black] {USM \emph{shared}:\\automatische Migration} (6.3,0.9);
-\end{tikzpicture}
-\caption{Speicherhierarchie von Host und Gerät und die Wege des Datentransfers}
-\label{fig:speicher}
-\end{figure}
-
-Beim \emph{Buffer-Modell} kapselt ein Buffer die Daten, und Kernel greifen über
-\emph{Accessoren} darauf zu, die angeben, ob gelesen oder geschrieben wird.
-Daraus leitet die Laufzeit sowohl die nötigen Kopien als auch die
-Abhängigkeiten im Graphen ab. Die Daten gehören während der Lebensdauer des
-Buffers der Laufzeit; erst wenn der Buffer zerstört wird oder der Host über
-einen \emph{Host-Accessor} zugreift, sind die Ergebnisse wieder im
-Hauptspeicher sichtbar (Abbildung~\ref{fig:buffer}). Dieses Modell ist sicher,
-verlangt aber ein Umdenken gegenüber gewöhnlichen Zeigern. Beim zeigerbasierten \emph{USM}, das mit
-SYCL~2020 eingeführt wurde, wird Speicher ähnlich wie mit \texttt{malloc}
-angelegt. Es gibt drei Arten: \emph{device} (nur auf dem Gerät),
-\emph{host} (im Hauptspeicher, vom Gerät aus lesbar) und \emph{shared}
-(auf beiden Seiten gültig, die Laufzeit migriert die Daten bei Bedarf)
-\cite{reinders2023dpcpp}. USM erleichtert die Portierung bestehender
-Programme, überträgt aber die Verantwortung für Abhängigkeiten auf den
-Programmierer.
-
-Auf dem Gerät unterscheidet SYCL zudem (Abbildung~\ref{fig:speicher})
-\emph{globalen} Speicher (für alle
-Work-Items sichtbar, groß, aber langsam), \emph{lokalen} Speicher (pro
-Work-Group, klein und schnell) und \emph{privaten} Speicher (Register). Diese
-Hierarchie gezielt zu nutzen ist, wie bei CUDA, der wichtigste Hebel für
-Leistung \cite{hwu2022pmpp}.
-
-\subsection{Fehlerbehandlung, Spezialisierung und Interoperabilität}\label{sec:erweitert}
-
-Fehler meldet SYCL als C++-Ausnahmen. Synchrone Fehler, etwa eine ungültige
-Work-Group-Größe beim Einreichen, werden sofort geworfen. Asynchrone Fehler,
-die erst während der Ausführung auf dem Gerät auftreten, sammelt die
-Laufzeit und übergibt sie einem \emph{Async Handler}, sobald der Host
-wartet. Diese Trennung ist eine Folge der asynchronen Ausführung: Ein Fehler
-in einem Kernel kann erst sichtbar werden, wenn der Host längst weitere
-Aufträge eingereicht hat (Abbildung~\ref{fig:fehler}). \emph{Spezialisierungskonstanten} erlauben es, Werte wie eine
-Kachelgröße erst zur Laufzeit festzulegen und dennoch vom Compiler als
-Konstante behandeln zu lassen, was zur JIT-Kompilierung passt. Über die
-\emph{Backend-Interoperabilität} lassen sich schließlich native Objekte des
-Backends abrufen, um etwa herstellerspezifische Bibliotheken direkt auf
-SYCL-Daten aufzurufen \cite{khronos2020sycl}.
+Zusätzlich wurde Stufe~3 mit den Kachelgrößen $T \in \{8, 16, 32, 64\}$
+übersetzt und auf beiden Geräten gemessen. Bei $T = 64$ umfasst eine
+Work-Group $64 \cdot 64 = 4096$ Work-Items und überschreitet damit die Grenze
+der NVIDIA-GPU; der Kernel wird beim Einreichen abgewiesen. Solche Fehler
+meldet SYCL als C++-Ausnahmen (Abbildung~\ref{fig:fehler}): synchrone
+Fehler wie eine ungültige Work-Group-Größe sofort beim Einreichen,
+asynchrone Fehler, die erst während der Ausführung auf dem Gerät
+auftreten, gesammelt über einen Async Handler, sobald der Host wartet.
 
 \begin{figure}[htbp]
 \centering
 \begin{tikzpicture}[
     ev/.style={draw, rounded corners=2pt, minimum height=0.55cm, inner sep=3pt, font=\scriptsize, fill=gray!10, align=center},
-    lz/.style={font=\scriptsize\itshape, text=corange, align=center},
+    lz/.style={font=\scriptsize, text=corange, align=center},
     >={Stealth[length=1.8mm]}
 ]
     \node[font=\footnotesize\bfseries, anchor=east] at (-0.2,1.2) {Host};
@@ -541,30 +527,22 @@ SYCL-Daten aufzurufen \cite{khronos2020sycl}.
 \label{fig:fehler}
 \end{figure}
 
+Um solche Grenzen zu vermeiden, kann ein Programm die maximale
+Work-Group-Größe zur Laufzeit abfragen und die Kachelgröße über
+Spezialisierungskonstanten erst dann festlegen \cite{khronos2020sycl}.
+
 % ---------------------------------------------------------------------------
-\section{Anwendungsbeispiel: Matrixmultiplikation}\label{sec:beispiel}
+\section{Ergebnisse}\label{sec:ergebnisse}
 % ---------------------------------------------------------------------------
 
-Zur Veranschaulichung wurde ein sequentielles C++-Programm für die
-Matrixmultiplikation $C = A \cdot B$ \cite{hwu2022pmpp} schrittweise nach
-SYCL portiert und
-mit DPC++ auf einer CPU (AMD Ryzen~5 5600X) und einer GPU (NVIDIA GeForce
-RTX~5060~Ti) ausgeführt. Der Weg entspricht dem Anwendungsfall der Migration:
-Zuerst wurden die äußeren Schleifen durch ein \texttt{parallel\_for} über
-USM \emph{shared} ersetzt, wobei die Rechenvorschrift unverändert zum Kernel
-wurde. Danach wurden die Daten mit USM \emph{device} explizit kopiert, und
-schließlich lud jede Work-Group Blöcke der Matrizen in den lokalen Speicher.
-
-Alle Stufen liefen ohne Codeänderung auf beiden Geräten; gewechselt wurde nur
-das Gerät beim Programmstart. Abbildung~\ref{fig:ergebnisse} zeigt zwei
-Beobachtungen. Erstens kostet bei kleinen Matrizen der Datentransfer mehr als
-die Rechnung, weshalb das Überlappen über den Abhängigkeitsgraphen wichtig
-ist (a). Zweitens ist die beste Work-Group-Größe geräteabhängig: Auf der GPU
-ist eine Kachelgröße von $T = 16$ am schnellsten, auf der CPU $T = 32$, und
-bei $T = 64$ überschreitet die Work-Group die Grenze von 1024 Threads der
-NVIDIA-GPU, sodass der Kernel dort nicht startet (b). Die Kennzahl für
-Performance-Portabilität nach Pennycook et~al.\ \cite{pennycook2016metric}
-fällt dann auf null.
+Alle Stufen liefen ohne Codeänderung und mit korrektem Ergebnis auf beiden
+Geräten. Abbildung~\ref{fig:ergebnisse} fasst die Messungen zusammen. Bei
+kleinen Matrizen kostet der Datentransfer zur GPU mehr als die Rechnung;
+erst ab $n = 1024$ überwiegt die Rechenzeit (a). Die beste Kachelgröße ist
+geräteabhängig: Auf der GPU ist $T = 16$ am schnellsten, auf der CPU
+$T = 32$. Bei $T = 64$ startet der Kernel auf der GPU nicht, sodass die
+Performance-Portabilität auf null fällt (b). Der höchste Wert,
+$\mathrm{PP} = 0{,}99$, ergibt sich für $T = 32$.
 
 \begin{figure}[htbp]
 \centering
@@ -623,31 +601,40 @@ fällt dann auf null.
 \end{figure}
 
 % ---------------------------------------------------------------------------
-\section{Bewertung und Fazit}\label{sec:fazit}
+\section{Diskussion}\label{sec:diskussion}
 % ---------------------------------------------------------------------------
 
-SYCL löst das Problem der Herstellerbindung und der mehrfachen Codebasen
-überzeugend: Ein Quellcode in Standard-C++ läuft auf CPUs und GPUs
-verschiedener Hersteller, und mehrere unabhängige Implementierungen sichern
-die Offenheit. Die Anwendungsfälle tragen dabei verschiedene Teile des
-Programmiermodells. Für die Migration aus CUDA sind die enge
-Verwandtschaft der Ausführungshierarchie und das zeigerbasierte USM
-entscheidend, für die gemeinsame Nutzung von CPU und GPU die asynchronen
-Queues mit ihrem Abhängigkeitsgraphen und für portable Bibliotheken
-Single-Source mit Templates sowie die Geräteabfragen.
+Zu F1: Die Stufen zeigen, welches Konzept welches Problem löst. Die
+Herstellerbindung lösen Backends und Geräteauswahl (Stufe~4), die mehrfachen
+Codebasen Single-Source in Standard-C++ mit Kerneln als Lambdas (Stufe~1).
+Den Zielkonflikt zwischen Abstraktion und Kontrolle entschärft SYCL durch
+einen gestuften Einstieg: Eine einfache \texttt{range} mit USM shared
+genügt für ein lauffähiges Programm, während \texttt{nd\_range}, lokaler
+Speicher und expliziter Transfer die Kontrolle für die Optimierung
+zurückgeben (Stufen~2 und~3). 
 
-Die Grenze liegt im dritten Problem, dem Zielkonflikt zwischen Abstraktion und
-Kontrolle. SYCL abstrahiert die Schnittstelle, nicht die Hardware: Für hohe
-Leistung muss der Programmierer Work-Groups und lokalen Speicher ebenso
-verstehen wie bei CUDA, und Parameter wie die Work-Group-Größe bleiben
-gerätespezifisch, wie das Beispiel zeigt. Hinzu kommen eine merkliche Abhängigkeit von der
-Implementierung \cite{deakin2020sycl} und eine anspruchsvolle
-Werkzeugkette.
+Zu F2: Die Fallstudie bestätigt funktionale Portabilität für alle Stufen.
+Performance-Portabilität ergibt sich dagegen nicht von selbst. SYCL
+abstrahiert die Schnittstelle, nicht die Hardware: Parameter wie die
+Work-Group-Größe bleiben gerätespezifisch, und ein für die CPU günstiger Wert
+kann auf der GPU sogar zum Abbruch führen. Dies deckt sich mit der in
+früheren Studien beobachteten Abhängigkeit von Implementierung und
+Parametrierung \cite{deakin2020sycl}.
 
-Insgesamt erfüllt SYCL sein Versprechen \enquote{einmal schreiben, überall
-ausführen} für die Korrektheit. Für hohe Leistung auf allen Geräten stellt es
-mit Geräteabfragen und Spezialisierungskonstanten die Werkzeuge bereit, nimmt
-dem Programmierer die gerätespezifische Abstimmung aber nicht ab.
+Die Aussagekraft der Fallstudie ist begrenzt: Untersucht wurden ein
+einzelner Kernel, zwei Geräte und eine Implementierung. Die PP-Werte gelten
+nur für diese Gerätemenge \cite{pennycook2019implications}, und ein
+Vergleich mit nativem CUDA-Code oder optimierten Bibliotheken fehlt.
+
+% ---------------------------------------------------------------------------
+\section{Schlussfolgerung}\label{sec:fazit}
+% ---------------------------------------------------------------------------
+
+SYCL erfüllt sein Versprechen \enquote{einmal schreiben, überall ausführen}
+für die Korrektheit: Ein schrittweise portiertes Programm lief in allen
+Stufen unverändert auf CPU und GPU. Die gerätespezifische Abstimmung für hohe Leistung nimmt SYCL dem
+Programmierer jedoch nicht ab. Folgearbeiten sollten weitere Geräte und eine
+zweite Implementierung wie AdaptiveCpp einbeziehen.
 
 \newpage
 \printbibliography[heading=bibintoc, title={Literaturverzeichnis}]

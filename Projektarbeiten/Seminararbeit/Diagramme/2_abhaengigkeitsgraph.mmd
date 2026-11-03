@@ -1,0 +1,11 @@
+---
+config:
+  look: handDrawn
+  theme: neutral
+---
+flowchart LR
+  ca["Kopie A → Gerät"] --> k1["Kernel 1: C = A · B"]
+  cb["Kopie B → Gerät"] --> k1
+  k1 --> k2["Kernel 2: E = C + D"]
+  cd["Kopie D → Gerät"] --> k2
+  k2 --> ce["Kopie E → Host"]

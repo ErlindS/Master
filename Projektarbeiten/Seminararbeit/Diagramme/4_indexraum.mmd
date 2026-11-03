@@ -1,0 +1,10 @@
+---
+config:
+  look: handDrawn
+  theme: neutral
+---
+flowchart TB
+  nd["Indexraum der nd_range (gesamte Berechnung)"]
+  nd --> wg1["Work-Group 1"] & wg2["Work-Group 2"] & wgn["… Work-Group n"]
+  wg1 --> wi1["Work-Item"] & wi2["Work-Item"] & wi3["… Work-Item"]
+  wg1 -.- info["teilen lokalen Speicher, synchronisieren über Barrieren"]

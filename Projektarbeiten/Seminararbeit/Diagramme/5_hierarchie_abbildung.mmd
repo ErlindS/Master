@@ -1,0 +1,13 @@
+---
+config:
+  look: handDrawn
+  theme: neutral
+---
+flowchart LR
+  h1["SYCL"] ~~~ h2["NVIDIA-GPU"] ~~~ h3["CPU"]
+  s1["nd_range"] --- g1["Grid (gesamte GPU)"] --- c1["alle Kerne"]
+  s2["Work-Group"] --- g2["Thread-Block auf einem SM"] --- c2["ein Kern (Thread)"]
+  s3["Sub-Group"] --- g3["Warp (32 Threads)"] --- c3["SIMD-Vektor"]
+  s4["Work-Item"] --- g4["Thread"] --- c4["eine SIMD-Lane"]
+  classDef kopf fill:none,stroke:none,font-weight:bold
+  class h1,h2,h3 kopf

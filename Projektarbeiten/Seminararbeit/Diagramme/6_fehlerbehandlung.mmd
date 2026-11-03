@@ -1,0 +1,17 @@
+---
+config:
+  theme: neutral
+---
+sequenceDiagram
+  participant H as Host
+  participant G as Gerät
+  H->>G: Kernel 1 einreichen
+  activate G
+  Note over G: Kernel 1 läuft, Fehler tritt auf
+  H-xH: Kernel 2 einreichen (ungültige Work-Group)
+  Note left of H: synchron: Ausnahme sofort
+  H->>H: weitere Host-Arbeit
+  deactivate G
+  H->>G: wait_and_throw()
+  G-->>H: gesammelter Fehler an Async Handler
+  Note over H,G: asynchron: Fehler erst beim Warten sichtbar

@@ -1,0 +1,18 @@
+---
+config:
+  look: handDrawn
+  theme: neutral
+---
+flowchart LR
+  subgraph links["Herstellerspezifisch"]
+    direction LR
+    cuda["CUDA-Code"] --> nv1["NVIDIA-GPU"]
+    hip["HIP-Code"] --> amd1["AMD-GPU"]
+    omp["OpenMP-Code"] --> cpu1["CPU"]
+  end
+  subgraph rechts["Mit SYCL"]
+    direction TB
+    sycl["ein SYCL-Quellcode (C++17)"] --> impl["DPC++ / AdaptiveCpp"]
+    impl --> nv2["NVIDIA"] & amd2["AMD"] & intel["Intel"] & cpu2["CPU"]
+  end
+  links ~~~ rechts
