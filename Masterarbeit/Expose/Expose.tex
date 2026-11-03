@@ -50,7 +50,7 @@
     linkcolor   = hkared,
     urlcolor    = hkared,
     citecolor   = hkared,
-    pdftitle    = {Fehlertoleranz und deterministische Zustandsrekonstruktion in MQTT-basierten IIoT- und MES-Architekturen},
+    pdftitle    = {Zuverl\"assigkeit verteilter Datenketten in der Fertigung},
     pdfauthor   = {Erlind Sejdiu},
     pdfcreator  = {pdflatex},
     pdfproducer = {LaTeX with hyperref}
@@ -90,8 +90,8 @@
     {\color{hkared}\rule{\textwidth}{1.5pt}}
 
     \vspace{1.2cm}
-    {\fontsize{22}{28}\selectfont\bfseries\color{hkared} Fehlertoleranz und deterministische Zustandsrekonstruktion in MQTT-basierten IIoT- und MES-Architekturen\par}\vspace{0.6cm}
-    {\Large State of the Art, Fehlermodelle und Architekturvergleich\par}
+    {\fontsize{22}{28}\selectfont\bfseries\color{hkared} Zuverlässigkeit verteilter Datenketten in der Fertigung\par}\vspace{0.6cm}
+    {\Large Fehlermodell, Messung und Architekturvergleich einer MQTT-basierten IIoT-Datenkette\par}
     \vspace{1cm}
 
     {\large Exposé und Antrag auf Durchführung einer Masterarbeit\\[0.2cm] in Kooperation mit der ProSeS GmbH}\\[0.3cm]
@@ -126,57 +126,122 @@
 
 \section{Motivation}
 
-Die industrielle Prozessdatenerfassung über Message Queuing Telemetry Transport (MQTT) bildet das nachrichtentechnische Rückgrat moderner Architekturen für das Industrial Internet of Things (IIoT), Fertigungsmanagementsysteme (Manufacturing Execution Systems, MES) sowie Unified Namespaces (UNS) \cite{mishra2020mqttsurvey}. Maschinen, Steuerungen und Edge-Gateways veröffentlichen ihre Daten auf einem zentralen Broker, und MES, Historian oder Dashboards abonnieren genau die Daten, die sie brauchen. Diese lose Kopplung ist der Grund für die Verbreitung von MQTT, denn Erzeuger und Verbraucher müssen sich nicht kennen \cite{eugster2003pubsub}.
+Die industrielle Prozessdatenerfassung über Message Queuing Telemetry Transport (MQTT) bildet das nachrichtentechnische Rückgrat moderner Architekturen für das Industrial Internet of Things (IIoT) \cite{mishra2020mqttsurvey}. Erzeuger veröffentlichen ihre Daten auf einem Broker, und Verbraucher abonnieren genau die Daten, die sie brauchen. Diese lose Kopplung ist der Grund für die Verbreitung von MQTT, denn Erzeuger und Verbraucher müssen sich nicht kennen \cite{eugster2003pubsub}.
 
-Ein MES arbeitet aber nicht mit einzelnen Messwerten, sondern mit Zuständen. Es muss wissen, welcher Auftrag gerade auf welcher Maschine läuft, wie viele Gutteile gefertigt wurden und ob eine Maschine steht oder produziert \cite{iec62264}. Geht eine Nachricht verloren, kommt sie doppelt oder in falscher Reihenfolge an, dann ist dieser Zustand falsch. Ein verpasstes \enquote{Auftrag beendet} oder ein doppelt gezählter Stückzähler wirkt sich direkt auf Kennzahlen, Rückmeldungen an das ERP-System und Nachweise gegenüber Kunden aus.
+In der Praxis wird MQTT selten auf der grünen Wiese eingeführt, sondern in eine bestehende Systemlandschaft eingebaut. Fertigungsdaten durchlaufen dann eine Kette von Komponenten: Sie werden an der Maschine ausgelesen, gespeichert, weitergeleitet und schließlich angezeigt oder für die Planung verwendet. Jede Komponente läuft als eigener Prozess, oft auf eigenen Rechnern, und kann unabhängig von den anderen ausfallen. Das Ganze ist damit ein verteiltes System \cite{kleppmann2017ddia}. Die Verbraucher am Ende der Kette, etwa eine Hallenanzeige oder eine Feinplanung \cite{iec62264}, brauchen ein korrektes und aktuelles Bild der Fertigung. Geht eine Meldung unterwegs verloren, kommt sie doppelt oder zu spät an, zeigt die Halle einen falschen Maschinenstatus, oder die Planung rechnet mit falschen Stückzahlen.
 
-Die wissenschaftliche Literatur offenbart eine signifikante Diskrepanz zwischen den elementaren Transportgarantien des MQTT-Standards und den deterministischen Anforderungen zustandsbehafteter Automatisierungsprozesse. MQTT sichert die Zustellung nur zwischen einem Client und dem Broker ab, nicht von Ende zu Ende \cite{mqtt5}. Was nach einem Broker-Neustart, einem Netzwerkausfall oder dem Neustart eines Verbrauchers mit dem Zustand passiert, regelt der Standard nicht. Erweiterungen wie Sparkplug~B \cite{sparkplug3} und Muster aus verteilten Systemen wie Event Sourcing \cite{fowler2005eventsourcing} oder Log-basierte Plattformen \cite{kreps2011kafka} schließen einen Teil dieser Lücke, jeweils mit eigenen Annahmen und Kosten.
+MQTT sichert die Zustellung nur zwischen einem Client und dem Broker ab, nicht von Ende zu Ende \cite{mqtt5}. In einer Kette aus mehreren Komponenten gilt das für jede Übergabe einzeln: Selbst wenn jede Übergabe für sich zuverlässig ist, folgt daraus keine Zuverlässigkeit von der Maschine bis zum Verbraucher \cite{saltzer1984endtoend}. Was nach dem Neustart einer Komponente, einem Netzwerkausfall oder einer nicht erreichbaren Datenbank mit den Daten passiert, muss die Architektur selbst regeln. Erweiterungen wie Sparkplug~B \cite{sparkplug3} und Muster aus verteilten Systemen wie Event Sourcing \cite{fowler2005eventsourcing} oder Log-basierte Plattformen \cite{kreps2011kafka} bieten dafür Lösungen, jeweils mit eigenen Annahmen und Kosten.
 
-Bei der ProSeS GmbH ist MQTT \offen{kurz beschreiben, wo und wie MQTT im Unternehmen eingesetzt wird, z.\,B. Anbindung von Maschinen an das MES, UNS-Aufbau}. Die Masterarbeit soll klären, wie zuverlässig solche Architekturen den Zustand der Fertigung nach Fehlern wiederherstellen können und welche Architektur dafür am besten geeignet ist.
+Bei der ProSeS GmbH wurde MQTT erst vor Kurzem eingeführt, und weitere Komponenten wie eine Feinplanung kommen hinzu. Die Masterarbeit soll klären, wie zuverlässig diese verteilte Datenkette im Sinne von ISO/IEC 25010 \cite{iso25010} ist, wo sie bei Fehlern Daten verliert oder verfälscht und welche Architektur für den weiteren Ausbau am besten geeignet ist.
 
 \section{Problemstellung}
+
+\subsection{Das System als verteilte Datenkette}
+
+Abbildung~\ref{fig:ist} zeigt die bestehende Architektur. Ein Reader liest die Maschinen aus und schreibt die Daten in eine Datenbank. Ein Übertragungsmodul \offen{Name} überträgt die Daten von dort in Cancom \offen{Art des Systems und Schnittstelle klären}. Von Cancom gelangen die Daten zu einem API-Server, der sie mit MQTTnet \offen{eingebetteter Broker oder Client eines externen Brokers?} an ein EIS und an einen Hallenspiegel verteilt. Als weiterer Verbraucher kommt eine Feinplanung hinzu.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+    font=\small, node distance=0.6cm,
+    comp/.style={draw, rounded corners=3pt, fill=white, minimum height=1.1cm, text width=2.0cm, align=center},
+    mqtt/.style={comp, draw=hkared, very thick, fill=hkared!8},
+    neu/.style={comp, dashed, text=hkagray},
+    flow/.style={-{Latex[length=2mm]}, thick},
+]
+    \node[comp] (m)   {Maschinen};
+    \node[comp, right=of m]  (r)   {Reader};
+    \node[comp, right=of r]  (db)  {Datenbank};
+    \node[comp, right=of db] (um)  {Übertragungs-\\modul};
+    \node[comp, right=of um] (cc)  {Cancom};
+    \node[mqtt, right=of cc] (api) {API-Server\\\scriptsize mit MQTTnet};
+    \node[comp, right=1.3cm of api, yshift=1.5cm]  (eis) {EIS};
+    \node[comp, right=1.3cm of api]                (hs)  {Hallenspiegel};
+    \node[neu,  right=1.3cm of api, yshift=-1.5cm] (fp)  {Feinplanung\\\scriptsize (geplant)};
+
+    \draw[flow] (m) -- (r);
+    \draw[flow] (r) -- (db);
+    \draw[flow] (db) -- (um);
+    \draw[flow] (um) -- (cc);
+    \draw[flow] (cc) -- (api);
+    \draw[flow] (api) -- (eis);
+    \draw[flow] (api) -- node[above, font=\scriptsize] {MQTT} (hs);
+    \draw[flow, dashed, hkagray] (api) -- (fp);
+
+    \begin{scope}[on background layer]
+        \node[fill=hkared!4, draw=hkared!40, rounded corners=4pt, inner sep=7pt,
+              fit=(api)(eis)(fp), label={[font=\scriptsize, text=hkared]above:MQTT (neu eingeführt)}] {};
+    \end{scope}
+\end{tikzpicture}}
+\caption{Bestehende Architektur bei der ProSeS GmbH (vereinfacht). Die Daten durchlaufen sechs Stufen, bevor sie beim Verbraucher ankommen. MQTT wird nur auf der letzten Strecke eingesetzt.}
+\label{fig:ist}
+\end{figure}
+
+Für die Zuverlässigkeit hat diese Kette zwei Folgen. Erstens fällt die Kette aus, sobald eine ihrer Stufen ausfällt. Sind die Ausfälle unabhängig, ist die Verfügbarkeit der ganzen Kette das Produkt der Verfügbarkeiten aller Stufen und damit geringer als die jeder einzelnen Stufe. Zweitens hat jede Übergabe ihre eigenen Garantien. Zwischen Datenbank, Übertragungsmodul, Cancom und API-Server muss jeweils geregelt sein, was bei einem Ausfall mit gerade übertragenen Daten geschieht. Wie sich die Kette bei Ausfällen einzelner Stufen verhält, ist bisher nicht systematisch untersucht. Mit jeder neuen Komponente wie der Feinplanung wird diese Frage wichtiger.
 
 \subsection{Was MQTT garantiert und was nicht}
 
 MQTT bietet drei Dienstgüten (Quality of Service, QoS) \cite{mqtt311,mqtt5}. QoS~0 stellt höchstens einmal zu, QoS~1 mindestens einmal und QoS~2 genau einmal. Diese Garantien gelten aber jeweils nur für eine Strecke, also vom Publisher zum Broker und getrennt davon vom Broker zum Subscriber. Ob eine Nachricht beim Verbraucher tatsächlich verarbeitet wurde, ist damit nicht gesichert. Die Reihenfolge wird nur innerhalb eines Topics und einer Dienstgüte garantiert, bei Shared Subscriptions in MQTT~5 auch das nicht.
 
-Für den Wiederanlauf gibt es zwei Mechanismen. \emph{Retained Messages} speichern pro Topic genau die letzte Nachricht, und \emph{persistente Sessions} puffern Nachrichten für einen getrennten Client. Beide sind kein Verlauf. Wer nach einem Ausfall wissen will, was in der Zwischenzeit passiert ist, bekommt bestenfalls den letzten Wert, und auch das nur, solange Puffergrenzen und Ablaufzeiten des Brokers nicht überschritten sind. Wie ein Broker seine Daten persistiert und ob er im Cluster betrieben werden kann, ist nicht standardisiert, sondern produktspezifisch.
+Für den Wiederanlauf gibt es zwei Mechanismen. \emph{Retained Messages} speichern pro Topic genau die letzte Nachricht, und \emph{persistente Sessions} puffern Nachrichten für einen getrennten Client. Beide sind kein Verlauf. Wer nach einem Ausfall wissen will, was in der Zwischenzeit passiert ist, bekommt bestenfalls den letzten Wert, und auch das nur, solange Puffergrenzen und Ablaufzeiten des Brokers nicht überschritten sind. Wie ein Broker seine Daten persistiert, ist nicht standardisiert. Ein mit MQTTnet eingebetteter Broker hält Sessions und Retained Messages zunächst nur im Arbeitsspeicher, die Persistenz muss die Anwendung selbst umsetzen.
 
-\subsection{Was zustandsbehaftete Prozesse brauchen}
+\subsection{Was die Verbraucher brauchen}
 
-Ein MES leitet seinen Zustand aus einer Folge von Ereignissen ab, zum Beispiel Auftragsstart, Statuswechsel und Stückmeldungen. Damit dieser Zustand nach einem Fehler korrekt wiederhergestellt werden kann, muss er \emph{deterministisch} aus den Ereignissen folgen, also bei gleicher Eingabe immer gleich sein \cite{schneider1990statemachine}. Dafür braucht es eine eindeutige Reihenfolge der Ereignisse \cite{lamport1978time}, eine idempotente Verarbeitung von Duplikaten und einen Punkt, ab dem nach einem Ausfall weitergemacht werden kann \cite{elnozahy2002rollback,chandy1985snapshots}.
+Hallenspiegel, EIS und Feinplanung leiten aus den Meldungen einen Zustand ab, zum Beispiel den Status jeder Maschine oder die gefertigte Stückzahl eines Auftrags. Damit alle Verbraucher denselben, korrekten Zustand sehen und ihn nach einem Fehler wiederherstellen können, muss er \emph{deterministisch} aus den Meldungen folgen, also bei gleicher Eingabe immer gleich sein \cite{schneider1990statemachine}. Dafür braucht es über alle Stufen hinweg eine eindeutige Reihenfolge der Meldungen \cite{lamport1978time}, eine idempotente Verarbeitung von Duplikaten und an jeder Übergabe einen Punkt, ab dem nach einem Ausfall weitergemacht werden kann \cite{elnozahy2002rollback,chandy1985snapshots}.
+
+\subsection{Zuverlässigkeit als Bewertungsrahmen}
+
+Um Architekturen vergleichbar zu machen, wird Zuverlässigkeit (Reliability) nach ISO/IEC 25010 \cite{iso25010} als Bewertungsrahmen verwendet. Zuverlässigkeit ist dort der Grad, in dem ein System festgelegte Funktionen unter festgelegten Bedingungen über einen festgelegten Zeitraum erfüllt. Die Norm unterteilt sie in vier Teilmerkmale. Die folgende Tabelle überträgt sie auf die Datenkette und nennt mögliche Messgrößen. Fehlerbegriffe und Fehlerklassen werden ergänzend aus der Taxonomie von Avižienis et al.\ \cite{avizienis2004taxonomy} übernommen.
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}p{2.6cm} X X@{}}
+\toprule
+\textbf{Teilmerkmal} & \textbf{Bedeutung für die Datenkette} & \textbf{Mögliche Messgrößen} \\
+\midrule
+Fehlerfreiheit (Faultlessness) & Im Normalbetrieb kommt jede Maschinenmeldung genau einmal und in der richtigen Reihenfolge bei allen Verbrauchern an. & Lücken, Duplikate und Umordnungen ohne eingebaute Fehler \\
+Verfügbarkeit (Availability) & Hallenspiegel, EIS und Feinplanung erhalten aktuelle Daten, wenn sie sie brauchen. & Anteil der Zeit mit aktuellen Daten, Datenalter beim Verbraucher \\
+Fehlertoleranz (Fault tolerance) & Der Ausfall einer Stufe, etwa der Datenbank, von Cancom oder des API-Servers, führt nicht zu Verlust, Verdopplung oder Umordnung. & Verlust und Duplikate unter eingebauten Fehlern, aufgeschlüsselt nach Stufe \\
+Wiederherstellbarkeit (Recoverability) & Nach einem Ausfall werden fehlende Daten nachgeholt, und alle Verbraucher erreichen wieder den korrekten Zustand. & Zeit bis zur Wiederherstellung (RTO), Umfang verlorener Meldungen (RPO), Abweichung vom Sollzustand \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Bisher werden MQTT-Architekturen meist nur nach einzelnen Mechanismen wie QoS-Stufen oder Clustering bewertet. Ob eine mehrstufige Kette in allen vier Teilmerkmalen zuverlässig ist, wird selten zusammenhängend betrachtet. So kann QoS~1 auf der letzten Strecke die Fehlertoleranz gegen Verlust erhöhen und gleichzeitig durch Duplikate die Fehlerfreiheit beim Verbraucher gefährden, wenn dieser nicht idempotent arbeitet.
 
 \subsection{Die Lücke}
 
-Zwischen diesen beiden Seiten gibt es eine Lücke, die in der Praxis meist anwendungsspezifisch und oft ungeprüft geschlossen wird. Es fehlt eine zusammenhängende Darstellung,
+Zwischen den Garantien einzelner Übergaben und den Anforderungen der Verbraucher gibt es eine Lücke, die in der Praxis meist anwendungsspezifisch und oft ungeprüft geschlossen wird. Es fehlt eine zusammenhängende Darstellung,
 \begin{itemize}[nosep]
-    \item welche Fehler in MQTT-basierten IIoT- und MES-Architekturen tatsächlich auftreten,
-    \item welche davon von MQTT, Sparkplug~B oder dem Broker abgefangen werden und welche nicht,
-    \item und welche Architektur unter welchen Fehlern den Zustand korrekt rekonstruiert.
+    \item welche Fehler in mehrstufigen, MQTT-basierten IIoT-Datenketten tatsächlich auftreten, an welcher Stufe sie entstehen und welches Teilmerkmal der Zuverlässigkeit sie betreffen,
+    \item welche davon von MQTT, dem Broker oder den einzelnen Komponenten abgefangen werden und welche nicht,
+    \item und welche Architektur unter welchen Fehlern von der Maschine bis zum Verbraucher fehlerfrei, verfügbar, fehlertolerant und wiederherstellbar bleibt.
 \end{itemize}
 
-\paragraph{Abgrenzung.} Die Arbeit betrachtet Fehlertoleranz und Zustandsrekonstruktion. IT-Sicherheit (Authentifizierung, Verschlüsselung, Angriffe) ist nicht Gegenstand der Arbeit, ebenso wenig harte Echtzeitanforderungen auf Feldebene. Andere Protokolle wie OPC~UA werden nur als Quelle der Daten berücksichtigt, nicht als Alternative zu MQTT verglichen. Es wird kein neues MES entwickelt. Die Untersuchung erfolgt in einer Testumgebung und nicht im laufenden Produktivbetrieb.
+\paragraph{Abgrenzung.} Die Arbeit betrachtet die Zuverlässigkeit nach ISO/IEC 25010 von der Maschine bis zum Verbraucher. Leistungseffizienz wird nur als Aufwand der jeweiligen Architektur erfasst, etwa als zusätzliche Latenz oder Speicherbedarf, und nicht eigenständig optimiert. IT-Sicherheit (Authentifizierung, Verschlüsselung, Angriffe) ist nicht Gegenstand der Arbeit, ebenso wenig harte Echtzeitanforderungen auf Feldebene und die fachliche Logik von EIS, Hallenspiegel und Feinplanung. Andere Protokolle wie OPC~UA werden nur als Quelle der Daten berücksichtigt, nicht als Alternative zu MQTT verglichen. Architekturvarianten werden als Prototypen in einer Testumgebung umgesetzt, nicht im laufenden Produktivbetrieb.
 
 \section{Forschungsfragen und Ziele}
 
-Ziel der Arbeit ist es, den Stand der Technik zur Fehlertoleranz in MQTT-basierten Architekturen aufzuarbeiten, die relevanten Fehler in einem Fehlermodell festzuhalten und verbreitete Architekturen daran zu messen. Daraus ergeben sich drei Forschungsfragen.
+Ziel der Arbeit ist es, den Stand der Technik zur Zuverlässigkeit mehrstufiger, MQTT-basierter Datenketten aufzuarbeiten, die relevanten Fehler in einem Fehlermodell festzuhalten und die bestehende Architektur sowie Alternativen anhand der vier Teilmerkmale der Zuverlässigkeit zu messen. Daraus ergeben sich drei Forschungsfragen.
 
 \begin{enumerate}[label=\textbf{FF\arabic*}, leftmargin=*, nosep]
-    \item Welche Ansätze zur Fehlertoleranz und Zustandsrekonstruktion in MQTT-basierten IIoT- und MES-Architekturen beschreibt die Literatur, und welche Garantien bieten sie?
-    \item Welche Fehler treten in solchen Architekturen auf, und welche Auswirkung haben sie auf den rekonstruierten Zustand eines MES?
-    \item Wie gut rekonstruieren verbreitete Architekturvarianten den Zustand unter diesen Fehlern, und mit welchem Aufwand?
+    \item Welche Ansätze für eine zuverlässige Übertragung von der Quelle bis zum Verbraucher beschreibt die Literatur für mehrstufige, MQTT-basierte IIoT-Architekturen, und welche Teilmerkmale der Zuverlässigkeit sichern sie ab?
+    \item Welche Fehler treten an welcher Stufe einer solchen Datenkette auf, welches Teilmerkmal der Zuverlässigkeit betreffen sie, und wie wirken sie sich auf den Zustand bei den Verbrauchern aus?
+    \item Wie fehlerfrei, verfügbar, fehlertolerant und wiederherstellbar ist die bestehende Datenkette im Vergleich zu alternativen Architekturvarianten, und mit welchem Aufwand?
 \end{enumerate}
 
-Die Arbeit liefert drei Ergebnisse. Erstens eine strukturierte Übersicht über den Stand der Technik und verwandte Arbeiten (FF1). Zweitens ein Fehlermodell, das Fehlerorte, Fehlerarten und ihre Auswirkung auf den Zustand beschreibt (FF2). Drittens einen Architekturvergleich mit Messergebnissen aus einer Testumgebung und einer Empfehlung für die ProSeS GmbH (FF3).
+Die Arbeit liefert drei Ergebnisse. Erstens eine strukturierte Übersicht über den Stand der Technik und verwandte Arbeiten, geordnet nach den Teilmerkmalen der Zuverlässigkeit (FF1). Zweitens ein Fehlermodell, das für jede Stufe der Kette Fehlerarten, das betroffene Teilmerkmal und die Auswirkung bei den Verbrauchern beschreibt (FF2). Drittens einen Vergleich der bestehenden Architektur mit Alternativen, mit Messergebnissen je Teilmerkmal aus einer Testumgebung und einer Empfehlung für den weiteren Ausbau bei der ProSeS GmbH (FF3).
 
 \section{Nutzen für die ProSeS GmbH}
 
-Die Arbeit liefert der ProSeS GmbH eine belastbare Grundlage für Architekturentscheidungen rund um MQTT, UNS und MES. Im Einzelnen:
+Die Arbeit liefert der ProSeS GmbH eine belastbare Grundlage für Architekturentscheidungen beim weiteren Ausbau der MQTT-basierten Datenkette. Im Einzelnen:
 \begin{itemize}[nosep]
-    \item ein Fehlermodell, mit dem sich bestehende und geplante Anlagen systematisch auf Schwachstellen prüfen lassen,
-    \item einen messbasierten Vergleich von Architekturvarianten statt einer Entscheidung nach Erfahrung oder Herstellerangaben,
+    \item ein Fehlermodell der bestehenden Datenkette, mit dem sich Schwachstellen an jeder Stufe benennen lassen,
+    \item eine Grundlage für die Einbindung neuer Komponenten wie der Feinplanung, ohne die Zuverlässigkeit der übrigen Verbraucher zu gefährden,
+    \item einen messbasierten Vergleich von Architekturvarianten statt einer Entscheidung nach Erfahrung oder Herstellerangaben, mit Kennzahlen wie Wiederherstellungszeit und Ereignisverlust, die sich als Zuverlässigkeitsanforderungen an künftige Anlagen formulieren lassen,
     \item eine wiederverwendbare Testumgebung, mit der sich Broker, Konfigurationen und Updates vor dem Einsatz unter Fehlerbedingungen testen lassen,
-    \item konkrete Handlungsempfehlungen, zum Beispiel zu QoS-Einstellungen, Session-Konfiguration, Puffergrößen und Idempotenz in Verbrauchern.
+    \item konkrete Handlungsempfehlungen, zum Beispiel zu QoS-Einstellungen, Session-Konfiguration, Puffergrößen, Wiederaufsetzpunkten an den Übergaben und Idempotenz in Verbrauchern.
 \end{itemize}
 Gerade weil Fehler im Datenfluss in der Fertigung oft erst spät bemerkt werden, etwa als falsche Kennzahl oder fehlende Rückmeldung, ist ein systematischer Blick auf diese Fehler auch für den Betrieb wertvoll.
 
@@ -185,7 +250,7 @@ Gerade weil Fehler im Datenfluss in der Fertigung oft erst spät bemerkt werden,
 \paragraph{Unterstützung durch das Unternehmen.} Für die Durchführung wäre Folgendes hilfreich:
 \begin{itemize}[nosep]
     \item eine Ansprechperson als Betreuung im Unternehmen und regelmäßige kurze Abstimmungen,
-    \item Einblick in die eingesetzte Architektur (Broker-Produkt, Topic-Struktur, Datenmodell, Verbraucher),
+    \item Einblick in die eingesetzte Architektur (Reader, Übertragungsmodul, Cancom, API-Server, Topic-Struktur, Datenmodell, Verbraucher),
     \item wenn möglich anonymisierte Beispieldaten oder Logs zu bisherigen Störungen, um das Fehlermodell an realen Fällen zu prüfen,
     \item Zugang zu einer Test- oder Entwicklungsumgebung bzw.\ die Freigabe, Broker-Software in einer eigenen Umgebung zu nutzen.
 \end{itemize}
@@ -204,11 +269,11 @@ Die Bearbeitungszeit beträgt sechs Monate.
 \toprule
 \textbf{Phase} & \textbf{Monat} & \textbf{Ziel} & \textbf{Artefakt} \\
 \midrule
-1 Einarbeitung & 1 & Bestehende Architektur bei der ProSeS GmbH verstehen, Recherche planen & Recherche-Protokoll \\
+1 Einarbeitung & 1 & Bestehende Datenkette bei der ProSeS GmbH aufnehmen, Recherche planen & Architekturdokumentation, Recherche-Protokoll \\
 2 State of the Art & 1--2 & Literatur und Standards auswerten & Literaturübersicht (FF1) \\
 3 Fehlermodell & 2--3 & Fehlerorte, Fehlerarten und Auswirkungen festhalten & Fehlermodell (FF2) \\
-4 Testumgebung & 3--4 & Architekturvarianten und Fehlerinjektion aufbauen & Lauffähige Testumgebung \\
-5 Experimente & 4--5 & Fehlerfälle durchspielen und messen & Messergebnisse (FF3) \\
+4 Testumgebung & 3--4 & Bestehende Kette und Varianten nachbilden, Fehlerinjektion aufbauen & Lauffähige Testumgebung \\
+5 Experimente & 4--5 & Fehlerfälle durchspielen und je Teilmerkmal der Zuverlässigkeit messen & Messergebnisse (FF3) \\
 6 Auswertung & 5 & Vergleich und Empfehlung ableiten & Bewertung, Empfehlung \\
 7 Ausarbeitung & 5--6 & Schriftliche Arbeit und Abschlusspräsentation & Masterarbeit, Code im Repository \\
 \bottomrule

@@ -1,0 +1,556 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- Pakete ---
+\usepackage[english, ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage[autostyle=true,german=quotes]{csquotes}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{positioning,fit,backgrounds,shapes.geometric,arrows.meta,calc,decorations.pathreplacing}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage{microtype}
+\usepackage[document]{ragged2e}
+\usepackage[backend=biber,style=ieee,urldate=long]{biblatex}
+\addbibresource{../Expose/literatur.bib}
+\usepackage{hyperref}
+\emergencystretch=0.3\textwidth
+\hyphenpenalty=10000
+\exhyphenpenalty=50
+
+% X-Spalten in tabularx global linksbündig (kein Blocksatz in Tabellen)
+\renewcommand{\tabularxcolumn}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% --- Farben (HKA Corporate + Messpunkte) ---
+\definecolor{hkared}{RGB}{198, 42, 18}
+\definecolor{hkagray}{RGB}{100, 100, 100}
+\definecolor{messblau}{RGB}{20, 90, 160}
+
+\hypersetup{
+    colorlinks  = true,
+    linkcolor   = hkared,
+    urlcolor    = hkared,
+    citecolor   = hkared,
+    pdftitle    = {Messkonzept Zuverl\"assigkeit Datenkette},
+    pdfauthor   = {Erlind Sejdiu}
+}
+
+% --- Section Styling ---
+\titleformat{\section}{\large\bfseries\color{hkared}}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{hkared}}{\thesubsection}{1em}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.5em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.3em}
+
+% --- Header/Footer ---
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{hkagray}Messkonzept Masterarbeit}
+\fancyhead[R]{\small\color{hkagray}Master Informatik}
+\fancyfoot[C]{\small\color{hkagray}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Markierung für Stellen, die noch ergänzt/geprüft werden müssen
+\newcommand{\offen}[1]{\textcolor{red}{[#1]}}
+
+% Marker für Fehlerorte (rot) und Messpunkte (blau), im Fließtext und in Tabellen
+\newcommand{\fmark}[1]{\tikz[baseline=(c.base)]\node[circle, fill=hkared, text=white, inner sep=1.2pt, font=\scriptsize\bfseries] (c) {#1};}
+\newcommand{\mmark}[1]{\tikz[baseline=(c.base)]\node[rectangle, rounded corners=2pt, fill=messblau, text=white, inner sep=1.6pt, font=\scriptsize\bfseries] (c) {M#1};}
+
+% =============================================================================
+\begin{document}
+
+\begin{center}
+    {\LARGE\bfseries\color{hkared} Messkonzept: Zuverlässigkeit einer\\[0.2cm] verteilten Datenkette mit MQTT}\\[0.4cm]
+    {\large Versuchsaufbau, Fehlerorte, Messgrößen und Architekturvarianten}\\[0.3cm]
+    {\small\color{hkagray} Erlind Sejdiu \quad·\quad Stand: \today}
+\end{center}
+
+\section{Versuchsaufbau}
+
+Abbildung~\ref{fig:kette} zeigt die bestehende Architektur als verteiltes System. Ein Reader liest die Maschinen aus und schreibt in eine Datenbank. Ein Übertragungsmodul \offen{Name} überträgt die Daten nach Cancom \offen{Art des Systems klären}, von dort gelangen sie zum API-Server, der sie mit MQTTnet an EIS, Hallenspiegel und künftig die Feinplanung verteilt. Die Kette wird in einer isolierten Testumgebung nachgebildet \offen{welche Komponenten können im Original betrieben werden, welche werden nachgebaut?}. An die Stelle der Maschinen tritt ein Simulator, der jede Meldung mit einer fortlaufenden Sequenznummer und einem Zeitstempel versieht. Zwischen den Stufen liegt jeweils ein Toxiproxy, über den Netzwerkfehler eingebaut werden. Der Testrunner (xUnit) steuert Last und Fehler und sammelt die Messdaten.
+
+Rote Kreise markieren die Fehlerorte \fmark{1}--\fmark{6}, blaue Kästen die Messpunkte \mmark{1}--\mmark{6}. Die Messpunkte liegen jeweils am Ausgang einer Stufe, sodass sich Verluste einer bestimmten Übergabe zuordnen lassen, ohne in die Komponenten selbst einzugreifen.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+    font=\small, node distance=0.75cm,
+    comp/.style={draw, rounded corners=3pt, fill=white, minimum height=1.2cm, text width=2.1cm, align=center},
+    mqtt/.style={comp, draw=hkared, very thick, fill=hkared!8},
+    neu/.style={comp, dashed, text=hkagray},
+    extern/.style={comp, fill=hkagray!8},
+    flow/.style={-{Latex[length=2mm]}, thick},
+    fault/.style={circle, fill=hkared, text=white, inner sep=1.2pt, font=\scriptsize\bfseries},
+    mess/.style={rectangle, rounded corners=2pt, fill=messblau, text=white, inner sep=1.6pt, font=\scriptsize\bfseries},
+]
+    \node[extern] (m)   {Maschinen-\\simulator};
+    \node[comp, right=of m]  (r)   {Reader};
+    \node[comp, right=of r]  (db)  {Datenbank};
+    \node[comp, right=of db] (um)  {Übertragungs-\\modul};
+    \node[comp, right=of um] (cc)  {Cancom};
+    \node[mqtt, right=of cc] (api) {API-Server\\\scriptsize mit MQTTnet};
+    \node[comp, right=1.4cm of api, yshift=1.6cm]  (eis) {EIS};
+    \node[comp, right=1.4cm of api]                (hs)  {Hallenspiegel};
+    \node[neu,  right=1.4cm of api, yshift=-1.6cm] (fp)  {Feinplanung\\\scriptsize (geplant)};
+
+    \draw[flow] (m) -- (r);
+    \draw[flow] (r) -- (db);
+    \draw[flow] (db) -- (um);
+    \draw[flow] (um) -- (cc);
+    \draw[flow] (cc) -- (api);
+    \draw[flow] (api) -- (eis);
+    \draw[flow] (api) -- node[above, font=\scriptsize] {MQTT} (hs);
+    \draw[flow, dashed, hkagray] (api) -- (fp);
+
+    \begin{scope}[on background layer]
+        \node[fill=hkared!4, draw=hkared!40, rounded corners=4pt, inner sep=8pt,
+              fit=(api)(eis)(fp), label={[font=\scriptsize, text=hkared]above:MQTT (neu eingeführt)}] (mq) {};
+    \end{scope}
+
+    % Testrunner
+    \node[extern, below=2.3cm of um, text width=4.2cm] (run) {Testrunner\\\scriptsize xUnit, Toxiproxy-API, \texttt{docker kill/start}};
+    \draw[->, hkared, densely dashed] (run.north) -- node[right, font=\tiny, text=hkared] {Fehler auslösen} ($(um.south)+(0,-0.9)$);
+    \draw[hkared, densely dashed] ($(r.south)+(0,-0.9)$) -- ($(api.south)+(0,-0.9)$);
+    \foreach \n in {r,db,um,cc,api} { \draw[->, hkared, densely dashed] ($(\n.south)+(0,-0.9)$) -- (\n.south); }
+    \draw[->, messblau, densely dotted, thick] (m.south) |- node[pos=0.75, below, font=\tiny, text=messblau] {Sollwerte (Lastplan)} (run.west);
+
+    % Fehlerorte
+    \node[fault] at ($(r.north west)+(0.05,0.05)$)   {1};
+    \node[fault] at ($(db.north west)+(0.05,0.05)$)  {2};
+    \node[fault] at ($(um.north west)+(0.05,0.05)$)  {3};
+    \node[fault] at ($(cc.north west)+(0.05,0.05)$)  {4};
+    \node[fault] at ($(api.north west)+(0.05,0.05)$) {5};
+    \node[fault] at ($($(api.east)!0.55!(hs.west)$)+(0,-0.3)$) {6};
+
+    % Messpunkte
+    \node[mess] at ($(r.north east)+(-0.1,0.05)$)   {M1};
+    \node[mess] at ($(db.north east)+(-0.1,0.05)$)  {M2};
+    \node[mess] at ($(cc.north east)+(-0.1,0.05)$)  {M3};
+    \node[mess] at ($(api.north east)+(-0.1,0.05)$) {M4};
+    \node[mess] at ($(eis.south east)+(-0.1,-0.05)$) {M5};
+    \node[mess] at ($(hs.south east)+(-0.1,-0.05)$)  {M5};
+    \node[mess] at ($(fp.south east)+(-0.1,-0.05)$)  {M5};
+    \node[mess] at ($(run.south east)+(-0.1,-0.05)$) {M6};
+
+    % Legende
+    \begin{scope}[shift={($(run.east)+(2.2,0.5)$)}, font=\scriptsize]
+        \node[fault] (lf) at (0,0) {n}; \node[right=2pt of lf] {Fehlerort};
+        \node[mess]  (lm) at (0,-0.5) {Mn}; \node[right=2pt of lm] {Messpunkt};
+    \end{scope}
+\end{tikzpicture}}
+\caption{Bestehende Architektur als verteilte Datenkette mit Fehlerorten und Messpunkten. MQTT wird nur auf der letzten Strecke eingesetzt und bildet dort einen Stern um den API-Server.}
+\label{fig:kette}
+\end{figure}
+
+\subsection{Fehlerorte}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}l l X X@{}}
+\toprule
+\textbf{Ort} & \textbf{Stufe} & \textbf{Eingebauter Fehler} & \textbf{Werkzeug} \\
+\midrule
+\fmark{1} & Reader & Neustart, Verbindung zur Maschine unterbrochen & \texttt{docker kill/start}, Toxiproxy \\
+\fmark{2} & Datenbank & nicht erreichbar, langsame Schreibzugriffe & Toxiproxy, \texttt{docker pause} \\
+\fmark{3} & Übertragungsmodul & Absturz während einer Übertragung & \texttt{docker kill/start} \\
+\fmark{4} & Cancom & nicht erreichbar, verzögerte Antworten & Toxiproxy \\
+\fmark{5} & API-Server mit MQTTnet & harter Absturz, sauberer Neustart & \texttt{docker kill/stop} \\
+\fmark{6} & Strecke zu den Verbrauchern & Verbraucher getrennt oder offline & Toxiproxy, \texttt{docker stop} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Messpunkte}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}l l X@{}}
+\toprule
+\textbf{Punkt} & \textbf{Ort} & \textbf{Erfasste Rohdaten} \\
+\midrule
+\mmark{1} & Ausgang Reader & Sequenznummer $s$, Zeitstempel an der Quelle $t_{\text{src}}$, Anzahl ausgelesener Meldungen \\
+\mmark{2} & Datenbank & gespeicherte Sequenznummern, Schreibzeitpunkt \\
+\mmark{3} & Cancom & angekommene Sequenznummern, Ankunftszeitpunkt \\
+\mmark{4} & API-Server & publizierte Sequenznummern, verbundene Clients, gepufferte Nachrichten, CPU, RAM \\
+\mmark{5} & EIS, Hallenspiegel, Feinplanung & empfangene Sequenznummern in Ankunftsreihenfolge, Empfangszeitpunkt $t_{\text{recv}}$, abgeleiteter Zustand \\
+\mmark{6} & Testrunner & Sollwerte aus dem Lastplan, Beginn und Ende jedes Fehlers \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Alle Komponenten laufen als Container auf einem Host, damit alle Zeitstempel dieselbe Uhr verwenden.
+
+\section{Messmethodik}
+
+\subsection{Vom Qualitätsmodell zur Messung}
+
+ISO/IEC 25010 \cite{iso25010} legt fest, welche Teilmerkmale die Zuverlässigkeit ausmachen, aber nicht, wie sie gemessen werden. Die Messung stützt sich deshalb auf ISO/IEC 25023 \cite{iso25023}, die je Teilmerkmal Qualitätsmaße mit einer Messfunktion meist der Form $X = A/B$ angibt. Diese Maße setzen voraus, dass sich Ausfälle zählen und Betriebs- und Ausfallzeiten klar abgrenzen lassen. In der Datenkette ist das nicht unmittelbar gegeben: Fällt eine Stufe aus, arbeiten die übrigen weiter, Verbraucher können veraltete oder unvollständige Daten anzeigen, ohne selbst gestört zu sein, und verschiedene Verbraucher können gleichzeitig unterschiedliche Zustände haben. Ein System, das nur entweder läuft oder steht, bildet das nicht ab.
+
+Die Messung geht daher in drei Schritten vor:
+\begin{enumerate}[nosep]
+    \item Für jeden Verbraucher wird zu jedem Zeitpunkt ein Zustand bestimmt. Daraus folgt, was in dieser Arbeit als Ausfall gilt (Abschnitt~\ref{sec:zustaende}).
+    \item Die Qualitätsmaße aus ISO/IEC 25023 werden auf diese Ausfalldefinition angewendet (Abschnitt~\ref{sec:iso25023}).
+    \item Ergänzende Messgrößen erfassen, was die Maße der Norm nicht abbilden: Verlust je Stufe, Abweichungen zwischen Verbrauchern und das Zuschalten neuer Verbraucher (Abschnitt~\ref{sec:kette}).
+\end{enumerate}
+
+\subsection{Zustände eines Verbrauchers}
+\label{sec:zustaende}
+
+Für jeden Verbraucher $j$ (EIS, Hallenspiegel, Feinplanung) wird zu jedem Zeitpunkt $t$ ein Zustand $z_j(t)$ bestimmt. Sind mehrere Bedingungen erfüllt, gilt der weiter unten stehende Zustand.
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}p{2.6cm} X@{}}
+\toprule
+\textbf{Zustand} & \textbf{Bedingung} \\
+\midrule
+Aktuell & Datenalter $a_j(t) \le a_{\max}$ und alle Meldungen mit $t_{\text{src}} \le t - a_{\max}$ sind angekommen \\
+Veraltet & $a_j(t) > a_{\max}$, aber es fehlt keine Meldung. Die Daten kommen verzögert, aber vollständig an \\
+Lückenhaft & mindestens eine Meldung mit $t_{\text{src}} \le t - a_{\max}$ fehlt. Der angezeigte Zustand weicht vom Sollzustand ab \\
+Getrennt & keine Verbindung zum API-Server bzw.\ Broker \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Als \emph{Ausfall} gilt jeder Übergang eines Verbrauchers aus \enquote{Aktuell} in einen anderen Zustand, als \emph{Ausfallzeit} die Zeit bis zur Rückkehr nach \enquote{Aktuell}. Damit werden Teilausfälle erfasst: Ein Verbraucher kann lückenhaft sein, während die anderen aktuell sind. Kommt eine fehlende Meldung später noch an, etwa weil Variante~B sie nachholt, kehrt der Verbraucher nach \enquote{Aktuell} zurück. Was am Ende eines Laufs noch fehlt, geht in den RPO ein.
+
+\subsection{Fehlerinjektion und Ablauf eines Laufs}
+\label{sec:ablauf}
+
+Fehler werden kontrolliert eingebaut, wie es im Chaos Engineering üblich ist \cite{basiri2016chaos}: Zuerst wird das Verhalten im Normalbetrieb erfasst, dann ein Fehler ausgelöst und die Abweichung davon gemessen. Jeder Lauf folgt dem Ablauf in Abbildung~\ref{fig:phasen}.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[font=\scriptsize, x=1cm, y=1cm,
+    phase/.style={draw, minimum height=0.8cm, align=center, inner sep=1pt},
+]
+    \node[phase, fill=hkagray!15, minimum width=1.6cm, anchor=south west] at (0,0)    {Aufwärmen};
+    \node[phase, fill=white,      minimum width=2.0cm, anchor=south west] at (1.6,0)  {Referenz};
+    \node[phase, fill=hkared!25,  minimum width=1.0cm, anchor=south west] at (3.6,0)  {Fehler};
+    \node[phase, fill=messblau!15,minimum width=2.0cm, anchor=south west] at (4.6,0)  {Erholung};
+    \node[phase, fill=hkared!25,  minimum width=1.0cm, anchor=south west] at (6.6,0)  {Fehler};
+    \node[phase, fill=messblau!15,minimum width=2.0cm, anchor=south west] at (7.6,0)  {Erholung};
+    \node[phase, draw=none,       minimum width=0.8cm, anchor=south west] at (9.6,0)  {\dots};
+    \node[phase, fill=hkagray!15, minimum width=2.2cm, anchor=south west] at (10.4,0) {Auslaufen};
+
+    % Last
+    \draw[-{Latex[length=1.5mm]}, hkagray] (0,1.25) node[above, text=black] {Last an} -- (0,0.85);
+    \draw[-{Latex[length=1.5mm]}, hkagray] (10.4,1.25) node[above, text=black] {Last aus} -- (10.4,0.85);
+    % Zufälliger Fehlerzeitpunkt
+    \draw[{Latex[length=1.5mm]}-{Latex[length=1.5mm]}, hkared] (3.1,1.0) -- node[above, text=hkared] {zufälliger Beginn} (4.1,1.0);
+
+    % Zyklen
+    \draw[decorate, decoration={brace, amplitude=4pt, mirror}] (3.6,-0.1) -- node[below=4pt] {$k$ Fehlerzyklen} (10.4,-0.1);
+
+    % Auswertung je Phase
+    \node[align=center, text=hkagray] at (2.6,-0.75)  {Normalbetrieb,\\Fehlerfreiheit};
+    \node[align=center, text=hkagray] at (11.5,-0.75) {RPO, $\Delta$};
+\end{tikzpicture}
+\caption{Ablauf eines Messlaufs. Die Referenzphase liefert die Vergleichswerte des Normalbetriebs, jeder Fehlerzyklus liefert Fehlertoleranz und RTO, das Auslaufen den endgültigen Verlust.}
+\label{fig:phasen}
+\end{figure}
+
+Der Beginn jedes Fehlers wird zufällig gewählt. Ob ein Fehler folgenlos bleibt, hängt oft davon ab, in welchem Moment er eine Übertragung trifft, etwa ob das Übertragungsmodul vor oder nach der Bestätigung einer Meldung abstürzt. Die Wirkung eines Fehlers ist deshalb eine Wahrscheinlichkeit, die nur über viele Fehlerzyklen geschätzt werden kann. Ein neuer Fehlerzyklus beginnt erst, wenn alle Verbraucher wieder aktuell sind oder eine Höchstdauer \offen{z.\,B. 120\,s} überschritten ist.
+
+\subsection{Sollzustand als Vergleichsgrundlage}
+\label{sec:orakel}
+
+Der Simulator erzeugt die Meldungen aus einem Lastplan mit festem Startwert für den Zufallsgenerator, sodass jeder Lauf reproduzierbar ist. Der Sollzustand $S_{\text{soll}}(t)$, etwa die Stückzahl je Auftrag, wird aus allen bis $t$ erzeugten Meldungen berechnet. Der Istzustand $S_j(t)$ eines Verbrauchers wird mit derselben Rechenvorschrift aus den an \mmark{5} empfangenen Meldungen berechnet. So lassen sich Soll und Ist vergleichen, ohne die interne Logik der Verbraucher zu kennen. Wo ein Verbraucher seinen Zustand über eine Schnittstelle ausgibt, wird dieser zusätzlich abgefragt und mit $S_j(t)$ verglichen \offen{klären, ob EIS und Hallenspiegel ihren Zustand abfragbar machen}.
+
+\section{Messgrößen}
+
+Es seien $N$ die Anzahl erzeugter Meldungen laut Lastplan, $R_k$ die Folge der an Messpunkt $k$ beobachteten Sequenznummern, $|R_k|_{\text{u}}$ die Anzahl verschiedener Sequenznummern darin, $m$ die Anzahl der Verbraucher und $T$ die ausgewertete Beobachtungsdauer.
+
+\subsection{Qualitätsmaße nach ISO/IEC 25023}
+\label{sec:iso25023}
+
+Tabelle~\ref{tab:iso25023} ordnet die Zuverlässigkeitsmaße aus ISO/IEC 25023 \cite{iso25023} der Datenkette zu. Die Norm bezieht sich noch auf ISO/IEC 25010:2011, dort heißt die Fehlerfreiheit noch Reife (\emph{maturity}). Ausfall und Ausfallzeit sind wie in Abschnitt~\ref{sec:zustaende} definiert \offen{Bezeichner und Messfunktionen gegen den Normtext prüfen}.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}p{2.5cm} p{3.3cm} p{4.1cm} X@{}}
+\toprule
+\textbf{Teilmerkmal} & \textbf{Maß (ID)} & \textbf{Messfunktion} & \textbf{Anwendung in der Kette} \\
+\midrule
+Fehlerfreiheit & MTBF\newline (RMa-2-G) & Betriebszeit / Anzahl Ausfälle & Dauerlauf F1, nur Ausfälle ohne eingebauten Fehler \\
+ & Ausfallrate\newline (RMa-3-G) & Anzahl Ausfälle / Beobachtungsdauer & F1, je Verbraucher und für die Kette \\
+ & Testabdeckung\newline (RMa-4-S) & durchgeführte / geplante Szenarien & Szenarien aus Abschnitt~\ref{sec:szenarien} je Variante \\
+ & Fehlerbehebung\newline (RMa-1-G) & behobene / gefundene Fehler & nicht anwendbar, betrifft den Entwicklungsprozess \\
+\addlinespace
+Verfügbarkeit & Systemverfügbarkeit\newline (RAv-1-G) & Zeit in \enquote{Aktuell} / $T$ & je Verbraucher $A_j$, für die Kette $A_{\text{Kette}}$ = Zeit, in der alle aktuell sind \\
+ & Mittlere Ausfallzeit\newline (RAv-2-G) & Ausfallzeit gesamt / Anzahl Ausfälle & je Verbraucher und Szenario \\
+\addlinespace
+Fehlertoleranz & Ausfallvermeidung\newline (RFt-1-G) & folgenlose / eingebaute Fehler & folgenlos: kein Verbraucher verlässt \enquote{Aktuell} \\
+ & Redundanz\newline (RFt-2-S) & redundant ausgelegte / alle Komponenten & aus der Architektur je Variante, ohne Messung \\
+ & Mittlere Fehlermeldezeit\newline (RFt-3-S) & $\frac{1}{n}\sum_i (t_{\text{meld},i} - t_{\text{fault},i})$ & Zeit bis zur ersten Fehlermeldung in Log oder Monitoring \offen{abhängig vom vorhandenen Logging} \\
+\addlinespace
+Wiederher-\newline stellbarkeit & Mittlere Wiederherstellungszeit\newline (RRe-1-G) & $\frac{1}{n}\sum_i \text{RTO}_i$ & RTO wie in Abschnitt~\ref{sec:kette}, je Fehlerort \\
+ & Vollständigkeit der Sicherung\newline (RRe-2-S) & gesicherte / zur Wiederherstellung benötigte Daten & Anteil der beim Fehler unterwegs befindlichen Meldungen, die in einer persistenten Stufe (Datenbank, Broker-Persistenz) vorliegen \\
+\bottomrule
+\end{tabularx}
+\caption{Zuverlässigkeitsmaße aus ISO/IEC 25023 und ihre Anwendung auf die Datenkette.}
+\label{tab:iso25023}
+\end{table}
+
+\subsection{Messgrößen der Datenkette}
+\label{sec:kette}
+
+Die Maße der Norm fassen einen Lauf in wenigen Zahlen zusammen. Um zu erklären, an welcher Übergabe Meldungen verloren gehen und wie sich die Verbraucher untereinander unterscheiden, kommen die folgenden Messgrößen hinzu. Ergänzend wird der Aufwand jeder Architekturvariante als Leistungseffizienz gemessen, damit die Abwägung sichtbar wird.
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}p{3.25cm} p{3.2cm} X l@{}}
+\toprule
+\textbf{Teilmerkmal} & \textbf{Messgröße} & \textbf{Definition} & \textbf{Quelle} \\
+\midrule
+Fehlerfreiheit & Duplikatquote & $D = (|R_5| - |R_5|_{\text{u}}) \,/\, N$ im Normalbetrieb & \mmark{5}\,\mmark{6} \\
+ & Umordnungen & $U = |\{\,i : r_{i+1} < r_i\,\}|$ je Maschine beim Verbraucher & \mmark{5} \\
+ & Einbindungszeit & $t_{\text{sync}} - t_{\text{join}}$: vom Verbinden eines neuen Verbrauchers bis sein Zustand dem Sollzustand entspricht (F2) & \mmark{5}\,\mmark{6} \\
+\addlinespace
+Verfügbarkeit & Datenalter & $a_j(t) = t - t_{\text{src}}$ des zuletzt bei Verbraucher $j$ angekommenen Werts, als p50, p95, p99 & \mmark{1}\,\mmark{5} \\
+ & Mittlere Teilverfügbarkeit & $\bar{A} = \frac{1}{m}\sum_j A_j$, im Unterschied zu $A_{\text{Kette}}$, das nur zählt, wenn alle aktuell sind; $a_{\max}$ \offen{z.\,B. 5\,s, mit ProSeS festlegen} & \mmark{5} \\
+ & Modell der Kette & $A_{\text{Modell}} = \prod_i A_i$ der Stufen bei unabhängigen Ausfällen, Vergleich mit gemessenem $A_{\text{Kette}}$ & \mmark{1}--\mmark{5} \\
+\addlinespace
+Fehlertoleranz & Verlustquote & $L = (N - |R_5|_{\text{u}}) \,/\, N$ unter eingebautem Fehler & \mmark{5}\,\mmark{6} \\
+ & Verlust je Stufe & $L_k = |R_{k-1}|_{\text{u}} - |R_k|_{\text{u}}$, zeigt, an welcher Übergabe Meldungen verloren gehen & \mmark{1}--\mmark{5} \\
+ & Duplikatquote & $D$ unter eingebautem Fehler & \mmark{5}\,\mmark{6} \\
+ & Folgenlos je Fehlerort & $\hat{p}_i$ = Anteil folgenloser Fehler an Ort $i$ (RFt-1-G je Ort), mit Wilson-Konfidenzintervall \cite{wilson1927} & \mmark{5}\,\mmark{6} \\
+ & Abweichung zwischen Verbrauchern & $\delta_{jl}(t) = |S_j(t) - S_l(t)|$ und Dauer, in der $\delta_{jl} > 0$, z.\,B. Hallenspiegel zeigt andere Stückzahl als EIS & \mmark{5} \\
+\addlinespace
+Wiederherstellbarkeit & RTO & $t_{\text{rec}} - t_{\text{fault}}$, wobei $t_{\text{rec}}$ der erste Zeitpunkt ist, ab dem der Zustand beim Verbraucher wieder dem Sollzustand entspricht; für die Kette das Maximum über alle Verbraucher & \mmark{5}\,\mmark{6} \\
+ & RPO & Anzahl der Meldungen, die nach Abschluss aller Wiederanläufe endgültig fehlen & \mmark{5}\,\mmark{6} \\
+ & Zustandsabweichung & $\Delta = |\,\text{Zustand}_{\text{ist}} - \text{Zustand}_{\text{soll}}\,|$ am Ende des Laufs, je Verbraucher & \mmark{5}\,\mmark{6} \\
+\midrule
+\textit{Aufwand} & Latenz & $t_{\text{recv}} - t_{\text{src}}$ von Ende zu Ende und je Stufe, als p50, p95, p99 & \mmark{1}--\mmark{5} \\
+ & Ressourcen & CPU, RAM, Plattenbedarf je Stunde & \mmark{4} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{RTO und RPO am Beispiel eines Absturzes des API-Servers}
+
+Abbildung~\ref{fig:verlauf} zeigt schematisch, wie sich RTO und RPO aus dem Verlauf des Zustands beim Hallenspiegel ergeben, hier der Stückzahl eines Auftrags. Während der API-Server ausgefallen ist, bleibt der Wert stehen. Variante~A verliert die Meldungen, die während des Ausfalls nicht zugestellt werden können, und läuft danach mit konstantem Abstand zum Sollwert weiter. Variante~B holt sie nach dem Wiederanlauf nach und erreicht den Sollzustand zum Zeitpunkt $t_{\text{rec}}$.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[font=\small, x=1.05cm, y=1cm]
+    % Ausfallzeitraum
+    \fill[hkared!10] (4,0) rectangle (6,4.8);
+    \node[font=\scriptsize, text=hkared, align=center] at (5,4.5) {API-Server\\ausgefallen};
+
+    % Achsen
+    \draw[-{Latex[length=2mm]}] (0,0) -- (11.6,0) node[below left] {Zeit};
+    \draw[-{Latex[length=2mm]}] (0,0) -- (0,5.1) node[above, align=center] {Stückzahl beim Hallenspiegel};
+
+    % Soll
+    \draw[thick, black] (0,0) -- (11,4.4) node[above left, font=\scriptsize] {Soll};
+    % Variante A: Verlust
+    \draw[thick, hkared, densely dashed] (0,0) -- (4,1.6) -- (6,1.6) -- (11,3.6);
+    \node[font=\scriptsize, text=hkared] at (9.6,2.55) {Variante A};
+    % Variante B: holt auf
+    \draw[thick, messblau] (0,0) -- (4,1.6) -- (6,1.6) -- (7,2.8) -- (10.6,4.24);
+    \node[font=\scriptsize, text=messblau, anchor=south east] at (7.0,2.9) {Variante B};
+
+    % Zeitmarken
+    \draw[dashed, hkagray] (4,0) -- (4,-0.1) node[below, font=\scriptsize, text=black] {$t_{\text{fault}}$};
+    \draw[dashed, hkagray] (7,0) -- (7,2.8);
+    \node[below, font=\scriptsize] at (7,-0.1) {$t_{\text{rec}}$};
+
+    % RTO
+    \draw[{Latex[length=1.5mm]}-{Latex[length=1.5mm]}, messblau] (4,-0.75) -- node[below, font=\scriptsize] {RTO (Variante B)} (7,-0.75);
+
+    % RPO
+    \draw[decorate, decoration={brace, amplitude=4pt}, hkared] (11.05,4.4) -- node[right=4pt, font=\scriptsize, align=left] {RPO\\(Variante A)} (11.05,3.6);
+\end{tikzpicture}
+\caption{Schematischer Verlauf der Stückzahl beim Hallenspiegel bei einem Absturz des API-Servers. Kein Messergebnis, sondern Veranschaulichung der Messgrößen.}
+\label{fig:verlauf}
+\end{figure}
+
+\section{Architekturvarianten}
+
+Verglichen werden drei Varianten \offen{mit ProSeS abstimmen}. Die bestehende Kette ist die Basislinie.
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}l p{3.2cm} X@{}}
+\toprule
+\textbf{Variante} & \textbf{Bezeichnung} & \textbf{Beschreibung} \\
+\midrule
+A & Bestehende Kette & Architektur wie in Abbildung~\ref{fig:kette}, unverändert nachgebildet \\
+B & Gehärtete Kette & gleiche Stufen, aber mit Wiederaufsetzpunkt im Übertragungsmodul, idempotenten Übergaben über die Sequenznummer sowie persistenten Sessions und Retained Messages im API-Server \\
+C & Stern & Der Reader veröffentlicht direkt auf einem Broker. Datenbank, Cancom-Anbindung, EIS, Hallenspiegel und Feinplanung sind gleichberechtigte Abonnenten (Abbildung~\ref{fig:stern}) \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    font=\small,
+    client/.style={draw, rounded corners=3pt, fill=white, minimum width=2.6cm, minimum height=1.0cm, align=center},
+    broker/.style={draw=hkared, very thick, circle, fill=hkared!8, minimum size=2.2cm, align=center, font=\small\bfseries},
+    neu/.style={client, dashed, text=hkagray},
+    spoke/.style={-{Latex[length=2mm]}, thick},
+]
+    \node[broker] (b) at (0,0) {Broker\\[-1pt]\scriptsize\normalfont MQTT};
+    \node[client] (r)  at (180:4.2) {Reader\\\scriptsize Publisher};
+    \node[client] (db) at (70:3.6)  {Datenbank-\\Writer};
+    \node[client] (cc) at (35:4.3)  {Cancom-\\Anbindung};
+    \node[client] (eis) at (0:4.4)  {EIS};
+    \node[client] (hs) at (-35:4.3) {Hallenspiegel};
+    \node[neu]    (fp) at (-70:3.6) {Feinplanung\\\scriptsize (geplant)};
+
+    \draw[spoke] (r) -- node[above, font=\scriptsize] {MQTT} (b);
+    \foreach \n in {db,cc,eis,hs} { \draw[spoke] (b) -- (\n); }
+    \draw[spoke, dashed, hkagray] (b) -- (fp);
+\end{tikzpicture}
+\caption{Variante C: Sterntopologie. Jeder Verbraucher hängt direkt am Broker und ist nicht mehr von den vorherigen Stufen der Kette abhängig.}
+\label{fig:stern}
+\end{figure}
+
+Die Varianten stehen für eine Abwägung. Variante~B behält die bestehende Architektur bei und sichert jede Übergabe einzeln ab. Variante~C verkürzt den Weg zu jedem Verbraucher auf zwei Übergaben, macht den Broker aber zum zentralen Fehlerpunkt und erfordert einen Umbau.
+
+\section{Versuchsplan}
+
+\subsection{Szenarien}
+\label{sec:szenarien}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}l p{3.3cm} l X@{}}
+\toprule
+\textbf{ID} & \textbf{Teilmerkmal} & \textbf{Ort} & \textbf{Szenario} \\
+\midrule
+F1 & Fehlerfreiheit & -- & Dauerlauf 24\,h ohne Fehler \offen{Anzahl Maschinen und Takt festlegen} \\
+F2 & Fehlerfreiheit & -- & Feinplanung wird im laufenden Betrieb als neuer Verbraucher zugeschaltet \\
+V1 & Verfügbarkeit & \fmark{5} & Neustart des API-Servers während laufender Fertigung \\
+V2 & Verfügbarkeit & \fmark{6} & Hallenspiegel 30\,s vom Netz getrennt \\
+T1 & Fehlertoleranz & \fmark{2} & Datenbank 30\,s nicht erreichbar \\
+T2 & Fehlertoleranz & \fmark{4} & Cancom 30\,s nicht erreichbar \\
+T3 & Fehlertoleranz & \fmark{3} & Übertragungsmodul stürzt während einer Übertragung ab \\
+W1 & Wiederherstellbarkeit & \fmark{5} & API-Server hart beendet (\texttt{docker kill}) und neu gestartet \\
+W2 & Wiederherstellbarkeit & \fmark{1} & Reader während laufender Fertigung neu gestartet \\
+W3 & Wiederherstellbarkeit & \fmark{6} & Verbraucher länger offline als die Session-Ablaufzeit \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Faktoren}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}p{3.2cm} X@{}}
+\toprule
+\textbf{Faktor} & \textbf{Stufen} \\
+\midrule
+Architektur & A: bestehende Kette \quad B: gehärtete Kette \quad C: Stern \\
+QoS (MQTT-Strecken) & 0 \quad 1 \quad 2 \\
+Last & \offen{Anzahl Maschinen und Meldungen pro Sekunde, angelehnt an den Produktivbetrieb} \\
+Wiederholungen & \offen{10} Läufe je Kombination mit je \offen{10} Fehlerzyklen, also \offen{100} eingebaute Fehler je Kombination \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Nicht jede Kombination ist für jedes Szenario sinnvoll. Je Szenario werden nur die Faktoren variiert, die den eingebauten Fehler betreffen. Die übrigen bleiben auf einem festen Basiswert \offen{Basiswerte festlegen}.
+
+\section{Umsetzung der Messung}
+
+\subsection{Nachrichtenformat}
+
+Der Simulator versieht jede Meldung mit den folgenden Feldern. Sie müssen alle Stufen bis zum Verbraucher unverändert durchlaufen, damit eine Meldung an jedem Messpunkt wiedererkannt wird \offen{prüfen, ob Übertragungsmodul und Cancom zusätzliche Felder durchreichen, sonst in vorhandenen Feldern codieren}.
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}p{3.0cm} X@{}}
+\toprule
+\textbf{Feld} & \textbf{Bedeutung} \\
+\midrule
+\texttt{run\_id} & Kennung des Laufs, trennt Daten verschiedener Läufe \\
+\texttt{machine\_id} & simulierte Maschine \\
+\texttt{seq} & fortlaufende Sequenznummer je Maschine, beginnend bei 1 \\
+\texttt{t\_src} & Erzeugungszeitpunkt in Millisekunden \\
+Nutzdaten & fachlicher Inhalt wie im Produktivbetrieb, z.\,B. Auftrag und Stückzahl \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Messsonden}
+
+Jede Sonde schreibt je beobachteter Meldung eine Zeile mit \texttt{run\_id}, Messpunkt, \texttt{machine\_id}, \texttt{seq}, \texttt{t\_src} und Beobachtungszeitpunkt $t_{\text{obs}}$. Die Sonden sollen die Komponenten möglichst nicht verändern.
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}l X X@{}}
+\toprule
+\textbf{Punkt} & \textbf{Umsetzung} & \textbf{Rückwirkung auf das System} \\
+\midrule
+\mmark{1} & Log des Readers. Ist der Reader nicht instrumentierbar, wird der Verlust zwischen Simulator und Datenbank über \mmark{6} und \mmark{2} bestimmt & keine \\
+\mmark{2} & Abfrage der Datenbank nach dem Lauf über Sequenznummer und Schreibzeitpunkt. Fehlt ein Schreibzeitpunkt, wird eine Spalte mit Standardwert ergänzt & keine während des Laufs \\
+\mmark{3} & Export oder Log von Cancom \offen{Zugriff klären} & offen \\
+\mmark{4} & passiver Mitleser, der alle Topics abonniert, sowie \texttt{docker stats} für CPU und RAM im Sekundentakt & zusätzlicher Client am Broker \\
+\mmark{5} & Verbraucher-Nachbildungen mit demselben Abo-Verhalten wie EIS, Hallenspiegel und Feinplanung (Topics, QoS, Client-ID, Session-Einstellungen), die jede Meldung mit $t_{\text{recv}}$ protokollieren \offen{prüfen, ob die echten Verbraucher eingesetzt werden können} & keine, da sie die Verbraucher ersetzen \\
+\mmark{6} & Testrunner protokolliert Lastplan sowie Beginn, Ende, Ort und Art jedes Fehlers & keine \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Ablauf eines Laufs im Testrunner}
+
+\begin{enumerate}[nosep]
+    \item Umgebung mit leeren Volumes neu starten, Variante und QoS über die Konfiguration setzen.
+    \item Warten, bis alle Verbraucher verbunden sind und der Mitleser an \mmark{4} Meldungen empfängt.
+    \item Simulator mit Lastplan und Startwert starten, Aufwärm- und Referenzphase abwarten.
+    \item Fehlerzyklen ausführen: Beginn zufällig wählen, Fehler über die Toxiproxy-API oder \texttt{docker kill/stop/pause} auslösen, nach der Fehlerdauer aufheben, Erholung abwarten und alles mit Zeitstempel in das Fehlerprotokoll schreiben.
+    \item Last stoppen und warten, bis \offen{30\,s} lang keine neue Meldung mehr ankommt.
+    \item Logs aller Sonden und den Datenbankexport unter der \texttt{run\_id} ablegen.
+    \item Plausibilität prüfen: Die Anzahl der Meldungen an \mmark{6} muss $N$ entsprechen, sonst wird der Lauf verworfen.
+\end{enumerate}
+
+\subsection{Auswertung}
+
+Die Protokolle aller Sonden werden über (\texttt{run\_id}, \texttt{machine\_id}, \texttt{seq}) zu einer Tabelle mit einer Zeile je Meldung zusammengeführt, die für jeden Messpunkt den Beobachtungszeitpunkt und die Anzahl der Beobachtungen enthält. Daraus ergeben sich Verlust, Duplikate und Latenz je Stufe direkt. Die Zustände $z_j(t)$ werden auf einem Zeitraster von \offen{100\,ms} berechnet. Daraus folgen Verfügbarkeit, Ausfälle und RTO. Die Auswertung erfolgt in Python mit pandas und SciPy.
+
+Für die statistische Auswertung \cite{jain1991} liefert jeder Lauf einen Wert je Messgröße. Über die Läufe einer Kombination werden Median und 95-\%-Konfidenzintervall angegeben, bei Perzentilen wie dem p99 der Latenz mit Bootstrap. Anteile wie die folgenlosen Fehler werden über alle Fehlerzyklen mit Wilson-Intervall angegeben \cite{wilson1927}. Die Varianten werden paarweise mit dem Mann-Whitney-U-Test verglichen, da keine Normalverteilung angenommen werden kann. Als Effektstärke wird Cliffs Delta angegeben \cite{cliff1993}. Bei mehreren Vergleichen wird das Signifikanzniveau von 0{,}05 nach Holm korrigiert.
+
+\subsection{Prüfung des Messaufbaus}
+
+Bevor Ergebnisse ausgewertet werden, wird geprüft, ob die Messung selbst korrekt ist:
+\begin{itemize}[nosep]
+    \item \textbf{Nullmessung:} Ein Lauf ohne Fehler muss $L = 0$ und $D = 0$ ergeben. Andernfalls liegt der Fehler in der Messung oder im Aufbau.
+    \item \textbf{Bekannte Fehler:} Der Simulator lässt gezielt einzelne Sequenznummern aus und sendet andere doppelt. Die Auswertung muss genau diese Meldungen als Verlust bzw.\ Duplikat erkennen.
+    \item \textbf{Rückwirkung:} Latenz und CPU-Last des API-Servers werden mit und ohne Mitleser an \mmark{4} verglichen.
+    \item \textbf{Zeitauflösung:} Alle Zeitstempel stammen von derselben Uhr des Hosts. Das Raster von \offen{100\,ms} ist die untere Grenze für RTO und Ausfallzeiten.
+\end{itemize}
+
+\section{Ergebnisvorlage}
+
+Die folgende Tabelle zeigt, in welcher Form die Ergebnisse berichtet werden. Sie enthält noch keine Messwerte.
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}l X X X X X@{}}
+\toprule
+\textbf{Variante} & \textbf{W1: RPO} & \textbf{W1: RTO} & \textbf{T3: $\Delta$} & \textbf{Datenalter p99} & \textbf{Latenz p99} \\
+\midrule
+A: bestehende Kette & \offen{--} & \offen{--} & \offen{--} & \offen{--} & \offen{--} \\
+B: gehärtete Kette  & \offen{--} & \offen{--} & \offen{--} & \offen{--} & \offen{--} \\
+C: Stern            & \offen{--} & \offen{--} & \offen{--} & \offen{--} & \offen{--} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Aus dieser Tabelle ergibt sich die Abwägung zwischen Zuverlässigkeit (RPO, RTO, $\Delta$, Datenalter) und Aufwand (Latenz, Umbau), die die Grundlage der Empfehlung für den weiteren Ausbau bildet.
+
+\printbibliography[heading=bibintoc, title={Literaturverzeichnis}]
+
+\end{document}

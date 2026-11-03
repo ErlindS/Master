@@ -11,20 +11,30 @@
 \abx@aux@segm{0}{0}{mishra2020mqttsurvey}
 \abx@aux@cite{0}{eugster2003pubsub}
 \abx@aux@segm{0}{0}{eugster2003pubsub}
+\abx@aux@cite{0}{kleppmann2017ddia}
+\abx@aux@segm{0}{0}{kleppmann2017ddia}
 \abx@aux@cite{0}{iec62264}
 \abx@aux@segm{0}{0}{iec62264}
 \abx@aux@cite{0}{mqtt5}
 \abx@aux@segm{0}{0}{mqtt5}
+\abx@aux@cite{0}{saltzer1984endtoend}
+\abx@aux@segm{0}{0}{saltzer1984endtoend}
 \abx@aux@cite{0}{sparkplug3}
 \abx@aux@segm{0}{0}{sparkplug3}
 \abx@aux@cite{0}{fowler2005eventsourcing}
 \abx@aux@segm{0}{0}{fowler2005eventsourcing}
 \abx@aux@cite{0}{kreps2011kafka}
 \abx@aux@segm{0}{0}{kreps2011kafka}
+\abx@aux@cite{0}{iso25010}
+\abx@aux@segm{0}{0}{iso25010}
 \abx@aux@cite{0}{mqtt311}
 \abx@aux@segm{0}{0}{mqtt311}
 \abx@aux@cite{0}{mqtt5}
 \abx@aux@segm{0}{0}{mqtt5}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Motivation}{1}{section.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}Problemstellung}{1}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Das System als verteilte Datenkette}{1}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Was MQTT garantiert und was nicht}{1}{subsection.2.2}\protected@file@percent }
 \abx@aux@cite{0}{schneider1990statemachine}
 \abx@aux@segm{0}{0}{schneider1990statemachine}
 \abx@aux@cite{0}{lamport1978time}
@@ -33,31 +43,39 @@
 \abx@aux@segm{0}{0}{elnozahy2002rollback}
 \abx@aux@cite{0}{chandy1985snapshots}
 \abx@aux@segm{0}{0}{chandy1985snapshots}
-\@writefile{toc}{\contentsline {section}{\numberline {1}Motivation}{1}{section.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2}Problemstellung}{1}{section.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Was MQTT garantiert und was nicht}{1}{subsection.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Was zustandsbehaftete Prozesse brauchen}{1}{subsection.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Die Lücke}{2}{subsection.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Abgrenzung.}{2}{paragraph*.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3}Forschungsfragen und Ziele}{2}{section.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4}Nutzen für die ProSeS GmbH}{2}{section.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5}Rahmenbedingungen}{3}{section.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Unterstützung durch das Unternehmen.}{3}{paragraph*.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Kein Eingriff in die Produktion.}{3}{paragraph*.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Vertraulichkeit.}{3}{paragraph*.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6}Zeitplan}{3}{section.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{Literaturverzeichnis}{3}{section.6}\protected@file@percent }
-\abx@aux@read@bbl@mdfivesum{AF25AF42EF92FDC4E5A08BB4EBB5438E}
+\abx@aux@cite{0}{iso25010}
+\abx@aux@segm{0}{0}{iso25010}
+\abx@aux@cite{0}{avizienis2004taxonomy}
+\abx@aux@segm{0}{0}{avizienis2004taxonomy}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Bestehende Architektur bei der ProSeS GmbH (vereinfacht). Die Daten durchlaufen sechs Stufen, bevor sie beim Verbraucher ankommen. MQTT wird nur auf der letzten Strecke eingesetzt.}}{2}{figure.1}\protected@file@percent }
+\newlabel{fig:ist}{{1}{2}{Bestehende Architektur bei der ProSeS GmbH (vereinfacht). Die Daten durchlaufen sechs Stufen, bevor sie beim Verbraucher ankommen. MQTT wird nur auf der letzten Strecke eingesetzt}{figure.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Was die Verbraucher brauchen}{2}{subsection.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Zuverlässigkeit als Bewertungsrahmen}{2}{subsection.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Die Lücke}{3}{subsection.2.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Abgrenzung.}{3}{paragraph*.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Forschungsfragen und Ziele}{3}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Nutzen für die ProSeS GmbH}{4}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Rahmenbedingungen}{4}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Unterstützung durch das Unternehmen.}{4}{paragraph*.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Kein Eingriff in die Produktion.}{4}{paragraph*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Vertraulichkeit.}{5}{paragraph*.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Zeitplan}{5}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{Literaturverzeichnis}{5}{section.6}\protected@file@percent }
+\abx@aux@read@bbl@mdfivesum{0BBC462D4C484170F51C66B093D5D87C}
 \abx@aux@defaultrefcontext{0}{mishra2020mqttsurvey}{none/global//global/global/global}
 \abx@aux@defaultrefcontext{0}{eugster2003pubsub}{none/global//global/global/global}
+\abx@aux@defaultrefcontext{0}{kleppmann2017ddia}{none/global//global/global/global}
 \abx@aux@defaultrefcontext{0}{iec62264}{none/global//global/global/global}
 \abx@aux@defaultrefcontext{0}{mqtt5}{none/global//global/global/global}
+\abx@aux@defaultrefcontext{0}{saltzer1984endtoend}{none/global//global/global/global}
 \abx@aux@defaultrefcontext{0}{sparkplug3}{none/global//global/global/global}
 \abx@aux@defaultrefcontext{0}{fowler2005eventsourcing}{none/global//global/global/global}
 \abx@aux@defaultrefcontext{0}{kreps2011kafka}{none/global//global/global/global}
+\abx@aux@defaultrefcontext{0}{iso25010}{none/global//global/global/global}
 \abx@aux@defaultrefcontext{0}{mqtt311}{none/global//global/global/global}
 \abx@aux@defaultrefcontext{0}{schneider1990statemachine}{none/global//global/global/global}
 \abx@aux@defaultrefcontext{0}{lamport1978time}{none/global//global/global/global}
 \abx@aux@defaultrefcontext{0}{elnozahy2002rollback}{none/global//global/global/global}
 \abx@aux@defaultrefcontext{0}{chandy1985snapshots}{none/global//global/global/global}
-\gdef \@abspage@last{6}
+\abx@aux@defaultrefcontext{0}{avizienis2004taxonomy}{none/global//global/global/global}
+\gdef \@abspage@last{8}

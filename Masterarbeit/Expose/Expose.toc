@@ -1,15 +1,17 @@
 \babel@toc {ngerman}{}\relax 
 \contentsline {section}{\numberline {1}Motivation}{1}{section.1}%
 \contentsline {section}{\numberline {2}Problemstellung}{1}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Was MQTT garantiert und was nicht}{1}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}Was zustandsbehaftete Prozesse brauchen}{1}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}Die Lücke}{2}{subsection.2.3}%
-\contentsline {paragraph}{Abgrenzung.}{2}{paragraph*.1}%
-\contentsline {section}{\numberline {3}Forschungsfragen und Ziele}{2}{section.3}%
-\contentsline {section}{\numberline {4}Nutzen für die ProSeS GmbH}{2}{section.4}%
-\contentsline {section}{\numberline {5}Rahmenbedingungen}{3}{section.5}%
-\contentsline {paragraph}{Unterstützung durch das Unternehmen.}{3}{paragraph*.2}%
-\contentsline {paragraph}{Kein Eingriff in die Produktion.}{3}{paragraph*.3}%
-\contentsline {paragraph}{Vertraulichkeit.}{3}{paragraph*.4}%
-\contentsline {section}{\numberline {6}Zeitplan}{3}{section.6}%
-\contentsline {section}{Literaturverzeichnis}{3}{section.6}%
+\contentsline {subsection}{\numberline {2.1}Das System als verteilte Datenkette}{1}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Was MQTT garantiert und was nicht}{1}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Was die Verbraucher brauchen}{2}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Zuverlässigkeit als Bewertungsrahmen}{2}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Die Lücke}{3}{subsection.2.5}%
+\contentsline {paragraph}{Abgrenzung.}{3}{paragraph*.1}%
+\contentsline {section}{\numberline {3}Forschungsfragen und Ziele}{3}{section.3}%
+\contentsline {section}{\numberline {4}Nutzen für die ProSeS GmbH}{4}{section.4}%
+\contentsline {section}{\numberline {5}Rahmenbedingungen}{4}{section.5}%
+\contentsline {paragraph}{Unterstützung durch das Unternehmen.}{4}{paragraph*.2}%
+\contentsline {paragraph}{Kein Eingriff in die Produktion.}{4}{paragraph*.3}%
+\contentsline {paragraph}{Vertraulichkeit.}{5}{paragraph*.4}%
+\contentsline {section}{\numberline {6}Zeitplan}{5}{section.6}%
+\contentsline {section}{Literaturverzeichnis}{5}{section.6}%

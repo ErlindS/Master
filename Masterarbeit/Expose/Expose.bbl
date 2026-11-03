@@ -102,12 +102,42 @@
       \verb 10.1145/857076.857078
       \endverb
     \endentry
+    \entry{kleppmann2017ddia}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=34b8d5b1d29d175527a6642f3ec8a76d}{%
+           family={Kleppmann},
+           familyi={K\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Sebastopol, CA}%
+      }
+      \list{publisher}{1}{%
+        {O'Reilly Media}%
+      }
+      \strng{namehash}{34b8d5b1d29d175527a6642f3ec8a76d}
+      \strng{fullhash}{34b8d5b1d29d175527a6642f3ec8a76d}
+      \strng{fullhashraw}{34b8d5b1d29d175527a6642f3ec8a76d}
+      \strng{bibnamehash}{34b8d5b1d29d175527a6642f3ec8a76d}
+      \strng{authorbibnamehash}{34b8d5b1d29d175527a6642f3ec8a76d}
+      \strng{authornamehash}{34b8d5b1d29d175527a6642f3ec8a76d}
+      \strng{authorfullhash}{34b8d5b1d29d175527a6642f3ec8a76d}
+      \strng{authorfullhashraw}{34b8d5b1d29d175527a6642f3ec8a76d}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{{Designing Data-Intensive Applications}}
+      \field{year}{2017}
+    \endentry
     \entry{iec62264}{standard}{}{}
       \list{organization}{1}{%
         {International Electrotechnical Commission}%
       }
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
       \field{labeltitlesource}{title}
       \field{langid}{english}
       \field{title}{{IEC 62264-1:2013 -- Enterprise-control system integration -- Part 1: Models and terminology}}
@@ -147,8 +177,8 @@
       \strng{editornamehash}{b0fb3ebdaac8940dc69f2db43ddc33b1}
       \strng{editorfullhash}{62d0b73c18ba223abd31321e678539e1}
       \strng{editorfullhashraw}{62d0b73c18ba223abd31321e678539e1}
-      \field{sortinit}{4}
-      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
       \field{labelnamesource}{editor}
       \field{labeltitlesource}{title}
       \field{langid}{english}
@@ -166,12 +196,54 @@
       \verb https://docs.oasis-open.org/mqtt/mqtt/v5.0/mqtt-v5.0.html
       \endverb
     \endentry
+    \entry{saltzer1984endtoend}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=a719626d86148a18f531a22673403d68}{%
+           family={Saltzer},
+           familyi={S\bibinitperiod},
+           given={Jerome\bibnamedelima H.},
+           giveni={J\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+        {{hash=937e6a38817bc3064d67544d22e4e47d}{%
+           family={Reed},
+           familyi={R\bibinitperiod},
+           given={David\bibnamedelima P.},
+           giveni={D\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+        {{hash=48081674d4763dfac778c43c5009ec09}{%
+           family={Clark},
+           familyi={C\bibinitperiod},
+           given={David\bibnamedelima D.},
+           giveni={D\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \strng{namehash}{f2ce38c256d1d81ece556085a4d30dd1}
+      \strng{fullhash}{5567198e88cbd5a4fcfd219e18bde31d}
+      \strng{fullhashraw}{5567198e88cbd5a4fcfd219e18bde31d}
+      \strng{bibnamehash}{5567198e88cbd5a4fcfd219e18bde31d}
+      \strng{authorbibnamehash}{5567198e88cbd5a4fcfd219e18bde31d}
+      \strng{authornamehash}{f2ce38c256d1d81ece556085a4d30dd1}
+      \strng{authorfullhash}{5567198e88cbd5a4fcfd219e18bde31d}
+      \strng{authorfullhashraw}{5567198e88cbd5a4fcfd219e18bde31d}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{ACM Transactions on Computer Systems}
+      \field{langid}{english}
+      \field{number}{4}
+      \field{title}{{End-to-End Arguments in System Design}}
+      \field{volume}{2}
+      \field{year}{1984}
+      \field{pages}{277\bibrangedash 288}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1145/357401.357402
+      \endverb
+    \endentry
     \entry{sparkplug3}{manual}{}{}
       \list{organization}{1}{%
         {Eclipse Foundation}%
       }
-      \field{sortinit}{5}
-      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
       \field{labeltitlesource}{title}
       \field{langid}{english}
       \field{title}{{Sparkplug Specification, Version 3.0.0}}
@@ -203,8 +275,8 @@
       \strng{authornamehash}{312ac886938a9b2be4f8eb607567fe4c}
       \strng{authorfullhash}{312ac886938a9b2be4f8eb607567fe4c}
       \strng{authorfullhashraw}{312ac886938a9b2be4f8eb607567fe4c}
-      \field{sortinit}{6}
-      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{langid}{english}
@@ -247,14 +319,25 @@
       \strng{authornamehash}{d009307c8a7d167729aa617586c9fd8a}
       \strng{authorfullhash}{410d77ed28aaaef357bb86242898553b}
       \strng{authorfullhashraw}{410d77ed28aaaef357bb86242898553b}
-      \field{sortinit}{7}
-      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{booktitle}{Proceedings of the 6th International Workshop on Networking Meets Databases (NetDB)}
       \field{langid}{english}
       \field{title}{{Kafka: A Distributed Messaging System for Log Processing}}
       \field{year}{2011}
+    \endentry
+    \entry{iso25010}{standard}{}{}
+      \list{organization}{1}{%
+        {International Organization for Standardization}%
+      }
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{{ISO/IEC 25010:2023 -- Systems and software engineering -- Systems and software Quality Requirements and Evaluation (SQuaRE) -- Product quality model}}
+      \field{year}{2023}
     \endentry
     \entry{mqtt311}{standard}{}{}
       \name{editor}{2}{}{%
@@ -280,8 +363,8 @@
       \strng{editornamehash}{1c72cfe9338477f90293a80bbdc39067}
       \strng{editorfullhash}{1c72cfe9338477f90293a80bbdc39067}
       \strng{editorfullhashraw}{1c72cfe9338477f90293a80bbdc39067}
-      \field{sortinit}{8}
-      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{editor}
       \field{labeltitlesource}{title}
       \field{langid}{english}
@@ -315,8 +398,8 @@
       \strng{authornamehash}{bd4d942d672b1b6dfd97fa9db7d08ddb}
       \strng{authorfullhash}{bd4d942d672b1b6dfd97fa9db7d08ddb}
       \strng{authorfullhashraw}{bd4d942d672b1b6dfd97fa9db7d08ddb}
-      \field{sortinit}{9}
-      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{ACM Computing Surveys}
@@ -445,6 +528,53 @@
       \range{pages}{13}
       \verb{doi}
       \verb 10.1145/214451.214456
+      \endverb
+    \endentry
+    \entry{avizienis2004taxonomy}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=b5cc48326c4baf9bdea81ca0637c0b38}{%
+           family={Avižienis},
+           familyi={A\bibinitperiod},
+           given={Algirdas},
+           giveni={A\bibinitperiod}}}%
+        {{hash=88ac1497be18842438f286d0b41a2c06}{%
+           family={Laprie},
+           familyi={L\bibinitperiod},
+           given={Jean-Claude},
+           giveni={J\bibinithyphendelim C\bibinitperiod}}}%
+        {{hash=76332c6371627eade995a45d9e642654}{%
+           family={Randell},
+           familyi={R\bibinitperiod},
+           given={Brian},
+           giveni={B\bibinitperiod}}}%
+        {{hash=186c616f1893ab90fedbb256a5d7d55d}{%
+           family={Landwehr},
+           familyi={L\bibinitperiod},
+           given={Carl},
+           giveni={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{e7bf45b09be88561d649bdd3634465f7}
+      \strng{fullhash}{323409242df0ca3767020b1bb088de8a}
+      \strng{fullhashraw}{323409242df0ca3767020b1bb088de8a}
+      \strng{bibnamehash}{323409242df0ca3767020b1bb088de8a}
+      \strng{authorbibnamehash}{323409242df0ca3767020b1bb088de8a}
+      \strng{authornamehash}{e7bf45b09be88561d649bdd3634465f7}
+      \strng{authorfullhash}{323409242df0ca3767020b1bb088de8a}
+      \strng{authorfullhashraw}{323409242df0ca3767020b1bb088de8a}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Dependable and Secure Computing}
+      \field{langid}{english}
+      \field{number}{1}
+      \field{title}{{Basic Concepts and Taxonomy of Dependable and Secure Computing}}
+      \field{volume}{1}
+      \field{year}{2004}
+      \field{pages}{11\bibrangedash 33}
+      \range{pages}{23}
+      \verb{doi}
+      \verb 10.1109/TDSC.2004.2
       \endverb
     \endentry
   \enddatalist
