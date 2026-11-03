@@ -1,6 +1,6 @@
 PWD /home/debian/repo/Master/Projektarbeiten/Seminararbeit
 INPUT /home/debian/.miktex/texmfs/data/miktex/data/le/pdftex/pdflatex.fmt
-INPUT /home/debian/repo/Master/Projektarbeiten/Seminararbeit/Seminararbeit.tex
+INPUT Seminararbeit.tex
 OUTPUT Seminararbeit.log
 INPUT /home/debian/.miktex/texmfs/install/tex/latex/base/article.cls
 INPUT /home/debian/.miktex/texmfs/install/tex/latex/base/article.cls
@@ -591,7 +591,6 @@ INPUT /home/debian/.miktex/texmfs/install/fonts/tfm/public/lm/ec-lmr6.tfm
 OUTPUT Seminararbeit.lot
 INPUT /home/debian/.miktex/texmfs/install/fonts/enc/dvips/lm/lm-mathit.enc
 INPUT /home/debian/.miktex/texmfs/install/fonts/tfm/public/lm/ec-lmr10.tfm
-INPUT /home/debian/.miktex/texmfs/install/fonts/tfm/public/lm/ec-lmbx10.tfm
 INPUT /home/debian/.miktex/texmfs/install/fonts/tfm/public/lm/ec-lmr10.tfm
 INPUT /home/debian/.miktex/texmfs/install/fonts/tfm/public/lm/ec-lmbx10.tfm
 INPUT /home/debian/.miktex/texmfs/install/fonts/tfm/public/lm/rm-lmr10.tfm
@@ -600,17 +599,17 @@ INPUT /home/debian/.miktex/texmfs/install/fonts/tfm/public/lm/lmsy10.tfm
 INPUT /home/debian/.miktex/texmfs/install/fonts/tfm/public/amsfonts/symbols/msam10.tfm
 INPUT /home/debian/.miktex/texmfs/install/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT /home/debian/.miktex/texmfs/install/fonts/tfm/adobe/zapfding/pzdr.tfm
-INPUT /home/debian/.miktex/texmfs/install/fonts/enc/dvips/lm/lm-rm.enc
-INPUT /home/debian/.miktex/texmfs/install/fonts/enc/dvips/lm/lm-mathsy.enc
 INPUT /home/debian/.miktex/texmfs/install/tex/latex/lm/t1lmtt.fd
 INPUT /home/debian/.miktex/texmfs/install/tex/latex/lm/t1lmtt.fd
 INPUT /home/debian/.miktex/texmfs/install/tex/latex/lm/t1lmtt.fd
 INPUT /home/debian/.miktex/texmfs/install/fonts/tfm/public/lm/ec-lmtt10.tfm
+INPUT /home/debian/.miktex/texmfs/install/fonts/enc/dvips/lm/lm-rm.enc
+INPUT /home/debian/.miktex/texmfs/install/fonts/enc/dvips/lm/lm-mathsy.enc
 INPUT /home/debian/.miktex/texmfs/install/fonts/tfm/public/lm/ec-lmtt12.tfm
 INPUT /home/debian/.miktex/texmfs/install/fonts/enc/dvips/lm/lm-mathex.enc
 INPUT /home/debian/.miktex/texmfs/install/fonts/tfm/public/lm/ec-lmtt8.tfm
 INPUT /home/debian/.miktex/texmfs/install/fonts/tfm/public/lm/ec-lmtt10.tfm
-INPUT /home/debian/.miktex/texmfs/install/fonts/tfm/adobe/zapfding/pzdr.tfm
+INPUT /home/debian/.miktex/texmfs/install/fonts/tfm/public/lm/ec-lmri8.tfm
 INPUT /home/debian/.miktex/texmfs/install/fonts/tfm/public/lm/ec-lmri12.tfm
 INPUT /home/debian/.miktex/texmfs/install/fonts/tfm/public/lm/ec-lmcsc10.tfm
 INPUT Seminararbeit.aux
@@ -642,6 +641,8 @@ INPUT /home/debian/.miktex/texmfs/install/fonts/type1/public/lm/lmr8.pfb
 INPUT /home/debian/.miktex/texmfs/install/fonts/type1/public/lm/lmr8.pfb
 INPUT /home/debian/.miktex/texmfs/install/fonts/type1/public/lm/lmri12.pfb
 INPUT /home/debian/.miktex/texmfs/install/fonts/type1/public/lm/lmri12.pfb
+INPUT /home/debian/.miktex/texmfs/install/fonts/type1/public/lm/lmri8.pfb
+INPUT /home/debian/.miktex/texmfs/install/fonts/type1/public/lm/lmri8.pfb
 INPUT /home/debian/.miktex/texmfs/install/fonts/type1/public/lm/lmsy10.pfb
 INPUT /home/debian/.miktex/texmfs/install/fonts/type1/public/lm/lmsy10.pfb
 INPUT /home/debian/.miktex/texmfs/install/fonts/type1/public/lm/lmsy6.pfb

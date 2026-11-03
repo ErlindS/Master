@@ -1,5 +1,5 @@
 \babel@toc {ngerman}{}\relax 
-\contentsline {figure}{\numberline {1}{\ignorespaces Mehrere herstellerspezifische Codebasen (links) gegenüber einer SYCL-Codebasis, die über Backends wie CUDA, HIP, Level~Zero oder OpenCL auf verschiedener Hardware läuft (rechts)}}{1}{figure.caption.4}%
+\contentsline {figure}{\numberline {1}{\ignorespaces Getrennte Codebasen je Hersteller (a) und eine SYCL-Codebasis für alle Backends (b)}}{1}{figure.caption.4}%
 \contentsline {figure}{\numberline {2}{\ignorespaces Abhängigkeitsgraph: Die Kopie von $D$ kann parallel zu Kernel~1 laufen}}{5}{figure.caption.7}%
 \contentsline {figure}{\numberline {3}{\ignorespaces Speicherhierarchie von Host und Gerät und die Wege des Datentransfers}}{5}{figure.caption.9}%
 \contentsline {figure}{\numberline {4}{\ignorespaces Gliederung des Indexraums in Work-Groups und Work-Items}}{6}{figure.caption.10}%

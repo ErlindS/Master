@@ -11,4 +11,4 @@
 \contentsline {section}{\numberline {6}Ergebnisse}{7}{section.6}%
 \contentsline {section}{\numberline {7}Diskussion}{8}{section.7}%
 \contentsline {section}{\numberline {8}Schlussfolgerung}{8}{section.8}%
-\contentsline {section}{Literaturverzeichnis}{9}{section*.14}%
+\contentsline {section}{Literaturverzeichnis}{10}{section*.14}%

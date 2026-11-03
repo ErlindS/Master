@@ -1,14 +1,14 @@
 # Fdb version 4
-["biber Seminararbeit"] 1793733641.22016 "Seminararbeit.bcf" "Seminararbeit.bbl" "Seminararbeit" 1793736737.60783 0
-  "Seminararbeit.bcf" 1793736737.46807 109711 1f28b2aab6e0aaa0d1f9ecba0d8027c1 "pdflatex"
+["biber Seminararbeit"] 1793733641.22016 "Seminararbeit.bcf" "Seminararbeit.bbl" "Seminararbeit" 1793739520.77469 0
+  "Seminararbeit.bcf" 1793739520.594 109711 1f28b2aab6e0aaa0d1f9ecba0d8027c1 "pdflatex"
   "sycl.bib" 1793732498.58151 6037 7c9ae992e6aded49d320710a048b2ac5 ""
   (generated)
   "Seminararbeit.bbl"
   "Seminararbeit.blg"
   (rewritten before read)
-["pdflatex"] 1793736736.1445 "/home/debian/repo/Master/Projektarbeiten/Seminararbeit/Seminararbeit.tex" "Seminararbeit.pdf" "Seminararbeit" 1793736737.60808 0
-  "/home/debian/.miktex/texmfs/data/fonts/map/pdftex/pdftex.map" 1793733029.82473 119505 dc048216f299a39dcb530e036d754e30 ""
-  "/home/debian/.miktex/texmfs/data/miktex/data/le/pdftex/pdflatex.fmt" 1790604329.05341 10201911 01f8db5683a2ebaa16a60c5d18d0e04a ""
+["pdflatex"] 1793739519.18635 "Seminararbeit.tex" "Seminararbeit.pdf" "Seminararbeit" 1793739520.77496 0
+  "/home/debian/.miktex/texmfs/data/fonts/map/pdftex/pdftex.map" 1793739364.80195 119505 dc048216f299a39dcb530e036d754e30 ""
+  "/home/debian/.miktex/texmfs/data/miktex/data/le/pdftex/pdflatex.fmt" 1793739365.12995 13398274 73ded0d2fdfafc4531e42925581480b5 ""
   "/home/debian/.miktex/texmfs/install/fonts/enc/dvips/lm/lm-ec.enc" 1790759091.64153 2375 baa924870cfb487815765f9094cf3728 ""
   "/home/debian/.miktex/texmfs/install/fonts/enc/dvips/lm/lm-mathex.enc" 1790759091.64153 3486 c7eadf5dcc57b3b2d11736679f6636ba ""
   "/home/debian/.miktex/texmfs/install/fonts/enc/dvips/lm/lm-mathit.enc" 1790759091.64153 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
@@ -33,6 +33,7 @@
   "/home/debian/.miktex/texmfs/install/fonts/tfm/public/lm/ec-lmr6.tfm" 1790759091.71753 12048 c1068d0f4772be9b0ec447692e1d6d82 ""
   "/home/debian/.miktex/texmfs/install/fonts/tfm/public/lm/ec-lmr8.tfm" 1790759091.71753 12064 a35db870f0b76c338d749c56dc030ef5 ""
   "/home/debian/.miktex/texmfs/install/fonts/tfm/public/lm/ec-lmri12.tfm" 1790759091.71753 17144 271aaf9ebb339934b04110dc5211fba4 ""
+  "/home/debian/.miktex/texmfs/install/fonts/tfm/public/lm/ec-lmri8.tfm" 1790759091.71753 17152 c8240fef851c4991afefdae37a539ee1 ""
   "/home/debian/.miktex/texmfs/install/fonts/tfm/public/lm/ec-lmtt10.tfm" 1790759091.71753 1372 2ef2c2b492b3c4cd7879fe083abbb061 ""
   "/home/debian/.miktex/texmfs/install/fonts/tfm/public/lm/ec-lmtt12.tfm" 1790759091.71753 1368 6a60e6a5e029141041d64d339b87e533 ""
   "/home/debian/.miktex/texmfs/install/fonts/tfm/public/lm/ec-lmtt8.tfm" 1790759091.71753 1380 64228d979098ac090aa3f98d5aa8ad3e ""
@@ -64,6 +65,7 @@
   "/home/debian/.miktex/texmfs/install/fonts/type1/public/lm/lmr6.pfb" 1790759091.79354 123394 d390152bb30feeb496aaaa93299ee9ba ""
   "/home/debian/.miktex/texmfs/install/fonts/type1/public/lm/lmr8.pfb" 1790759091.80154 122174 a7a08406857c9530a0320a2517f60370 ""
   "/home/debian/.miktex/texmfs/install/fonts/type1/public/lm/lmri12.pfb" 1790759091.80554 109265 32320cb6133d4d76bf83e27b5eb4009b ""
+  "/home/debian/.miktex/texmfs/install/fonts/type1/public/lm/lmri8.pfb" 1790759091.81354 109952 3dd76c0c5c680d519bb6d59a066c0826 ""
   "/home/debian/.miktex/texmfs/install/fonts/type1/public/lm/lmsy10.pfb" 1790759091.86554 27863 09ce3735688ffde955e72da27c95b61a ""
   "/home/debian/.miktex/texmfs/install/fonts/type1/public/lm/lmsy6.pfb" 1790759091.86554 28109 6d61305ed3d0eb794ebe36f15cf44aa0 ""
   "/home/debian/.miktex/texmfs/install/fonts/type1/public/lm/lmsy8.pfb" 1790759091.86954 27802 5c876bb2c4040caaf035d60bd74a86bd ""
@@ -290,15 +292,14 @@
   "/home/debian/.miktex/texmfs/install/tex/latex/tools/tabularx.sty" 1790620539.41924 7243 98a9e0737a56460d15d6b41be1ecc3b8 ""
   "/home/debian/.miktex/texmfs/install/tex/latex/url/url.sty" 1790604377.61296 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "/home/debian/.miktex/texmfs/install/tex/latex/xcolor/xcolor.sty" 1790620454.17572 55384 b454dec21c2d9f45ec0b793f0995b992 ""
-  "/home/debian/repo/Master/Projektarbeiten/Seminararbeit/Seminararbeit.tex" 1793736734.11209 31226 eba1d198aeeb5bf22f6b1168a6742526 ""
-  "Seminararbeit.aux" 1793736737.46407 9432 e3b8691b4e1e17ff51f517f110461dcb "pdflatex"
+  "Seminararbeit.aux" 1793739520.59 9241 93c8aade058dd22b81f3076be66f641a "pdflatex"
   "Seminararbeit.bbl" 1793733642.14759 25876 067b4cd07261f91426d39f311020640f "biber Seminararbeit"
-  "Seminararbeit.lof" 1793736737.46807 1190 4abee9982e275724cd887869f7731e32 "pdflatex"
-  "Seminararbeit.lot" 1793736737.46807 465 11f03accb2713889496cd53002490c10 "pdflatex"
-  "Seminararbeit.out" 1793736737.46807 1972 a6d9d15f90ccc1b46ebc4c6c93b0da3f "pdflatex"
-  "Seminararbeit.run.xml" 1793736737.46807 2520 2380c1a1b7fa5887cd81052f66c770cf "pdflatex"
-  "Seminararbeit.tex" 1793736734.11209 31226 eba1d198aeeb5bf22f6b1168a6742526 ""
-  "Seminararbeit.toc" 1793736737.46807 1046 a3b26766a754a6c81c9adbd7f5a7576b "pdflatex"
+  "Seminararbeit.lof" 1793739520.594 1094 ec02c82a0d44ad38619e031a78ca4334 "pdflatex"
+  "Seminararbeit.lot" 1793739520.594 465 11f03accb2713889496cd53002490c10 "pdflatex"
+  "Seminararbeit.out" 1793739520.594 1972 a6d9d15f90ccc1b46ebc4c6c93b0da3f "pdflatex"
+  "Seminararbeit.run.xml" 1793739520.594 2520 2380c1a1b7fa5887cd81052f66c770cf "pdflatex"
+  "Seminararbeit.tex" 1793739517.354 30280 04fac61a8ee57dcde735e63d333fbf4c ""
+  "Seminararbeit.toc" 1793739520.594 1047 c9594152871ace7163aca2332c04eeba "pdflatex"
   (generated)
   "Seminararbeit.aux"
   "Seminararbeit.bcf"

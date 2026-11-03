@@ -21,10 +21,13 @@
 \usetikzlibrary{positioning,patterns,arrows.meta}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
-% Diagrammfarben (geprüft auf Farbsehschwächen), zusätzlich Marker/Strichart
-\definecolor{cblue}{HTML}{2A78D6}
-\definecolor{corange}{HTML}{EB6834}
-\definecolor{ctext}{HTML}{52514E}
+% Einheitlicher, schlichter Stil für alle Abbildungen (schwarz/grau, druckbar)
+\tikzset{
+    every picture/.style={line width=0.4pt, >={Latex[length=1.6mm, width=1.1mm]}},
+    kasten/.style={draw, fill=white, minimum height=0.5cm, inner sep=2.5pt, font=\scriptsize},
+    kastengrau/.style={kasten, fill=gray!18},
+    titel/.style={font=\footnotesize},
+}
 \usepackage[backend=biber,style=ieee,urldate=long]{biblatex}
 \addbibresource{sycl.bib}
 \usepackage{hyperref}
@@ -98,8 +101,8 @@
 % ---------------------------------------------------------------------------
 
 Rechenleistung liegt heutzutage in verschiedenen Formen vor. Neben der CPU
-stehen in fast jedem Rechner GPUs und andere technischen Komponenten zur Verfügung, die datenparallele
-Aufgaben schneller bearbeiten können. Die Software um diese Geräte jeweils anzusprechen kann varrieren, denn jeder Hersteller bringt sein eigenes
+stehen in fast jedem Rechner GPUs und andere technische Komponenten zur Verfügung, die datenparallele
+Aufgaben schneller bearbeiten können. Die Software, um diese Geräte jeweils anzusprechen, kann variieren, denn jeder Hersteller bringt sein eigenes
 Programmiermodell mit. Für die Software ergeben sich daraus drei Probleme:
 
 \begin{enumerate}[nosep]
@@ -108,7 +111,7 @@ Programmiermodell mit. Für die Software ergeben sich daraus drei Probleme:
     Schnittstellen.
     \item \textbf{Mehrfache Codebasen:} Wer mehrere Hersteller unterstützen
     will, pflegt mehrere Implementierungen parallel
-    (Abbildung~\ref{fig:codebasen}, links).
+    (Abbildung~\ref{fig:codebasen}a).
     \item \textbf{Abstraktion gegen Kontrolle:} Offene Alternativen sind
     entweder sehr hardwarenah und aufwendig wie OpenCL
     \cite{stone2010opencl} oder lassen wie OpenMP-Direktiven wenig Kontrolle
@@ -118,30 +121,29 @@ Programmiermodell mit. Für die Software ergeben sich daraus drei Probleme:
 \begin{figure}[htbp]
 \centering
 \begin{tikzpicture}[
-    code/.style={draw, rounded corners=2pt, minimum width=2.3cm, minimum height=0.55cm, font=\scriptsize, fill=gray!10},
-    hw/.style={draw, minimum width=1.25cm, minimum height=0.6cm, align=center, font=\scriptsize, fill=corange!15, draw=corange},
-    >={Stealth[length=1.8mm]}
+    code/.style={kasten, minimum width=2.2cm},
+    hw/.style={kastengrau, minimum width=1.3cm},
 ]
-    \node[font=\footnotesize\bfseries] at (1.9,2.75) {Herstellerspezifisch};
-    \node[code] (c1) at (0.9,2) {CUDA-Code};
-    \node[code] (c2) at (0.9,1) {HIP-Code};
+    \node[titel] at (1.95,1.95) {(a) herstellerspezifisch};
+    \node[code] (c1) at (0.9,1.4) {CUDA-Code};
+    \node[code] (c2) at (0.9,0.7) {HIP-Code};
     \node[code] (c3) at (0.9,0) {OpenMP-Code};
-    \node[hw, minimum width=1.6cm] (h1) at (3.6,2) {NVIDIA-GPU};
-    \node[hw, minimum width=1.6cm] (h2) at (3.6,1) {AMD-GPU};
-    \node[hw, minimum width=1.6cm] (h3) at (3.6,0) {CPU};
+    \node[hw, minimum width=2.05cm] (h1) at (3.75,1.4) {NVIDIA-GPU};
+    \node[hw, minimum width=2.05cm] (h2) at (3.75,0.7) {AMD-GPU};
+    \node[hw, minimum width=2.05cm] (h3) at (3.75,0) {CPU};
     \draw[->] (c1) -- (h1); \draw[->] (c2) -- (h2); \draw[->] (c3) -- (h3);
-    \draw[dashed, gray] (5.1,-0.4) -- (5.1,2.9);
-    \node[font=\footnotesize\bfseries] at (9.3,2.75) {Mit SYCL};
-    \node[code, fill=cblue!15, draw=cblue, minimum width=4.2cm] (s) at (9.3,2) {ein SYCL-Quellcode (C++17)};
-    \node[code, minimum width=4.2cm] (i) at (9.3,1) {DPC++ \;|\; AdaptiveCpp};
-    \node[hw] (g1) at (6.7,0) {NVIDIA};
-    \node[hw] (g2) at (8.43,0) {AMD};
-    \node[hw] (g3) at (10.17,0) {Intel};
-    \node[hw] (g4) at (11.9,0) {CPU};
+    \draw[gray] (5.15,-0.3) -- (5.15,2.1);
+    \node[titel] at (9.3,1.95) {(b) mit SYCL};
+    \node[code, minimum width=4.4cm] (s) at (9.3,1.4) {ein SYCL-Quellcode (C++17)};
+    \node[code, minimum width=4.4cm] (i) at (9.3,0.7) {DPC++ / AdaptiveCpp};
+    \node[hw] (g1) at (6.7,-0.2) {NVIDIA};
+    \node[hw] (g2) at (8.43,-0.2) {AMD};
+    \node[hw] (g3) at (10.17,-0.2) {Intel};
+    \node[hw] (g4) at (11.9,-0.2) {CPU};
     \draw[->] (s) -- (i);
     \foreach \g in {g1,g2,g3,g4} \draw[->] (i.south) -- (\g.north);
 \end{tikzpicture}
-\caption{Mehrere herstellerspezifische Codebasen (links) gegenüber einer SYCL-Codebasis, die über Backends wie CUDA, HIP, Level~Zero oder OpenCL auf verschiedener Hardware läuft (rechts)}
+\caption{Getrennte Codebasen je Hersteller (a) und eine SYCL-Codebasis für alle Backends (b)}
 \label{fig:codebasen}
 \end{figure}
 
@@ -150,8 +152,8 @@ Programmiermodell mit. Für die Software ergeben sich daraus drei Probleme:
 % ---------------------------------------------------------------------------
 
 SYCL ist ein offener Standard der Khronos Group, der diese oben genannten Probleme lösen
-will. Mithilfe eines heterogenen Code im Standard-C++ sollen auf CPUs und GPUs
-verschiedener Hersteller das selbe Programm laufen \cite{khronos2020sycl}. Ob ein Programm
+will. Mithilfe eines heterogenen Codes in Standard-C++ soll auf CPUs und GPUs
+verschiedener Hersteller dasselbe Programm laufen \cite{khronos2020sycl}. Ob ein Programm
 überall läuft, ist jedoch etwas anderes, als ob es überall
 schnell läuft. Diese Arbeit untersucht deshalb:
 
@@ -331,9 +333,8 @@ wartet der Einfachheit halber nach jedem Schritt.
 \begin{figure}[htbp]
 \centering
 \begin{tikzpicture}[
-    node/.style={draw, rounded corners=2pt, minimum height=0.6cm, inner sep=3pt, font=\scriptsize, fill=gray!10},
-    kern/.style={node, fill=cblue!15, draw=cblue},
-    >={Stealth[length=2mm]}
+    node/.style={kasten},
+    kern/.style={kastengrau},
 ]
     \node[node] (ca) at (0,0.5) {Kopie $A$ $\rightarrow$ Gerät};
     \node[node] (cb) at (0,-0.5) {Kopie $B$ $\rightarrow$ Gerät};
@@ -387,25 +388,25 @@ wichtigste Hebel für Leistung \cite{hwu2022pmpp}.
 
 \begin{figure}[htbp]
 \centering
-\begin{tikzpicture}[font=\scriptsize, >={Stealth[length=2mm]}]
-    \draw[fill=gray!8, rounded corners=2pt] (0,0) rectangle (3.2,3.2);
-    \node[anchor=north, font=\footnotesize\bfseries] at (1.6,3.15) {Host (CPU)};
-    \draw[fill=white] (0.3,0.3) rectangle (2.9,2.5);
+\begin{tikzpicture}[font=\scriptsize]
+    \draw (0,0) rectangle (3.2,3.2);
+    \node[anchor=north, titel] at (1.6,3.12) {Host (CPU)};
+    \draw[fill=gray!8] (0.3,0.3) rectangle (2.9,2.5);
     \node[align=center] at (1.6,1.4) {Hauptspeicher\\[2pt]USM host};
-    \draw[fill=gray!8, rounded corners=2pt] (6.0,0) rectangle (12.6,3.2);
-    \node[anchor=north, font=\footnotesize\bfseries] at (9.3,3.15) {Gerät (GPU)};
-    \draw[fill=white] (6.3,0.3) rectangle (12.3,2.5);
+    \draw (6.0,0) rectangle (12.6,3.2);
+    \node[anchor=north, titel] at (9.3,3.12) {Gerät (GPU)};
+    \draw[fill=gray!8] (6.3,0.3) rectangle (12.3,2.5);
     \node[anchor=north] at (9.3,2.48) {globaler Speicher (USM device)};
     \foreach \x in {6.55,9.4} {
-        \draw[fill=cblue!15, draw=cblue] (\x,0.5) rectangle (\x+2.65,1.95);
+        \draw[fill=gray!25] (\x,0.5) rectangle (\x+2.65,1.95);
         \node at (\x+1.325,1.7) {lokaler Speicher};
         \node at (\x+1.325,1.4) {(Work-Group)};
         \foreach \i in {0,1,2,3}
-            \draw[fill=cblue, draw=cblue] (\x+0.3+\i*0.55,0.65) rectangle (\x+0.7+\i*0.55,0.95);
+            \draw[fill=gray!70] (\x+0.3+\i*0.55,0.65) rectangle (\x+0.7+\i*0.55,0.95);
     }
-    \node[below] at (9.3,0) {dunkel: privater Speicher je Work-Item};
-    \draw[<->, thick] (2.9,1.9) -- node[above] {\texttt{memcpy}} (6.3,1.9);
-    \draw[<->, thick, dashed, corange] (2.9,0.9) -- node[below, align=center, text=black] {USM shared:\\automatische Migration} (6.3,0.9);
+    \node[below] at (9.3,0) {dunkle Kästchen: privater Speicher je Work-Item};
+    \draw[<->] (2.9,1.9) -- node[above] {\texttt{memcpy}} (6.3,1.9);
+    \draw[<->, dashed] (2.9,0.9) -- node[below, align=center] {USM shared:\\automatisch} (6.3,0.9);
 \end{tikzpicture}
 \caption{Speicherhierarchie von Host und Gerät und die Wege des Datentransfers}
 \label{fig:speicher}
@@ -425,12 +426,12 @@ den schnellen Kopien.
 \begin{figure}[htbp]
 \centering
 \begin{tikzpicture}[scale=0.75, font=\footnotesize]
-    \fill[cblue!15] (1,2) rectangle (2,3);
+    \fill[gray!20] (1,2) rectangle (2,3);
     \draw[step=0.25, gray!60] (1,2) grid (2,3);
-    \fill[cblue] (1.25,2.5) rectangle (1.5,2.75);
+    \fill[gray!70] (1.25,2.5) rectangle (1.5,2.75);
     \draw[step=1, gray] (0,0) grid (4,4);
-    \draw[thick] (0,0) rectangle (4,4);
-    \draw[thick, cblue] (1,2) rectangle (2,3);
+    \draw (0,0) rectangle (4,4);
+    \draw[line width=1pt] (1,2) rectangle (2,3);
     \draw[->] (4.4,3.4) node[right, align=left] {Work-Group: teilt lokalen Speicher,\\synchronisiert über Barrieren} -- (2.05,2.85);
     \draw[->] (4.4,1.6) node[right, align=left] {Work-Item: eine Ausführung\\des Kernels} -- (1.45,2.55);
     \node[below] at (2,0) {Indexraum der \texttt{nd\_range}};
@@ -459,12 +460,12 @@ entsprechen, sowie fertige Gruppenalgorithmen und Reduktionen
 \begin{figure}[htbp]
 \centering
 \begin{tikzpicture}[
-    sy/.style={draw, rounded corners=2pt, minimum width=2.8cm, minimum height=0.55cm, font=\scriptsize, fill=cblue!15, draw=cblue},
-    hw/.style={draw, rounded corners=2pt, minimum width=3.6cm, minimum height=0.55cm, font=\scriptsize, fill=gray!10},
+    sy/.style={kastengrau, minimum width=2.8cm},
+    hw/.style={kasten, minimum width=3.9cm},
 ]
-    \node[font=\footnotesize\bfseries] at (0,3.0) {SYCL};
-    \node[font=\footnotesize\bfseries] at (4.6,3.0) {NVIDIA-GPU};
-    \node[font=\footnotesize\bfseries] at (9.2,3.0) {CPU};
+    \node[titel] at (0,3.0) {SYCL};
+    \node[titel] at (4.6,3.0) {NVIDIA-GPU};
+    \node[titel] at (9.2,3.0) {CPU};
     \foreach \y/\s/\g/\c in {2.3/nd\_range/Grid (gesamte GPU)/alle Kerne,
                               1.5/Work-Group/Thread-Block auf einem SM/ein Kern (Thread),
                               0.7/Sub-Group/Warp (32 Threads)/SIMD-Vektor,
@@ -472,8 +473,8 @@ entsprechen, sowie fertige Gruppenalgorithmen und Reduktionen
         \node[sy] (s) at (0,\y) {\s};
         \node[hw] (g) at (4.6,\y) {\g};
         \node[hw] (c) at (9.2,\y) {\c};
-        \draw[dashed, gray] (s) -- (g);
-        \draw[dashed, gray] (g) -- (c);
+        \draw[densely dotted] (s) -- (g);
+        \draw[densely dotted] (g) -- (c);
     }
 \end{tikzpicture}
 \caption{Typische Abbildung der SYCL-Ausführungshierarchie auf GPU und CPU}
@@ -506,22 +507,21 @@ auftreten, gesammelt über einen Async Handler, sobald der Host wartet.
 \begin{figure}[htbp]
 \centering
 \begin{tikzpicture}[
-    ev/.style={draw, rounded corners=2pt, minimum height=0.55cm, inner sep=3pt, font=\scriptsize, fill=gray!10, align=center},
-    lz/.style={font=\scriptsize, text=corange, align=center},
-    >={Stealth[length=1.8mm]}
+    ev/.style={kasten, align=center},
+    lz/.style={font=\scriptsize\itshape, align=center},
 ]
-    \node[font=\footnotesize\bfseries, anchor=east] at (-0.2,1.2) {Host};
-    \node[font=\footnotesize\bfseries, anchor=east] at (-0.2,0) {Gerät};
-    \draw[->, gray] (0,1.2) -- (13,1.2) node[right, font=\scriptsize, text=ctext] {Zeit};
+    \node[titel, anchor=east] at (-0.2,1.2) {Host};
+    \node[titel, anchor=east] at (-0.2,0) {Gerät};
+    \draw[->, gray] (0,1.2) -- (13,1.2) node[right, font=\scriptsize] {Zeit};
     \draw[->, gray] (0,0) -- (13,0);
     \node[ev] (s1) at (1.1,1.2) {Kernel 1\\einreichen};
-    \node[ev, fill=cblue!15, draw=cblue, minimum width=3.6cm] (k1) at (4.4,0) {Kernel 1 läuft \;\textcolor{corange}{\ding{55}} Fehler};
-    \node[ev, fill=corange!15, draw=corange] (s2) at (4.4,1.2) {Kernel 2 einreichen\\(ungültige Work-Group)};
+    \node[ev, kastengrau, minimum width=3.6cm] (k1) at (4.4,0) {Kernel 1 läuft: Fehler};
+    \node[ev, kastengrau] (s2) at (4.4,1.2) {Kernel 2 einreichen\\(ungültige Work-Group)};
     \node[ev] (h) at (7.9,1.2) {weitere\\Host-Arbeit};
     \node[ev] (w) at (11.0,1.2) {\texttt{wait\_and\_throw()}\\$\rightarrow$ Async Handler};
-    \draw[->] (s1.south) -- (2.6,0.28);
+    \draw[->] (s1.south) -- (2.6,0.25);
     \node[lz, above=1pt of s2] {synchron: Ausnahme sofort};
-    \draw[->, dashed, corange, thick] (k1.east) to[out=0, in=-90] node[lz, below right, pos=0.45] {asynchron: erst beim Warten} (w.south);
+    \draw[->, dashed] (k1.east) -| node[lz, below, pos=0.3] {asynchron: erst beim Warten} (w.south);
 \end{tikzpicture}
 \caption{Synchrone Fehler werden beim Einreichen geworfen, asynchrone erst, wenn der Host wartet}
 \label{fig:fehler}
@@ -549,8 +549,8 @@ $\mathrm{PP} = 0{,}99$, ergibt sich für $T = 32$.
 \pgfplotsset{
     every axis/.append style={
         font=\scriptsize, width=7cm, height=4.8cm,
-        axis line style={ctext}, tick style={ctext},
-        grid style={gray!20}, ymajorgrids,
+        grid style={gray!25, densely dotted}, ymajorgrids,
+        tick align=outside, tick pos=left,
         legend style={draw=none, fill=none, font=\scriptsize},
         legend cell align=left,
     }
@@ -564,10 +564,10 @@ $\mathrm{PP} = 0{,}99$, ergibt sich für $T = 32$.
     legend pos=north west,
     title={(a) Rechnung und Transfer, GPU},
 ]
-\addplot[cblue, line width=1.2pt, mark=*, mark size=2pt]
+\addplot[black, mark=*, mark size=1.6pt]
     coordinates {(256,0.038) (512,0.263) (1024,1.974) (2048,15.869)};
 \addlegendentry{Rechnung}
-\addplot[corange, line width=1.2pt, dashed, mark=square*, mark size=2pt, mark options={solid}]
+\addplot[black, dashed, mark=square*, mark size=1.6pt, mark options={solid, fill=white}]
     coordinates {(256,0.173) (512,0.405) (1024,1.344) (2048,3.934)};
 \addlegendentry{Transfer}
 \end{axis}
@@ -582,17 +582,18 @@ $\mathrm{PP} = 0{,}99$, ergibt sich für $T = 32$.
     xticklabels={{$T{=}8$\\PP 0{,}59},{$T{=}16$\\PP 0{,}93},{$T{=}32$\\PP 0{,}99},{$T{=}64$\\PP 0}},
     xticklabel style={align=center},
     ylabel={Effizienz in \%},
-    legend style={at={(0.5,1.0)}, anchor=south, legend columns=2},
+    legend style={at={(0.5,1.0)}, anchor=south, legend columns=2, /tikz/every even column/.append style={column sep=6pt}},
+    legend image code/.code={\draw[#1] (0cm,-0.08cm) rectangle (0.3cm,0.1cm);},
     title style={yshift=3ex},
     title={(b) Effizienz je Kachelgröße, $n = 2048$},
 ]
-\addplot[fill=cblue, draw=white, line width=0.8pt]
+\addplot[fill=gray!60, draw=black]
     coordinates {(8,83) (16,100) (32,99) (64,0)};
 \addlegendentry{GPU}
-\addplot[fill=corange, draw=white, line width=0.8pt, postaction={pattern=north east lines, pattern color=white}]
+\addplot[fill=white, draw=black, postaction={pattern=north east lines}]
     coordinates {(8,45) (16,88) (32,100) (64,91)};
 \addlegendentry{CPU}
-\node[font=\scriptsize, text=ctext, rotate=90, anchor=west] at ([xshift=-4.5pt]axis cs:64,2) {startet nicht};
+\node[font=\scriptsize, rotate=90, anchor=west] at ([xshift=-4.5pt]axis cs:64,2) {startet nicht};
 \end{axis}
 \end{tikzpicture}
 \end{minipage}
