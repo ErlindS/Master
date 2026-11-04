@@ -1,4 +1,4 @@
 \babel@toc {ngerman}{}\relax 
 \contentsline {table}{\numberline {1}{\ignorespaces SYCL im Vergleich zu anderen Programmiermodellen (($\text {$\mathsurround \z@ \mathchar "458$}$) = eingeschränkt)}}{2}{table.caption.5}%
 \contentsline {table}{\numberline {2}{\ignorespaces Stufen der Portierung und die dabei eingeführten Konzepte}}{3}{table.caption.6}%
-\contentsline {table}{\numberline {3}{\ignorespaces Die beiden Speichermodelle von SYCL}}{5}{table.caption.8}%
+\contentsline {table}{\numberline {3}{\ignorespaces Laufzeit und Leistung je Stufe (Median aus fünf Läufen, Transfer bei Stufe~1 in der Rechenzeit enthalten)}}{7}{table.caption.11}%

@@ -2391,14 +2391,13 @@
     <bcf:citekey order="14" intorder="1">intel_llvm</bcf:citekey>
     <bcf:citekey order="15" intorder="1">khronos2020sycl</bcf:citekey>
     <bcf:citekey order="16" intorder="1">reinders2023dpcpp</bcf:citekey>
-    <bcf:citekey order="17" intorder="1">reinders2023dpcpp</bcf:citekey>
-    <bcf:citekey order="18" intorder="1">hwu2022pmpp</bcf:citekey>
-    <bcf:citekey order="19" intorder="1">nickolls2008cuda</bcf:citekey>
-    <bcf:citekey order="20" intorder="1">nvidia_cuda_guide</bcf:citekey>
-    <bcf:citekey order="21" intorder="1">khronos2020sycl</bcf:citekey>
-    <bcf:citekey order="22" intorder="1">khronos2020sycl</bcf:citekey>
-    <bcf:citekey order="23" intorder="1">deakin2020sycl</bcf:citekey>
-    <bcf:citekey order="24" intorder="1">pennycook2019implications</bcf:citekey>
+    <bcf:citekey order="17" intorder="1">hwu2022pmpp</bcf:citekey>
+    <bcf:citekey order="18" intorder="1">nickolls2008cuda</bcf:citekey>
+    <bcf:citekey order="19" intorder="1">nvidia_cuda_guide</bcf:citekey>
+    <bcf:citekey order="20" intorder="1">khronos2020sycl</bcf:citekey>
+    <bcf:citekey order="21" intorder="1">pennycook2016metric</bcf:citekey>
+    <bcf:citekey order="22" intorder="1">deakin2020sycl</bcf:citekey>
+    <bcf:citekey order="23" intorder="1">pennycook2019implications</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

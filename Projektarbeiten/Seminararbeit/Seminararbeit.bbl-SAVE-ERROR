@@ -1,0 +1,622 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{nickolls2008cuda}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=4e9afb5dec66f82dce8dd9cd8b94345c}{%
+           family={Nickolls},
+           familyi={N\bibinitperiod},
+           given={John},
+           giveni={J\bibinitperiod}}}%
+        {{hash=26af11cfc02d0f239a5482f14e1413f7}{%
+           family={Buck},
+           familyi={B\bibinitperiod},
+           given={Ian},
+           giveni={I\bibinitperiod}}}%
+        {{hash=b65b1e0d8d79fe6e41bb998ea526b3cd}{%
+           family={Garland},
+           familyi={G\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+        {{hash=892a3e33d25b9ce399f8972f67cf93a6}{%
+           family={Skadron},
+           familyi={S\bibinitperiod},
+           given={Kevin},
+           giveni={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{8cb7d32ec75904edfafaff49577f267c}
+      \strng{fullhash}{45dc0be15277d2e82e366afe22773b3c}
+      \strng{fullhashraw}{45dc0be15277d2e82e366afe22773b3c}
+      \strng{bibnamehash}{45dc0be15277d2e82e366afe22773b3c}
+      \strng{authorbibnamehash}{45dc0be15277d2e82e366afe22773b3c}
+      \strng{authornamehash}{8cb7d32ec75904edfafaff49577f267c}
+      \strng{authorfullhash}{45dc0be15277d2e82e366afe22773b3c}
+      \strng{authorfullhashraw}{45dc0be15277d2e82e366afe22773b3c}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{ACM Queue}
+      \field{langid}{english}
+      \field{number}{2}
+      \field{title}{{Scalable Parallel Programming with CUDA}}
+      \field{volume}{6}
+      \field{year}{2008}
+      \field{pages}{40\bibrangedash 53}
+      \range{pages}{14}
+      \verb{doi}
+      \verb 10.1145/1365490.1365500
+      \endverb
+    \endentry
+    \entry{stone2010opencl}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=2cca89cab87c8bf47572a366ab2a7f33}{%
+           family={Stone},
+           familyi={S\bibinitperiod},
+           given={John\bibnamedelima E.},
+           giveni={J\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+        {{hash=30dac6b3d3cb5f8345e4ae675668be91}{%
+           family={Gohara},
+           familyi={G\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+        {{hash=41f1999c62ce0876a4024c2e535c5cd4}{%
+           family={Shi},
+           familyi={S\bibinitperiod},
+           given={Guochun},
+           giveni={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{49c3897f2ae1076e3efc3c07ee5fa18f}
+      \strng{fullhash}{0372157aa4218f70744c365de8f0bb27}
+      \strng{fullhashraw}{0372157aa4218f70744c365de8f0bb27}
+      \strng{bibnamehash}{0372157aa4218f70744c365de8f0bb27}
+      \strng{authorbibnamehash}{0372157aa4218f70744c365de8f0bb27}
+      \strng{authornamehash}{49c3897f2ae1076e3efc3c07ee5fa18f}
+      \strng{authorfullhash}{0372157aa4218f70744c365de8f0bb27}
+      \strng{authorfullhashraw}{0372157aa4218f70744c365de8f0bb27}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Computing in Science \& Engineering}
+      \field{langid}{english}
+      \field{number}{3}
+      \field{title}{{OpenCL: A Parallel Programming Standard for Heterogeneous Computing Systems}}
+      \field{volume}{12}
+      \field{year}{2010}
+      \field{pages}{66\bibrangedash 73}
+      \range{pages}{8}
+      \verb{doi}
+      \verb 10.1109/MCSE.2010.69
+      \endverb
+    \endentry
+    \entry{khronos2020sycl}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=fade912a79d8e4e9cfde5e687713045e}{%
+           family={{The Khronos SYCL Working Group}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{fade912a79d8e4e9cfde5e687713045e}
+      \strng{fullhash}{fade912a79d8e4e9cfde5e687713045e}
+      \strng{fullhashraw}{fade912a79d8e4e9cfde5e687713045e}
+      \strng{bibnamehash}{fade912a79d8e4e9cfde5e687713045e}
+      \strng{authorbibnamehash}{fade912a79d8e4e9cfde5e687713045e}
+      \strng{authornamehash}{fade912a79d8e4e9cfde5e687713045e}
+      \strng{authorfullhash}{fade912a79d8e4e9cfde5e687713045e}
+      \strng{authorfullhashraw}{fade912a79d8e4e9cfde5e687713045e}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{{SYCL 2020 Specification}}
+      \field{urlday}{30}
+      \field{urlmonth}{10}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://registry.khronos.org/SYCL/specs/sycl-2020/html/sycl-2020.html
+      \endverb
+      \verb{url}
+      \verb https://registry.khronos.org/SYCL/specs/sycl-2020/html/sycl-2020.html
+      \endverb
+    \endentry
+    \entry{intel_llvm}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=b7f0fb90e404efb48f8a85a517dec3c9}{%
+           family={{Intel Corporation}},
+           familyi={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{b7f0fb90e404efb48f8a85a517dec3c9}
+      \strng{fullhash}{b7f0fb90e404efb48f8a85a517dec3c9}
+      \strng{fullhashraw}{b7f0fb90e404efb48f8a85a517dec3c9}
+      \strng{bibnamehash}{b7f0fb90e404efb48f8a85a517dec3c9}
+      \strng{authorbibnamehash}{b7f0fb90e404efb48f8a85a517dec3c9}
+      \strng{authornamehash}{b7f0fb90e404efb48f8a85a517dec3c9}
+      \strng{authorfullhash}{b7f0fb90e404efb48f8a85a517dec3c9}
+      \strng{authorfullhashraw}{b7f0fb90e404efb48f8a85a517dec3c9}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{{Intel LLVM-based Compiler (DPC++) -- Repository}}
+      \field{urlday}{30}
+      \field{urlmonth}{10}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://github.com/intel/llvm
+      \endverb
+      \verb{url}
+      \verb https://github.com/intel/llvm
+      \endverb
+    \endentry
+    \entry{alpay2020hipsycl}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=31d31d626ecff1b2c869a125c2fd9eb9}{%
+           family={Alpay},
+           familyi={A\bibinitperiod},
+           given={Aksel},
+           giveni={A\bibinitperiod}}}%
+        {{hash=2ddc12643f7ca579e04dbb3997db5f7b}{%
+           family={Heuveline},
+           familyi={H\bibinitperiod},
+           given={Vincent},
+           giveni={V\bibinitperiod}}}%
+      }
+      \strng{namehash}{91396d26779424e587439d269e3102d3}
+      \strng{fullhash}{91396d26779424e587439d269e3102d3}
+      \strng{fullhashraw}{91396d26779424e587439d269e3102d3}
+      \strng{bibnamehash}{91396d26779424e587439d269e3102d3}
+      \strng{authorbibnamehash}{91396d26779424e587439d269e3102d3}
+      \strng{authornamehash}{91396d26779424e587439d269e3102d3}
+      \strng{authorfullhash}{91396d26779424e587439d269e3102d3}
+      \strng{authorfullhashraw}{91396d26779424e587439d269e3102d3}
+      \field{extraname}{1}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the International Workshop on OpenCL (IWOCL '20)}
+      \field{langid}{english}
+      \field{title}{{SYCL beyond OpenCL: The Architecture, Current State and Future Direction of hipSYCL}}
+      \field{year}{2020}
+      \verb{doi}
+      \verb 10.1145/3388333.3388658
+      \endverb
+    \endentry
+    \entry{adaptivecpp}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=ddb236590984e73a3c28c632bd32fd43}{%
+           family={{AdaptiveCpp Contributors}},
+           familyi={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{ddb236590984e73a3c28c632bd32fd43}
+      \strng{fullhash}{ddb236590984e73a3c28c632bd32fd43}
+      \strng{fullhashraw}{ddb236590984e73a3c28c632bd32fd43}
+      \strng{bibnamehash}{ddb236590984e73a3c28c632bd32fd43}
+      \strng{authorbibnamehash}{ddb236590984e73a3c28c632bd32fd43}
+      \strng{authornamehash}{ddb236590984e73a3c28c632bd32fd43}
+      \strng{authorfullhash}{ddb236590984e73a3c28c632bd32fd43}
+      \strng{authorfullhashraw}{ddb236590984e73a3c28c632bd32fd43}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{{AdaptiveCpp -- Repository}}
+      \field{urlday}{30}
+      \field{urlmonth}{10}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://github.com/AdaptiveCpp/AdaptiveCpp
+      \endverb
+      \verb{url}
+      \verb https://github.com/AdaptiveCpp/AdaptiveCpp
+      \endverb
+    \endentry
+    \entry{alpay2023sscp}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=31d31d626ecff1b2c869a125c2fd9eb9}{%
+           family={Alpay},
+           familyi={A\bibinitperiod},
+           given={Aksel},
+           giveni={A\bibinitperiod}}}%
+        {{hash=2ddc12643f7ca579e04dbb3997db5f7b}{%
+           family={Heuveline},
+           familyi={H\bibinitperiod},
+           given={Vincent},
+           giveni={V\bibinitperiod}}}%
+      }
+      \strng{namehash}{91396d26779424e587439d269e3102d3}
+      \strng{fullhash}{91396d26779424e587439d269e3102d3}
+      \strng{fullhashraw}{91396d26779424e587439d269e3102d3}
+      \strng{bibnamehash}{91396d26779424e587439d269e3102d3}
+      \strng{authorbibnamehash}{91396d26779424e587439d269e3102d3}
+      \strng{authornamehash}{91396d26779424e587439d269e3102d3}
+      \strng{authorfullhash}{91396d26779424e587439d269e3102d3}
+      \strng{authorfullhashraw}{91396d26779424e587439d269e3102d3}
+      \field{extraname}{2}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the International Workshop on OpenCL (IWOCL '23)}
+      \field{langid}{english}
+      \field{title}{{One Pass to Bind Them: The First Single-Pass SYCL Compiler with Unified Code Representation Across Backends}}
+      \field{year}{2023}
+    \endentry
+    \entry{edwards2014kokkos}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=c9e196b0b31f0313da8b550345fefb5e}{%
+           family={Edwards},
+           familyi={E\bibinitperiod},
+           given={H.\bibnamedelimi Carter},
+           giveni={H\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=fb77589ef70bf6d2a4570eb86b017bb0}{%
+           family={Trott},
+           familyi={T\bibinitperiod},
+           given={Christian\bibnamedelima R.},
+           giveni={C\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=a53efab0ded2f6a2bcff0ac341e47302}{%
+           family={Sunderland},
+           familyi={S\bibinitperiod},
+           given={Daniel},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{dd38bf152ec8eb4b5e71577946374034}
+      \strng{fullhash}{538c40bf3d2b469737c9dafe2a6a1bc1}
+      \strng{fullhashraw}{538c40bf3d2b469737c9dafe2a6a1bc1}
+      \strng{bibnamehash}{538c40bf3d2b469737c9dafe2a6a1bc1}
+      \strng{authorbibnamehash}{538c40bf3d2b469737c9dafe2a6a1bc1}
+      \strng{authornamehash}{dd38bf152ec8eb4b5e71577946374034}
+      \strng{authorfullhash}{538c40bf3d2b469737c9dafe2a6a1bc1}
+      \strng{authorfullhashraw}{538c40bf3d2b469737c9dafe2a6a1bc1}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Parallel and Distributed Computing}
+      \field{langid}{english}
+      \field{number}{12}
+      \field{title}{{Kokkos: Enabling Manycore Performance Portability through Polymorphic Memory Access Patterns}}
+      \field{volume}{74}
+      \field{year}{2014}
+      \field{pages}{3202\bibrangedash 3216}
+      \range{pages}{15}
+      \verb{doi}
+      \verb 10.1016/j.jpdc.2014.07.003
+      \endverb
+    \endentry
+    \entry{beckingsale2019raja}{inproceedings}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{hash=397e95e380bc2f36d1e8f848aab48be1}{%
+           family={Beckingsale},
+           familyi={B\bibinitperiod},
+           given={David\bibnamedelima A.},
+           giveni={D\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \strng{namehash}{ccaeed364afb410b2a0abfeb82efc1da}
+      \strng{fullhash}{ccaeed364afb410b2a0abfeb82efc1da}
+      \strng{fullhashraw}{ccaeed364afb410b2a0abfeb82efc1da}
+      \strng{bibnamehash}{ccaeed364afb410b2a0abfeb82efc1da}
+      \strng{authorbibnamehash}{ccaeed364afb410b2a0abfeb82efc1da}
+      \strng{authornamehash}{ccaeed364afb410b2a0abfeb82efc1da}
+      \strng{authorfullhash}{ccaeed364afb410b2a0abfeb82efc1da}
+      \strng{authorfullhashraw}{ccaeed364afb410b2a0abfeb82efc1da}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2019 IEEE/ACM International Workshop on Performance, Portability and Productivity in HPC (P3HPC)}
+      \field{langid}{english}
+      \field{title}{{RAJA: Portable Performance for Large-Scale Scientific Applications}}
+      \field{year}{2019}
+      \field{pages}{71\bibrangedash 81}
+      \range{pages}{11}
+    \endentry
+    \entry{reinders2023dpcpp}{book}{}{}
+      \name{author}{6}{}{%
+        {{hash=d7e38f2fae1f0d57c7d21db14442f89e}{%
+           family={Reinders},
+           familyi={R\bibinitperiod},
+           given={James},
+           giveni={J\bibinitperiod}}}%
+        {{hash=caed47cb61058649a8a4e422d8959666}{%
+           family={Ashbaugh},
+           familyi={A\bibinitperiod},
+           given={Ben},
+           giveni={B\bibinitperiod}}}%
+        {{hash=029e47fdacf888206127bcff458441c9}{%
+           family={Brodman},
+           familyi={B\bibinitperiod},
+           given={James},
+           giveni={J\bibinitperiod}}}%
+        {{hash=b3e87968a9dccb151ca9702500201b72}{%
+           family={Kinsner},
+           familyi={K\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+        {{hash=72a1e5f292f9d831144b55ff689f0a2e}{%
+           family={Pennycook},
+           familyi={P\bibinitperiod},
+           given={John},
+           giveni={J\bibinitperiod}}}%
+        {{hash=44b6a35e70f95867732f23c911062040}{%
+           family={Tian},
+           familyi={T\bibinitperiod},
+           given={Xinmin},
+           giveni={X\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Berkeley, CA}%
+      }
+      \list{publisher}{1}{%
+        {Apress}%
+      }
+      \strng{namehash}{faeda06bd1bfba78a6d6107af04efc39}
+      \strng{fullhash}{a3c5b6feeb71e09cd4056683dcfeea9f}
+      \strng{fullhashraw}{a3c5b6feeb71e09cd4056683dcfeea9f}
+      \strng{bibnamehash}{a3c5b6feeb71e09cd4056683dcfeea9f}
+      \strng{authorbibnamehash}{a3c5b6feeb71e09cd4056683dcfeea9f}
+      \strng{authornamehash}{faeda06bd1bfba78a6d6107af04efc39}
+      \strng{authorfullhash}{a3c5b6feeb71e09cd4056683dcfeea9f}
+      \strng{authorfullhashraw}{a3c5b6feeb71e09cd4056683dcfeea9f}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{2}
+      \field{isbn}{978-1-4842-9691-2}
+      \field{langid}{english}
+      \field{title}{{Data Parallel C++: Programming Accelerated Systems Using C++ and SYCL}}
+      \field{year}{2023}
+      \verb{doi}
+      \verb 10.1007/978-1-4842-9691-2
+      \endverb
+    \endentry
+    \entry{deakin2020sycl}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=6bf8da3e4fb1a56f8e081a507d05e4f1}{%
+           family={Deakin},
+           familyi={D\bibinitperiod},
+           given={Tom},
+           giveni={T\bibinitperiod}}}%
+        {{hash=e3f38b14b64f22da420f4abea95f782b}{%
+           family={McIntosh-Smith},
+           familyi={M\bibinithyphendelim S\bibinitperiod},
+           given={Simon},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{3d5e3945b9e92ec0f862b3dd6b4836ee}
+      \strng{fullhash}{3d5e3945b9e92ec0f862b3dd6b4836ee}
+      \strng{fullhashraw}{3d5e3945b9e92ec0f862b3dd6b4836ee}
+      \strng{bibnamehash}{3d5e3945b9e92ec0f862b3dd6b4836ee}
+      \strng{authorbibnamehash}{3d5e3945b9e92ec0f862b3dd6b4836ee}
+      \strng{authornamehash}{3d5e3945b9e92ec0f862b3dd6b4836ee}
+      \strng{authorfullhash}{3d5e3945b9e92ec0f862b3dd6b4836ee}
+      \strng{authorfullhashraw}{3d5e3945b9e92ec0f862b3dd6b4836ee}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the International Workshop on OpenCL (IWOCL '20)}
+      \field{langid}{english}
+      \field{title}{{Evaluating the Performance of HPC-Style SYCL Applications}}
+      \field{year}{2020}
+      \verb{doi}
+      \verb 10.1145/3388333.3388643
+      \endverb
+    \endentry
+    \entry{breyer2022svm}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=5a3a82436709ef02fa442a7880ee9c43}{%
+           family={Breyer},
+           familyi={B\bibinitperiod},
+           given={Marcel},
+           giveni={M\bibinitperiod}}}%
+        {{hash=377ccdfcfc1aaed0060d4347ac06b2dc}{%
+           family={Van\bibnamedelima Craen},
+           familyi={V\bibinitperiod\bibinitdelim C\bibinitperiod},
+           given={Alexander},
+           giveni={A\bibinitperiod}}}%
+        {{hash=f54860793c01cc839e2c0fefe8c50097}{%
+           family={Pflüger},
+           familyi={P\bibinitperiod},
+           given={Dirk},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{cd783479d805b780cb3586119c0219f0}
+      \strng{fullhash}{5e339a184ba67de8ca3214eba555f18d}
+      \strng{fullhashraw}{5e339a184ba67de8ca3214eba555f18d}
+      \strng{bibnamehash}{5e339a184ba67de8ca3214eba555f18d}
+      \strng{authorbibnamehash}{5e339a184ba67de8ca3214eba555f18d}
+      \strng{authornamehash}{cd783479d805b780cb3586119c0219f0}
+      \strng{authorfullhash}{5e339a184ba67de8ca3214eba555f18d}
+      \strng{authorfullhashraw}{5e339a184ba67de8ca3214eba555f18d}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the International Workshop on OpenCL (IWOCL '22)}
+      \field{langid}{english}
+      \field{title}{{A Comparison of SYCL, OpenCL, CUDA, and OpenMP for Massively Parallel Support Vector Machine Classification on Multi-Vendor Hardware}}
+      \field{year}{2022}
+    \endentry
+    \entry{pennycook2016metric}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=163657d704a661db96927095df124f72}{%
+           family={Pennycook},
+           familyi={P\bibinitperiod},
+           given={S.\bibnamedelimi John},
+           giveni={S\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=dee82bc2fc10b837c82e0273524a1e79}{%
+           family={Sewall},
+           familyi={S\bibinitperiod},
+           given={Jason\bibnamedelima D.},
+           giveni={J\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+        {{hash=8b5c3eb29d776611e1ae2f5d18f991e2}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Victor\bibnamedelima W.},
+           giveni={V\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+      }
+      \strng{namehash}{3cc1210dc9719e5a6d3810f0b3b395f7}
+      \strng{fullhash}{e4096351544ec23a8d98db514d084679}
+      \strng{fullhashraw}{e4096351544ec23a8d98db514d084679}
+      \strng{bibnamehash}{e4096351544ec23a8d98db514d084679}
+      \strng{authorbibnamehash}{e4096351544ec23a8d98db514d084679}
+      \strng{authornamehash}{3cc1210dc9719e5a6d3810f0b3b395f7}
+      \strng{authorfullhash}{e4096351544ec23a8d98db514d084679}
+      \strng{authorfullhashraw}{e4096351544ec23a8d98db514d084679}
+      \field{extraname}{1}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 7th International Workshop on Performance Modeling, Benchmarking and Simulation of High Performance Computer Systems (PMBS)}
+      \field{eprinttype}{arxiv}
+      \field{langid}{english}
+      \field{title}{{A Metric for Performance Portability}}
+      \field{year}{2016}
+      \verb{eprint}
+      \verb 1611.07409
+      \endverb
+    \endentry
+    \entry{hwu2022pmpp}{book}{}{}
+      \name{author}{3}{}{%
+        {{hash=720f32a4424db239592c327c78132fda}{%
+           family={Hwu},
+           familyi={H\bibinitperiod},
+           given={Wen-mei\bibnamedelima W.},
+           giveni={W\bibinithyphendelim m\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+        {{hash=d3aa2dfd7bd68dcafe8f2c42acff8258}{%
+           family={Kirk},
+           familyi={K\bibinitperiod},
+           given={David\bibnamedelima B.},
+           giveni={D\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+        {{hash=0d45cb398937828ae04c9111a5c0a6fe}{%
+           family={El\bibnamedelima Hajj},
+           familyi={E\bibinitperiod\bibinitdelim H\bibinitperiod},
+           given={Izzat},
+           giveni={I\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Cambridge, MA}%
+      }
+      \list{publisher}{1}{%
+        {Morgan Kaufmann}%
+      }
+      \strng{namehash}{fa4df1d61f61cc9c90c5171a8f4e262a}
+      \strng{fullhash}{32a3f10098b35d6f183da01f8d43c68d}
+      \strng{fullhashraw}{32a3f10098b35d6f183da01f8d43c68d}
+      \strng{bibnamehash}{32a3f10098b35d6f183da01f8d43c68d}
+      \strng{authorbibnamehash}{32a3f10098b35d6f183da01f8d43c68d}
+      \strng{authornamehash}{fa4df1d61f61cc9c90c5171a8f4e262a}
+      \strng{authorfullhash}{32a3f10098b35d6f183da01f8d43c68d}
+      \strng{authorfullhashraw}{32a3f10098b35d6f183da01f8d43c68d}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{4}
+      \field{langid}{english}
+      \field{title}{{Programming Massively Parallel Processors: A Hands-on Approach}}
+      \field{year}{2022}
+    \endentry
+    \entry{nvidia_cuda_guide}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=9ad14fae09b617d96cb4af76c555b394}{%
+           family={{NVIDIA Corporation}},
+           familyi={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{9ad14fae09b617d96cb4af76c555b394}
+      \strng{fullhash}{9ad14fae09b617d96cb4af76c555b394}
+      \strng{fullhashraw}{9ad14fae09b617d96cb4af76c555b394}
+      \strng{bibnamehash}{9ad14fae09b617d96cb4af76c555b394}
+      \strng{authorbibnamehash}{9ad14fae09b617d96cb4af76c555b394}
+      \strng{authornamehash}{9ad14fae09b617d96cb4af76c555b394}
+      \strng{authorfullhash}{9ad14fae09b617d96cb4af76c555b394}
+      \strng{authorfullhashraw}{9ad14fae09b617d96cb4af76c555b394}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{{CUDA C++ Programming Guide}}
+      \field{urlday}{30}
+      \field{urlmonth}{10}
+      \field{urlyear}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://docs.nvidia.com/cuda/cuda-c-programming-guide/
+      \endverb
+      \verb{url}
+      \verb https://docs.nvidia.com/cuda/cuda-c-programming-guide/
+      \endverb
+    \endentry
+    \entry{pennycook2019implications}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=163657d704a661db96927095df124f72}{%
+           family={Pennycook},
+           familyi={P\bibinitperiod},
+           given={S.\bibnamedelimi John},
+           giveni={S\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=dee82bc2fc10b837c82e0273524a1e79}{%
+           family={Sewall},
+           familyi={S\bibinitperiod},
+           given={Jason\bibnamedelima D.},
+           giveni={J\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+        {{hash=8b5c3eb29d776611e1ae2f5d18f991e2}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Victor\bibnamedelima W.},
+           giveni={V\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+      }
+      \strng{namehash}{3cc1210dc9719e5a6d3810f0b3b395f7}
+      \strng{fullhash}{e4096351544ec23a8d98db514d084679}
+      \strng{fullhashraw}{e4096351544ec23a8d98db514d084679}
+      \strng{bibnamehash}{e4096351544ec23a8d98db514d084679}
+      \strng{authorbibnamehash}{e4096351544ec23a8d98db514d084679}
+      \strng{authornamehash}{3cc1210dc9719e5a6d3810f0b3b395f7}
+      \strng{authorfullhash}{e4096351544ec23a8d98db514d084679}
+      \strng{authorfullhashraw}{e4096351544ec23a8d98db514d084679}
+      \field{extraname}{2}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Future Generation Computer Systems}
+      \field{langid}{english}
+      \field{title}{{Implications of a Metric for Performance Portability}}
+      \field{volume}{92}
+      \field{year}{2019}
+      \field{pages}{947\bibrangedash 958}
+      \range{pages}{12}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
