@@ -2,13 +2,13 @@
 \contentsline {section}{\numberline {1}Problemstellung}{1}{section.1}%
 \contentsline {section}{\numberline {2}Forschungsfrage}{1}{section.2}%
 \contentsline {section}{\numberline {3}Stand der Technik}{2}{section.3}%
-\contentsline {section}{\numberline {4}Methode}{2}{section.4}%
-\contentsline {section}{\numberline {5}Untersuchung}{3}{section.5}%
+\contentsline {section}{\numberline {4}Methode}{3}{section.4}%
+\contentsline {section}{\numberline {5}Implementierung}{4}{section.5}%
 \contentsline {subsection}{\numberline {5.1}Stufe 1: Der erste Kernel}{4}{subsection.5.1}%
 \contentsline {subsection}{\numberline {5.2}Stufe 2: Expliziter Gerätespeicher}{4}{subsection.5.2}%
 \contentsline {subsection}{\numberline {5.3}Stufe 3: Kachelung im lokalen Speicher}{5}{subsection.5.3}%
 \contentsline {subsection}{\numberline {5.4}Stufe 4: Gerätewechsel und Kachelgröße}{7}{subsection.5.4}%
-\contentsline {section}{\numberline {6}Ergebnisse}{7}{section.6}%
+\contentsline {section}{\numberline {6}Ergebnisse}{8}{section.6}%
 \contentsline {section}{\numberline {7}Diskussion}{8}{section.7}%
-\contentsline {section}{\numberline {8}Schlussfolgerung}{8}{section.8}%
+\contentsline {section}{\numberline {8}Schlussfolgerung}{9}{section.8}%
 \contentsline {section}{Literaturverzeichnis}{10}{section*.14}%

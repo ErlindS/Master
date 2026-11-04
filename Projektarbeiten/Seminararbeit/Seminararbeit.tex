@@ -221,6 +221,7 @@ sich die Kennzahl von Pennycook, Sewall und Lee etabliert
 welcher Schritt einer Portierung welchen Effekt auf welchem Gerät hat.
 Hier setzt folgende Seminararbeit an.
 
+\newpage
 % ---------------------------------------------------------------------------
 \section{Methode}\label{sec:methode}
 % ---------------------------------------------------------------------------
@@ -254,36 +255,18 @@ sich die Wirkung jedes Schritts getrennt messen, was F2 beantwortet.
 \label{tab:stufen}
 \end{table}
 
-Bewertet werden zwei Ebenen: funktionale Portabilität (das Programm
-läuft unverändert und korrekt auf jedem Gerät) und
-Performance-Portabilität. Letztere wird als harmonischer Mittelwert
-der Effizienzen $e_i$ über die Gerätemenge $H$ berechnet
-\cite{pennycook2016metric}:
-\[
-    \mathrm{PP}(a, p, H) =
-    \begin{cases}
-        |H| \,\big/ \sum_{i \in H} 1/e_i(a,p) & \text{falls $a$ auf allen $i \in H$ läuft,}\\
-        0 & \text{sonst.}
-    \end{cases}
-\]
-Als Effizienz dient die Anwendungseffizienz, also die Leistung relativ zur
-besten gemessenen Variante auf dem jeweiligen Gerät.
-
 Gemessen wird auf einem AMD Ryzen~5 5600X (sechs Kerne, OpenCL-Backend) und
 einer NVIDIA GeForce RTX~5060~Ti (CUDA-Backend) mit DPC++ \cite{intel_llvm}.
 Jede Stufe läuft für $n \in \{256, 512, 1024, 2048\}$; nach einem getrennt
 erfassten ersten Lauf, der die JIT-Kompilierung enthält, folgen fünf
 Messläufe, von denen der Median berichtet wird. Kernel- und Transferzeit
-werden getrennt erfasst, und jedes Ergebnis wird stichprobenartig gegen eine
-Referenzrechnung in doppelter Genauigkeit geprüft.
+werden getrennt erfasst.
 
+\newpage
 % ---------------------------------------------------------------------------
-\section{Untersuchung}\label{sec:untersuchung}
+\section{Implementierung}\label{sec:untersuchung}
 % ---------------------------------------------------------------------------
-
-Die größte Hürde war die Werkzeugkette: Die Standardinstallation von oneAPI
-erkannte nur die CPU, für die NVIDIA-GPU war ein eigener Build von DPC++
-nötig. Alle Programme wurden einmal für beide Geräte zugleich übersetzt.
+Im folgenden werden die jeweils unterschiedlichen Stufen und die neu dazu kommenden Prinzipien erläutert.
 
 \subsection{Stufe 1: Der erste Kernel}\label{sec:stufe1}
 

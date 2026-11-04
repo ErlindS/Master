@@ -1,8 +1,8 @@
 \babel@toc {ngerman}{}\relax 
 \contentsline {figure}{\numberline {1}{\ignorespaces Getrennte Codebasen je Hersteller (a) und eine SYCL-Codebasis für alle Backends (b)}}{1}{figure.caption.4}%
 \contentsline {figure}{\numberline {2}{\ignorespaces Abhängigkeitsgraph: Die Kopie von $D$ kann parallel zu Kernel~1 laufen}}{5}{figure.caption.7}%
-\contentsline {figure}{\numberline {3}{\ignorespaces Speicherhierarchie von Host und Gerät und die Wege des Datentransfers}}{5}{figure.caption.9}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Speicherhierarchie von Host und Gerät und die Wege des Datentransfers}}{6}{figure.caption.9}%
 \contentsline {figure}{\numberline {4}{\ignorespaces Gliederung des Indexraums in Work-Groups und Work-Items}}{6}{figure.caption.10}%
-\contentsline {figure}{\numberline {5}{\ignorespaces Typische Abbildung der SYCL-Ausführungshierarchie auf GPU und CPU}}{6}{figure.caption.11}%
+\contentsline {figure}{\numberline {5}{\ignorespaces Typische Abbildung der SYCL-Ausführungshierarchie auf GPU und CPU}}{7}{figure.caption.11}%
 \contentsline {figure}{\numberline {6}{\ignorespaces Synchrone Fehler werden beim Einreichen geworfen, asynchrone erst, wenn der Host wartet}}{7}{figure.caption.12}%
 \contentsline {figure}{\numberline {7}{\ignorespaces Datentransfer (a) und Leistung je Kachelgröße mit Performance-Portabilität (b)}}{8}{figure.caption.13}%
