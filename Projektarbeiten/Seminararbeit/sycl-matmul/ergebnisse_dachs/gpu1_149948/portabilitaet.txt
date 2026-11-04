@@ -1,0 +1,28 @@
+
+=== n = 1024 ===
+  cuda:gpu     = NVIDIA L40S
+
+  T                     cuda:gpu      PP
+  --------------------------------------
+  8       4019.7 GFLOPS (  85%)    0.85
+  16      4720.6 GFLOPS ( 100%)    1.00
+  32      4265.0 GFLOPS (  90%)    0.90
+  64                 läuft nicht    0.00
+
+  beste Kachel auf cuda:gpu    : T = 16
+  bester fester Wert für alle Geräte: T = 16 (PP = 1.00)
+  pro Gerät abgestimmt:                        PP = 1.00 (per Definition)
+
+=== n = 2048 ===
+  cuda:gpu     = NVIDIA L40S
+
+  T                     cuda:gpu      PP
+  --------------------------------------
+  8       4193.4 GFLOPS (  85%)    0.85
+  16      4933.2 GFLOPS ( 100%)    1.00
+  32      4812.7 GFLOPS (  98%)    0.98
+  64                 läuft nicht    0.00
+
+  beste Kachel auf cuda:gpu    : T = 16
+  bester fester Wert für alle Geräte: T = 16 (PP = 1.00)
+  pro Gerät abgestimmt:                        PP = 1.00 (per Definition)

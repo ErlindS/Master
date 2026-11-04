@@ -1,0 +1,9 @@
+auswahl;geraet;tile;n;median_ms;gflops;status
+cuda:gpu;NVIDIA L40S;8;1024;0.534;4019.74;ok
+cuda:gpu;NVIDIA L40S;16;1024;0.455;4720.61;ok
+cuda:gpu;NVIDIA L40S;32;1024;0.504;4264.96;ok
+cuda:gpu;;64;1024;;;startet_nicht
+cuda:gpu;NVIDIA L40S;8;2048;4.097;4193.37;ok
+cuda:gpu;NVIDIA L40S;16;2048;3.483;4933.18;ok
+cuda:gpu;NVIDIA L40S;32;2048;3.570;4812.74;ok
+cuda:gpu;;64;2048;;;startet_nicht

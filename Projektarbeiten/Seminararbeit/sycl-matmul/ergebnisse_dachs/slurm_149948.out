@@ -1,0 +1,39 @@
+== Knoten
+gpu109
+== CPU
+CPU(s):                                  48
+Model name:                              AMD EPYC 9254 24-Core Processor
+CPU(s) scaling MHz:                      73%
+== GPU
+name, driver_version, memory.total [MiB]
+NVIDIA L40S, 595.58.03, 46068 MiB
+== Compiler
+DPC++ compiler 7.2.0 build based on:
+== SYCL-Geräte
+[cuda:gpu][cuda:0] NVIDIA CUDA BACKEND, NVIDIA L40S 8.9 [CUDA 13.2]
+0_sequentiell;CPU (1 Kern);256;11.438;11.306;0.000;2.97;ja
+1_usm_shared;NVIDIA L40S;256;73.592;0.020;0.000;1687.93;ja
+2_usm_device;NVIDIA L40S;256;56.947;0.021;0.064;1566.43;ja
+3_tiling_T16;NVIDIA L40S;256;36.062;0.021;0.066;1564.16;ja
+0_sequentiell;CPU (1 Kern);512;249.375;239.438;0.000;1.12;ja
+1_usm_shared;NVIDIA L40S;512;2.549;0.098;0.000;2733.11;ja
+2_usm_device;NVIDIA L40S;512;2.240;0.101;0.204;2654.89;ja
+3_tiling_T16;NVIDIA L40S;512;2.054;0.079;0.209;3402.78;ja
+0_sequentiell;CPU (1 Kern);1024;5114.065;6650.237;0.000;0.32;ja
+1_usm_shared;NVIDIA L40S;1024;4.739;0.621;0.000;3459.20;ja
+2_usm_device;NVIDIA L40S;1024;3.019;0.631;0.599;3402.28;ja
+3_tiling_T16;NVIDIA L40S;1024;2.883;0.455;0.732;4720.09;ja
+1_usm_shared;NVIDIA L40S;2048;13.796;5.865;0.000;2929.45;ja
+2_usm_device;NVIDIA L40S;2048;10.058;5.871;2.123;2926.24;ja
+3_tiling_T16;NVIDIA L40S;2048;7.518;3.482;2.145;4933.98;ja
+Fertig: ergebnisse_dachs/gpu1_149948/stufen_gpu.csv
+cuda:gpu;NVIDIA L40S;8;1024;0.534;4019.74;ok
+cuda:gpu;NVIDIA L40S;16;1024;0.455;4720.61;ok
+cuda:gpu;NVIDIA L40S;32;1024;0.504;4264.96;ok
+cuda:gpu;;64;1024;;;startet_nicht
+cuda:gpu;NVIDIA L40S;8;2048;4.097;4193.37;ok
+cuda:gpu;NVIDIA L40S;16;2048;3.483;4933.18;ok
+cuda:gpu;NVIDIA L40S;32;2048;3.570;4812.74;ok
+cuda:gpu;;64;2048;;;startet_nicht
+Fertig: ergebnisse_dachs/gpu1_149948/kacheln.csv
+Fertig: ergebnisse_dachs/gpu1_149948

@@ -127,21 +127,20 @@ Programmiermodell mit. Für die Software ergeben sich daraus drei Probleme:
     über Speicher und Ausführung.
 \end{enumerate}
 
+% ---------------------------------------------------------------------------
+\section{Forschungsfrage}\label{sec:frage}
+% ---------------------------------------------------------------------------
+
+SYCL ist ein offener Standard der Khronos Group, der diese Probleme lösen
+will. Mit einem einzigen Quellcode in Standard-C++ soll auf CPUs und GPUs
+verschiedener Hersteller dasselbe Programm laufen \cite{khronos2020sycl}. 
+
 \begin{figure}[htbp]
 \centering
 \begin{tikzpicture}[
     code/.style={kasten, minimum width=2.2cm},
     hw/.style={kastengrau, minimum width=1.3cm},
 ]
-    \node[titel] at (1.95,1.95) {(a) herstellerspezifisch};
-    \node[code] (c1) at (0.9,1.4) {CUDA-Code};
-    \node[code] (c2) at (0.9,0.7) {HIP-Code};
-    \node[code] (c3) at (0.9,0) {OpenMP-Code};
-    \node[hw, minimum width=2.05cm] (h1) at (3.75,1.4) {NVIDIA-GPU};
-    \node[hw, minimum width=2.05cm] (h2) at (3.75,0.7) {AMD-GPU};
-    \node[hw, minimum width=2.05cm] (h3) at (3.75,0) {CPU};
-    \draw[->] (c1) -- (h1); \draw[->] (c2) -- (h2); \draw[->] (c3) -- (h3);
-    \draw[gray] (5.15,-0.3) -- (5.15,2.1);
     \node[titel] at (9.3,1.95) {(b) mit SYCL};
     \node[code, minimum width=4.4cm] (s) at (9.3,1.4) {ein SYCL-Quellcode (C++17)};
     \node[code, minimum width=4.4cm] (i) at (9.3,0.7) {DPC++ / AdaptiveCpp};
@@ -156,14 +155,8 @@ Programmiermodell mit. Für die Software ergeben sich daraus drei Probleme:
 \label{fig:codebasen}
 \end{figure}
 
-% ---------------------------------------------------------------------------
-\section{Forschungsfrage}\label{sec:frage}
-% ---------------------------------------------------------------------------
 
-SYCL ist ein offener Standard der Khronos Group, der diese Probleme lösen
-will. Mit einem einzigen Quellcode in Standard-C++ soll auf CPUs und GPUs
-verschiedener Hersteller dasselbe Programm laufen \cite{khronos2020sycl}. Ob ein Programm
-überall läuft, ist jedoch etwas anderes, als ob es überall
+Ob ein Programm überall läuft, ist jedoch etwas anderes, als ob es überall
 schnell läuft. Diese Arbeit untersucht deshalb:
 
 \begin{quote}
@@ -264,8 +257,10 @@ sich die Wirkung jedes Schritts getrennt messen, was F2 beantwortet.
 \label{tab:stufen}
 \end{table}
 
-Gemessen wird auf einem AMD Ryzen~5 5600X (sechs Kerne, OpenCL-Backend) und
-einer NVIDIA GeForce RTX~5060~Ti (CUDA-Backend) mit DPC++ \cite{intel_llvm}.
+Gemessen wird mit DPC++ \cite{intel_llvm} auf drei Geräten: einem AMD
+Ryzen~5 5600X (sechs Kerne, OpenCL-Backend), einer NVIDIA GeForce
+RTX~5060~Ti und einer NVIDIA L40S auf dem DACHS-Cluster der Hochschule
+Esslingen (beide CUDA-Backend).
 Jede Stufe läuft für $n \in \{256, 512, 1024, 2048\}$; nach einem getrennt
 erfassten ersten Lauf, der die JIT-Kompilierung enthält, folgen fünf
 Messläufe, von denen der Median berichtet wird. Kernel- und Transferzeit
@@ -503,40 +498,42 @@ Work-Group-Größe zur Laufzeit abzufragen \cite{khronos2020sycl}.
 \section{Ergebnisse}\label{sec:ergebnisse}
 % ---------------------------------------------------------------------------
 
-Alle Stufen liefen ohne Codeänderung und mit korrektem Ergebnis auf beiden
-Geräten. Tabelle~\ref{tab:stufenmessung} zeigt die Wirkung jeder Stufe auf der
-GPU. Schon Stufe~1 ist bei $n = 1024$ rund 2300-mal schneller als das
-sequentielle Ausgangsprogramm auf einem CPU-Kern; dieser Vergleich misst
-allerdings Parallelisierung und Gerätewechsel zugleich. Stufe~2 ändert die
-Rechenzeit nicht, macht aber den Transfer sichtbar, der bei $n = 2048$ etwa
-ein Viertel der Rechenzeit ausmacht. Die Kachelung in Stufe~3 steigert die
-Leistung um rund 30\,\%. Der erste Lauf mit JIT-Kompilierung dauert bis zu
-2,2-mal so lang wie die folgenden.
+Alle Stufen liefen ohne Codeänderung und mit korrektem Ergebnis auf allen
+drei Geräten. Tabelle~\ref{tab:stufenmessung} zeigt die Wirkung jeder Stufe
+auf den beiden GPUs. Schon Stufe~1 ist bei $n = 1024$ rund 2300-mal (RTX)
+bzw.\ 10\,700-mal (L40S) schneller als das sequentielle Ausgangsprogramm auf
+einem CPU-Kern; dieser Vergleich misst allerdings Parallelisierung und
+Gerätewechsel zugleich. Stufe~2 ändert die Rechenzeit nicht, macht aber den
+Transfer sichtbar, der bei $n = 2048$ ein Viertel (RTX) bis ein Drittel
+(L40S) der Rechenzeit ausmacht. Die Kachelung in Stufe~3 steigert die
+Leistung um 31\,\% auf der RTX, auf der L40S sogar um 69\,\%. Der erste Lauf
+mit JIT-Kompilierung dauert bei $n = 1024$ zwei- bis achtmal so lang wie die
+folgenden.
 
 \begin{table}[htbp]
 \centering
 \small
-\begin{tabular}{@{}clrrrrr@{}}
+\begin{tabular}{@{}lrrrr@{}}
 \toprule
- & & \multicolumn{3}{c}{\textbf{Zeit in ms ($n = 1024$)}} & \multicolumn{2}{c}{\textbf{GFLOPS}} \\
-\cmidrule(lr){3-5}\cmidrule(l){6-7}
-\textbf{Stufe} & \textbf{Gerät} & \textbf{erster Lauf} & \textbf{Median} & \textbf{Transfer} & $n = 1024$ & $n = 2048$ \\
+ & \multicolumn{2}{c}{\textbf{RTX 5060 Ti}} & \multicolumn{2}{c}{\textbf{L40S}} \\
+\cmidrule(lr){2-3}\cmidrule(l){4-5}
+\textbf{Stufe} & $n = 1024$ & $n = 2048$ & $n = 1024$ & $n = 2048$ \\
 \midrule
-0 & CPU, ein Kern & 4472,7 & 4484,0 & -- & 0,5 & -- \\
-1 & GPU & 4,3 & 1,9 & -- & 1105 & 1099 \\
-2 & GPU & 3,6 & 2,0 & 1,3 & 1088 & 1083 \\
-3 ($T = 16$) & GPU & 3,4 & 1,5 & 1,4 & 1395 & 1418 \\
+0 (CPU, ein Kern)  & 0,5  & --   & 0,3  & --   \\
+1 (USM shared)     & 1105 & 1099 & 3459 & 2929 \\
+2 (USM device)     & 1088 & 1083 & 3402 & 2926 \\
+3 (Kachelung, $T = 16$) & 1395 & 1418 & 4720 & 4934 \\
 \bottomrule
 \end{tabular}
-\caption{Laufzeit und Leistung je Stufe (Median aus fünf Läufen, Transfer bei Stufe~1 in der Rechenzeit enthalten)}
+\caption{Leistung je Stufe in GFLOPS (Median aus fünf Läufen; Stufe~0 auf einem Kern der jeweiligen Host-CPU)}
 \label{tab:stufenmessung}
 \end{table}
 
-Abbildung~\ref{fig:ergebnisse} vergleicht Transfer und Rechnung sowie beide
-Geräte. Bei kleinen Matrizen kostet der Datentransfer zur GPU mehr als die Rechnung;
+Abbildung~\ref{fig:ergebnisse} vergleicht Transfer und Rechnung sowie alle
+drei Geräte. Bei kleinen Matrizen kostet der Datentransfer zur GPU mehr als die Rechnung;
 erst ab $n = 1024$ überwiegt die Rechenzeit (a). Die beste Kachelgröße ist
-geräteabhängig: Auf der GPU ist $T = 16$ am schnellsten, auf der CPU
-$T = 32$. Bei $T = 64$ startet der Kernel auf der GPU nicht, sodass die
+geräteabhängig: Auf beiden GPUs ist $T = 16$ am schnellsten, auf der CPU
+$T = 32$. Bei $T = 64$ startet der Kernel auf den GPUs nicht, sodass die
 Performance-Portabilität auf null fällt (b). Diese ist nach Pennycook et al.\
 \cite{pennycook2016metric} der harmonische Mittelwert der Effizienzen $e_i$
 über die Gerätemenge $H$ und null, sobald ein Gerät nicht unterstützt wird:
@@ -565,7 +562,7 @@ $T = 32$.
     xtick={256,512,1024,2048}, xticklabels={256,512,1024,2048},
     xlabel={Matrixgröße $n$}, ylabel={Zeit in ms},
     legend pos=north west,
-    title={(a) Rechnung und Transfer, GPU},
+    title={(a) Rechnung und Transfer, RTX 5060 Ti},
 ]
 \addplot[black, mark=*, mark size=1.6pt]
     coordinates {(256,0.038) (512,0.263) (1024,1.974) (2048,15.869)};
@@ -579,24 +576,27 @@ $T = 32$.
 \begin{minipage}[t]{0.49\textwidth}\centering
 \begin{tikzpicture}
 \begin{axis}[
-    ybar, bar width=7pt, enlarge x limits=0.18,
+    ybar, bar width=5pt, enlarge x limits=0.18,
     ymin=0, ymax=115, ytick={0,25,50,75,100},
     symbolic x coords={8,16,32,64}, xtick=data,
-    xticklabels={{$T{=}8$\\PP 0{,}59},{$T{=}16$\\PP 0{,}93},{$T{=}32$\\PP 0{,}99},{$T{=}64$\\PP 0}},
+    xticklabels={{$T{=}8$\\PP 0{,}65},{$T{=}16$\\PP 0{,}96},{$T{=}32$\\PP 0{,}99},{$T{=}64$\\PP 0}},
     xticklabel style={align=center},
     ylabel={Effizienz in \%},
-    legend style={at={(0.5,1.0)}, anchor=south, legend columns=2, /tikz/every even column/.append style={column sep=6pt}},
+    legend style={at={(0.5,1.0)}, anchor=south, legend columns=3, /tikz/every even column/.append style={column sep=6pt}},
     legend image code/.code={\draw[#1] (0cm,-0.08cm) rectangle (0.3cm,0.1cm);},
     title style={yshift=3ex},
     title={(b) Effizienz je Kachelgröße, $n = 2048$},
 ]
 \addplot[fill=gray!60, draw=black]
     coordinates {(8,83) (16,100) (32,99) (64,0)};
-\addlegendentry{GPU}
+\addlegendentry{RTX}
+\addplot[fill=black, draw=black]
+    coordinates {(8,85) (16,100) (32,98) (64,0)};
+\addlegendentry{L40S}
 \addplot[fill=white, draw=black, postaction={pattern=north east lines}]
     coordinates {(8,45) (16,88) (32,100) (64,91)};
 \addlegendentry{CPU}
-\node[font=\scriptsize, rotate=90, anchor=west] at ([xshift=-4.5pt]axis cs:64,2) {startet nicht};
+\node[font=\scriptsize, rotate=90, anchor=west] at ([xshift=-2.5pt]axis cs:64,2) {GPUs: startet nicht};
 \end{axis}
 \end{tikzpicture}
 \end{minipage}
@@ -623,12 +623,15 @@ abstrahiert die Schnittstelle, nicht die Hardware: Parameter wie die
 Work-Group-Größe bleiben gerätespezifisch, und ein für die CPU günstiger Wert
 kann auf der GPU sogar zum Abbruch führen. Dies deckt sich mit der in
 früheren Studien beobachteten Abhängigkeit von Implementierung und
-Parametrierung \cite{deakin2020sycl}. Den größten Gewinn bringt bereits der
+Parametrierung \cite{deakin2020sycl}. Selbst zwischen zwei NVIDIA-GPUs
+unterscheidet sich der Nutzen der Kachelung deutlich (31\,\% gegenüber
+69\,\%), auch wenn die beste Kachelgröße übereinstimmt. Den größten Gewinn bringt bereits der
 erste, unveränderte Kernel; die hardwarenahe Kachelung lohnt sich zusätzlich,
 bindet das Programm aber an gerätespezifische Parameter.
 
 Die Aussagekraft der Fallstudie ist begrenzt: Untersucht wurden ein
-einzelner Kernel, zwei Geräte und eine Implementierung. Die PP-Werte gelten
+einzelner Kernel, drei Geräte mit GPUs nur eines Herstellers und eine
+Implementierung. Die PP-Werte gelten
 nur für diese Gerätemenge \cite{pennycook2019implications}, und ein
 Vergleich mit nativem CUDA-Code oder optimierten Bibliotheken fehlt.
 
@@ -639,8 +642,9 @@ Vergleich mit nativem CUDA-Code oder optimierten Bibliotheken fehlt.
 SYCL erfüllt sein Versprechen \enquote{einmal schreiben, überall ausführen}
 für die Korrektheit: Ein schrittweise portiertes Programm lief in allen
 Stufen unverändert auf CPU und GPU. Die gerätespezifische Abstimmung für hohe Leistung nimmt SYCL dem
-Programmierer jedoch nicht ab. Folgearbeiten sollten weitere Geräte und eine
-zweite Implementierung wie AdaptiveCpp einbeziehen.
+Programmierer jedoch nicht ab. Folgearbeiten sollten GPUs weiterer Hersteller,
+etwa die AMD MI300A des DACHS-Clusters, und eine zweite Implementierung wie
+AdaptiveCpp einbeziehen.
 
 \newpage
 \printbibliography[heading=bibintoc, title={Literaturverzeichnis}]

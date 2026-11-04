@@ -1,0 +1,13 @@
+== Knoten
+gpu109
+== CPU
+CPU(s):                                  48
+Model name:                              AMD EPYC 9254 24-Core Processor
+CPU(s) scaling MHz:                      73%
+== GPU
+name, driver_version, memory.total [MiB]
+NVIDIA L40S, 595.58.03, 46068 MiB
+== Compiler
+DPC++ compiler 7.2.0 build based on:
+== SYCL-Geräte
+[cuda:gpu][cuda:0] NVIDIA CUDA BACKEND, NVIDIA L40S 8.9 [CUDA 13.2]
