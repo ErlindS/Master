@@ -1,7 +1,7 @@
 \babel@toc {ngerman}{}\relax 
-\contentsline {figure}{\numberline {1}{\ignorespaces Getrennte Codebasen je Hersteller (a) und eine SYCL-Codebasis für alle Backends (b)}}{1}{figure.caption.4}%
-\contentsline {figure}{\numberline {2}{\ignorespaces Stufe~1: Die Queue reicht einen Kernel ein, der für jedes Element von $C$ als eigenes Work-Item läuft}}{4}{figure.caption.7}%
-\contentsline {figure}{\numberline {3}{\ignorespaces Stufe~2: Pfeile zeigen, worauf ein Auftrag wartet; die Kopie von $D$ läuft parallel zu Kernel~1}}{5}{figure.caption.8}%
-\contentsline {figure}{\numberline {4}{\ignorespaces Stufe~3: Eine Work-Group lädt die dunklen Kacheln in den lokalen Speicher}}{6}{figure.caption.9}%
-\contentsline {figure}{\numberline {5}{\ignorespaces Stufe~4: Abbildung der SYCL-Ausführungshierarchie auf GPU und CPU}}{6}{figure.caption.10}%
-\contentsline {figure}{\numberline {6}{\ignorespaces Datentransfer (a) und Leistung je Kachelgröße mit Performance-Portabilität (b)}}{8}{figure.caption.12}%
+\contentsline {figure}{\numberline {1}{\ignorespaces SYCL-Codebasis für alle Backends}}{1}{figure.caption.4}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Aufbau in Stufe~1. Neu sind Queue, Kernel, Work-Items und USM shared (dick umrandet)}}{4}{figure.caption.7}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Aufbau in Stufe~2. Neu sind der getrennte Gerätespeicher und explizite Kopien, deren Abhängigkeiten als Pfeile in der Queue stehen. Kopie $A$ und Kopie $B$ hängen nicht voneinander ab und können gleichzeitig laufen}}{5}{figure.caption.8}%
+\contentsline {figure}{\numberline {4}{\ignorespaces Aufbau in Stufe~3. Neu sind die Command Group sowie Work-Groups mit eigenem lokalem Speicher und Barriere}}{5}{figure.caption.9}%
+\contentsline {figure}{\numberline {5}{\ignorespaces Abbildung der SYCL-Ausführungshierarchie auf GPU und CPU}}{6}{figure.caption.10}%
+\contentsline {figure}{\numberline {6}{\ignorespaces Effizienz und Performance-Portabilität je Kachelgröße bei $n = 2048$}}{8}{figure.caption.13}%

@@ -1,0 +1,7 @@
+stufe;geraet;n;erster_lauf_ms;median_ms;transfer_ms;gflops;korrekt
+1_usm_shared;AMD Ryzen 5 5600X 6-Core Processor             ;1024;194.708;47.606;0.000;45.11;ja
+2_usm_device;AMD Ryzen 5 5600X 6-Core Processor             ;1024;171.435;48.716;0.904;44.08;ja
+3_tiling_T16;AMD Ryzen 5 5600X 6-Core Processor             ;1024;127.545;13.989;1.054;153.51;ja
+1_usm_shared;AMD Ryzen 5 5600X 6-Core Processor             ;2048;518.487;401.310;0.000;42.81;ja
+2_usm_device;AMD Ryzen 5 5600X 6-Core Processor             ;2048;526.630;402.017;5.683;42.73;ja
+3_tiling_T16;AMD Ryzen 5 5600X 6-Core Processor             ;2048;235.343;114.436;5.743;150.13;ja
