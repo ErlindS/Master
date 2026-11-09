@@ -1,15 +1,15 @@
-[0] Config.pm:329> INFO - This is Biber 2.22
-[0] Config.pm:332> INFO - Logfile is 'Seminararbeit.blg'
-[51] biber:342> INFO - === Wed Nov  4, 2026, 17:01:53
-[62] Biber.pm:421> INFO - Reading 'Seminararbeit.bcf'
-[107] Biber.pm:1002> INFO - Found 16 citekeys in bib section 0
-[115] Biber.pm:4487> INFO - Processing section 0
-[121] Biber.pm:4680> INFO - Looking for bibtex file 'sycl.bib' for section 0
-[122] bibtex.pm:1713> INFO - LaTeX decoding ...
-[131] bibtex.pm:1519> INFO - Found BibTeX data source 'sycl.bib'
-[227] UCollate.pm:68> INFO - Overriding locale 'de-DE' defaults 'variable = shifted' with 'variable = non-ignorable'
-[227] UCollate.pm:68> INFO - Overriding locale 'de-DE' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[227] Biber.pm:4307> INFO - Sorting list 'none/global//global/global/global' of type 'entry' with template 'none' and locale 'de-DE'
-[227] Biber.pm:4313> INFO - No sort tailoring available for locale 'de-DE'
-[236] bbl.pm:676> INFO - Writing 'Seminararbeit.bbl' with encoding 'UTF-8'
-[241] bbl.pm:779> INFO - Output to Seminararbeit.bbl
+[0] Config.pm:308> INFO - This is Biber 2.20
+[0] Config.pm:311> INFO - Logfile is 'Seminararbeit.blg'
+[78] biber:340> INFO - === Mon Nov  9, 2026, 12:30:25
+[95] Biber.pm:420> INFO - Reading 'Seminararbeit.bcf'
+[156] Biber.pm:994> INFO - Found 16 citekeys in bib section 0
+[172] Biber.pm:4463> INFO - Processing section 0
+[182] Biber.pm:4654> INFO - Looking for bibtex file 'sycl.bib' for section 0
+[184] bibtex.pm:1713> INFO - LaTeX decoding ...
+[197] bibtex.pm:1519> INFO - Found BibTeX data source 'sycl.bib'
+[340] UCollate.pm:68> INFO - Overriding locale 'de-DE' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[341] UCollate.pm:68> INFO - Overriding locale 'de-DE' defaults 'variable = shifted' with 'variable = non-ignorable'
+[341] Biber.pm:4283> INFO - Sorting list 'none/global//global/global/global' of type 'entry' with template 'none' and locale 'de-DE'
+[341] Biber.pm:4289> INFO - No sort tailoring available for locale 'de-DE'
+[354] bbl.pm:676> INFO - Writing 'Seminararbeit.bbl' with encoding 'UTF-8'
+[360] bbl.pm:779> INFO - Output to Seminararbeit.bbl

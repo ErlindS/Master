@@ -1,7 +1,14 @@
 \babel@toc {ngerman}{}\relax 
 \contentsline {figure}{\numberline {1}{\ignorespaces SYCL-Codebasis für alle Backends}}{1}{figure.caption.4}%
-\contentsline {figure}{\numberline {2}{\ignorespaces Aufbau in Stufe~1. Neu sind Queue, Kernel, Work-Items und USM shared (dick umrandet)}}{4}{figure.caption.7}%
-\contentsline {figure}{\numberline {3}{\ignorespaces Aufbau in Stufe~2. Neu sind der getrennte Gerätespeicher und explizite Kopien, deren Abhängigkeiten als Pfeile in der Queue stehen. Kopie $A$ und Kopie $B$ hängen nicht voneinander ab und können gleichzeitig laufen}}{5}{figure.caption.8}%
-\contentsline {figure}{\numberline {4}{\ignorespaces Aufbau in Stufe~3. Neu sind die Command Group sowie Work-Groups mit eigenem lokalem Speicher und Barriere}}{5}{figure.caption.9}%
-\contentsline {figure}{\numberline {5}{\ignorespaces Abbildung der SYCL-Ausführungshierarchie auf GPU und CPU}}{6}{figure.caption.10}%
-\contentsline {figure}{\numberline {6}{\ignorespaces Effizienz und Performance-Portabilität je Kachelgröße bei $n = 2048$}}{8}{figure.caption.13}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Grundaufbau (Stufe~1). Der Host reicht einen Kernel über eine Queue ein, das Gerät führt ihn als viele Work-Items aus}}{4}{figure.caption.7}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Speichermodell, aufbauend auf Stufe~1. Neu sind Host- und Gerätespeicher mit den Matrizen $A$, $B$, $C$. Bei USM device kopiert der Host die Daten ausdrücklich (durchgezogen), bei USM shared verschiebt die Laufzeit sie automatisch (gestrichelt). Stufe~1 verwendet USM shared}}{5}{figure.caption.8}%
+\contentsline {figure}{\numberline {4}{\ignorespaces Speicherebenen in SYCL, aufbauend auf Abbildung~\ref {fig:usm}. Neu sind die Ebenen auf dem Gerät. Nach unten werden sie kleiner, schneller und von weniger Work-Items geteilt}}{6}{figure.caption.10}%
+\contentsline {figure}{\numberline {5}{\ignorespaces Getrennter Speicher und Abhängigkeiten (Stufe~2). Neu sind der Gerätespeicher und explizite Kopien, deren Abhängigkeiten als Pfeile in der Queue stehen. Kopie $A$ und Kopie $B$ hängen nicht voneinander ab und können gleichzeitig laufen}}{7}{figure.caption.11}%
+\contentsline {figure}{\numberline {6}{\ignorespaces Eine nd\_range mit globalem Bereich $8 \times 8$ und lokalem Bereich $4 \times 4$. Dick umrandet sind die vier Work-Groups}}{7}{figure.caption.12}%
+\contentsline {figure}{\numberline {7}{\ignorespaces Hierarchische Ausführung (Stufe~3). Neu sind die Command Group sowie Work-Groups mit eigenem lokalem Speicher und Barriere}}{8}{figure.caption.13}%
+\contentsline {figure}{\numberline {8}{\ignorespaces Abbildung der SYCL-Ausführungshierarchie auf GPU und CPU}}{9}{figure.caption.14}%
+\contentsline {figure}{\numberline {9}{\ignorespaces Übersetzung und Ausführung. Der Gerätecode liegt als Zwischendarstellung vor und wird erst beim ersten Start für das gewählte Gerät übersetzt}}{9}{figure.caption.15}%
+\contentsline {figure}{\numberline {10}{\ignorespaces Synchrone und asynchrone Fehler. Der synchrone Fehler wird beim Einreichen gemeldet, der asynchrone erst, wenn der Host auf das Gerät wartet}}{10}{figure.caption.16}%
+\contentsline {figure}{\numberline {11}{\ignorespaces Zuordnung der Work-Items zu den Elementen von $C$ in Stufe~1}}{13}{figure.caption.19}%
+\contentsline {figure}{\numberline {12}{\ignorespaces Kachelung in Stufe~3. Eine Work-Group durchläuft die Kachelzeile von $A$ und die Kachelspalte von $B$ in $n/T$ Schritten}}{14}{figure.caption.20}%
+\contentsline {figure}{\numberline {13}{\ignorespaces Effizienz und Performance-Portabilität je Kachelgröße bei $n = 2048$}}{17}{figure.caption.23}%

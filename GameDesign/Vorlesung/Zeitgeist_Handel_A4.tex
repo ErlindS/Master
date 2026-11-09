@@ -1,0 +1,159 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- Pakete (Stil wie Zeitgeist&Themenkarte_Kurz.tex) ---
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[left=2.2cm, right=2.2cm, top=2.2cm, bottom=2.2cm]{geometry}
+\usepackage[autostyle=true,german=quotes]{csquotes}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{microtype}
+\usepackage[document]{ragged2e}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage[none]{hyphenat}
+
+\emergencystretch=0.3\textwidth
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+
+\definecolor{hkared}{RGB}{198, 42, 18}
+\definecolor{hkagray}{RGB}{100, 100, 100}
+
+\hypersetup{
+    colorlinks  = true,
+    linkcolor   = hkared,
+    urlcolor    = hkared,
+    citecolor   = hkared,
+    pdftitle    = {Zeitgeist Handel},
+    pdfauthor   = {Erlind Sejdiu},
+    pdfsubject  = {Game Design, Game Concept Document}
+}
+
+\titleformat{\section}{\large\bfseries\color{hkared}}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{hkared}}{\thesubsection}{0.8em}{}
+\titlespacing*{\section}{0pt}{0.85em}{0.25em}
+\titlespacing*{\subsection}{0pt}{0.5em}{0.15em}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{hkagray}Labor Game Design}
+\fancyhead[R]{\small\color{hkagray}Master Informatik WS~2026/27}
+\fancyfoot[C]{\small\color{hkagray}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\setlength{\parskip}{0.6em}
+
+\begin{document}
+
+% --- Titelseite ---
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+    \centering
+    \includegraphics[width=0.35\textwidth]{HKA.jpg}
+
+    {\normalsize\color{hkagray} University of Applied Sciences}\\[0.125cm]
+    {\small\color{hkagray} Fakultät für Informatik und Wirtschaftsinformatik}
+
+    \vspace{.5cm}
+    \textcolor{hkared}{\rule{\textwidth}{1.5pt}}
+
+    \vspace{1.5cm}
+    {\fontsize{24}{30}\selectfont\bfseries\color{hkared} Zeitgeist Handel}\\[0.6cm]
+    {\large\color{hkagray} Game Concept Document}
+    \vspace{.75cm}
+
+    \vspace{.5cm}
+    {\large Labor Game Design}\\[0.3cm]
+    {\large Wintersemester 2026/27}
+
+    \vspace{.5cm}
+    \textcolor{hkared}{\rule{0.6\textwidth}{0.5pt}}
+    \vspace{1.5cm}
+
+    {\normalsize
+    \begin{tabular}{rl}
+        \textbf{Autor}          & Erlind Sejdiu \\
+        \textbf{Matrikelnummer} & 106357 \\[0.5cm]
+    \end{tabular}
+    }
+
+    \vfill
+    {\small\color{hkagray} Stand \today}
+\end{titlepage}
+
+\newpage
+\hypersetup{pageanchor=true}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\section{Zeitgeist}
+
+Handel bedeutet, dass Menschen Güter austauschen, oft ohne sich zu kennen. Lange lebten die meisten von dem, was sie selbst
+herstellten. Wer mehr hatte, als er brauchte, tauschte den Überschuss gegen andere Waren. Das klappt allerdings nur, wenn beide Seiten
+genau das wollen, was die andere anbietet. Über große Distanzen wurde Handel erst möglich, als es Geld als gemeinsamen Maßstab gab und
+Händler als Vermittler auftraten. Ein Händler verdient daran, dass er weiß, wo eine Ware billig und wo sie knapp ist. Außerdem trägt er
+Risiken wie Transport und Lagerung.
+
+Auf Märkten spielte sich auch das soziale Leben ab. Die antike Agora war zugleich politischer Treffpunkt, auf dem orientalischen Basar
+gehört das Feilschen zum Aufbau einer Beziehung, und zu mittelalterlichen Messen kamen neben Kaufleuten auch Gaukler und Richter.
+Damit das alles funktioniert, braucht es Vertrauen. Wer Fremden Waren übergibt, verlässt sich auf Reputation, auf Regeln oder auf
+Kredit.
+
+Heute ist der Marktplatz fast vollständig aufs Smartphone gewandert. Bei Amazon, Temu oder Shein lässt sich beinahe alles mit einem
+Klick bestellen. Allein in Deutschland wurden 2024 täglich rund 400.000 Pakete von Temu und Shein zugestellt. Laut Bundesbank wurden
+2025 erstmals mehr als die Hälfte aller Einkäufe bargeldlos bezahlt, nämlich 55\,\%. Jeder dieser Käufe hinterlässt eine Datenspur.
+
+Wie anfällig dieses System ist, zeigt das Rote Meer. Wegen der Angriffe dort meiden Containerschiffe seit Ende 2023 den Sueskanal. Von Shanghai nach Rotterdam dauert die Fahrt dadurch 10 bis 14 Tage länger, und die
+Containerpreise stiegen zeitweise um das Dreifache bis Vierfache. Schon wenige Meerengen entscheiden also darüber, ob die Ware ankommt.
+
+Beim Thema Handel sind die Gefühle gemischt. Kaufen und Verkaufen macht vielen Menschen Spaß. Wer ein gutes Geschäft macht, ein seltenes
+Stück ergattert oder billig einkauft und teuer weiterverkauft, fühlt sich clever und erfolgreich. Plattformen nutzen das gezielt und
+greifen dafür zu Mitteln aus dem Game Design. Einkaufsapps zeigen Glücksräder und Countdowns, bei limitierten Drops konkurrieren Kunden
+um wenige Paar Sneaker, und auf StockX werden Turnschuhe mit Kurscharts gehandelt wie Aktien. So wird Handel zum Spiel, zu dem auch
+Nervenkitzel, Status und die Angst gehören, etwas zu verpassen (FOMO).
+
+Zugleich wächst das Unbehagen. Viele wollen fair und nachhaltig einkaufen und greifen bei steigenden Preisen dann doch zur Billigware,
+was ein schlechtes Gewissen hinterlässt. Dazu kommt das Gefühl, selbst nur Spielfigur zu sein.
+Algorithmen kennen die eigenen Vorlieben, Preise passen sich individuell an, und Bots kaufen begehrte Ware in Millisekunden weg, bevor
+ein Mensch überhaupt klicken kann.
+
+Handel verspricht Freiheit, Wohlstand und unbegrenzte Auswahl. Er macht aber auch abhängig von fernen Lieferketten, von großen
+Plattformen und vom eigenen Konsumdrang. Viele kennen Gedanken wie „Eigentlich brauche ich das nicht, aber es ist gerade so günstig“
+oder „Wer verdient hier eigentlich an mir?“
+
+Der Markt wirkt wie ein Ort, an dem jeder mit Geschick gewinnen kann. Wer am Ende tatsächlich profitiert, hängt in der Realität aber oft
+davon ab, wer mehr weiß, wer die Infrastruktur kontrolliert und wem die anderen vertrauen.
+
+\newpage
+\section*{Quellen}
+
+\subsection*{Grundlagen Handel, Geld \& Vertrauen}
+Jevons, W. S. (1875). \emph{Money and the Mechanism of Exchange}. London, H. S. King.\\
+Simmel, G. (1900). \emph{Philosophie des Geldes}. Leipzig, Duncker \& Humblot.\\
+Luhmann, N. (1968). \emph{Vertrauen. Ein Mechanismus der Reduktion sozialer Komplexität}. Stuttgart, Enke.\\
+Graeber, D. (2011). \emph{Debt: The First 5,000 Years}. New York, Melville House.
+
+\subsection*{Plattformen, Konsum \& Gamification}
+Zuboff, S. (2019). \emph{The Age of Surveillance Capitalism}. New York, PublicAffairs.\\
+Carrington, M. J.; Neville, B. A.; Whitwell, G. J. (2010). Why Ethical Consumers Don't Walk Their Talk. \emph{Journal of Business Ethics} 97, S.~139 bis 158.\\
+BEUC (2024). \emph{Taming Temu}. Beschwerde europäischer Verbraucherverbände zu manipulativen Designmustern. \href{https://www.beuc.eu}{www.beuc.eu}\\
+Handelsverband Deutschland (HDE) (2024). Pressemitteilungen zum Paketvolumen von Temu und Shein. \href{https://einzelhandel.de}{einzelhandel.de}
+
+\subsection*{Zahlungsverhalten}
+Deutsche Bundesbank (2026). \emph{Zahlungsverhalten in Deutschland 2025}. \href{https://www.bundesbank.de}{www.bundesbank.de}
+
+\subsection*{Lieferketten \& Rotes Meer}
+UNCTAD (2024). \emph{Review of Maritime Transport 2024}. Genf, United Nations. \href{https://unctad.org/rmt2024}{unctad.org/rmt2024}\\
+Drewry (2024 bis 2026). \emph{World Container Index}. \href{https://www.drewry.co.uk}{www.drewry.co.uk}\\
+Shanghai Shipping Exchange. \emph{Shanghai Containerized Freight Index (SCFI)}. \href{https://en.sse.net.cn}{en.sse.net.cn}
+
+\subsection*{Regulierung}
+Lieferkettensorgfaltspflichtengesetz (LkSG) vom 16.07.2021, BGBl. I S.~2959.\\
+Richtlinie (EU) 2024/1760 über die Sorgfaltspflichten von Unternehmen im Hinblick auf Nachhaltigkeit (CSDDD), ABl. L, 05.07.2024.
+
+\end{document}
