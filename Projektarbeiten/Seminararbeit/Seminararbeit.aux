@@ -48,8 +48,6 @@
 \newlabel{tab:vergleich}{{1}{2}{SYCL im Vergleich zu anderen Programmiermodellen (($\checkmark $) = eingeschränkt)}{table.caption.5}{}}
 \abx@aux@cite{0}{intel_llvm}
 \abx@aux@segm{0}{0}{intel_llvm}
-\abx@aux@cite{0}{khronos2020sycl}
-\abx@aux@segm{0}{0}{khronos2020sycl}
 \@writefile{toc}{\contentsline {section}{\numberline {4}Methode}{3}{section.4}\protected@file@percent }
 \newlabel{sec:methode}{{4}{3}{Methode}{section.4}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Stufen der Portierung und die dabei eingeführten Konzepte}}{3}{table.caption.6}\protected@file@percent }
@@ -58,106 +56,84 @@
 \abx@aux@segm{0}{0}{khronos2020sycl}
 \abx@aux@cite{0}{alpay2023sscp}
 \abx@aux@segm{0}{0}{alpay2023sscp}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Konzepte des Programmiermodells}{5}{section.5}\protected@file@percent }
-\newlabel{sec:konzepte}{{5}{5}{Konzepte des Programmiermodells}{section.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Host, Gerät und Kernel}{5}{subsection.5.1}\protected@file@percent }
-\newlabel{sec:k-grundlagen}{{5.1}{5}{Host, Gerät und Kernel}{subsection.5.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Grundaufbau (Stufe~1). Der Host reicht einen Kernel über eine Queue ein, das Gerät führt ihn als viele Work-Items aus}}{5}{figure.caption.7}\protected@file@percent }
-\newlabel{fig:stufe1}{{2}{5}{Grundaufbau (Stufe~1). Der Host reicht einen Kernel über eine Queue ein, das Gerät führt ihn als viele Work-Items aus}{figure.caption.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Konzepte des Programmiermodells}{4}{section.5}\protected@file@percent }
+\newlabel{sec:konzepte}{{5}{4}{Konzepte des Programmiermodells}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Host, Gerät und Kernel}{4}{subsection.5.1}\protected@file@percent }
+\newlabel{sec:k-grundlagen}{{5.1}{4}{Host, Gerät und Kernel}{subsection.5.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Grundaufbau (Stufe~1). Der Host reicht einen Kernel über eine Queue ein, das Gerät führt ihn als viele Work-Items aus}}{4}{figure.caption.7}\protected@file@percent }
+\newlabel{fig:stufe1}{{2}{4}{Grundaufbau (Stufe~1). Der Host reicht einen Kernel über eine Queue ein, das Gerät führt ihn als viele Work-Items aus}{figure.caption.7}{}}
 \abx@aux@cite{0}{alpay2023sscp}
 \abx@aux@segm{0}{0}{alpay2023sscp}
 \abx@aux@cite{0}{khronos2020sycl}
 \abx@aux@segm{0}{0}{khronos2020sycl}
 \abx@aux@cite{0}{reinders2023dpcpp}
 \abx@aux@segm{0}{0}{reinders2023dpcpp}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Speichermodell}{6}{subsection.5.2}\protected@file@percent }
-\newlabel{sec:k-speicher}{{5.2}{6}{Speichermodell}{subsection.5.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Speichermodell, aufbauend auf Stufe~1. Neu sind Host- und Gerätespeicher mit den Matrizen $A$, $B$, $C$. Bei USM device kopiert der Host die Daten ausdrücklich (durchgezogen), bei USM shared verschiebt die Laufzeit sie automatisch (gestrichelt). Stufe~1 verwendet USM shared}}{6}{figure.caption.8}\protected@file@percent }
-\newlabel{fig:usm}{{3}{6}{Speichermodell, aufbauend auf Stufe~1. Neu sind Host- und Gerätespeicher mit den Matrizen $A$, $B$, $C$. Bei USM device kopiert der Host die Daten ausdrücklich (durchgezogen), bei USM shared verschiebt die Laufzeit sie automatisch (gestrichelt). Stufe~1 verwendet USM shared}{figure.caption.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Speichermodell}{5}{subsection.5.2}\protected@file@percent }
+\newlabel{sec:k-speicher}{{5.2}{5}{Speichermodell}{subsection.5.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Speichermodell, aufbauend auf Stufe~1. Neu sind Host- und Gerätespeicher mit den Matrizen $A$, $B$, $C$. Bei USM device kopiert der Host die Daten ausdrücklich (durchgezogen), bei USM shared verschiebt die Laufzeit sie automatisch (gestrichelt). Stufe~1 verwendet USM shared}}{5}{figure.caption.8}\protected@file@percent }
+\newlabel{fig:usm}{{3}{5}{Speichermodell, aufbauend auf Stufe~1. Neu sind Host- und Gerätespeicher mit den Matrizen $A$, $B$, $C$. Bei USM device kopiert der Host die Daten ausdrücklich (durchgezogen), bei USM shared verschiebt die Laufzeit sie automatisch (gestrichelt). Stufe~1 verwendet USM shared}{figure.caption.8}{}}
 \abx@aux@cite{0}{hwu2022pmpp}
 \abx@aux@segm{0}{0}{hwu2022pmpp}
 \abx@aux@cite{0}{reinders2023dpcpp}
 \abx@aux@segm{0}{0}{reinders2023dpcpp}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Speicherebenen in SYCL, aufbauend auf Abbildung~\ref {fig:usm}. Neu sind die Ebenen auf dem Gerät. Nach unten werden sie kleiner, schneller und von weniger Work-Items geteilt}}{7}{figure.caption.9}\protected@file@percent }
-\newlabel{fig:speicher}{{4}{7}{Speicherebenen in SYCL, aufbauend auf Abbildung~\ref {fig:usm}. Neu sind die Ebenen auf dem Gerät. Nach unten werden sie kleiner, schneller und von weniger Work-Items geteilt}{figure.caption.9}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Asynchrone Ausführung und Abhängigkeiten}{7}{subsection.5.3}\protected@file@percent }
-\newlabel{sec:k-abhaengigkeiten}{{5.3}{7}{Asynchrone Ausführung und Abhängigkeiten}{subsection.5.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Getrennter Speicher und Abhängigkeiten (Stufe~2). Neu sind der Gerätespeicher und explizite Kopien, deren Abhängigkeiten als Pfeile in der Queue stehen. Kopie $A$ und Kopie $B$ hängen nicht voneinander ab und können gleichzeitig laufen}}{8}{figure.caption.10}\protected@file@percent }
-\newlabel{fig:stufe2}{{5}{8}{Getrennter Speicher und Abhängigkeiten (Stufe~2). Neu sind der Gerätespeicher und explizite Kopien, deren Abhängigkeiten als Pfeile in der Queue stehen. Kopie $A$ und Kopie $B$ hängen nicht voneinander ab und können gleichzeitig laufen}{figure.caption.10}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Hierarchische Ausführung und lokaler Speicher}{8}{subsection.5.4}\protected@file@percent }
-\newlabel{sec:k-hierarchie}{{5.4}{8}{Hierarchische Ausführung und lokaler Speicher}{subsection.5.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Eine nd\_range mit globalem Bereich $8 \times 8$ und lokalem Bereich $4 \times 4$. Dick umrandet sind die vier Work-Groups}}{8}{figure.caption.11}\protected@file@percent }
-\newlabel{fig:ndrange}{{6}{8}{Eine nd\_range mit globalem Bereich $8 \times 8$ und lokalem Bereich $4 \times 4$. Dick umrandet sind die vier Work-Groups}{figure.caption.11}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Hierarchische Ausführung (Stufen~3 und~4). Neu sind Work-Groups (Stufe~3) sowie Command Group, lokaler Speicher und Barriere (Stufe~4)}}{9}{figure.caption.12}\protected@file@percent }
-\newlabel{fig:stufe3}{{7}{9}{Hierarchische Ausführung (Stufen~3 und~4). Neu sind Work-Groups (Stufe~3) sowie Command Group, lokaler Speicher und Barriere (Stufe~4)}{figure.caption.12}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Konzepte von SYCL, die von ihnen adressierten Probleme und die Stufe, in der sie bei der Portierung eingeführt werden}}{9}{table.caption.13}\protected@file@percent }
-\newlabel{tab:konzepte}{{3}{9}{Konzepte von SYCL, die von ihnen adressierten Probleme und die Stufe, in der sie bei der Portierung eingeführt werden}{table.caption.13}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Anwendung auf die Matrixmultiplikation}{10}{section.6}\protected@file@percent }
-\newlabel{sec:anwendung}{{6}{10}{Anwendung auf die Matrixmultiplikation}{section.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Stufe 0 bis 2 -- Vom Programm zum Kernel}{10}{subsection.6.1}\protected@file@percent }
-\newlabel{sec:stufe0}{{6.1}{10}{Stufe 0 bis 2 -- Vom Programm zum Kernel}{subsection.6.1}{}}
-\newlabel{sec:stufe1}{{6.1}{10}{Stufe 0 bis 2 -- Vom Programm zum Kernel}{subsection.6.1}{}}
-\newlabel{sec:stufe2}{{6.1}{10}{Stufe 0 bis 2 -- Vom Programm zum Kernel}{subsection.6.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Stufe 2b -- Buffer und Accessoren}{10}{subsection.6.2}\protected@file@percent }
-\newlabel{sec:stufe2b}{{6.2}{10}{Stufe 2b -- Buffer und Accessoren}{subsection.6.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Stufe 3 -- Work-Groups festlegen}{10}{subsection.6.3}\protected@file@percent }
-\newlabel{sec:stufe3}{{6.3}{10}{Stufe 3 -- Work-Groups festlegen}{subsection.6.3}{}}
-\abx@aux@cite{0}{nvidia_cuda_guide}
-\abx@aux@segm{0}{0}{nvidia_cuda_guide}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}Stufe 4 -- Kachelung im lokalen Speicher}{11}{subsection.6.4}\protected@file@percent }
-\newlabel{sec:stufe4}{{6.4}{11}{Stufe 4 -- Kachelung im lokalen Speicher}{subsection.6.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Kachelung in Stufe~4. Eine Work-Group durchläuft die Kachelzeile von $A$ und die Kachelspalte von $B$ in $n/T$ Schritten}}{11}{figure.caption.14}\protected@file@percent }
-\newlabel{fig:kachelung}{{8}{11}{Kachelung in Stufe~4. Eine Work-Group durchläuft die Kachelzeile von $A$ und die Kachelspalte von $B$ in $n/T$ Schritten}{figure.caption.14}{}}
-\newlabel{lst:ausschnitt4}{{1}{11}{Schleife über die Kacheln in Stufe~4 (Ausschnitt aus Anhang~\ref {lst:stufe4})}{lstlisting.1}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {1}{\ignorespaces Schleife über die Kacheln in Stufe~4 (Ausschnitt aus Anhang~\ref {lst:stufe4})}}{11}{lstlisting.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.5}Stufe 5 -- Anpassung an das Gerät}{12}{subsection.6.5}\protected@file@percent }
-\newlabel{sec:stufe5}{{6.5}{12}{Stufe 5 -- Anpassung an das Gerät}{subsection.6.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Speicherebenen in SYCL, aufbauend auf Abbildung~\ref {fig:usm}. Neu sind die Ebenen auf dem Gerät. Nach unten werden sie kleiner, schneller und von weniger Work-Items geteilt}}{6}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:speicher}{{4}{6}{Speicherebenen in SYCL, aufbauend auf Abbildung~\ref {fig:usm}. Neu sind die Ebenen auf dem Gerät. Nach unten werden sie kleiner, schneller und von weniger Work-Items geteilt}{figure.caption.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Asynchrone Ausführung und Abhängigkeiten}{6}{subsection.5.3}\protected@file@percent }
+\newlabel{sec:k-abhaengigkeiten}{{5.3}{6}{Asynchrone Ausführung und Abhängigkeiten}{subsection.5.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Getrennter Speicher und Abhängigkeiten (Stufe~2). Neu sind der Gerätespeicher und explizite Kopien, deren Abhängigkeiten als Pfeile in der Queue stehen. Kopie $A$ und Kopie $B$ hängen nicht voneinander ab und können gleichzeitig laufen}}{7}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:stufe2}{{5}{7}{Getrennter Speicher und Abhängigkeiten (Stufe~2). Neu sind der Gerätespeicher und explizite Kopien, deren Abhängigkeiten als Pfeile in der Queue stehen. Kopie $A$ und Kopie $B$ hängen nicht voneinander ab und können gleichzeitig laufen}{figure.caption.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Hierarchische Ausführung und lokaler Speicher}{7}{subsection.5.4}\protected@file@percent }
+\newlabel{sec:k-hierarchie}{{5.4}{7}{Hierarchische Ausführung und lokaler Speicher}{subsection.5.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Eine nd\_range mit globalem Bereich $8 \times 8$ und lokalem Bereich $4 \times 4$. Dick umrandet sind die vier Work-Groups}}{7}{figure.caption.11}\protected@file@percent }
+\newlabel{fig:ndrange}{{6}{7}{Eine nd\_range mit globalem Bereich $8 \times 8$ und lokalem Bereich $4 \times 4$. Dick umrandet sind die vier Work-Groups}{figure.caption.11}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Hierarchische Ausführung (Stufen~3 und~4). Neu sind Work-Groups (Stufe~3) sowie Command Group, lokaler Speicher und Barriere (Stufe~4)}}{8}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:stufe3}{{7}{8}{Hierarchische Ausführung (Stufen~3 und~4). Neu sind Work-Groups (Stufe~3) sowie Command Group, lokaler Speicher und Barriere (Stufe~4)}{figure.caption.12}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Konzepte von SYCL, die von ihnen adressierten Probleme und die Stufe, in der sie bei der Portierung eingeführt werden}}{8}{table.caption.13}\protected@file@percent }
+\newlabel{tab:konzepte}{{3}{8}{Konzepte von SYCL, die von ihnen adressierten Probleme und die Stufe, in der sie bei der Portierung eingeführt werden}{table.caption.13}{}}
 \abx@aux@cite{0}{pennycook2016metric}
 \abx@aux@segm{0}{0}{pennycook2016metric}
-\@writefile{toc}{\contentsline {section}{\numberline {7}Ergebnisse}{13}{section.7}\protected@file@percent }
-\newlabel{sec:ergebnisse}{{7}{13}{Ergebnisse}{section.7}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Leistung je Stufe in GFLOPS (Median aus fünf Läufen, Stufe~0 auf einem Kern der jeweiligen Host-CPU)}}{13}{table.caption.15}\protected@file@percent }
-\newlabel{tab:stufenmessung}{{4}{13}{Leistung je Stufe in GFLOPS (Median aus fünf Läufen, Stufe~0 auf einem Kern der jeweiligen Host-CPU)}{table.caption.15}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Laufzeit je Stufe in ms (Median aus fünf Läufen). Ab Stufe~2 sind Kernel- und Transferzeit getrennt erfasst, außer bei Stufe~2b. Die Transferzeit von Stufe~3 und~5 entspricht der von Stufe~2 bzw.~4}}{14}{table.caption.16}\protected@file@percent }
-\newlabel{tab:zeiten}{{5}{14}{Laufzeit je Stufe in ms (Median aus fünf Läufen). Ab Stufe~2 sind Kernel- und Transferzeit getrennt erfasst, außer bei Stufe~2b. Die Transferzeit von Stufe~3 und~5 entspricht der von Stufe~2 bzw.~4}{table.caption.16}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Effizienz und Performance-Portabilität je Kachelgröße bei $n = 2048$}}{14}{figure.caption.17}\protected@file@percent }
-\newlabel{fig:ergebnisse}{{9}{14}{Effizienz und Performance-Portabilität je Kachelgröße bei $n = 2048$}{figure.caption.17}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {8}Diskussion}{14}{section.8}\protected@file@percent }
-\newlabel{sec:diskussion}{{8}{14}{Diskussion}{section.8}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Ergebnisse}{9}{section.6}\protected@file@percent }
+\newlabel{sec:ergebnisse}{{6}{9}{Ergebnisse}{section.6}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Leistung je Stufe in GFLOPS (Median aus fünf Läufen, Stufe~0 auf einem Kern der jeweiligen Host-CPU)}}{9}{table.caption.14}\protected@file@percent }
+\newlabel{tab:stufenmessung}{{4}{9}{Leistung je Stufe in GFLOPS (Median aus fünf Läufen, Stufe~0 auf einem Kern der jeweiligen Host-CPU)}{table.caption.14}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Laufzeit je Stufe in ms (Median aus fünf Läufen). Ab Stufe~2 sind Kernel- und Transferzeit getrennt erfasst, außer bei Stufe~2b. Die Transferzeit von Stufe~3 und~5 entspricht der von Stufe~2 bzw.~4}}{10}{table.caption.15}\protected@file@percent }
+\newlabel{tab:zeiten}{{5}{10}{Laufzeit je Stufe in ms (Median aus fünf Läufen). Ab Stufe~2 sind Kernel- und Transferzeit getrennt erfasst, außer bei Stufe~2b. Die Transferzeit von Stufe~3 und~5 entspricht der von Stufe~2 bzw.~4}{table.caption.15}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Effizienz und Performance-Portabilität je Kachelgröße bei $n = 2048$}}{10}{figure.caption.16}\protected@file@percent }
+\newlabel{fig:ergebnisse}{{8}{10}{Effizienz und Performance-Portabilität je Kachelgröße bei $n = 2048$}{figure.caption.16}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Diskussion}{10}{section.7}\protected@file@percent }
+\newlabel{sec:diskussion}{{7}{10}{Diskussion}{section.7}{}}
 \abx@aux@cite{0}{deakin2020sycl}
 \abx@aux@segm{0}{0}{deakin2020sycl}
 \abx@aux@cite{0}{pennycook2019implications}
 \abx@aux@segm{0}{0}{pennycook2019implications}
-\@writefile{toc}{\contentsline {section}{\numberline {9}Schlussfolgerung}{15}{section.9}\protected@file@percent }
-\newlabel{sec:fazit}{{9}{15}{Schlussfolgerung}{section.9}{}}
-\@writefile{toc}{\contentsline {section}{Literaturverzeichnis}{17}{section*.18}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {A}Quellcode der Matrixmultiplikation}{19}{appendix.A}\protected@file@percent }
-\newlabel{sec:anhang}{{A}{19}{Quellcode der Matrixmultiplikation}{appendix.A}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Stufe 0 -- Sequentielles Ausgangsprogramm}{19}{subsection.A.1}\protected@file@percent }
-\newlabel{lst:stufe0}{{A.1}{19}{Stufe 0 -- Sequentielles Ausgangsprogramm}{subsection.A.1}{}}
-\@writefile{lol}{\contentsline {lstlisting}{sycl\textendash matmul/stufe0\textunderscore sequentiell.cpp}{19}{lstlisting.-1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.2}Stufe 1 -- USM shared und \texttt  {parallel\_for}}{20}{subsection.A.2}\protected@file@percent }
-\newlabel{lst:stufe1}{{A.2}{20}{Stufe 1 -- USM shared und \texttt {parallel\_for}}{subsection.A.2}{}}
-\@writefile{lol}{\contentsline {lstlisting}{sycl\textendash matmul/stufe1\textunderscore usm\textunderscore shared.cpp}{20}{lstlisting.-2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.3}Stufe 2 -- USM device und explizites Kopieren}{21}{subsection.A.3}\protected@file@percent }
-\newlabel{lst:stufe2}{{A.3}{21}{Stufe 2 -- USM device und explizites Kopieren}{subsection.A.3}{}}
-\@writefile{lol}{\contentsline {lstlisting}{sycl\textendash matmul/stufe2\textunderscore usm\textunderscore device.cpp}{21}{lstlisting.-3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.4}Stufe 2b -- Buffer und Accessoren}{22}{subsection.A.4}\protected@file@percent }
-\newlabel{lst:stufe2b}{{A.4}{22}{Stufe 2b -- Buffer und Accessoren}{subsection.A.4}{}}
-\@writefile{lol}{\contentsline {lstlisting}{sycl\textendash matmul/stufe2b\textunderscore buffer.cpp}{22}{lstlisting.-4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.5}Stufe 3 -- Work-Groups mit \texttt  {nd\_range}}{24}{subsection.A.5}\protected@file@percent }
-\newlabel{lst:stufe3}{{A.5}{24}{Stufe 3 -- Work-Groups mit \texttt {nd\_range}}{subsection.A.5}{}}
-\@writefile{lol}{\contentsline {lstlisting}{sycl\textendash matmul/stufe3\textunderscore ndrange.cpp}{24}{lstlisting.-5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.6}Stufe 4 -- Kachelung im lokalen Speicher}{25}{subsection.A.6}\protected@file@percent }
-\newlabel{lst:stufe4}{{A.6}{25}{Stufe 4 -- Kachelung im lokalen Speicher}{subsection.A.6}{}}
-\@writefile{lol}{\contentsline {lstlisting}{sycl\textendash matmul/stufe4\textunderscore tiling.cpp}{25}{lstlisting.-6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.7}Stufe 5 -- Anpassung an das Gerät}{27}{subsection.A.7}\protected@file@percent }
-\newlabel{lst:stufe5}{{A.7}{27}{Stufe 5 -- Anpassung an das Gerät}{subsection.A.7}{}}
-\@writefile{lol}{\contentsline {lstlisting}{sycl\textendash matmul/stufe5\textunderscore anpassung.cpp}{27}{lstlisting.-7}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.8}Gemeinsame Hilfsfunktionen (\texttt  {common.hpp})}{31}{subsection.A.8}\protected@file@percent }
-\newlabel{lst:common}{{A.8}{31}{Gemeinsame Hilfsfunktionen (\texttt {common.hpp})}{subsection.A.8}{}}
-\@writefile{lol}{\contentsline {lstlisting}{sycl\textendash matmul/common.hpp}{31}{lstlisting.-8}\protected@file@percent }
-\abx@aux@read@bbl@mdfivesum{C54654C9FDFB54E4D45814C986B396DE}
+\@writefile{toc}{\contentsline {section}{Literaturverzeichnis}{12}{section*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A}Quellcode der Matrixmultiplikation}{14}{appendix.A}\protected@file@percent }
+\newlabel{sec:anhang}{{A}{14}{Quellcode der Matrixmultiplikation}{appendix.A}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Stufe 0 -- Sequentielles Ausgangsprogramm}{14}{subsection.A.1}\protected@file@percent }
+\newlabel{lst:stufe0}{{A.1}{14}{Stufe 0 -- Sequentielles Ausgangsprogramm}{subsection.A.1}{}}
+\@writefile{lol}{\contentsline {lstlisting}{sycl\textendash matmul/stufe0\textunderscore sequentiell.cpp}{14}{lstlisting.-1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.2}Stufe 1 -- USM shared und \texttt  {parallel\_for}}{15}{subsection.A.2}\protected@file@percent }
+\newlabel{lst:stufe1}{{A.2}{15}{Stufe 1 -- USM shared und \texttt {parallel\_for}}{subsection.A.2}{}}
+\@writefile{lol}{\contentsline {lstlisting}{sycl\textendash matmul/stufe1\textunderscore usm\textunderscore shared.cpp}{15}{lstlisting.-2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.3}Stufe 2 -- USM device und explizites Kopieren}{16}{subsection.A.3}\protected@file@percent }
+\newlabel{lst:stufe2}{{A.3}{16}{Stufe 2 -- USM device und explizites Kopieren}{subsection.A.3}{}}
+\@writefile{lol}{\contentsline {lstlisting}{sycl\textendash matmul/stufe2\textunderscore usm\textunderscore device.cpp}{16}{lstlisting.-3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.4}Stufe 2b -- Buffer und Accessoren}{17}{subsection.A.4}\protected@file@percent }
+\newlabel{lst:stufe2b}{{A.4}{17}{Stufe 2b -- Buffer und Accessoren}{subsection.A.4}{}}
+\@writefile{lol}{\contentsline {lstlisting}{sycl\textendash matmul/stufe2b\textunderscore buffer.cpp}{17}{lstlisting.-4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.5}Stufe 3 -- Work-Groups mit \texttt  {nd\_range}}{19}{subsection.A.5}\protected@file@percent }
+\newlabel{lst:stufe3}{{A.5}{19}{Stufe 3 -- Work-Groups mit \texttt {nd\_range}}{subsection.A.5}{}}
+\@writefile{lol}{\contentsline {lstlisting}{sycl\textendash matmul/stufe3\textunderscore ndrange.cpp}{19}{lstlisting.-5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.6}Stufe 4 -- Kachelung im lokalen Speicher}{20}{subsection.A.6}\protected@file@percent }
+\newlabel{lst:stufe4}{{A.6}{20}{Stufe 4 -- Kachelung im lokalen Speicher}{subsection.A.6}{}}
+\@writefile{lol}{\contentsline {lstlisting}{sycl\textendash matmul/stufe4\textunderscore tiling.cpp}{20}{lstlisting.-6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.7}Stufe 5 -- Anpassung an das Gerät}{22}{subsection.A.7}\protected@file@percent }
+\newlabel{lst:stufe5}{{A.7}{22}{Stufe 5 -- Anpassung an das Gerät}{subsection.A.7}{}}
+\@writefile{lol}{\contentsline {lstlisting}{sycl\textendash matmul/stufe5\textunderscore anpassung.cpp}{22}{lstlisting.-7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.8}Gemeinsame Hilfsfunktionen (\texttt  {common.hpp})}{26}{subsection.A.8}\protected@file@percent }
+\newlabel{lst:common}{{A.8}{26}{Gemeinsame Hilfsfunktionen (\texttt {common.hpp})}{subsection.A.8}{}}
+\@writefile{lol}{\contentsline {lstlisting}{sycl\textendash matmul/common.hpp}{26}{lstlisting.-8}\protected@file@percent }
+\abx@aux@read@bbl@mdfivesum{FC24D58FFE709F4ACEB2A7A9DB348C60}
 \abx@aux@defaultrefcontext{0}{nickolls2008cuda}{none/global//global/global/global}
 \abx@aux@defaultrefcontext{0}{stone2010opencl}{none/global//global/global/global}
 \abx@aux@defaultrefcontext{0}{khronos2020sycl}{none/global//global/global/global}
@@ -172,6 +148,5 @@
 \abx@aux@defaultrefcontext{0}{breyer2022svm}{none/global//global/global/global}
 \abx@aux@defaultrefcontext{0}{pennycook2016metric}{none/global//global/global/global}
 \abx@aux@defaultrefcontext{0}{hwu2022pmpp}{none/global//global/global/global}
-\abx@aux@defaultrefcontext{0}{nvidia_cuda_guide}{none/global//global/global/global}
 \abx@aux@defaultrefcontext{0}{pennycook2019implications}{none/global//global/global/global}
-\gdef \@abspage@last{36}
+\gdef \@abspage@last{31}

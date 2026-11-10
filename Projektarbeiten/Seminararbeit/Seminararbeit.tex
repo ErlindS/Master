@@ -284,24 +284,10 @@ Ryzen~5 5600X (sechs Kerne, OpenCL-Backend), einer NVIDIA GeForce
 RTX~5060~Ti und einer NVIDIA L40S auf dem DACHS-Cluster der Hochschule
 Esslingen (beide CUDA-Backend).
 Jede Stufe wird einmal übersetzt und unverändert auf allen drei Geräten
-ausgeführt. Das Gerät wird beim Start über die Umgebungsvariable
-\texttt{ONEAPI\_DEVICE\_SELECTOR} gewählt, etwa \texttt{cuda:gpu} oder
-\texttt{opencl:cpu}. Stufe~4 wird zusätzlich für die Kachelgrößen
-$T \in \{8, 16, 32, 64\}$ übersetzt und gemessen, Stufe~5 wählt $T$ selbst.
-Jede Stufe läuft für $n \in \{256, 512, 1024, 2048\}$. Nach einem getrennt
-erfassten ersten Lauf, der die JIT-Kompilierung enthält, folgen fünf
-Messläufe, von denen der Median berichtet wird.
+ausgeführt.
 
-Die Zeit misst der Host mit der monotonen Uhr der C++-Standardbibliothek
-(\texttt{std::chrono::steady\_clock}) vom Einreichen eines Auftrags bis zum
-Ende des Wartens auf ihn \stelle{lst:common}{44--53}. Ab Stufe~2 werden
-Kernel und Kopien so getrennt erfasst. Gemessen wird damit nicht nur die
-Ausführung auf dem Gerät, sondern auch das Einreichen und der Start des
-Kernels, was nur bei kleinen Matrizen ins Gewicht fällt. SYCL bietet als
-Alternative eine Messung auf dem Gerät selbst. Eine Queue, die mit der
-Eigenschaft \texttt{enable\_profiling} angelegt ist, liefert zu jedem Event
-die Zeitpunkte, zu denen der Auftrag auf dem Gerät begann und endete
-\cite{khronos2020sycl}. Die Host-Messung wurde gewählt, weil sie für alle
+Die Zeit misst der Host mit der monotonen Uhr der C++-Standardbibliothek vom Einreichen eines Auftrags bis zum
+Ende des Wartens auf ihn \stelle{lst:common}{44--53}. Die Host-Messung wurde gewählt, weil sie für alle
 Stufen gleich funktioniert, auch für das sequentielle Ausgangsprogramm und
 für Stufe~2b, deren Kopien die Laufzeit selbst einplant.
 
@@ -594,137 +580,6 @@ in der sie bei der Portierung eingeführt werden}
 
 \newpage
 % ---------------------------------------------------------------------------
-\section{Anwendung auf die Matrixmultiplikation}\label{sec:anwendung}
-% ---------------------------------------------------------------------------
-
-Dieses Kapitel zeigt, wie die Konzepte aus Abschnitt~\ref{sec:konzepte} im
-Programm umgesetzt sind. Verweise der Form \stelle{lst:stufe1}{36--43}
-bezeichnen Abschnitt und Zeilen im Quellcode des Anhangs~\ref{sec:anhang}.
-Alle Stufen teilen sich die Hilfsfunktionen für Zeitmessung, Prüfung und
-Ausgabe \stelle{lst:common}{1--90} und unterscheiden sich nur an den hier
-beschriebenen Stellen.
-
-\subsection{Stufe 0 bis 2 -- Vom Programm zum Kernel}\label{sec:stufe0}\label{sec:stufe1}\label{sec:stufe2}
-
-Das Ausgangsprogramm berechnet $C$ mit drei verschachtelten Schleifen über
-zeilenweise gespeicherte Matrizen \stelle{lst:stufe0}{12--20}. Die Elemente
-von $C$ sind voneinander unabhängig, und genau das nutzt Stufe~1. Sie legt
-eine Queue mit dem Standard-Selektor an \stelle{lst:stufe1}{24}, die Matrizen
-in USM shared \stelle{lst:stufe1}{28--30} und ersetzt die Schleifen über $i$
-und $j$ durch ein \texttt{parallel\_for} über einen Indexraum
-$n \times n$ \stelle{lst:stufe1}{36--43}. Jedes Work-Item berechnet ein
-Element von $C$, die Schleife über $k$ bleibt im Kernel. Da die Zeiger auch
-auf dem Gerät gültig sind, ist keine Zeile für den Datentransfer nötig.
-
-Stufe~2 lässt den Kernel unverändert \stelle{lst:stufe2}{43--50} und trennt
-den Speicher. Die Matrizen liegen als Vektoren auf dem Host
-\stelle{lst:stufe2}{28--30} und als USM device auf dem Gerät
-\stelle{lst:stufe2}{33--35}, und der Host kopiert ausdrücklich hin und zurück
-\stelle{lst:stufe2}{37--41, 52}. Statt über Events wartet er nach jedem
-Abschnitt auf die gesamte Queue \stelle{lst:stufe2}{40, 50, 52}. Das
-verschenkt Überlappung, macht Kopier- und Rechenzeit aber getrennt messbar.
-
-\subsection{Stufe 2b -- Buffer und Accessoren}\label{sec:stufe2b}
-
-Die Variante 2b geht denselben Schritt mit Buffern. Sie kapseln die
-Host-Felder \stelle{lst:stufe2b}{36--38}, und Accessoren geben an, dass $A$
-und $B$ nur gelesen und $C$ nur geschrieben wird \stelle{lst:stufe2b}{41--43}.
-Daraus plant die Laufzeit Kopien und Abhängigkeiten selbst. Erst der
-Destruktor des Buffers von $C$ kopiert das Ergebnis zurück
-\stelle{lst:stufe2b}{54}. Der Code wird kürzer und sicherer, Kopien und Kernel
-sind aber nur noch gemeinsam messbar \stelle{lst:stufe2b}{60--66}.
-
-\subsection{Stufe 3 -- Work-Groups festlegen}\label{sec:stufe3}
-
-Stufe~3 ersetzt den einfachen Indexraum durch eine nd\_range mit
-Work-Groups aus $W \times W = 16 \times 16$ Work-Items
-\stelle{lst:stufe3}{30, 53}. Da der globale Bereich ein Vielfaches des
-lokalen sein muss, wird $n$ aufgerundet \stelle{lst:stufe3}{44}, und
-überzählige Work-Items kehren sofort zurück \stelle{lst:stufe3}{57}. Die
-Rechnung bleibt die aus Stufe~2. Was sich ändert, geht damit allein auf die
-selbst gewählte Work-Group-Größe zurück.
-
-\subsection{Stufe 4 -- Kachelung im lokalen Speicher}\label{sec:stufe4}
-
-Bis Stufe~3 liest jedes Work-Item $2n$ Werte aus dem globalen Speicher, und
-benachbarte Work-Items lesen dieselben Werte immer wieder. Stufe~4 zerlegt
-die Matrizen deshalb in Kacheln der Größe $T \times T$. Jede Work-Group
-berechnet eine Kachel von $C$ und lädt dafür in $n/T$ Schritten je eine
-Kachel von $A$ und $B$ gemeinsam in den lokalen Speicher
-(Abbildung~\ref{fig:kachelung}). Jedes Work-Item liest so nur noch $2n/T$
-Werte aus dem globalen Speicher.
-
-\begin{figure}[htbp]
-\centering
-\begin{tikzpicture}[font=\scriptsize, scale=0.85]
-    \fill[gray!20] (0,1.2) rectangle (2.4,1.8);
-    \fill[gray!60] (0.6,1.2) rectangle (1.2,1.8);
-    \fill[gray!20] (4.2,3.0) rectangle (4.8,5.4);
-    \fill[gray!60] (4.2,4.2) rectangle (4.8,4.8);
-    \fill[black] (4.2,1.2) rectangle (4.8,1.8);
-    \draw[gray!60, densely dotted, step=0.6] (0,0) grid (2.4,2.4);
-    \draw[gray!60, densely dotted, step=0.6] (3.0,3.0) grid (5.4,5.4);
-    \draw[gray!60, densely dotted, step=0.6] (3.0,0) grid (5.4,2.4);
-    \draw (0,0) rectangle (2.4,2.4);       \node at (1.2,-0.25) {$A$};
-    \draw (3.0,3.0) rectangle (5.4,5.4);   \node at (2.75,4.2) {$B$};
-    \draw (3.0,0) rectangle (5.4,2.4);     \node at (4.2,-0.25) {$C$};
-    \draw[->] (0.6,2.55) -- node[above] {Schritte $t$} (2.4,2.55);
-    \draw[->] (5.55,4.2) -- node[right] {$t$} (5.55,3.0);
-    \node[anchor=west, align=left] (tc) at (6.3,1.5)
-        {Kachel von $C$, berechnet\\von einer Work-Group\\aus $T \times T$ Work-Items};
-    \draw[->] (tc.west) -- (4.85,1.5);
-    \node[anchor=west, align=left] (tb) at (6.3,4.5)
-        {Kacheln von $A$ und $B$\\im aktuellen Schritt $t$,\\gemeinsam in den lokalen\\Speicher geladen};
-    \draw[->] (tb.west) -- (4.85,4.5);
-\end{tikzpicture}
-\caption{Kachelung in Stufe~4. Eine Work-Group durchläuft die Kachelzeile von
-$A$ und die Kachelspalte von $B$ in $n/T$ Schritten}
-\label{fig:kachelung}
-\end{figure}
-
-Weil lokaler Speicher vor dem Start reserviert werden muss, wird der Kernel
-als Command Group eingereicht, die zwei lokale Felder für die Kacheln anlegt
-\stelle{lst:stufe4}{60--63}. Die Work-Group-Größe der nd\_range entspricht nun
-der Kachelgröße \stelle{lst:stufe4}{66}. In der Schleife über die Kacheln
-(Listing~\ref{lst:ausschnitt4}) lädt jedes Work-Item ein Element von $A$ und
-$B$ (Zeilen~76--77). Die erste Barriere stellt sicher, dass beide Kacheln
-vollständig geladen sind, bevor gerechnet wird. Die zweite verhindert, dass
-ein schnelles Work-Item die Kachel überschreibt, während andere noch mit ihr
-rechnen. Elemente außerhalb der Matrix werden als null geladen und nicht
-geschrieben.
-
-\lstinputlisting[firstline=73, lastline=85, firstnumber=73,
-    caption={Schleife über die Kacheln in Stufe~4 (Ausschnitt aus Anhang~\ref{lst:stufe4})},
-    label={lst:ausschnitt4}]{sycl-matmul/stufe4_tiling.cpp}
-
-$T$ wird beim Übersetzen gesetzt \stelle{lst:stufe4}{28--30, 36}, sodass für
-jedes $T \in \{8, 16, 32, 64\}$ ein eigenes Programm entsteht. Bei $T = 64$
-überschreitet eine Work-Group mit 4096 Work-Items die GPU-Grenze von 1024
-Threads je Block \cite{nvidia_cuda_guide}. Die Laufzeit wirft beim Einreichen
-einen synchronen Fehler, den Stufe~4 nicht abfängt, und das Programm bricht
-ab. Auf der CPU läuft $T = 64$ fehlerfrei.
-
-\subsection{Stufe 5 -- Anpassung an das Gerät}\label{sec:stufe5}
-
-Stufe~5 wählt $T$ zur Laufzeit. Der Kernel aus Stufe~4 liest $T$ dazu aus
-einer Specialization Constant \stelle{lst:stufe5}{30, 62}, die der Host vor
-dem Einreichen setzt \stelle{lst:stufe5}{49}. Für den JIT-Compiler bleibt $T$
-eine Konstante. Für AdaptiveCpp, das den Mechanismus nicht unterstützt,
-enthält das Programm einen zweiten Weg über dessen Erweiterung
-\stelle{lst:stufe5}{42--63}. Ein Async Handler gibt Fehler vom Gerät als
-Ausnahme weiter \stelle{lst:stufe5}{93--98}, sodass synchrone und asynchrone
-Fehler im selben \texttt{try}-Block landen. Über Geräteabfragen liest das
-Programm die maximale Work-Group-Größe und den lokalen Speicher
-\stelle{lst:stufe5}{103--106} und verwirft jedes $T$, das nicht hineinpasst
-\stelle{lst:stufe5}{139--144}. Auf den GPUs fällt so $T = 64$ weg. Die übrigen
-Kachelgrößen misst es nach einem Aufwärmlauf mit JIT-Übersetzung je dreimal
-und wählt die schnellste. Scheitert ein Kernel trotz Abfrage, etwa wegen zu
-vieler Register, fängt der \texttt{catch}-Block das ab, und das Programm
-versucht die nächste \stelle{lst:stufe5}{145--161}. Die Auswahl zählt zum
-ersten Lauf, nicht zu den Messläufen.
-
-\newpage
-% ---------------------------------------------------------------------------
 \section{Ergebnisse}\label{sec:ergebnisse}
 % ---------------------------------------------------------------------------
 
@@ -904,10 +759,6 @@ Zeiten wurden auf dem Host gemessen und enthalten damit das Einreichen der
 Aufträge. Eine Messung über die Profiling-Events von SYCL würde die reine
 Ausführungszeit auf dem Gerät liefern und vor allem die Werte für kleine
 Matrizen genauer machen.
-
-% ---------------------------------------------------------------------------
-\section{Schlussfolgerung}\label{sec:fazit}
-% ---------------------------------------------------------------------------
 
 SYCL erfüllt sein Versprechen \enquote{einmal schreiben, überall ausführen}
 für die Korrektheit. Ein schrittweise portiertes Programm lief in allen

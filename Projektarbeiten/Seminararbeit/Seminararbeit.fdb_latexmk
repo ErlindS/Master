@@ -1,14 +1,14 @@
 # Fdb version 4
-["biber Seminararbeit"] 1794304978.81211 "Seminararbeit.bcf" "Seminararbeit.bbl" "Seminararbeit" 1794306178.78517 0
-  "Seminararbeit.bcf" 1794306178.70261 109648 8a5bd4fe47aa46f3689a8374493ad4a8 "pdflatex"
+["biber Seminararbeit"] 1794316673.21269 "Seminararbeit.bcf" "Seminararbeit.bbl" "Seminararbeit" 1794316713.41858 0
+  "Seminararbeit.bcf" 1794316713.34434 109504 19615fe571317aa3f942e68d43f01dd5 "pdflatex"
   "sycl.bib" 1793610858.64387 6037 7c9ae992e6aded49d320710a048b2ac5 ""
   (generated)
   "Seminararbeit.bbl"
   "Seminararbeit.blg"
   (rewritten before read)
-["pdflatex"] 1794306176.96783 "/home/debian/Repo/Master/Projektarbeiten/Seminararbeit/Seminararbeit.tex" "Seminararbeit.pdf" "Seminararbeit" 1794306178.7854 0
+["pdflatex"] 1794316711.82078 "/home/debian/Repo/Master/Projektarbeiten/Seminararbeit/Seminararbeit.tex" "Seminararbeit.pdf" "Seminararbeit" 1794316713.41886 0
   "/etc/texmf/web2c/texmf.cnf" 1790850069.28621 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/debian/Repo/Master/Projektarbeiten/Seminararbeit/Seminararbeit.tex" 1794306176.75865 49055 c2cb6ca08af5ed141c0d5ca178954c6a ""
+  "/home/debian/Repo/Master/Projektarbeiten/Seminararbeit/Seminararbeit.tex" 1794316709.92847 40300 7cfa65f049a63d1209d0a8d3b87ad3c8 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/symbol/psyr.tfm" 1136768653 1408 5937f58aa508ea2cea4901c07d10f5fe ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1136768653 1528 f853c4d1b4e0550255e02831fdc8496f ""
@@ -305,14 +305,14 @@
   "Diagramme/selbsterstellt/Speicher.pdf" 1794229902.7668 38933 a90cd2701f23bc9189ea3276244f1066 ""
   "Diagramme/selbsterstellt/Speicherebenen.pdf" 1794229902.7668 38180 303b9b225ec9c05be3661edced304a77 ""
   "Diagramme/selbsterstellt/Stufe1.pdf" 1794229902.7668 36315 00595c2ea0811a0b3e1d59f5e5c5d9bf ""
-  "Seminararbeit.aux" 1794306178.69861 17578 875c02f903ab76d98e09bbe6ff1a4139 "pdflatex"
-  "Seminararbeit.bbl" 1794304979.27542 25876 c54654c9fdfb54e4d45814c986b396de "biber Seminararbeit"
-  "Seminararbeit.lof" 1794306178.70261 2032 75e94645bebbe117112e4b77289a61de "pdflatex"
-  "Seminararbeit.lot" 1794306178.70261 1007 d3a5ce90bf22db984885151a5b1f84d5 "pdflatex"
-  "Seminararbeit.out" 1794306178.70261 5825 b3d9fd1cb134df935e4175aedf706836 "pdflatex"
-  "Seminararbeit.run.xml" 1794306178.70261 2520 2380c1a1b7fa5887cd81052f66c770cf "pdflatex"
-  "Seminararbeit.tex" 1794306176.75865 49055 c2cb6ca08af5ed141c0d5ca178954c6a ""
-  "Seminararbeit.toc" 1794306178.70261 2629 99ab16f0ad2b57d7b93c47aad18ad68e "pdflatex"
+  "Seminararbeit.aux" 1794316713.34034 14844 edfb0119b7f1b18404d1a8ffc6d1de80 "pdflatex"
+  "Seminararbeit.bbl" 1794316673.64585 24607 fc24d58ffe709f4aceb2a7a9db348c60 "biber Seminararbeit"
+  "Seminararbeit.lof" 1794316713.34434 1831 e103521c91cb0b8d34cd34ca122c86bd "pdflatex"
+  "Seminararbeit.lot" 1794316713.34434 1006 ce9a7583767ba45372b4594eaf89b9ed "pdflatex"
+  "Seminararbeit.out" 1794316713.34034 4198 b8072a2ed0b3175ddcbeead538d19982 "pdflatex"
+  "Seminararbeit.run.xml" 1794316713.34434 2520 2380c1a1b7fa5887cd81052f66c770cf "pdflatex"
+  "Seminararbeit.tex" 1794316709.92847 40300 7cfa65f049a63d1209d0a8d3b87ad3c8 ""
+  "Seminararbeit.toc" 1794316713.34434 1946 be13b82c78e4c2076a56e82a987c8695 "pdflatex"
   "sycl-matmul/common.hpp" 1792579066.44399 3126 c129ee26f7289a8bdf361258f66a4792 ""
   "sycl-matmul/stufe0_sequentiell.cpp" 1792579066.44399 1526 eff842d04872e0692cf6ff89f3edf060 ""
   "sycl-matmul/stufe1_usm_shared.cpp" 1792579066.44399 2338 0f787623e2ba8f0c168b8e30bb08e829 ""

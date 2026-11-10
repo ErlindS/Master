@@ -537,45 +537,14 @@
       \strng{authornamehash}{fa4df1d61f61cc9c90c5171a8f4e262a}
       \strng{authorfullhash}{32a3f10098b35d6f183da01f8d43c68d}
       \strng{authorfullhashraw}{32a3f10098b35d6f183da01f8d43c68d}
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{edition}{4}
       \field{langid}{english}
       \field{title}{{Programming Massively Parallel Processors: A Hands-on Approach}}
       \field{year}{2022}
-    \endentry
-    \entry{nvidia_cuda_guide}{online}{}{}
-      \name{author}{1}{}{%
-        {{hash=9ad14fae09b617d96cb4af76c555b394}{%
-           family={{NVIDIA Corporation}},
-           familyi={N\bibinitperiod}}}%
-      }
-      \strng{namehash}{9ad14fae09b617d96cb4af76c555b394}
-      \strng{fullhash}{9ad14fae09b617d96cb4af76c555b394}
-      \strng{fullhashraw}{9ad14fae09b617d96cb4af76c555b394}
-      \strng{bibnamehash}{9ad14fae09b617d96cb4af76c555b394}
-      \strng{authorbibnamehash}{9ad14fae09b617d96cb4af76c555b394}
-      \strng{authornamehash}{9ad14fae09b617d96cb4af76c555b394}
-      \strng{authorfullhash}{9ad14fae09b617d96cb4af76c555b394}
-      \strng{authorfullhashraw}{9ad14fae09b617d96cb4af76c555b394}
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{langid}{english}
-      \field{title}{{CUDA C++ Programming Guide}}
-      \field{urlday}{30}
-      \field{urlmonth}{10}
-      \field{urlyear}{2026}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb https://docs.nvidia.com/cuda/cuda-c-programming-guide/
-      \endverb
-      \verb{url}
-      \verb https://docs.nvidia.com/cuda/cuda-c-programming-guide/
-      \endverb
     \endentry
     \entry{pennycook2019implications}{article}{}{}
       \name{author}{3}{}{%
