@@ -2,8 +2,9 @@
 #
 #   make                         -> Intel oneAPI DPC++ (icpx)
 #   make COMPILER=acpp           -> AdaptiveCpp
-#   make TILE=32                 -> andere Kachelgröße für Stufe 3
-#   make kacheln                 -> Stufe 3 einmal pro Kachelgröße (TILES)
+#   make TILE=32                 -> andere Kachelgröße für Stufe 4
+#   make WG=32                   -> andere Work-Group-Größe für Stufe 3
+#   make kacheln                 -> Stufe 4 einmal pro Kachelgröße (TILES)
 #
 # NVIDIA-GPU mit DPC++ (braucht das CUDA-Plugin für oneAPI):
 #   make SYCL_TARGETS=nvptx64-nvidia-cuda
@@ -12,6 +13,7 @@
 
 COMPILER ?= dpcpp
 TILE     ?= 16
+WG       ?= 16
 TILES    ?= 8 16 32 64
 SEQ_CXX  ?= g++
 
@@ -28,7 +30,8 @@ endif
 
 SYCL_FLAGS += $(EXTRA)
 
-BINS := stufe0_sequentiell stufe1_usm_shared stufe2_usm_device stufe3_tiling
+BINS := stufe0_sequentiell stufe1_usm_shared stufe2_usm_device stufe2b_buffer \
+        stufe3_ndrange stufe4_tiling stufe5_anpassung
 
 all: $(BINS)
 
@@ -41,16 +44,27 @@ stufe1_usm_shared: stufe1_usm_shared.cpp common.hpp
 stufe2_usm_device: stufe2_usm_device.cpp common.hpp
 	$(CXX) $(SYCL_FLAGS) -o $@ $<
 
-stufe3_tiling: stufe3_tiling.cpp common.hpp
+stufe2b_buffer: stufe2b_buffer.cpp common.hpp
+	$(CXX) $(SYCL_FLAGS) -o $@ $<
+
+stufe3_ndrange: stufe3_ndrange.cpp common.hpp
+	$(CXX) $(SYCL_FLAGS) -DWGSIZE=$(WG) -o $@ $<
+
+stufe4_tiling: stufe4_tiling.cpp common.hpp
 	$(CXX) $(SYCL_FLAGS) -DTILE=$(TILE) -o $@ $<
 
-# Kachelgrößen-Experiment (Performance-Portabilität): stufe3_tiling_T8, _T16, …
-kacheln: $(addprefix stufe3_tiling_T,$(TILES))
+# Stufe 5 wählt die Kachelgröße (8, 16, 32, 64) erst zur Laufzeit
+stufe5_anpassung: stufe5_anpassung.cpp common.hpp
+	$(CXX) $(SYCL_FLAGS) -o $@ $<
 
-stufe3_tiling_T%: stufe3_tiling.cpp common.hpp
+# Kachelgrößen-Experiment (Performance-Portabilität): stufe4_tiling_T8, _T16, …
+kacheln: $(addprefix stufe4_tiling_T,$(TILES))
+
+stufe4_tiling_T%: stufe4_tiling.cpp common.hpp
 	$(CXX) $(SYCL_FLAGS) -DTILE=$* -o $@ $<
 
 clean:
-	rm -f $(BINS) stufe3_tiling_T*
+	rm -f $(BINS) stufe4_tiling_T*
+	rm -f stufe3_tiling stufe3_tiling_T* stufe4_anpassung   # alte Namen
 
 .PHONY: all clean kacheln

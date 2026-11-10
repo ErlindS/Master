@@ -2373,36 +2373,33 @@
     <bcf:datasource type="file" datatype="bibtex" glob="false">sycl.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="2" intorder="1">nickolls2008cuda</bcf:citekey>
-    <bcf:citekey order="3" intorder="1">stone2010opencl</bcf:citekey>
+    <bcf:citekey order="1" intorder="1">nickolls2008cuda</bcf:citekey>
+    <bcf:citekey order="2" intorder="1">stone2010opencl</bcf:citekey>
+    <bcf:citekey order="3" intorder="1">khronos2020sycl</bcf:citekey>
     <bcf:citekey order="4" intorder="1">khronos2020sycl</bcf:citekey>
-    <bcf:citekey order="5" intorder="1">khronos2020sycl</bcf:citekey>
-    <bcf:citekey order="6" intorder="1">intel_llvm</bcf:citekey>
-    <bcf:citekey order="7" intorder="1">alpay2020hipsycl</bcf:citekey>
-    <bcf:citekey order="7" intorder="2">adaptivecpp</bcf:citekey>
-    <bcf:citekey order="8" intorder="1">alpay2023sscp</bcf:citekey>
-    <bcf:citekey order="9" intorder="1">edwards2014kokkos</bcf:citekey>
-    <bcf:citekey order="10" intorder="1">beckingsale2019raja</bcf:citekey>
-    <bcf:citekey order="11" intorder="1">reinders2023dpcpp</bcf:citekey>
-    <bcf:citekey order="12" intorder="1">deakin2020sycl</bcf:citekey>
-    <bcf:citekey order="12" intorder="2">breyer2022svm</bcf:citekey>
-    <bcf:citekey order="13" intorder="1">pennycook2016metric</bcf:citekey>
-    <bcf:citekey order="14" intorder="1">intel_llvm</bcf:citekey>
+    <bcf:citekey order="5" intorder="1">intel_llvm</bcf:citekey>
+    <bcf:citekey order="6" intorder="1">alpay2020hipsycl</bcf:citekey>
+    <bcf:citekey order="6" intorder="2">adaptivecpp</bcf:citekey>
+    <bcf:citekey order="7" intorder="1">alpay2023sscp</bcf:citekey>
+    <bcf:citekey order="8" intorder="1">edwards2014kokkos</bcf:citekey>
+    <bcf:citekey order="9" intorder="1">beckingsale2019raja</bcf:citekey>
+    <bcf:citekey order="10" intorder="1">reinders2023dpcpp</bcf:citekey>
+    <bcf:citekey order="11" intorder="1">deakin2020sycl</bcf:citekey>
+    <bcf:citekey order="11" intorder="2">breyer2022svm</bcf:citekey>
+    <bcf:citekey order="12" intorder="1">pennycook2016metric</bcf:citekey>
+    <bcf:citekey order="13" intorder="1">intel_llvm</bcf:citekey>
+    <bcf:citekey order="14" intorder="1">khronos2020sycl</bcf:citekey>
     <bcf:citekey order="15" intorder="1">khronos2020sycl</bcf:citekey>
     <bcf:citekey order="16" intorder="1">alpay2023sscp</bcf:citekey>
-    <bcf:citekey order="17" intorder="1">khronos2020sycl</bcf:citekey>
+    <bcf:citekey order="17" intorder="1">alpay2023sscp</bcf:citekey>
     <bcf:citekey order="18" intorder="1">khronos2020sycl</bcf:citekey>
     <bcf:citekey order="19" intorder="1">reinders2023dpcpp</bcf:citekey>
     <bcf:citekey order="20" intorder="1">hwu2022pmpp</bcf:citekey>
     <bcf:citekey order="21" intorder="1">reinders2023dpcpp</bcf:citekey>
-    <bcf:citekey order="22" intorder="1">nickolls2008cuda</bcf:citekey>
-    <bcf:citekey order="23" intorder="1">alpay2023sscp</bcf:citekey>
-    <bcf:citekey order="24" intorder="1">khronos2020sycl</bcf:citekey>
-    <bcf:citekey order="25" intorder="1">khronos2020sycl</bcf:citekey>
-    <bcf:citekey order="26" intorder="1">nvidia_cuda_guide</bcf:citekey>
-    <bcf:citekey order="27" intorder="1">pennycook2016metric</bcf:citekey>
-    <bcf:citekey order="28" intorder="1">deakin2020sycl</bcf:citekey>
-    <bcf:citekey order="29" intorder="1">pennycook2019implications</bcf:citekey>
+    <bcf:citekey order="22" intorder="1">nvidia_cuda_guide</bcf:citekey>
+    <bcf:citekey order="23" intorder="1">pennycook2016metric</bcf:citekey>
+    <bcf:citekey order="24" intorder="1">deakin2020sycl</bcf:citekey>
+    <bcf:citekey order="25" intorder="1">pennycook2019implications</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

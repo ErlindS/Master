@@ -42,7 +42,7 @@ make clean >/dev/null
 make COMPILER=acpp all kacheln
 
 for dev in $DEVICES; do
-  echo "==> Stufen 0-3 auf Gerät: $dev"
+  echo "==> Stufen 0-5 auf Gerät: $dev"
   ACPP_VISIBILITY_MASK=$dev bash run_benchmark.sh "$OUT/stufen_$dev.csv"
 done
 

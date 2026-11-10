@@ -1,8 +1,6 @@
 \babel@toc {ngerman}{}\relax 
 \contentsline {table}{\numberline {1}{\ignorespaces SYCL im Vergleich zu anderen Programmiermodellen (($\text {$\mathsurround \z@ \mathchar "458$}$) = eingeschränkt)}}{2}{table.caption.5}%
 \contentsline {table}{\numberline {2}{\ignorespaces Stufen der Portierung und die dabei eingeführten Konzepte}}{3}{table.caption.6}%
-\contentsline {table}{\numberline {3}{\ignorespaces Varianten von Unified Shared Memory \blx@tocontentsinit {0}\cite {khronos2020sycl}}}{5}{table.caption.9}%
-\contentsline {table}{\numberline {4}{\ignorespaces Konzepte von SYCL, die von ihnen adressierten Probleme und die Stufe, in der sie bei der Portierung eingeführt werden}}{11}{table.caption.17}%
-\contentsline {table}{\numberline {5}{\ignorespaces Änderungen in Stufe~1 gegenüber Stufe~0}}{12}{table.caption.18}%
-\contentsline {table}{\numberline {6}{\ignorespaces Leistung je Stufe in GFLOPS (Median aus fünf Läufen, Stufe~0 auf einem Kern der jeweiligen Host-CPU)}}{16}{table.caption.21}%
-\contentsline {table}{\numberline {7}{\ignorespaces Laufzeit je Stufe in ms (Median aus fünf Läufen). Ab Stufe~2 sind Kernel- und Transferzeit getrennt erfasst}}{16}{table.caption.22}%
+\contentsline {table}{\numberline {3}{\ignorespaces Konzepte von SYCL, die von ihnen adressierten Probleme und die Stufe, in der sie bei der Portierung eingeführt werden}}{9}{table.caption.13}%
+\contentsline {table}{\numberline {4}{\ignorespaces Leistung je Stufe in GFLOPS (Median aus fünf Läufen, Stufe~0 auf einem Kern der jeweiligen Host-CPU)}}{13}{table.caption.15}%
+\contentsline {table}{\numberline {5}{\ignorespaces Laufzeit je Stufe in ms (Median aus fünf Läufen). Ab Stufe~2 sind Kernel- und Transferzeit getrennt erfasst, außer bei Stufe~2b. Die Transferzeit von Stufe~3 und~5 entspricht der von Stufe~2 bzw.~4}}{14}{table.caption.16}%

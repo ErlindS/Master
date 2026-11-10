@@ -1,6 +1,6 @@
-// Stufe 3 – Hardwarenah optimieren: Work-Groups und Local Memory (Tiling)
+// Stufe 4 – Hardwarenah optimieren: Local Memory (Tiling)
 //
-// Problem der Stufen 1 und 2: Jedes Work-Item liest seine komplette Zeile
+// Problem der Stufen 1 bis 3: Jedes Work-Item liest seine komplette Zeile
 // von A und Spalte von B aus dem langsamen globalen Speicher. Benachbarte
 // Work-Items lesen dabei immer wieder dieselben Werte.
 //
@@ -14,9 +14,9 @@
 // Dadurch wird jeder Wert aus dem globalen Speicher nur noch einmal pro
 // Work-Group statt einmal pro Work-Item gelesen.
 //
-// Speicherverwaltung wie Stufe 2 – geändert hat sich nur der Kernel.
+// Speicher wie Stufe 2, nd_range wie Stufe 3 – neu ist nur der Kernel.
 //
-// Neue Konzepte: nd_range, nd_item, Work-Group, local_accessor (Local
+// Neue Konzepte: Command Group (submit mit handler), local_accessor (Local
 // Memory), group_barrier
 //
 // Kachelgröße beim Kompilieren ändern, z. B. -DTILE=8 oder -DTILE=32.
@@ -111,7 +111,7 @@ int main(int argc, char** argv) {
   }
 
   const bool ok = bench::verify(hA.data(), hB.data(), hC.data(), n);
-  bench::report("3_tiling_T" + std::to_string(T), dev, n, first,
+  bench::report("4_tiling_T" + std::to_string(T), dev, n, first,
                 bench::median(kernel_times), bench::median(transfer_times), ok);
 
   sycl::free(A, q);

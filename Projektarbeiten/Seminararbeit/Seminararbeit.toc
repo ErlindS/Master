@@ -3,28 +3,27 @@
 \contentsline {section}{\numberline {2}Forschungsfrage}{1}{section.2}%
 \contentsline {section}{\numberline {3}Stand der Technik}{2}{section.3}%
 \contentsline {section}{\numberline {4}Methode}{3}{section.4}%
-\contentsline {section}{\numberline {5}Konzepte des Programmiermodells}{4}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Host, Gerät und Kernel}{4}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Speichermodell}{5}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}Asynchrone Ausführung und Abhängigkeiten}{6}{subsection.5.3}%
-\contentsline {subsection}{\numberline {5.4}Hierarchische Ausführung und lokaler Speicher}{7}{subsection.5.4}%
-\contentsline {subsection}{\numberline {5.5}Abbildung auf die Hardware}{8}{subsection.5.5}%
-\contentsline {subsection}{\numberline {5.6}Geräteauswahl, Backends und JIT-Kompilierung}{9}{subsection.5.6}%
-\contentsline {subsection}{\numberline {5.7}Fehlerbehandlung}{10}{subsection.5.7}%
-\contentsline {subsection}{\numberline {5.8}Zusammenfassung}{10}{subsection.5.8}%
-\contentsline {section}{\numberline {6}Anwendung auf die Matrixmultiplikation}{11}{section.6}%
-\contentsline {subsection}{\numberline {6.1}Stufe 0 -- Ausgangsprogramm}{11}{subsection.6.1}%
-\contentsline {subsection}{\numberline {6.2}Stufe 1 -- Der erste Kernel}{11}{subsection.6.2}%
-\contentsline {subsection}{\numberline {6.3}Stufe 2 -- Expliziter Gerätespeicher}{12}{subsection.6.3}%
-\contentsline {subsection}{\numberline {6.4}Stufe 3 -- Kachelung im lokalen Speicher}{13}{subsection.6.4}%
-\contentsline {subsection}{\numberline {6.5}Stufe 4 -- Gerätewechsel und Kachelgröße}{15}{subsection.6.5}%
-\contentsline {section}{\numberline {7}Ergebnisse}{16}{section.7}%
-\contentsline {section}{\numberline {8}Diskussion}{17}{section.8}%
-\contentsline {section}{\numberline {9}Schlussfolgerung}{18}{section.9}%
-\contentsline {section}{Literaturverzeichnis}{19}{section*.24}%
-\contentsline {section}{\numberline {A}Quellcode der Matrixmultiplikation}{21}{appendix.A}%
-\contentsline {subsection}{\numberline {A.1}Stufe 0 -- Sequentielles Ausgangsprogramm}{21}{subsection.A.1}%
-\contentsline {subsection}{\numberline {A.2}Stufe 1 -- USM shared und \texttt {parallel\_for}}{22}{subsection.A.2}%
-\contentsline {subsection}{\numberline {A.3}Stufe 2 -- USM device und explizites Kopieren}{23}{subsection.A.3}%
-\contentsline {subsection}{\numberline {A.4}Stufe 3 -- Kachelung im lokalen Speicher}{24}{subsection.A.4}%
-\contentsline {subsection}{\numberline {A.5}Gemeinsame Hilfsfunktionen (\texttt {common.hpp})}{26}{subsection.A.5}%
+\contentsline {section}{\numberline {5}Konzepte des Programmiermodells}{5}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Host, Gerät und Kernel}{5}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Speichermodell}{6}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Asynchrone Ausführung und Abhängigkeiten}{7}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Hierarchische Ausführung und lokaler Speicher}{8}{subsection.5.4}%
+\contentsline {section}{\numberline {6}Anwendung auf die Matrixmultiplikation}{10}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Stufe 0 bis 2 -- Vom Programm zum Kernel}{10}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Stufe 2b -- Buffer und Accessoren}{10}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Stufe 3 -- Work-Groups festlegen}{10}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Stufe 4 -- Kachelung im lokalen Speicher}{11}{subsection.6.4}%
+\contentsline {subsection}{\numberline {6.5}Stufe 5 -- Anpassung an das Gerät}{12}{subsection.6.5}%
+\contentsline {section}{\numberline {7}Ergebnisse}{13}{section.7}%
+\contentsline {section}{\numberline {8}Diskussion}{14}{section.8}%
+\contentsline {section}{\numberline {9}Schlussfolgerung}{15}{section.9}%
+\contentsline {section}{Literaturverzeichnis}{17}{section*.18}%
+\contentsline {section}{\numberline {A}Quellcode der Matrixmultiplikation}{19}{appendix.A}%
+\contentsline {subsection}{\numberline {A.1}Stufe 0 -- Sequentielles Ausgangsprogramm}{19}{subsection.A.1}%
+\contentsline {subsection}{\numberline {A.2}Stufe 1 -- USM shared und \texttt {parallel\_for}}{20}{subsection.A.2}%
+\contentsline {subsection}{\numberline {A.3}Stufe 2 -- USM device und explizites Kopieren}{21}{subsection.A.3}%
+\contentsline {subsection}{\numberline {A.4}Stufe 2b -- Buffer und Accessoren}{22}{subsection.A.4}%
+\contentsline {subsection}{\numberline {A.5}Stufe 3 -- Work-Groups mit \texttt {nd\_range}}{24}{subsection.A.5}%
+\contentsline {subsection}{\numberline {A.6}Stufe 4 -- Kachelung im lokalen Speicher}{25}{subsection.A.6}%
+\contentsline {subsection}{\numberline {A.7}Stufe 5 -- Anpassung an das Gerät}{27}{subsection.A.7}%
+\contentsline {subsection}{\numberline {A.8}Gemeinsame Hilfsfunktionen (\texttt {common.hpp})}{31}{subsection.A.8}%

@@ -4,7 +4,7 @@
 #   ./run_benchmark.sh                     -> Standardgerät, ergebnisse.csv
 #   ./run_benchmark.sh gpu_nvidia.csv      -> eigener Dateiname
 #
-# Gerät wählen (Stufe 4: derselbe Code auf verschiedener Hardware):
+# Gerät wählen (derselbe Code auf verschiedener Hardware):
 #   DPC++:        ONEAPI_DEVICE_SELECTOR=cuda:gpu   ./run_benchmark.sh nvidia.csv
 #                 ONEAPI_DEVICE_SELECTOR=opencl:cpu ./run_benchmark.sh cpu.csv
 #                 ONEAPI_DEVICE_SELECTOR=level_zero:gpu ./run_benchmark.sh intel_gpu.csv
@@ -27,7 +27,10 @@ for n in $SIZES; do
   fi
   ./stufe1_usm_shared "$n" "$REPS" | tee -a "$OUT"
   ./stufe2_usm_device "$n" "$REPS" | tee -a "$OUT"
-  ./stufe3_tiling     "$n" "$REPS" | tee -a "$OUT"
+  ./stufe2b_buffer    "$n" "$REPS" | tee -a "$OUT"
+  ./stufe3_ndrange    "$n" "$REPS" | tee -a "$OUT"
+  ./stufe4_tiling     "$n" "$REPS" | tee -a "$OUT"
+  ./stufe5_anpassung  "$n" "$REPS" | tee -a "$OUT"
 done
 
 echo "Fertig: $OUT"
