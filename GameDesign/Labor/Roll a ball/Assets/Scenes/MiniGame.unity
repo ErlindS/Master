@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 156144954}
   - component: {fileID: 156144955}
   - component: {fileID: 156144956}
+  - component: {fileID: 156144957}
   m_Layer: 0
   m_Name: Walls
   m_TagString: Untagged
@@ -231,7 +232,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aec43d89082a3a722b5957490b3daff9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlaygroundMovement
-  moveSpeed: 10
+  maxSpeed: 12
+  smoothTime: 0.08
+  ballCollisionRadius: 0.45
+  spinBall: 1
+  physicsRate: 100
+--- !u!114 &156144957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 156144951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f21157d7390da62df97588e07a51db30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelManager
+  pauseBetweenStages: 0.6
+  minEnemySpawnDistance: 7
+  wallHeight: 1
+  wallRiseDuration: 0.5
+  createReferenceTable: 1
+  tableSize: 80
+  tableDepth: 1
+  tileSize: 2
+  tableColorA: {r: 0.3, g: 0.32, b: 0.36, a: 1}
+  tableColorB: {r: 0.4, g: 0.42, b: 0.47, a: 1}
+  homeFrameColor: {r: 1, g: 0.75, b: 0.2, a: 1}
+  createHolderRod: 1
+  rodHeight: 2.5
+  rodThickness: 0.25
+  rodColor: {r: 0.75, g: 0.77, b: 0.8, a: 1}
+  ground: {fileID: 0}
+  pickUpParent: {fileID: 0}
+  pickUpTemplate: {fileID: 0}
+  wallMaterial: {fileID: 0}
+  ball: {fileID: 0}
+  enemy: {fileID: 0}
 --- !u!1 &205752839
 GameObject:
   m_ObjectHideFlags: 0
@@ -778,6 +816,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   player: {fileID: 808354408}
+  board: {fileID: 0}
 --- !u!195 &503513810
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1707,6 +1746,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   countText: {fileID: 1739096052}
   winTextObject: {fileID: 523545288}
+  pickUpsToWin: 12
 --- !u!54 &808354410
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2105,6 +2145,10 @@ PrefabInstance:
     - target: {fileID: 3794734637110484721, guid: a8305ea0eca4c2c4382880e3cb23f82c, type: 3}
       propertyPath: m_Name
       value: DynamicBox (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3794734637110484721, guid: a8305ea0eca4c2c4382880e3cb23f82c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5358682796129378134, guid: a8305ea0eca4c2c4382880e3cb23f82c, type: 3}
       propertyPath: m_UseGravity
@@ -2684,6 +2728,10 @@ PrefabInstance:
     - target: {fileID: 3794734637110484721, guid: a8305ea0eca4c2c4382880e3cb23f82c, type: 3}
       propertyPath: m_Name
       value: DynamicBox (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3794734637110484721, guid: a8305ea0eca4c2c4382880e3cb23f82c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5358682796129378134, guid: a8305ea0eca4c2c4382880e3cb23f82c, type: 3}
       propertyPath: m_UseGravity
@@ -3558,6 +3606,10 @@ PrefabInstance:
     - target: {fileID: 3794734637110484721, guid: a8305ea0eca4c2c4382880e3cb23f82c, type: 3}
       propertyPath: m_Name
       value: DynamicBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 3794734637110484721, guid: a8305ea0eca4c2c4382880e3cb23f82c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5358682796129378134, guid: a8305ea0eca4c2c4382880e3cb23f82c, type: 3}
       propertyPath: m_UseGravity
