@@ -1,0 +1,77 @@
+== Knoten
+gpu103
+== CPU
+CPU(s):                                  48
+Model name:                              AMD EPYC 9254 24-Core Processor
+CPU(s) scaling MHz:                      73%
+== GPU
+name, driver_version, memory.total [MiB]
+NVIDIA L40S, 595.58.03, 46068 MiB
+== Compiler
+DPC++ compiler 7.2.0 build based on:
+== SYCL-Geräte
+[cuda:gpu][cuda:0] NVIDIA CUDA BACKEND, NVIDIA L40S 8.9 [CUDA 13.2]
+0_sequentiell;CPU (1 Kern);256;11.616;11.152;0.000;3.01;ja
+1_usm_shared;NVIDIA L40S;256;5.151;0.019;0.000;1749.54;ja
+2_usm_device;NVIDIA L40S;256;2.980;0.021;0.066;1635.21;ja
+2b_buffer;NVIDIA L40S;256;57.843;0.224;0.000;150.12;ja
+3_ndrange_WG16;NVIDIA L40S;256;19.704;0.019;0.065;1757.88;ja
+4_tiling_T16;NVIDIA L40S;256;3.474;0.021;0.070;1624.05;ja
+[stufe5] NVIDIA L40S: max. Work-Group 1024, max. je Dimension 1024 x 1024, lokaler Speicher 101376 Byte
+[stufe5] T = 8: 0.032 ms
+[stufe5] T = 16: 0.030 ms
+[stufe5] T = 32: 0.035 ms
+[stufe5] T = 64: vom Gerät nicht erlaubt
+[stufe5] gewählt: T = 16 (Auswahl 26.3 ms)
+5_angepasst_T16;NVIDIA L40S;256;26.487;0.035;0.069;963.05;ja
+0_sequentiell;CPU (1 Kern);512;248.593;238.448;0.000;1.13;ja
+1_usm_shared;NVIDIA L40S;512;2.566;0.101;0.000;2645.18;ja
+2_usm_device;NVIDIA L40S;512;2.297;0.103;0.201;2615.26;ja
+2b_buffer;NVIDIA L40S;512;2.683;0.512;0.000;524.40;ja
+3_ndrange_WG16;NVIDIA L40S;512;1.943;0.073;0.209;3689.94;ja
+4_tiling_T16;NVIDIA L40S;512;2.224;0.078;0.197;3424.97;ja
+[stufe5] NVIDIA L40S: max. Work-Group 1024, max. je Dimension 1024 x 1024, lokaler Speicher 101376 Byte
+[stufe5] T = 8: 0.094 ms
+[stufe5] T = 16: 0.085 ms
+[stufe5] T = 32: 0.087 ms
+[stufe5] T = 64: vom Gerät nicht erlaubt
+[stufe5] gewählt: T = 16 (Auswahl 5.6 ms)
+5_angepasst_T16;NVIDIA L40S;512;5.944;0.096;0.203;2784.51;ja
+0_sequentiell;CPU (1 Kern);1024;5616.090;6665.882;0.000;0.32;ja
+1_usm_shared;NVIDIA L40S;1024;4.467;0.615;0.000;3489.49;ja
+2_usm_device;NVIDIA L40S;1024;3.134;0.619;0.608;3470.91;ja
+2b_buffer;NVIDIA L40S;1024;3.991;1.703;0.000;1260.78;ja
+3_ndrange_WG16;NVIDIA L40S;1024;2.775;0.411;0.594;5230.62;ja
+4_tiling_T16;NVIDIA L40S;1024;3.415;0.457;0.589;4704.05;ja
+[stufe5] NVIDIA L40S: max. Work-Group 1024, max. je Dimension 1024 x 1024, lokaler Speicher 101376 Byte
+[stufe5] T = 8: 0.667 ms
+[stufe5] T = 16: 0.576 ms
+[stufe5] T = 32: 0.657 ms
+[stufe5] T = 64: vom Gerät nicht erlaubt
+[stufe5] gewählt: T = 16 (Auswahl 12.4 ms)
+5_angepasst_T16;NVIDIA L40S;1024;13.354;0.593;0.591;3624.08;ja
+1_usm_shared;NVIDIA L40S;2048;13.628;5.848;0.000;2937.97;ja
+2_usm_device;NVIDIA L40S;2048;10.142;5.848;2.165;2937.61;ja
+2b_buffer;NVIDIA L40S;2048;12.032;9.303;0.000;1846.80;ja
+3_ndrange_WG16;NVIDIA L40S;2048;7.331;3.088;2.248;5562.58;ja
+4_tiling_T16;NVIDIA L40S;2048;8.851;3.483;3.294;4932.88;ja
+[stufe5] NVIDIA L40S: max. Work-Group 1024, max. je Dimension 1024 x 1024, lokaler Speicher 101376 Byte
+[stufe5] T = 8: 4.311 ms
+[stufe5] T = 16: 3.615 ms
+[stufe5] T = 32: 3.936 ms
+[stufe5] T = 64: vom Gerät nicht erlaubt
+[stufe5] gewählt: T = 16 (Auswahl 54.2 ms)
+5_angepasst_T16;NVIDIA L40S;2048;58.732;3.672;2.175;4678.28;ja
+Fertig: ergebnisse_dachs/gpu1_153608/stufen_gpu.csv
+cuda:gpu;NVIDIA L40S;8;1024;0.535;4012.83;ok;
+cuda:gpu;NVIDIA L40S;16;1024;0.455;4721.03;ok;
+cuda:gpu;NVIDIA L40S;32;1024;0.505;4252.60;ok;
+cuda:gpu;;64;1024;;;startet_nicht;
+cuda:gpu;NVIDIA L40S;auto;1024;0.592;3630.40;ok;16
+cuda:gpu;NVIDIA L40S;8;2048;4.096;4194.47;ok;
+cuda:gpu;NVIDIA L40S;16;2048;3.485;4929.84;ok;
+cuda:gpu;NVIDIA L40S;32;2048;3.568;4814.92;ok;
+cuda:gpu;;64;2048;;;startet_nicht;
+cuda:gpu;NVIDIA L40S;auto;2048;3.663;4690.66;ok;16
+Fertig: ergebnisse_dachs/gpu1_153608/kacheln.csv
+Fertig: ergebnisse_dachs/gpu1_153608

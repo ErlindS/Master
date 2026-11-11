@@ -1,0 +1,11 @@
+auswahl;geraet;tile;n;median_ms;gflops;status;gewaehlt
+cuda:gpu;NVIDIA H100 80GB HBM3;8;1024;0.526;4083.58;ok;
+cuda:gpu;NVIDIA H100 80GB HBM3;16;1024;0.366;5873.06;ok;
+cuda:gpu;NVIDIA H100 80GB HBM3;32;1024;0.399;5377.03;ok;
+cuda:gpu;;64;1024;;;startet_nicht;
+cuda:gpu;NVIDIA H100 80GB HBM3;auto;1024;0.647;3318.86;ok;16
+cuda:gpu;NVIDIA H100 80GB HBM3;8;2048;3.954;4344.79;ok;
+cuda:gpu;NVIDIA H100 80GB HBM3;16;2048;2.709;6342.71;ok;
+cuda:gpu;NVIDIA H100 80GB HBM3;32;2048;2.975;5773.87;ok;
+cuda:gpu;;64;2048;;;startet_nicht;
+cuda:gpu;NVIDIA H100 80GB HBM3;auto;2048;3.119;5508.46;ok;16

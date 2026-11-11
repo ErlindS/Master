@@ -1,0 +1,13 @@
+== Knoten
+gpu801
+== CPU
+CPU(s):                                  96
+Model name:                              AMD EPYC 9454 48-Core Processor
+CPU(s) scaling MHz:                      77%
+== GPU
+name, driver_version, memory.total [MiB]
+NVIDIA H100 80GB HBM3, 595.58.03, 81559 MiB
+== Compiler
+DPC++ compiler 7.2.0 build based on:
+== SYCL-Geräte
+[cuda:gpu][cuda:0] NVIDIA CUDA BACKEND, NVIDIA H100 80GB HBM3 9.0 [CUDA 13.2]

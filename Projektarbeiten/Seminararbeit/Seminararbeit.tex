@@ -279,12 +279,13 @@ Wirkung jedes Schritts getrennt messen, was F2 beantwortet.
 \label{tab:stufen}
 \end{table}
 
-Gemessen wird mit DPC++ \cite{intel_llvm} auf drei Geräten. Zumal auf einem AMD
-Ryzen~5 5600X (sechs Kerne, OpenCL-Backend), einer NVIDIA GeForce
-RTX~5060~Ti und einer NVIDIA L40S auf dem DACHS-Cluster der Hochschule
-Esslingen (beide CUDA-Backend).
-Jede Stufe wird einmal übersetzt und unverändert auf allen drei Geräten
-ausgeführt.
+Gemessen wird mit DPC++~7.2 \cite{intel_llvm} auf vier Geräten. Ein AMD
+Ryzen~5 5600X (sechs Kerne, OpenCL-Backend) und eine NVIDIA GeForce
+RTX~5060~Ti stecken im selben Arbeitsplatzrechner. Eine NVIDIA L40S und eine
+NVIDIA H100 stehen auf dem DACHS-Cluster der Hochschule Esslingen. Alle GPUs
+laufen über das CUDA-Backend. Der Quellcode ist für alle Geräte derselbe.
+Jede Stufe wird je Rechner einmal übersetzt und läuft dort unverändert. Die
+AMD MI300A des Clusters war im Messzeitraum nicht verfügbar.
 
 Die Zeit misst der Host mit der monotonen Uhr der C++-Standardbibliothek vom Einreichen eines Auftrags bis zum
 Ende des Wartens auf ihn \stelle{lst:common}{44--53}. Die Host-Messung wurde gewählt, weil sie für alle
@@ -583,94 +584,92 @@ in der sie bei der Portierung eingeführt werden}
 \section{Ergebnisse}\label{sec:ergebnisse}
 % ---------------------------------------------------------------------------
 
-Alle Stufen liefen ohne Codeänderung und mit korrektem Ergebnis auf allen
-drei Geräten. \offen{für 2b, 3 und 5 nach der Messung prüfen} Tabelle~\ref{tab:stufenmessung} zeigt die Wirkung jeder Stufe. Schon Stufe~1 ist bei $n = 1024$ rund 2300-mal (RTX)
-bzw.\ 10\,700-mal (L40S) schneller als das sequentielle Ausgangsprogramm auf
-einem CPU-Kern. Dieser Vergleich misst allerdings Parallelisierung und
-Gerätewechsel zugleich. Stufe~2 ändert die Rechenzeit nicht, macht aber den
-Transfer sichtbar, der bei $n = 2048$ ein Viertel (RTX) bis ein Drittel
-(L40S) der Rechenzeit ausmacht. Stufe~2b braucht für Kopien und Kernel
-zusammen \offen{Messung}, verglichen mit der Summe aus Kernel- und
-Transferzeit von Stufe~2. Die selbst gewählte Work-Group-Größe in Stufe~3
-ändert die Leistung gegenüber Stufe~2 um \offen{Messung} (RTX),
-\offen{Messung} (L40S) und \offen{Messung} (CPU). Die Kachelung in Stufe~4
-steigert die Leistung gegenüber Stufe~2 um 31\,\% auf der RTX, auf der L40S
-sogar um 69\,\%. Auf der
-CPU erreicht Stufe~1 mit sechs Kernen rund 45~GFLOPS, etwa 90-mal so viel
-wie ein einzelner Kern. Die Kachelung steigert die Leistung dort auf mehr als
-das Dreifache, weil die Kacheln in die Caches der CPU passen. Der erste Lauf
-mit JIT-Kompilierung dauert bei $n = 1024$ zwei- bis achtmal so lang wie die
-folgenden.
+Alle Stufen liefen ohne Codeänderung auf allen vier Geräten und lieferten
+überall ein korrektes Ergebnis. Tabelle~\ref{tab:stufenmessung} zeigt die
+Leistung jeder Stufe, Tabelle~\ref{tab:zeiten} die zugehörigen Laufzeiten.
+Die folgenden Abschnitte gehen die Stufen der Reihe nach durch.
 
 \begin{table}[htbp]
 \centering
-\small
-\begin{tabular}{@{}lrrrrrr@{}}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}l*{8}{>{\raggedleft\arraybackslash}p{0.95cm}}@{}}
 \toprule
- & \multicolumn{2}{c}{\textbf{RTX 5060 Ti}} & \multicolumn{2}{c}{\textbf{L40S}} & \multicolumn{2}{c}{\textbf{Ryzen 5 5600X}} \\
-\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(l){6-7}
-\textbf{Stufe} & $n = 1024$ & $n = 2048$ & $n = 1024$ & $n = 2048$ & $n = 1024$ & $n = 2048$ \\
+ & \multicolumn{2}{c}{\textbf{RTX 5060 Ti}} & \multicolumn{2}{c}{\textbf{L40S}} & \multicolumn{2}{c}{\textbf{H100}} & \multicolumn{2}{c}{\textbf{Ryzen 5 5600X}} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(l){8-9}
+\textbf{Stufe} & 1024 & 2048 & 1024 & 2048 & 1024 & 2048 & 1024 & 2048 \\
 \midrule
-0 (ein CPU-Kern)   & 0,5  & --   & 0,3  & --   & 0,5 & --  \\
-1 (USM shared)     & 1105 & 1099 & 3459 & 2929 & 45  & 43  \\
-2 (USM device)     & 1088 & 1083 & 3402 & 2926 & 44  & 43  \\
-2b (Buffer, inkl.\ Transfer) & \offen{?} & \offen{?} & \offen{?} & \offen{?} & \offen{?} & \offen{?} \\
-3 (nd\_range, $W = 16$) & \offen{?} & \offen{?} & \offen{?} & \offen{?} & \offen{?} & \offen{?} \\
-4 (Kachelung, $T = 16$) & 1395 & 1418 & 4720 & 4934 & 154 & 150 \\
-5 (angepasst)      & \offen{?} & \offen{?} & \offen{?} & \offen{?} & \offen{?} & \offen{?} \\
+0 (ein CPU-Kern)        & 0,5  & --   & 0,3  & --   & 0,4  & --   & 0,5 & --  \\
+1 (USM shared)          & 1102 & 1108 & 3489 & 2938 & 6044 & 4793 & 43  & 43  \\
+2 (USM device)          & 1094 & 1110 & 3471 & 2938 & 6110 & 4811 & 41  & 43  \\
+2b (Buffer, mit Transfer) & 645 & 863 & 1261 & 1847 & 1246 & 2468 & 31  & 28  \\
+3 (nd\_range, $W = 16$) & 1573 & 1595 & 5231 & 5563 & 4858 & 5351 & 51  & 51  \\
+4 (Kachelung, $T = 16$) & 1388 & 1426 & 4704 & 4933 & 5853 & 6348 & 151 & 149 \\
+5 (angepasst)           & 1240 & 1350 & 3624 & 4678 & 3317 & 5497 & 179 & 176 \\
 \bottomrule
 \end{tabular}
-\caption{Leistung je Stufe in GFLOPS (Median aus fünf Läufen, Stufe~0 auf einem Kern der jeweiligen Host-CPU)}
+\caption{Leistung je Stufe in GFLOPS für $n = 1024$ und $n = 2048$ (Median aus
+fünf Läufen). Stufe~0 läuft auf einem Kern der jeweiligen Host-CPU}
 \label{tab:stufenmessung}
 \end{table}
 
 \begin{table}[htbp]
 \centering
-\small
-\begin{tabular}{@{}lrrrrrr@{}}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}l*{8}{>{\raggedleft\arraybackslash}p{0.95cm}}@{}}
 \toprule
- & \multicolumn{2}{c}{\textbf{RTX 5060 Ti}} & \multicolumn{2}{c}{\textbf{L40S}} & \multicolumn{2}{c}{\textbf{Ryzen 5 5600X}} \\
-\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(l){6-7}
-\textbf{Stufe} & $n = 1024$ & $n = 2048$ & $n = 1024$ & $n = 2048$ & $n = 1024$ & $n = 2048$ \\
+ & \multicolumn{2}{c}{\textbf{RTX 5060 Ti}} & \multicolumn{2}{c}{\textbf{L40S}} & \multicolumn{2}{c}{\textbf{H100}} & \multicolumn{2}{c}{\textbf{Ryzen 5 5600X}} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(l){8-9}
+\textbf{Stufe} & 1024 & 2048 & 1024 & 2048 & 1024 & 2048 & 1024 & 2048 \\
 \midrule
-0 (ein CPU-Kern)    & 4484 & --    & 6650 & --    & 4484 & --  \\
-1 (USM shared)      & 1,94 & 15,64 & 0,62 & 5,87  & 47,6 & 401 \\
-2 Kernel            & 1,97 & 15,87 & 0,63 & 5,87  & 48,7 & 402 \\
-\quad Transfer      & 1,34 & 3,93  & 0,60 & 2,12  & 0,90 & 5,68 \\
-2b Kernel und Transfer & \offen{?} & \offen{?} & \offen{?} & \offen{?} & \offen{?} & \offen{?} \\
-3 Kernel ($W = 16$) & \offen{?} & \offen{?} & \offen{?} & \offen{?} & \offen{?} & \offen{?} \\
-4 Kernel ($T = 16$) & 1,54 & 12,12 & 0,46 & 3,48  & 14,0 & 114 \\
-\quad Transfer      & 1,40 & 4,21  & 0,73 & 2,15  & 1,05 & 5,74 \\
-5 Kernel (angepasst) & \offen{?} & \offen{?} & \offen{?} & \offen{?} & \offen{?} & \offen{?} \\
-\quad erster Lauf mit Auswahl & \offen{?} & \offen{?} & \offen{?} & \offen{?} & \offen{?} & \offen{?} \\
+0 (ein CPU-Kern)        & 4319 & --    & 6666 & --    & 5600 & --    & 4319 & --   \\
+1 (USM shared)          & 1,95 & 15,50 & 0,62 & 5,85  & 0,36 & 3,58  & 49,6 & 399  \\
+2 Kernel                & 1,96 & 15,47 & 0,62 & 5,85  & 0,35 & 3,57  & 52,5 & 399  \\
+\quad Transfer          & 1,14 & 4,16  & 0,61 & 2,17  & 0,70 & 2,65  & 0,90 & 4,97 \\
+2b Kernel und Transfer  & 3,33 & 19,90 & 1,70 & 9,30  & 1,72 & 6,96  & 68,4 & 612  \\
+3 Kernel ($W = 16$)     & 1,37 & 10,77 & 0,41 & 3,09  & 0,44 & 3,21  & 42,3 & 335  \\
+4 Kernel ($T = 16$)     & 1,55 & 12,05 & 0,46 & 3,48  & 0,37 & 2,71  & 14,2 & 115  \\
+\quad Transfer          & 1,53 & 4,06  & 0,59 & 3,29  & 0,72 & 2,55  & 0,70 & 4,64 \\
+5 Kernel (angepasst)    & 1,73 & 12,73 & 0,59 & 3,67  & 0,65 & 3,13  & 12,0 & 97,7 \\
+\quad erster Lauf mit Auswahl & 26,0 & 182 & 13,4 & 58,7 & 14,3 & 54,1 & 512 & 2291 \\
 \bottomrule
 \end{tabular}
-\caption{Laufzeit je Stufe in ms (Median aus fünf Läufen). Ab Stufe~2 sind Kernel- und Transferzeit getrennt erfasst, außer bei Stufe~2b. Die Transferzeit von Stufe~3 und~5 entspricht der von Stufe~2 bzw.~4}
+\caption{Laufzeit je Stufe in ms für $n = 1024$ und $n = 2048$ (Median aus fünf
+Läufen). Ab Stufe~2 sind Kernel- und Transferzeit getrennt erfasst, außer bei
+Stufe~2b. Die Transferzeit von Stufe~3 und~5 entspricht der von Stufe~2
+bzw.~4}
 \label{tab:zeiten}
 \end{table}
 
-Tabelle~\ref{tab:zeiten} zeigt die zugehörigen Laufzeiten. Bei kleinen
-Matrizen kostet der Datentransfer zur GPU mehr als die Rechnung. Auf der RTX
-überwiegt die Rechenzeit ab $n = 1024$, auf der schnelleren L40S erst bei
-$n = 2048$. Auf der CPU ist der Transfer vernachlässigbar, da Host und Gerät
-denselben Arbeitsspeicher nutzen. Abbildung~\ref{fig:ergebnisse}
-zeigt die Effizienz je Kachelgröße auf allen drei Geräten. Die beste
-Kachelgröße ist geräteabhängig. Auf beiden GPUs ist $T = 16$ am schnellsten, auf der CPU
-$T = 32$. Bei $T = 64$ startet der Kernel auf den GPUs nicht, sodass die
-Performance-Portabilität (PP) auf null fällt. Nach Pennycook et al.\
-\cite{pennycook2016metric} ist sie das harmonische Mittel der Effizienzen,
-die eine Anwendung auf den einzelnen Geräten einer Gerätemenge erreicht.
-Wird ein Gerät nicht unterstützt, ist sie null. Als Effizienz dient hier die
-Leistung relativ zur besten Kachelgröße auf demselben Gerät. Den höchsten
-Wert von 0,99 erreicht $T = 32$.
+\paragraph{Parallelisierung und Transfer (Stufen 1 bis 2b).}
+Den größten Sprung bringt Stufe~1. Bei $n = 1024$ ist sie auf der CPU rund
+90-mal, auf den GPUs 2200-mal (RTX) bis 15\,800-mal (H100) so schnell wie das
+sequentielle Ausgangsprogramm. Stufe~2 macht den Transfer sichtbar. Er wiegt
+umso schwerer, je schneller die GPU rechnet, und entspricht bei $n = 2048$
+einem Viertel (RTX) bis drei Vierteln (H100) der Rechenzeit. Auf der CPU ist
+er vernachlässigbar. Buffer (Stufe~2b) sind auf keinem Gerät schneller als
+Stufe~2 und kosten außer auf der RTX 12 bis 64\,\% mehr Zeit.
 
-Stufe~5 sortiert $T = 64$ auf beiden GPUs schon über die Geräteabfrage aus
-und startet deshalb auf allen drei Geräten. Gewählt wurde $T = \offen{?}$ auf
-der RTX, $T = \offen{?}$ auf der L40S und $T = \offen{?}$ auf der CPU. Daraus
-ergibt sich eine Performance-Portabilität von \offen{Messung} gegenüber 0,99 für das
-beste feste $T$ und 0 für $T = 64$. Der Preis ist ein längerer erster Lauf,
-der bei $n = 1024$ wegen der Auswahl \offen{Messung}-mal so lang dauert wie in
-Stufe~4 (Tabelle~\ref{tab:zeiten}).
+\paragraph{Work-Groups und Kachelung (Stufen 3 und 4).}
+Die Work-Group-Größe allein steigert die Leistung gegenüber Stufe~2 auf RTX
+und L40S um 44 bis 89\,\%, auf der CPU um rund 20\,\%. Die H100 macht sie bei
+$n = 1024$ dagegen um 20\,\% langsamer. Die Kachelung bringt bei $n = 2048$
+28\,\% (RTX), 68\,\% (L40S) und 32\,\% (H100), auf der CPU das 3,5-Fache.
+Auf RTX und L40S ist sie trotzdem rund 10\,\% langsamer als Stufe~3, auf H100
+und CPU klar schneller. Welche Optimierung sich lohnt, hängt also selbst bei
+GPUs eines Herstellers vom Gerät ab.
+
+\paragraph{Kachelgröße und Performance-Portabilität.}
+Abbildung~\ref{fig:ergebnisse} zeigt die Effizienz jeder Kachelgröße, also
+die Leistung relativ zur besten Kachelgröße auf demselben Gerät. Die
+Performance-Portabilität (PP) ist das harmonische Mittel dieser Effizienzen
+über alle Geräte und null, sobald ein Gerät nicht unterstützt wird
+\cite{pennycook2016metric}. Auf allen GPUs ist $T = 16$ am schnellsten, auf
+der CPU $T = 32$ ($n = 1024$) bzw.\ $T = 64$ ($n = 2048$). Gerade $T = 64$
+startet auf keiner GPU, weil eine Work-Group dann 4096 Work-Items hätte und
+die GPUs höchstens 1024 erlauben. Am besten schneidet bei $n = 2048$ $T = 16$
+ab (PP 0,97), bei $n = 1024$ $T = 32$ (PP 0,94).
 
 \begin{figure}[htbp]
 \centering
@@ -685,87 +684,86 @@ Stufe~4 (Tabelle~\ref{tab:zeiten}).
 }
 \begin{tikzpicture}
 \begin{axis}[
-    ybar, bar width=5pt, enlarge x limits=0.18,
+    width=8.5cm, ybar, bar width=4.5pt, enlarge x limits=0.16,
     ymin=0, ymax=115, ytick={0,25,50,75,100},
     symbolic x coords={8,16,32,64}, xtick=data,
-    xticklabels={{$T{=}8$\\PP 0{,}65},{$T{=}16$\\PP 0{,}96},{$T{=}32$\\PP 0{,}99},{$T{=}64$\\PP 0}},
+    xticklabels={{$T{=}8$\\PP 0{,}71},{$T{=}16$\\PP 0{,}97},{$T{=}32$\\PP 0{,}95},{$T{=}64$\\PP 0}},
     xticklabel style={align=center},
     ylabel={Effizienz in \%},
-    legend style={at={(0.5,1.0)}, anchor=south, legend columns=3, /tikz/every even column/.append style={column sep=6pt}},
+    legend style={at={(0.5,1.0)}, anchor=south, legend columns=4, /tikz/every even column/.append style={column sep=6pt}},
     legend image code/.code={\draw[#1] (0cm,-0.08cm) rectangle (0.3cm,0.1cm);},
 ]
 \addplot[fill=gray!60, draw=black]
-    coordinates {(8,83) (16,100) (32,99) (64,0)};
+    coordinates {(8,83) (16,100) (32,96) (64,0)};
 \addlegendentry{RTX}
 \addplot[fill=black, draw=black]
     coordinates {(8,85) (16,100) (32,98) (64,0)};
 \addlegendentry{L40S}
+\addplot[fill=gray!25, draw=black]
+    coordinates {(8,69) (16,100) (32,91) (64,0)};
+\addlegendentry{H100}
 \addplot[fill=white, draw=black, postaction={pattern=north east lines}]
-    coordinates {(8,45) (16,88) (32,100) (64,91)};
+    coordinates {(8,55) (16,88) (32,97) (64,100)};
 \addlegendentry{CPU}
-\node[font=\scriptsize, rotate=90, anchor=west] at ([xshift=-2.5pt]axis cs:64,2) {startet nicht};
+\node[font=\scriptsize, rotate=90, anchor=west] at ([xshift=-4.5pt]axis cs:64,2) {startet nicht};
 \end{axis}
 \end{tikzpicture}
 \caption{Effizienz und Performance-Portabilität je Kachelgröße bei $n = 2048$}
 \label{fig:ergebnisse}
 \end{figure}
 
+\paragraph{Automatische Anpassung (Stufe 5).}
+Stufe~5 verwirft $T = 64$ per Geräteabfrage, misst die übrigen
+Kachelgrößen kurz und wählt auf allen vier Geräten die beste. Auf den GPUs
+ist sie im Dauerbetrieb trotzdem 5 bis 43\,\% langsamer als Stufe~4 mit
+derselben Kachel, vermutlich weil DPC++ Specialization Constants für CUDA
+nur emuliert und die Kachelgröße für den Compiler damit keine Konstante ist.
+Ihre PP liegt deshalb mit 0,95 ($n = 2048$) bzw.\ 0,76 ($n = 1024$) etwas
+unter dem besten festen Wert, aber weit über 0 für $T = 64$. Der erste Lauf
+dauert bei $n = 1024$ wegen der Auswahl 3,6- bis achtmal so lang wie in Stufe~4. Schon ohne
+Auswahl ist er wegen der JIT-Kompilierung bis zu 14-mal so lang wie die
+folgenden Läufe.
+
 % ---------------------------------------------------------------------------
 \section{Diskussion}\label{sec:diskussion}
 % ---------------------------------------------------------------------------
 
-Für F1 zeigen die Stufen, welches Konzept welches Problem löst
-(Tabelle~\ref{tab:konzepte}). Herstellerbindung und mehrfache Codebasen
-löst bereits Stufe~1 durch Single-Source in Standard-C++, Backends und
-JIT-Kompilierung. Dasselbe Programm läuft ohne Neuübersetzung auf GPU und
-CPU.
-Den Zielkonflikt zwischen Abstraktion und Kontrolle entschärft SYCL durch
-einen gestuften Einstieg. Ein einfacher Indexraum mit USM shared
-genügt für ein lauffähiges Programm, während expliziter Transfer,
-Work-Groups und lokaler Speicher die Kontrolle für die Optimierung
-zurückgeben (Stufen~2 bis~4). Stufe~2b zeigt, dass SYCL den Konflikt
-dabei nicht nur in eine Richtung auflöst. Buffer und Accessoren nehmen dem
-Programmierer die Abhängigkeiten ab, kosten aber die Kontrolle über den
-Transfer, bis hin zu seiner getrennten Messbarkeit.
+\paragraph{F1: Konzepte.}
+Herstellerbindung und mehrfache Codebasen löst bereits Stufe~1.
+Single-Source in Standard-C++, Backends und JIT-Kompilierung lassen dieselbe
+ausführbare Datei ohne Neuübersetzung auf CPU und GPU laufen. Den Konflikt
+zwischen Abstraktion und Kontrolle entschärft SYCL durch einen gestuften
+Einstieg (Tabelle~\ref{tab:konzepte}). Ein einfacher Indexraum mit USM shared
+reicht für ein lauffähiges Programm. Expliziter Transfer, Work-Groups und
+lokaler Speicher geben schrittweise Kontrolle zurück. Buffer gehen den
+umgekehrten Weg. Sie nehmen dem Programmierer die Abhängigkeiten ab und
+kosten dafür bis zu 64\,\% Laufzeit.
 
-Für F2 bestätigt die Untersuchung funktionale Portabilität für alle Stufen.
-Performance-Portabilität ergibt sich dagegen nicht von selbst. SYCL
-abstrahiert die Schnittstelle, nicht die Hardware. Parameter wie die
-Work-Group-Größe bleiben gerätespezifisch, und ein für die CPU günstiger Wert
-kann auf der GPU sogar zum Abbruch führen. Dies deckt sich mit der in
-früheren Studien beobachteten Abhängigkeit von Implementierung und
-Parametrierung \cite{deakin2020sycl}. Selbst zwischen zwei NVIDIA-GPUs
-unterscheidet sich der Nutzen der Kachelung deutlich (31\,\% gegenüber
-69\,\%), auch wenn die beste Kachelgröße übereinstimmt. Den größten Gewinn bringt bereits der
-erste, unveränderte Kernel. Die hardwarenahe Kachelung lohnt sich zusätzlich,
-bindet das Programm aber an gerätespezifische Parameter. Stufe~3 zeigt, wie
-viel davon schon auf die Work-Group-Größe allein entfällt. Stufe~5 zeigt, dass
-SYCL diese Bindung nicht auflöst, aber handhabbar macht. Geräteabfragen und
-Fehlerbehandlung verhindern den Abbruch, eine kurze Messung beim Start
-findet die passende Kachelgröße, und Specialization Constants erlauben das,
-ohne mehrere Varianten des Kernels im Quellcode zu halten. Dass AdaptiveCpp
-gerade diesen Mechanismus nicht unterstützt und DPC++ ihn für CUDA nur
-emuliert, zeigt aber, dass auch der Standard selbst nicht überall gleich weit
-umgesetzt ist. Die Kenntnis, welche Parameter überhaupt
-variiert werden müssen und welche Werte in Frage kommen, bleibt jedoch beim
-Programmierer.
+\paragraph{F2: Performance-Portabilität.}
+Funktional ist jede Stufe portabel, die Leistung ist es nicht von selbst.
+SYCL vereinheitlicht die Schnittstelle, nicht die Hardware. Die beste
+Kachelgröße der CPU startet auf keiner GPU, und dieselbe Optimierung wirkt
+selbst auf GPUs eines Herstellers unterschiedlich. Auch die Implementierung
+zählt. DPC++ emuliert Specialization Constants für CUDA, AdaptiveCpp bietet
+sie nur über eine eigene Erweiterung an. Das deckt sich mit früheren
+Studien \cite{deakin2020sycl}. Stufe~5 hebt die Bindung an Geräteparameter
+nicht auf, macht sie aber handhabbar. Sie verhindert den Abbruch und findet
+in einem einzigen Quellcode die beste Kachelgröße. Einen gut gewählten
+festen Wert schlägt sie wegen der Emulation aber nicht. Welche Parameter
+variiert werden müssen, muss der Programmierer weiterhin selbst wissen.
 
-Die Aussagekraft der Untersuchung ist begrenzt. Untersucht wurden ein
-einzelner Kernel, drei Geräte mit GPUs nur eines Herstellers und eine
-Implementierung. Die PP-Werte gelten
-nur für diese Gerätemenge \cite{pennycook2019implications}, und ein
-Vergleich mit nativem CUDA-Code oder optimierten Bibliotheken fehlt. Die
-Zeiten wurden auf dem Host gemessen und enthalten damit das Einreichen der
-Aufträge. Eine Messung über die Profiling-Events von SYCL würde die reine
-Ausführungszeit auf dem Gerät liefern und vor allem die Werte für kleine
-Matrizen genauer machen.
+\paragraph{Grenzen.}
+Untersucht wurden ein Kernel, GPUs nur eines Herstellers und eine
+Implementierung. Die PP-Werte gelten nur für diese Gerätemenge
+\cite{pennycook2019implications}, ein Vergleich mit nativem CUDA fehlt. Die
+Zeiten wurden auf dem Host gemessen und enthalten das Einreichen der
+Aufträge. Profiling-Events würden vor allem kleine Matrizen genauer messen.
 
-SYCL erfüllt sein Versprechen \enquote{einmal schreiben, überall ausführen}
-für die Korrektheit. Ein schrittweise portiertes Programm lief in allen
-Stufen unverändert auf CPU und GPU. Die gerätespezifische Abstimmung für hohe Leistung nimmt SYCL dem
-Programmierer jedoch nicht ab. Folgearbeiten sollten GPUs weiterer Hersteller,
-etwa die AMD MI300A des DACHS-Clusters, und eine zweite Implementierung wie
-AdaptiveCpp einbeziehen.
+\paragraph{Fazit.}
+SYCL hält sein Versprechen \enquote{einmal schreiben, überall ausführen} für
+die Korrektheit. Die Abstimmung für hohe Leistung nimmt es dem Programmierer
+aber nicht ab. Folgearbeiten sollten GPUs weiterer Hersteller wie die AMD
+MI300A und eine zweite Implementierung wie AdaptiveCpp einbeziehen.
 
 \newpage
 \printbibliography[heading=bibintoc, title={Literaturverzeichnis}]

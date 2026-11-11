@@ -90,23 +90,31 @@
 \newlabel{fig:stufe3}{{7}{8}{Hierarchische Ausführung (Stufen~3 und~4). Neu sind Work-Groups (Stufe~3) sowie Command Group, lokaler Speicher und Barriere (Stufe~4)}{figure.caption.12}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Konzepte von SYCL, die von ihnen adressierten Probleme und die Stufe, in der sie bei der Portierung eingeführt werden}}{8}{table.caption.13}\protected@file@percent }
 \newlabel{tab:konzepte}{{3}{8}{Konzepte von SYCL, die von ihnen adressierten Probleme und die Stufe, in der sie bei der Portierung eingeführt werden}{table.caption.13}{}}
-\abx@aux@cite{0}{pennycook2016metric}
-\abx@aux@segm{0}{0}{pennycook2016metric}
 \@writefile{toc}{\contentsline {section}{\numberline {6}Ergebnisse}{9}{section.6}\protected@file@percent }
 \newlabel{sec:ergebnisse}{{6}{9}{Ergebnisse}{section.6}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Leistung je Stufe in GFLOPS (Median aus fünf Läufen, Stufe~0 auf einem Kern der jeweiligen Host-CPU)}}{9}{table.caption.14}\protected@file@percent }
-\newlabel{tab:stufenmessung}{{4}{9}{Leistung je Stufe in GFLOPS (Median aus fünf Läufen, Stufe~0 auf einem Kern der jeweiligen Host-CPU)}{table.caption.14}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Laufzeit je Stufe in ms (Median aus fünf Läufen). Ab Stufe~2 sind Kernel- und Transferzeit getrennt erfasst, außer bei Stufe~2b. Die Transferzeit von Stufe~3 und~5 entspricht der von Stufe~2 bzw.~4}}{10}{table.caption.15}\protected@file@percent }
-\newlabel{tab:zeiten}{{5}{10}{Laufzeit je Stufe in ms (Median aus fünf Läufen). Ab Stufe~2 sind Kernel- und Transferzeit getrennt erfasst, außer bei Stufe~2b. Die Transferzeit von Stufe~3 und~5 entspricht der von Stufe~2 bzw.~4}{table.caption.15}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Effizienz und Performance-Portabilität je Kachelgröße bei $n = 2048$}}{10}{figure.caption.16}\protected@file@percent }
-\newlabel{fig:ergebnisse}{{8}{10}{Effizienz und Performance-Portabilität je Kachelgröße bei $n = 2048$}{figure.caption.16}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {7}Diskussion}{10}{section.7}\protected@file@percent }
-\newlabel{sec:diskussion}{{7}{10}{Diskussion}{section.7}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Leistung je Stufe in GFLOPS für $n = 1024$ und $n = 2048$ (Median aus fünf Läufen). Stufe~0 läuft auf einem Kern der jeweiligen Host-CPU}}{9}{table.caption.14}\protected@file@percent }
+\newlabel{tab:stufenmessung}{{4}{9}{Leistung je Stufe in GFLOPS für $n = 1024$ und $n = 2048$ (Median aus fünf Läufen). Stufe~0 läuft auf einem Kern der jeweiligen Host-CPU}{table.caption.14}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Laufzeit je Stufe in ms für $n = 1024$ und $n = 2048$ (Median aus fünf Läufen). Ab Stufe~2 sind Kernel- und Transferzeit getrennt erfasst, außer bei Stufe~2b. Die Transferzeit von Stufe~3 und~5 entspricht der von Stufe~2 bzw.~4}}{9}{table.caption.15}\protected@file@percent }
+\newlabel{tab:zeiten}{{5}{9}{Laufzeit je Stufe in ms für $n = 1024$ und $n = 2048$ (Median aus fünf Läufen). Ab Stufe~2 sind Kernel- und Transferzeit getrennt erfasst, außer bei Stufe~2b. Die Transferzeit von Stufe~3 und~5 entspricht der von Stufe~2 bzw.~4}{table.caption.15}{}}
+\@writefile{toc}{\contentsline {paragraph}{Parallelisierung und Transfer (Stufen 1 bis 2b).}{9}{section*.16}\protected@file@percent }
+\abx@aux@cite{0}{pennycook2016metric}
+\abx@aux@segm{0}{0}{pennycook2016metric}
+\@writefile{toc}{\contentsline {paragraph}{Work-Groups und Kachelung (Stufen 3 und 4).}{10}{section*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Kachelgröße und Performance-Portabilität.}{10}{section*.18}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Effizienz und Performance-Portabilität je Kachelgröße bei $n = 2048$}}{10}{figure.caption.19}\protected@file@percent }
+\newlabel{fig:ergebnisse}{{8}{10}{Effizienz und Performance-Portabilität je Kachelgröße bei $n = 2048$}{figure.caption.19}{}}
+\@writefile{toc}{\contentsline {paragraph}{Automatische Anpassung (Stufe 5).}{10}{section*.20}\protected@file@percent }
 \abx@aux@cite{0}{deakin2020sycl}
 \abx@aux@segm{0}{0}{deakin2020sycl}
 \abx@aux@cite{0}{pennycook2019implications}
 \abx@aux@segm{0}{0}{pennycook2019implications}
-\@writefile{toc}{\contentsline {section}{Literaturverzeichnis}{12}{section*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Diskussion}{11}{section.7}\protected@file@percent }
+\newlabel{sec:diskussion}{{7}{11}{Diskussion}{section.7}{}}
+\@writefile{toc}{\contentsline {paragraph}{F1: Konzepte.}{11}{section*.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{F2: Performance-Portabilität.}{11}{section*.22}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Grenzen.}{11}{section*.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Fazit.}{11}{section*.24}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{Literaturverzeichnis}{12}{section*.25}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {A}Quellcode der Matrixmultiplikation}{14}{appendix.A}\protected@file@percent }
 \newlabel{sec:anhang}{{A}{14}{Quellcode der Matrixmultiplikation}{appendix.A}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Stufe 0 -- Sequentielles Ausgangsprogramm}{14}{subsection.A.1}\protected@file@percent }

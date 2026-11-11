@@ -6,4 +6,4 @@
 \contentsline {figure}{\numberline {5}{\ignorespaces Getrennter Speicher und Abhängigkeiten (Stufe~2). Neu sind der Gerätespeicher und explizite Kopien, deren Abhängigkeiten als Pfeile in der Queue stehen. Kopie $A$ und Kopie $B$ hängen nicht voneinander ab und können gleichzeitig laufen}}{7}{figure.caption.10}%
 \contentsline {figure}{\numberline {6}{\ignorespaces Eine nd\_range mit globalem Bereich $8 \times 8$ und lokalem Bereich $4 \times 4$. Dick umrandet sind die vier Work-Groups}}{7}{figure.caption.11}%
 \contentsline {figure}{\numberline {7}{\ignorespaces Hierarchische Ausführung (Stufen~3 und~4). Neu sind Work-Groups (Stufe~3) sowie Command Group, lokaler Speicher und Barriere (Stufe~4)}}{8}{figure.caption.12}%
-\contentsline {figure}{\numberline {8}{\ignorespaces Effizienz und Performance-Portabilität je Kachelgröße bei $n = 2048$}}{10}{figure.caption.16}%
+\contentsline {figure}{\numberline {8}{\ignorespaces Effizienz und Performance-Portabilität je Kachelgröße bei $n = 2048$}}{10}{figure.caption.19}%

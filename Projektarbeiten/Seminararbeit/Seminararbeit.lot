@@ -2,5 +2,5 @@
 \contentsline {table}{\numberline {1}{\ignorespaces SYCL im Vergleich zu anderen Programmiermodellen (($\text {$\mathsurround \z@ \mathchar "458$}$) = eingeschränkt)}}{2}{table.caption.5}%
 \contentsline {table}{\numberline {2}{\ignorespaces Stufen der Portierung und die dabei eingeführten Konzepte}}{3}{table.caption.6}%
 \contentsline {table}{\numberline {3}{\ignorespaces Konzepte von SYCL, die von ihnen adressierten Probleme und die Stufe, in der sie bei der Portierung eingeführt werden}}{8}{table.caption.13}%
-\contentsline {table}{\numberline {4}{\ignorespaces Leistung je Stufe in GFLOPS (Median aus fünf Läufen, Stufe~0 auf einem Kern der jeweiligen Host-CPU)}}{9}{table.caption.14}%
-\contentsline {table}{\numberline {5}{\ignorespaces Laufzeit je Stufe in ms (Median aus fünf Läufen). Ab Stufe~2 sind Kernel- und Transferzeit getrennt erfasst, außer bei Stufe~2b. Die Transferzeit von Stufe~3 und~5 entspricht der von Stufe~2 bzw.~4}}{10}{table.caption.15}%
+\contentsline {table}{\numberline {4}{\ignorespaces Leistung je Stufe in GFLOPS für $n = 1024$ und $n = 2048$ (Median aus fünf Läufen). Stufe~0 läuft auf einem Kern der jeweiligen Host-CPU}}{9}{table.caption.14}%
+\contentsline {table}{\numberline {5}{\ignorespaces Laufzeit je Stufe in ms für $n = 1024$ und $n = 2048$ (Median aus fünf Läufen). Ab Stufe~2 sind Kernel- und Transferzeit getrennt erfasst, außer bei Stufe~2b. Die Transferzeit von Stufe~3 und~5 entspricht der von Stufe~2 bzw.~4}}{9}{table.caption.15}%

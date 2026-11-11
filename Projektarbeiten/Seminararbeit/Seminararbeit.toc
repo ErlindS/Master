@@ -9,8 +9,16 @@
 \contentsline {subsection}{\numberline {5.3}Asynchrone Ausführung und Abhängigkeiten}{6}{subsection.5.3}%
 \contentsline {subsection}{\numberline {5.4}Hierarchische Ausführung und lokaler Speicher}{7}{subsection.5.4}%
 \contentsline {section}{\numberline {6}Ergebnisse}{9}{section.6}%
-\contentsline {section}{\numberline {7}Diskussion}{10}{section.7}%
-\contentsline {section}{Literaturverzeichnis}{12}{section*.17}%
+\contentsline {paragraph}{Parallelisierung und Transfer (Stufen 1 bis 2b).}{9}{section*.16}%
+\contentsline {paragraph}{Work-Groups und Kachelung (Stufen 3 und 4).}{10}{section*.17}%
+\contentsline {paragraph}{Kachelgröße und Performance-Portabilität.}{10}{section*.18}%
+\contentsline {paragraph}{Automatische Anpassung (Stufe 5).}{10}{section*.20}%
+\contentsline {section}{\numberline {7}Diskussion}{11}{section.7}%
+\contentsline {paragraph}{F1: Konzepte.}{11}{section*.21}%
+\contentsline {paragraph}{F2: Performance-Portabilität.}{11}{section*.22}%
+\contentsline {paragraph}{Grenzen.}{11}{section*.23}%
+\contentsline {paragraph}{Fazit.}{11}{section*.24}%
+\contentsline {section}{Literaturverzeichnis}{12}{section*.25}%
 \contentsline {section}{\numberline {A}Quellcode der Matrixmultiplikation}{14}{appendix.A}%
 \contentsline {subsection}{\numberline {A.1}Stufe 0 -- Sequentielles Ausgangsprogramm}{14}{subsection.A.1}%
 \contentsline {subsection}{\numberline {A.2}Stufe 1 -- USM shared und \texttt {parallel\_for}}{15}{subsection.A.2}%
