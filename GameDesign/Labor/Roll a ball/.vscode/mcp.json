@@ -1,0 +1,11 @@
+{
+  "servers": {
+    "unity": {
+      "type": "stdio",
+      "command": "/home/linuxbrew/.linuxbrew/bin/unity",
+      "args": [
+        "mcp"
+      ]
+    }
+  }
+}
