@@ -1,0 +1,520 @@
+\documentclass[11pt]{article}
+
+% --- Folienformat wie Game Concept Document (16:9, 960x540pt) ---
+\usepackage[paperwidth=960bp, paperheight=540bp, margin=0pt]{geometry}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[autostyle=true,german=quotes]{csquotes}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc, positioning, shapes.geometric, backgrounds}
+\usepackage{microtype}
+\usepackage{hyperref}
+
+% --- Farbpalette (passend zu HKA & OneManArmy-Vorbild) ---
+\definecolor{hkared}{RGB}{198, 42, 18}
+\definecolor{hkagray}{RGB}{100, 100, 100}
+\definecolor{clBlue}{RGB}{45, 115, 195}    % Ursprung / Sozialer Markt / Spieler
+\definecolor{clGold}{RGB}{215, 165, 30}    % Kernversprechen / Bewertungsdimensionen
+\definecolor{clGreen}{RGB}{42, 155, 85}    % Moderner Zeitgeist / Welt & Routen
+\definecolor{clPurple}{RGB}{130, 95, 195}  % Schattenseiten / Machtasymmetrie
+\definecolor{clRed}{RGB}{215, 70, 65}      % Emotionales Wechselbad
+\definecolor{clOrange}{RGB}{225, 130, 45}  % Realitätscheck / Risiken & Rivalen
+\definecolor{posgreen}{RGB}{35, 155, 65}
+\definecolor{negred}{RGB}{200, 35, 35}
+
+\hypersetup{
+    colorlinks = true, linkcolor = hkared, urlcolor = hkared,
+    pdftitle   = {Varianten der Kausal-Kreisläufe rund um die Agora},
+    pdfauthor  = {Erlind Sejdiu},
+    pdfsubject = {Game Design, Game Concept Document}
+}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+% =============================================================================
+% TikZ-Stile
+% =============================================================================
+\tikzset{
+  pfeil/.style     = {-{Stealth[length=2.2mm, width=1.6mm]}, line width=0.8pt, draw=black!80},
+  looppfeil/.style = {-{Stealth[length=2.3mm, width=1.65mm]}, line width=1.0pt, draw=#1!85!black},
+  txt/.style       = {font=\tiny\bfseries, fill=white, inner sep=1.3pt, rounded corners=1.5pt,
+                      align=center, text=black!85},
+  % Themenkarten-Karten im OneManArmy-Stil (Folie 4)
+  tkarte/.style    = {draw=#1, line width=1.7pt, rounded corners=9pt, fill=#1!11,
+                      text width=6.5cm, minimum height=4.35cm, align=center, inner sep=5pt,
+                      font=\scriptsize},
+  agoraZentrum/.style = {ellipse, draw=hkared, line width=2.2pt, fill=black!90,
+                      text=white, minimum width=4.6cm, minimum height=2.25cm,
+                      align=center, inner sep=3pt},
+  loopbadge/.style = {circle, draw=#1!85!black, fill=#1!16, line width=0.9pt,
+                      font=\tiny\bfseries, text=#1!85!black, inner sep=1.2pt,
+                      minimum size=0.52cm},
+  % Begriffsnetzwerk-Knoten (Folie 2)
+  bknoten/.style   = {draw=#1, line width=1.3pt, rounded corners=6pt, fill=#1!10,
+                      text width=3.9cm, minimum height=1.25cm, align=center, inner sep=3pt,
+                      font=\scriptsize},
+  % Spielübersichtsdiagramm (Folie 3)
+  rahmen/.style    = {draw=#1, line width=1.4pt, rounded corners=12pt, fill=#1!5},
+  rtitel/.style    = {font=\footnotesize\bfseries, text=#1, anchor=north},
+  komp/.style      = {draw=#1, line width=1pt, rounded corners=5pt, fill=#1!12,
+                      minimum width=3.55cm, anchor=north},
+  ktitel/.style    = {font=\scriptsize\bfseries, text=#1!80!black, anchor=north, inner sep=2pt},
+  mini/.style      = {draw=#1!65, line width=0.6pt, rounded corners=3pt, fill=white,
+                      text width=3.15cm, minimum height=0.52cm, align=center, inner sep=1.2pt,
+                      font=\scriptsize, anchor=north},
+  indikator/.style = {draw=black!70, line width=0.8pt, rounded corners=4pt, fill=white,
+                      text width=3.35cm, minimum height=0.92cm, align=center, inner sep=2pt,
+                      font=\scriptsize},
+  dimension/.style = {draw=clGold!85!black, line width=1pt, rounded corners=8pt, fill=clGold!22,
+                      text width=3.6cm, minimum height=0.95cm, align=center, inner sep=2pt,
+                      font=\scriptsize},
+  ziel/.style      = {draw=black, line width=1.2pt, rounded corners=6pt, fill=black!88,
+                      text=white, text width=5.4cm, minimum height=0.82cm, align=center,
+                      font=\scriptsize},
+  % Loop-Knoten (Folie 4 & 5)
+  lknoten/.style   = {draw=#1, line width=1.0pt, rounded corners=6pt, fill=white,
+                      text width=3.0cm, minimum height=0.98cm, align=center, inner sep=2pt,
+                      font=\scriptsize},
+  larc/.style      = {-{Stealth[length=2.2mm, width=1.6mm]}, line width=1.0pt, draw=#1!85!black},
+}
+
+% \komp{name}{oben-mitte}{farbe}{titel}{anzahl}{Titel/{Beschreibung}, ...}
+\newcommand{\komp}[6]{%
+  \node[komp=#3, minimum height={0.46cm + #5*0.64cm}] (#1) at (#2) {};
+  \node[ktitel=#3] at (#1.north) {#4};
+  \foreach \t/\d [count=\i] in {#6} {
+    \node[mini=#3] (#1-\i) at ($(#1.north)+(0,{-0.39-(\i-1)*0.64})$)
+      {\textbf{\t}\\[-1.5pt]{\tiny\d}};
+  }%
+}
+
+% --- Folienkopf im HKA-Stil ---
+\newcounter{folie}
+\newcommand{\kopf}[1]{%
+  \stepcounter{folie}%
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[hkared] ([xshift=38bp, yshift=-18bp]current page.north west) rectangle ++(9bp, -64bp);
+    \node[anchor=west, font=\fontsize{28}{34}\selectfont\bfseries, text=hkared]
+      at ([xshift=58bp, yshift=-50bp]current page.north west) {#1};
+    \shade[top color=black!12, bottom color=white]
+      ([yshift=-96bp]current page.north west) rectangle ([yshift=-103bp]current page.north east);
+    \node[anchor=north east, inner sep=0pt]
+      at ([xshift=-22bp, yshift=-8bp]current page.north east)
+      {\includegraphics[height=80bp, trim=520 140 580 140, clip]{HKA.jpg}};
+    \node[anchor=south west, font=\scriptsize, text=hkagray]
+      at ([xshift=24bp, yshift=12bp]current page.south west) {\thefolie};
+  \end{tikzpicture}%
+}
+
+% --- Zusatzstile für die Varianten ---
+\tikzset{
+  pol/.style    = {circle, draw=black!75, fill=white, font=\footnotesize\bfseries, inner sep=0pt,
+                   minimum size=0.42cm, text=black},
+  rbadge/.style = {circle, draw=#1!85!black, fill=#1!18, line width=1.2pt, align=center,
+                   font=\footnotesize\bfseries, text=#1!85!black, inner sep=1pt, minimum size=1.15cm},
+  ring/.style   = {draw=#1, line width=1.1pt, rounded corners=6pt, fill=white,
+                   text width=2.9cm, minimum height=0.95cm, align=center, inner sep=2pt,
+                   font=\scriptsize},
+  eingriff/.style = {draw=#1, line width=1.3pt, rounded corners=6pt, fill=#1!14, dashed,
+                   text width=3.6cm, minimum height=1.15cm, align=center, inner sep=3pt,
+                   font=\scriptsize},
+  hebel/.style  = {font=\tiny, text=black!70, align=left},
+}
+% Ellipsenbogen um (C0): \ringarc{rx}{ry}{start}{ende}{farbe}
+\newcommand{\ringarc}[5]{%
+  \draw[larc=#5] ($(C0)+({#1*cos(#3)},{#2*sin(#3)})$)
+     arc[start angle=#3, end angle=#4, x radius=#1, y radius=#2];}
+% Beschriftung auf Ellipse: \ringlabel{rx}{ry}{winkel}{text}
+\newcommand{\ringlabel}[4]{%
+  \node[txt] at ($(C0)+({#1*cos(#3)},{#2*sin(#3)})$) {#4};}
+\newcommand{\punkte}[1]{%
+  \foreach \i in {1,...,5}{\ifnum\i>#1 \textcolor{black!20}{$\bullet$}\else\textcolor{hkared}{$\bullet$}\fi}}
+
+\begin{document}
+
+% =============================================================================
+% FOLIE 1: Übersicht der Varianten
+% =============================================================================
+\kopf{Varianten der Agora-Kreisläufe}
+\begin{tikzpicture}[remember picture, overlay, shift={(current page.north west)}]
+  \node[anchor=north west, text width=31cm, font=\small] at (1.4,-4.4) {%
+    \renewcommand{\arraystretch}{1.75}%
+    \begin{tabular}{@{}p{1.2cm}p{6.6cm}p{13.6cm}cc@{}}
+      \textbf{Folie} & \textbf{Variante} & \textbf{Idee} & \textbf{Kreislauf-Stärke} & \textbf{Zeitgeist}\\\hline
+      -- & Original (4 Quadranten) & Vier Begriffs-Loops laufen durch die Agora, gestrichelt gekoppelt & \punkte{3} & \punkte{3}\\
+      2 & \textbf{A}\enspace Systemdynamik mit Polarität & Gleiche Struktur, aber jede Kante mit $+/-$ und jeder Loop als R (verstärkend) oder B (ausgleichend) & \punkte{5} & \punkte{2}\\
+      3 & \textbf{B}\enspace Tugend- \& Teufelskreis & Zwei große Spiralen in Acht-Form, die Agora als Kreuzungspunkt, Eingriffe von außen & \punkte{5} & \punkte{3}\\
+      4 & \textbf{C}\enspace Antike $\leftrightarrow$ Heute & Derselbe Loop zweimal: Athen oben, App-Markt 2026 unten, jede Station mit Gegenstück & \punkte{3} & \punkte{5}\\
+      5 & \textbf{D}\enspace Die App-Agora 2026 & Bekanntes Quadranten-Layout, aber nur mit Zeitgeist-Loops: Datenspur, Rotes Meer, LkSG, Drops & \punkte{3} & \punkte{5}\\
+      6 & \textbf{E}\enspace Verschachtelte Spiel-Loops & Mikro (Deal) $\subset$ Meso (Fahrt) $\subset$ Makro (Ära), Zeitgeist als äußerer Ring & \punkte{4} & \punkte{4}\\
+    \end{tabular}};
+  \node[anchor=west, font=\scriptsize, text=hkagray, text width=30cm] at (1.4,-17.4)
+    {\textbf{Empfehlung zum Kombinieren:} B als starkes Bild für die Spannung (\enquote{welcher Kreis gewinnt?}), C oder D als Beleg für den Zeitgeist, E als Brücke zur konkreten Spielmechanik.};
+\end{tikzpicture}
+\newpage
+
+% =============================================================================
+% FOLIE 2 / VARIANTE A: Systemdynamik mit Polarität
+% =============================================================================
+\kopf{Variante A: Kreisläufe mit Polarität}
+\begin{tikzpicture}[remember picture, overlay, shift={(current page.north west)}]
+
+  \fill[clBlue!6, rounded corners=18pt]   (0.7,-4.15)  rectangle (15.8,-10.85);
+  \fill[clGreen!6, rounded corners=18pt]  (18.0,-4.15) rectangle (33.1,-10.85);
+  \fill[clPurple!6, rounded corners=18pt] (0.7,-11.35) rectangle (15.8,-18.05);
+  \fill[clRed!6, rounded corners=18pt]    (18.0,-11.35) rectangle (33.1,-18.05);
+
+  \node[anchor=north west, font=\scriptsize\bfseries, text=clBlue!85!black] at (1.0,-4.3)
+    {R1 \enspace Vertrauen wächst mit jedem Geschäft (verstärkend)};
+  \node[anchor=north east, font=\scriptsize\bfseries, text=clGreen!80!black] at (32.8,-4.3)
+    {B2 \enspace Arbitrage frisst ihren eigenen Gewinn (ausgleichend)};
+  \node[anchor=south west, font=\scriptsize\bfseries, text=clPurple!85!black] at (1.0,-17.9)
+    {B3 \enspace Macht ruft die Marktaufsicht (ausgleichend)};
+  \node[anchor=south east, font=\scriptsize\bfseries, text=clRed!85!black] at (32.8,-17.9)
+    {R4 \enspace FOMO-Spirale (verstärkend)};
+
+  \node[hebel, anchor=west] at (1.0,-10.45) {\textbf{Spielhebel:} Ruf-Leiste schaltet Kreditrahmen frei};
+  \node[hebel, anchor=east] at (32.8,-10.45) {\textbf{Spielhebel:} Marge sinkt, je mehr Händler dieselbe Route fahren};
+  \node[hebel, anchor=west] at (1.0,-11.75) {\textbf{Spielhebel:} Agoranomos-Event ab 40\,\% Marktanteil};
+  \node[hebel, anchor=east] at (32.8,-11.75) {\textbf{Spielhebel:} Drop-Timer erhöht Preis \& Reue-Chance};
+
+  \node[agoraZentrum, minimum width=5.0cm, minimum height=2.3cm] (C) at (16.9,-11.1) {
+    {\normalsize\bfseries DIE AGORA}\\[1pt]
+    {\scriptsize\color{white!90} Marktplatz \& Preisbildung}\\[1pt]
+    {\tiny\color{white!80} Angebot $\cdot$ Nachfrage $\cdot$ Tausch}};
+
+  % LOOP R1
+  \node[bknoten=clBlue] (L1A) at (3.6,-6.2)
+    {\textbf{Reputation}\\[-1pt]{\tiny bekannter Händler $\cdot$ ehrlicher Ruf}};
+  \node[bknoten=clBlue] (L1B) at (11.8,-6.2)
+    {\textbf{Kredit \& Vorleistung}\\[-1pt]{\tiny \emph{credere} = glauben $\cdot$ Ware auf Ziel}};
+  \node[bknoten=clBlue] (L1C) at (7.7,-9.4)
+    {\textbf{Gehaltene Versprechen}\\[-1pt]{\tiny pünktliche Lieferung $\cdot$ faire Maße}};
+  \node[rbadge=clBlue] at (7.7,-7.55) {R1\\[-3pt]$\circlearrowright$};
+  \draw[looppfeil=clBlue] (L1A.east) -- node[txt]{mehr Ruf, mehr} node[pol, pos=0.88]{+} (L1B.west);
+  \draw[looppfeil=clBlue] (L1B.south east) to[bend left=14] node[txt, pos=0.45]{mehr Kaufkraft\\auf der} node[pol, pos=0.9]{+} (C.north west);
+  \draw[looppfeil=clBlue] (C.168) to[bend left=12] node[txt, pos=0.52]{mehr Abschlüsse,\\mehr} node[pol, pos=0.88]{+} (L1C.east);
+  \draw[looppfeil=clBlue] (L1C.north west) to[bend left=14] node[txt]{stärken} node[pol, pos=0.85]{+} (L1A.south);
+
+  % LOOP B2
+  \node[bknoten=clGreen] (L2A) at (22.0,-6.2)
+    {\textbf{Preisgefälle erkennen}\\[-1pt]{\tiny wo billig $\cdot$ wo knapp}};
+  \node[bknoten=clGreen] (L2B) at (30.2,-6.2)
+    {\textbf{Fahrten \& Seewege}\\[-1pt]{\tiny Piräus $\cdot$ Sueskanal $\cdot$ Kap}};
+  \node[bknoten=clGreen] (L2C) at (26.1,-9.4)
+    {\textbf{Warenstrom}\\[-1pt]{\tiny Ware fließt vom Überfluss zur Knappheit}};
+  \node[rbadge=clGreen] at (26.1,-7.55) {B2\\[-3pt]$\circlearrowleft$};
+  \draw[looppfeil=clGreen] (C.north east) to[bend left=14] node[txt, pos=0.55]{großes Gefälle\\lockt} node[pol, pos=0.9]{+} (L2A.south west);
+  \draw[looppfeil=clGreen] (L2A.east) -- node[txt]{mehr Wissen, mehr} node[pol, pos=0.88]{+} (L2B.west);
+  \draw[looppfeil=clGreen] (L2B.south) to[bend left=14] node[txt]{mehr Fahrten, mehr} node[pol, pos=0.85]{+} (L2C.north east);
+  \draw[looppfeil=clGreen] (L2C.west) to[bend left=12] node[txt, pos=0.48]{gleicht Preise an,\\Gefälle sinkt} node[pol, pos=0.9]{$-$} (C.12);
+
+  % LOOP B3
+  \node[bknoten=clPurple] (L3A) at (11.8,-15.9)
+    {\textbf{Marktmacht \& Bots}\\[-1pt]{\tiny Großhändler $\cdot$ Plattformen}};
+  \node[bknoten=clPurple] (L3B) at (3.6,-15.9)
+    {\textbf{Wucher \& Abhängigkeit}\\[-1pt]{\tiny Aufkauf knapper Ware $\cdot$ Preisdiktat}};
+  \node[bknoten=clPurple] (L3C) at (7.7,-12.8)
+    {\textbf{Marktaufsicht \& Gesetze}\\[-1pt]{\tiny Agoranomos $\cdot$ Zölle $\cdot$ LkSG}};
+  \node[rbadge=clPurple] at (7.7,-14.55) {B3\\[-3pt]$\circlearrowleft$};
+  \draw[looppfeil=clPurple] (C.south west) to[bend left=14] node[txt, pos=0.52]{Umsatz \& Daten\\stärken} node[pol, pos=0.9]{+} (L3A.north east);
+  \draw[looppfeil=clPurple] (L3A.west) -- node[txt]{verursacht} node[pol, pos=0.88]{+} (L3B.east);
+  \draw[looppfeil=clPurple] (L3B.north) to[bend left=14] node[txt]{erzwingt} node[pol, pos=0.85]{+} (L3C.south west);
+  \draw[looppfeil=clPurple] (L3C.east) to[bend left=12] node[txt, pos=0.48]{deckelt Macht\\auf der} node[pol, pos=0.9]{$-$} (C.192);
+
+  % LOOP R4
+  \node[bknoten=clRed] (L4A) at (26.1,-12.8)
+    {\textbf{Verlockung \& Drops}\\[-1pt]{\tiny Schnäppchen $\cdot$ Countdown}};
+  \node[bknoten=clRed] (L4B) at (30.2,-15.9)
+    {\textbf{Impulskauf}\\[-1pt]{\tiny Fiero beim Deal $\cdot$ Spekulation}};
+  \node[bknoten=clRed] (L4C) at (22.0,-15.9)
+    {\textbf{Reue \& Verlustdruck}\\[-1pt]{\tiny schlechtes Gewissen $\cdot$ Schulden}};
+  \node[rbadge=clRed] at (26.1,-14.55) {R4\\[-3pt]$\circlearrowright$};
+  \draw[looppfeil=clRed] (C.348) to[bend left=12] node[txt, pos=0.52]{inszeniert} node[pol, pos=0.88]{+} (L4A.west);
+  \draw[looppfeil=clRed] (L4A.south east) to[bend left=14] node[txt]{verleitet zu} node[pol, pos=0.85]{+} (L4B.north);
+  \draw[looppfeil=clRed] (L4B.west) -- node[txt]{kippt in} node[pol, pos=0.88]{+} (L4C.east);
+  \draw[looppfeil=clRed] (L4C.north west) to[bend left=14] node[txt, pos=0.48]{Drang zum Ausgleich\\treibt zurück auf} node[pol, pos=0.9]{+} (C.south east);
+
+  % Kopplungen
+  \draw[pfeil, dashed] (L1B.east) -- node[txt]{finanziert} node[pol, pos=0.9]{+} (L2A.west);
+  \draw[pfeil, dashed] (L2C.south) -- node[txt]{Verknappung triggert} node[pol, pos=0.82]{+} (L4A.north);
+  \draw[pfeil, dashed] (L3C.north) -- node[txt]{schützt} node[pol, pos=0.82]{+} (L1C.south);
+  \draw[pfeil, dashed] (L4C.west) -- node[txt]{Schulden stärken} node[pol, pos=0.9]{+} (L3A.east);
+
+  \node[anchor=west, font=\tiny, text=hkagray] at (1.6,-18.58)
+    {\textbf{Lesart:} $+$ = gleiche Richtung, $-$ = Gegenrichtung. Gerade Anzahl $-$ im Loop $\Rightarrow$ \textbf{R} (verstärkend), ungerade $\Rightarrow$ \textbf{B} (ausgleichend). Spannung entsteht, weil R1/R4 eskalieren und B2/B3 bremsen.};
+\end{tikzpicture}
+\newpage
+
+% =============================================================================
+% FOLIE 3 / VARIANTE B: Tugend- & Teufelskreis (Acht)
+% =============================================================================
+\kopf{Variante B: Tugendkreis und Teufelskreis}
+\begin{tikzpicture}[remember picture, overlay, shift={(current page.north west)}]
+
+  \fill[clBlue!6]  (9.0,-11.3) ellipse [x radius=8.6cm, y radius=6.2cm];
+  \fill[clRed!6]   (24.8,-11.3) ellipse [x radius=8.6cm, y radius=6.2cm];
+
+  \node[align=center, text=clBlue!80!black] at (9.0,-11.3)
+    {{\Large\bfseries $\circlearrowright$ TUGENDKREIS}\\[2pt]{\scriptsize Vertrauen $\rightarrow$ Wohlstand}\\[1pt]{\tiny verstärkend (R+)}};
+  \node[align=center, text=clRed!80!black] at (24.8,-11.3)
+    {{\Large\bfseries $\circlearrowright$ TEUFELSKREIS}\\[2pt]{\scriptsize Billig $\rightarrow$ Abhängigkeit}\\[1pt]{\tiny verstärkend (R$-$)}};
+
+  \node[agoraZentrum, minimum width=4.6cm, minimum height=2.2cm] (C) at (16.9,-11.3) {
+    {\normalsize\bfseries DIE AGORA}\\[1pt]
+    {\tiny\color{white!85} hier entscheidet sich,}\\[-1pt]
+    {\tiny\color{white!85} welcher Kreis dreht}};
+
+  % Tugendkreis
+  \node[bknoten=clBlue] (P1) at (11.44,-16.25) {\textbf{Fairer Abschluss}\\[-1pt]{\tiny faire Maße $\cdot$ pünktliche Lieferung}};
+  \node[bknoten=clBlue] (P2) at (2.61,-14.36)  {\textbf{Ruf wächst}\\[-1pt]{\tiny Empfehlungen $\cdot$ Stammkunden}};
+  \node[bknoten=clBlue] (P3) at (2.61,-8.24)   {\textbf{Kredit \& Vertrauen}\\[-1pt]{\tiny \emph{credere} $\cdot$ Ware auf Ziel}};
+  \node[bknoten=clBlue] (P4) at (11.44,-6.35)  {\textbf{Mehr Handel \& Wohlstand}\\[-1pt]{\tiny größere Ladungen $\cdot$ neue Partner}};
+  \draw[looppfeil=clBlue] (C.south west) to[bend left=18] node[txt]{Ehrlichkeit führt zu} (P1.east);
+  \draw[looppfeil=clBlue] (P1.west) to[bend left=18] node[txt]{stärkt} (P2.south);
+  \draw[looppfeil=clBlue] (P2.north) to[bend left=12] node[txt]{öffnet} (P3.south);
+  \draw[looppfeil=clBlue] (P3.north) to[bend left=18] node[txt]{ermöglicht} (P4.west);
+  \draw[looppfeil=clBlue] (P4.east) to[bend left=18] node[txt]{belebt die} (C.north west);
+
+  % Teufelskreis
+  \node[bknoten=clRed] (Q1) at (22.36,-6.35) {\textbf{Billigpreis \& Drops}\\[-1pt]{\tiny Temu $\cdot$ Shein $\cdot$ Countdown}};
+  \node[bknoten=clRed] (Q2) at (31.0,-8.24)  {\textbf{Impulskauf \& Datenspur}\\[-1pt]{\tiny 1 Klick $\cdot$ 55\,\% bargeldlos}};
+  \node[bknoten=clRed] (Q3) at (31.0,-14.36) {\textbf{Plattformmacht}\\[-1pt]{\tiny personalisierte Preise $\cdot$ Bots}};
+  \node[bknoten=clRed] (Q4) at (22.36,-16.25){\textbf{Abhängigkeit \& Reue}\\[-1pt]{\tiny Schulden $\cdot$ schlechtes Gewissen}};
+  \draw[looppfeil=clRed] (C.north east) to[bend left=18] node[txt]{Preiskampf erzeugt} (Q1.west);
+  \draw[looppfeil=clRed] (Q1.east) to[bend left=18] node[txt]{verleitet zu} (Q2.north);
+  \draw[looppfeil=clRed] (Q2.south) to[bend left=12] node[txt]{füttert} (Q3.north);
+  \draw[looppfeil=clRed] (Q3.south) to[bend left=18] node[txt]{erzeugt} (Q4.east);
+  \draw[looppfeil=clRed] (Q4.west) to[bend left=18] node[txt]{treibt zurück auf} (C.south east);
+
+  % Eingriffe von außen
+  \node[eingriff=clPurple] (E1) at (16.9,-5.55) {\textbf{Marktaufsicht}\\[-1pt]{\tiny Agoranomos $\cdot$ LkSG $\cdot$ CSDDD}};
+  \node[eingriff=clOrange] (E2) at (16.9,-17.15) {\textbf{Lieferketten-Schock}\\[-1pt]{\tiny Rotes Meer $\cdot$ Fracht $\times$3--4}};
+  \draw[pfeil, draw=clPurple] (E1.west) -- node[pol, pos=0.5]{+} (P4.north east);
+  \draw[pfeil, draw=clPurple] (E1.east) -- node[pol, pos=0.5]{$-$} (Q1.north west);
+  \draw[pfeil, draw=clOrange] (E2.west) -- node[pol, pos=0.5]{$-$} (P1.south east);
+  \draw[pfeil, draw=clOrange] (E2.east) -- node[pol, pos=0.5]{+} (Q4.south west);
+
+  \node[anchor=west, font=\tiny, text=hkagray] at (1.6,-18.58)
+    {\textbf{Lesart:} Beide Kreise verstärken sich selbst und laufen durch dieselbe Agora. Regeln stützen den Tugendkreis ($+$) und bremsen den Teufelskreis ($-$), Krisen wirken umgekehrt. Kernfrage fürs Spiel: Welcher Kreis dreht schneller?};
+\end{tikzpicture}
+\newpage
+
+% =============================================================================
+% FOLIE 4 / VARIANTE C: Antike <-> Heute
+% =============================================================================
+\kopf{Variante C: Derselbe Kreislauf, 2.500 Jahre später}
+\begin{tikzpicture}[remember picture, overlay, shift={(current page.north west)}]
+
+  \fill[clGold!9, rounded corners=18pt]  (0.7,-4.15) rectangle (33.1,-9.6);
+  \fill[clGreen!8, rounded corners=18pt] (0.7,-12.6) rectangle (33.1,-18.05);
+
+  \node[anchor=north west, font=\scriptsize\bfseries, text=clGold!70!black] at (1.0,-4.3)
+    {$\circlearrowright$ ANTIKE AGORA \enspace Athen, ca.\ 400 v.\,Chr.};
+  \node[anchor=south west, font=\scriptsize\bfseries, text=clGreen!70!black] at (1.0,-17.9)
+    {$\circlearrowright$ DIGITALE AGORA \enspace Smartphone, 2026};
+
+  \foreach \n/\x in {1/4.0, 2/10.45, 3/16.9, 4/23.35, 5/29.8} {
+    \coordinate (xT\n) at (\x,-7.75);
+    \coordinate (xB\n) at (\x,-14.45);
+  }
+  \tikzset{cknoten/.style={bknoten=#1, text width=4.4cm}}
+
+  \node[cknoten=clGold] (T1) at (xT1) {\textbf{Agora von Athen}\\[-1pt]{\tiny Markt, Stoa \& Volksversammlung}};
+  \node[cknoten=clGold] (T2) at (xT2) {\textbf{Feilschen am Stand}\\[-1pt]{\tiny Preis als Beziehung}};
+  \node[cknoten=clGold] (T3) at (xT3) {\textbf{Agoranomos}\\[-1pt]{\tiny Aufseher prüft Maße \& Gewichte}};
+  \node[cknoten=clGold] (T4) at (xT4) {\textbf{Ruf in der Polis}\\[-1pt]{\tiny man kennt sich $\cdot$ Ehre \& Klatsch}};
+  \node[cknoten=clGold] (T5) at (xT5) {\textbf{Kredit auf Vertrauen}\\[-1pt]{\tiny \emph{credere} = glauben}};
+
+  \node[cknoten=clGreen] (B1) at (xB1) {\textbf{Die App-Agora}\\[-1pt]{\tiny Amazon $\cdot$ Temu $\cdot$ Shein, 400.000 Pakete/Tag}};
+  \node[cknoten=clGreen] (B2) at (xB2) {\textbf{Glücksrad \& Countdown}\\[-1pt]{\tiny Drops $\cdot$ FOMO $\cdot$ dynamische Preise}};
+  \node[cknoten=clGreen] (B3) at (xB3) {\textbf{Algorithmus \& Bots}\\[-1pt]{\tiny kuratiert, rankt, kauft in ms}};
+  \node[cknoten=clGreen] (B4) at (xB4) {\textbf{Sterne \& Reviews}\\[-1pt]{\tiny Rating ersetzt Ruf $\cdot$ Fake-Bewertungen}};
+  \node[cknoten=clGreen] (B5) at (xB5) {\textbf{Buy now, pay later}\\[-1pt]{\tiny 55\,\% bargeldlos $\cdot$ Datenspur}};
+
+  \draw[looppfeil=clGold] (T1) -- node[txt]{lockt zum} (T2);
+  \draw[looppfeil=clGold] (T2) -- node[txt]{Streit ruft} (T3);
+  \draw[looppfeil=clGold] (T3) -- node[txt]{faire Maße\\stärken} (T4);
+  \draw[looppfeil=clGold] (T4) -- node[txt]{ermöglicht} (T5);
+  \draw[looppfeil=clGold] (T5.north) .. controls (29.8,-5.0) and (4.0,-5.0) .. node[txt, pos=0.5]{finanziert neue Ware für die} (T1.north);
+
+  \draw[looppfeil=clGreen] (B1) -- node[txt]{bindet durch} (B2);
+  \draw[looppfeil=clGreen] (B2) -- node[txt]{Klicks\\füttern} (B3);
+  \draw[looppfeil=clGreen] (B3) -- node[txt]{rankt nach} (B4);
+  \draw[looppfeil=clGreen] (B4) -- node[txt]{senkt Hemm-\\schwelle für} (B5);
+  \draw[looppfeil=clGreen] (B5.south) .. controls (29.8,-17.2) and (4.0,-17.2) .. node[txt, pos=0.5]{Datenspur optimiert die} (B1.south);
+
+  \foreach \i/\lab in {1/Platz $\rightarrow$ Plattform, 2/Feilschen $\rightarrow$ Gamification, 3/Aufseher $\rightarrow$ Algorithmus, 4/Ehre $\rightarrow$ Sterne, 5/Vertrauen $\rightarrow$ Daten} {
+    \draw[pfeil, dashed, draw=black!55] (T\i.south) -- node[txt, font=\tiny, fill=white]{\lab} (B\i.north);
+  }
+
+  \node[anchor=west, font=\tiny, text=hkagray] at (1.6,-18.58)
+    {\textbf{Lesart:} Die Kausalkette ist dieselbe geblieben, nur jede Station hat ihr digitales Gegenstück. Das Spiel kann zwischen beiden Ebenen wechseln oder sie in einer Welt verschmelzen.};
+\end{tikzpicture}
+\newpage
+
+% =============================================================================
+% FOLIE 5 / VARIANTE D: Die App-Agora 2026
+% =============================================================================
+\kopf{Variante D: Die App-Agora 2026}
+\begin{tikzpicture}[remember picture, overlay, shift={(current page.north west)}]
+
+  \fill[clBlue!6, rounded corners=18pt]   (0.7,-4.15)  rectangle (15.8,-10.85);
+  \fill[clOrange!7, rounded corners=18pt] (18.0,-4.15) rectangle (33.1,-10.85);
+  \fill[clPurple!6, rounded corners=18pt] (0.7,-11.35) rectangle (15.8,-18.05);
+  \fill[clRed!6, rounded corners=18pt]    (18.0,-11.35) rectangle (33.1,-18.05);
+
+  \node[anchor=north west, font=\scriptsize\bfseries, text=clBlue!85!black] at (1.0,-4.3)
+    {$\circlearrowright$ LOOP 1: Datenspur-Kreislauf (Bezahlen \& Profil)};
+  \node[anchor=north east, font=\scriptsize\bfseries, text=clOrange!85!black] at (32.8,-4.3)
+    {$\circlearrowright$ LOOP 2: Lieferketten-Schock (Rotes Meer)};
+  \node[anchor=south west, font=\scriptsize\bfseries, text=clPurple!85!black] at (1.0,-17.9)
+    {$\circlearrowright$ LOOP 3: Gewissens- \& Gesetzes-Kreislauf};
+  \node[anchor=south east, font=\scriptsize\bfseries, text=clRed!85!black] at (32.8,-17.9)
+    {$\circlearrowright$ LOOP 4: Drop-, Bot- \& Resale-Kreislauf};
+
+  \node[agoraZentrum, minimum width=5.0cm, minimum height=2.3cm] (C) at (16.9,-11.1) {
+    {\normalsize\bfseries DIE APP-AGORA}\\[1pt]
+    {\scriptsize\color{white!90} Marktplatz im Smartphone}\\[1pt]
+    {\tiny\color{white!80} Plattform $\cdot$ Algorithmus $\cdot$ Paket}};
+
+  % LOOP 1
+  \node[bknoten=clBlue] (L1A) at (3.6,-6.2)
+    {\textbf{Klick \& Kontaktlos}\\[-1pt]{\tiny 55\,\% bargeldlos (2025) $\cdot$ BNPL}};
+  \node[bknoten=clBlue] (L1B) at (11.8,-6.2)
+    {\textbf{Datenspur}\\[-1pt]{\tiny jeder Kauf wird Profil}};
+  \node[bknoten=clBlue] (L1C) at (7.7,-9.4)
+    {\textbf{Personalisierte Preise}\\[-1pt]{\tiny Feed kennt die Vorlieben}};
+  \draw[looppfeil=clBlue] (L1A.east) -- node[txt]{hinterlässt} (L1B.west);
+  \draw[looppfeil=clBlue] (L1B.south east) to[bend left=14] node[txt, pos=0.45]{trainiert die\\Empfehlungen der} (C.north west);
+  \draw[looppfeil=clBlue] (C.168) to[bend left=12] node[txt, pos=0.52]{spielt aus} (L1C.east);
+  \draw[looppfeil=clBlue] (L1C.north west) to[bend left=14] node[txt]{verführt zum\\nächsten} (L1A.south);
+
+  % LOOP 2
+  \node[bknoten=clOrange] (L2A) at (22.0,-6.2)
+    {\textbf{Bestellung in Fernost}\\[-1pt]{\tiny Shanghai $\rightarrow$ Rotterdam}};
+  \node[bknoten=clOrange] (L2B) at (30.2,-6.2)
+    {\textbf{Engpass Rotes Meer}\\[-1pt]{\tiny Sueskanal gemieden seit Ende 2023}};
+  \node[bknoten=clOrange] (L2C) at (26.1,-9.4)
+    {\textbf{Umweg ums Kap}\\[-1pt]{\tiny +10--14 Tage $\cdot$ Fracht $\times$3--4}};
+  \draw[looppfeil=clOrange] (C.north east) to[bend left=14] node[txt, pos=0.55]{Nachfrage löst aus} (L2A.south west);
+  \draw[looppfeil=clOrange] (L2A.east) -- node[txt]{Container müssen durch} (L2B.west);
+  \draw[looppfeil=clOrange] (L2B.south) to[bend left=14] node[txt]{Angriffe erzwingen} (L2C.north east);
+  \draw[looppfeil=clOrange] (L2C.west) to[bend left=12] node[txt, pos=0.48]{verteuert \& verzögert\\Ware auf der} (C.12);
+
+  % LOOP 3
+  \node[bknoten=clPurple] (L3A) at (11.8,-15.9)
+    {\textbf{Billigware}\\[-1pt]{\tiny Temu $\cdot$ Shein $\cdot$ Fast Fashion}};
+  \node[bknoten=clPurple] (L3B) at (3.6,-15.9)
+    {\textbf{Schlechtes Gewissen}\\[-1pt]{\tiny fair wollen, billig kaufen}};
+  \node[bknoten=clPurple] (L3C) at (7.7,-12.8)
+    {\textbf{Lieferkettengesetze}\\[-1pt]{\tiny LkSG $\cdot$ CSDDD $\cdot$ BEUC-Beschwerde}};
+  \draw[looppfeil=clPurple] (C.south west) to[bend left=14] node[txt, pos=0.52]{Preisdruck\\begünstigt} (L3A.north east);
+  \draw[looppfeil=clPurple] (L3A.west) -- node[txt]{hinterlässt} (L3B.east);
+  \draw[looppfeil=clPurple] (L3B.north) to[bend left=14] node[txt]{politischer Druck} (L3C.south west);
+  \draw[looppfeil=clPurple] (L3C.east) to[bend left=12] node[txt, pos=0.48]{verpflichtet \&\\verteuert die} (C.192);
+
+  % LOOP 4
+  \node[bknoten=clRed] (L4A) at (26.1,-12.8)
+    {\textbf{Limitierter Drop}\\[-1pt]{\tiny Sneaker $\cdot$ Glücksrad $\cdot$ Countdown}};
+  \node[bknoten=clRed] (L4B) at (30.2,-15.9)
+    {\textbf{Bots \& Scalper}\\[-1pt]{\tiny Kauf in Millisekunden}};
+  \node[bknoten=clRed] (L4C) at (22.0,-15.9)
+    {\textbf{Resale-Börse}\\[-1pt]{\tiny StockX-Kurscharts $\cdot$ FOMO}};
+  \draw[looppfeil=clRed] (C.348) to[bend left=12] node[txt, pos=0.52]{inszeniert Knappheit} (L4A.west);
+  \draw[looppfeil=clRed] (L4A.south east) to[bend left=14] node[txt]{lockt} (L4B.north);
+  \draw[looppfeil=clRed] (L4B.west) -- node[txt]{verschiebt Ware auf} (L4C.east);
+  \draw[looppfeil=clRed] (L4C.north west) to[bend left=14] node[txt, pos=0.48]{FOMO treibt\\zurück auf} (C.south east);
+
+  % Kopplungen
+  \draw[pfeil, dashed] (L1B.east) -- node[txt]{prognostiziert Nachschub} (L2A.west);
+  \draw[pfeil, dashed] (L2C.south) -- node[txt]{Verknappung befeuert} (L4A.north);
+  \draw[pfeil, dashed] (L3C.north) -- node[txt]{DSA verbietet Dark Patterns} (L1C.south);
+  \draw[pfeil, dashed] (L4C.west) -- node[txt]{Frust treibt zu} (L3A.east);
+
+  \node[anchor=west, font=\tiny, text=hkagray] at (1.6,-18.58)
+    {\textbf{Lesart:} Gleiche Struktur wie die Ausgangskarte, aber jeder Loop ist ein aktuelles Phänomen mit Zahlen aus 2023--2026 (Bundesbank, HDE, UNCTAD, Drewry).};
+\end{tikzpicture}
+\newpage
+
+% =============================================================================
+% FOLIE 6 / VARIANTE E: Verschachtelte Spiel-Loops
+% =============================================================================
+\kopf{Variante E: Verschachtelte Spiel-Loops}
+\begin{tikzpicture}[remember picture, overlay, shift={(current page.north west)}]
+  \coordinate (C0) at (16.9,-11.4);
+  \def\rxA{5.0}  \def\ryA{2.6}
+  \def\rxB{10.6} \def\ryB{4.7}
+  \def\rxC{14.3} \def\ryC{6.2}
+
+  \fill[clBlue!6]  (C0) ellipse [x radius=\rxC cm, y radius=\ryC cm];
+  \fill[clGreen!8] (C0) ellipse [x radius=\rxB cm, y radius=\ryB cm];
+  \fill[clRed!8]   (C0) ellipse [x radius=\rxA cm, y radius=\ryA cm];
+
+  \node[agoraZentrum, minimum width=3.6cm, minimum height=1.5cm] at (C0)
+    {{\small\bfseries DIE AGORA}\\[-1pt]{\tiny\color{white!80} Preis entsteht}};
+
+  % Inner: Mikro
+  \node[ring=clRed, text width=2.5cm] at ($(C0)+(0,\ryA)$)    {\textbf{Angebot sehen}\\[-1pt]{\tiny Glücksrad $\cdot$ Countdown}};
+  \node[ring=clRed, text width=2.5cm] at ($(C0)+(\rxA,0)$)    {\textbf{Feilschen}\\[-1pt]{\tiny Basar $\cdot$ Preisvorschlag}};
+  \node[ring=clRed, text width=2.5cm] at ($(C0)+(0,-\ryA)$)   {\textbf{Zuschlag}\\[-1pt]{\tiny Fiero $\cdot$ Rabatt-Konfetti}};
+  \node[ring=clRed, text width=2.5cm] at ($(C0)+(-\rxA,0)$)   {\textbf{Stolz oder Reue}\\[-1pt]{\tiny Schnäppchen vs.\ Fehlkauf}};
+  \ringarc{\rxA}{\ryA}{70}{18}{clRed}
+  \ringarc{\rxA}{\ryA}{-18}{-70}{clRed}
+  \ringarc{\rxA}{\ryA}{-110}{-162}{clRed}
+  \ringarc{\rxA}{\ryA}{162}{110}{clRed}
+  \ringlabel{\rxA}{\ryA}{45}{lockt zum}
+  \ringlabel{\rxA}{\ryA}{-45}{führt zum}
+  \ringlabel{\rxA}{\ryA}{-135}{kippt in}
+  \ringlabel{\rxA}{\ryA}{135}{Neugier}
+
+  % Middle: Meso
+  \node[ring=clGreen, text width=3.0cm] at ($(C0)+({\rxB*cos(135)},{\ryB*sin(135)})$) {\textbf{Preisgefälle erkennen}\\[-1pt]{\tiny Daten $\cdot$ Gerüchte $\cdot$ Kurse}};
+  \node[ring=clGreen, text width=3.0cm] at ($(C0)+({\rxB*cos(45)},{\ryB*sin(45)})$)   {\textbf{Route \& Ladung}\\[-1pt]{\tiny Piräus $\cdot$ Sues $\cdot$ Kap}};
+  \node[ring=clGreen, text width=3.0cm] at ($(C0)+({\rxB*cos(-45)},{\ryB*sin(-45)})$) {\textbf{Risiko unterwegs}\\[-1pt]{\tiny Piraten $\cdot$ Rotes Meer $\cdot$ Zoll}};
+  \node[ring=clGreen, text width=3.0cm] at ($(C0)+({\rxB*cos(-135)},{\ryB*sin(-135)})$) {\textbf{Ankunft \& Verkauf}\\[-1pt]{\tiny Arbitrage-Gewinn}};
+  \ringarc{\rxB}{\ryB}{118}{62}{clGreen}
+  \ringarc{\rxB}{\ryB}{28}{-28}{clGreen}
+  \ringarc{\rxB}{\ryB}{-62}{-118}{clGreen}
+  \ringarc{\rxB}{\ryB}{-152}{-208}{clGreen}
+  \ringlabel{\rxB}{\ryB}{90}{plant}
+  \ringlabel{\rxB}{\ryB}{0}{setzt aus}
+  \ringlabel{\rxB}{\ryB}{-90}{Fracht erreicht Markt}
+  \ringlabel{\rxB}{\ryB}{180}{neue Marktkenntnis}
+
+  % Outer: Makro
+  \node[ring=clBlue] at ($(C0)+(0,\ryC)$)    {\textbf{Ruf \& Sterne}\\[-1pt]{\tiny Reputation $\cdot$ Reviews}};
+  \node[ring=clBlue] at ($(C0)+(\rxC,0)$)    {\textbf{Kredit \& Expansion}\\[-1pt]{\tiny \emph{credere} $\cdot$ BNPL $\cdot$ Kontore}};
+  \node[ring=clBlue] at ($(C0)+(0,-\ryC)$)   {\textbf{Marktmacht}\\[-1pt]{\tiny Monopol $\cdot$ Plattform $\cdot$ Bots}};
+  \node[ring=clBlue] at ($(C0)+(-\rxC,0)$)   {\textbf{Krise \& Regulierung}\\[-1pt]{\tiny Agoranomos $\cdot$ LkSG $\cdot$ Schocks}};
+  \ringarc{\rxC}{\ryC}{81}{9}{clBlue}
+  \ringarc{\rxC}{\ryC}{-9}{-81}{clBlue}
+  \ringarc{\rxC}{\ryC}{-99}{-171}{clBlue}
+  \ringarc{\rxC}{\ryC}{171}{99}{clBlue}
+  \ringlabel{\rxC}{\ryC}{45}{öffnet}
+  \ringlabel{\rxC}{\ryC}{-45}{wächst zu}
+  \ringlabel{\rxC}{\ryC}{-135}{provoziert}
+  \ringlabel{\rxC}{\ryC}{135}{Neuordnung}
+
+  \node[anchor=north west, font=\scriptsize\bfseries, text=clRed!85!black, align=left] at (1.0,-4.3)
+    {MIKRO \enspace Sekunden: der Deal};
+  \node[anchor=north west, font=\scriptsize\bfseries, text=clGreen!75!black, align=left] at (1.0,-4.85)
+    {MESO \enspace Minuten: die Handelsfahrt};
+  \node[anchor=north west, font=\scriptsize\bfseries, text=clBlue!85!black, align=left] at (1.0,-5.4)
+    {MAKRO \enspace Spielsession: die Ära};
+  \node[anchor=north east, font=\tiny, text=hkagray, align=right, text width=7.5cm] at (32.8,-4.3)
+    {Jede Runde innen ist ein Schritt außen: viele Deals ergeben eine Fahrt, viele Fahrten eine Ära. Der Zeitgeist (Rotes Meer, BNPL, Bots, LkSG) sitzt in den äußeren Ringen.};
+
+  \node[anchor=west, font=\tiny, text=hkagray] at (1.6,-18.58)
+    {\textbf{Lesart:} Drei Loops im Uhrzeigersinn, verschiedene Zeitskalen. Innen Emotion, Mitte Raum \& Risiko, außen Macht \& Gesellschaft.};
+\end{tikzpicture}
+\newpage
+
+\end{document}
