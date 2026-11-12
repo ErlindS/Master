@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.11.3)  11 NOV 2026 23:59
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.11.3)  12 NOV 2026 01:25
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -657,71 +657,35 @@ Package pdftex.def Info: HKA.jpg  used on input line 121.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 7.59998pt on input line 121.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 10.40245pt on input line 126.
-LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 7.59998pt on input line 127.
-LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 5.69998pt on input line 128.
+(Font)              scaled to size 7.59998pt on input line 132.
  (/home/debian/.miktex/texmfs/install/tex/latex/microtype/mt-cmr.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 128.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 132.
  (/home/debian/.miktex/texmfs/install/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/home/debian/.miktex/texmfs/install/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 128.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 132.
  (/home/debian/.miktex/texmfs/install/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (/home/debian/.miktex/texmfs/install/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 10.40245pt on input line 142.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 9.49997pt on input line 134.
-LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 9.49997pt on input line 134.
-LaTeX Font Info:    Font shape `T1/phv/m/it' in size <8> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 140.
+(Font)              scaled to size 5.69998pt on input line 144.
+LaTeX Font Info:    Font shape `T1/phv/m/it' in size <6> not available
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 151.
 LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
-(Font)              scaled to size 7.59998pt on input line 140.
+(Font)              scaled to size 5.69998pt on input line 151.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 5.69998pt on input line 201.
+(Font)              scaled to size 5.69998pt on input line 155.
  [1
 
-{/home/debian/.miktex/texmfs/data/fonts/map/pdftex/pdftex.map}{/home/debian/.miktex/texmfs/install/fonts/enc/dvips/base/8r.enc} <./HKA.jpg>]
-File: HKA.jpg Graphic file (type jpg)
-<use HKA.jpg>
-Package pdftex.def Info: HKA.jpg  used on input line 303.
-(pdftex.def)             Requested size: 39.26376pt x 80.29999pt.
-LaTeX Font Info:    Font shape `T1/phv/m/it' in size <6> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 333.
-LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
-(Font)              scaled to size 5.69998pt on input line 333.
- [2]
-File: HKA.jpg Graphic file (type jpg)
-<use HKA.jpg>
-Package pdftex.def Info: HKA.jpg  used on input line 396.
-(pdftex.def)             Requested size: 39.26376pt x 80.29999pt.
-LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 8.54997pt on input line 442.
-LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 8.54997pt on input line 442.
- [3]
-File: HKA.jpg Graphic file (type jpg)
-<use HKA.jpg>
-Package pdftex.def Info: HKA.jpg  used on input line 563.
-(pdftex.def)             Requested size: 39.26376pt x 80.29999pt.
-LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 11.39996pt on input line 585.
-LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 11.39996pt on input line 585.
- [4]
-File: HKA.jpg Graphic file (type jpg)
-<use HKA.jpg>
-Package pdftex.def Info: HKA.jpg  used on input line 637.
-(pdftex.def)             Requested size: 39.26376pt x 80.29999pt.
- [5] (Themenkarte_Agora.aux)
+{/home/debian/.miktex/texmfs/data/fonts/map/pdftex/pdftex.map}{/home/debian/.miktex/texmfs/install/fonts/enc/dvips/base/8r.enc} <./HKA.jpg>] (Themenkarte_Agora.aux)
  ***********
 LaTeX2e <2026-06-01>
 L3 programming layer <2026-09-09>
@@ -730,17 +694,17 @@ Package rerunfilecheck Info: File `Themenkarte_Agora.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 27709 strings out of 467393
- 519484 string characters out of 5410050
- 1073848 words of memory out of 5000000
- 56511 multiletter control sequences out of 15000+600000
- 677582 words of font info for 157 fonts, out of 8000000 for 9000
+ 26468 strings out of 467393
+ 499594 string characters out of 5410050
+ 988770 words of memory out of 5000000
+ 55335 multiletter control sequences out of 15000+600000
+ 659052 words of font info for 114 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 92i,8n,94p,1060b,944s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</home/debian/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy6.pfb></home/debian/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy8.pfb></home/debian/.miktex/texmfs/install/fonts/type1/public/amsfonts/symbols/msam10.pfb></home/debian/.miktex/texmfs/install/fonts/type1/public/amsfonts/symbols/msam7.pfb></home/debian/.miktex/texmfs/install/fonts/type1/urw/helvetic/uhvb8a.pfb></home/debian/.miktex/texmfs/install/fonts/type1/urw/helvetic/uhvr8a.pfb></home/debian/.miktex/texmfs/install/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on Themenkarte_Agora.pdf (5 pages, 245879 bytes).
+ 92i,7n,94p,1060b,882s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</home/debian/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmsy6.pfb></home/debian/.miktex/texmfs/install/fonts/type1/public/amsfonts/symbols/msam10.pfb></home/debian/.miktex/texmfs/install/fonts/type1/urw/helvetic/uhvb8a.pfb></home/debian/.miktex/texmfs/install/fonts/type1/urw/helvetic/uhvr8a.pfb></home/debian/.miktex/texmfs/install/fonts/type1/urw/helvetic/uhvro8a.pfb>
+Output written on Themenkarte_Agora.pdf (1 page, 172827 bytes).
 PDF statistics:
- 79 PDF objects out of 1000 (max. 8388607)
- 6 named destinations out of 1000 (max. 500000)
- 61494 words of extra memory for PDF output out of 61914 (max. 10000000)
+ 45 PDF objects out of 1000 (max. 8388607)
+ 2 named destinations out of 1000 (max. 500000)
+ 38942 words of extra memory for PDF output out of 42996 (max. 10000000)
 
