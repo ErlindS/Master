@@ -1,0 +1,572 @@
+\documentclass[11pt]{article}
+
+% =============================================================================
+% Themenlandschaftskarte "Handel" aus den 10 Kausalkreisläufen (B1-B6, R1-R4)
+% Format: 16:9 (960x540bp) im HKA- & Game-Concept-Document-Stil
+% =============================================================================
+
+\usepackage[paperwidth=960bp, paperheight=540bp, margin=0pt]{geometry}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[autostyle=true,german=quotes]{csquotes}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{array,booktabs,tabularx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc, positioning, decorations.markings, shapes.geometric, backgrounds}
+\usepackage{microtype}
+\usepackage{hyperref}
+
+% --- Farbpalette ---
+\definecolor{hkared}{RGB}{198, 42, 18}
+\definecolor{hkagray}{RGB}{100, 100, 100}
+\definecolor{clBlue}{RGB}{42, 110, 190}    % Vertrauen & Regeln (R3, B4)
+\definecolor{clPurple}{RGB}{125, 82, 188}  % Plattform, Daten & Macht (R2, R4)
+\definecolor{clGold}{RGB}{198, 142, 18}    % Marktplatz & Konkurrenz (B1, B5)
+\definecolor{clGreen}{RGB}{36, 145, 78}    % Nachschub & Lieferkette (B2)
+\definecolor{clRed}{RGB}{208, 58, 52}      % Budget & Spekulation (B3, R1)
+\definecolor{clOrange}{RGB}{218, 118, 32}  % Gegenbewegung & Aufsicht (B6)
+\definecolor{posgreen}{RGB}{28, 142, 58}
+\definecolor{negred}{RGB}{196, 32, 32}
+
+\hypersetup{
+  colorlinks = true, linkcolor = hkared, urlcolor = hkared,
+  pdftitle   = {Themenlandschaftskarte Handel: Die 10 Kausalkreisläufe (B1-B6, R1-R4)},
+  pdfauthor  = {Erlind Sejdiu},
+  pdfsubject = {Game Design, Themenlandschaftskarte & Causal Loop Diagrams}
+}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+% =============================================================================
+% TikZ-Stile
+% =============================================================================
+\tikzset{
+  % Knoten Folie 1 (Vernetztes Wirkungsgefüge)
+  var/.style    = {draw=#1!85!black, line width=1.05pt, rounded corners=5pt, fill=white,
+                   text width=2.95cm, minimum height=0.98cm, align=center, inner sep=2pt,
+                   font=\scriptsize},
+  stock/.style  = {draw=#1!85!black, line width=1.1pt, double=white, double distance=1.2pt,
+                   rounded corners=3pt, fill=#1!9, text width=2.95cm, minimum height=0.98cm,
+                   align=center, inner sep=2pt, font=\scriptsize},
+  zone/.style   = {draw=#1!45, line width=0.8pt, rounded corners=10pt, fill=#1!5},
+  zlabel/.style = {font=\tiny\bfseries, text=#1!85!black, anchor=north west, inner sep=3pt},
+  % Pfeile & Polaritäten
+  k/.style      = {-{Stealth[length=2.1mm, width=1.5mm]}, line width=0.85pt, draw=#1!80!black},
+  k/.default    = black,
+  delay/.style  = {postaction={decorate}, decoration={markings, mark=at position #1 with {
+                    \draw[line width=1.1pt, black!85] (-1.4pt,-3.6pt) -- (-1.4pt,3.6pt)
+                                                      (1.4pt,-3.6pt) -- (1.4pt,3.6pt);}}},
+  delay/.default= 0.5,
+  vtxt/.style   = {font=\tiny, fill=white, inner sep=1pt, rounded corners=1.2pt,
+                   text=black!80, align=center},
+  polp/.style   = {circle, fill=posgreen!15, draw=posgreen!85!black, line width=0.55pt,
+                   font=\tiny\bfseries, text=posgreen!90!black, inner sep=0.4pt, minimum size=3.1mm},
+  polm/.style   = {circle, fill=negred!15, draw=negred!85!black, line width=0.55pt,
+                   font=\tiny\bfseries, text=negred!90!black, inner sep=0.4pt, minimum size=3.1mm},
+  % Schleifen-Badges
+  badgeB/.style = {rounded corners=4pt, draw=clBlue!85!black, fill=clBlue!13, line width=0.9pt,
+                   font=\tiny\bfseries, text=clBlue!90!black, inner sep=2pt, align=center},
+  badgeR/.style = {rounded corners=4pt, draw=clRed!85!black, fill=clRed!13, line width=0.9pt,
+                   font=\tiny\bfseries, text=clRed!90!black, inner sep=2pt, align=center},
+  % Folie 2 (Cluster-Karten im OneManArmy-Stil)
+  tkarte/.style = {draw=#1!85!black, line width=1.5pt, rounded corners=8pt, fill=#1!8,
+                   text width=6.6cm, minimum height=4.15cm, align=center, inner sep=4.5pt,
+                   font=\scriptsize},
+  zentrum/.style= {ellipse, draw=hkared, line width=2.2pt, fill=black!90, text=white,
+                   minimum width=5.6cm, minimum height=2.55cm, align=center, inner sep=3pt},
+  % Folie 3 (Mini-Loops)
+  mvar/.style   = {draw=#1!85!black, line width=0.8pt, rounded corners=3.5pt, fill=white,
+                   font=\tiny\bfseries, inner sep=2pt, align=center, minimum height=0.48cm},
+}
+
+\newcommand{\kn}[2]{\textbf{#1}\\[-1pt]{\tiny\color{black!62}#2}}
+
+% --- Folienkopf im HKA-Stil ---
+\newcounter{folie}
+\newcommand{\kopf}[2]{%
+  \stepcounter{folie}%
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[hkared] ([xshift=38bp, yshift=-16bp]current page.north west) rectangle ++(9bp, -62bp);
+    \node[anchor=west, font=\fontsize{22}{26}\selectfont\bfseries, text=hkared]
+      at ([xshift=58bp, yshift=-38bp]current page.north west) {#1};
+    \node[anchor=west, font=\small, text=hkagray]
+      at ([xshift=58bp, yshift=-65bp]current page.north west) {#2};
+    \shade[top color=black!12, bottom color=white]
+      ([yshift=-92bp]current page.north west) rectangle ([yshift=-99bp]current page.north east);
+    \node[anchor=north east, inner sep=0pt]
+      at ([xshift=-22bp, yshift=-8bp]current page.north east)
+      {\includegraphics[height=76bp, trim=520 140 580 140, clip]{HKA.jpg}};
+    \node[anchor=south west, font=\scriptsize, text=hkagray]
+      at ([xshift=14bp, yshift=9bp]current page.south west) {\thefolie};
+  \end{tikzpicture}%
+}
+
+\begin{document}
+
+% =============================================================================
+% FOLIE 1: Vernetztes Wirkungsgefüge aller 10 Kreisläufe (kreuzungsfrei!)
+% =============================================================================
+\kopf{Themenlandschaftskarte: Handel (10 Kausalkreisläufe)}
+     {Integriertes Wirkungsgefüge der Schleifen B1\textendash B6 (ausgleichend) und R1\textendash R4 (verstärkend) nach Sterman, Meadows, Adams/Dormans \& Salen/Zimmerman}
+\begin{tikzpicture}[remember picture, overlay, shift={(current page.north west)}]
+
+  % ---------------- Hintergrund-Zonen ----------------
+  \draw[zone=clBlue]   (0.55,-3.85) rectangle (9.0,-10.35);
+  \node[zlabel=clBlue] at (0.65,-3.9) {ZONE 1: VERTRAUEN \& OPPORTUNISMUS (R3, B4)};
+
+  \draw[zone=clPurple] (9.25,-3.85) rectangle (19.55,-7.25);
+  \node[zlabel=clPurple] at (9.35,-3.9) {ZONE 2: PLATTFORM \& DATEN (R2)};
+
+  \draw[zone=clGold]   (9.25,-7.45) rectangle (20.5,-14.65);
+  \node[zlabel=clGold, anchor=north east] at (20.4,-7.5) {ZONE 3: MARKTPLATZ \& SPEKULATION (B1, R1)};
+
+  \draw[zone=clGreen]  (20.75,-7.45) rectangle (33.3,-11.2);
+  \node[zlabel=clGreen] at (20.85,-7.5) {ZONE 4: NACHSCHUB \& LIEFERKETTE (B2)};
+
+  \draw[zone=clGold]   (20.75,-11.4) rectangle (33.3,-15.05);
+  \node[zlabel=clGold, anchor=north east] at (33.2,-11.45) {ZONE 5: MARGE \& KONKURRENZ (B5)};
+
+  \draw[zone=clRed]    (0.55,-10.55) rectangle (9.0,-14.65);
+  \node[zlabel=clRed]  at (0.65,-10.6) {ZONE 6: AUFSICHT \& BUDGET (B3)};
+
+  \draw[zone=clOrange] (0.55,-14.85) rectangle (33.3,-18.15);
+  \node[zlabel=clOrange, anchor=north east] at (33.2,-14.9) {ZONE 7: MARKTMACHT, KAPITAL \& GEGENBEWEGUNG (R4, B6)};
+
+  % ---------------- 15 KNOTEN DER 10 SCHLEIFEN ----------------
+  % Zone 1: Vertrauen, Betrug, Transaktionskosten
+  \node[var=clBlue]   (BT) at (2.35,-5.35) {\kn{Betrug}{Fake-Shops $\cdot$ Täuschung}};
+  \node[stock=clBlue] (V)  at (7.15,-5.35) {\kn{Vertrauen}{Ruf \& Bewertungen}};
+  \node[var=clBlue]   (TK) at (7.15,-9.15) {\kn{Transaktionskosten}{Prüfung \& Absicherung}};
+
+  % Zone 2: Gezielte Kaufanreize, Daten
+  \node[var=clPurple] (AN) at (11.6,-5.35) {\kn{Gezielte Kaufanreize}{Countdowns $\cdot$ Drops}};
+  \node[stock=clPurple](DA) at (17.6,-5.35) {\kn{Daten}{Datenspur (55\,\% unbar)}};
+
+  % Zone 3: Kaufrate, Angebot, Spekulative Nachfrage, Preis
+  \node[var=clGold]   (KR) at (12.3,-9.15) {\kn{Kaufrate}{400.000 Pakete/Tag}};
+  \node[stock=clGold] (AG) at (18.6,-9.15) {\kn{Angebot}{Lager- \& Marktbestand}};
+  \node[var=clRed]    (SP) at (12.3,-13.35){\kn{Spekul.\ Nachfrage}{Weiterverkauf $\cdot$ StockX}};
+  \node[var=clGold]   (PR) at (17.5,-13.35){\kn{Preis}{Marktpreis}};
+
+  % Zone 4: Ware unterwegs
+  \node[stock=clGreen](WU) at (24.3,-9.15) {\kn{Ware unterwegs}{Seeweg +10\textendash14 Tage}};
+
+  % Zone 5: Marge, Konkurrenz
+  \node[var=clGold]   (MG) at (24.3,-13.35){\kn{Marge}{Handelsspanne}};
+  \node[var=clGold]   (KK) at (31.3,-13.35){\kn{Konkurrenz}{Nachahmer $\cdot$ Neueintritt}};
+
+  % Zone 6: Regulierung, Budget
+  \node[stock=clOrange](RG) at (2.35,-12.6) {\kn{Regulierung}{LkSG 2021 $\cdot$ CSDDD 2024}};
+  \node[stock=clRed]   (BU) at (7.15,-12.6) {\kn{Budget}{Konto $\cdot$ Ratenkauf-Delay}};
+
+  % Zone 7: Öffentlicher Druck, Marktmacht, Kapital
+  \node[var=clOrange] (OD) at (7.15,-16.55){\kn{Öffentl.\ Druck}{Medien $\cdot$ BEUC 2024}};
+  \node[var=clPurple] (MM) at (17.2,-16.55){\kn{Marktmacht}{Plattform- \& Konditionsmacht}};
+  \node[stock=clPurple](KP) at (24.3,-16.55){\kn{Kapital}{Gewinnrücklagen}};
+
+  % ===========================================================================
+  % KANTEN DER 10 KREISLÄUFE (inkl. Verb + Polarität + Delay)
+  % ===========================================================================
+
+  % --- B1: Preisausgleich (Angebot - -> Preis - -> Kaufrate - -> Angebot) ---
+  \draw[k=clGold] (AG.south west) -- node[vtxt, pos=0.45]{knapp treibt} node[polm, pos=0.82]{$-$} (PR.north east);
+  \draw[k=clGold] (PR.north west) -- node[vtxt, pos=0.48]{dämpft} node[polm, pos=0.82]{$-$} (KR.south east);
+  \draw[k=clGold] (KR.east) -- node[vtxt, above=1pt, pos=0.46]{leert} node[polm, pos=0.82]{$-$} (AG.west);
+
+  % --- R1: Spekulation (Preis + -> spekul. Nachfrage + -> Kaufrate - -> Angebot - -> Preis) ---
+  \draw[k=clRed] (PR.west) -- node[vtxt, below=1pt, pos=0.46]{lockt an} node[polp, pos=0.82]{$+$} (SP.east);
+  \draw[k=clRed] (SP.north) -- node[vtxt, right=1.5pt, pos=0.48]{heizt an} node[polp, pos=0.82]{$+$} (KR.south);
+
+  % --- B2: Nachschub (Preis + -> Marge + -> Ware unterwegs +|| -> Angebot - -> Preis) ---
+  \draw[k=clGreen] (PR.east) -- node[vtxt, below=1pt, pos=0.46]{erhöht} node[polp, pos=0.82]{$+$} (MG.west);
+  \draw[k=clGreen] (MG.north) -- node[vtxt, right=1.5pt, pos=0.58]{löst Order aus} node[polp, pos=0.84]{$+$} (WU.south);
+  \draw[k=clGreen, delay=0.42] (WU.west) -- node[vtxt, above=3pt, pos=0.45]{füllt verzögert} node[polp, pos=0.84]{$+$} (AG.east);
+
+  % --- R2: Daten (Kaufrate + -> Daten + -> gezielte Kaufanreize + -> Kaufrate) ---
+  \draw[k=clPurple] (KR.north east) -- node[vtxt, right=2pt, pos=0.45]{liefert} node[polp, pos=0.82]{$+$} (DA.south west);
+  \draw[k=clPurple] (DA.west) -- node[vtxt, above=1pt, pos=0.48]{schärfen} node[polp, pos=0.82]{$+$} (AN.east);
+  \draw[k=clPurple] (AN.south) -- node[vtxt, left=1.5pt, pos=0.45]{triggern} node[polp, pos=0.82]{$+$} (KR.north);
+
+  % --- R3: Vertrauen (Vertrauen - -> Transaktionskosten - -> Kaufrate + -> Vertrauen) ---
+  \draw[k=clBlue] (V.south) -- node[vtxt, left=1pt, pos=0.46]{senkt} node[polm, pos=0.82]{$-$} (TK.north);
+  \draw[k=clBlue] (TK.east) -- node[vtxt, below=1pt, pos=0.45]{bremst} node[polm, pos=0.82]{$-$} (KR.west);
+  \draw[k=clBlue] (KR.145) -- node[vtxt, sloped, above=1pt, pos=0.52]{stärkt Ruf} node[polp, pos=0.85]{$+$} (V.335);
+
+  % --- B4: Opportunismus (Vertrauen + -> Betrug - -> Vertrauen; Regulierung - -> Betrug) ---
+  \draw[k=clBlue] ([yshift=2.2mm]V.west) -- node[vtxt, above=1pt, pos=0.48]{verlockt zu} node[polp, pos=0.82]{$+$} ([yshift=2.2mm]BT.east);
+  \draw[k=clBlue] ([yshift=-2.2mm]BT.east) -- node[vtxt, below=1pt, pos=0.48]{zerstört} node[polm, pos=0.82]{$-$} ([yshift=-2.2mm]V.west);
+  \draw[k=clOrange] (RG.north) -- node[vtxt, left=1pt, pos=0.48]{dämpft} node[polm, pos=0.82]{$-$} (BT.south);
+
+  % --- B3: Budget (Kaufrate -|| -> Budget + -> Kaufrate) ---
+  \draw[k=clRed, delay=0.36] (KR.202) to[bend right=18] node[vtxt, left=3pt, pos=0.52]{leert (Raten)} node[polm, pos=0.84]{$-$} (BU.north east);
+  \draw[k=clRed] (BU.east) to[bend right=18] node[vtxt, right=2pt, pos=0.38]{erlaubt} node[polp, pos=0.82]{$+$} (KR.238);
+
+  % --- B5: Konkurrenz (Marge +|| -> Konkurrenz - -> Marge) ---
+  \draw[k=clGold, delay=0.38] ([yshift=2.3mm]MG.east) -- node[vtxt, above=2.5pt, pos=0.48]{lockt an} node[polp, pos=0.84]{$+$} ([yshift=2.3mm]KK.west);
+  \draw[k=clGold] ([yshift=-2.3mm]KK.west) -- node[vtxt, below=1.5pt, pos=0.48]{drückt} node[polm, pos=0.84]{$-$} ([yshift=-2.3mm]MG.east);
+
+  % --- R4: Erfolg dem Erfolgreichen (Marktmacht + -> Marge + -> Kapital + -> Marktmacht) ---
+  \draw[k=clPurple] (MM.north east) -- node[vtxt, sloped, above=1pt, pos=0.48]{diktiert Konditionen} node[polp, pos=0.84]{$+$} (MG.south west);
+  \draw[k=clPurple] (MG.south) -- node[vtxt, right=1pt, pos=0.46]{mehrt} node[polp, pos=0.82]{$+$} (KP.north);
+  \draw[k=clPurple] (KP.west) -- node[vtxt, above=1pt, pos=0.48]{vergrößert} node[polp, pos=0.82]{$+$} (MM.east);
+
+  % --- B6: Gegenbewegung (Marktmacht + -> öffentl. Druck +|| -> Regulierung - -> Marktmacht) ---
+  \draw[k=clOrange] (MM.west) -- node[vtxt, above=1pt, pos=0.48]{provoziert} node[polp, pos=0.84]{$+$} (OD.east);
+  \draw[k=clOrange, delay=0.42] (OD.north west) -- node[vtxt, sloped, above=2.5pt, pos=0.48]{erzwingt (Jahre)} node[polp, pos=0.84]{$+$} (RG.south east);
+  \draw[k=clOrange] (RG.south) -- (2.35,-17.75) -- node[vtxt, above=1pt, pos=0.45]{begrenzt (Umgehungsgefahr)} node[polm, pos=0.88]{$-$} (17.2,-17.75) -- (MM.south);
+
+  % ===========================================================================
+  % SCHLEIFEN-BADGES (mit Minus-Zählung & Typ)
+  % ===========================================================================
+  \node[badgeB] at (16.4,-10.55) {$\circlearrowright$ \textbf{B1} Preisausgleich\\[-1.5pt]{\tiny (3$-$) $\cdot$ B}};
+  \node[badgeR] at (14.4,-12.25) {$\circlearrowleft$ \textbf{R1} Spekulation\\[-1.5pt]{\tiny (2$-$) $\cdot$ R}};
+  \node[badgeB] at (21.3,-10.55) {$\circlearrowleft$ \textbf{B2} Nachschub ($\parallel$)\\[-1.5pt]{\tiny (1$-$) $\cdot$ B}};
+  \node[badgeR] at (13.9,-6.8)   {$\circlearrowleft$ \textbf{R2} Daten\\[-1.5pt]{\tiny (0$-$) $\cdot$ R}};
+  \node[badgeR] at (8.75,-8.15)  {$\circlearrowleft$ \textbf{R3} Vertrauen\\[-1.5pt]{\tiny (2$-$) $\cdot$ R}};
+  \node[badgeB] at (4.75,-6.65)  {$\circlearrowright$ \textbf{B4} Opportunismus\\[-1.5pt]{\tiny (1$-$) $\cdot$ B}};
+  \node[badgeB] at (9.65,-13.6)  {$\circlearrowleft$ \textbf{B3} Budget ($\parallel$)\\[-1.5pt]{\tiny (1$-$) $\cdot$ B}};
+  \node[badgeB] at (27.8,-14.45) {$\circlearrowright$ \textbf{B5} Konkurrenz ($\parallel$)\\[-1.5pt]{\tiny (1$-$) $\cdot$ B}};
+  \node[badgeR] at (21.6,-15.55) {$\circlearrowright$ \textbf{R4} Erfolg d.\ Erfolgr.\\[-1.5pt]{\tiny (0$-$) $\cdot$ R}};
+  \node[badgeB] at (11.5,-15.55) {$\circlearrowright$ \textbf{B6} Gegenbewegung ($\parallel$)\\[-1.5pt]{\tiny (1$-$) $\cdot$ B}};
+
+  % ===========================================================================
+  % LEGENDE OBEN RECHTS (im freien Bereich über Zone 4)
+  % ===========================================================================
+  \node[draw=black!30, rounded corners=7pt, fill=white, anchor=north west, inner sep=4.5pt,
+        font=\tiny, text width=12.3cm] at (20.75,-3.85) {
+    {\scriptsize\bfseries Methodische Lesart (Sterman Kap.~5 \& 6; Meadows; Novak)}\\[2pt]
+    \textbullet~\textbf{Kanten:} Verbphrase + Polarität
+      (\textcolor{posgreen!90!black}{\textbf{$+$}} gleichgerichtet,
+       \textcolor{negred!90!black}{\textbf{$-$}} gegenläufig,
+       \textbf{$\parallel$} Zeitverzögerung/Delay).\\
+    \textbullet~\textbf{Knoten:} \textbf{Doppelrahmen} = Bestandsgröße (\emph{Stock}: Angebot, Ware unterwegs, Vertrauen, Budget, Daten, Kapital, Regulierung); \textbf{Einfachrahmen} = Fluss-/Hilfsgröße.\\
+    \textbullet~\textbf{Schleifenregel:} Ungerade Anzahl \textcolor{negred!90!black}{\textbf{$-$}} $\Rightarrow$ \textcolor{clBlue!90!black}{\textbf{B}} (ausgleichend); gerade Anzahl \textcolor{negred!90!black}{\textbf{$-$}} $\Rightarrow$ \textcolor{clRed!90!black}{\textbf{R}} (verstärkend).
+  };
+
+  % Fußzeile
+  \node[anchor=west, font=\tiny, text=hkagray] at (1.35,-18.62)
+    {\textbf{Kernerkenntnis:} Alle 10 Rückkopplungen greifen ineinander \textendash{} ob \textbf{B1/B5/B6} stabilisieren oder \textbf{R1/R2/R4} eskalieren, entscheidet die \emph{Dominanz und Verzögerung ($\parallel$)} der Schleifen.};
+
+\end{tikzpicture}
+\newpage
+
+% =============================================================================
+% FOLIE 2: Themenlandschaftskarte im Cluster-Kartenstil (Vorbild: OneManArmy)
+% =============================================================================
+\kopf{Themenlandschaftskarte: Die 6 Themenfelder \& 10 Loops}
+     {Räumliche Themenkarten-Darstellung mit dem Preisausgleich (\textbf{B1}) im Zentrum und den 9 gekoppelten Rückkopplungen}
+\begin{tikzpicture}[remember picture, overlay, shift={(current page.north west)}]
+
+  % --- ZENTRUM: DER MARKTPLATZ (B1 PREISAUSGLEICH) ---
+  \node[zentrum] (C) at (16.9,-11.05) {
+    {\normalsize\bfseries DER MARKTPLATZ}\\[1pt]
+    {\scriptsize\color{clGold!70!white}\bfseries $\circlearrowright$ B1 Preisausgleich (3$-$) $\cdot$ B}\\[2pt]
+    {\tiny\color{white!90} $\text{Angebot} \xrightarrow{-} \text{Preis} \xrightarrow{-} \text{Kaufrate} \xrightarrow{-} \text{Angebot}$}\\
+    {\tiny\color{white!75} Knappheit hebt Preise, bremst Käufe \& erholt das Angebot (Sterman S.~169)}
+  };
+
+  % --- 1. Oben Links: Vertrauen & Opportunismus (R3, B4) ---
+  \node[tkarte=clBlue] (K1) at (4.4,-6.25) {
+    {\small\bfseries\color{clBlue!85!black} 1. Vertrauen \& Opportunismus}\\[3pt]
+    \textbf{$\circlearrowleft$ R3 Vertrauen (2$-$) $\cdot$ R}\\
+    $\text{Vertrauen} \xrightarrow{-} \text{Transaktionskosten} \xrightarrow{-} \text{Kaufrate} \xrightarrow{+} \text{Vertrauen}$\\
+    {\tiny Verlässliche Lieferung spart Prüfung; ein Skandal dreht die Schleife um.}\\[3pt]
+    \textbf{$\circlearrowright$ B4 Opportunismus (1$-$) $\cdot$ B}\\
+    $\text{Vertrauen} \xrightarrow{+} \text{Betrug} \xrightarrow{-} \text{Vertrauen}$\\
+    {\tiny Hohes Vertrauen lockt Fake-Shops; Aufsicht dämpft Betrug (Salen/Z.\ S.~266).}
+  };
+
+  % --- 2. Oben Mitte: Plattform & Datenmacht (R2) ---
+  \node[tkarte=clPurple, minimum height=3.65cm] (K2) at (16.9,-5.95) {
+    {\small\bfseries\color{clPurple!85!black} 2. Digitale Plattform \& Daten}\\[3pt]
+    \textbf{$\circlearrowleft$ R2 Daten-Spirale (0$-$) $\cdot$ R}\\
+    $\text{Kaufrate} \xrightarrow{+} \text{Daten} \xrightarrow{+} \text{gezielte Kaufanreize} \xrightarrow{+} \text{Kaufrate}$\\[2pt]
+    55\,\% unbare Käufe liefern Datenspuren für personalisierte Preise,\\
+    Glücksräder, Countdowns und Drops (Sterman S.~364; Salen/Z.\ S.~202).\\[2pt]
+    {\color{black!60}\emph{\enquote{Jeder Klick trainiert die Verlockung}}}
+  };
+
+  % --- 3. Oben Rechts: Nachschub & Seewege (B2) ---
+  \node[tkarte=clGreen] (K3) at (29.4,-6.25) {
+    {\small\bfseries\color{clGreen!80!black} 3. Nachschub \& Lieferketten}\\[3pt]
+    \textbf{$\circlearrowleft$ B2 Nachschub-Oszillation (1$-$) $\cdot$ B}\\
+    $\text{Preis} \xrightarrow{+} \text{Marge} \xrightarrow{+} \text{Ware unterwegs} \xrightarrow{+\,\parallel} \text{Angebot} \xrightarrow{-} \text{Preis}$\\[2pt]
+    Nachschub braucht Zeit (Kap-Umweg +10\textendash14 Tage):\\
+    Händler bestellen zu lange zu viel $\Rightarrow$ Preise schwingen über\\
+    das Gleichgewicht hinaus (Sterman S.~663, 791; Meadows S.~51\textendash58).
+  };
+
+  % --- 4. Unten Links: Gegenbewegung & Regulierung (B6) ---
+  \node[tkarte=clOrange] (K4) at (4.4,-15.65) {
+    {\small\bfseries\color{clOrange!85!black} 4. Öffentlicher Druck \& Aufsicht}\\[3pt]
+    \textbf{$\circlearrowright$ B6 Gegenbewegung (1$-$) $\cdot$ B}\\
+    $\text{Marktmacht} \xrightarrow{+} \text{öffentl.\ Druck} \xrightarrow{+\,\parallel} \text{Regulierung} \xrightarrow{-} \text{Marktmacht}$\\[2pt]
+    Missbrauch erzeugt Druck (BEUC 2024); Gesetze folgen mit Jahren\\
+    Verzug (LkSG 2021, CSDDD 2024). Betroffene suchen Umgehungen\\
+    (\emph{Policy Resistance} \& \emph{Rule Beating}, Meadows S.~112, 136).
+  };
+
+  % --- 5. Unten Mitte: Budget & Spekulation (B3, R1) ---
+  \node[tkarte=clRed, minimum height=3.85cm] (K5) at (16.9,-15.8) {
+    {\small\bfseries\color{clRed!85!black} 5. Kundschaft: Spekulation vs.\ Budget}\\[2pt]
+    \textbf{$\circlearrowleft$ R1 Spekulation (2$-$) $\cdot$ R:}
+    $\text{Preis} \xrightarrow{+} \text{spekul.\ Nachfr.} \xrightarrow{+} \text{Kaufrate} \xrightarrow{-} \text{Angebot} \xrightarrow{-} \text{Preis}$\\
+    {\tiny Steigende Preise locken Spekulanten (StockX); Blase wächst, bis B1 bremst (Sterman S.~173).}\\[2pt]
+    \textbf{$\circlearrowleft$ B3 Budgetbremse (1$-$) $\cdot$ B:}
+    $\text{Kaufrate} \xrightarrow{-\,\parallel} \text{Budget} \xrightarrow{+} \text{Kaufrate}$\\
+    {\tiny Kaufen leert das Konto; Ratenkauf verzögert ($\parallel$) die Bremse (Sterman S.~409; Adams/D.\ S.~59).}
+  };
+
+  % --- 6. Unten Rechts: Marktmacht vs. Konkurrenz (R4, B5) ---
+  \node[tkarte=clPurple] (K6) at (29.4,-15.65) {
+    {\small\bfseries\color{clPurple!85!black} 6. Marktmacht vs.\ Konkurrenz}\\[3pt]
+    \textbf{$\circlearrowright$ R4 Erfolg dem Erfolgreichen (0$-$) $\cdot$ R}\\
+    $\text{Marktmacht} \xrightarrow{+} \text{Marge} \xrightarrow{+} \text{Kapital} \xrightarrow{+} \text{Marktmacht}$\\
+    {\tiny Große diktieren Konditionen \& Gebühren (Meadows S.~126\textendash130; Sterman S.~374).}\\[3pt]
+    \textbf{$\circlearrowright$ B5 Konkurrenz (1$-$) $\cdot$ B:}
+    $\text{Marge} \xrightarrow{+\,\parallel} \text{Konkurrenz} \xrightarrow{-} \text{Marge}$\\
+    {\tiny Nachahmer drücken Margen verzögert ($\parallel$), oft schwächer als R4 (Adams/D.\ S.~316).}
+  };
+
+  % --- KOPPLUNGSPFEILE ZWISCHEN KARTEN & ZENTRUM ---
+  % K1 <-> Zentrum (R3)
+  \draw[k=clBlue] (K1.340) to[bend left=10] node[vtxt, pos=0.5]{Vertrauen senkt TK ($-$) $\rightarrow$ Kaufrate} (C.162);
+  \draw[k=clBlue] (C.176) to[bend left=10] node[vtxt, pos=0.5]{gute Käufe stärken Ruf ($+$)} (K1.318);
+
+  % K2 <-> Zentrum (R2)
+  \draw[k=clPurple] ($(K2.south)+(-1.05,0)$) -- node[vtxt, left=1pt]{Kaufanreize ($+$)} ($(C.north)+(-1.05,0)$);
+  \draw[k=clPurple] ($(C.north)+(1.05,0)$) -- node[vtxt, right=1pt]{Kaufrate liefert Daten ($+$)} ($(K2.south)+(1.05,0)$);
+
+  % K3 <-> Zentrum (B2)
+  \draw[k=clGreen] (C.18) to[bend left=10] node[vtxt, pos=0.5]{Preis hebt Marge \& Order ($+$)} (K3.200);
+  \draw[k=clGreen, delay=0.5] (K3.222) to[bend left=10] node[vtxt, pos=0.5]{Nachschub füllt Angebot ($+\,\parallel$)} (C.4);
+
+  % K5 <-> Zentrum (R1 & B3)
+  \draw[k=clRed] ($(C.south)+(-1.15,0)$) -- node[vtxt, left=1pt]{Preis weckt Spekulation ($+$)} ($(K5.north)+(-1.15,0)$);
+  \draw[k=clRed] ($(K5.north)+(1.15,0)$) -- node[vtxt, right=1pt]{Spekulation \& Budget steuern Kaufrate} ($(C.south)+(1.15,0)$);
+
+  % K6 <-> Zentrum & K3 (R4 & B5)
+  \draw[k=clPurple] (C.342) to[bend left=8] node[vtxt, pos=0.52]{Preis speist Marge ($+$)} (K6.158);
+  \draw[k=clPurple] (K6.north) -- node[vtxt, right=1pt]{Marge steuert Order ($+$)} (K3.south);
+
+  % K6 <-> K4 (B6 Gegenbewegung) & K4 -> K1 (Aufsicht dämpft Betrug)
+  \draw[k=clOrange] (K6.192) -- (21.5,-18.18) -- node[vtxt, above=0.5pt]{Marktmacht weckt Druck ($+$) $\xrightarrow{\parallel}$ Regulierung begrenzt Macht ($-$)} (12.3,-18.18) -- (K4.348);
+  \draw[k=clOrange] (K4.north) -- node[vtxt, left=1pt]{Aufsicht dämpft Betrug ($-$)} (K1.south);
+
+  % Fußzeile
+  \node[anchor=west, font=\tiny, text=hkagray] at (1.35,-18.62)
+    {\textbf{Lesart:} Im Zentrum regelt \textbf{B1} das Marktgleichgewicht; die sechs Themenfelder koppeln die 9 weiteren Schleifen (\textbf{B2\textendash B6}, \textbf{R1\textendash R4}) direkt an Preis, Kaufrate, Angebot und Marge.};
+
+\end{tikzpicture}
+\newpage
+
+% =============================================================================
+% FOLIE 3: Die 10 Kreisläufe als modulare Kausal-Porträts (2x5 Raster)
+% =============================================================================
+\kopf{Die 10 Kreisläufe im Einzelporträt (Struktur \& Vorzeichenprüfung)}
+     {Jede Rückkopplung als isoliertes Kausalmodul mit exakter Kantenpolarität, Verzögerung ($\parallel$) und Literaturquelle}
+\begin{tikzpicture}[remember picture, overlay, shift={(current page.north west)}]
+
+  % 2 Reihen x 5 Spalten Raster
+  % Spalten-X (Mitte): 3.7, 10.3, 16.9, 23.5, 30.1 (Breite je 6.1cm)
+  % Reihe 1 Y: -4.0 bis -10.8 | Reihe 2 Y: -11.2 bis -18.0
+
+  \newcommand{\modulbox}[5]{% #1 x, #2 y, #3 farbe, #4 Titel, #5 Untertitel/Quelle
+    \draw[draw=#3!80!black, line width=1.1pt, rounded corners=7pt, fill=#3!5]
+      (#1-3.05,#2) rectangle (#1+3.05,#2-6.75);
+    \node[anchor=north, font=\scriptsize\bfseries, text=#3!85!black, align=center]
+      at (#1,#2-0.12) {#4};
+    \node[anchor=south, font=\tiny, text=black!75, text width=5.8cm, align=center]
+      at (#1,#2-6.65) {#5};
+  }
+
+  % ==================== REIHE 1 ====================
+  % 1. B1 Preisausgleich
+  \modulbox{3.7}{-3.95}{clGold}{B1 Preisausgleich (3$-$) $\cdot$ B}
+    {Knappheit hebt Preis, bremst Kauf, Angebot erholt sich.\\{\color{hkagray}Sterman Kap.~5.5, S.~169}}
+  \node[mvar=clGold] (m1a) at (3.7,-5.15) {Angebot};
+  \node[mvar=clGold] (m1b) at (5.3,-7.45) {Preis};
+  \node[mvar=clGold] (m1c) at (2.1,-7.45) {Kaufrate};
+  \draw[k=clGold] (m1a.east) to[bend left=20] node[polm, pos=0.5]{$-$} (m1b.north);
+  \draw[k=clGold] (m1b.west) to[bend left=18] node[polm, pos=0.5]{$-$} (m1c.east);
+  \draw[k=clGold] (m1c.north) to[bend left=20] node[polm, pos=0.5]{$-$} (m1a.west);
+  \node[badgeB] at (3.7,-6.65) {$\circlearrowright$ B1};
+
+  % 2. B2 Nachschub
+  \modulbox{10.3}{-3.95}{clGreen}{B2 Nachschub (1$-$) $\cdot$ B}
+    {Nachschub braucht Zeit ($\parallel$) $\Rightarrow$ Preise schwingen über.\\{\color{hkagray}Sterman S.~663, 791; Meadows S.~51\textendash58}}
+  \node[mvar=clGreen] (m2a) at (8.7,-5.2)  {Preis};
+  \node[mvar=clGreen] (m2b) at (11.9,-5.2) {Marge};
+  \node[mvar=clGreen] (m2c) at (11.9,-7.55){Ware unterw.};
+  \node[mvar=clGreen] (m2d) at (8.7,-7.55) {Angebot};
+  \draw[k=clGreen] (m2a) -- node[polp, pos=0.5]{$+$} (m2b);
+  \draw[k=clGreen] (m2b) -- node[polp, pos=0.5]{$+$} (m2c);
+  \draw[k=clGreen, delay=0.35] (m2c) -- node[polp, pos=0.72]{$+$} (m2d);
+  \draw[k=clGreen] (m2d) -- node[polm, pos=0.5]{$-$} (m2a);
+  \node[badgeB] at (10.3,-6.38) {$\circlearrowright$ B2};
+
+  % 3. R1 Spekulation
+  \modulbox{16.9}{-3.95}{clRed}{R1 Spekulation (2$-$) $\cdot$ R}
+    {Steigende Preise locken Spekulanten; Blase wächst bis B1 bremst.\\{\color{hkagray}Sterman Kap.~5.5, S.~173}}
+  \node[mvar=clRed] (m3a) at (15.3,-5.2)  {Preis};
+  \node[mvar=clRed] (m3b) at (18.5,-5.2)  {spekul.\ Nachfr.};
+  \node[mvar=clRed] (m3c) at (18.5,-7.55) {Kaufrate};
+  \node[mvar=clRed] (m3d) at (15.3,-7.55) {Angebot};
+  \draw[k=clRed] (m3a) -- node[polp, pos=0.5]{$+$} (m3b);
+  \draw[k=clRed] (m3b) -- node[polp, pos=0.5]{$+$} (m3c);
+  \draw[k=clRed] (m3c) -- node[polm, pos=0.5]{$-$} (m3d);
+  \draw[k=clRed] (m3d) -- node[polm, pos=0.5]{$-$} (m3a);
+  \node[badgeR] at (16.9,-6.38) {$\circlearrowright$ R1};
+
+  % 4. R3 Vertrauen
+  \modulbox{23.5}{-3.95}{clBlue}{R3 Vertrauen (2$-$) $\cdot$ R}
+    {Verlässlichkeit spart Prüfung \& stärkt Ruf; Skandal dreht um.\\{\color{hkagray}Sterman S.~735; Salen/Z.\ Kap.~19, S.~230}}
+  \node[mvar=clBlue] (m4a) at (23.5,-5.15) {Vertrauen};
+  \node[mvar=clBlue] (m4b) at (25.1,-7.45) {Trans.-Kosten};
+  \node[mvar=clBlue] (m4c) at (21.9,-7.45) {Kaufrate};
+  \draw[k=clBlue] (m4a.east) to[bend left=20] node[polm, pos=0.5]{$-$} (m4b.north);
+  \draw[k=clBlue] (m4b.west) to[bend left=18] node[polm, pos=0.5]{$-$} (m4c.east);
+  \draw[k=clBlue] (m4c.north) to[bend left=20] node[polp, pos=0.5]{$+$} (m4a.west);
+  \node[badgeR] at (23.5,-6.65) {$\circlearrowright$ R3};
+
+  % 5. B4 Opportunismus
+  \modulbox{30.1}{-3.95}{clBlue}{B4 Opportunismus (1$-$) $\cdot$ B}
+    {Hohes Vertrauen lockt Fake-Shops; Aufsicht dämpft Betrug.\\{\color{hkagray}Salen/Zimmerman Kap.~21, S.~266}}
+  \node[mvar=clBlue]   (m5a) at (28.4,-5.65) {Vertrauen};
+  \node[mvar=clBlue]   (m5b) at (31.8,-5.65) {Betrug};
+  \node[mvar=clOrange] (m5c) at (31.8,-7.65) {Aufsicht};
+  \draw[k=clBlue] (m5a.north east) to[bend left=28] node[polp, pos=0.5]{$+$} (m5b.north west);
+  \draw[k=clBlue] (m5b.south west) to[bend left=28] node[polm, pos=0.5]{$-$} (m5a.south east);
+  \draw[k=clOrange] (m5c.north) -- node[polm, pos=0.5]{$-$} (m5b.south);
+  \node[badgeB] at (30.1,-5.65) {B4};
+
+  % ==================== REIHE 2 ====================
+  % 6. B3 Budget
+  \modulbox{3.7}{-11.2}{clRed}{B3 Budget (1$-$) $\cdot$ B}
+    {Kaufen leert Konto; Ratenkauf verzögert ($\parallel$) die Bremse.\\{\color{hkagray}Sterman S.~409; Adams/Dormans S.~59}}
+  \node[mvar=clRed] (m6a) at (2.0,-13.45) {Kaufrate};
+  \node[mvar=clRed] (m6b) at (5.4,-13.45) {Budget};
+  \draw[k=clRed, delay=0.35] (m6a.north east) to[bend left=32] node[polm, pos=0.68]{$-$} (m6b.north west);
+  \draw[k=clRed] (m6b.south west) to[bend left=32] node[polp, pos=0.5]{$+$} (m6a.south east);
+  \node[badgeB] at (3.7,-13.45) {$\circlearrowright$ B3};
+
+  % 7. R2 Daten
+  \modulbox{10.3}{-11.2}{clPurple}{R2 Daten (0$-$) $\cdot$ R}
+    {Mehr Käufe $\Rightarrow$ mehr Daten $\Rightarrow$ passgenauere Kaufanreize.\\{\color{hkagray}Sterman S.~364\textendash370; Salen/Z.\ S.~202}}
+  \node[mvar=clPurple] (m7a) at (10.3,-12.4) {Kaufrate};
+  \node[mvar=clPurple] (m7b) at (11.9,-14.7) {Daten};
+  \node[mvar=clPurple] (m7c) at (8.7,-14.7)  {Kaufanreize};
+  \draw[k=clPurple] (m7a.east) to[bend left=20] node[polp, pos=0.5]{$+$} (m7b.north);
+  \draw[k=clPurple] (m7b.west) to[bend left=18] node[polp, pos=0.5]{$+$} (m7c.east);
+  \draw[k=clPurple] (m7c.north) to[bend left=20] node[polp, pos=0.5]{$+$} (m7a.west);
+  \node[badgeR] at (10.3,-13.9) {$\circlearrowright$ R2};
+
+  % 8. R4 Erfolg dem Erfolgreichen
+  \modulbox{16.9}{-11.2}{clPurple}{R4 Erfolg d.\ Erfolgr.\ (0$-$) $\cdot$ R}
+    {Große diktieren Konditionen \& Gebühren $\Rightarrow$ noch größer.\\{\color{hkagray}Meadows S.~126\textendash130; Sterman S.~374}}
+  \node[mvar=clPurple] (m8a) at (16.9,-12.4) {Marktmacht};
+  \node[mvar=clPurple] (m8b) at (18.5,-14.7) {Marge};
+  \node[mvar=clPurple] (m8c) at (15.3,-14.7) {Kapital};
+  \draw[k=clPurple] (m8a.east) to[bend left=20] node[polp, pos=0.5]{$+$} (m8b.north);
+  \draw[k=clPurple] (m8b.west) to[bend left=18] node[polp, pos=0.5]{$+$} (m8c.east);
+  \draw[k=clPurple] (m8c.north) to[bend left=20] node[polp, pos=0.5]{$+$} (m8a.west);
+  \node[badgeR] at (16.9,-13.9) {$\circlearrowright$ R4};
+
+  % 9. B5 Konkurrenz
+  \modulbox{23.5}{-11.2}{clGold}{B5 Konkurrenz (1$-$) $\cdot$ B}
+    {Hohe Margen locken verzögert ($\parallel$) Nachahmer (\emph{Dynamic Friction}).\\{\color{hkagray}Adams/Dormans Anh.~B, S.~316}}
+  \node[mvar=clGold] (m9a) at (21.8,-13.45) {Marge};
+  \node[mvar=clGold] (m9b) at (25.2,-13.45) {Konkurrenz};
+  \draw[k=clGold, delay=0.35] (m9a.north east) to[bend left=32] node[polp, pos=0.68]{$+$} (m9b.north west);
+  \draw[k=clGold] (m9b.south west) to[bend left=32] node[polm, pos=0.5]{$-$} (m9a.south east);
+  \node[badgeB] at (23.5,-13.45) {$\circlearrowright$ B5};
+
+  % 10. B6 Gegenbewegung
+  \modulbox{30.1}{-11.2}{clOrange}{B6 Gegenbewegung (1$-$) $\cdot$ B}
+    {Missbrauch $\Rightarrow$ Druck $\Rightarrow$ Gesetz mit Verzug ($\parallel$, LkSG/CSDDD).\\{\color{hkagray}Meadows S.~112, 136; Salen/Z.\ S.~212}}
+  \node[mvar=clOrange] (m10a) at (30.1,-12.4) {Marktmacht};
+  \node[mvar=clOrange] (m10b) at (31.8,-14.7) {öff.\ Druck};
+  \node[mvar=clOrange] (m10c) at (28.4,-14.7) {Regulierung};
+  \draw[k=clOrange] (m10a.east) to[bend left=20] node[polp, pos=0.5]{$+$} (m10b.north);
+  \draw[k=clOrange, delay=0.35] (m10b.west) to[bend left=18] node[polp, pos=0.72]{$+$} (m10c.east);
+  \draw[k=clOrange] (m10c.north) to[bend left=20] node[polm, pos=0.5]{$-$} (m10a.west);
+  \node[badgeB] at (30.1,-13.9) {$\circlearrowright$ B6};
+
+  % Fußzeile
+  \node[anchor=west, font=\tiny, text=hkagray] at (1.35,-18.62)
+    {\textbf{Systemische Synthese:} \textbf{B1\textendash B6} wirken als ausgleichende Gegenkräfte (ungerade Anzahl $-$), \textbf{R1\textendash R4} als selbstverstärkende Motoren (gerade Anzahl $-$).};
+
+\end{tikzpicture}
+\newpage
+
+% =============================================================================
+% FOLIE 4: Schleifenregister & Vollständige Dokumentation der 10 Kreisläufe
+% =============================================================================
+\kopf{Schleifenregister: Die 10 Rückkopplungen im Überblick}
+     {Formale Spezifikation der Kausalpfade, Vorzeichenzählung, Systemverhalten und Literaturstellen aus \texttt{Ressourcen/}}
+\begin{tikzpicture}[remember picture, overlay, shift={(current page.north west)}]
+\node[anchor=north west, inner sep=0pt] at (0.9,-3.9) {%
+\fontsize{8.5}{10.3}\selectfont
+\renewcommand{\arraystretch}{1.32}
+\begin{tabularx}{32.0cm}{@{}p{2.95cm} p{9.85cm} p{0.65cm} X >{\raggedright\arraybackslash}p{5.55cm}@{}}
+\toprule
+\textbf{Schleife} & \textbf{Kausalpfad} {\color{black!55}(Anzahl $-$)} & \textbf{Typ} & \textbf{Was man in der Realität beobachtet} & \textbf{Fundstelle} \\
+\midrule
+\textbf{B1} Preisausgleich &
+  Angebot $\xrightarrow{-}$ Preis $\xrightarrow{-}$ Kaufrate $\xrightarrow{-}$ Angebot \hfill (3) & \textbf{\color{clBlue!85!black}B} &
+  Wird Ware knapp, steigt der Preis, es wird weniger gekauft, das Angebot erholt sich. &
+  Sterman Kap.~5.5, S.~169 \\
+\textbf{B2} Nachschub &
+  Preis $\xrightarrow{+}$ Marge $\xrightarrow{+}$ Ware unterwegs $\xrightarrow{+\,\parallel}$ Angebot $\xrightarrow{-}$ Preis \hfill (1) & \textbf{\color{clBlue!85!black}B} &
+  Nachschub braucht Zeit, also wird zu lange zu viel bestellt. Preise schwingen über das Gleichgewicht hinaus und zurück. &
+  Sterman Kap.~17, S.~663; Kap.~20, S.~791; Meadows S.~51--58 \\
+\textbf{R1} Spekulation &
+  Preis $\xrightarrow{+}$ spekul.\ Nachfrage $\xrightarrow{+}$ Kaufrate $\xrightarrow{-}$ Angebot $\xrightarrow{-}$ Preis \hfill (2) & \textbf{\color{clRed!85!black}R} &
+  Steigende Preise locken Käufer an, die auf weitere Steigerung setzen. Die Blase wächst, bis B1 sie bremst. &
+  Sterman Kap.~5.5, S.~173 \\
+\textbf{R3} Vertrauen &
+  Vertrauen $\xrightarrow{-}$ Transaktionskosten $\xrightarrow{-}$ Kaufrate $\xrightarrow{+}$ Vertrauen \hfill (2) & \textbf{\color{clRed!85!black}R} &
+  Wer verlässlich liefert, wird ohne Prüfung gekauft. Jedes gute Geschäft stärkt den Ruf; ein Skandal dreht die Schleife um. &
+  Sterman Kap.~18.2.1, S.~735; Salen/Zimmerman Kap.~19, S.~230 \\
+\textbf{B4} Opportunismus &
+  Vertrauen $\xrightarrow{+}$ Betrug $\xrightarrow{-}$ Vertrauen \hfill (1) & \textbf{\color{clBlue!85!black}B} &
+  Wo viel vertraut wird, lohnt sich Betrug (Fake-Shops). Aufgeflogene Fälle senken das Vertrauen. Aufsicht dämpft den Betrug. &
+  Salen/Zimmerman Kap.~21, S.~266 \\
+\textbf{B3} Budget &
+  Kaufrate $\xrightarrow{-\,\parallel}$ Budget $\xrightarrow{+}$ Kaufrate \hfill (1) & \textbf{\color{clBlue!85!black}B} &
+  Kaufen leert das Konto. Ratenkauf verzögert diese Bremse, deshalb wird die Grenze oft erst spät bemerkt. &
+  Sterman Kap.~11, S.~409; Adams/Dormans Kap.~4, S.~59 \\
+\textbf{R2} Daten &
+  Kaufrate $\xrightarrow{+}$ Daten $\xrightarrow{+}$ gezielte Kaufanreize $\xrightarrow{+}$ Kaufrate \hfill (0) & \textbf{\color{clRed!85!black}R} &
+  Mehr Käufe liefern mehr Daten. Damit werden Angebote, Preise und Countdowns passgenauer. &
+  Sterman Kap.~10.4, S.~364--370; Salen/Zimmerman Kap.~17, S.~202 \\
+\textbf{R4} Erfolg dem\newline Erfolgreichen &
+  Marktmacht $\xrightarrow{+}$ Marge $\xrightarrow{+}$ Kapital $\xrightarrow{+}$ Marktmacht \hfill (0) & \textbf{\color{clRed!85!black}R} &
+  Wer groß ist, diktiert Einkaufskonditionen und Gebühren und wird dadurch noch größer. &
+  Meadows S.~126--130; Sterman Kap.~10.4.7, S.~374 \\
+\textbf{B5} Konkurrenz &
+  Marge $\xrightarrow{+\,\parallel}$ Konkurrenz $\xrightarrow{-}$ Marge \hfill (1) & \textbf{\color{clBlue!85!black}B} &
+  Hohe Margen locken Nachahmer an, die Preise und Margen drücken. Wirkt verzögert und oft schwächer als R4. &
+  Adams/Dormans Anh.~B, S.~316 (Dynamic Friction) \\
+\textbf{B6} Gegenbewegung &
+  Marktmacht $\xrightarrow{+}$ öffentl.\ Druck $\xrightarrow{+\,\parallel}$ Regulierung $\xrightarrow{-}$ Marktmacht \hfill (1) & \textbf{\color{clBlue!85!black}B} &
+  Missbrauch wird sichtbar, Gesetze folgen mit Jahren Verzug (LkSG 2021, CSDDD 2024). Betroffene suchen Umgehungen. &
+  Meadows S.~112 (Policy Resistance), S.~136 (Rule Beating); Salen/Z.\ Kap.~18, S.~212 \\
+\bottomrule
+\end{tabularx}};
+
+\node[draw=hkared!60, fill=hkared!5, rounded corners=6pt, inner sep=5pt,
+      anchor=north west, text width=31.6cm, font=\scriptsize, align=left] at (0.9,-16.55) {%
+  \textbf{Methodische Synthese für das Spieldesign (Sterman Kap.~5.2.3, S.~143; Meadows S.~126; Fullerton Kap.~5):}
+  Durch die Kopplung über gemeinsame Knoten (\emph{Kaufrate}, \emph{Preis}, \emph{Angebot}, \emph{Marge}, \emph{Vertrauen}, \emph{Marktmacht}) entstehen nichtlineare Kipp-Punkte:
+  Verzögerungen ($\parallel$) in \textbf{B2}, \textbf{B3}, \textbf{B5} und \textbf{B6} erlauben den verstärkenden Schleifen (\textbf{R1}, \textbf{R2}, \textbf{R4}), kurzfristig über das Gleichgewicht hinauszuschießen, bevor die Bremsen greifen.};
+
+\end{tikzpicture}
+
+\end{document}

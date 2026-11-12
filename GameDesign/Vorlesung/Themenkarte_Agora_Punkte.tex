@@ -1,0 +1,271 @@
+\documentclass[11pt]{article}
+
+% --- Folienformat wie Themenkarte_Agora / OneManArmy (16:9, 960x540bp) ---
+\usepackage[paperwidth=960bp, paperheight=540bp, margin=0pt]{geometry}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[autostyle=true,german=quotes]{csquotes}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc, positioning, shapes.geometric, shapes.symbols, backgrounds, decorations.markings}
+\usepackage{microtype}
+\usepackage{hyperref}
+
+% --- Farbpalette (HKA + Domänenfarben) ---
+\definecolor{hkared}{RGB}{198, 42, 18}
+\definecolor{hkagray}{RGB}{100, 100, 100}
+\definecolor{clBlue}{RGB}{45, 115, 195}    % Institutionen & Vertrauen / Balancing
+\definecolor{clGold}{RGB}{200, 148, 20}    % Balance, Trade-offs & Progression
+\definecolor{clGreen}{RGB}{38, 148, 82}    % Ressourcen, Lieferketten & Flüsse
+\definecolor{clPurple}{RGB}{125, 88, 190}  % Macht, Asymmetrie & Systemfallen
+\definecolor{clRed}{RGB}{210, 62, 58}      % Eskalation, FOMO / Reinforcing
+\definecolor{clOrange}{RGB}{220, 122, 38}  % Verzögerungen, Risiken & Reibung
+\definecolor{posgreen}{RGB}{32, 148, 62}
+\definecolor{negred}{RGB}{198, 35, 35}
+
+\hypersetup{
+    colorlinks = true, linkcolor = hkared, urlcolor = hkared,
+    pdftitle   = {Themenlandschaftskarte: Die Agora (Zonen als Punkte)},
+    pdfauthor  = {Erlind Sejdiu},
+    pdfsubject = {Game Design, Themenlandschaftskarte auf Basis von Sterman, Meadows, Adams/Dormans, Salen/Zimmerman, Fullerton und Novak}
+}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+% =============================================================================
+% TikZ-Stile
+% =============================================================================
+\tikzset{
+  pfeil/.style      = {-{Stealth[length=2.1mm, width=1.5mm]}, line width=0.8pt, draw=black!80},
+  looppfeil/.style  = {-{Stealth[length=2.2mm, width=1.6mm]}, line width=1.05pt, draw=#1!85!black},
+  crosslink/.style  = {-{Stealth[length=2.1mm, width=1.5mm]}, line width=0.95pt, dashed, draw=hkared!90!black},
+  stateconn/.style  = {-{Stealth[length=1.9mm, width=1.4mm]}, line width=0.85pt, densely dashed, draw=#1!85!black},
+  txt/.style        = {font=\tiny\bfseries, fill=white, inner sep=1.2pt, rounded corners=1.5pt,
+                       align=center, text=black!85},
+  cltxt/.style      = {font=\tiny\bfseries, fill=hkared!8, draw=hkared!45, line width=0.4pt,
+                       inner sep=1.3pt, rounded corners=2pt, align=center, text=hkared!90!black},
+  polplus/.style    = {circle, fill=posgreen!14, draw=posgreen!85!black, line width=0.6pt,
+                       font=\tiny\bfseries, text=posgreen!90!black, inner sep=0.6pt, minimum size=3.3mm},
+  polminus/.style   = {circle, fill=negred!14, draw=negred!85!black, line width=0.6pt,
+                       font=\tiny\bfseries, text=negred!90!black, inner sep=0.6pt, minimum size=3.3mm},
+  % Knoten Folie 1 (Novak Concept Map)
+  cknoten/.style    = {draw=#1, line width=1.3pt, rounded corners=6pt, fill=#1!10,
+                       text width=3.35cm, minimum height=1.12cm, align=center, inner sep=2.5pt,
+                       font=\scriptsize},
+  agoraZentrum/.style = {ellipse, draw=hkared, line width=2.2pt, fill=black!90,
+                       text=white, minimum width=4.5cm, minimum height=2.1cm,
+                       align=center, inner sep=3pt},
+  % Knoten Folie 2 (Sterman CLD)
+  cldvar/.style     = {draw=#1!85!black, line width=1.1pt, rounded corners=5pt, fill=white,
+                       text width=2.9cm, minimum height=0.88cm, align=center, inner sep=2pt,
+                       font=\scriptsize},
+  loopbadge/.style  = {circle, draw=#1!85!black, fill=#1!14, line width=1.2pt,
+                       font=\footnotesize\bfseries, text=#1!85!black, inner sep=1pt,
+                       minimum size=0.85cm, align=center},
+  % Knoten Folie 3 (Stocks & Flows / Machinations)
+  stock/.style      = {draw=#1!85!black, line width=1.5pt, fill=#1!12, double, double distance=1.3pt,
+                       rounded corners=3pt, text width=3.05cm, minimum height=1.05cm,
+                       align=center, inner sep=2.5pt, font=\scriptsize},
+  machpool/.style   = {circle, draw=#1!85!black, line width=1.4pt, fill=#1!12,
+                       minimum size=1.45cm, align=center, inner sep=1.5pt, font=\tiny\bfseries},
+  machsource/.style = {regular polygon, regular polygon sides=3, draw=clGreen!85!black,
+                       line width=1.2pt, fill=clGreen!14, minimum size=1.1cm,
+                       inner sep=0.5pt, font=\tiny\bfseries, align=center},
+  machdrain/.style  = {regular polygon, regular polygon sides=3, shape border rotate=180,
+                       draw=clRed!85!black, line width=1.2pt, fill=clRed!14, minimum size=1.1cm,
+                       inner sep=0.5pt, font=\tiny\bfseries, align=center},
+  machconv/.style   = {regular polygon, regular polygon sides=3, shape border rotate=-90,
+                       draw=clGold!85!black, line width=1.2pt, fill=clGold!18, minimum size=1.15cm,
+                       inner sep=0.5pt, font=\tiny\bfseries, align=center},
+  machtrader/.style = {diamond, draw=hkared, line width=1.3pt, fill=hkared!12,
+                       minimum size=1.35cm, aspect=1.25, inner sep=1pt, font=\tiny\bfseries, align=center},
+  valve/.style      = {rectangle, draw=black!75, line width=0.7pt, fill=white,
+                       font=\tiny\bfseries, inner sep=1.5pt, rounded corners=1.5pt, align=center},
+  % Knoten Folie 4 (Kybernetik & Balance)
+  kyb/.style        = {draw=#1!85!black, line width=1.3pt, rounded corners=7pt, fill=#1!10,
+                       text width=3.55cm, minimum height=1.22cm, align=center, inner sep=3pt,
+                       font=\scriptsize},
+  falle/.style      = {draw=#1!85!black, line width=1.2pt, rounded corners=7pt, fill=#1!8,
+                       text width=7.2cm, minimum height=2.65cm, align=left, inner sep=5pt,
+                       font=\scriptsize},
+  % Delay-Markierung auf Pfad (Sterman ||)
+  delaymark/.style  = {postaction={decorate},
+                       decoration={markings, mark=at position #1 with {
+                         \draw[black!85, line width=1.2pt] (-1.6pt,-4.2pt) -- (-1.6pt,4.2pt);
+                         \draw[black!85, line width=1.2pt] (1.6pt,-4.2pt) -- (1.6pt,4.2pt);
+                       }}},
+}
+
+% --- Folienkopf im HKA-Stil ---
+\newcounter{folie}
+\newcommand{\kopf}[2]{%
+  \stepcounter{folie}%
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[hkared] ([xshift=38bp, yshift=-16bp]current page.north west) rectangle ++(9bp, -62bp);
+    \node[anchor=west, font=\fontsize{22}{26}\selectfont\bfseries, text=hkared]
+      at ([xshift=58bp, yshift=-38bp]current page.north west) {#1};
+    \node[anchor=west, font=\small, text=hkagray]
+      at ([xshift=58bp, yshift=-65bp]current page.north west) {#2};
+    \shade[top color=black!12, bottom color=white]
+      ([yshift=-92bp]current page.north west) rectangle ([yshift=-99bp]current page.north east);
+    \node[anchor=north east, inner sep=0pt]
+      at ([xshift=-22bp, yshift=-8bp]current page.north east)
+      {\includegraphics[height=76bp, trim=520 140 580 140, clip]{HKA.jpg}};
+    \node[anchor=south west, font=\scriptsize, text=hkagray]
+      at ([xshift=14bp, yshift=9bp]current page.south west) {\thefolie};
+  \end{tikzpicture}%
+}
+
+% --- Zusätzliche Stile: Zonen als eigene Punkte ---
+\tikzset{
+  zpunkt/.style   = {draw=#1!85!black, line width=2pt, rounded corners=14pt, fill=#1!5,
+                     minimum width=12.2cm, minimum height=6.1cm, inner sep=0pt},
+  zkopf/.style    = {font=\small\bfseries, text=white, fill=#1!85!black, rounded corners=4pt,
+                     inner sep=3pt, anchor=north},
+  zwirkung/.style = {-{Stealth[length=3.6mm, width=2.8mm]}, line width=2.3pt, draw=#1!80!black},
+  zwtxt/.style    = {font=\tiny\bfseries, fill=white, draw=#1!70!black, line width=0.6pt,
+                     inner sep=2pt, rounded corners=2.5pt, align=center, text=#1!75!black},
+}
+
+\definecolor{agoragray}{RGB}{70,70,70}
+\begin{document}
+
+% =============================================================================
+% Themenlandschaftskarte: Vier Zonen als eigene Punkte, die sich gegenseitig
+% beeinflussen. Interne Verkettungen bleiben innerhalb jedes Punktes sichtbar.
+% =============================================================================
+\kopf{Themenlandschaftskarte: Die Agora als Systemmodell}
+     {Fokusfrage (Novak): \enquote{Welche Institutionen, Flüsse, Machtasymmetrien \& Bremsen steuern realen Handel?}}
+\begin{tikzpicture}[remember picture, overlay, shift={(current page.north west)}]
+
+  % ------------------------------------------------------------------
+  % Die vier Punkte (Zonen)
+  % ------------------------------------------------------------------
+  \node[zpunkt=clBlue]   (P1) at (6.75,-6.95)  {};
+  \node[zpunkt=clGreen]  (P2) at (27.1,-6.95)  {};
+  \node[zpunkt=clPurple] (P3) at (6.75,-15.2)  {};
+  \node[zpunkt=clOrange] (P4) at (27.1,-15.2)  {};
+
+  \node[zkopf=clBlue]   at ($(P1.north)+(0,-0.18)$) {1 \enskip Institutionen \& Vertrauen};
+  \node[zkopf=clGreen]  at ($(P2.north)+(0,-0.18)$) {2 \enskip Ökonomie \& Lieferketten};
+  \node[zkopf=clPurple] at ($(P3.north)+(0,-0.18)$) {3 \enskip Macht \& Information};
+  \node[zkopf=clOrange] at ($(P4.north)+(0,-0.18)$) {4 \enskip Psyche \& Friktion};
+
+  % ------------------------------------------------------------------
+  % Zentrum
+  % ------------------------------------------------------------------
+  \node[agoraZentrum] (AG) at (16.92,-11.07) {
+    {\normalsize\bfseries DIE AGORA}\\[1pt]
+    {\scriptsize\color{white!90} Sozialer Markt \& Preisbildung}\\[1pt]
+    {\tiny\color{white!80} Schnittpunkt von Tausch, Risiko \& Ordnung}
+  };
+
+  % ------------------------------------------------------------------
+  % Punkt 1: Institutionen & Vertrauen (interne Kette)
+  % ------------------------------------------------------------------
+  \node[cknoten=clBlue] (Z1A) at (2.95,-5.75)
+    {\textbf{Informelle Normen}\\[-1pt]{\tiny Reputation $\cdot$ Ehrenkodex}};
+  \node[cknoten=clBlue] (Z1B) at (10.55,-5.75)
+    {\textbf{Kredit \& Vorleistung}\\[-1pt]{\tiny \emph{credere} $\cdot$ zeitliche Dehnung}};
+  \node[cknoten=clBlue] (Z1C) at (2.95,-8.85)
+    {\textbf{Formale Marktordnung}\\[-1pt]{\tiny Agoranomos $\cdot$ Maße $\cdot$ Recht}};
+  \node[cknoten=clBlue] (Z1D) at (10.55,-8.85)
+    {\textbf{Transaktionskosten}\\[-1pt]{\tiny Such-, Prüf- \& Vertragsaufwand}};
+
+  \draw[pfeil] (Z1A.east) -- node[txt]{ermöglicht} (Z1B.west);
+  \draw[pfeil] (Z1A.south east) -- node[txt]{senkt ohne Zwang} (Z1D.north west);
+  \draw[pfeil] (Z1C.east) -- node[txt]{begrenzt Betrug \&} (Z1D.west);
+  \draw[pfeil] (Z1C.north) -- node[txt]{schützt} (Z1A.south);
+  \draw[pfeil] (Z1D.north) -- node[txt]{verteuert} (Z1B.south);
+
+  % ------------------------------------------------------------------
+  % Punkt 2: Ökonomie & Lieferketten
+  % ------------------------------------------------------------------
+  \node[cknoten=clGreen] (Z2A) at (23.3,-5.75)
+    {\textbf{Ferne Quellen (Sources)}\\[-1pt]{\tiny Häfen $\cdot$ Getreide $\cdot$ Purpur}};
+  \node[cknoten=clGreen] (Z2B) at (30.9,-5.75)
+    {\textbf{Seewege \& Delays}\\[-1pt]{\tiny Nadelöhre $\cdot$ Sturm $\cdot$ Piraten}};
+  \node[cknoten=clGreen] (Z2C) at (30.9,-8.85)
+    {\textbf{Lagerbestände (Stocks)}\\[-1pt]{\tiny Vorrat auf der Agora}};
+  \node[cknoten=clGreen] (Z2D) at (23.3,-8.85)
+    {\textbf{Preisbildung \& Arbitrage}\\[-1pt]{\tiny Marge durch Knappheit}};
+
+  \draw[pfeil] (Z2A.east) -- node[txt]{speist Fracht über} (Z2B.west);
+  \draw[pfeil, delaymark=0.3] (Z2B.south) -- node[txt]{verzögert Zufluss in} (Z2C.north);
+  \draw[pfeil] (Z2C.west) -- node[txt]{bestimmt über Vorrat} (Z2D.east);
+  \draw[pfeil] (Z2D.north) -- node[txt]{lockt neue Fahrten zu} (Z2A.south);
+
+  % ------------------------------------------------------------------
+  % Punkt 3: Macht & Information
+  % ------------------------------------------------------------------
+  \node[cknoten=clPurple] (Z3B) at (2.95,-14.0)
+    {\textbf{Success to the Successful}\\[-1pt]{\tiny Monopol $\cdot$ Bots $\cdot$ Kapitalmacht}};
+  \node[cknoten=clPurple] (Z3A) at (10.55,-14.0)
+    {\textbf{Imperfect Information}\\[-1pt]{\tiny Gerüchte $\cdot$ Insiderwissen}};
+  \node[cknoten=clPurple] (Z3C) at (2.95,-17.1)
+    {\textbf{Double Movement}\\[-1pt]{\tiny Zölle $\cdot$ Aufsicht $\cdot$ LkSG}};
+  \node[cknoten=clPurple] (Z3D) at (10.55,-17.1)
+    {\textbf{Rule Beating}\\[-1pt]{\tiny Schmuggel $\cdot$ falsche Gewichte}};
+
+  \draw[pfeil] (Z3A.west) -- node[txt]{verstärkt} (Z3B.east);
+  \draw[pfeil] (Z3B.south) -- node[txt]{provoziert Gegenwehr} (Z3C.north);
+  \draw[pfeil] (Z3C.east) -- node[txt]{erzeugt als Umgehung} (Z3D.west);
+  \draw[pfeil] (Z3D.north) -- node[txt]{untergräbt} (Z3A.south);
+
+  % ------------------------------------------------------------------
+  % Punkt 4: Psyche & Friktion
+  % ------------------------------------------------------------------
+  \node[cknoten=clOrange] (Z4A) at (23.3,-14.0)
+    {\textbf{Eskalation \& FOMO}\\[-1pt]{\tiny Drops $\cdot$ Jagdfieber $\cdot$ Panik}};
+  \node[cknoten=clOrange] (Z4B) at (30.9,-14.0)
+    {\textbf{Schulden \& Reue}\\[-1pt]{\tiny Trapezites $\cdot$ Pfand $\cdot$ Verlust}};
+  \node[cknoten=clOrange] (Z4C) at (30.9,-17.1)
+    {\textbf{Dynamic Friction}\\[-1pt]{\tiny Zinsen $\cdot$ Verderb $\cdot$ Standpacht}};
+  \node[cknoten=clOrange] (Z4D) at (23.3,-17.1)
+    {\textbf{Strategie-Balance}\\[-1pt]{\tiny Trade-offs statt Dominanz}};
+
+  \draw[pfeil] (Z4A.east) -- node[txt]{kippt in} (Z4B.west);
+  \draw[pfeil] (Z4B.south) -- node[txt]{aktiviert Kosten in} (Z4C.north);
+  \draw[pfeil] (Z4C.west) -- node[txt]{erzwingt} (Z4D.east);
+  \draw[pfeil] (Z4D.north) -- node[txt]{bremst Gier \&} (Z4A.south);
+
+  % ------------------------------------------------------------------
+  % Wirkungen ZWISCHEN den Punkten (Farbe = auslösender Punkt)
+  % ------------------------------------------------------------------
+  % 1 <-> 2 (oben)
+  \draw[zwirkung=clBlue]  ($(P1.east)+(0,0.95)$) -- node[zwtxt=clBlue]{finanziert Handelsreisen\\(Seedarlehen, Vorschuss)} ($(P2.west)+(0,0.95)$);
+  \draw[zwirkung=clGreen] ($(P2.west)+(0,-0.75)$) -- node[zwtxt=clGreen]{Seerisiko verlangt\\Absicherung \& Vertrauen} ($(P1.east)+(0,-0.75)$);
+  % 2 <-> 4 (rechts)
+  \draw[zwirkung=clGreen]  ($(P2.south)+(-2.4,0)$) -- node[zwtxt=clGreen]{Knappheit nährt\\Hype \& Panik} ($(P4.north)+(-2.4,0)$);
+  \draw[zwirkung=clOrange] ($(P4.north)+(2.4,0)$) -- node[zwtxt=clOrange]{Hamsterkäufe\\leeren Lager} ($(P2.south)+(2.4,0)$);
+  % 4 <-> 3 (unten)
+  \draw[zwirkung=clOrange] ($(P4.west)+(0,0.75)$) -- node[zwtxt=clOrange]{Schulden machen abhängig\\von Kapitalmacht} ($(P3.east)+(0,0.75)$);
+  \draw[zwirkung=clPurple] ($(P3.east)+(0,-0.95)$) -- node[zwtxt=clPurple]{Bots \& künstliche Knappheit\\schüren FOMO} ($(P4.west)+(0,-0.95)$);
+  % 3 <-> 1 (links)
+  \draw[zwirkung=clPurple] ($(P3.north)+(-2.4,0)$) -- node[zwtxt=clPurple]{Gegenbewegung\\schafft Regeln} ($(P1.south)+(-2.4,0)$);
+  \draw[zwirkung=clBlue]   ($(P1.south)+(2.4,0)$) -- node[zwtxt=clBlue]{Aufsicht begrenzt\\Machtmissbrauch} ($(P3.north)+(2.4,0)$);
+
+  % ------------------------------------------------------------------
+  % Jeder Punkt <-> Agora
+  % ------------------------------------------------------------------
+  \draw[zwirkung=clBlue]   (P1.south east) -- node[zwtxt=clBlue, pos=0.4]{mobilisiert\\Kaufkraft} (AG.north west);
+  \draw[zwirkung=clGreen]  (P2.south west) -- node[zwtxt=clGreen, pos=0.4]{steuert\\Angebot} (AG.north east);
+  \draw[zwirkung=agoragray] (AG.south west) -- node[zwtxt=agoragray, pos=0.6]{verdeckt\\Kurse} (P3.north east);
+  \draw[zwirkung=agoragray] (AG.south east) -- node[zwtxt=agoragray, pos=0.6]{triggert\\Hype} (P4.north west);
+
+  % --- Legende ---
+  \node[anchor=west, font=\tiny, text=hkagray] at (1.2,-18.62)
+    {\textbf{Lesart (Novak):} Jeder Pfeil ist eine Aussage (Konzept $\rightarrow$ Verbphrase $\rightarrow$ Konzept).
+     \textbf{Dünne Pfeile} = Verkettung innerhalb eines Punktes;
+     \textbf{dicke Pfeile} = Einfluss eines Punktes auf einen anderen (Farbe = auslösender Punkt);
+     \textbf{\textbar\textbar} = Verzögerung.};
+
+\end{tikzpicture}
+
+\end{document}

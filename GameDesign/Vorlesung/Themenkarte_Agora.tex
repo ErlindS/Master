@@ -1,0 +1,718 @@
+\documentclass[11pt]{article}
+
+% --- Folienformat wie Game Concept Document (16:9, 960x540pt) ---
+\usepackage[paperwidth=960bp, paperheight=540bp, margin=0pt]{geometry}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[autostyle=true,german=quotes]{csquotes}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc, positioning, shapes.geometric, backgrounds}
+\usepackage{microtype}
+\usepackage{hyperref}
+
+% --- Farbpalette (passend zu HKA & OneManArmy-Vorbild) ---
+\definecolor{hkared}{RGB}{198, 42, 18}
+\definecolor{hkagray}{RGB}{100, 100, 100}
+\definecolor{clBlue}{RGB}{45, 115, 195}    % Ursprung / Sozialer Markt / Spieler
+\definecolor{clGold}{RGB}{215, 165, 30}    % Kernversprechen / Bewertungsdimensionen
+\definecolor{clGreen}{RGB}{42, 155, 85}    % Moderner Zeitgeist / Welt & Routen
+\definecolor{clPurple}{RGB}{130, 95, 195}  % Schattenseiten / Machtasymmetrie
+\definecolor{clRed}{RGB}{215, 70, 65}      % Emotionales Wechselbad
+\definecolor{clOrange}{RGB}{225, 130, 45}  % Realitätscheck / Risiken & Rivalen
+\definecolor{posgreen}{RGB}{35, 155, 65}
+\definecolor{negred}{RGB}{200, 35, 35}
+
+\hypersetup{
+    colorlinks = true, linkcolor = hkared, urlcolor = hkared,
+    pdftitle   = {Themenlandschaftskarte und Loops: Handel und Agora},
+    pdfauthor  = {Erlind Sejdiu},
+    pdfsubject = {Game Design, Game Concept Document}
+}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+% =============================================================================
+% TikZ-Stile
+% =============================================================================
+\tikzset{
+  pfeil/.style     = {-{Stealth[length=2.2mm, width=1.6mm]}, line width=0.8pt, draw=black!80},
+  looppfeil/.style = {-{Stealth[length=2.3mm, width=1.65mm]}, line width=1.0pt, draw=#1!85!black},
+  txt/.style       = {font=\tiny\bfseries, fill=white, inner sep=1.3pt, rounded corners=1.5pt,
+                      align=center, text=black!85},
+  % Themenkarten-Karten im OneManArmy-Stil (Folie 4)
+  tkarte/.style    = {draw=#1, line width=1.7pt, rounded corners=9pt, fill=#1!11,
+                      text width=6.5cm, minimum height=4.35cm, align=center, inner sep=5pt,
+                      font=\scriptsize},
+  agoraZentrum/.style = {ellipse, draw=hkared, line width=2.2pt, fill=black!90,
+                      text=white, minimum width=4.6cm, minimum height=2.25cm,
+                      align=center, inner sep=3pt},
+  loopbadge/.style = {circle, draw=#1!85!black, fill=#1!16, line width=0.9pt,
+                      font=\tiny\bfseries, text=#1!85!black, inner sep=1.2pt,
+                      minimum size=0.52cm},
+  % Begriffsnetzwerk-Knoten (Folie 2)
+  bknoten/.style   = {draw=#1, line width=1.3pt, rounded corners=6pt, fill=#1!10,
+                      text width=3.9cm, minimum height=1.25cm, align=center, inner sep=3pt,
+                      font=\scriptsize},
+  % Spielübersichtsdiagramm (Folie 3)
+  rahmen/.style    = {draw=#1, line width=1.4pt, rounded corners=12pt, fill=#1!5},
+  rtitel/.style    = {font=\footnotesize\bfseries, text=#1, anchor=north},
+  komp/.style      = {draw=#1, line width=1pt, rounded corners=5pt, fill=#1!12,
+                      minimum width=3.55cm, anchor=north},
+  ktitel/.style    = {font=\scriptsize\bfseries, text=#1!80!black, anchor=north, inner sep=2pt},
+  mini/.style      = {draw=#1!65, line width=0.6pt, rounded corners=3pt, fill=white,
+                      text width=3.15cm, minimum height=0.52cm, align=center, inner sep=1.2pt,
+                      font=\scriptsize, anchor=north},
+  indikator/.style = {draw=black!70, line width=0.8pt, rounded corners=4pt, fill=white,
+                      text width=3.35cm, minimum height=0.92cm, align=center, inner sep=2pt,
+                      font=\scriptsize},
+  dimension/.style = {draw=clGold!85!black, line width=1pt, rounded corners=8pt, fill=clGold!22,
+                      text width=3.6cm, minimum height=0.95cm, align=center, inner sep=2pt,
+                      font=\scriptsize},
+  ziel/.style      = {draw=black, line width=1.2pt, rounded corners=6pt, fill=black!88,
+                      text=white, text width=5.4cm, minimum height=0.82cm, align=center,
+                      font=\scriptsize},
+  % Loop-Knoten (Folie 4 & 5)
+  lknoten/.style   = {draw=#1, line width=1.0pt, rounded corners=6pt, fill=white,
+                      text width=3.0cm, minimum height=0.98cm, align=center, inner sep=2pt,
+                      font=\scriptsize},
+  larc/.style      = {-{Stealth[length=2.2mm, width=1.6mm]}, line width=1.0pt, draw=#1!85!black},
+}
+
+% \komp{name}{oben-mitte}{farbe}{titel}{anzahl}{Titel/{Beschreibung}, ...}
+\newcommand{\komp}[6]{%
+  \node[komp=#3, minimum height={0.46cm + #5*0.64cm}] (#1) at (#2) {};
+  \node[ktitel=#3] at (#1.north) {#4};
+  \foreach \t/\d [count=\i] in {#6} {
+    \node[mini=#3] (#1-\i) at ($(#1.north)+(0,{-0.39-(\i-1)*0.64})$)
+      {\textbf{\t}\\[-1.5pt]{\tiny\d}};
+  }%
+}
+
+% --- Folienkopf im HKA-Stil ---
+\newcounter{folie}
+\newcommand{\kopf}[1]{%
+  \stepcounter{folie}%
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[hkared] ([xshift=38bp, yshift=-18bp]current page.north west) rectangle ++(9bp, -64bp);
+    \node[anchor=west, font=\fontsize{28}{34}\selectfont\bfseries, text=hkared]
+      at ([xshift=58bp, yshift=-50bp]current page.north west) {#1};
+    \shade[top color=black!12, bottom color=white]
+      ([yshift=-96bp]current page.north west) rectangle ([yshift=-103bp]current page.north east);
+    \node[anchor=north east, inner sep=0pt]
+      at ([xshift=-22bp, yshift=-8bp]current page.north east)
+      {\includegraphics[height=80bp, trim=520 140 580 140, clip]{HKA.jpg}};
+    \node[anchor=south west, font=\scriptsize, text=hkagray]
+      at ([xshift=24bp, yshift=12bp]current page.south west) {\thefolie};
+  \end{tikzpicture}%
+}
+
+\begin{document}
+
+% =============================================================================
+% FOLIE 1: Themenlandschaftskarte: Handel – Die Agora (OneManArmy-Stil + Loops)
+% =============================================================================
+\kopf{Themenlandschaftskarte: Handel \textendash{} Die Agora}
+\begin{tikzpicture}[remember picture, overlay, shift={(current page.north west)}]
+
+  % --- ZENTRUM: DIE AGORA ---
+  \node[agoraZentrum] (AG) at (16.9,-10.55) {
+    {\normalsize\bfseries Die Agora}\\[1pt]
+    {\scriptsize\bfseries (Der Handel)}\\[2pt]
+    {\tiny\color{white!85} Marktplatz $\cdot$ Preisbildung $\cdot$ Feilschen}\\
+    {\tiny\color{white!85} Austausch zwischen Fremden}
+  };
+
+  % --- 1. Oben Links: Ursprung & Sozialer Markt ---
+  \node[tkarte=clBlue] (B1) at (4.3,-6.4) {
+    {\small\bfseries\color{clBlue!85!black} Ursprung \& Sozialer Markt}\\[4pt]
+    \underline{Historische Schauplätze}\\
+    Antike Agora $\cdot$ Orientalischer Basar\\
+    Mittelalterliche Handelsmessen\\[3pt]
+    \underline{Soziales Fundament}\\
+    Vertrauen \& Reputation statt Anonymität\\
+    Kredit (\emph{credere} = glauben) \& Regeln\\[4pt]
+    {\color{black!65}\emph{\enquote{Kein Handel ohne Vertrauen}}}
+  };
+
+  % --- 2. Oben Mitte: Kernversprechen ---
+  \node[tkarte=clGold, minimum height=3.85cm] (B2) at (16.9,-6.05) {
+    {\small\bfseries\color{clGold!75!black} Kernversprechen des Handels}\\[2pt]
+    Arbitrage: billig einkaufen, teuer verkaufen\\
+    Wohlstand durch Marktkenntnis \& Geschick\\
+    Grenzenlose Auswahl \& Verfügbarkeit\\
+    Freiheit, Aufstieg \& Selbstwirksamkeit\\[3pt]
+    {\color{black!65}\emph{\enquote{Wer den Markt liest, kann alles erreichen}}}
+  };
+
+  % --- 3. Oben Rechts: Moderner Zeitgeist ---
+  \node[tkarte=clGreen] (B3) at (29.5,-6.4) {
+    {\small\bfseries\color{clGreen!80!black} Moderner Zeitgeist (Digitale Agora)}\\[4pt]
+    Smartphone-Marktplatz (Amazon, Temu, Shein)\\
+    55\,\% bargeldlos \textendash{} jeder Kauf als Datenspur\\
+    Gamification: Glücksräder, Countdowns, Drops\\
+    Sneaker \& Waren als Spekulation (StockX)\\[4pt]
+    {\color{black!65}\emph{\enquote{Die ganze Welt mit einem Klick kaufen}}}
+  };
+
+  % --- 4. Unten Links: Schattenseiten & Machtasymmetrie ---
+  \node[tkarte=clPurple] (B4) at (4.3,-15.5) {
+    {\small\bfseries\color{clPurple!85!black} Schattenseiten \& Machtgefälle}\\[4pt]
+    Informationsvorsprung \& Insiderwissen\\
+    Dynamische Preise, Algorithmen \& Kauf-Bots\\
+    Ausbeutung in Lieferketten vs.\ LkSG / CSDDD\\
+    Gefühl, selbst nur Spielfigur zu sein\\[4pt]
+    {\color{black!65}\emph{\enquote{Wer verdient hier eigentlich an mir?}}}
+  };
+
+  % --- 5. Unten Mitte: Emotionales Wechselbad (mit innerem Loop wie OneManArmy) ---
+  \node[tkarte=clRed, text width=9.0cm, minimum height=4.45cm] (B5) at (16.9,-15.65) {};
+  \node[anchor=north, font=\small\bfseries, text=clRed!85!black] at ($(B5.north)+(0,-0.1)$)
+    {Emotionales Wechselbad};
+  \node[anchor=north, font=\tiny, text=black!65] at ($(B5.north)+(0,-0.52)$)
+    {\enquote{Psychologisches Schwanken zwischen Jagdfieber \& Kaufreue}};
+
+  % Hoch-Spalte (links im Kasten)
+  \node[anchor=north, font=\tiny, align=center] (H) at (13.55,-14.45) {
+    {\scriptsize\bfseries\color{posgreen} Hoch}\\[2pt]
+    Schnäppchen-Kick\\
+    Fiero \& Cleverness\\
+    Seltener Drop / Status\\
+    Nervenkitzel (FOMO)
+  };
+  % Tief-Spalte (rechts im Kasten)
+  \node[anchor=north, font=\tiny, align=center] (T) at (20.25,-14.45) {
+    {\scriptsize\bfseries\color{negred} Tief}\\[2pt]
+    Schlechtes Gewissen\\
+    Übervorteilung \& Wucher\\
+    Schulden \& Kaufdruck\\
+    Ohnmacht gegen Bots
+  };
+  % Innerer Kreislauf im Wechselbad (frei in der Mitte zwischen den Spalten)
+  \draw[-{Stealth[length=2mm]}, posgreen!85!black, line width=1.1pt]
+    (15.35,-15.15) to[bend left=18]
+    node[above=1pt, font=\tiny\bfseries, text=posgreen!80!black]{kippt durch Gier in}
+    (18.45,-15.15);
+  \draw[-{Stealth[length=2mm]}, negred!85!black, line width=1.1pt]
+    (18.45,-16.05) to[bend left=18]
+    node[below=1pt, font=\tiny\bfseries, text=negred!85!black]{nährt Jagd nach}
+    (15.35,-16.05);
+
+  \node[anchor=south, font=\scriptsize\bfseries, text=clRed!85!black] at ($(B5.south)+(0,0.08)$)
+    {Ständiger emotionaler Kreislauf ($\circlearrowright$ Loop 5)};
+
+  % --- 6. Unten Rechts: Realitätscheck (Lieferketten & Knappheit) ---
+  \node[tkarte=clOrange] (B6) at (29.5,-15.5) {
+    {\small\bfseries\color{clOrange!85!black} Realitätscheck: Fragile Weltwege}\\[4pt]
+    Physische Risiken: Transport, Sturm, Lagerung\\
+    Nadelöhre: Rotes Meer, Sueskanal, Meerengen\\
+    Umwege (+10\textendash14 Tage) \& Frachtpreis-Explosion\\
+    Abhängigkeit von fernen Produzenten \& Häfen\\[4pt]
+    {\color{black!65}\emph{\enquote{Wenige Meerengen entscheiden über alles}}}
+  };
+
+  % ===========================================================================
+  % GESCHLOSSENE KAUSAL-LOOPS ZWISCHEN DEN KNOTEN (Hin- UND Rückpfeile!)
+  % ===========================================================================
+
+  % --- LOOP 1 (Oben Links <-> Oben Mitte <-> Agora): Vertrauens- & Aufstiegs-Loop ---
+  \draw[looppfeil=clBlue] (B1.east) to[bend left=12]
+    node[txt]{Vertrauen \& Kredit begründen} (B2.west);
+  \draw[looppfeil=clGold] ($(B2.south)+(-0.9,0)$) --
+    node[txt, left=1.5pt]{lockt Händler auf} ($(AG.north)+(-0.9,0)$);
+  \draw[looppfeil=clGold] ($(AG.north)+(0.9,0)$) --
+    node[txt, right=1.5pt]{Preisdifferenz nährt} ($(B2.south)+(0.9,0)$);
+  \draw[looppfeil=clBlue] (AG.158) to[bend left=12]
+    node[txt, pos=0.52]{eingehaltene Deals stärken} (B1.335);
+  \draw[looppfeil=clBlue] (B1.295) to[bend right=12]
+    node[txt, pos=0.48]{Regeln \& Handschlag ordnen} (AG.176);
+  \node[loopbadge=clBlue] at (10.7,-8.15) {L1};
+
+  % --- LOOP 2 (Agora <-> Oben Mitte <-> Oben Rechts): Digitaler Wachstums-Loop ---
+  \draw[looppfeil=clGreen] (B2.east) to[bend left=12]
+    node[txt]{eskaliert durch Apps \& Drops in} (B3.west);
+  \draw[looppfeil=clGreen] (B3.205) to[bend left=12]
+    node[txt, pos=0.48]{Klick-Handel beschleunigt} (AG.22);
+  \draw[looppfeil=clGreen] (AG.4) to[bend right=12]
+    node[txt, pos=0.52]{wandert als Kurschart in} (B3.245);
+  \node[loopbadge=clGreen] at (23.1,-8.15) {L2};
+
+  % --- LOOP 3 (Agora <-> Oben Rechts <-> Unten Rechts): Lieferketten- & Knappheits-Loop ---
+  \draw[looppfeil=clOrange] ($(B3.south)+(1.2,0)$) to[bend left=14]
+    node[txt]{400.000 Pakete/Tag\\belasten} ($(B6.north)+(1.2,0)$);
+  \draw[looppfeil=clOrange] ($(B6.north)+(-1.2,0)$) to[bend left=14]
+    node[txt]{Engpässe erzwingen\\Preissprünge in} ($(B3.south)+(-1.2,0)$);
+  % Beide Pfeile oberhalb von B5 im freien Korridor:
+  \draw[looppfeil=clOrange] (AG.346) to[bend left=10]
+    node[txt, pos=0.48]{Gewinne finanzieren Fahrten} ($(B6.north)+(-1.55,0)$);
+  \draw[looppfeil=clOrange] ($(B6.north)+(-2.65,0)$) to[bend left=8]
+    node[txt, pos=0.46]{Blockaden treiben Preise auf} (AG.326);
+  \node[loopbadge=clOrange] at (24.3,-10.55) {L3};
+
+  % --- LOOP 4 (Agora <-> Unten Links <-> Unten Mitte): Macht-, FOMO- & Reue-Loop ---
+  \draw[looppfeil=clRed] ($(AG.south)+(-0.85,0)$) --
+    node[txt, left=1.5pt]{Preiskampf erzeugt} ($(B5.north)+(-0.85,0)$);
+  \draw[looppfeil=clRed] ($(B5.north)+(0.85,0)$) --
+    node[txt, right=1.5pt]{FOMO treibt zurück auf} ($(AG.south)+(0.85,0)$);
+
+  % Beide Pfeile oberhalb von B5 im freien Korridor:
+  \draw[looppfeil=clPurple] (AG.194) to[bend right=10]
+    node[txt, pos=0.48]{Intransparenz begünstigt} ($(B4.north)+(1.55,0)$);
+  \draw[looppfeil=clPurple] ($(B4.north)+(2.65,0)$) to[bend right=8]
+    node[txt, pos=0.46]{Bots \& Monopole diktieren} (AG.214);
+
+  \draw[looppfeil=clPurple] ($(B4.east)+(0,0.48)$) --
+    node[txt, above=1pt]{Übervorteilung verstärkt Tief} ($(B5.west)+(0,0.62)$);
+  \draw[looppfeil=clPurple] ($(B5.west)+(0,-0.55)$) --
+    node[txt, below=1pt]{Sucht \& Daten nähren Macht} ($(B4.east)+(0,-0.48)$);
+
+  % Vertikaler Loop Links (Sozialer Markt <-> Schattenseiten)
+  \draw[looppfeil=clPurple] ($(B1.south)+(-1.2,0)$) to[bend right=14]
+    node[txt]{Anonymität verdrängt\\Vertrauen durch} ($(B4.north)+(-1.2,0)$);
+  \draw[looppfeil=clBlue] ($(B4.north)+(1.2,0)$) to[bend right=14]
+    node[txt]{Misstrauen weckt Ruf nach\\Regeln \& ehrlichem Markt} ($(B1.south)+(1.2,0)$);
+  \node[loopbadge=clPurple] at (9.5,-10.75) {L4};
+
+  % Realitätscheck <-> Emotionales Wechselbad
+  \draw[looppfeil=clOrange] ($(B6.west)+(0,0.48)$) --
+    node[txt, above=1pt]{Mangel \& Teuerung dämpfen Hoch} ($(B5.east)+(0,0.62)$);
+  \draw[looppfeil=clRed] ($(B5.east)+(0,-0.55)$) --
+    node[txt, below=1pt]{Panikkäufe \& Horten verschärfen} ($(B6.west)+(0,-0.48)$);
+
+  % Legende unten (mit Abstand zur Seitenzahl)
+  \node[anchor=west, font=\tiny, text=hkagray] at (1.6,-18.58)
+    {\textbf{Lesart der Loops:}
+     \textcolor{clBlue!85!black}{\textbf{L1}} Vertrauens- \& Kredit-Loop \quad
+     \textcolor{clGreen!80!black}{\textbf{L2}} Digitaler Plattform- \& Spekulations-Loop \quad
+     \textcolor{clOrange!85!black}{\textbf{L3}} Lieferketten- \& Knappheits-Loop \quad
+     \textcolor{clPurple!85!black}{\textbf{L4}} Macht- \& Manipulations-Loop \quad
+     \textcolor{clRed!85!black}{\textbf{L5}} Innerer Emotions-Loop (Hoch $\rightleftharpoons$ Tief)};
+
+\end{tikzpicture}
+\newpage
+
+% =============================================================================
+% FOLIE 2: Themenlandschaftskarte als Kausal-Netzwerk (Begriffs-Loops um die Agora)
+% =============================================================================
+\kopf{Kausale Kreisläufe rund um die Agora}
+\begin{tikzpicture}[remember picture, overlay, shift={(current page.north west)}]
+
+  % Hintergrund-Flächen für die 4 großen Kausalschleifen
+  \fill[clBlue!6, rounded corners=18pt]   (0.7,-4.15)  rectangle (15.8,-10.85);
+  \fill[clGreen!6, rounded corners=18pt]  (18.0,-4.15) rectangle (33.1,-10.85);
+  \fill[clPurple!6, rounded corners=18pt] (0.7,-11.35) rectangle (15.8,-18.05);
+  \fill[clRed!6, rounded corners=18pt]    (18.0,-11.35) rectangle (33.1,-18.05);
+
+  % Schleifen-Titel in den Ecken
+  \node[anchor=north west, font=\scriptsize\bfseries, text=clBlue!85!black] at (1.0,-4.3)
+    {$\circlearrowright$ LOOP 1: Vertrauens- \& Kreditkreislauf (Soziale Agora)};
+  \node[anchor=north east, font=\scriptsize\bfseries, text=clGreen!80!black] at (32.8,-4.3)
+    {$\circlearrowright$ LOOP 2: Arbitrage- \& Seewege-Kreislauf (Räumlicher Handel)};
+  \node[anchor=south west, font=\scriptsize\bfseries, text=clPurple!85!black] at (1.0,-17.9)
+    {$\circlearrowright$ LOOP 3: Marktmacht- \& Regulierungs-Kreislauf (Ordnung vs.\ Monopol)};
+  \node[anchor=south east, font=\scriptsize\bfseries, text=clRed!85!black] at (32.8,-17.9)
+    {$\circlearrowright$ LOOP 4: Verlockungs-, FOMO- \& Reue-Kreislauf (Psychologie)};
+
+  % --- ZENTRUM: DIE AGORA ---
+  \node[agoraZentrum, minimum width=5.0cm, minimum height=2.3cm] (C) at (16.9,-11.1) {
+    {\normalsize\bfseries DIE AGORA}\\[1pt]
+    {\scriptsize\color{white!90} Marktplatz \& Preisbildung}\\[1pt]
+    {\tiny\color{white!80} Angebot $\cdot$ Nachfrage $\cdot$ Tausch}
+  };
+
+  % --- KNOTEN LOOP 1 (Oben Links: Vertrauen & Kredit) ---
+  \node[bknoten=clBlue] (L1A) at (3.6,-6.2)
+    {\textbf{Beziehung \& Reputation}\\[-1pt]{\tiny bekannter Händler $\cdot$ ehrlicher Ruf}};
+  \node[bknoten=clBlue] (L1B) at (11.8,-6.2)
+    {\textbf{Kredit \& Vorleistung}\\[-1pt]{\tiny \emph{credere} = glauben $\cdot$ Ware auf Ziel}};
+  \node[bknoten=clBlue] (L1C) at (7.7,-9.4)
+    {\textbf{Gehaltene Versprechen}\\[-1pt]{\tiny pünktliche Lieferung $\cdot$ faire Maße}};
+
+  \draw[looppfeil=clBlue] (L1A.east) -- node[txt]{ermöglicht} (L1B.west);
+  \draw[looppfeil=clBlue] (L1B.south east) to[bend left=14] node[txt, pos=0.45]{erhöht Kaufkraft\\auf der} (C.north west);
+  \draw[looppfeil=clBlue] (C.168) to[bend left=12] node[txt, pos=0.52]{Abschluss führt zu} (L1C.east);
+  \draw[looppfeil=clBlue] (L1C.north west) to[bend left=14] node[txt]{baut auf} (L1A.south);
+
+  % --- KNOTEN LOOP 2 (Oben Rechts: Arbitrage & Lieferketten) ---
+  \node[bknoten=clGreen] (L2A) at (22.0,-6.2)
+    {\textbf{Informationsvorsprung}\\[-1pt]{\tiny wissen, wo Ware billig \& wo knapp ist}};
+  \node[bknoten=clGreen] (L2B) at (30.2,-6.2)
+    {\textbf{Seewege \& Meerengen}\\[-1pt]{\tiny Piräus $\cdot$ Sueskanal $\cdot$ Transportrisiko}};
+  \node[bknoten=clGreen] (L2C) at (26.1,-9.4)
+    {\textbf{Knappheit \& Warenstrom}\\[-1pt]{\tiny seltene Güter erreichen den Markt}};
+
+  \draw[looppfeil=clGreen] (C.north east) to[bend left=14] node[txt, pos=0.55]{Preisgefälle verrät} (L2A.south west);
+  \draw[looppfeil=clGreen] (L2A.east) -- node[txt]{steuert Routen über} (L2B.west);
+  \draw[looppfeil=clGreen] (L2B.south) to[bend left=14] node[txt]{bestimmt} (L2C.north east);
+  \draw[looppfeil=clGreen] (L2C.west) to[bend left=12] node[txt, pos=0.48]{bewegt Kurse \&\\Gewinn auf der} (C.12);
+
+  % --- KNOTEN LOOP 3 (Unten Links: Marktmacht & Regulierung) ---
+  \node[bknoten=clPurple] (L3A) at (11.8,-15.9)
+    {\textbf{Marktmacht \& Bots}\\[-1pt]{\tiny Großhändler $\cdot$ Plattformen $\cdot$ Algorithmen}};
+  \node[bknoten=clPurple] (L3B) at (3.6,-15.9)
+    {\textbf{Wucher \& Abhängigkeit}\\[-1pt]{\tiny Aufkauf knapper Ware $\cdot$ Preisdiktat}};
+  \node[bknoten=clPurple] (L3C) at (7.7,-12.8)
+    {\textbf{Marktaufsicht \& Gesetze}\\[-1pt]{\tiny Agoranomos $\cdot$ Zölle $\cdot$ LkSG / CSDDD}};
+
+  \draw[looppfeil=clPurple] (C.south west) to[bend left=14] node[txt, pos=0.52]{Umsatz \& Daten\\stärken} (L3A.north east);
+  \draw[looppfeil=clPurple] (L3A.west) -- node[txt]{verursachen} (L3B.east);
+  \draw[looppfeil=clPurple] (L3B.north) to[bend left=14] node[txt]{erzwingen Eingriff durch} (L3C.south west);
+  \draw[looppfeil=clPurple] (L3C.east) to[bend left=12] node[txt, pos=0.48]{kontrolliert \&\\begrenzt die} (C.192);
+
+  % --- KNOTEN LOOP 4 (Unten Rechts: Verlockung, FOMO & Reue) ---
+  \node[bknoten=clRed] (L4A) at (26.1,-12.8)
+    {\textbf{Verlockung \& Drops}\\[-1pt]{\tiny Schnäppchen $\cdot$ Countdown $\cdot$ FOMO}};
+  \node[bknoten=clRed] (L4B) at (30.2,-15.9)
+    {\textbf{Wagnis \& Impulskauf}\\[-1pt]{\tiny Fiero beim Deal $\cdot$ Spekulation}};
+  \node[bknoten=clRed] (L4C) at (22.0,-15.9)
+    {\textbf{Reue \& Verlustdruck}\\[-1pt]{\tiny schlechtes Gewissen $\cdot$ Schulden}};
+
+  \draw[looppfeil=clRed] (C.348) to[bend left=12] node[txt, pos=0.52]{inszeniert Angebote als} (L4A.west);
+  \draw[looppfeil=clRed] (L4A.south east) to[bend left=14] node[txt]{verleitet zu} (L4B.north);
+  \draw[looppfeil=clRed] (L4B.west) -- node[txt]{kippt nach dem Kauf in} (L4C.east);
+  \draw[looppfeil=clRed] (L4C.north west) to[bend left=14] node[txt, pos=0.48]{Drang zum Ausgleich\\treibt zurück auf} (C.south east);
+
+  % --- Querverbindungen zwischen den 4 Loops ---
+  \draw[pfeil, dashed] (L1B.east) -- node[txt]{finanziert Fahrten über} (L2A.west);
+  \draw[pfeil, dashed] (L2C.south) -- node[txt]{Verknappung triggert} (L4A.north);
+  \draw[pfeil, dashed] (L3C.north) -- node[txt]{schützt ehrliche} (L1C.south);
+  \draw[pfeil, dashed] (L4C.west) -- node[txt]{Verschuldung liefert aus an} (L3A.east);
+
+  \node[anchor=west, font=\tiny, text=hkagray] at (1.6,-18.58)
+    {\textbf{Lesart:} Jeder Quadrant bildet einen geschlossenen Kausal-Loop mit der \textbf{Agora} im Zentrum; gestrichelte Pfeile koppeln die vier Kreisläufe untereinander.};
+
+\end{tikzpicture}
+\newpage
+
+% =============================================================================
+% FOLIE 3: Spielübersichtsdiagramm mit der Agora in der Mitte (Vorbild: OneManArmy S. 18)
+% =============================================================================
+\kopf{Spielübersichtsdiagramm: Die Agora}
+\begin{tikzpicture}[remember picture, overlay, shift={(current page.north west)}]
+
+  % ---------------------------------------------------------------- Ebene: Ziel
+  \node[ziel] (Z) at (16.9,-4.35)
+    {{\small\bfseries Bürgerrecht der Polis}\\[-1pt]
+     {\tiny Vom fremden Metöken zum angesehenen Bürger mit Stimme im Rat}};
+
+  % ------------------------------------------------- Ebene: Bewertungsdimension
+  \node[dimension] (W) at (9.5,-5.8)  {\textbf{Wohlstand}\\[-1pt]{\tiny Kapital für Stände, Schiffe \& Waren}};
+  \node[dimension] (A) at (16.9,-5.8) {\textbf{Ansehen}\\[-1pt]{\tiny Bürger \& Händler vertrauen deinem Wort}};
+  \node[dimension] (E) at (24.3,-5.8) {\textbf{Einfluss}\\[-1pt]{\tiny du gestaltest Preise, Kredite \& Regeln mit}};
+  \foreach \d in {W, A, E} \draw[pfeil, line width=0.9pt] (\d) -- (Z);
+
+  % Ebenenbeschriftung + Legende rechts
+  \node[anchor=east, font=\scriptsize\bfseries] at (33.2,-4.35) {Hauptziel};
+  \node[anchor=east, font=\scriptsize\bfseries] at (33.2,-5.5)  {Bewertungsdimensionen};
+  \draw[-{Stealth[length=1.8mm]}, posgreen, line width=1pt] (33.2,-5.98) -- (32.0,-5.98)
+        node[left, font=\scriptsize, text=posgreen] {Positiv};
+  \draw[-{Stealth[length=1.8mm]}, negred, line width=1pt] (33.2,-6.42) -- (32.0,-6.42)
+        node[left, font=\scriptsize, text=negred] {Negativ};
+  \node[anchor=west, font=\scriptsize\bfseries] at (0.6,-6.65) {Indikatoren};
+
+  % ---------------------------------------------------------- Ebene: Indikatoren
+  \foreach \n/\x/\t/\d/\c in {
+      I1/3.7/Handelsgewinn/{Verkauf über Einkaufspreis}/{W+},
+      I2/8.1/Verlorene Ladung/{Piraten, Sturm, Verderb}/{W$-$},
+      I3/12.5/Gehaltene Zusagen/{pünktlich \& ehrlich geliefert}/{A+ \ E+},
+      I4/16.9/Betrug \& Wucher/{falsche Gewichte, Preisdiktat}/{W+ \ A$-$},
+      I5/21.3/Vergebene Kredite/{andere Händler schulden dir}/{E+ \ W+},
+      I6/25.7/Offene Schulden/{Säumnis beim Trapezites}/{A$-$ \ E$-$},
+      I7/30.1/Stände \& Flotte/{eigene Markt-Infrastruktur}/{E+ \ W+}} {
+    \node[indikator] (\n) at (\x,-7.6)
+      {\textbf{\t}\\[-1.5pt]{\tiny\d}\\[-1.5pt]{\tiny\bfseries\c}};
+  }
+  % positive / negative Wirkung auf die Dimensionen
+  \foreach \i/\d in {I1/W, I3/A, I3/E, I4/W, I5/E, I5/W, I7/E, I7/W}
+    \draw[-{Stealth[length=1.8mm]}, posgreen, line width=0.8pt] (\i.north) -- (\d.south);
+  \foreach \i/\d in {I2/W, I4/A, I6/A, I6/E}
+    \draw[-{Stealth[length=1.8mm]}, negred, line width=0.8pt] (\i.north) -- (\d.south);
+
+  % ======================================================= Große Komponenten
+  \draw[rahmen=clBlue]  (0.6,-8.65)  rectangle (9.8,-17.0);
+  \draw[rahmen=hkared, line width=2.2pt, fill=hkared!6] (11.5,-8.65) rectangle (22.3,-17.0);
+  \draw[rahmen=clGreen] (24.0,-8.65) rectangle (33.2,-17.0);
+
+  \node[rtitel=clBlue]  at (5.2,-8.72)   {HANDLUNGSRAUM \textendash{} der Spieler};
+  \node[rtitel=hkared, font=\normalsize\bfseries] at (16.9,-8.68) {DIE AGORA \textendash{} Marktplatz der Polis};
+  \node[rtitel=clGreen] at (28.6,-8.72)  {WELT \textendash{} Seewege \& fremde Märkte};
+
+  % ------------------------------------------------- Handlungsraum (Spieler)
+  \node[komp=clBlue, minimum height=1.74cm, fill=clBlue!22] (S) at (2.65,-9.35) {};
+  \node[ktitel=clBlue] at (S.north) {Spieler: der Metöke};
+  \node[font=\tiny, text width=3.2cm, align=center, anchor=north] at ($(S.north)+(0,-0.38)$)
+    {Fremder Händler ohne Bürgerrecht.\\Start: ein Karren, 50 Drachmen\\und Reputation bei null.};
+
+  \node[komp=clBlue, minimum height=1.74cm] (T) at (2.65,-11.8) {};
+  \node[ktitel=clBlue] at (T.north) {Zeit \& Aktionspunkte};
+  \node[font=\tiny, text width=3.2cm, align=center, anchor=north] at ($(T.north)+(0,-0.38)$)
+    {Jede Aktion kostet Stunden.\\Abendglocke schließt den Markt,\\Zinsen \& neue Preise greifen.};
+
+  \komp{Rs}{2.65,-14.25}{clBlue}{Reisen \& Verschiffen}{2}{
+      Route wählen/{sicher oder schnell über See},
+      Ladung schützen/{Konvoi \& Versicherung}}
+
+  \komp{If}{7.75,-9.35}{clBlue}{Informieren}{2}{
+      Preise lesen/{Angebot \& Knappheit prüfen},
+      Gerüchte prüfen/{Wahrheit oder Finte?}}
+  \komp{Hd}{7.75,-11.8}{clBlue}{Handeln \& Feilschen}{2}{
+      Kaufen \& Verkaufen/{Marge erwirtschaften},
+      Feilschen/{Angebot $\rightleftharpoons$ Gegenangebot}}
+  \komp{Bz}{7.75,-14.25}{clBlue}{Kredit \& Versprechen}{2}{
+      Lieferzusage/{Ware auf Termin zusichern},
+      Kapital/{leihen $\cdot$ verleihen $\cdot$ investieren}}
+
+  % ------------------------------------------------------------------ Agora
+  \komp{St}{13.6,-9.35}{hkared}{Stoa (Säulenhalle)}{2}{
+      Gerüchtebörse/{Nachrichten aus Häfen},
+      Aufträge/{Lieferverträge aushandeln}}
+  \komp{Rt}{20.2,-9.35}{hkared}{Bouleuterion (Rat)}{2}{
+      Zölle \& Marktregeln/{steuern jede Marge},
+      Bürgerrecht/{Verleihung bei hohem Ansehen}}
+  \komp{Mk}{16.9,-11.8}{hkared}{Marktstände (Zentrum)}{2}{
+      Preisbildung/{dynamisch nach Vorrat \& Bedarf},
+      Eigener Stand/{Pacht bringt Dauer-Einfluss}}
+  \komp{Tp}{13.6,-14.25}{hkared}{Trapezites (Wechsler)}{2}{
+      Seekredit/{Darlehen gegen Zins \& Pfand},
+      Schuldenbuch/{tilgen oder Pfand verlieren}}
+  \komp{Ag}{20.2,-14.25}{hkared}{Agoranomos (Aufsicht)}{2}{
+      Maße \& Gewichte/{deckt Schwindel auf},
+      Marktgericht/{straft Wucher \& Vertragsbruch}}
+
+  % ------------------------------------------------------------------ Welt
+  \komp{Rv}{26.05,-9.35}{clOrange}{Rivalen \& Großhändler}{2}{
+      Aufkäufer/{verknappt gezielt Waren},
+      Intrigant/{streut falsche Gerüchte}}
+  \komp{Ev}{26.05,-11.8}{clGreen}{Welt-Ereignisse}{2}{
+      Krieg \& Blockade/{Meerengen gesperrt},
+      Feste \& Ernte/{Nachfrage- \& Preiswelle}}
+  \komp{Hf}{26.05,-14.25}{clGreen}{Häfen \& Routen}{2}{
+      Piräus/{Umschlagplatz zur Agora},
+      Ferne Häfen/{Schwarzes Meer $\cdot$ Ägypten}}
+  \komp{Wr}{31.15,-9.35}{clGreen}{Handelswaren}{3}{
+      Grundgüter/{Getreide $\cdot$ Öl $\cdot$ Wein},
+      Luxusgüter/{Purpur $\cdot$ Glas $\cdot$ Papyrus},
+      Frachtraum/{begrenzt \& verderblich}}
+  \komp{Gf}{31.15,-14.25}{clOrange}{Seegefahren}{2}{
+      Piraten/{Überfall auf reiche Fracht},
+      Sturm \& Flaute/{Verzögerung \& Verlust}}
+
+  % ============================================================ GESCHLOSSENE LOOPS IM DIAGRAMM
+  % Spieler intern
+  \draw[pfeil] (S.east |- If) -- node[txt]{startet} (If.west);
+  \draw[pfeil] (T.east |- Hd) -- node[txt]{taktet} (Hd.west);
+  \draw[pfeil] (T.south) -- node[txt]{steuert} (Rs.north);
+
+  % Loop A: Informieren <-> Stoa (Hin & Zurück!)
+  \draw[looppfeil=clBlue] ($(If.east)+(0,0.24)$) -- node[txt, above=0.5pt]{befragt in} ($(St.west |- If.east)+(0,0.24)$);
+  \draw[looppfeil=hkared] ($(St.west |- If.east)+(0,-0.24)$) -- node[txt, below=0.5pt]{Preistipps} ($(If.east)+(0,-0.24)$);
+
+  % Loop B: Handeln <-> Marktstände (Hin & Zurück!)
+  \draw[looppfeil=clBlue] ($(Hd.east)+(0,0.24)$) -- node[txt, above=0.5pt, pos=0.68]{bietet Ware \& feilscht} ($(Mk.west |- Hd.east)+(0,0.24)$);
+  \draw[looppfeil=hkared] ($(Mk.west |- Hd.east)+(0,-0.24)$) -- node[txt, below=0.5pt, pos=0.68]{zahlt Drachmen \& Kurse} ($(Hd.east)+(0,-0.24)$);
+
+  % Loop C: Beziehungen <-> Trapezites (Hin & Zurück!)
+  \draw[looppfeil=clBlue] ($(Bz.east)+(0,0.24)$) -- node[txt, above=0.5pt]{leiht beim} ($(Tp.west |- Bz.east)+(0,0.24)$);
+  \draw[looppfeil=hkared] ($(Tp.west |- Bz.east)+(0,-0.24)$) -- node[txt, below=0.5pt]{Zins \& Pfand} ($(Bz.east)+(0,-0.24)$);
+
+  % Loop D: Reisen <-> Häfen <-> Agora (Geschlossener Seehandels-Loop!)
+  \draw[looppfeil=clBlue] (Rs.south) -- ++(0,-0.8) -| node[txt, pos=0.25]{segelt mit Kapital \& Fracht zu den} ($(Hf.south)+(-0.55,0)$);
+  \draw[looppfeil=clGreen] ($(Hf.south)+(0.55,0)$) -- ++(0,-1.18) -| node[txt, pos=0.25]{kehrt mit seltenen Waren \& Erfahrung zurück} ($(Rs.south)+(-0.7,0)$);
+
+  % Innerhalb der Agora (Geschlossener Markt-Kreislauf!)
+  \draw[looppfeil=hkared] (St.south) -- node[txt, left=1pt]{Gerüchte} (Mk.north west);
+  \draw[looppfeil=hkared] (Mk.north) -- node[txt, right=1pt]{Kurse} (St.south east);
+  \draw[looppfeil=hkared] (Rt.south) |- node[txt, pos=0.28]{Zölle steuern} ($(Mk.east)+(0,0.38)$);
+  \draw[looppfeil=hkared] (Ag.north) |- node[txt, pos=0.28]{prüft \& straft} ($(Mk.east)+(0,-0.38)$);
+  \draw[looppfeil=hkared] (Tp.north) -- node[txt, left=1pt]{finanziert} (Mk.south west);
+  \draw[looppfeil=hkared] (Mk.south) -- node[txt, right=1pt]{Erlös tilgt} (Tp.north east);
+
+  % Loop E: Welt <-> Agora (Hin & Zurück!)
+  \draw[looppfeil=clOrange] ($(Rv.west)+(0,0.24)$) -- node[txt, above=0.5pt]{bestechen} ($(Rt.east |- Rv.west)+(0,0.24)$);
+  \draw[looppfeil=hkared]   ($(Rt.east |- Rv.west)+(0,-0.24)$) -- node[txt, below=0.5pt]{Zölle regeln} ($(Rv.west)+(0,-0.24)$);
+  \draw[looppfeil=clGreen]  (Ev.west) -- node[txt, pos=0.33]{bewegen Preise} (Mk.east);
+  \draw[looppfeil=clGreen]  ($(Hf.west)+(0,0.24)$) -- node[txt, above=0.5pt]{Importware} ($(Ag.east |- Hf.west)+(0,0.24)$);
+  \draw[looppfeil=hkared]   ($(Ag.east |- Hf.west)+(0,-0.24)$) -- node[txt, below=0.5pt]{Nachfrage} ($(Hf.west)+(0,-0.24)$);
+
+  % Innerhalb der Welt (Geschlossener Waren-Risiko-Loop!)
+  \draw[looppfeil=clOrange] (Rv.east) -- node[txt]{kaufen} (Wr.west |- Rv.east);
+  \draw[looppfeil=clGreen]  (Wr.south) -- node[txt]{auf See} (Gf.north);
+  \draw[looppfeil=clOrange] (Gf.west) -- node[txt]{bedrohen} (Hf.east |- Gf.west);
+  \draw[looppfeil=clGreen]  (Hf.north east) -- node[txt, sloped]{liefern} (Wr.south west);
+
+  % --- Saubere Pfeile von den 3 Bereichen nach oben in die Indikatoren (wie OneManArmy S. 18) ---
+  \foreach \x in {3.7, 8.1, 12.5, 16.9, 21.3, 25.7, 30.1} {
+    \draw[-{Stealth[length=1.7mm]}, draw=black!55, line width=0.75pt] (\x,-8.65) -- (\x,-8.08);
+  }
+
+  % Legende
+  \node[anchor=west, font=\tiny, text=hkagray] at (1.6,-18.58)
+    {\textbf{Lesart:} Doppelpfeile ($\rightleftharpoons$) zeigen die geschlossenen Loops zwischen \textbf{Spieler}, \textbf{Agora} und \textbf{Welt}; alle Aktionen speisen nach oben die \textbf{Indikatoren} für das Hauptziel.};
+\end{tikzpicture}
+\newpage
+
+% =============================================================================
+% FOLIE 4: Game Loops (Handlungsloop & Emotionaler Erfahrungsloop wie OneManArmy S. 19)
+% =============================================================================
+\kopf{Game Loops: Handlung \& Emotion auf der Agora}
+\begin{tikzpicture}[remember picture, overlay, shift={(current page.north west)}]
+  \def\rx{4.15} \def\ry{2.95}
+
+  % Sanfte Hintergrundflächen für beide Loops
+  \fill[clBlue!6] (8.1,-11.55)  ellipse (5.9cm and 4.15cm);
+  \fill[clRed!6]  (25.7,-11.55) ellipse (5.9cm and 4.15cm);
+
+  % --- Handelsloop / Handlungsloop (links, im Uhrzeigersinn) ---
+  \coordinate (HL) at (8.1,-11.55);
+  \foreach \n/\a/\t/\d in {
+      h1/90/Lage in der Stoa lesen/{Preise, Gerüchte \& Engpässe},
+      h2/18/Bewerten \& Planen/{Marge vs.\ Transport- \& Kreditrisiko},
+      h3/-54/Entscheiden \& Feilschen/{Einkauf $\cdot$ Kredit $\cdot$ Route wählen},
+      h4/-126/Handeln \& Verschiffen/{Seeweg, Zölle \& Marktstand},
+      h5/162/Feedback auf der Agora/{Gewinn, Verlust \& neuer Ruf}} {
+    \node[lknoten=clBlue] (\n) at ($(HL)+({\rx*cos(\a)},{\ry*sin(\a)})$)
+      {\textbf{\t}\\[-1.5pt]{\tiny\d}};
+  }
+  \foreach \a/\b in {h1/h2, h2/h3, h3/h4, h4/h5, h5/h1}
+    \draw[larc=clBlue] (\a) to[bend left=22] (\b);
+  \node[font=\large\bfseries, text=clBlue!85!black, align=center] at (HL)
+    {Handlungsloop\\[-2pt]{\scriptsize\normalfont (Handelsloop)}};
+
+  % --- Emotionaler Erfahrungsloop (rechts, im Uhrzeigersinn) ---
+  \coordinate (EL) at (25.7,-11.55);
+  \foreach \n/\a/\t/\d in {
+      e1/90/Verlockung \& Druck/{Schnäppchen $\cdot$ \mbox{FOMO} $\cdot$ Schulden},
+      e2/18/Abwägen \& Beobachten/{Gier zügeln $\cdot$ Markt durchschauen},
+      e3/-54/Wagnis \& Bewältigung/{alles auf eine Ladung setzen},
+      e4/-126/Triumph oder Reue/{Fiero beim Gewinn $\cdot$ Scham bei Wucher},
+      e5/162/Neue Herausforderung/{Rivalen, Stürme \& höhere Zölle}} {
+    \node[lknoten=clRed] (\n) at ($(EL)+({\rx*cos(\a)},{\ry*sin(\a)})$)
+      {\textbf{\t}\\[-1.5pt]{\tiny\d}};
+  }
+  \foreach \a/\b in {e1/e2, e2/e3, e3/e4, e4/e5, e5/e1}
+    \draw[larc=clRed] (\a) to[bend left=22] (\b);
+  \node[font=\large\bfseries, text=clRed!85!black, align=center] at (EL)
+    {Emotionaler\\[-1pt]Erfahrungsloop};
+
+  % --- Geschlossener Kopplungs-Loop in der Mitte (wie OneManArmy S. 19) ---
+  \draw[-{Stealth[length=2.8mm]}, line width=1.35pt, draw=black!85]
+    (13.9,-10.55) to[bend left=16] (19.9,-10.55);
+  \node[font=\scriptsize\bfseries, align=center] at (16.9,-9.35)
+    {Aktionen \& Risiken erzeugen\\Spannung, Verlockung \& Reue};
+
+  \draw[-{Stealth[length=2.8mm]}, line width=1.35pt, draw=black!85]
+    (19.9,-12.55) to[bend left=16] (13.9,-12.55);
+  \node[font=\scriptsize\bfseries, align=center] at (16.9,-13.75)
+    {Erfahrung, Ruf \& Gewissen\\verändern künftige Entscheidungen};
+
+  % --- DIE AGORA (oben, wie "Gegner" bei OneManArmy) ---
+  \node[agoraZentrum, minimum width=4.8cm, minimum height=1.35cm] (AG) at (16.9,-5.15) {
+    {\small\bfseries DIE AGORA \& RIVALEN}\\[-1pt]
+    {\tiny\color{white!85} Preisschwankungen $\cdot$ Drops $\cdot$ Seegefahren}
+  };
+  \draw[looppfeil=clBlue] (AG.west) -| node[txt, pos=0.25]{fordert Handeln \&\\ändert Preise} (h1.north);
+  \draw[looppfeil=clRed]  (AG.east) -| node[txt, pos=0.25]{Lockrufe \& Knappheit\\erzeugen Druck} (e1.north);
+  \draw[looppfeil=hkared, dashed] (h5.north west) |- node[txt, pos=0.68]{eigenes Handelsvolumen bewegt Kurse} (AG.170);
+
+  % --- SPIELER (unten, wie "Spieler" bei OneManArmy) ---
+  \node[draw=clBlue, line width=1.7pt, rounded corners=8pt, fill=clBlue!12,
+        font=\small\bfseries, text=clBlue!85!black, minimum width=4.6cm, minimum height=1.0cm,
+        align=center] (SP) at (16.9,-17.65)
+        {SPIELER (Der Metöke)\\[-2pt]{\tiny\normalfont handelt auf der Agora \& wächst an Erfahrung}};
+  \draw[looppfeil=clBlue] (SP.west) -| node[txt, pos=0.25]{handelt} ($(h3.south)!0.5!(h4.south)+(0,-0.25)$);
+  \draw[looppfeil=clRed]  (SP.east) -| node[txt, pos=0.25]{erlebt}  ($(e3.south)!0.5!(e4.south)+(0,-0.25)$);
+
+\end{tikzpicture}
+\newpage
+
+% =============================================================================
+% FOLIE 5: Verschachtelte Loops (Mikro ⇄ Meso ⇄ Makro mit Rückkopplung)
+% =============================================================================
+\kopf{Verschachtelte Loops: Vom Feilschen zum Bürgerrecht}
+\begin{tikzpicture}[remember picture, overlay, shift={(current page.north west)}]
+
+  % --- Mikro: Feilsch-Loop ---
+  \coordinate (F) at (4.6,-10.75);
+  \fill[clOrange!8] (F) ellipse (3.75cm and 2.85cm);
+  \foreach \n/\a/\t/\d in {
+      f1/90/Angebot/{Preis \& Menge nennen},
+      f2/180/Reaktion lesen/{Händler zögert $\cdot$ Mimik},
+      f3/270/Gegenangebot/{nachgeben oder pokern},
+      f4/0/Handschlag/{Deal oder Abbruch}} {
+    \node[lknoten=clOrange, text width=2.3cm] (\n) at ($(F)+({2.15*cos(\a)},{2.0*sin(\a)})$)
+      {\textbf{\t}\\[-1.5pt]{\tiny\d}};
+  }
+  \foreach \a/\b in {f1/f2, f2/f3, f3/f4, f4/f1}
+    \draw[larc=clOrange] (\a) to[bend right=25] (\b);
+  \node[font=\small\bfseries, text=clOrange!85!black] at (F) {Feilschen};
+  \node[font=\scriptsize, text=clOrange!85!black, align=center] at (4.6,-7.35)
+    {\textbf{Mikro-Loop} $\cdot$ Sekunden};
+
+  % --- Meso: Markttag-Loop auf der Agora ---
+  \coordinate (M) at (15.0,-10.75);
+  \fill[hkared!7] (M) ellipse (4.75cm and 3.75cm);
+  \foreach \n/\a/\t/\d in {
+      m1/90/Morgen: Stoa/{Gerüchte \& Kurse prüfen},
+      m2/162/Mittag: Agora/{kaufen, feilschen, verkaufen},
+      m3/234/Nachmittag: Hafen/{Ladung löschen \& verschiffen},
+      m4/306/Abendglocke/{Bilanz, Zinsen \& Ruf},
+      m5/18/Nacht: Weltwege/{Schiffe fahren $\cdot$ Ereignisse}} {
+    \node[lknoten=hkared, text width=2.55cm] (\n) at ($(M)+({3.15*cos(\a)},{2.85*sin(\a)})$)
+      {\textbf{\t}\\[-1.5pt]{\tiny\d}};
+  }
+  \foreach \a/\b in {m1/m2, m2/m3, m3/m4, m4/m5, m5/m1}
+    \draw[larc=hkared] (\a) to[bend right=22] (\b);
+  \node[font=\small\bfseries, text=hkared, align=center] at (M) {Markttag\\[-2pt]{\tiny auf der Agora}};
+  \node[font=\scriptsize, text=hkared!85!black, align=center] at (15.0,-6.45)
+    {\textbf{Meso-Loop} $\cdot$ ein Spieltag};
+
+  % --- Makro: Aufstiegs-Loop in der Polis ---
+  \coordinate (U) at (26.9,-10.75);
+  \fill[clGreen!8] (U) ellipse (5.6cm and 4.55cm);
+  \foreach \n/\a/\t/\d in {
+      u1/162/Kapital erwirtschaften/{Markttage erfolgreich meistern},
+      u2/234/Investieren auf der Agora/{eigener Stand $\cdot$ Schiff $\cdot$ Kredite},
+      u3/306/Ansehen \& Einfluss/{Stimme bei Preisen \& Zöllen},
+      u4/18/Ferne Handelsrouten/{höhere Margen $\cdot$ größeres Risiko},
+      u5/90/Krisen \& Rückschläge/{Piraten $\cdot$ Rivalen $\cdot$ Blockaden}} {
+    \node[lknoten=clGreen, text width=2.9cm] (\n) at ($(U)+({3.85*cos(\a)},{3.45*sin(\a)})$)
+      {\textbf{\t}\\[-1.5pt]{\tiny\d}};
+  }
+  \foreach \a/\b in {u1/u2, u2/u3, u3/u4, u4/u5, u5/u1}
+    \draw[larc=clGreen] (\a) to[bend right=22] (\b);
+  \node[font=\small\bfseries, text=clGreen!80!black, align=center] at (U) {Aufstieg\\[-2pt]{\tiny in der Polis}};
+  \node[font=\scriptsize, text=clGreen!80!black, align=center] at (26.9,-5.65)
+    {\textbf{Makro-Loop} $\cdot$ eine Handelssaison};
+
+  % --- Zoom-Verbindungen (vorwärts) ---
+  \draw[dashed, clOrange!85!black, line width=0.9pt] (m2.north west) -- ($(F)+(1.9,2.3)$);
+  \draw[dashed, clOrange!85!black, line width=0.9pt] (m2.south west) -- ($(F)+(1.9,-2.3)$);
+  \node[font=\scriptsize\bfseries, text=clOrange!85!black, align=center] at (9.0,-10.85) {besteht\\aus};
+
+  \draw[dashed, hkared!85!black, line width=0.9pt] (u1.north west) -- ($(M)+(2.6,3.15)$);
+  \draw[dashed, hkared!85!black, line width=0.9pt] (u1.south west) -- ($(M)+(2.6,-3.15)$);
+  \node[font=\scriptsize\bfseries, text=hkared!85!black, align=center] at (20.4,-10.55) {besteht\\aus};
+
+  % --- Rückkopplungs-Pfeil von Makro zurück auf Meso & Mikro (schließt den Loop über die Ebenen!) ---
+  \draw[looppfeil=clBlue] (u3.south) -- (29.17,-16.5) -| (f3.south);
+  \draw[looppfeil=clBlue] (m4.south |- 0,-16.5) -- (m4.south);
+  \node[txt] at (23.0,-16.5) {Höheres Ansehen \& eigener Stand senken Zinsen am Markttag und verbessern Startpreise};
+  \node[txt] at (10.7,-16.5) {Markttag-Preise \& Ruf bestimmen Feilschen};
+
+  % Ausstieg: Hauptziel
+  \node[ziel, text width=3.7cm] (Zl) at (31.3,-17.55)
+    {\textbf{Bürgerrecht der Polis}\\[-1.5pt]{\tiny Spielende mit Hochgefühl}};
+  \draw[pfeil, line width=1pt] (u3.east) -| node[txt, pos=0.72]{genug Ansehen\\\& Wohlstand?} (Zl.north);
+
+  % Legende
+  \node[anchor=west, font=\tiny, text=hkagray] at (1.6,-18.58)
+    {\textbf{Lesart:} Ein Schritt im großen Loop ist selbst ein kleiner Loop; zugleich wirkt der Fortschritt im Makro-Loop (Ansehen, Stand, Flotte) wieder zurück auf jeden Markttag und jedes Feilschen.};
+\end{tikzpicture}
+
+\end{document}

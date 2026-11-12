@@ -1,0 +1,629 @@
+\documentclass[11pt]{article}
+
+% --- Folienformat wie Themenkarte_Agora / OneManArmy (16:9, 960x540bp) ---
+\usepackage[paperwidth=960bp, paperheight=540bp, margin=0pt]{geometry}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[autostyle=true,german=quotes]{csquotes}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc, positioning, shapes.geometric, shapes.symbols, backgrounds, decorations.markings}
+\usepackage{microtype}
+\usepackage{hyperref}
+
+% --- Farbpalette (HKA + Domänenfarben) ---
+\definecolor{hkared}{RGB}{198, 42, 18}
+\definecolor{hkagray}{RGB}{100, 100, 100}
+\definecolor{clBlue}{RGB}{45, 115, 195}    % Institutionen & Vertrauen / Balancing
+\definecolor{clGold}{RGB}{200, 148, 20}    % Balance, Trade-offs & Progression
+\definecolor{clGreen}{RGB}{38, 148, 82}    % Ressourcen, Lieferketten & Flüsse
+\definecolor{clPurple}{RGB}{125, 88, 190}  % Macht, Asymmetrie & Systemfallen
+\definecolor{clRed}{RGB}{210, 62, 58}      % Eskalation, FOMO / Reinforcing
+\definecolor{clOrange}{RGB}{220, 122, 38}  % Verzögerungen, Risiken & Reibung
+\definecolor{posgreen}{RGB}{32, 148, 62}
+\definecolor{negred}{RGB}{198, 35, 35}
+
+\hypersetup{
+    colorlinks = true, linkcolor = hkared, urlcolor = hkared,
+    pdftitle   = {Methodische Themenlandschaftskarte: Die Agora (Systemdynamik \& Game Design)},
+    pdfauthor  = {Erlind Sejdiu},
+    pdfsubject = {Game Design, Themenlandschaftskarte auf Basis von Sterman, Meadows, Adams/Dormans, Salen/Zimmerman, Fullerton und Novak}
+}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+% =============================================================================
+% TikZ-Stile
+% =============================================================================
+\tikzset{
+  pfeil/.style      = {-{Stealth[length=2.1mm, width=1.5mm]}, line width=0.8pt, draw=black!80},
+  looppfeil/.style  = {-{Stealth[length=2.2mm, width=1.6mm]}, line width=1.05pt, draw=#1!85!black},
+  crosslink/.style  = {-{Stealth[length=2.1mm, width=1.5mm]}, line width=0.95pt, dashed, draw=hkared!90!black},
+  stateconn/.style  = {-{Stealth[length=1.9mm, width=1.4mm]}, line width=0.85pt, densely dashed, draw=#1!85!black},
+  txt/.style        = {font=\tiny\bfseries, fill=white, inner sep=1.2pt, rounded corners=1.5pt,
+                       align=center, text=black!85},
+  cltxt/.style      = {font=\tiny\bfseries, fill=hkared!8, draw=hkared!45, line width=0.4pt,
+                       inner sep=1.3pt, rounded corners=2pt, align=center, text=hkared!90!black},
+  polplus/.style    = {circle, fill=posgreen!14, draw=posgreen!85!black, line width=0.6pt,
+                       font=\tiny\bfseries, text=posgreen!90!black, inner sep=0.6pt, minimum size=3.3mm},
+  polminus/.style   = {circle, fill=negred!14, draw=negred!85!black, line width=0.6pt,
+                       font=\tiny\bfseries, text=negred!90!black, inner sep=0.6pt, minimum size=3.3mm},
+  % Knoten Folie 1 (Novak Concept Map)
+  cknoten/.style    = {draw=#1, line width=1.3pt, rounded corners=6pt, fill=#1!10,
+                       text width=3.35cm, minimum height=1.12cm, align=center, inner sep=2.5pt,
+                       font=\scriptsize},
+  agoraZentrum/.style = {ellipse, draw=hkared, line width=2.2pt, fill=black!90,
+                       text=white, minimum width=4.5cm, minimum height=2.1cm,
+                       align=center, inner sep=3pt},
+  % Knoten Folie 2 (Sterman CLD)
+  cldvar/.style     = {draw=#1!85!black, line width=1.1pt, rounded corners=5pt, fill=white,
+                       text width=2.9cm, minimum height=0.88cm, align=center, inner sep=2pt,
+                       font=\scriptsize},
+  loopbadge/.style  = {circle, draw=#1!85!black, fill=#1!14, line width=1.2pt,
+                       font=\footnotesize\bfseries, text=#1!85!black, inner sep=1pt,
+                       minimum size=0.85cm, align=center},
+  % Knoten Folie 3 (Stocks & Flows / Machinations)
+  stock/.style      = {draw=#1!85!black, line width=1.5pt, fill=#1!12, double, double distance=1.3pt,
+                       rounded corners=3pt, text width=3.05cm, minimum height=1.05cm,
+                       align=center, inner sep=2.5pt, font=\scriptsize},
+  machpool/.style   = {circle, draw=#1!85!black, line width=1.4pt, fill=#1!12,
+                       minimum size=1.45cm, align=center, inner sep=1.5pt, font=\tiny\bfseries},
+  machsource/.style = {regular polygon, regular polygon sides=3, draw=clGreen!85!black,
+                       line width=1.2pt, fill=clGreen!14, minimum size=1.1cm,
+                       inner sep=0.5pt, font=\tiny\bfseries, align=center},
+  machdrain/.style  = {regular polygon, regular polygon sides=3, shape border rotate=180,
+                       draw=clRed!85!black, line width=1.2pt, fill=clRed!14, minimum size=1.1cm,
+                       inner sep=0.5pt, font=\tiny\bfseries, align=center},
+  machconv/.style   = {regular polygon, regular polygon sides=3, shape border rotate=-90,
+                       draw=clGold!85!black, line width=1.2pt, fill=clGold!18, minimum size=1.15cm,
+                       inner sep=0.5pt, font=\tiny\bfseries, align=center},
+  machtrader/.style = {diamond, draw=hkared, line width=1.3pt, fill=hkared!12,
+                       minimum size=1.35cm, aspect=1.25, inner sep=1pt, font=\tiny\bfseries, align=center},
+  valve/.style      = {rectangle, draw=black!75, line width=0.7pt, fill=white,
+                       font=\tiny\bfseries, inner sep=1.5pt, rounded corners=1.5pt, align=center},
+  % Knoten Folie 4 (Kybernetik & Balance)
+  kyb/.style        = {draw=#1!85!black, line width=1.3pt, rounded corners=7pt, fill=#1!10,
+                       text width=3.55cm, minimum height=1.22cm, align=center, inner sep=3pt,
+                       font=\scriptsize},
+  falle/.style      = {draw=#1!85!black, line width=1.2pt, rounded corners=7pt, fill=#1!8,
+                       text width=7.2cm, minimum height=2.65cm, align=left, inner sep=5pt,
+                       font=\scriptsize},
+  % Delay-Markierung auf Pfad (Sterman ||)
+  delaymark/.style  = {postaction={decorate},
+                       decoration={markings, mark=at position #1 with {
+                         \draw[black!85, line width=1.2pt] (-1.6pt,-4.2pt) -- (-1.6pt,4.2pt);
+                         \draw[black!85, line width=1.2pt] (1.6pt,-4.2pt) -- (1.6pt,4.2pt);
+                       }}},
+}
+
+% --- Folienkopf im HKA-Stil ---
+\newcounter{folie}
+\newcommand{\kopf}[2]{%
+  \stepcounter{folie}%
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[hkared] ([xshift=38bp, yshift=-16bp]current page.north west) rectangle ++(9bp, -62bp);
+    \node[anchor=west, font=\fontsize{22}{26}\selectfont\bfseries, text=hkared]
+      at ([xshift=58bp, yshift=-38bp]current page.north west) {#1};
+    \node[anchor=west, font=\small, text=hkagray]
+      at ([xshift=58bp, yshift=-65bp]current page.north west) {#2};
+    \shade[top color=black!12, bottom color=white]
+      ([yshift=-92bp]current page.north west) rectangle ([yshift=-99bp]current page.north east);
+    \node[anchor=north east, inner sep=0pt]
+      at ([xshift=-22bp, yshift=-8bp]current page.north east)
+      {\includegraphics[height=76bp, trim=520 140 580 140, clip]{HKA.jpg}};
+    \node[anchor=south west, font=\scriptsize, text=hkagray]
+      at ([xshift=14bp, yshift=9bp]current page.south west) {\thefolie};
+  \end{tikzpicture}%
+}
+
+\begin{document}
+
+% =============================================================================
+% FOLIE 1: Themenlandschaftskarte nach Novak (Concept Map) & Eppler (Zonierung)
+% =============================================================================
+\kopf{Themenlandschaftskarte: Die Agora als Systemmodell}
+     {Fokusfrage (Novak, Kap.~3): \enquote{Welche Institutionen, Flüsse, Machtasymmetrien \& Bremsen steuern realen Handel?}}
+\begin{tikzpicture}[remember picture, overlay, shift={(current page.north west)}]
+
+  % --- 4 Funktionale Zonen nach Eppler & Burkhard ---
+  \fill[clBlue!5,   rounded corners=14pt] (0.7,-3.9)  rectangle (16.4,-10.75);
+  \fill[clGreen!5,  rounded corners=14pt] (17.4,-3.9) rectangle (33.1,-10.75);
+  \fill[clPurple!5, rounded corners=14pt] (0.7,-11.25) rectangle (16.4,-18.1);
+  \fill[clOrange!5, rounded corners=14pt] (17.4,-11.25) rectangle (33.1,-18.1);
+
+  % Zonen-Header
+  \node[anchor=north west, font=\scriptsize\bfseries, text=clBlue!85!black] at (1.0,-4.05)
+    {ZONE 1: Institutionen \& Vertrauen (North, Kap.~5\textendash7; Simmel)};
+  \node[anchor=north east, font=\scriptsize\bfseries, text=clGreen!80!black] at (32.8,-4.05)
+    {ZONE 2: Ökonomie \& Lieferketten (Adams/Dormans, Kap.~4; Polanyi)};
+  \node[anchor=north west, font=\scriptsize\bfseries, text=clPurple!85!black] at (2.2,-11.38)
+    {ZONE 3: Macht, Information \& Systemfallen (Meadows, Kap.~5; Salen/Zimmerman)};
+  \node[anchor=north east, font=\scriptsize\bfseries, text=clOrange!85!black] at (32.8,-11.38)
+    {ZONE 4: Psyche, Friktion \& Balance (Fullerton; Adams/Dormans)};
+
+  % --- ZENTRUM: DIE AGORA ---
+  \node[agoraZentrum] (AG) at (16.9,-11.0) {
+    {\normalsize\bfseries DIE AGORA}\\[1pt]
+    {\scriptsize\color{white!90} Sozialer Markt \& Preisbildung}\\[1pt]
+    {\tiny\color{white!80} Schnittpunkt von Tausch, Risiko \& Ordnung}
+  };
+
+  % --- ZONE 1: Institutionen & Vertrauen (Oben Links) ---
+  \node[cknoten=clBlue] (Z1A) at (3.2,-5.45)
+    {\textbf{Informelle Normen}\\[-1pt]{\tiny Reputation $\cdot$ Ehrenkodex}};
+  \node[cknoten=clBlue] (Z1B) at (10.7,-5.45)
+    {\textbf{Kredit \& Vorleistung}\\[-1pt]{\tiny \emph{credere} $\cdot$ zeitliche Dehnung}};
+  \node[cknoten=clBlue] (Z1C) at (3.2,-9.35)
+    {\textbf{Formale Marktordnung}\\[-1pt]{\tiny Agoranomos $\cdot$ Maße $\cdot$ Recht}};
+  \node[cknoten=clBlue] (Z1D) at (10.7,-9.35)
+    {\textbf{Transaktionskosten}\\[-1pt]{\tiny Such-, Prüf- \& Vertragsaufwand}};
+
+  \draw[pfeil] (Z1A.east) -- node[txt]{ermöglicht} (Z1B.west);
+  \draw[pfeil] (Z1A.south) -- node[txt]{senkt ohne\\Zwang} (Z1D.north west);
+  \draw[pfeil] (Z1C.east) -- node[txt]{begrenzt\\Betrug \&} (Z1D.west);
+  \draw[pfeil] (Z1B.south east) -- node[txt, pos=0.45]{mobilisiert\\Kaufkraft auf} (AG.north west);
+  \draw[pfeil] (Z1C.north east) -- node[txt, pos=0.4]{schützt} (Z1A.south east);
+
+  % --- ZONE 2: Ökonomie & Lieferketten (Oben Rechts) ---
+  \node[cknoten=clGreen] (Z2A) at (23.1,-5.45)
+    {\textbf{Ferne Quellen (Sources)}\\[-1pt]{\tiny Häfen $\cdot$ Getreide $\cdot$ Purpur}};
+  \node[cknoten=clGreen] (Z2B) at (30.6,-5.45)
+    {\textbf{Seewege \& Delays}\\[-1pt]{\tiny Nadelöhre $\cdot$ Sturm $\cdot$ Piraten}};
+  \node[cknoten=clGreen] (Z2C) at (30.6,-9.35)
+    {\textbf{Lagerbestände (Stocks)}\\[-1pt]{\tiny Vorrat auf der Agora}};
+  \node[cknoten=clGreen] (Z2D) at (23.1,-9.35)
+    {\textbf{Preisbildung \& Arbitrage}\\[-1pt]{\tiny Marge durch Knappheit}};
+
+  \draw[pfeil] (Z2A.east) -- node[txt]{speist Fracht\\über} (Z2B.west);
+  \draw[pfeil] (Z2B.south) -- node[txt]{verzögert\\Zufluss in} (Z2C.north);
+  \draw[pfeil] (Z2C.west) -- node[txt]{bestimmt\\über Vorrat} (Z2D.east);
+  \draw[pfeil] (Z2D.south west) -- node[txt, pos=0.45]{steuert\\Angebote auf} (AG.north east);
+
+  % --- ZONE 3: Macht, Information & Systemfallen (Unten Links) ---
+  \node[cknoten=clPurple] (Z3A) at (10.7,-12.95)
+    {\textbf{Imperfect Information}\\[-1pt]{\tiny Gerüchte $\cdot$ Insiderwissen}};
+  \node[cknoten=clPurple] (Z3B) at (3.2,-12.95)
+    {\textbf{Success to the Successful}\\[-1pt]{\tiny Monopol $\cdot$ Bots $\cdot$ Kapitalmacht}};
+  \node[cknoten=clPurple] (Z3C) at (3.2,-16.75)
+    {\textbf{Double Movement}\\[-1pt]{\tiny Zölle $\cdot$ Aufsicht $\cdot$ LkSG}};
+  \node[cknoten=clPurple] (Z3D) at (10.7,-16.75)
+    {\textbf{Rule Beating}\\[-1pt]{\tiny Schmuggel $\cdot$ falsche Gewichte}};
+
+  \draw[pfeil] (AG.south west) -- node[txt, pos=0.52]{verdeckt\\Kurse als} (Z3A.north east);
+  \draw[pfeil] (Z3A.west) -- node[txt]{verstärkt} (Z3B.east);
+  \draw[pfeil] (Z3B.south) -- node[txt]{provoziert\\Gegenwehr} (Z3C.north);
+  \draw[pfeil] (Z3C.east) -- node[txt]{erzeugt als\\Umgehung} (Z3D.west);
+  \draw[pfeil] (Z3D.north) -- node[txt]{untergräbt} (Z3A.south);
+
+  % --- ZONE 4: Psyche, Friktion & Spielbalance (Unten Rechts) ---
+  \node[cknoten=clOrange] (Z4A) at (23.1,-12.95)
+    {\textbf{Eskalation \& FOMO}\\[-1pt]{\tiny Drops $\cdot$ Jagdfieber $\cdot$ Panik}};
+  \node[cknoten=clOrange] (Z4B) at (30.6,-12.95)
+    {\textbf{Schulden \& Reue}\\[-1pt]{\tiny Trapezites $\cdot$ Pfand $\cdot$ Verlust}};
+  \node[cknoten=clOrange] (Z4C) at (30.6,-16.75)
+    {\textbf{Dynamic Friction}\\[-1pt]{\tiny Zinsen $\cdot$ Verderb $\cdot$ Standpacht}};
+  \node[cknoten=clOrange] (Z4D) at (23.1,-16.75)
+    {\textbf{Strategie-Balance}\\[-1pt]{\tiny Trade-offs statt Dominanz}};
+
+  \draw[pfeil] (AG.south east) -- node[txt, pos=0.52]{triggert\\durch Hype} (Z4A.north west);
+  \draw[pfeil] (Z4A.east) -- node[txt]{kippt in} (Z4B.west);
+  \draw[pfeil] (Z4B.south) -- node[txt]{aktiviert\\Kosten in} (Z4C.north);
+  \draw[pfeil] (Z4C.west) -- node[txt]{erzwingt} (Z4D.east);
+  \draw[pfeil] (Z4D.north) -- node[txt]{bremst\\Gier \&} (Z4A.south);
+
+  % --- NOVAK CROSS-LINKS (gestrichelt zwischen Zonen!) ---
+  \draw[crosslink] (Z1B.east) -- node[cltxt]{[CL] finanziert\\Handelsreisen über} (Z2A.west);
+  \draw[crosslink] (Z2D.south) -- node[cltxt, pos=0.46]{[CL] Preissprung\\nährt} (Z4A.north);
+  \draw[crosslink] (Z3C.north west) .. controls (1.1,-12.2) and (1.1,-10.0) ..
+    node[cltxt, pos=0.5]{[CL] verankert\\Schutz in} (Z1C.south west);
+  \draw[crosslink] (Z4C.south) |- (16.9,-17.85) -|
+    node[cltxt, pos=0.25]{[CL] bremst Übermacht von} (Z3B.south east);
+
+  % --- Legende ---
+  \node[anchor=west, font=\tiny, text=hkagray] at (1.35,-18.62)
+    {\textbf{Lesart nach Novak (Kap.~3 \& 5):} Jeder Pfeil bildet eine Proposition (\emph{Konzept $\rightarrow$ Verbphrase $\rightarrow$ Konzept});
+     \textcolor{hkared}{\textbf{[CL] gestrichelt}} = zonenübergreifende \emph{Cross-Links}.};
+
+\end{tikzpicture}
+\newpage
+
+% =============================================================================
+% FOLIE 2: Formales Causal Loop Diagram (CLD) nach Sterman & Meadows
+% =============================================================================
+\kopf{Formales Causal Loop Diagram (Sterman Kap.~5 \& Meadows Kap.~2/5)}
+     {Strikte Polaritätsnotation ($+$\,/\,$-$), Transport-Delays ($\parallel$) sowie Schleifenklassifikation (\textbf{R} = verstärkend, \textbf{B} = ausgleichend)}
+\begin{tikzpicture}[remember picture, overlay, shift={(current page.north west)}]
+
+  % Sanfte Quadrant-Trenner
+  \fill[clBlue!4,   rounded corners=12pt] (0.7,-3.9)   rectangle (11.1,-10.75);
+  \fill[clGreen!4,  rounded corners=12pt] (11.6,-3.9)  rectangle (22.2,-10.75);
+  \fill[clPurple!4, rounded corners=12pt] (22.7,-3.9)  rectangle (33.1,-10.75);
+  \fill[clBlue!4,   rounded corners=12pt] (0.7,-11.25) rectangle (11.1,-18.1);
+  \fill[clGold!5,   rounded corners=12pt] (11.6,-11.25) rectangle (22.2,-18.1);
+  \fill[clRed!4,    rounded corners=12pt] (22.7,-11.25) rectangle (33.1,-18.1);
+
+  % =========================================================================
+  % R1: Vertrauens- & Kreditspirale (Oben Links)
+  % =========================================================================
+  \node[anchor=north west, font=\scriptsize\bfseries, text=clBlue!85!black] at (0.95,-4.02)
+    {R1: Vertrauens- \& Kreditspirale (North/Simmel)};
+  \node[cldvar=clBlue] (r1a) at (3.2,-5.4)  {\textbf{Reputation}\\[-1pt]{\tiny soziales Vertrauen}};
+  \node[cldvar=clBlue] (r1b) at (8.7,-5.4)  {\textbf{Kreditlimit}\\[-1pt]{\tiny Kauf auf Ziel}};
+  \node[cldvar=clBlue] (r1c) at (8.7,-9.5)  {\textbf{Handelsvolumen}\\[-1pt]{\tiny Transaktionen}};
+  \node[cldvar=clBlue] (r1d) at (3.2,-9.5)  {\textbf{Gehaltene Zusagen}\\[-1pt]{\tiny Vertragstreue}};
+
+  \draw[looppfeil=clBlue] (r1a) -- node[polplus, pos=0.5]{$+$} (r1b);
+  \draw[looppfeil=clBlue] (r1b) -- node[polplus, pos=0.5]{$+$} (r1c);
+  \draw[looppfeil=clBlue] (r1c) -- node[polplus, pos=0.5]{$+$} (r1d);
+  \draw[looppfeil=clBlue] (r1d) -- node[polplus, pos=0.5]{$+$} (r1a);
+  \node[loopbadge=clRed] (BR1) at (5.95,-7.45) {$\circlearrowright$ R1\\[-2pt]{\tiny 0$\times(-)$}};
+
+  % =========================================================================
+  % B1: Arbitrage- & Seewege-Oszillation (Oben Mitte)
+  % =========================================================================
+  \node[anchor=north, font=\scriptsize\bfseries, text=clGreen!80!black] at (16.9,-4.02)
+    {B1: Arbitrage-Oszillation (Sterman/Meadows)};
+  \node[cldvar=clGreen] (b1a) at (16.9,-5.2)  {\textbf{Knappheit Agora}\\[-1pt]{\tiny Bestandsdefizit}};
+  \node[cldvar=clGreen] (b1b) at (20.2,-7.35) {\textbf{Marktpreis}\\[-1pt]{\tiny Marge \& Anreiz}};
+  \node[cldvar=clGreen] (b1c) at (19.3,-9.7)  {\textbf{See-Fracht}\\[-1pt]{\tiny losgesegelt}};
+  \node[cldvar=clGreen] (b1d) at (14.5,-9.7)  {\textbf{Warenankunft}\\[-1pt]{\tiny Marktzufluss}};
+
+  \draw[looppfeil=clGreen] (b1a.east) to[bend left=18] node[polplus, pos=0.5]{$+$} (b1b.north);
+  \draw[looppfeil=clGreen] (b1b.south) to[bend left=15] node[polplus, pos=0.5]{$+$} (b1c.north east);
+  \draw[looppfeil=clGreen, delaymark=0.5] (b1c.west) -- node[polplus, above=4pt, pos=0.5]{$+$} node[txt, below=4pt, pos=0.5]{See-Delay} (b1d.east);
+  \draw[looppfeil=clGreen] (b1d.north) to[bend left=22] node[polminus, pos=0.55]{$-$} (b1a.west);
+  \node[loopbadge=clGreen] (BB1) at (16.9,-7.45) {$\circlearrowright$ B1\\[-2pt]{\tiny 1$\times(-)$}};
+
+  % =========================================================================
+  % R2: Systemfalle Success to the Successful (Oben Rechts)
+  % =========================================================================
+  \node[anchor=north east, font=\scriptsize\bfseries, text=clPurple!85!black] at (32.85,-4.02)
+    {R2: Success to the Successful (Meadows)};
+  \node[cldvar=clPurple] (r2a) at (25.1,-5.4)  {\textbf{Kapitalvorsprung}\\[-1pt]{\tiny Liquide Mittel}};
+  \node[cldvar=clPurple] (r2b) at (30.6,-5.4)  {\textbf{Aufkaufmacht}\\[-1pt]{\tiny Bots \& Flotte}};
+  \node[cldvar=clPurple] (r2c) at (30.6,-9.5)  {\textbf{Marktanteil}\\[-1pt]{\tiny Verdrängung}};
+  \node[cldvar=clPurple] (r2d) at (25.1,-9.5)  {\textbf{Preisdiktat \& Marge}\\[-1pt]{\tiny Monopolgewinn}};
+
+  \draw[looppfeil=clPurple] (r2a) -- node[polplus, pos=0.5]{$+$} (r2b);
+  \draw[looppfeil=clPurple] (r2b) -- node[polplus, pos=0.5]{$+$} (r2c);
+  \draw[looppfeil=clPurple] (r2c) -- node[polplus, pos=0.5]{$+$} (r2d);
+  \draw[looppfeil=clPurple] (r2d) -- node[polplus, pos=0.5]{$+$} (r2a);
+  \node[loopbadge=clPurple] (BR2) at (27.85,-7.45) {$\circlearrowright$ R2\\[-2pt]{\tiny 0$\times(-)$}};
+
+  % =========================================================================
+  % B2: Institutionelle Gegenbewegung + Rule Beating (Unten Links)
+  % =========================================================================
+  \node[anchor=north west, font=\scriptsize\bfseries, text=clBlue!85!black] at (0.95,-11.38)
+    {B2: Double Movement \& Rule Beating};
+  \node[cldvar=clBlue] (b2a) at (3.2,-12.75)  {\textbf{Wucher \& Macht}\\[-1pt]{\tiny Preisdiktat}};
+  \node[cldvar=clBlue] (b2b) at (8.7,-12.75)  {\textbf{Politischer Druck}\\[-1pt]{\tiny Unmut in Polis}};
+  \node[cldvar=clBlue] (b2c) at (8.7,-16.75)  {\textbf{Agoranomos \& Zoll}\\[-1pt]{\tiny Marktregulierung}};
+  \node[cldvar=clPurple] (b2d) at (3.2,-16.75){\textbf{Rule Beating}\\[-1pt]{\tiny Schmuggel / Bots}};
+
+  \draw[looppfeil=clBlue] (b2a) -- node[polplus, pos=0.5]{$+$} (b2b);
+  \draw[looppfeil=clBlue, delaymark=0.5] (b2b) -- node[polplus, left=4pt, pos=0.5]{$+$} node[txt, right=4pt, pos=0.5]{Rats-\\Delay} (b2c);
+  \draw[looppfeil=clBlue] (b2c.north west) -- node[polminus, pos=0.5]{$-$} (b2a.south east);
+  % Rule-Beating-Pfad (Meadows Kap. 5)
+  \draw[looppfeil=clPurple] (b2c.west) -- node[polplus, pos=0.5]{$+$} (b2d.east);
+  \draw[looppfeil=clPurple] (b2d.north) -- node[polplus, pos=0.5]{$+$} (b2a.south);
+  \node[loopbadge=clBlue] at (7.05,-14.3) {$\circlearrowright$ B2\\[-2pt]{\tiny 1$\times(-)$}};
+  \node[font=\tiny\bfseries, text=clPurple!85!black, align=center] at (4.65,-15.5) {Schatten-\\Umgehung};
+
+  % =========================================================================
+  % B3: Dynamic Friction (Unten Mitte)
+  % =========================================================================
+  \node[anchor=north, font=\scriptsize\bfseries, text=clGold!80!black] at (16.9,-11.38)
+    {B3: Dynamic Friction (Adams/Dormans)};
+  \node[cldvar=clGold] (b3a) at (16.9,-12.75) {\textbf{Bestand \& Schulden}\\[-1pt]{\tiny Lager / Darlehen}};
+  \node[cldvar=clGold] (b3b) at (20.1,-15.1)  {\textbf{Zins-, Lager- \& Zollast}\\[-1pt]{\tiny progressive Kosten}};
+  \node[cldvar=clGold] (b3c) at (13.7,-15.1)  {\textbf{Netto-Kaufkraft}\\[-1pt]{\tiny freies Kapital}};
+
+  \draw[looppfeil=clGold] (b3a.east) to[bend left=18] node[polplus, pos=0.5]{$+$} (b3b.north);
+  \draw[looppfeil=clGold] (b3b.west) -- node[polminus, pos=0.5]{$-$} (b3c.east);
+  \draw[looppfeil=clGold] (b3c.north) to[bend left=18] node[polplus, pos=0.5]{$+$} (b3a.west);
+  \node[loopbadge=clGold] at (16.9,-16.75) {$\circlearrowright$ B3\\[-2pt]{\tiny 1$\times(-)$}};
+
+  % =========================================================================
+  % R3: Eskalation & FOMO-Spirale (Unten Rechts)
+  % =========================================================================
+  \node[anchor=north east, font=\scriptsize\bfseries, text=clRed!85!black] at (32.85,-11.38)
+    {R3: Eskalation \& FOMO (Meadows Kap.~5)};
+  \node[cldvar=clRed] (r3a) at (25.1,-12.75) {\textbf{Drop- \& Knapp-Hype}\\[-1pt]{\tiny Preisdruck / FOMO}};
+  \node[cldvar=clRed] (r3b) at (30.6,-12.75) {\textbf{Impuls- \& Panikkauf}\\[-1pt]{\tiny ungedecktes Risiko}};
+  \node[cldvar=clRed] (r3c) at (30.6,-16.75) {\textbf{Verlust- \& Tilgungsdruck}\\[-1pt]{\tiny Überschuldung}};
+  \node[cldvar=clRed] (r3d) at (25.1,-16.75) {\textbf{Aufhol-Wagnis}\\[-1pt]{\tiny Alles-auf-eine-Karte}};
+
+  \draw[looppfeil=clRed] (r3a) -- node[polplus, pos=0.5]{$+$} (r3b);
+  \draw[looppfeil=clRed] (r3b) -- node[polplus, pos=0.5]{$+$} (r3c);
+  \draw[looppfeil=clRed] (r3c) -- node[polplus, pos=0.5]{$+$} (r3d);
+  \draw[looppfeil=clRed] (r3d) -- node[polplus, pos=0.5]{$+$} (r3a);
+  \node[loopbadge=clRed] at (27.85,-14.75) {$\circlearrowright$ R3\\[-2pt]{\tiny 0$\times(-)$}};
+
+  % =========================================================================
+  % KOPPLUNGEN ZWISCHEN DEN 6 LOOPS (sauber durch Korridore geführt)
+  % =========================================================================
+  \draw[pfeil, dashed] (r1b.east) to[bend left=12] node[polplus, pos=0.45]{$+$} (b1a.north west);
+  \draw[pfeil, dashed] (b1b.east) to[bend left=12] node[polplus, pos=0.5]{$+$} (r2a.west);
+  \draw[pfeil, dashed] (r2d.south) -- (25.1,-11.02) -| node[polplus, pos=0.28]{$+$} (b2a.north east);
+  \draw[pfeil, dashed] (b1b.south east) -- node[polplus, pos=0.48]{$+$} (r3a.north west);
+  \draw[pfeil, dashed] (r3c.north west) -- (23.6,-15.1) -- node[polplus, pos=0.45]{$+$} (b3b.east);
+  \draw[pfeil, dashed] (b3c.south) -- (13.7,-17.55) -| node[polplus, pos=0.25]{$+$} (r3d.south west);
+
+  % --- Sterman-Legende ---
+  \node[anchor=west, font=\tiny, text=hkagray] at (1.35,-18.62)
+    {\textbf{Sterman-CLD-Notation:}
+     \textcolor{posgreen!90!black}{\textbf{$+$}} gleichgerichtet ($\partial Y/\partial X > 0$) \quad
+     \textcolor{negred!90!black}{\textbf{$-$}} gegenläufig ($\partial Y/\partial X < 0$) \quad
+     \textbf{$\parallel$} Verzögerung (Delay) \quad
+     \textbf{R} Reinforcing (gerade Zahl $-$) \quad
+     \textbf{B} Balancing (ungerade Zahl $-$)};
+
+\end{tikzpicture}
+\newpage
+
+% =============================================================================
+% FOLIE 3: Stocks & Flows + Machinations Internal Economy
+% =============================================================================
+\kopf{Bestands- \& Flussmodell + Machinations-Ökonomie}
+     {Trennung von Beständen (Sterman Kap.~6) und operativen Ressourcenknoten (Adams \& Dormans, Kap.~4 \& App.~B)}
+\begin{tikzpicture}[remember picture, overlay, shift={(current page.north west)}]
+
+  % Hintergrundbereiche (Ferne Häfen | Seeweg/Delay | Agora-Kern | Spieler-Konto)
+  \fill[clGreen!4, rounded corners=12pt] (0.7,-3.9) rectangle (10.3,-17.2);
+  \fill[clOrange!4, rounded corners=12pt] (10.7,-3.9) rectangle (17.2,-17.2);
+  \fill[hkared!4,  rounded corners=12pt] (17.6,-3.9) rectangle (26.2,-17.2);
+  \fill[clBlue!4,  rounded corners=12pt] (26.6,-3.9) rectangle (33.1,-17.2);
+
+  \node[anchor=north, font=\scriptsize\bfseries, text=clGreen!80!black] at (5.5,-4.02)
+    {1. QUELLEN \& PRODUKTION};
+  \node[anchor=north, font=\scriptsize\bfseries, text=clOrange!85!black] at (13.95,-4.02)
+    {2. TRANSPORT-DELAY};
+  \node[anchor=north, font=\scriptsize\bfseries, text=hkared] at (21.9,-4.02)
+    {3. AGORA-MARKT (TRADER)};
+  \node[anchor=north, font=\scriptsize\bfseries, text=clBlue!85!black] at (29.85,-4.02)
+    {4. SPIELER-BESTÄNDE};
+
+  % --- 1. QUELLEN & HEIMATHAFEN ---
+  \node[machsource] (SRC1) at (3.0,-6.2) {Source\\Ferne\\Häfen};
+  \node[stock=clGreen] (ST_HAFEN) at (7.4,-6.2)
+    {\textbf{Hafen-Bestand}\\{\tiny (Stock: Produzierte Güter)}};
+  \node[machsource] (SRC2) at (3.0,-14.3) {Source\\Trapezites\\Kredit};
+  \node[stock=clPurple] (ST_SCHULD) at (7.4,-14.3)
+    {\textbf{Schulden-Stock}\\{\tiny (offene Darlehen)}};
+
+  \draw[pfeil, line width=1.2pt, clGreen!85!black] (SRC1) -- node[valve]{Ernte-Rate} (ST_HAFEN);
+  \draw[pfeil, line width=1.2pt, clPurple!85!black] (SRC2) -- node[valve]{Kredit-\\fluss} (ST_SCHULD);
+
+  % --- 2. TRANSPORT-DELAY & VERLUST-SENKE ---
+  \node[stock=clOrange] (ST_SEE) at (13.95,-6.2)
+    {\textbf{Fracht auf See}\\{\tiny (In-Transit Stock)}};
+  \node[machdrain] (DR_SEE) at (13.95,-10.7) {Drain\\Verderb\\\& Piraten};
+
+  \draw[pfeil, line width=1.2pt, clOrange!85!black] (ST_HAFEN) -- node[valve]{Verschiffung} (ST_SEE);
+  \draw[pfeil, line width=1.1pt, clRed!85!black] (ST_SEE) -- node[valve]{Verlust-\\rate} (DR_SEE);
+
+  % --- 3. AGORA-MARKT (LAGER, TRADER, KONSUM-SENKE) ---
+  \node[stock=hkared] (ST_AGORA) at (21.9,-6.2)
+    {\textbf{Agora-Warenlager}\\{\tiny (Stock: Marktangebot)}};
+  \node[machdrain] (DR_KONSUM) at (21.9,-10.7) {Drain\\Polis-\\Konsum};
+  \node[machtrader] (TRADER) at (21.9,-14.3) {Trader\\Marktstand\\(Ware $\rightleftharpoons$ Dr.)};
+
+  \draw[pfeil, line width=1.2pt, clOrange!85!black, delaymark=0.45]
+    (ST_SEE) -- node[valve, above=5.5pt]{Ankunft (Delay)} (ST_AGORA);
+  \draw[pfeil, line width=1.1pt, clRed!85!black] (ST_AGORA) -- node[valve]{Abverkauf} (DR_KONSUM);
+  \draw[pfeil, line width=1.1pt, hkared] (ST_AGORA.east) to[bend left=38] node[valve]{Lieferung} (TRADER.north east);
+
+  % --- 4. SPIELER-BESTÄNDE (KAPITAL, CONVERTER, REPUTATION, DYNAMIC FRICTION) ---
+  \node[stock=clBlue] (ST_DRACH) at (29.85,-6.2)
+    {\textbf{Drachmen-Pool}\\{\tiny (Stock: Kapital)}};
+  \node[machconv, minimum size=1.45cm] (CONV) at (29.85,-10.7) {Converter\\Investition\\\& Bürgerrecht};
+  \node[stock=clBlue] (ST_REP) at (29.85,-14.3)
+    {\textbf{Reputations-Pool}\\{\tiny (Stock: Ansehen)}};
+  \node[machdrain] (DR_FRIC) at (13.95,-14.3) {Drain\\Zins, Zoll\\\& Pacht};
+
+  % Waren- und Geldflüsse Spieler <-> Trader
+  \draw[pfeil, line width=1.1pt, hkared] (TRADER.north) to[bend left=18] node[valve]{Erlös} (ST_DRACH.west);
+  \draw[pfeil, line width=1.1pt, clBlue!85!black] (ST_DRACH.south west) to[bend left=18] node[valve]{Einkauf} (TRADER.east);
+  % Kapital -> Converter -> Reputation (sauber über Kanten ohne Überlagerung)
+  \draw[pfeil, line width=1.1pt, clGold!85!black] (ST_DRACH.south) -- node[valve]{Stand/Flotte} (29.85,-9.55);
+  \draw[pfeil, line width=1.1pt, clBlue!85!black] (29.85,-11.85) -- node[valve]{Status-Gain} (ST_REP.north);
+  % Kapital -> Dynamic Friction Drain (außen rechts um Converter & Reputation herum!)
+  \draw[pfeil, line width=1.0pt, clRed!85!black] (ST_DRACH.east) -- (32.45,-6.2) -- (32.45,-16.15) -|
+    node[valve, pos=0.28]{Abgaben \& Tilgung (Dynamic Friction)} (DR_FRIC.south);
+  \draw[pfeil, line width=1.0pt, clPurple!85!black] (ST_SCHULD.east) -- node[valve]{Zins-Abzug} (DR_FRIC.west);
+
+  % --- STATE CONNECTIONS (gestrichelt: Bestände modulieren Raten!) ---
+  \draw[stateconn=hkared] (ST_AGORA.south west) .. controls (18.4,-9.6) and (18.4,-12.5) ..
+    node[txt, pos=0.52]{Vorrat steuert\\Preis-Multiplikator} (TRADER.west);
+  \draw[stateconn=clBlue] (ST_REP.south) -- (29.85,-16.85) -|
+    node[txt, pos=0.25]{Reputation skaliert Kreditlimit (State Conn.)} (SRC2.south);
+  \draw[stateconn=clPurple] (ST_SCHULD.north) -- ++(0,0.85) -|
+    node[txt, pos=0.25]{Schuldenstand erhöht Zinsrate} (DR_FRIC.north);
+
+  % --- Machinations- & Stock/Flow-Legende ---
+  \node[anchor=west, font=\tiny, text=hkagray] at (1.35,-18.02)
+    {\textbf{Notation (Sterman Kap.~6 / Adams \& Dormans Kap.~4):}
+     \textbf{Doppelrahmen} = Stock/Pool (Akkumulation) \quad
+     \textbf{Kästchen auf Pfeil} = Flow-Rate (Ventil) \quad
+     \textcolor{clGreen!80!black}{$\blacktriangle$} Source \quad
+     \textcolor{clRed!85!black}{$\blacktriangledown$} Drain/Sink \quad
+     \textcolor{clGold!80!black}{$\blacktriangleright$} Converter \quad
+     \textcolor{hkared}{$\blacklozenge$} Trader \quad
+     \textbf{- - -} State Connection};
+
+\end{tikzpicture}
+\newpage
+
+% =============================================================================
+% FOLIE 4: Kybernetik (Salen/Zimmerman) & Systemfallen-Balance (Meadows/Fullerton)
+% =============================================================================
+\kopf{Kybernetische Regelung \& Balance-Architektur}
+     {Feedback-Steuerung (Salen \& Zimmerman, Kap.~18) und Vermeidung von Systemfallen \& Dominanzstrategien (Meadows Kap.~5; Fullerton Kap.~10)}
+\begin{tikzpicture}[remember picture, overlay, shift={(current page.north west)}]
+
+  % =========================================================================
+  % LINKER BEREICH: KYBERNETISCHER REGELKREIS (Salen & Zimmerman, Kap. 18)
+  % =========================================================================
+  \fill[clBlue!4, rounded corners=14pt] (0.7,-3.9) rectangle (15.5,-17.85);
+  \node[anchor=north west, font=\footnotesize\bfseries, text=clBlue!85!black] at (1.0,-4.08)
+    {Kybernetischer Regelkreis (Salen \& Zimmerman, Kap.~18)};
+
+  \node[kyb=hkared] (ENV) at (8.1,-6.0)
+    {\textbf{1. Umwelt / Marktgeschehen}\\[-1pt]{\tiny Preisschwankung $\cdot$ Vorräte $\cdot$ Rivalen}};
+  \node[kyb=clGreen] (SEN) at (12.6,-10.2)
+    {\textbf{2. Sensor (Information)}\\[-1pt]{\tiny Stoa-Gerüchte $\cdot$ Zollbuch $\cdot$ Kurstafel}};
+  \node[kyb=clGold, text width=3.9cm] (CMP) at (8.1,-14.4)
+    {\textbf{3. Comparator (Soll-Ist)}\\[-1pt]{\tiny Marktordnung vs.\ Wucher?\\Marge vs.\ Risiko?}};
+  \node[kyb=clPurple] (ACT) at (3.6,-10.2)
+    {\textbf{4. Activator (Eingriff)}\\[-1pt]{\tiny Zölle $\cdot$ Strafen $\cdot$ Kauf/Verkauf}};
+
+  \draw[looppfeil=clGreen] (ENV.east) -| node[txt, pos=0.25]{Signale \&\\Messwerte} (SEN.north);
+  \draw[looppfeil=clGold]  (SEN.south) |- node[txt, pos=0.75]{Wahrnehmung\\(Imperfect Info)} (CMP.east);
+  \draw[looppfeil=clPurple](CMP.west) -| node[txt, pos=0.25]{Abweichung\\löst aus} (ACT.south);
+  \draw[looppfeil=hkared]  (ACT.north) |- node[txt, pos=0.75]{verändert\\Marktzustand} (ENV.west);
+
+  % Innere Box: Negatives vs. Positives Feedback
+  \node[draw=black!35, rounded corners=8pt, fill=white, text width=4.65cm, align=center,
+        font=\tiny, inner sep=4pt] at (8.1,-10.2) {
+    {\scriptsize\bfseries Regelungs-Dualität}\\[2pt]
+    \textcolor{clBlue!85!black}{\textbf{Negatives Feedback:}} stabilisiert Preise\\durch Zölle, Agoranomos \& Verderb\\[2pt]
+    \textcolor{clRed!85!black}{\textbf{Positives Feedback:}} belohnt\\Reinvestition in Flotte \& Stand
+  };
+
+  \node[anchor=south, font=\tiny, text=hkagray, text width=13.8cm, align=center] at (8.1,-17.55)
+    {\textbf{Fullerton (Kap.~10):} Ausgewogenheit über vier Stellschrauben:
+     \emph{Variables} (Zollsätze, Zinsen), \emph{Dynamics} (See-Delays), \emph{Starting Conditions} (Metöke) und \emph{Skill} (Timing, Verhandlung).};
+
+  % =========================================================================
+  % RECHTER BEREICH: 4 SYSTEMFALLEN & GEGENMASSNAHMEN (Meadows Kap. 5 & Fullerton)
+  % =========================================================================
+  \fill[clOrange!4, rounded corners=14pt] (16.0,-3.9) rectangle (33.1,-17.85);
+  \node[anchor=north west, font=\footnotesize\bfseries, text=clOrange!85!black] at (16.3,-4.08)
+    {Systemfallen (Meadows, Kap.~5) $\rightarrow$ Spieldesign-Gegenmaßnahmen (Fullerton / Adams)};
+
+  % Falle 1
+  \node[falle=clPurple] (F1) at (20.2,-6.55) {
+    {\small\bfseries\color{clPurple!85!black} 1. Success to the Successful}\\[2pt]
+    \textbf{Phänomen:} Großkapital \& Bots verdrängen kleinere Händler dauerhaft (Monopolspirale R2).\\[2pt]
+    \textbf{Design-Antwort:} \emph{Dynamic Friction} (Adams/Dormans): progressive Standpacht, Skalierungszölle \& begrenzte Lagerkapazität bremsen den Runaway Leader.
+  };
+
+  % Falle 2
+  \node[falle=clRed] (F2) at (28.8,-6.55) {
+    {\small\bfseries\color{clRed!85!black} 2. Escalation \& FOMO}\\[2pt]
+    \textbf{Phänomen:} Preisunterbietung oder spekulativer Kaufrausch eskaliert bis zum Ruin (R3).\\[2pt]
+    \textbf{Design-Antwort:} Verbindliche Kredit-Collateral-Grenzen beim Trapezites \& sichtbare Zinslast als ausgleichende Bremse (B3).
+  };
+
+  % Falle 3
+  \node[falle=clBlue] (F3) at (20.2,-10.85) {
+    {\small\bfseries\color{clBlue!85!black} 3. Rule Beating}\\[2pt]
+    \textbf{Phänomen:} Akteure erfüllen Regeln nur formal (Schmuggel, manipulierte Gewichte), um Zölle zu umgehen.\\[2pt]
+    \textbf{Design-Antwort:} Stichproben-Sensoren des Agoranomos verhängen neben Geldstrafen permanenten Reputationsverlust (blockiert Bürgerrecht).
+  };
+
+  % Falle 4
+  \node[falle=clGreen] (F4) at (28.8,-10.85) {
+    {\small\bfseries\color{clGreen!80!black} 4. Oszillation durch Delays}\\[2pt]
+    \textbf{Phänomen:} Lange Seewege ($\parallel$) führen zu verspäteter Überlieferung \& Preiscrash (B1).\\[2pt]
+    \textbf{Design-Antwort:} Informations-Vorlauf über Stoa-Gerüchte sowie Warenverderb verhindern passives Horten als Dominanzstrategie (Fullerton, Kap.~10).
+  };
+
+  % Synthese-Balken unten rechts: Dominanzstrategien verhindern
+  \node[draw=hkared, line width=1.3pt, rounded corners=8pt, fill=hkared!7,
+        text width=15.7cm, minimum height=2.35cm, align=left, inner sep=6pt, font=\scriptsize]
+        at (24.55,-15.35) {
+    {\small\bfseries\color{hkared} Anti-Dominanz-Dreieck (Fullerton, Kap.~10: Meaningful Choice)}\\[3pt]
+    Keine Einzelstrategie darf alle anderen schlagen; jeder Pfad besitzt einen strukturellen Trade-off:\\[2pt]
+    \textbullet~\textbf{Ehrlicher Lokalhandel:} geringe Volatilität, hoher Reputationsgewinn, aber niedrige Kapitalmarge.\\
+    \textbullet~\textbf{Riskanter Fernhandel:} hohe Arbitrage-Margen, aber Seeweg-Delays ($\parallel$), Verderb \& Piratenrisiko.\\
+    \textbullet~\textbf{Aggressiver Kredit- \& Machthebel:} schnelles Wachstum, aber verwundbar durch Zinslast \& Agoranomos.
+  };
+
+\end{tikzpicture}
+\newpage
+
+% =============================================================================
+% FOLIE 5: Methodische Ressourcensynthese & Abbildungsmatrix
+% =============================================================================
+\kopf{Methodische Synthese: Ressourcen $\rightarrow$ Themenlandschaftskarte}
+     {Nachweis der konzeptionellen Fundierung aller Modellierungsebenen aus dem Verzeichnis \texttt{Ressourcen/}}
+\begin{tikzpicture}[remember picture, overlay, shift={(current page.north west)}]
+
+  % 6 Karten in einem 2x3 Raster (sauber ausgerichtet, viel Weißraum)
+  \def\cw{10.1cm}
+  \def\ch{5.85cm}
+
+  % Reihe 1
+  \node[draw=clBlue, line width=1.4pt, rounded corners=9pt, fill=clBlue!6,
+        text width=\cw, minimum height=\ch, align=left, inner sep=6pt, anchor=north west, font=\scriptsize]
+        at (0.9,-4.15) {
+    {\small\bfseries\color{clBlue!85!black} 1. Sterman (2000): Business Dynamics}\\[1pt]
+    {\tiny\color{hkagray} Kap.~5 (S.~137\textendash190) \& Kap.~6\textendash7 (S.~191\textendash262)}\\[4pt]
+    \textbf{Kernmethodik:} Formale Causal Loop Diagrams (Kantenpolarität $+$/$-$, Schleifenpolarität R/B, Delays $\parallel$) sowie strikte Trennung von \emph{Stocks} und \emph{Flows}.\\[3pt]
+    \textbf{Umsetzung in dieser Karte:} Folie~2 modelliert alle 6 Schleifen mit exakter Vorzeichen-Parität; Folie~3 trennt Lager-/Schuldenbestände sauber von Handels- und Verlustraten.
+  };
+
+  \node[draw=clGreen, line width=1.4pt, rounded corners=9pt, fill=clGreen!6,
+        text width=\cw, minimum height=\ch, align=left, inner sep=6pt, anchor=north west, font=\scriptsize]
+        at (11.75,-4.15) {
+    {\small\bfseries\color{clGreen!80!black} 2. Meadows (2008): Thinking in Systems}\\[1pt]
+    {\tiny\color{hkagray} Kap.~1\textendash2 (S.~11\textendash72) \& Kap.~5 (S.~111\textendash144)}\\[4pt]
+    \textbf{Kernmethodik:} Oszillation durch Lieferketten-Delays sowie Typologie struktureller Systemfallen (\emph{Success to the Successful}, \emph{Escalation}, \emph{Rule Beating}).\\[3pt]
+    \textbf{Umsetzung in dieser Karte:} Folie~2 \& 4 verankern Monopolbildung, FOMO-Eskalation, Schmuggel und Seeweg-Schwankungen als strukturelle Archetypen samt Gegenhebeln.
+  };
+
+  \node[draw=clOrange, line width=1.4pt, rounded corners=9pt, fill=clOrange!6,
+        text width=\cw, minimum height=\ch, align=left, inner sep=6pt, anchor=north west, font=\scriptsize]
+        at (22.6,-4.15) {
+    {\small\bfseries\color{clOrange!85!black} 3. Adams \& Dormans (2012): Game Mechanics}\\[1pt]
+    {\tiny\color{hkagray} Kap.~4, 6, 7, 11 \& App.~B (S.~59\textendash80, 107\textendash170, 275\textendash310)}\\[4pt]
+    \textbf{Kernmethodik:} \emph{Internal Economy} via Machinations (\emph{Sources, Pools, Drains, Converters, Traders}) sowie Design Patterns (\emph{Dynamic Friction}, \emph{Trade Engine}).\\[3pt]
+    \textbf{Umsetzung in dieser Karte:} Folie~3 überführt die Agora in ein prüfbares Flussnetz mit Progressions-Converter und progressiven Reibungssenken (Zins, Zoll, Verderb).
+  };
+
+  % Reihe 2
+  \node[draw=clPurple, line width=1.4pt, rounded corners=9pt, fill=clPurple!6,
+        text width=\cw, minimum height=\ch, align=left, inner sep=6pt, anchor=north west, font=\scriptsize]
+        at (0.9,-10.5) {
+    {\small\bfseries\color{clPurple!85!black} 4. Salen \& Zimmerman (2004): Rules of Play}\\[1pt]
+    {\tiny\color{hkagray} Unit~2, Kap.~18: Games as Cybernetic Systems (S.~212\textendash229)}\\[4pt]
+    \textbf{Kernmethodik:} Spiele als kybernetische Regelsysteme (\emph{Sensor}, \emph{Comparator}, \emph{Activator}) im Wechselspiel aus stabilisierendem negativem und treibendem positivem Feedback.\\[3pt]
+    \textbf{Umsetzung in dieser Karte:} Folie~4 modelliert Stoa und Agoranomos als Informations- und Kontrollorgane unter Bedingungen imperfekter Information.
+  };
+
+  \node[draw=clRed, line width=1.4pt, rounded corners=9pt, fill=clRed!6,
+        text width=\cw, minimum height=\ch, align=left, inner sep=6pt, anchor=north west, font=\scriptsize]
+        at (11.75,-10.5) {
+    {\small\bfseries\color{clRed!85!black} 5. Fullerton (2014): Game Design Workshop}\\[1pt]
+    {\tiny\color{hkagray} Kap.~5 (System Dynamics, S.~127\textendash158) \& Kap.~10 (Balance, S.~310\textendash345)}\\[4pt]
+    \textbf{Kernmethodik:} Systemelemente (Objekte, Eigenschaften, Verhalten, Relationen) sowie Balance-Design zur Vermeidung von \emph{Dominant Strategies} und Dead Ends.\\[3pt]
+    \textbf{Umsetzung in dieser Karte:} Folie~4 definiert das Anti-Dominanz-Dreieck aus Lokalhandel, Fernhandel und Kredithebel über explizite Trade-offs.
+  };
+
+  \node[draw=hkared, line width=1.4pt, rounded corners=9pt, fill=hkared!6,
+        text width=\cw, minimum height=\ch, align=left, inner sep=6pt, anchor=north west, font=\scriptsize]
+        at (22.6,-10.5) {
+    {\small\bfseries\color{hkared} 6. Novak (1998) \& Sozioökonomie (\texttt{ressourcen.md})}\\[1pt]
+    {\tiny\color{hkagray} Novak Kap.~3 \& 5; Eppler/Burkhard; North, Polanyi \& Simmel}\\[4pt]
+    \textbf{Kernmethodik:} Fokusfrage, propositionale Kanten (\emph{Concept Maps}) und \emph{Cross-Links}; räumliche Zonierung; Institutionen, \emph{Double Movement} und Kredit als Vertrauen.\\[3pt]
+    \textbf{Umsetzung in dieser Karte:} Folie~1 verbindet alle vier Wissenszonen über lesbare Sätze und Querverweise rund um die räumliche Metapher der Agora.
+  };
+
+  % Abschluss-Banner unten
+  \node[draw=black!80, line width=1.1pt, rounded corners=7pt, fill=black!88, text=white,
+        text width=31.9cm, minimum height=1.1cm, align=center, font=\scriptsize]
+        at (16.9,-17.35) {
+    \textbf{Methodisches Fazit:} Durch die Kombination von \textbf{Novak} (Semantik), \textbf{Sterman/Meadows} (Kausalität \& Systemfallen),
+    \textbf{Adams/Dormans} (Ressourcenfluss) und \textbf{Salen/Zimmerman + Fullerton} (Kybernetik \& Balance) wird die Themenlandschaftskarte direkt in balancierte Spielmechanik überführbar.
+  };
+
+\end{tikzpicture}
+
+\end{document}

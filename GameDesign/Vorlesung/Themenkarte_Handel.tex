@@ -1,0 +1,376 @@
+\documentclass[11pt]{article}
+
+% =============================================================================
+% Themenlandschaftskarte "Handel" als EIN zusammenhängendes Wirkungsgefüge.
+% Grundlage: Sterman (Business Dynamics), Meadows (Thinking in Systems),
+% Adams/Dormans (Game Mechanics), Salen/Zimmerman (Rules of Play),
+% Fullerton (Game Design Workshop), Novak (Concept Maps).
+% Alle Seitenangaben wurden in den PDFs unter Ressourcen/ nachgeschlagen.
+% =============================================================================
+
+\usepackage[paperwidth=960bp, paperheight=540bp, margin=0pt]{geometry}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[autostyle=true,german=quotes]{csquotes}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{array,booktabs,tabularx,colortbl}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc, positioning, decorations.markings, shapes.misc}
+\usepackage{microtype}
+\usepackage{hyperref}
+
+% --- Farbpalette (HKA + Zonenfarben wie bisherige Karten) ---
+\definecolor{hkared}{RGB}{198, 42, 18}
+\definecolor{hkagray}{RGB}{100, 100, 100}
+\definecolor{zVertrauen}{RGB}{45, 115, 195}
+\definecolor{zMarkt}{RGB}{200, 148, 20}
+\definecolor{zWege}{RGB}{38, 148, 82}
+\definecolor{zMacht}{RGB}{125, 88, 190}
+\definecolor{zKunde}{RGB}{210, 62, 58}
+\definecolor{posgreen}{RGB}{32, 140, 62}
+\definecolor{negred}{RGB}{198, 35, 35}
+
+\hypersetup{
+  colorlinks = true, linkcolor = hkared, urlcolor = hkared,
+  pdftitle   = {Themenlandschaftskarte Handel: Wirkungsgefüge},
+  pdfauthor  = {Erlind Sejdiu},
+  pdfsubject = {Game Design, Themenlandschaftskarte}
+}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+% =============================================================================
+% TikZ-Stile
+% =============================================================================
+\tikzset{
+  % Hilfsvariable (rund) / Bestand (eckig, doppelt) / exogen (gestrichelt)
+  var/.style   = {draw=#1!80!black, line width=0.9pt, rounded corners=5pt, fill=white,
+                  text width=3.15cm, minimum height=1.05cm, align=center, inner sep=2pt,
+                  font=\scriptsize},
+  stock/.style = {draw=#1!80!black, line width=0.9pt, double=white, double distance=1.1pt,
+                  fill=#1!8, text width=3.15cm, minimum height=1.05cm, align=center,
+                  inner sep=2.5pt, font=\scriptsize},
+  exo/.style   = {draw=black!60, line width=0.9pt, dashed, rounded corners=5pt, fill=black!4,
+                  text width=3.15cm, minimum height=1.05cm, align=center, inner sep=2pt,
+                  font=\scriptsize},
+  zone/.style  = {draw=#1!45, line width=0.8pt, rounded corners=9pt, fill=#1!6},
+  ztitle/.style= {font=\scriptsize\bfseries, text=#1!80!black, anchor=north west, inner sep=3pt},
+  % Kanten
+  k/.style     = {-{Stealth[length=2.1mm, width=1.5mm]}, line width=0.75pt, draw=black!75},
+  delay/.style = {postaction={decorate}, decoration={markings, mark=at position #1 with {
+                    \draw[line width=0.9pt, black] (-1pt,-3.2pt) -- (-1pt,3.2pt)
+                                                   (1.4pt,-3.2pt) -- (1.4pt,3.2pt);}}},
+  delay/.default = 0.5,
+  pol/.style   = {circle, anchor=center, inner sep=0pt, minimum size=3.1mm, font=\tiny\bfseries,
+                  fill=white, draw=#1, text=#1, line width=0.5pt},
+  % Schleifenmarke
+  loopR/.style = {circle, draw=zKunde!85!black, fill=zKunde!12, line width=0.8pt,
+                  font=\tiny\bfseries, text=zKunde!85!black, inner sep=0.6pt, minimum size=6.2mm},
+  loopB/.style = {circle, draw=zVertrauen!85!black, fill=zVertrauen!12, line width=0.8pt,
+                  font=\tiny\bfseries, text=zVertrauen!85!black, inner sep=0.6pt, minimum size=6.2mm},
+  anker/.style = {font=\tiny, text=black!55},
+}
+
+% Polaritätsmarke an der Pfeilspitze: node[pp]{+} / node[nn]{$-$}
+\tikzset{pp/.style={pol=posgreen, pos=#1}, pp/.default=0.78,
+         nn/.style={pol=negred, pos=#1},   nn/.default=0.78}
+
+% Knotentext: Titel + Realitätsanker
+\newcommand{\kn}[2]{\lefthyphenmin=64\textbf{#1}\\[-0.5pt]{\tiny\color{black!60}#2}}
+
+% Schleifenmarke mit Drehpfeil
+\newcommand{\schleife}[5][right]{% [#1 Lage des Namens] #2 Stil, #3 Position, #4 Kürzel, #5 Name
+  \node[#2] (#4) at (#3) {#4};
+  \draw[-{Stealth[length=1.3mm]}, line width=0.6pt, draw=black!55]
+    ($(#4)+(0.42,0.12)$) arc[start angle=15, end angle=300, radius=0.44];
+  \node[font=\tiny\itshape, text=black!70, #1=1.2mm of #4, align=center, inner sep=0pt] {#5};
+}
+
+% --- Folienkopf im HKA-Stil (wie Themenkarte_Agora_Systemdynamik) ---
+\newcounter{folie}
+\newcommand{\kopf}[2]{%
+  \stepcounter{folie}%
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[hkared] ([xshift=38bp, yshift=-16bp]current page.north west) rectangle ++(9bp, -62bp);
+    \node[anchor=west, font=\fontsize{22}{26}\selectfont\bfseries, text=hkared]
+      at ([xshift=58bp, yshift=-38bp]current page.north west) {#1};
+    \node[anchor=west, font=\small, text=hkagray]
+      at ([xshift=58bp, yshift=-65bp]current page.north west) {#2};
+    \shade[top color=black!12, bottom color=white]
+      ([yshift=-92bp]current page.north west) rectangle ([yshift=-99bp]current page.north east);
+    \node[anchor=north east, inner sep=0pt]
+      at ([xshift=-22bp, yshift=-8bp]current page.north east)
+      {\includegraphics[height=76bp, trim=520 140 580 140, clip]{HKA.jpg}};
+    \node[anchor=south west, font=\scriptsize, text=hkagray]
+      at ([xshift=14bp, yshift=9bp]current page.south west) {\thefolie};
+  \end{tikzpicture}%
+}
+
+\begin{document}
+
+% =============================================================================
+% FOLIE 1: Die Karte (kreuzungsfreies Wirkungsgefüge)
+%   Spalten  A 2.65 | B 6.85 | C 11.6 | D 17.0 | E 22.1 | F 26.9 | G 31.0
+%   Zeilen   1 -5.2 | 2 -9.3 | 3 -13.4 | 4 -17.0
+% =============================================================================
+\kopf{Themenlandschaftskarte: Handel}
+     {Leitfrage: Wer gewinnt im Handel, und welche Rückkopplungen entscheiden darüber?}
+\begin{tikzpicture}[remember picture, overlay, shift={(current page.north west)}]
+
+  % ---------------- Zonen ----------------
+  \draw[zone=zVertrauen] (0.45,-3.75) rectangle (9.1,-11.3);
+  \node[ztitle=zVertrauen] at (0.45,-3.75) {Vertrauen \& Regeln};
+  \draw[zone=zKunde] (0.45,-11.5) rectangle (9.1,-18.45);
+  \node[ztitle=zKunde] at (0.45,-11.5) {Kundschaft \& Öffentlichkeit};
+  \draw[zone=zMacht] (9.3,-3.75) rectangle (19.35,-7.2);
+  \node[ztitle=zMacht] at (9.3,-3.75) {Plattform \& Daten};
+  \draw[zone=zMarkt] (9.3,-7.4) rectangle (19.35,-15.1);
+  \node[ztitle=zMarkt] at (9.3,-7.4) {Marktplatz};
+  \draw[zone=zWege] (19.55,-7.2) rectangle (33.4,-11.3);
+  \node[ztitle=zWege] at (19.55,-7.2) {Wege \& Lieferkette};
+  \draw[zone=zMarkt] (19.55,-11.5) rectangle (33.4,-15.1);
+  \node[ztitle=zMarkt] at (19.55,-11.5) {Händler \& Konkurrenz};
+  \draw[zone=zMacht] (9.3,-15.3) rectangle (25.0,-18.45);
+  \node[ztitle=zMacht] at (9.3,-15.3) {Kapital \& Marktmacht};
+
+  % ---------------- Knoten ----------------
+  % Vertrauen & Regeln
+  \node[var=zVertrauen]   (BT) at (2.65,-5.2) {\kn{Betrug \&\\Opportunismus}{Fake-Shops, gekaufte Bewertungen}};
+  \node[stock=zVertrauen] (V)  at (6.85,-5.2) {\kn{Vertrauen}{Ruf \& Bewertungen; \emph{credere} = glauben}};
+  \node[stock=zVertrauen] (RG) at (2.65,-9.3) {\kn{Regulierung \& Aufsicht}{LkSG 2021, CSDDD 2024}};
+  \node[var=zVertrauen]   (TK) at (6.85,-9.3) {\kn{Transaktionskosten}{prüfen, absichern, durchsetzen}};
+  % Kundschaft & Öffentlichkeit
+  \node[stock=zKunde] (BU) at (6.85,-13.4) {\kn{Budget der Kundschaft}{verfügbares Geld; Ratenkauf verschiebt die Rechnung}};
+  \node[var=zKunde]   (OD) at (6.85,-17.0) {\kn{Öffentlicher Druck}{Medien, Verbraucherverbände (BEUC 2024)}};
+  % Plattform & Daten
+  \node[var=zMacht]   (AN) at (11.6,-5.2)  {\kn{Gezielte Kaufanreize}{Countdown, Glücksrad, Drops, Preis pro Person}};
+  \node[var=zMacht]   (D)  at (17.0,-5.2)  {\kn{Daten über Kundschaft}{jeder Kauf mit Karte/App = Datenspur (2025: 55\,\% unbar)}};
+  % Marktplatz
+  \node[var=zMarkt]   (K)  at (11.6,-9.3)  {\kn{Kaufrate}{DE 2024: ca.\ 400.000 Temu-/Shein-Pakete pro Tag}};
+  \node[stock=zMarkt] (L)  at (17.0,-9.3)  {\kn{Angebot am Markt}{Ware im Lager \& im Regal}};
+  \node[var=zMarkt]   (SP) at (11.6,-13.4) {\kn{Spekulative Nachfrage}{kaufen, um teurer weiterzuverkaufen (Sneaker, StockX)}};
+  \node[var=zMarkt]   (P)  at (17.0,-13.4) {\kn{Preis}{entsteht aus Angebot \& Nachfrage}};
+  % Wege & Lieferkette
+  \node[stock=zWege] (W)  at (22.1,-9.3)  {\kn{Ware unterwegs}{bestellt, aber noch nicht angekommen}};
+  \node[var=zWege]   (LZ) at (26.9,-9.3)  {\kn{Lieferzeit}{Shanghai--Rotterdam um das Kap: +10--14 Tage}};
+  \node[exo]         (ST) at (31.0,-9.3)  {\kn{Störung der Seewege}{Rotes Meer seit Ende 2023; Fracht zeitweise $\times$3--4}};
+  % Händler & Konkurrenz
+  \node[var=zMarkt]  (M)  at (22.1,-13.4) {\kn{Händlermarge}{billig einkaufen, teuer verkaufen}};
+  \node[var=zMarkt]  (NA) at (28.0,-13.4) {\kn{Konkurrenz}{neue Anbieter, Nachahmer}};
+  % Kapital & Marktmacht
+  \node[var=zMacht]   (MM)  at (17.0,-17.0) {\kn{Marktmacht}{Marktanteil, Kontrolle über die Plattform}};
+  \node[stock=zMacht] (KAP) at (22.1,-17.0) {\kn{Händlerkapital}{einbehaltene Gewinne, Rücklagen}};
+
+  % ---------------- Kanten ----------------
+  % B1 Preisausgleich
+  \draw[k] (K) -- node[nn]{$-$} (L);
+  \draw[k] (L) -- node[nn]{$-$} (P);
+  \draw[k] (P) -- node[nn=0.82]{$-$} (K);
+  % R1 Spekulation
+  \draw[k] (P) -- node[pp]{+} (SP);
+  \draw[k] (SP) -- node[pp]{+} (K);
+  % B2 Nachschub mit Verzögerung
+  \draw[k] (P) -- node[pp]{+} (M);
+  \draw[k] (M) -- node[pp]{+} (W);
+  \draw[k, delay=0.5] (W) -- node[pp]{+} (L);
+  \draw[k] (LZ) -- node[pp]{+} (W);
+  \draw[k] (ST) -- node[pp]{+} (LZ);
+  % B5 Konkurrenz
+  \draw[k, delay=0.45] ([yshift=2.2mm]M.east) -- node[pp]{+} ([yshift=2.2mm]NA.west);
+  \draw[k] ([yshift=-2.2mm]NA.west) -- node[nn]{$-$} ([yshift=-2.2mm]M.east);
+  % R4 Erfolg dem Erfolgreichen
+  \draw[k] (M) -- node[pp]{+} (KAP);
+  \draw[k] (KAP) -- node[pp]{+} (MM);
+  \draw[k] (MM) -- node[pp=0.84]{+} (M);
+  % R3 Vertrauen
+  \draw[k] (V) -- node[nn]{$-$} (TK);
+  \draw[k] (TK) -- node[nn]{$-$} (K);
+  \draw[k] (K) -- node[pp=0.84]{+} (V);
+  % B4 Opportunismus
+  \draw[k] ([yshift=2.2mm]V.west) -- node[pp]{+} ([yshift=2.2mm]BT.east);
+  \draw[k] ([yshift=-2.2mm]BT.east) -- node[nn]{$-$} ([yshift=-2.2mm]V.west);
+  \draw[k] (RG) -- node[nn]{$-$} (BT);
+  \draw[k] (RG) -- node[pp]{+} (TK);
+  % B3 Budgetgrenze
+  \draw[k, delay=0.45] (K.south west) to[bend left=10] node[nn]{$-$} (BU.north east);
+  \draw[k] (BU.east) to[bend right=14] node[pp]{+} (K.south);
+  % R2 Daten
+  \draw[k] (K) -- node[pp]{+} (D);
+  \draw[k] (D) -- node[pp]{+} (AN);
+  \draw[k] (AN) -- node[pp]{+} (K);
+  % B6 Gegenbewegung
+  \draw[k] (MM) -- node[pp]{+} (OD);
+  \draw[k, delay=0.12] (OD.west) -| node[pp=0.93]{+} (RG.south);
+  \draw[k] (RG.west) -- (0.75,-9.3) -- (0.75,-18.1) -- (17.0,-18.1) -- node[nn=0.6]{$-$} (MM.south);
+
+  % ---------------- Schleifenmarken ----------------
+  \schleife{loopB}{14.6,-10.55}{B1}{Preis-\\ausgleich}
+  \schleife{loopR}{13.0,-12.0}{R1}{Spekulation}
+  \schleife[below]{loopB}{19.55,-10.95}{B2}{Nachschub}
+  \schleife{loopB}{24.45,-14.55}{B5}{Konkurrenz}
+  \schleife{loopR}{20.3,-15.7}{R4}{Erfolg dem\\Erfolgreichen}
+  \schleife[below]{loopR}{7.75,-7.15}{R3}{Vertrauen}
+  \schleife{loopB}{4.15,-6.65}{B4}{Opportunismus}
+  \schleife[left]{loopB}{7.75,-11.95}{B3}{Budget}
+  \schleife{loopR}{13.35,-6.6}{R2}{Daten}
+  \schleife{loopB}{11.9,-17.55}{B6}{Gegenbewegung (Jahre)}
+
+  % ---------------- Legende ----------------
+  \node[anchor=north west, inner sep=2pt, font=\tiny, align=left, text width=13.6cm] at (19.75,-3.85) {%
+    {\scriptsize\bfseries Lesart}\enskip{\color{black!60}(Notation nach Sterman Kap.~5, Lesart als Aussage nach Novak)}\\[3pt]
+    \begin{tabular}{@{}l@{\;}l@{\qquad}l@{\;}l@{}}
+    \tikz[baseline=-0.6ex]{\draw[k](0,0)-- node[pp=0.55]{+} (0.8,0);} &
+      mehr Ursache $\Rightarrow$ mehr Wirkung &
+    \tikz[baseline=-0.6ex]{\draw[black!70, line width=0.5pt] (0,-0.15) rectangle (0.7,0.15) (0.05,-0.1) rectangle (0.65,0.1);} &
+      Bestand: sammelt sich an, ändert sich nur langsam \\[2pt]
+    \tikz[baseline=-0.6ex]{\draw[k](0,0)-- node[nn=0.55]{$-$} (0.8,0);} &
+      mehr Ursache $\Rightarrow$ weniger Wirkung &
+    \tikz[baseline=-0.6ex]{\draw[black!60, dashed, rounded corners=2pt, line width=0.5pt] (0,-0.15) rectangle (0.7,0.15);} &
+      Einfluss von außen (nicht vom Modell erklärt) \\[2pt]
+    \tikz[baseline=-0.6ex]{\draw[k, delay=0.45](0,0)--(0.8,0);} &
+      wirkt verzögert (Wochen bis Jahre) &
+    {\color{zKunde!85!black}\bfseries R}\,/\,{\color{zVertrauen!85!black}\bfseries B} &
+      verstärkend (gerade Anzahl $-$) / ausgleichend (ungerade)
+    \end{tabular}};
+
+  % ---------------- Lesebeispiel ----------------
+  \node[anchor=north west, draw=black!20, rounded corners=6pt, fill=white, inner sep=5pt,
+        font=\tiny, align=left, text width=7.7cm] at (25.25,-15.3) {%
+    {\scriptsize\bfseries Lesebeispiel}\\[2pt]
+    \enquote{Mehr Marktmacht erhöht die Marge, mehr Marge vergrößert das Kapital, mehr Kapital
+    erhöht die Marktmacht} (R4). Dieselbe Marge lockt aber Konkurrenz an, die sie wieder drückt (B5).
+    Welche Schleife gewinnt, ist eine Frage der Stärke, nicht der Existenz.};
+
+\end{tikzpicture}
+\newpage
+
+% =============================================================================
+% FOLIE 2: Schleifenregister
+% =============================================================================
+\kopf{Die zehn Rückkopplungen der Karte}
+     {Pfad, Vorzeichenprüfung, beobachtbares Verhalten und geprüfte Fundstelle}
+\begin{tikzpicture}[remember picture, overlay, shift={(current page.north west)}]
+\node[anchor=north west, inner sep=0pt] at (0.9,-3.85) {%
+\fontsize{8.6}{10.4}\selectfont
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{32.0cm}{@{}p{2.9cm} p{9.9cm} p{0.6cm} X p{5.6cm}@{}}
+\toprule
+\textbf{Schleife} & \textbf{Kausalpfad} {\color{black!55}(Anzahl $-$)} & \textbf{Typ} & \textbf{Was man in der Realität beobachtet} & \textbf{Fundstelle} \\
+\midrule
+\textbf{B1} Preisausgleich &
+  Angebot $\xrightarrow{-}$ Preis $\xrightarrow{-}$ Kaufrate $\xrightarrow{-}$ Angebot \hfill (3) & B &
+  Wird Ware knapp, steigt der Preis, es wird weniger gekauft, das Angebot erholt sich. &
+  Sterman Kap.~5.5, S.~169 \\
+\textbf{B2} Nachschub &
+  Preis $\xrightarrow{+}$ Marge $\xrightarrow{+}$ Ware unterwegs $\xrightarrow{+\,\|}$ Angebot $\xrightarrow{-}$ Preis \hfill (1) & B &
+  Nachschub braucht Zeit, also wird zu lange zu viel bestellt. Preise schwingen über das Gleichgewicht hinaus und zurück. &
+  Sterman Kap.~17, S.~663; Kap.~20, S.~791; Meadows S.~51--58 \\
+\textbf{R1} Spekulation &
+  Preis $\xrightarrow{+}$ spekul.\ Nachfrage $\xrightarrow{+}$ Kaufrate $\xrightarrow{-}$ Angebot $\xrightarrow{-}$ Preis \hfill (2) & R &
+  Steigende Preise locken Käufer an, die auf weitere Steigerung setzen. Die Blase wächst, bis B1 sie bremst. &
+  Sterman Kap.~5.5, S.~173 \\
+\textbf{R3} Vertrauen &
+  Vertrauen $\xrightarrow{-}$ Transaktionskosten $\xrightarrow{-}$ Kaufrate $\xrightarrow{+}$ Vertrauen \hfill (2) & R &
+  Wer verlässlich liefert, wird ohne Prüfung gekauft. Jedes gute Geschäft stärkt den Ruf; ein Skandal dreht die Schleife um. &
+  Sterman Kap.~18.2.1, S.~735; Salen/Zimmerman Kap.~19, S.~230 \\
+\textbf{B4} Opportunismus &
+  Vertrauen $\xrightarrow{+}$ Betrug $\xrightarrow{-}$ Vertrauen \hfill (1) & B &
+  Wo viel vertraut wird, lohnt sich Betrug (Fake-Shops). Aufgeflogene Fälle senken das Vertrauen. Aufsicht dämpft den Betrug. &
+  Salen/Zimmerman Kap.~21, S.~266 \\
+\textbf{B3} Budget &
+  Kaufrate $\xrightarrow{-\,\|}$ Budget $\xrightarrow{+}$ Kaufrate \hfill (1) & B &
+  Kaufen leert das Konto. Ratenkauf verzögert diese Bremse, deshalb wird die Grenze oft erst spät bemerkt. &
+  Sterman Kap.~11, S.~409; Adams/Dormans Kap.~4, S.~59 \\
+\textbf{R2} Daten &
+  Kaufrate $\xrightarrow{+}$ Daten $\xrightarrow{+}$ gezielte Kaufanreize $\xrightarrow{+}$ Kaufrate \hfill (0) & R &
+  Mehr Käufe liefern mehr Daten. Damit werden Angebote, Preise und Countdowns passgenauer. &
+  Sterman Kap.~10.4, S.~364--370; Salen/Zimmerman Kap.~17, S.~202 \\
+\textbf{R4} Erfolg dem\newline Erfolgreichen &
+  Marktmacht $\xrightarrow{+}$ Marge $\xrightarrow{+}$ Kapital $\xrightarrow{+}$ Marktmacht \hfill (0) & R &
+  Wer groß ist, diktiert Einkaufskonditionen und Gebühren und wird dadurch noch größer. &
+  Meadows S.~126--130; Sterman Kap.~10.4.7, S.~374 \\
+\textbf{B5} Konkurrenz &
+  Marge $\xrightarrow{+\,\|}$ Konkurrenz $\xrightarrow{-}$ Marge \hfill (1) & B &
+  Hohe Margen locken Nachahmer an, die Preise und Margen drücken. Wirkt verzögert und oft schwächer als R4. &
+  Adams/Dormans Anh.~B, S.~316 (Dynamic Friction) \\
+\textbf{B6} Gegenbewegung &
+  Marktmacht $\xrightarrow{+}$ öffentl.\ Druck $\xrightarrow{+\,\|}$ Regulierung $\xrightarrow{-}$ Marktmacht \hfill (1) & B &
+  Missbrauch wird sichtbar, Gesetze folgen mit Jahren Verzug (LkSG 2021, CSDDD 2024). Betroffene suchen Umgehungen. &
+  Meadows S.~112 (Policy Resistance), S.~136 (Rule Beating); Salen/Zimmerman Kap.~18, S.~212 \\
+\bottomrule
+\end{tabularx}};
+
+\node[anchor=north west, text width=31.8cm, font=\footnotesize, align=left] at (0.9,-16.3) {%
+  \textbf{Prüfregel (Sterman Kap.~5.2.3, S.~143):} Eine Schleife ist verstärkend (R), wenn die Zahl ihrer negativen Kanten gerade ist, sonst ausgleichend (B).\\[3pt]
+  \textbf{Warum eine Karte statt zehn Einzelbilder?} Die Schleifen teilen sich Größen. Ob ein Preisanstieg durch B1 gebremst oder durch R1 verstärkt wird,
+  entscheidet die \emph{Stärke} der Schleifen. Das sieht man nur, wenn sie in einem Bild verbunden sind (Meadows S.~126). Sterman warnt zugleich vor zu großen
+  Diagrammen (Kap.~5.2.9, S.~154), daher die Beschränkung auf zehn Schleifen.};
+\end{tikzpicture}
+\newpage
+
+% =============================================================================
+% FOLIE 3: Modellgrenze & Quellen
+% =============================================================================
+\kopf{Modellgrenze \& Quellen}
+     {Was die Karte erklärt, was sie von außen annimmt und was bewusst fehlt (Sterman Kap.~3.5.2, S.~94)}
+\begin{tikzpicture}[remember picture, overlay, shift={(current page.north west)}]
+
+  \tikzset{gbox/.style={anchor=north west, draw=#1!60, fill=#1!6, rounded corners=8pt,
+                        text width=9.6cm, inner sep=7pt, font=\footnotesize, align=left,
+                        minimum height=5.6cm}}
+  \node[gbox=zWege] at (0.9,-3.9) {%
+    {\small\bfseries\color{zWege!80!black} Endogen: in der Karte erklärt}\\[4pt]
+    Preis, Angebot, Kaufrate, spekulative Nachfrage\\
+    Händlermarge, Ware unterwegs, Lieferzeit\\
+    Vertrauen, Transaktionskosten, Betrug\\
+    Budget, gezielte Kaufanreize, Daten\\
+    Marktmacht, Händlerkapital, Konkurrenz\\
+    Öffentlicher Druck, Regulierung\\[6pt]
+    {\color{black!60}Bestände (doppelt umrandet) ändern sich nur über Zu- und Abflüsse
+    und machen das System träge (Sterman Kap.~6, S.~191).}\vfill};
+
+  \node[gbox=zMarkt] at (11.6,-3.9) {%
+    {\small\bfseries\color{zMarkt!80!black} Exogen: von außen gesetzt}\\[4pt]
+    Störung der Seewege (Rotes Meer, Meerengen)\\
+    Inflation und Einkommen der Haushalte\\
+    Zahlungstechnik (2025: 55\,\% der Käufe unbar)\\
+    Technischer Fortschritt der Plattformen\\
+    Politische Großereignisse, Sanktionen\\[6pt]
+    {\color{black!60}Im Spiel sind das Ereignisse oder Szenario-Parameter, die der
+    Spieler nicht steuert.}};
+
+  \node[gbox=zKunde] at (22.3,-3.9) {%
+    {\small\bfseries\color{zKunde!80!black} Ausgeschlossen: bewusst weggelassen}\\[4pt]
+    Wechselkurse und Zölle im Detail\\
+    Produktion und Arbeitsbedingungen beim Hersteller\\
+    Umweltkosten des Transports\\
+    Einzelne Produktkategorien\\[6pt]
+    {\color{black!60}Die Leitfrage zielt auf Gewinner und Verlierer im Handel. Jede
+    weitere Größe würde die Karte über das hinaus treiben, was ein
+    Kausaldiagramm lesbar zeigen kann (Sterman Kap.~5.4.5, S.~166).}};
+
+  \node[anchor=north west, text width=31.8cm, font=\fontsize{8.2}{10.2}\selectfont, align=left] at (0.9,-10.3) {%
+    {\small\bfseries Quellen}\enskip{\color{black!55}\footnotesize(alle Seitenzahlen in den PDFs unter \texttt{Ressourcen/} nachgeschlagen)}\\[4pt]
+    Sterman, J.\,D. (2000). \emph{Business Dynamics: Systems Thinking and Modeling for a Complex World}. Boston: Irwin/McGraw-Hill.\\
+      \hspace*{1em}{\color{black!70}Kap.~3.5.2 S.~94; Kap.~5.1--5.2 S.~137--156; Kap.~5.4.5 S.~166; Kap.~5.5 S.~169--176; Kap.~6 S.~191; Kap.~10.4 S.~364--382; Kap.~11 S.~409; Kap.~17 S.~663; Kap.~18.2.1 S.~735; Kap.~20 S.~791.}\\[2pt]
+    Meadows, D.\,H. (2008). \emph{Thinking in Systems: A Primer}. London: Earthscan.\\
+      \hspace*{1em}{\color{black!70}Lager mit Verzögerung S.~51--58; Policy Resistance S.~112; Success to the Successful S.~126--130; Rule Beating S.~136.}\\[2pt]
+    Adams, E.; Dormans, J. (2012). \emph{Game Mechanics: Advanced Game Design}. Berkeley: New Riders.\\
+      \hspace*{1em}{\color{black!70}Kap.~4 Internal Economy S.~59; Kap.~5 Traders S.~97; Kap.~6 Feedback Structures S.~113; Anh.~B Dynamic Friction S.~316, Trade S.~336.}\\[2pt]
+    Salen, K.; Zimmerman, E. (2004). \emph{Rules of Play: Game Design Fundamentals}. Cambridge, MA: MIT Press.\\
+      \hspace*{1em}{\color{black!70}Kap.~17 Systems of Information S.~202; Kap.~18 Cybernetic Systems S.~212--229; Kap.~19 Game Theory S.~230; Kap.~21 Breaking the Rules S.~266.}\\[2pt]
+    Fullerton, T. (2014). \emph{Game Design Workshop}. 3.~Aufl. Boca Raton: CRC Press.
+      {\color{black!70}Kap.~5 Working with System Dynamics, S.~127--156.}\\[2pt]
+    Novak, J.\,D. (1998). \emph{Learning, Creating, and Using Knowledge}. Mahwah, NJ: Lawrence Erlbaum.
+      {\color{black!70}Anh.~I \enquote{How to Build a Concept Map}, S.~227--228 (Leitfrage, 10--20 Begriffe, Querverbindungen).}\\[4pt]
+    {\color{black!55}Zahlen in den Knoten: Zeitgeist-Dokument (Bundesbank 2026, HDE 2024, UNCTAD 2024, Drewry, LkSG, CSDDD, BEUC 2024).}};
+
+\end{tikzpicture}
+
+\end{document}

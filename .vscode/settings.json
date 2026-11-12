@@ -1,3 +1,23 @@
 {
-    "cmake.sourceDirectory": "${workspaceFolder}/KonzepteVonProgrammiersprachen/Versuch1"
+    "cmake.sourceDirectory": "${workspaceFolder}/KonzepteVonProgrammiersprachen/Versuch1",
+    "files.exclude": {
+        "**/*.aux": true,
+        "**/*.bbl": true,
+        "**/*.bcf": true,
+        "**/*.blg": true,
+        "**/*.fdb_latexmk": true,
+        "**/*.fls": true,
+        "**/*.lof": true,
+        "**/*.lot": true,
+        "**/*.log": true,
+        "**/*.nav": true,
+        "**/*.out": true,
+        "**/*.run.xml": true,
+        "**/*.snm": true,
+        "**/*.synctex.gz": true,
+        "**/*.synctex(busy)": true,
+        "**/*.toc": true,
+        "**/*.vrb": true,
+        "**/*.xdv": true
+    }
 }

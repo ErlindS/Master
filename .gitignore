@@ -27,3 +27,24 @@ KünstlicheIntelligenz/Labor/assignment6/data/
 KünstlicheIntelligenz/Labor/assignment7/data/
 # Große Downloads (z. B. DPC++-Release für DACHS)
 sycl_linux.tar.gz
+# LaTeX-Hilfsdateien
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.lot
+*.nav
+*.out
+*.run.xml
+*.snm
+*.synctex.gz
+*.synctex(busy)
+*.toc
+*.vrb
+*.xdv
+
+
+GameDesign/Vorlesung/Ressourcen
