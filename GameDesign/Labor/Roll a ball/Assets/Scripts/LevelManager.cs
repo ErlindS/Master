@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering;
 
 // Stufen-System: Es liegt immer nur EIN Pickup auf dem Spielfeld.
 // Sobald er eingesammelt ist, wird die nächste Stufe aufgebaut – das Spielfeld
@@ -16,6 +17,7 @@ using UnityEngine.AI;
 // Legende der Karten (20 x 20 Zeichen, 1 Zeichen = 1 Unity-Einheit).
 // Jede Karte enthält nur das, was in DIESER Stufe NEU dazukommt:
 //   #  neue Mauer
+//   ~  durchlässige Mauer: der Ball rollt hindurch, Gegner kommen NICHT durch
 //   .  frei
 //   o  der Pickup dieser Stufe (genau einer)
 //   S  Startposition des Balls (nur in der ersten Stufe)
@@ -91,12 +93,12 @@ public class LevelManager : MonoBehaviour
         {
             name = "Stufe 3: Mehr Wände",
             map =
-                "....................\n" +
-                "....................\n" +
-                "...............#.o..\n" +
+                "...............~....\n" +
+                "...............~....\n" +
+                "...............~.o..\n" +
                 "...............#....\n" +
                 "...............#....\n" +
-                "...............#....\n" +
+                "...............#~~##\n" +
                 "...............#....\n" +
                 "...............#....\n" +
                 "...............#....\n" +
@@ -203,8 +205,8 @@ public class LevelManager : MonoBehaviour
                 "....................\n" +
                 "....................\n" +
                 "....................\n" +
-                "....................\n" +
-                ".................o..\n" +
+                "..........~...o..~..\n" +
+                "..........~......~..\n" +
                 "....................\n" +
                 "....................\n" +
                 "....................\n" +
@@ -246,7 +248,7 @@ public class LevelManager : MonoBehaviour
             enemySpeedFactor = 0.85f,
             map =
                 "....................\n" +
-                "...........o........\n" +
+                "..................o.\n" +
                 "....###.............\n" +
                 "....................\n" +
                 "....................\n" +
@@ -378,6 +380,12 @@ public class LevelManager : MonoBehaviour
     [Tooltip("Dauer der Animation, mit der neue Mauern aus dem Boden wachsen")]
     public float wallRiseDuration = 0.5f;
 
+    [Header("Durchlässige Mauer ('~')")]
+    [Tooltip("Farbe der Mauer, durch die nur der Ball rollen kann")]
+    public Color passableWallColor = new Color(0.2f, 0.9f, 1f, 0.4f);
+    [Tooltip("Wie schnell die durchlässige Mauer pulsiert")]
+    public float passableWallPulseSpeed = 3f;
+
     [Header("Bezugspunkt (fester Tisch unter dem Spielfeld)")]
     [Tooltip("Erzeugt beim Start einen festen, karierten Tisch unter dem Brett, damit man sieht, dass sich das Spielfeld bewegt")]
     public bool createReferenceTable = true;
@@ -416,6 +424,12 @@ public class LevelManager : MonoBehaviour
     private readonly List<GameObject> spawnedWalls = new List<GameObject>();
     private readonly List<EnemyMovement> spawnedEnemies = new List<EnemyMovement>();
     private readonly bool[,] wallGrid = new bool[GridSize, GridSize];
+    // Durchlässige Mauern: blockieren nur die Gegner (über das NavMesh), nicht den Ball
+    private readonly bool[,] passableGrid = new bool[GridSize, GridSize];
+    // Freie Felder, die Gegner nicht erreichen können (z. B. hinter einer durchlässigen Mauer)
+    private readonly bool[,] enclosedGrid = new bool[GridSize, GridSize];
+    private Material passableWallMaterial;
+    private Collider ballCollider;
     private GameObject currentPickUp;
 
     // Aktueller (noch nicht eingesammelter) Pickup – z. B. für die Kamera
@@ -429,6 +443,13 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         playground = GetComponent<PlaygroundMovement>();
+        // Ohne PlaygroundMovement bewegt sich das Brett nicht – versehentliches
+        // Abschalten im Inspector hier abfangen.
+        if (!playground.enabled)
+        {
+            Debug.LogWarning("LevelManager: PlaygroundMovement war deaktiviert und wurde wieder eingeschaltet.", this);
+            playground.enabled = true;
+        }
         FindReferences();
 
         // Alte, von Hand platzierte Hindernisse und Pickups ausblenden
@@ -453,6 +474,7 @@ public class LevelManager : MonoBehaviour
 
         if (ball != null)
         {
+            ballCollider = ball.GetComponent<Collider>();
             ball.SetPickUpsToWin(stages.Count);
             ball.Hit += PushEnemiesAway;
         }
@@ -631,6 +653,13 @@ public class LevelManager : MonoBehaviour
 
     void Update()
     {
+        // Durchlässige Mauern pulsieren leicht, damit man sie als "anders" erkennt
+        if (passableWallMaterial != null && passableWallMaterial.HasProperty("_EmissionColor"))
+        {
+            float pulse = 0.35f + 0.25f * Mathf.Sin(Time.time * passableWallPulseSpeed);
+            passableWallMaterial.SetColor("_EmissionColor", passableWallColor * pulse);
+        }
+
         if (switching || ball == null || currentPickUp == null) return;
         if (currentPickUp.activeSelf) return; // noch nicht eingesammelt
 
@@ -675,26 +704,31 @@ public class LevelManager : MonoBehaviour
             int c = 0;
             while (c < row.Length && c < GridSize)
             {
-                if (row[c] == '#')
+                if (row[c] == '#' || row[c] == '~')
                 {
                     // Nebeneinanderliegende Mauerstücke zu einem Block zusammenfassen.
-                    // Zellen, in denen gerade der Ball steht, werden ausgelassen.
+                    // Zellen, in denen gerade der Ball steht, werden bei festen Mauern
+                    // ausgelassen. Durchlässige Mauern ('~') dürfen auch über dem Ball
+                    // entstehen – er steckt ja nicht fest.
+                    char kind = row[c];
+                    bool passable = kind == '~';
                     int start = -1;
-                    while (c < row.Length && c < GridSize && row[c] == '#')
+                    while (c < row.Length && c < GridSize && row[c] == kind)
                     {
-                        if (!BallOverlapsCell(r, c))
+                        if (passable || !BallOverlapsCell(r, c))
                         {
                             if (start < 0) start = c;
-                            wallGrid[r, c] = true;
+                            if (passable) passableGrid[r, c] = true;
+                            else wallGrid[r, c] = true;
                         }
                         else if (start >= 0)
                         {
-                            newWalls.Add(SpawnWall(r, start, c - start));
+                            newWalls.Add(SpawnWall(r, start, c - start, passable));
                             start = -1;
                         }
                         c++;
                     }
-                    if (start >= 0) newWalls.Add(SpawnWall(r, start, c - start));
+                    if (start >= 0) newWalls.Add(SpawnWall(r, start, c - start, passable));
                     continue;
                 }
                 if (row[c] == 'o') pickUpCell = new Vector2(r, c);
@@ -704,6 +738,9 @@ public class LevelManager : MonoBehaviour
                 c++;
             }
         }
+
+        // Welche Felder können Gegner überhaupt erreichen?
+        UpdateEnclosedCells();
 
         // NavMesh neu backen, damit die Gegner die neuen Mauern kennen
         // (vor der Wachs-Animation, solange die Mauern volle Höhe haben)
@@ -780,7 +817,7 @@ public class LevelManager : MonoBehaviour
         {
             int r = Random.Range(1, GridSize - 1);
             int c = Random.Range(1, GridSize - 1);
-            if (wallGrid[r, c] || wallGrid[r - 1, c] || wallGrid[r + 1, c] || wallGrid[r, c - 1] || wallGrid[r, c + 1])
+            if (!IsEnemyCell(r, c) || IsAnyWall(r - 1, c) || IsAnyWall(r + 1, c) || IsAnyWall(r, c - 1) || IsAnyWall(r, c + 1))
                 continue;
             Vector3 p = CellToBoardLocal(r, c, 0f);
             if (Vector2.Distance(new Vector2(p.x, p.z), new Vector2(boardLocal.x, boardLocal.z)) >= minDistance)
@@ -798,6 +835,66 @@ public class LevelManager : MonoBehaviour
         return Mathf.Abs(ballLocal.x - cell.x) < reach && Mathf.Abs(ballLocal.z - cell.z) < reach;
     }
 
+    bool IsAnyWall(int row, int col) => wallGrid[row, col] || passableGrid[row, col];
+
+    // Darf hier ein Gegner stehen? (keine Mauer und nicht hinter einer durchlässigen Mauer)
+    bool IsEnemyCell(int row, int col) => !IsAnyWall(row, col) && !enclosedGrid[row, col];
+
+    bool IsEnemyCell(Vector3 boardLocal)
+    {
+        float half = GridSize * CellSize / 2f;
+        int col = Mathf.FloorToInt((boardLocal.x + half) / CellSize);
+        int row = Mathf.FloorToInt((half - boardLocal.z) / CellSize);
+        if (row < 0 || row >= GridSize || col < 0 || col >= GridSize) return false;
+        return IsEnemyCell(row, col);
+    }
+
+    // Sucht alle zusammenhängenden freien Bereiche (beide Mauerarten blockieren).
+    // Der größte Bereich gehört den Gegnern, alle anderen gelten als "umschlossen":
+    // Dort spawnt kein Gegner, und wer drin steckt, wird hinausgesetzt.
+    void UpdateEnclosedCells()
+    {
+        int[,] region = new int[GridSize, GridSize];
+        List<int> sizes = new List<int> { 0 }; // Index 0 = Mauer / unbesucht
+        Stack<Vector2Int> stack = new Stack<Vector2Int>();
+
+        for (int r = 0; r < GridSize; r++)
+        {
+            for (int c = 0; c < GridSize; c++)
+            {
+                if (region[r, c] != 0 || IsAnyWall(r, c)) continue;
+                int id = sizes.Count;
+                int size = 0;
+                region[r, c] = id;
+                stack.Push(new Vector2Int(r, c));
+                while (stack.Count > 0)
+                {
+                    Vector2Int p = stack.Pop();
+                    size++;
+                    TryVisit(p.x + 1, p.y); TryVisit(p.x - 1, p.y);
+                    TryVisit(p.x, p.y + 1); TryVisit(p.x, p.y - 1);
+                }
+                sizes.Add(size);
+
+                void TryVisit(int rr, int cc)
+                {
+                    if (rr < 0 || rr >= GridSize || cc < 0 || cc >= GridSize) return;
+                    if (region[rr, cc] != 0 || IsAnyWall(rr, cc)) return;
+                    region[rr, cc] = id;
+                    stack.Push(new Vector2Int(rr, cc));
+                }
+            }
+        }
+
+        int largest = 1;
+        for (int i = 2; i < sizes.Count; i++)
+            if (sizes[i] > sizes[largest]) largest = i;
+
+        for (int r = 0; r < GridSize; r++)
+            for (int c = 0; c < GridSize; c++)
+                enclosedGrid[r, c] = region[r, c] != 0 && region[r, c] != largest;
+    }
+
     void RebuildNavMesh()
     {
         if (navMeshSurface == null) return;
@@ -812,11 +909,17 @@ public class LevelManager : MonoBehaviour
                 navMeshSurface.transform.position, navMeshSurface.transform.rotation);
         });
 
-        // Vorhandene Gegner wieder sauber aufs (neue) NavMesh setzen
+        // Vorhandene Gegner wieder sauber aufs (neue) NavMesh setzen.
+        // Steht einer jetzt in einer Mauer oder hinter einer durchlässigen Mauer,
+        // wird er auf ein freies Feld weit weg vom Ball gesetzt.
+        Vector3 ballLocal = playground.PinPosition - transform.position;
         foreach (EnemyMovement e in spawnedEnemies)
         {
             NavMeshAgent agent = e.GetComponent<NavMeshAgent>();
-            if (NavMesh.SamplePosition(agent.nextPosition, out NavMeshHit hit, 3f, NavMesh.AllAreas))
+            Vector3 target = agent.nextPosition;
+            if (!IsEnemyCell(target - playground.StartPosition))
+                target = playground.StartPosition + RandomFreeCellAwayFrom(ballLocal, minEnemySpawnDistance);
+            if (NavMesh.SamplePosition(target, out NavMeshHit hit, 3f, NavMesh.AllAreas))
                 e.Teleport(hit.position);
         }
     }
@@ -834,11 +937,17 @@ public class LevelManager : MonoBehaviour
         return transform.position + CellToBoardLocal(row, col, height);
     }
 
-    GameObject SpawnWall(int row, int startCol, int length)
+    GameObject SpawnWall(int row, int startCol, int length, bool passable = false)
     {
         GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        wall.name = "MazeWall";
-        if (wallMaterial != null) wall.GetComponent<Renderer>().sharedMaterial = wallMaterial;
+        wall.name = passable ? "PassableWall" : "MazeWall";
+        if (passable)
+        {
+            wall.GetComponent<Renderer>().sharedMaterial = GetPassableWallMaterial();
+            if (ballCollider != null)
+                Physics.IgnoreCollision(wall.GetComponent<Collider>(), ballCollider);
+        }
+        else if (wallMaterial != null) wall.GetComponent<Renderer>().sharedMaterial = wallMaterial;
 
         float centerCol = startCol + (length - 1) / 2f;
         wall.transform.position = CellToWorld(row, centerCol, wallHeight / 2f);
@@ -849,6 +958,48 @@ public class LevelManager : MonoBehaviour
         wall.transform.SetParent(ground != null ? ground : transform, true);
         spawnedWalls.Add(wall);
         return wall;
+    }
+
+    // Halbtransparentes, leuchtendes Material (URP Lit). Falls der Shader fehlt,
+    // bleibt es eine farbige, pulsierende Mauer.
+    Material GetPassableWallMaterial()
+    {
+        if (passableWallMaterial != null) return passableWallMaterial;
+
+        Shader lit = Shader.Find("Universal Render Pipeline/Lit");
+        if (lit != null) passableWallMaterial = new Material(lit);
+        else if (wallMaterial != null) passableWallMaterial = new Material(wallMaterial);
+        else
+        {
+            GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            passableWallMaterial = new Material(temp.GetComponent<Renderer>().sharedMaterial);
+            Destroy(temp);
+        }
+        passableWallMaterial.name = "PassableWall (runtime)";
+
+        Material m = passableWallMaterial;
+        m.color = passableWallColor;
+        if (m.HasProperty("_BaseColor")) m.SetColor("_BaseColor", passableWallColor);
+        if (m.HasProperty("_Surface"))
+        {
+            // Auf "Transparent" umschalten, wie es der URP-Inspector auch tut
+            m.SetFloat("_Surface", 1f);
+            m.SetFloat("_Blend", 0f);
+            m.SetOverrideTag("RenderType", "Transparent");
+            m.SetFloat("_SrcBlend", (float)BlendMode.SrcAlpha);
+            m.SetFloat("_DstBlend", (float)BlendMode.OneMinusSrcAlpha);
+            if (m.HasProperty("_SrcBlendAlpha")) m.SetFloat("_SrcBlendAlpha", (float)BlendMode.One);
+            if (m.HasProperty("_DstBlendAlpha")) m.SetFloat("_DstBlendAlpha", (float)BlendMode.OneMinusSrcAlpha);
+            m.SetFloat("_ZWrite", 0f);
+            m.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+            m.renderQueue = (int)RenderQueue.Transparent;
+        }
+        if (m.HasProperty("_EmissionColor"))
+        {
+            m.EnableKeyword("_EMISSION");
+            m.SetColor("_EmissionColor", passableWallColor * 0.5f);
+        }
+        return m;
     }
 
     // Neue Mauer wächst aus dem Boden (nur Optik – die Kollision ist sofort aktiv)
@@ -887,7 +1038,7 @@ public class LevelManager : MonoBehaviour
         // Nicht direkt neben dem Ball auftauchen lassen
         Vector3 ballLocal = playground.PinPosition - transform.position;
         Vector3 spawnLocal = CellToBoardLocal(row, col, 0f);
-        if (Vector2.Distance(new Vector2(spawnLocal.x, spawnLocal.z), new Vector2(ballLocal.x, ballLocal.z)) < minEnemySpawnDistance)
+        if (!IsEnemyCell(row, col) || Vector2.Distance(new Vector2(spawnLocal.x, spawnLocal.z), new Vector2(ballLocal.x, ballLocal.z)) < minEnemySpawnDistance)
             spawnLocal = RandomFreeCellAwayFrom(ballLocal, minEnemySpawnDistance);
 
         StartCoroutine(SpawnEnemyAfterWarning(spawnLocal));
@@ -928,6 +1079,10 @@ public class LevelManager : MonoBehaviour
 
     void CreateEnemy(Vector3 spawnLocal)
     {
+        // Während der Spawn-Warnung kann eine neue Stufe Mauern gebaut haben
+        if (!IsEnemyCell(spawnLocal))
+            spawnLocal = RandomFreeCellAwayFrom(playground.PinPosition - transform.position, minEnemySpawnDistance);
+
         // NavMesh-Koordinaten = Brett in Ausgangslage
         Vector3 navPos = playground.StartPosition + spawnLocal;
         if (NavMesh.SamplePosition(navPos, out NavMeshHit hit, 2f, NavMesh.AllAreas))
@@ -949,7 +1104,7 @@ public class LevelManager : MonoBehaviour
         {
             for (int c = 1; c < GridSize - 1; c++)
             {
-                if (wallGrid[r, c]) continue;
+                if (!IsEnemyCell(r, c)) continue;
                 Vector3 p = CellToBoardLocal(r, c, 0f);
                 float d = Vector2.Distance(new Vector2(p.x, p.z), new Vector2(boardLocal.x, boardLocal.z));
                 if (d > bestDist) { bestDist = d; best = p; }

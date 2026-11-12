@@ -21,9 +21,12 @@
 \usetikzlibrary{positioning,patterns,arrows.meta,fit}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
+\usepackage{sansmath}
 % Einheitlicher, schlichter Stil für alle Abbildungen (schwarz/grau, druckbar)
+% Serifenlose Schrift wie in den draw.io-Abbildungen (Latin Modern Sans)
 \tikzset{
-    every picture/.style={line width=0.4pt, >={Latex[length=1.6mm, width=1.1mm]}},
+    every picture/.style={line width=0.4pt, >={Latex[length=1.6mm, width=1.1mm]},
+        execute at begin picture={\sffamily\sansmath}},
     kasten/.style={draw, fill=white, minimum height=0.5cm, inner sep=2.5pt, font=\scriptsize},
     kastengrau/.style={kasten, fill=gray!18},
     titel/.style={font=\footnotesize},
@@ -139,8 +142,7 @@ Programmiermodell mit. Für die Software ergeben sich daraus drei Probleme.
     \cite{nickolls2008cuda}. AMD (HIP) und Intel (Level~Zero) haben eigene
     Schnittstellen.
     \item \textbf{Mehrfache Codebasen.} Wer mehrere Hersteller unterstützen
-    will, pflegt mehrere Implementierungen parallel
-    (Abbildung~\ref{fig:codebasen}a).
+    will, pflegt mehrere Implementierungen parallel.
     \item \textbf{Abstraktion gegen Kontrolle.} Offene Alternativen sind
     entweder sehr hardwarenah und aufwendig wie OpenCL
     \cite{stone2010opencl} oder lassen wie OpenMP-Direktiven wenig Kontrolle
@@ -153,7 +155,8 @@ Programmiermodell mit. Für die Software ergeben sich daraus drei Probleme.
 
 SYCL ist ein offener Standard der Khronos Group, der diese Probleme lösen
 will. Mit einem einzigen Quellcode in Standard-C++ soll auf CPUs und GPUs
-verschiedener Hersteller dasselbe Programm laufen \cite{khronos2020sycl}. 
+verschiedener Hersteller dasselbe Programm laufen \cite{khronos2020sycl}
+(Abbildung~\ref{fig:codebasen}).
 
 \begin{figure}[htbp]
 \centering
@@ -236,9 +239,7 @@ bei der Migration von CUDA-Anwendungen mit dem Werkzeug SYCLomatic und in
 portablen Bibliotheken wie oneMKL \cite{reinders2023dpcpp}. Frühere Studien
 fanden SYCL auf vielen Plattformen konkurrenzfähig mit herstellerspezifischem
 Code, aber deutlich abhängig von Implementierung und Parametrierung
-\cite{deakin2020sycl, breyer2022svm}. Als Maß für Performance-Portabilität hat
-sich die Kennzahl von Pennycook, Sewall und Lee etabliert
-\cite{pennycook2016metric}. Offen bleibt in diesen Arbeiten meist,
+\cite{deakin2020sycl, breyer2022svm}. Offen bleibt in diesen Arbeiten meist,
 welcher Schritt einer Portierung welchen Effekt auf welchem Gerät hat.
 Hier setzt die vorliegende Seminararbeit an.
 
@@ -255,8 +256,8 @@ C++-Programm wird in Stufen nach SYCL überführt, wobei jede Stufe nur so viele
 neue Konzepte einführt, wie für ihren Schritt nötig sind
 (Tabelle~\ref{tab:stufen}). Abschnitt~\ref{sec:konzepte} erklärt diese
 Konzepte zunächst allgemein und in der Reihenfolge, in der sie gebraucht
-werden. Abschnitt~\ref{sec:anwendung} zeigt anschließend, wie sie in den
-einzelnen Stufen umgesetzt sind. Das beantwortet F1. Zugleich lässt sich die
+werden. Anhang~\ref{sec:anhang} zeigt mit dem Quellcode aller Stufen, wie sie
+umgesetzt sind. Das beantwortet F1. Zugleich lässt sich die
 Wirkung jedes Schritts getrennt messen, was F2 beantwortet.
 
 \begin{table}[htbp]
@@ -288,9 +289,8 @@ Jede Stufe wird je Rechner einmal übersetzt und läuft dort unverändert. Die
 AMD MI300A des Clusters war im Messzeitraum nicht verfügbar.
 
 Die Zeit misst der Host mit der monotonen Uhr der C++-Standardbibliothek vom Einreichen eines Auftrags bis zum
-Ende des Wartens auf ihn \stelle{lst:common}{44--53}. Die Host-Messung wurde gewählt, weil sie für alle
-Stufen gleich funktioniert, auch für das sequentielle Ausgangsprogramm und
-für Stufe~2b, deren Kopien die Laufzeit selbst einplant.
+Ende des Wartens auf ihn. Die Host-Messung wurde gewählt, weil sie für alle
+Stufen gleich funktioniert.
 
 \newpage
 % ---------------------------------------------------------------------------
@@ -302,7 +302,7 @@ Die Reihenfolge folgt den Stufen aus Tabelle~\ref{tab:stufen}, sodass jedes
 Konzept dort steht, wo es bei der Portierung zum ersten Mal gebraucht wird.
 Die Abbildungen~\ref{fig:stufe1}, \ref{fig:usm}, \ref{fig:stufe2} und~\ref{fig:stufe3} bauen aufeinander auf.
 Bereits Bekanntes ist grau gezeichnet, Neues dick schwarz. Wie die Konzepte im
-Quellcode der Matrixmultiplikation umgesetzt sind, zeigt Abschnitt~\ref{sec:anwendung}.
+Quellcode der Matrixmultiplikation umgesetzt sind, zeigt Anhang~\ref{sec:anhang}.
 
 \subsection{Host, Gerät und Kernel}\label{sec:k-grundlagen}
 
@@ -344,12 +344,17 @@ in Standard-C++.
 Jedes Gerät spricht die Implementierung über ein Backend an, etwa CUDA für
 NVIDIA-GPUs, HIP für AMD-GPUs, Level~Zero für Intel-GPUs oder OpenCL für
 CPUs. Welches Gerät eine Queue nutzt, bestimmt ein Device Selector, der jedem
-verfügbaren Gerät eine Bewertung gibt und das am besten bewertete wählt. Die
-ausführbare Datei enthält den Gerätecode dazu in Zwischendarstellungen wie
-PTX für CUDA oder SPIR-V für OpenCL, die der Treiber erst beim ersten Start
-eines Kernels just in time für das konkrete Gerät übersetzt
-\cite{alpay2023sscp}. So läuft dieselbe Datei ohne Neuübersetzung auf Geräten
-verschiedener Hersteller, der erste Lauf ist dafür langsamer als alle
+verfügbaren Gerät eine Bewertung gibt und das am besten bewertete wählt.
+Wie der Gerätecode in die ausführbare Datei gelangt, hängt von der
+Implementierung ab. Bei DPC++ wird er je Ziel entweder als
+Zwischendarstellung (PTX für NVIDIA, SPIR-V für Intel) oder als fertiger
+Maschinencode (etwa für AMD-GPUs) abgelegt. Ein Gerät, das beim Übersetzen
+nicht angegeben wurde, erfordert dort eine Neuübersetzung. AdaptiveCpp legt
+im generischen Modus stattdessen eine gemeinsame LLVM-Zwischendarstellung ab,
+die erst zur Laufzeit beim ersten Start eines Kernels just in time für das
+vorhandene Gerät in PTX, SPIR-V oder AMD-Maschinencode übersetzt wird
+\cite{alpay2023sscp}. So läuft dieselbe Datei ohne Neuübersetzung auf GPUs
+verschiedener Hersteller, der erste Kernelstart ist dafür langsamer als alle
 folgenden.
 
 \subsection{Speichermodell}\label{sec:k-speicher}
@@ -557,28 +562,6 @@ Kurzformen aus den vorigen Abschnitten sind nur eine Abkürzung dafür.
 \label{fig:stufe3}
 \end{figure}
 
-\begin{table}[htbp]
-\centering
-\small
-\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X c@{}}
-\toprule
-\textbf{Konzept} & \textbf{adressiertes Problem} & \textbf{Stufe} \\
-\midrule
-Single-Source in Standard-C++ & mehrfache Codebasen & 1 \\
-Backends, Device Selector, JIT-Kompilierung & Herstellerbindung & 1 \\
-Queue, Kernel, Indexraum, USM shared & Abstraktion (einfacher Einstieg) & 1 \\
-USM device, Kopien, Events, Abhängigkeiten & Kontrolle über Datentransfer & 2 \\
-Buffer und Accessoren & Abstraktion (Abhängigkeiten automatisch) & 2b \\
-nd\_range, Work-Group & Kontrolle über Ausführung & 3 \\
-Command Group, lokaler Speicher, Barriere & Kontrolle über Speicherebenen & 4 \\
-Geräteabfragen, Specialization Constants, Fehlerbehandlung & Kontrolle ohne Verlust an Portabilität & 5 \\
-\bottomrule
-\end{tabularx}
-\caption{Konzepte von SYCL, die von ihnen adressierten Probleme und die Stufe,
-in der sie bei der Portierung eingeführt werden}
-\label{tab:konzepte}
-\end{table}
-
 \newpage
 % ---------------------------------------------------------------------------
 \section{Ergebnisse}\label{sec:ergebnisse}
@@ -644,32 +627,34 @@ bzw.~4}
 
 \paragraph{Parallelisierung und Transfer (Stufen 1 bis 2b).}
 Den größten Sprung bringt Stufe~1. Bei $n = 1024$ ist sie auf der CPU rund
-90-mal, auf den GPUs 2200-mal (RTX) bis 15\,800-mal (H100) so schnell wie das
-sequentielle Ausgangsprogramm. Stufe~2 macht den Transfer sichtbar. Er wiegt
-umso schwerer, je schneller die GPU rechnet, und entspricht bei $n = 2048$
-einem Viertel (RTX) bis drei Vierteln (H100) der Rechenzeit. Auf der CPU ist
-er vernachlässigbar. Buffer (Stufe~2b) sind auf keinem Gerät schneller als
-Stufe~2 und kosten außer auf der RTX 12 bis 64\,\% mehr Zeit.
+90-mal so schnell wie das sequentielle Ausgangsprogramm, auf den GPUs
+2200-mal (RTX) bis 15\,800-mal (H100). Stufe~2 macht den Transfer sichtbar.
+Je schneller eine GPU rechnet, desto stärker fällt er ins Gewicht. Bei
+$n = 2048$ beträgt er auf der RTX ein Viertel, auf der H100 drei Viertel der
+Kernelzeit. Auf der CPU ist er vernachlässigbar. Buffer (Stufe~2b) sind auf
+keinem Gerät schneller als Stufe~2. Außer auf der RTX brauchen sie 12 bis
+64\,\% mehr Zeit.
 
 \paragraph{Work-Groups und Kachelung (Stufen 3 und 4).}
-Die Work-Group-Größe allein steigert die Leistung gegenüber Stufe~2 auf RTX
-und L40S um 44 bis 89\,\%, auf der CPU um rund 20\,\%. Die H100 macht sie bei
-$n = 1024$ dagegen um 20\,\% langsamer. Die Kachelung bringt bei $n = 2048$
-28\,\% (RTX), 68\,\% (L40S) und 32\,\% (H100), auf der CPU das 3,5-Fache.
-Auf RTX und L40S ist sie trotzdem rund 10\,\% langsamer als Stufe~3, auf H100
-und CPU klar schneller. Welche Optimierung sich lohnt, hängt also selbst bei
-GPUs eines Herstellers vom Gerät ab.
+Schon das Festlegen der Work-Group-Größe (Stufe~3) steigert die Leistung
+gegenüber Stufe~2, auf RTX und L40S um 44 bis 89\,\%, auf der CPU um rund
+20\,\%. Nur die H100 wird bei $n = 1024$ um 20\,\% langsamer. Die Kachelung
+(Stufe~4) bringt bei $n = 2048$ gegenüber Stufe~2 28\,\% (RTX), 68\,\% (L40S)
+und 32\,\% (H100) mehr Leistung, auf der CPU sogar das 3,5-Fache. Auf RTX und
+L40S bleibt sie damit aber rund 10\,\% hinter Stufe~3 zurück, auf H100 und
+CPU ist sie klar schneller. Welche Optimierung sich lohnt, hängt also selbst
+bei GPUs eines Herstellers vom Gerät ab.
 
 \paragraph{Kachelgröße und Performance-Portabilität.}
 Abbildung~\ref{fig:ergebnisse} zeigt die Effizienz jeder Kachelgröße, also
-die Leistung relativ zur besten Kachelgröße auf demselben Gerät. Die
+ihre Leistung im Verhältnis zur besten Kachelgröße desselben Geräts. Die
 Performance-Portabilität (PP) ist das harmonische Mittel dieser Effizienzen
-über alle Geräte und null, sobald ein Gerät nicht unterstützt wird
-\cite{pennycook2016metric}. Auf allen GPUs ist $T = 16$ am schnellsten, auf
-der CPU $T = 32$ ($n = 1024$) bzw.\ $T = 64$ ($n = 2048$). Gerade $T = 64$
-startet auf keiner GPU, weil eine Work-Group dann 4096 Work-Items hätte und
-die GPUs höchstens 1024 erlauben. Am besten schneidet bei $n = 2048$ $T = 16$
-ab (PP 0,97), bei $n = 1024$ $T = 32$ (PP 0,94).
+über alle Geräte. Läuft eine Kachelgröße auf einem Gerät nicht, ist ihre PP
+null \cite{pennycook2016metric}. Auf allen GPUs ist $T = 16$ am schnellsten,
+auf der CPU $T = 32$ ($n = 1024$) bzw.\ $T = 64$ ($n = 2048$). Ausgerechnet
+$T = 64$ startet aber auf keiner GPU. Eine Work-Group hätte dann 4096
+Work-Items, die GPUs erlauben höchstens 1024. Die beste PP erreicht bei
+$n = 2048$ $T = 16$ (0,97), bei $n = 1024$ $T = 32$ (0,94).
 
 \begin{figure}[htbp]
 \centering
@@ -713,16 +698,16 @@ ab (PP 0,97), bei $n = 1024$ $T = 32$ (PP 0,94).
 \end{figure}
 
 \paragraph{Automatische Anpassung (Stufe 5).}
-Stufe~5 verwirft $T = 64$ per Geräteabfrage, misst die übrigen
-Kachelgrößen kurz und wählt auf allen vier Geräten die beste. Auf den GPUs
-ist sie im Dauerbetrieb trotzdem 5 bis 43\,\% langsamer als Stufe~4 mit
-derselben Kachel, vermutlich weil DPC++ Specialization Constants für CUDA
-nur emuliert und die Kachelgröße für den Compiler damit keine Konstante ist.
-Ihre PP liegt deshalb mit 0,95 ($n = 2048$) bzw.\ 0,76 ($n = 1024$) etwas
-unter dem besten festen Wert, aber weit über 0 für $T = 64$. Der erste Lauf
-dauert bei $n = 1024$ wegen der Auswahl 3,6- bis achtmal so lang wie in Stufe~4. Schon ohne
-Auswahl ist er wegen der JIT-Kompilierung bis zu 14-mal so lang wie die
-folgenden Läufe.
+Stufe~5 schließt $T = 64$ per Geräteabfrage aus, misst die übrigen
+Kachelgrößen kurz und wählt auf allen vier Geräten die beste. Im
+Dauerbetrieb erreicht sie auf den GPUs trotzdem 5 bis 43\,\% weniger
+Leistung als Stufe~4 mit derselben Kachelgröße. Vermutlich liegt das daran,
+dass DPC++ Specialization Constants für CUDA nur emuliert. Die Kachelgröße
+ist für den Compiler damit keine Konstante. Ihre PP liegt mit 0,95
+($n = 2048$) bzw.\ 0,76 ($n = 1024$) unter dem besten festen Wert, aber weit
+über der PP von 0 für $T = 64$. Der erste Lauf dauert bei $n = 1024$ wegen
+der Auswahl 3,6- bis achtmal so lang wie in Stufe~4. Schon ohne Auswahl ist
+er wegen der JIT-Kompilierung bis zu 14-mal so lang wie die folgenden Läufe.
 
 % ---------------------------------------------------------------------------
 \section{Diskussion}\label{sec:diskussion}
@@ -730,10 +715,11 @@ folgenden Läufe.
 
 \paragraph{F1: Konzepte.}
 Herstellerbindung und mehrfache Codebasen löst bereits Stufe~1.
-Single-Source in Standard-C++, Backends und JIT-Kompilierung lassen dieselbe
-ausführbare Datei ohne Neuübersetzung auf CPU und GPU laufen. Den Konflikt
+Single-Source in Standard-C++ und Backends lassen denselben Quellcode auf
+allen Geräten laufen. Auf einem Rechner läuft sogar dieselbe ausführbare
+Datei ohne Neuübersetzung auf CPU und GPU. Den Konflikt
 zwischen Abstraktion und Kontrolle entschärft SYCL durch einen gestuften
-Einstieg (Tabelle~\ref{tab:konzepte}). Ein einfacher Indexraum mit USM shared
+Einstieg (Tabelle~\ref{tab:stufen}). Ein einfacher Indexraum mit USM shared
 reicht für ein lauffähiges Programm. Expliziter Transfer, Work-Groups und
 lokaler Speicher geben schrittweise Kontrolle zurück. Buffer gehen den
 umgekehrten Weg. Sie nehmen dem Programmierer die Abhängigkeiten ab und

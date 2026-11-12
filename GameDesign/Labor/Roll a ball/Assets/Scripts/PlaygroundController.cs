@@ -15,6 +15,10 @@ public class PlaygroundMovement : MonoBehaviour
     [Tooltip("Zeit in Sekunden, bis das Brett die Zielgeschwindigkeit ungefähr erreicht (kleiner = direkter)")]
     public float smoothTime = 0.08f;
 
+    [Tooltip("An: Der Ball rollt in die gedrückte Richtung (das Brett fährt dafür entgegengesetzt).\n" +
+             "Aus: Das Brett fährt in die gedrückte Richtung.")]
+    public bool invertControls = true;
+
     [Header("Ball / Stift")]
     [Tooltip("Radius für die Kollision Ball <-> Mauern (etwas kleiner als der echte Ball, damit er nicht an Ecken hängen bleibt)")]
     public float ballCollisionRadius = 0.45f;
@@ -116,16 +120,48 @@ public class PlaygroundMovement : MonoBehaviour
         Physics.SyncTransforms();
     }
 
+    // Kommt über die PlayerInput-Komponente (Send Messages)
     void OnMove(InputValue movementValue)
     {
         input = Vector2.ClampMagnitude(movementValue.Get<Vector2>(), 1f);
+    }
+
+    // Liest Tastatur/Gamepad zusätzlich direkt aus. So funktioniert die Steuerung
+    // auch dann, wenn die PlayerInput-Komponente kein Gerät bekommt (z. B. weil
+    // ein zweiter PlayerInput die Tastatur schon belegt hat).
+    Vector2 ReadDevicesDirectly()
+    {
+        Vector2 v = Vector2.zero;
+        Keyboard kb = Keyboard.current;
+        if (kb != null)
+        {
+            if (kb.aKey.isPressed || kb.leftArrowKey.isPressed) v.x -= 1f;
+            if (kb.dKey.isPressed || kb.rightArrowKey.isPressed) v.x += 1f;
+            if (kb.sKey.isPressed || kb.downArrowKey.isPressed) v.y -= 1f;
+            if (kb.wKey.isPressed || kb.upArrowKey.isPressed) v.y += 1f;
+        }
+        Gamepad pad = Gamepad.current;
+        if (pad != null)
+        {
+            Vector2 stick = pad.leftStick.ReadValue();
+            if (stick.sqrMagnitude > v.sqrMagnitude) v = stick;
+        }
+        return Vector2.ClampMagnitude(v, 1f);
     }
 
     void FixedUpdate()
     {
         float dt = Time.fixedDeltaTime;
 
-        Vector3 targetVelocity = new Vector3(input.x, 0f, input.y) * maxSpeed;
+        // Stärkere der beiden Quellen nehmen (sie liefern normalerweise dasselbe)
+        Vector2 direct = ReadDevicesDirectly();
+        Vector2 move = direct.sqrMagnitude > input.sqrMagnitude ? direct : input;
+
+        // Invertiert: Das Brett fährt entgegen der Eingabe -> der Ball rollt
+        // auf dem Brett genau in die gedrückte Richtung.
+        if (invertControls) move = -move;
+
+        Vector3 targetVelocity = new Vector3(move.x, 0f, move.y) * maxSpeed;
         velocity = Vector3.SmoothDamp(velocity, targetVelocity, ref velocitySmoothing, smoothTime, Mathf.Infinity, dt);
 
         // Achsen getrennt prüfen, damit das Brett an Mauern entlanggleiten kann

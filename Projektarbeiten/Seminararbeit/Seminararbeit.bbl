@@ -465,46 +465,6 @@
       \field{title}{{A Comparison of SYCL, OpenCL, CUDA, and OpenMP for Massively Parallel Support Vector Machine Classification on Multi-Vendor Hardware}}
       \field{year}{2022}
     \endentry
-    \entry{pennycook2016metric}{inproceedings}{}{}
-      \name{author}{3}{}{%
-        {{hash=163657d704a661db96927095df124f72}{%
-           family={Pennycook},
-           familyi={P\bibinitperiod},
-           given={S.\bibnamedelimi John},
-           giveni={S\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
-        {{hash=dee82bc2fc10b837c82e0273524a1e79}{%
-           family={Sewall},
-           familyi={S\bibinitperiod},
-           given={Jason\bibnamedelima D.},
-           giveni={J\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
-        {{hash=8b5c3eb29d776611e1ae2f5d18f991e2}{%
-           family={Lee},
-           familyi={L\bibinitperiod},
-           given={Victor\bibnamedelima W.},
-           giveni={V\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
-      }
-      \strng{namehash}{3cc1210dc9719e5a6d3810f0b3b395f7}
-      \strng{fullhash}{e4096351544ec23a8d98db514d084679}
-      \strng{fullhashraw}{e4096351544ec23a8d98db514d084679}
-      \strng{bibnamehash}{e4096351544ec23a8d98db514d084679}
-      \strng{authorbibnamehash}{e4096351544ec23a8d98db514d084679}
-      \strng{authornamehash}{3cc1210dc9719e5a6d3810f0b3b395f7}
-      \strng{authorfullhash}{e4096351544ec23a8d98db514d084679}
-      \strng{authorfullhashraw}{e4096351544ec23a8d98db514d084679}
-      \field{extraname}{1}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{booktitle}{Proceedings of the 7th International Workshop on Performance Modeling, Benchmarking and Simulation of High Performance Computer Systems (PMBS)}
-      \field{eprinttype}{arxiv}
-      \field{langid}{english}
-      \field{title}{{A Metric for Performance Portability}}
-      \field{year}{2016}
-      \verb{eprint}
-      \verb 1611.07409
-      \endverb
-    \endentry
     \entry{hwu2022pmpp}{book}{}{}
       \name{author}{3}{}{%
         {{hash=720f32a4424db239592c327c78132fda}{%
@@ -545,6 +505,46 @@
       \field{langid}{english}
       \field{title}{{Programming Massively Parallel Processors: A Hands-on Approach}}
       \field{year}{2022}
+    \endentry
+    \entry{pennycook2016metric}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=163657d704a661db96927095df124f72}{%
+           family={Pennycook},
+           familyi={P\bibinitperiod},
+           given={S.\bibnamedelimi John},
+           giveni={S\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=dee82bc2fc10b837c82e0273524a1e79}{%
+           family={Sewall},
+           familyi={S\bibinitperiod},
+           given={Jason\bibnamedelima D.},
+           giveni={J\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+        {{hash=8b5c3eb29d776611e1ae2f5d18f991e2}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Victor\bibnamedelima W.},
+           giveni={V\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+      }
+      \strng{namehash}{3cc1210dc9719e5a6d3810f0b3b395f7}
+      \strng{fullhash}{e4096351544ec23a8d98db514d084679}
+      \strng{fullhashraw}{e4096351544ec23a8d98db514d084679}
+      \strng{bibnamehash}{e4096351544ec23a8d98db514d084679}
+      \strng{authorbibnamehash}{e4096351544ec23a8d98db514d084679}
+      \strng{authornamehash}{3cc1210dc9719e5a6d3810f0b3b395f7}
+      \strng{authorfullhash}{e4096351544ec23a8d98db514d084679}
+      \strng{authorfullhashraw}{e4096351544ec23a8d98db514d084679}
+      \field{extraname}{1}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 7th International Workshop on Performance Modeling, Benchmarking and Simulation of High Performance Computer Systems (PMBS)}
+      \field{eprinttype}{arxiv}
+      \field{langid}{english}
+      \field{title}{{A Metric for Performance Portability}}
+      \field{year}{2016}
+      \verb{eprint}
+      \verb 1611.07409
+      \endverb
     \endentry
     \entry{pennycook2019implications}{article}{}{}
       \name{author}{3}{}{%

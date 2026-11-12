@@ -227,13 +227,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 156144951}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aec43d89082a3a722b5957490b3daff9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlaygroundMovement
   maxSpeed: 12
   smoothTime: 0.08
+  invertControls: 1
   ballCollisionRadius: 0.45
   spinBall: 1
   physicsRate: 100
@@ -337,9 +338,9 @@ MonoBehaviour:
   - name: "Stufe 3: Mehr W\xE4nde"
     enemyCountOffset: 0
     enemySpeedFactor: 1
-    map: '....................
+    map: '...............#....
 
-      ....................
+      ...............#....
 
       ...............#.o..
 
@@ -347,7 +348,7 @@ MonoBehaviour:
 
       ...............#....
 
-      ...............#....
+      ...............#~~##
 
       ...............#....
 
@@ -529,9 +530,9 @@ MonoBehaviour:
 
       ....................
 
-      ....................
+      ..........~...o..~..
 
-      .................o..
+      ..........~......~..
 
       ....................
 
@@ -591,7 +592,7 @@ MonoBehaviour:
     enemySpeedFactor: 0.85
     map: '....................
 
-      ...........o........
+      ..................o.
 
       ....###.............
 
@@ -767,6 +768,8 @@ MonoBehaviour:
   pushBackDistance: 8
   wallHeight: 1
   wallRiseDuration: 0.5
+  passableWallColor: {r: 0.2, g: 0.9, b: 1, a: 0.4}
+  passableWallPulseSpeed: 3
   createReferenceTable: 1
   tableSize: 80
   tableDepth: 1
@@ -2276,8 +2279,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18cd41ba6170e5f0688aa974079b9e7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  countText: {fileID: 1739096052}
-  winTextObject: {fileID: 523545288}
+  countText: {fileID: 0}
+  winTextObject: {fileID: 0}
   pickUpsToWin: 12
   lives: 3
   invulnerableTime: 2
@@ -2315,7 +2318,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 808354404}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 

@@ -34,9 +34,28 @@ public class BallGameLogic : MonoBehaviour
     void Start()
     {
         ballRenderer = GetComponent<Renderer>();
+        FindMissingUi();
         SetCountText();
         if (winTextObject != null)
             winTextObject.SetActive(false);
+    }
+
+    // Falls die Verknüpfungen im Inspector verloren gegangen sind:
+    // Texte über ihren Namen in der Szene suchen ("CountText" / "WinText").
+    // Sonst bleibt der "You Win!"-Text beim Start sichtbar.
+    void FindMissingUi()
+    {
+        if (countText != null && winTextObject != null) return;
+
+        TextMeshProUGUI[] texts = FindObjectsByType<TextMeshProUGUI>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        foreach (TextMeshProUGUI t in texts)
+        {
+            if (countText == null && t.name == "CountText") countText = t;
+            if (winTextObject == null && t.name == "WinText") winTextObject = t.gameObject;
+        }
+
+        if (countText == null || winTextObject == null)
+            Debug.LogWarning("BallGameLogic: CountText oder WinText nicht gefunden – bitte im Inspector zuweisen.", this);
     }
 
     void SetCountText()
