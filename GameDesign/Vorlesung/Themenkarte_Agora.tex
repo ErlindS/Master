@@ -37,6 +37,8 @@
 
 \pagestyle{empty}
 \setlength{\parindent}{0pt}
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
 
 % =============================================================================
 % TikZ-Stile
@@ -50,8 +52,8 @@
   tkarte/.style    = {draw=#1, line width=1.7pt, rounded corners=9pt, fill=#1!11,
                       text width=6.5cm, minimum height=4.35cm, align=center, inner sep=5pt,
                       font=\scriptsize},
-  agoraZentrum/.style = {ellipse, draw=hkared, line width=2.2pt, fill=black!90,
-                      text=white, minimum width=4.6cm, minimum height=2.25cm,
+  agoraZentrum/.style = {ellipse, draw=clGold!80!black, line width=2.2pt, fill=clGold!20,
+                      text=black!85, minimum width=4.6cm, minimum height=2.25cm,
                       align=center, inner sep=3pt},
   loopbadge/.style = {circle, draw=#1!85!black, fill=#1!16, line width=0.9pt,
                       font=\tiny\bfseries, text=#1!85!black, inner sep=1.2pt,
@@ -95,6 +97,9 @@
   }%
 }
 
+% Zeitgeist-Beleg in Knotenbeschreibungen (Bezug zu Zeitgeist_Handel_A4)
+\newcommand{\zg}[1]{\\[0pt]{\tiny\itshape\color{black!62}#1}}
+
 % --- Folienkopf im HKA-Stil ---
 \newcounter{folie}
 \newcommand{\kopf}[1]{%
@@ -129,81 +134,80 @@
 
   % Schleifen-Titel in den Ecken
   \node[anchor=north west, font=\scriptsize\bfseries, text=clBlue!85!black] at (1.0,-4.3)
-    {$\circlearrowright$ LOOP 1: Vertrauens- \& Kreditkreislauf (Soziale Agora)};
+    {$\circlearrowright$ Vertrauen und Stabilisation.};
   \node[anchor=north east, font=\scriptsize\bfseries, text=clGreen!80!black] at (32.8,-4.3)
-    {$\circlearrowright$ LOOP 2: Arbitrage- \& Seewege-Kreislauf (Räumlicher Handel)};
+    {$\circlearrowright$ Infrastruktur.};
   \node[anchor=south west, font=\scriptsize\bfseries, text=clPurple!85!black] at (1.0,-17.9)
-    {$\circlearrowright$ LOOP 3: Marktmacht- \& Regulierungs-Kreislauf (Ordnung vs.\ Monopol)};
+    {$\circlearrowright$ Konstitutionelle Einrichtungen.};
   \node[anchor=south east, font=\scriptsize\bfseries, text=clRed!85!black] at (32.8,-17.9)
-    {$\circlearrowright$ LOOP 4: Verlockungs-, FOMO- \& Reue-Kreislauf (Psychologie)};
+    {$\circlearrowright$ Menschliche Komponente.};
 
   % --- ZENTRUM: DIE AGORA ---
   \node[agoraZentrum, minimum width=5.0cm, minimum height=2.3cm] (C) at (16.9,-11.1) {
-    {\normalsize\bfseries DIE AGORA}\\[1pt]
-    {\scriptsize\color{white!90} Marktplatz \& Preisbildung}\\[1pt]
-    {\tiny\color{white!80} Angebot $\cdot$ Nachfrage $\cdot$ Tausch}
+    {\normalsize\bfseries HANDEL}\\[-1pt]
+    {\scriptsize\bfseries\color{clGold!55!black} (Agora)}\\[2pt]
   };
 
-  % --- KNOTEN LOOP 1 (Oben Links: Vertrauen & Kredit) ---
+  % --- KNOTEN LOOP 1 (Oben Links: Vertrauen und Stabilisation) ---
   \node[bknoten=clBlue] (L1A) at (3.6,-6.2)
-    {\textbf{Beziehung \& Reputation}\\[-1pt]{\tiny bekannter Händler $\cdot$ ehrlicher Ruf}};
+    {\textbf{Ruf}\zg{Auf dem Basar baut Feilschen eine Beziehung auf. Ein ehrlicher Ruf macht Fremde berechenbar.}};
   \node[bknoten=clBlue] (L1B) at (11.8,-6.2)
-    {\textbf{Kredit \& Vorleistung}\\[-1pt]{\tiny \emph{credere} = glauben $\cdot$ Ware auf Ziel}};
+    {\textbf{Kredit}\zg{Wer einen guten Ruf hat, bekommt Ware im Voraus. Kredit kommt von \emph{credere}, glauben.}};
   \node[bknoten=clBlue] (L1C) at (7.7,-9.4)
-    {\textbf{Gehaltene Versprechen}\\[-1pt]{\tiny pünktliche Lieferung $\cdot$ faire Maße}};
+    {\textbf{Verlässlichkeit}\zg{Geld als gemeinsamer Maßstab und gehaltene Zusagen machen jeden Tausch stabil.}};
 
   \draw[looppfeil=clBlue] (L1A.east) -- node[txt]{ermöglicht} (L1B.west);
-  \draw[looppfeil=clBlue] (L1B.south east) to[bend left=14] node[txt, pos=0.45]{erhöht Kaufkraft\\auf der} (C.north west);
+  \draw[looppfeil=clBlue] (L1B.south east) to[bend left=14] node[txt, pos=0.45]{erhöht\\Kaufkraft im} (C.north west);
   \draw[looppfeil=clBlue] (C.168) to[bend left=12] node[txt, pos=0.52]{Abschluss führt zu} (L1C.east);
   \draw[looppfeil=clBlue] (L1C.north west) to[bend left=14] node[txt]{baut auf} (L1A.south);
 
-  % --- KNOTEN LOOP 2 (Oben Rechts: Arbitrage & Lieferketten) ---
+  % --- KNOTEN LOOP 2 (Oben Rechts: Infrastruktur) ---
   \node[bknoten=clGreen] (L2A) at (22.0,-6.2)
-    {\textbf{Informationsvorsprung}\\[-1pt]{\tiny wissen, wo Ware billig \& wo knapp ist}};
+    {\textbf{Smartphone}\zg{Der Marktplatz ist aufs Smartphone gewandert. 2025 wurden 55\,\% der Einkäufe bargeldlos bezahlt.}};
   \node[bknoten=clGreen] (L2B) at (30.2,-6.2)
-    {\textbf{Seewege \& Meerengen}\\[-1pt]{\tiny Piräus $\cdot$ Sueskanal $\cdot$ Transportrisiko}};
+    {\textbf{Seewege}\zg{Schiffe, Häfen und Meerengen tragen den Welthandel. Seit Ende 2023 meiden Schiffe den Sueskanal.}};
   \node[bknoten=clGreen] (L2C) at (26.1,-9.4)
-    {\textbf{Knappheit \& Warenstrom}\\[-1pt]{\tiny seltene Güter erreichen den Markt}};
+    {\textbf{Engpass}\zg{Wenige Meerengen entscheiden, ob Ware ankommt: 10 bis 14 Tage länger, Containerpreise zeitweise vierfach.}};
 
-  \draw[looppfeil=clGreen] (C.north east) to[bend left=14] node[txt, pos=0.55]{Preisgefälle verrät} (L2A.south west);
-  \draw[looppfeil=clGreen] (L2A.east) -- node[txt]{steuert Routen über} (L2B.west);
-  \draw[looppfeil=clGreen] (L2B.south) to[bend left=14] node[txt]{bestimmt} (L2C.north east);
-  \draw[looppfeil=clGreen] (L2C.west) to[bend left=12] node[txt, pos=0.48]{bewegt Kurse \&\\Gewinn auf der} (C.12);
+  \draw[looppfeil=clGreen] (C.north east) to[bend left=14] node[txt, pos=0.55]{Bestellung per Klick} (L2A.south west);
+  \draw[looppfeil=clGreen] (L2A.east) -- node[txt]{löst Lieferung aus über} (L2B.west);
+  \draw[looppfeil=clGreen] (L2B.south) to[bend left=14] node[txt]{laufen durch} (L2C.north east);
+  \draw[looppfeil=clGreen] (L2C.west) to[bend left=12] node[txt, pos=0.48]{verzögert \&\\verteuert den} (C.12);
 
-  % --- KNOTEN LOOP 3 (Unten Links: Marktmacht & Regulierung) ---
+  % --- KNOTEN LOOP 3 (Unten Links: Konstitutionelle Einrichtungen) ---
   \node[bknoten=clPurple] (L3A) at (11.8,-15.9)
-    {\textbf{Marktmacht \& Bots}\\[-1pt]{\tiny Großhändler $\cdot$ Plattformen $\cdot$ Algorithmen}};
+    {\textbf{Plattformen}\zg{Amazon, Temu und Shein setzen eigene Regeln für Millionen Käufe, täglich rund 400.000 Pakete.}};
   \node[bknoten=clPurple] (L3B) at (3.6,-15.9)
-    {\textbf{Wucher \& Abhängigkeit}\\[-1pt]{\tiny Aufkauf knapper Ware $\cdot$ Preisdiktat}};
+    {\textbf{Gesetze}\zg{Der Staat reagiert mit LkSG und CSDDD auf Ausbeutung entlang der Lieferkette.}};
   \node[bknoten=clPurple] (L3C) at (7.7,-12.8)
-    {\textbf{Marktaufsicht \& Gesetze}\\[-1pt]{\tiny Agoranomos $\cdot$ Zölle $\cdot$ LkSG / CSDDD}};
+    {\textbf{Marktaufsicht}\zg{Agoranomen in Athen und Richter auf Messen wachten über Regeln. Heute prüfen Zoll und Behörden.}};
 
   \draw[looppfeil=clPurple] (C.south west) to[bend left=14] node[txt, pos=0.52]{Umsatz \& Daten\\stärken} (L3A.north east);
-  \draw[looppfeil=clPurple] (L3A.west) -- node[txt]{verursachen} (L3B.east);
-  \draw[looppfeil=clPurple] (L3B.north) to[bend left=14] node[txt]{erzwingen Eingriff durch} (L3C.south west);
-  \draw[looppfeil=clPurple] (L3C.east) to[bend left=12] node[txt, pos=0.48]{kontrolliert \&\\begrenzt die} (C.192);
+  \draw[looppfeil=clPurple] (L3A.west) -- node[txt]{Ausbeutung \& Bots\\rufen nach} (L3B.east);
+  \draw[looppfeil=clPurple] (L3B.north) to[bend left=14] node[txt]{beauftragen} (L3C.south west);
+  \draw[looppfeil=clPurple] (L3C.east) to[bend left=12] node[txt, pos=0.48]{kontrolliert \&\\begrenzt den} (C.192);
 
-  % --- KNOTEN LOOP 4 (Unten Rechts: Verlockung, FOMO & Reue) ---
+  % --- KNOTEN LOOP 4 (Unten Rechts: Menschliche Komponente) ---
   \node[bknoten=clRed] (L4A) at (26.1,-12.8)
-    {\textbf{Verlockung \& Drops}\\[-1pt]{\tiny Schnäppchen $\cdot$ Countdown $\cdot$ FOMO}};
+    {\textbf{Verlockung}\zg{Apps nutzen Mittel aus dem Game Design: Glücksräder, Countdowns und limitierte Drops.}};
   \node[bknoten=clRed] (L4B) at (30.2,-15.9)
-    {\textbf{Wagnis \& Impulskauf}\\[-1pt]{\tiny Fiero beim Deal $\cdot$ Spekulation}};
+    {\textbf{Impulskauf}\zg{Ein gutes Geschäft macht Spaß und bringt Status. Auf StockX laufen Sneaker wie Aktien.}};
   \node[bknoten=clRed] (L4C) at (22.0,-15.9)
-    {\textbf{Reue \& Verlustdruck}\\[-1pt]{\tiny schlechtes Gewissen $\cdot$ Schulden}};
+    {\textbf{Reue}\zg{Fair kaufen wollen und doch zur Billigware greifen. \enquote{Eigentlich brauche ich das nicht …}}};
 
   \draw[looppfeil=clRed] (C.348) to[bend left=12] node[txt, pos=0.52]{inszeniert Angebote als} (L4A.west);
   \draw[looppfeil=clRed] (L4A.south east) to[bend left=14] node[txt]{verleitet zu} (L4B.north);
   \draw[looppfeil=clRed] (L4B.west) -- node[txt]{kippt nach dem Kauf in} (L4C.east);
-  \draw[looppfeil=clRed] (L4C.north west) to[bend left=14] node[txt, pos=0.48]{Drang zum Ausgleich\\treibt zurück auf} (C.south east);
+  \draw[looppfeil=clRed] (L4C.north west) to[bend left=14] node[txt, pos=0.48]{Drang zum Ausgleich\\treibt zurück in den} (C.south east);
 
   % --- Querverbindungen zwischen den 4 Loops ---
-  \draw[pfeil, dashed] (L1B.east) -- node[txt]{finanziert Fahrten über} (L2A.west);
-  \draw[pfeil, dashed] (L2C.south) -- node[txt]{Verknappung triggert} (L4A.north);
-  \draw[pfeil, dashed] (L3C.north) -- node[txt]{schützt ehrliche} (L1C.south);
-  \draw[pfeil, dashed] (L4C.west) -- node[txt]{Verschuldung liefert aus an} (L3A.east);
+  \draw[pfeil, dashed] (L1B.east) -- node[txt]{ermöglicht Kauf auf Raten per} (L2A.west);
+  \draw[pfeil, dashed] (L2C.south) -- node[txt]{Knappheit befeuert} (L4A.north);
+  \draw[pfeil, dashed] (L3C.north) -- node[txt]{sichert} (L1C.south);
+  \draw[pfeil, dashed] (L4C.west) -- node[txt]{Verschuldung bindet an} (L3A.east);
 
   \node[anchor=west, font=\tiny, text=hkagray] at (1.6,-18.58)
-    {\textbf{Lesart:} Jeder Quadrant bildet einen geschlossenen Kausal-Loop mit der \textbf{Agora} im Zentrum; gestrichelte Pfeile koppeln die vier Kreisläufe untereinander.};
+    {\textbf{Lesart:} Jeder Quadrant bildet einen geschlossenen Kausal-Loop mit dem \textbf{Handel (Agora)} im Zentrum; gestrichelte Pfeile koppeln die vier Kreisläufe untereinander; die grauen Texte stammen aus dem \textbf{Zeitgeist Handel}.};
 
 \end{tikzpicture}
 \newpage

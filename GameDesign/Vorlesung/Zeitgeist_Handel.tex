@@ -8,15 +8,37 @@
 \usepackage[scaled]{helvet}
 \renewcommand{\familydefault}{\sfdefault}
 \usepackage[autostyle=true,german=quotes]{csquotes}
+\usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc, shapes.geometric}
 \usepackage{microtype}
 \usepackage{hyperref}
 \urlstyle{same}
 
 \definecolor{hkared}{RGB}{198, 42, 18}
 \definecolor{hkagray}{RGB}{100, 100, 100}
+
+% --- Farben & Stile der Themenlandschaftskarte (aus Themenkarte_Agora.tex) ---
+\definecolor{clBlue}{RGB}{45, 115, 195}
+\definecolor{clGold}{RGB}{215, 165, 30}
+\definecolor{clGreen}{RGB}{42, 155, 85}
+\definecolor{clPurple}{RGB}{130, 95, 195}
+\definecolor{clRed}{RGB}{215, 70, 65}
+\tikzset{
+  pfeil/.style     = {-{Stealth[length=2.2mm, width=1.6mm]}, line width=0.8pt, draw=black!80},
+  looppfeil/.style = {-{Stealth[length=2.3mm, width=1.65mm]}, line width=1.0pt, draw=#1!85!black},
+  txt/.style       = {font=\tiny\bfseries, fill=white, inner sep=1.3pt, rounded corners=1.5pt,
+                      align=center, text=black!85},
+  agoraZentrum/.style = {ellipse, draw=clGold!80!black, line width=2.2pt, fill=clGold!20,
+                      text=black!85, minimum width=4.6cm, minimum height=2.25cm,
+                      align=center, inner sep=3pt},
+  bknoten/.style   = {draw=#1, line width=1.3pt, rounded corners=6pt, fill=#1!10,
+                      text width=3.9cm, minimum height=1.25cm, align=center, inner sep=3pt,
+                      font=\scriptsize},
+}
+\newcommand{\zg}[1]{\\[0pt]{\tiny\itshape\color{black!62}#1}}
 
 \hypersetup{
     colorlinks = true, linkcolor = hkared, urlcolor = hkared,
@@ -58,6 +80,30 @@
   \end{tikzpicture}%
 }
 \usepackage{ragged2e}
+
+% --- Kartenfolie: gleicher Kopf wie \folie, Inhalt als TikZ-Grafik ---
+\newcommand{\kartenfolie}[2]{%
+  \stepcounter{folie}%
+  \newpage
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[hkared] ([xshift=38bp, yshift=-18bp]current page.north west) rectangle ++(9bp, -64bp);
+    \node[anchor=west, font=\fontsize{34}{40}\selectfont\bfseries, text=hkared]
+      at ([xshift=58bp, yshift=-52bp]current page.north west) {#1};
+    \shade[top color=black!12, bottom color=white]
+      ([yshift=-100bp]current page.north west) rectangle ([yshift=-108bp]current page.north east);
+    \node[anchor=south east, inner sep=0pt]
+      at ([xshift=-22bp, yshift=20bp]current page.south east)
+      {\includegraphics[height=120bp, trim=520 140 580 140, clip]{HKA.jpg}};
+    \node[anchor=south west, font=\scriptsize, text=hkagray]
+      at ([xshift=60bp, yshift=24bp]current page.south west) {\thefolie};
+  \end{tikzpicture}%
+  {\hyphenpenalty=10000 \exhyphenpenalty=10000
+  \begin{tikzpicture}[remember picture, overlay,
+      shift={($(current page.north west)+(1.45cm,-0.45cm)$)},
+      scale=0.88, every node/.append style={transform shape}]
+    #2
+  \end{tikzpicture}}%
+}
 
 \begin{document}
 
@@ -127,6 +173,89 @@ oder „Wer verdient hier eigentlich an mir?“
 
 Der Markt wirkt wie ein Ort, an dem jeder mit Geschick gewinnen kann. Wer am Ende tatsächlich profitiert, hängt in der Realität aber oft
 davon ab, wer mehr weiß, wer die Infrastruktur kontrolliert und wem die anderen vertrauen.
+}
+
+% ================= Themenlandschaftskarte =================
+\kartenfolie{Themenlandschaftskarte}{%
+  % Hintergrund-Flächen für die 4 großen Kausalschleifen
+  \fill[clBlue!6, rounded corners=18pt]   (0.7,-4.15)  rectangle (15.8,-10.85);
+  \fill[clGreen!6, rounded corners=18pt]  (18.0,-4.15) rectangle (33.1,-10.85);
+  \fill[clPurple!6, rounded corners=18pt] (0.7,-11.35) rectangle (15.8,-18.05);
+  \fill[clRed!6, rounded corners=18pt]    (18.0,-11.35) rectangle (33.1,-18.05);
+
+  % Schleifen-Titel in den Ecken
+  \node[anchor=north west, font=\scriptsize\bfseries, text=clBlue!85!black] at (1.0,-4.3)
+    {$\circlearrowright$ Vertrauen und Stabilisation.};
+  \node[anchor=north east, font=\scriptsize\bfseries, text=clGreen!80!black] at (32.8,-4.3)
+    {$\circlearrowright$ Infrastruktur.};
+  \node[anchor=south west, font=\scriptsize\bfseries, text=clPurple!85!black] at (1.0,-17.9)
+    {$\circlearrowright$ Konstitutionelle Einrichtungen.};
+  \node[anchor=south east, font=\scriptsize\bfseries, text=clRed!85!black] at (32.8,-17.9)
+    {$\circlearrowright$ Menschliche Komponente.};
+
+  % --- ZENTRUM: DIE AGORA ---
+  \node[agoraZentrum, minimum width=5.0cm, minimum height=2.3cm] (C) at (16.9,-11.1) {
+    {\normalsize\bfseries HANDEL}\\[-1pt]
+    {\scriptsize\bfseries\color{clGold!55!black} (Agora)}\\[2pt]
+  };
+
+  % --- KNOTEN LOOP 1 (Oben Links: Vertrauen und Stabilisation) ---
+  \node[bknoten=clBlue] (L1A) at (3.6,-6.2)
+    {\textbf{Ruf}\zg{Auf dem Basar baut Feilschen eine Beziehung auf. Ein ehrlicher Ruf macht Fremde berechenbar.}};
+  \node[bknoten=clBlue] (L1B) at (11.8,-6.2)
+    {\textbf{Kredit}\zg{Wer einen guten Ruf hat, bekommt Ware im Voraus. Kredit kommt von \emph{credere}, glauben.}};
+  \node[bknoten=clBlue] (L1C) at (7.7,-9.4)
+    {\textbf{Verlässlichkeit}\zg{Geld als gemeinsamer Maßstab und gehaltene Zusagen machen jeden Tausch stabil.}};
+
+  \draw[looppfeil=clBlue] (L1A.east) -- node[txt]{ermöglicht} (L1B.west);
+  \draw[looppfeil=clBlue] (L1B.south east) to[bend left=14] node[txt, pos=0.45]{erhöht\\Kaufkraft im} (C.north west);
+  \draw[looppfeil=clBlue] (C.168) to[bend left=12] node[txt, pos=0.52]{Abschluss führt zu} (L1C.east);
+  \draw[looppfeil=clBlue] (L1C.north west) to[bend left=14] node[txt]{baut auf} (L1A.south);
+
+  % --- KNOTEN LOOP 2 (Oben Rechts: Infrastruktur) ---
+  \node[bknoten=clGreen] (L2A) at (22.0,-6.2)
+    {\textbf{Smartphone}\zg{Der Marktplatz ist aufs Smartphone gewandert. 2025 wurden 55\,\% der Einkäufe bargeldlos bezahlt.}};
+  \node[bknoten=clGreen] (L2B) at (30.2,-6.2)
+    {\textbf{Seewege}\zg{Schiffe, Häfen und Meerengen tragen den Welthandel. Seit Ende 2023 meiden Schiffe den Sueskanal.}};
+  \node[bknoten=clGreen] (L2C) at (26.1,-9.4)
+    {\textbf{Engpass}\zg{Wenige Meerengen entscheiden, ob Ware ankommt: 10 bis 14 Tage länger, Containerpreise zeitweise vierfach.}};
+
+  \draw[looppfeil=clGreen] (C.north east) to[bend left=14] node[txt, pos=0.55]{Bestellung per Klick} (L2A.south west);
+  \draw[looppfeil=clGreen] (L2A.east) -- node[txt]{löst Lieferung aus über} (L2B.west);
+  \draw[looppfeil=clGreen] (L2B.south) to[bend left=14] node[txt]{laufen durch} (L2C.north east);
+  \draw[looppfeil=clGreen] (L2C.west) to[bend left=12] node[txt, pos=0.48]{verzögert \&\\verteuert den} (C.12);
+
+  % --- KNOTEN LOOP 3 (Unten Links: Konstitutionelle Einrichtungen) ---
+  \node[bknoten=clPurple] (L3A) at (11.8,-15.9)
+    {\textbf{Plattformen}\zg{Amazon, Temu und Shein setzen eigene Regeln für Millionen Käufe, täglich rund 400.000 Pakete.}};
+  \node[bknoten=clPurple] (L3B) at (3.6,-15.9)
+    {\textbf{Gesetze}\zg{Der Staat reagiert mit LkSG und CSDDD auf Ausbeutung entlang der Lieferkette.}};
+  \node[bknoten=clPurple] (L3C) at (7.7,-12.8)
+    {\textbf{Marktaufsicht}\zg{Agoranomen in Athen und Richter auf Messen wachten über Regeln. Heute prüfen Zoll und Behörden.}};
+
+  \draw[looppfeil=clPurple] (C.south west) to[bend left=14] node[txt, pos=0.52]{Umsatz \& Daten\\stärken} (L3A.north east);
+  \draw[looppfeil=clPurple] (L3A.west) -- node[txt]{Ausbeutung \& Bots\\rufen nach} (L3B.east);
+  \draw[looppfeil=clPurple] (L3B.north) to[bend left=14] node[txt]{beauftragen} (L3C.south west);
+  \draw[looppfeil=clPurple] (L3C.east) to[bend left=12] node[txt, pos=0.48]{kontrolliert \&\\begrenzt den} (C.192);
+
+  % --- KNOTEN LOOP 4 (Unten Rechts: Menschliche Komponente) ---
+  \node[bknoten=clRed] (L4A) at (26.1,-12.8)
+    {\textbf{Verlockung}\zg{Apps nutzen Mittel aus dem Game Design: Glücksräder, Countdowns und limitierte Drops.}};
+  \node[bknoten=clRed] (L4B) at (30.2,-15.9)
+    {\textbf{Impulskauf}\zg{Ein gutes Geschäft macht Spaß und bringt Status. Auf StockX laufen Sneaker wie Aktien.}};
+  \node[bknoten=clRed] (L4C) at (22.0,-15.9)
+    {\textbf{Reue}\zg{Fair kaufen wollen und doch zur Billigware greifen. \enquote{Eigentlich brauche ich das nicht …}}};
+
+  \draw[looppfeil=clRed] (C.348) to[bend left=12] node[txt, pos=0.52]{inszeniert Angebote als} (L4A.west);
+  \draw[looppfeil=clRed] (L4A.south east) to[bend left=14] node[txt]{verleitet zu} (L4B.north);
+  \draw[looppfeil=clRed] (L4B.west) -- node[txt]{kippt nach dem Kauf in} (L4C.east);
+  \draw[looppfeil=clRed] (L4C.north west) to[bend left=14] node[txt, pos=0.48]{Drang zum Ausgleich\\treibt zurück in den} (C.south east);
+
+  % --- Querverbindungen zwischen den 4 Loops ---
+  \draw[pfeil, dashed] (L1B.east) -- node[txt]{ermöglicht Kauf auf Raten per} (L2A.west);
+  \draw[pfeil, dashed] (L2C.south) -- node[txt]{Knappheit befeuert} (L4A.north);
+  \draw[pfeil, dashed] (L3C.north) -- node[txt]{sichert} (L1C.south);
+  \draw[pfeil, dashed] (L4C.west) -- node[txt]{Verschuldung bindet an} (L3A.east);
 }
 
 % ================= Quellen =================
