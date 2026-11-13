@@ -1,0 +1,298 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+\usetheme{metropolis}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\definecolor{akzent}{HTML}{E07A1F}
+\definecolor{blau}{HTML}{1F6FB2}
+\setbeamercolor{alerted text}{fg=akzent}
+
+\title{Der F1-Score}
+\subtitle{Precision, Recall, harmonisches Mittel und Macro-F1}
+\date{Assignment 6: LSTM vs.\ GRU auf TweetEval-Emotion}
+
+\begin{document}
+
+\maketitle
+
+% ------------------------------------------------------------
+\begin{frame}{Warum reicht die Accuracy nicht?}
+  \textbf{Accuracy} = Anteil aller richtig klassifizierten Beispiele.
+
+  \vspace{1em}
+  Bei \alert{unausgeglichenen Klassen} täuscht sie:
+  \begin{itemize}
+    \item Baseline „immer \emph{anger}“ im Testset: \alert{39{,}3\,\% Accuracy}, obwohl das Modell nichts gelernt hat.
+    \item Betrugserkennung mit 1\,\% Betrugsfällen: „nie Betrug“ ergibt \alert{99\,\% Accuracy} und ist völlig nutzlos.
+  \end{itemize}
+
+  \vspace{1em}
+  \(\Rightarrow\) Wir brauchen eine Kennzahl, die \textbf{pro Klasse} prüft, ob das Modell sie wirklich erkennt.
+\end{frame}
+
+% ------------------------------------------------------------
+\begin{frame}{Die Bausteine: TP, FP, FN}
+  Betrachtet wird immer \textbf{eine} Klasse, z.\,B.\ \emph{joy}:
+
+  \vspace{0.8em}
+  \begin{center}
+  \begin{tabular}{lcc}
+    \toprule
+     & \textbf{wirklich joy} & \textbf{wirklich nicht joy} \\
+    \midrule
+    \textbf{vorhergesagt joy}       & TP (Treffer)       & FP (Fehlalarm) \\
+    \textbf{vorhergesagt nicht joy} & FN (übersehen)     & TN \\
+    \bottomrule
+  \end{tabular}
+  \end{center}
+
+  \vspace{0.8em}
+  \begin{itemize}
+    \item \textbf{TP}: richtig als joy erkannt
+    \item \textbf{FP}: fälschlich joy genannt
+    \item \textbf{FN}: joy, aber nicht erkannt
+    \item \textbf{TN} kommt im F1 \alert{gar nicht vor}: Die vielen „leichten“ richtig-negativen Fälle blähen den Wert nicht auf.
+  \end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------
+\begin{frame}{Precision und Recall}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \textbf{Precision}
+      \[
+        P = \frac{TP}{TP + FP}
+      \]
+      Von allem, was das Modell „joy“ nennt: Wie viel \emph{ist} wirklich joy?
+
+      \vspace{0.5em}
+      Sinkt durch \alert{Fehlalarme}.
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \textbf{Recall}
+      \[
+        R = \frac{TP}{TP + FN}
+      \]
+      Von allen echten joy-Tweets: Wie viele \emph{findet} das Modell?
+
+      \vspace{0.5em}
+      Sinkt durch \alert{Übersehene}.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ------------------------------------------------------------
+\begin{frame}{Jede Kennzahl allein lässt sich austricksen}
+  \begin{itemize}
+    \item \textbf{Nur Recall optimieren:} Immer „joy“ sagen \(\Rightarrow\) \(R = 1{,}0\), aber \(P\) ist winzig.
+    \item \textbf{Nur Precision optimieren:} Nur beim eindeutigsten Tweet „joy“ sagen \(\Rightarrow\) \(P = 1{,}0\), aber \(R\) ist winzig.
+  \end{itemize}
+
+  \vspace{1em}
+  Beides ist nutzlos.\\[0.5em]
+  \(\Rightarrow\) Wir brauchen \textbf{eine} Zahl, die nur hoch ist, wenn \alert{beide} Werte gut sind.
+\end{frame}
+
+% ------------------------------------------------------------
+\begin{frame}{Der F1-Score}
+  F1 ist das \textbf{harmonische Mittel} von Precision und Recall:
+  \[
+    F_1 \;=\; \frac{2}{\frac{1}{P} + \frac{1}{R}}
+        \;=\; \frac{2\,P\,R}{P + R}
+        \;=\; \frac{2\,TP}{2\,TP + FP + FN}
+  \]
+
+  \begin{itemize}
+    \item Wertebereich: \(0\) (schlecht) bis \(1\) (perfekt)
+    \item Die letzte Form ist genau die Formel in \texttt{macro\_f1()} im Notebook, direkt aus den Zählungen berechnet.
+    \item Hoch \alert{nur dann}, wenn Precision \emph{und} Recall hoch sind.
+  \end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------
+\begin{frame}{Was ist das harmonische Mittel?}
+  \[
+    H(a,b) = \frac{2}{\frac{1}{a} + \frac{1}{b}}
+  \]
+  Kehrwerte bilden, davon den normalen Durchschnitt nehmen, wieder umdrehen.
+
+  \vspace{0.8em}
+  \textbf{Warum zählen kleine Werte stärker?} Ihr Kehrwert ist riesig:
+  \[
+    \tfrac{1}{1{,}0} = 1, \qquad \tfrac{1}{0{,}1} = \alert{10}
+  \]
+  Beispiel \(P = 1{,}0\), \(R = 0{,}1\):
+  \[
+    \frac{1 + 10}{2} = 5{,}5 \quad\Rightarrow\quad H = \frac{1}{5{,}5} \approx \alert{0{,}18}
+  \]
+\end{frame}
+
+% ------------------------------------------------------------
+\begin{frame}{Alltagsbeispiel: Durchschnittsgeschwindigkeit}
+  60\,km hin mit \textbf{30\,km/h}, dieselben 60\,km zurück mit \textbf{90\,km/h}.
+
+  \vspace{1em}
+  \begin{itemize}
+    \item Gefühlt: \((30 + 90)/2 = 60\) km/h \quad \alert{falsch}
+    \item Richtig: Hinweg 2\,h, Rückweg 0{,}67\,h \(\Rightarrow\) 120\,km in 2{,}67\,h \(=\) \textbf{45\,km/h}
+  \end{itemize}
+
+  \vspace{1em}
+  \(45\) km/h ist genau das harmonische Mittel von 30 und 90.\\[0.5em]
+  Der langsame Teil zählt mehr, so wie bei F1 der \alert{schwächere} der beiden Werte.
+\end{frame}
+
+% ------------------------------------------------------------
+\begin{frame}{Arithmetisches vs.\ harmonisches Mittel}
+  \begin{columns}[c]
+    \begin{column}{0.45\textwidth}
+      \begin{tabular}{ccc}
+        \toprule
+        \(P,\ R\) & arithm. & harm.\ (F1) \\
+        \midrule
+        0{,}6 / 0{,}6 & 0{,}60 & 0{,}60 \\
+        0{,}8 / 0{,}4 & 0{,}60 & 0{,}53 \\
+        1{,}0 / 0{,}1 & 0{,}55 & 0{,}18 \\
+        1{,}0 / 0{,}0 & 0{,}50 & \alert{0{,}00} \\
+        \bottomrule
+      \end{tabular}
+
+      \vspace{1em}
+      \small Je weiter \(P\) und \(R\) auseinanderliegen, desto stärker bestraft F1.
+    \end{column}
+    \begin{column}{0.52\textwidth}
+      \begin{tikzpicture}
+        \begin{axis}[
+          width=\linewidth, height=5.2cm,
+          xlabel={Recall (bei \(P = 1{,}0\))}, ylabel={Mittel},
+          xmin=0, xmax=1, ymin=0, ymax=1,
+          legend pos=south east, legend style={font=\scriptsize},
+          tick label style={font=\scriptsize}, label style={font=\small},
+          grid=major, grid style={gray!20}
+        ]
+          \addplot[blau, thick, domain=0:1, samples=50] {(1+x)/2};
+          \addlegendentry{arithmetisch}
+          \addplot[akzent, very thick, domain=0.001:1, samples=80] {2*x/(1+x)};
+          \addlegendentry{harmonisch (F1)}
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ------------------------------------------------------------
+\begin{frame}{Macro-F1: mehrere Klassen}
+  \[
+    \text{Macro-F1} = \frac{1}{K} \sum_{c=1}^{K} F_1^{(c)}
+  \]
+
+  \begin{itemize}
+    \item Zwei Ebenen von Durchschnitt:
+      \begin{enumerate}
+        \item \textbf{F1 pro Klasse}: harmonisches Mittel aus \(P\) und \(R\)
+        \item \textbf{Macro-F1}: normaler Durchschnitt über alle \(K\) Klassen
+      \end{enumerate}
+    \item Jede Klasse zählt \alert{gleich viel}, egal wie häufig sie ist.
+    \item Seltene Klassen, die schlecht erkannt werden, ziehen den Wert sichtbar nach unten.
+    \item Offizielle Metrik für TweetEval-Emotion, im Notebook auch zur Checkpoint-Auswahl genutzt.
+  \end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------
+\begin{frame}{Beispiel: Baseline „immer anger“}
+  Anteil von \emph{anger} im Testset: \(39{,}3\,\%\)
+
+  \vspace{0.5em}
+  \begin{itemize}
+    \item \emph{anger}: \(P = 0{,}393\), \(R = 1{,}0\) \(\Rightarrow\) \(F_1 = \frac{2 \cdot 0{,}393}{1{,}393} \approx 0{,}56\)
+    \item \emph{joy}, \emph{optimism}, \emph{sadness}: nie vorhergesagt \(\Rightarrow\) \(F_1 = 0\)
+  \end{itemize}
+
+  \vspace{0.5em}
+  \[
+    \text{Macro-F1} = \frac{0{,}56 + 0 + 0 + 0}{4} \approx \alert{0{,}141}
+  \]
+
+  \begin{center}
+    Accuracy \(0{,}393\) \quad vs.\quad Macro-F1 \(0{,}141\)
+  \end{center}
+  Macro-F1 zeigt, dass das Modell \alert{drei von vier} Klassen nicht erkennt.
+\end{frame}
+
+% ------------------------------------------------------------
+\begin{frame}{Ergebnisse im Notebook: F1 pro Klasse (Seed 42)}
+  \begin{columns}[c]
+    \begin{column}{0.58\textwidth}
+      \begin{tikzpicture}
+        \begin{axis}[
+          ybar, bar width=9pt,
+          width=\linewidth, height=5.6cm,
+          ymin=0, ymax=0.8,
+          symbolic x coords={anger,joy,optimism,sadness},
+          xtick=data,
+          ylabel={F1}, legend style={font=\scriptsize, at={(0.5,1.03)}, anchor=south, draw=none}, legend columns=2,
+          tick label style={font=\scriptsize}, label style={font=\small},
+          nodes near coords, nodes near coords style={font=\tiny},
+          every node near coord/.append style={/pgf/number format/fixed, /pgf/number format/precision=2},
+          ymajorgrids, grid style={gray!20}
+        ]
+          \addplot[fill=blau, draw=none] coordinates {(anger,0.666) (joy,0.523) (optimism,0.278) (sadness,0.547)};
+          \addlegendentry{LSTM}
+          \addplot[fill=akzent, draw=none] coordinates {(anger,0.673) (joy,0.574) (optimism,0.265) (sadness,0.599)};
+          \addlegendentry{GRU}
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \small
+      \begin{tabular}{lcc}
+        \toprule
+         & Acc & Macro-F1 \\
+        \midrule
+        Baseline & 0{,}393 & 0{,}141 \\
+        LSTM     & 0{,}574 & 0{,}503 \\
+        GRU      & 0{,}601 & 0{,}528 \\
+        \bottomrule
+      \end{tabular}
+
+      \vspace{1em}
+      \alert{optimism} wird kaum erkannt (\(F_1 \approx 0{,}27\)): wenige Beispiele, oft mit \emph{joy} verwechselt.
+      In der Accuracy fällt das kaum auf.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ------------------------------------------------------------
+\begin{frame}{Wann F1, wann nicht?}
+  \textbf{F1 / Macro-F1 ist sinnvoll, wenn}
+  \begin{itemize}
+    \item die Klassen unausgeglichen sind,
+    \item seltene Klassen genauso wichtig sind wie häufige,
+    \item Fehlalarme und Übersehene etwa gleich schlimm sind.
+  \end{itemize}
+
+  \vspace{0.8em}
+  \textbf{Andere Kennzahlen passen besser, wenn}
+  \begin{itemize}
+    \item die Klassen ausgeglichen sind \(\Rightarrow\) Accuracy reicht,
+    \item ein Fehlertyp viel teurer ist, z.\,B.\ Krebs-Screening \(\Rightarrow\) vor allem \textbf{Recall}.
+  \end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------
+\begin{frame}{Zusammenfassung}
+  \begin{itemize}
+    \item \textbf{Precision}: Stimmen die Treffer? \quad \textbf{Recall}: Werden alle gefunden?
+    \item \textbf{F1} = harmonisches Mittel aus beiden, also nur hoch, wenn \alert{beide} gut sind.
+    \item Das harmonische Mittel liegt nahe am \alert{kleineren} Wert, deshalb kann eine Schwäche nicht durch eine Stärke ausgeglichen werden.
+    \item \textbf{Macro-F1} = Durchschnitt der Klassen-F1, jede Klasse zählt gleich viel.
+    \item Im Notebook: GRU leicht vor LSTM (\(0{,}537\) vs.\ \(0{,}520\) über 5 Seeds), Unterschied etwa so groß wie die Seed-Streuung.
+  \end{itemize}
+\end{frame}
+
+\end{document}
