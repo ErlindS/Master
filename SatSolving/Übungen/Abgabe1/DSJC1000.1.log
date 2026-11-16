@@ -1,0 +1,8 @@
+Graph geladen: DSJC1000.1.col (|V| = 1000, |E| = 49629)
+IPASIR Solver initialisiert: cadical-3.0.1-c607304
+k = 1: UNSAT (keine gueltige 1-Faerbung)
+k = 2: UNSAT (keine gueltige 2-Faerbung)
+k = 3: UNSAT (keine gueltige 3-Faerbung)
+k = 4: UNSAT (keine gueltige 4-Faerbung)
+k = 5: UNSAT (keine gueltige 5-Faerbung)
+k = 6: UNSAT (keine gueltige 6-Faerbung)

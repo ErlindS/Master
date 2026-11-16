@@ -21,6 +21,34 @@
 \usepackage{array}
 \usepackage{xcolor}
 
+% --- Code Listings ---
+\usepackage{listings}
+\usepackage{multicol}
+\definecolor{codebg}{RGB}{248, 248, 248}
+\definecolor{codeborder}{RGB}{225, 225, 225}
+\definecolor{codegreen}{RGB}{0, 128, 0}
+\definecolor{codeblue}{RGB}{0, 0, 180}
+
+\lstset{
+    language=C++,
+    backgroundcolor=\color{codebg},
+    basicstyle=\ttfamily\fontsize{7.5pt}{8.8pt}\selectfont,
+    breaklines=true,
+    frame=single,
+    rulecolor=\color{codeborder},
+    keywordstyle=\color{codeblue}\bfseries,
+    commentstyle=\color{codegreen}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    numbersep=5pt,
+    tabsize=4,
+    showstringspaces=false,
+    aboveskip=4pt,
+    belowskip=4pt,
+    literate={ä}{{\"a}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+             {Ä}{{\"A}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1 {ß}{{\ss}}1
+}
+
 % --- Hyperref ---
 \usepackage{hyperref}
 \hypersetup{
@@ -44,49 +72,10 @@
 \end{flushleft}
 
 \begin{center}
-    {\Large\bfseries Übungsblatt 2: Aufgaben 1 \& 2}
+    {\Large\bfseries Übungsblatt 2: Aufgabe 2 \quad$\cdot$\quad Übungsblatt 1: Aufgaben 1 \& 2}
 \end{center}
 \vspace{0.2em}
 
-% =============================================================================
-\section*{Aufgabe 1: Resolutionsbeweis}
-% =============================================================================
-
-Gegeben ist die Formel
-\begin{equation*}
-    \underbrace{(x_3 \lor x_4 \lor \nx1 \lor x_5)}_{(1)} \land
-    \underbrace{(\nx3 \lor x_4 \lor x_5)}_{(2)} \land
-    \underbrace{(x_3 \lor \nx4 \lor \nx1)}_{(3)} \land
-    \underbrace{(x_1 \lor x_2)}_{(4)} \land
-    \underbrace{(x_1 \lor \nx2)}_{(5)} \land
-    \underbrace{(\nx1 \lor \nx5)}_{(6)} \land
-    \underbrace{(\nx3 \lor \nx4 \lor x_5)}_{(7)}
-\end{equation*}
-
-Durch wiederholte Resolution wird die leere Klausel $\square$ abgeleitet:
-
-\begin{center}
-\renewcommand{\arraystretch}{1.25}
-\begin{tabular}{@{}r>{$}l<{$}ll@{}}
-    \toprule
-    Nr. & \text{Resolvente} & aus & Variable \\
-    \midrule
-    (8)  & (x_1)                    & (4), (5)   & $x_2$ \\
-    (9)  & (\nx5)                   & (6), (8)   & $x_1$ \\
-    (10) & (x_3 \lor \nx4)          & (3), (8)   & $x_1$ \\
-    (11) & (\nx4 \lor x_5)          & (7), (10)  & $x_3$ \\
-    (12) & (\nx3 \lor x_5)          & (2), (11)  & $x_4$ \\
-    (13) & (x_3 \lor x_4 \lor x_5)  & (1), (8)   & $x_1$ \\
-    (14) & (x_3 \lor x_5)           & (13), (11) & $x_4$ \\
-    (15) & (x_5)                    & (12), (14) & $x_3$ \\
-    (16) & \square                  & (9), (15)  & $x_5$ \\
-    \bottomrule
-\end{tabular}
-\end{center}
-
-Da die leere Klausel ableitbar ist, ist die Formel \textbf{unerfüllbar}.
-
-\newpage
 % =============================================================================
 \section*{Aufgabe 2: Tseitin-Transformation}
 % =============================================================================
@@ -136,4 +125,303 @@ Für jede Teilformel wird eine neue Variable eingeführt:
     \bottomrule
 \end{tabular}
 \end{center}
+
+Insgesamt besteht $T(F)$ aus $1 + 3 + 4 + 7\cdot 3 = 26$ Klauseln über $4 + 8 = 12$ Variablen.
+
+\subsection*{Vereinfachung durch Unit-Propagation}
+
+Dabei entsteht keine weitere Unit-Klausel, die Unit-Propagation endet also hier. Übrig bleiben 23 Klauseln:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}l>{$}l<{$}@{\qquad}l>{$}l<{$}@{\qquad}l>{$}l<{$}@{}}
+    \toprule
+    $F_1$ & (b \lor h)                 & $C_1$ & (\n c \lor \nx3 \lor \nx4) & $E_1$ & (\n e \lor \nx1 \lor d) \\
+    $A_1$ & (\n a \lor \nx3 \lor x_2)  & $C_2$ & (c \lor x_3)               & $E_2$ & (e \lor x_1) \\
+    $A_2$ & (\n a \lor x_3 \lor \nx2)  & $C_3$ & (c \lor x_4)               & $E_3$ & (e \lor \n d) \\
+    $A_3$ & (a \lor x_3 \lor x_2)      & $D_1$ & (\n d \lor x_2)            & $G_1$ & (\n g \lor c) \\
+    $A_4$ & (a \lor \nx3 \lor \nx2)    & $D_2$ & (\n d \lor \nx3)           & $G_2$ & (\n g \lor e) \\
+    $B_1$ & (\n b \lor \nx1)           & $D_3$ & (d \lor \nx2 \lor x_3)     & $G_3$ & (g \lor \n c \lor \n e) \\
+    $B_2$ & (\n b \lor \n a)           &       &                            & $H_1$ & (\n h \lor g) \\
+    $B_3$ & (b \lor x_1 \lor a)        &       &                            & $H_2$ & (\n h \lor x_4) \\
+          &                            &       &                            & $H_3$ & (h \lor \n g \lor \nx4) \\
+    \bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{Vereinfachung durch Blocked Clause Elimination (BCE)}
+
+\textbf{Phase 1: Rückrichtungen der Definitionen.}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}rl>{$}c<{$}l>{$}l<{$}@{}}
+    \toprule
+    Nr. & Klausel & \ell & Partner & \text{Resolventen} \\
+    \midrule
+    1  & $B_3$ & b      & $B_1, B_2$ & (\underline{x_1 \lor \nx1} \lor a),\ (x_1 \lor \underline{a \lor \n a}) \\
+    2  & $H_3$ & h      & $H_1, H_2$ & (\underline{g \lor \n g} \lor \nx4),\ (\n g \lor \underline{\nx4 \lor x_4}) \\
+    3  & $G_3$ & g      & $G_1, G_2$ & (\underline{c \lor \n c} \lor \n e),\ (\n c \lor \underline{e \lor \n e}) \\
+    4  & $C_2$ & c      & $C_1$      & (\underline{x_3 \lor \nx3} \lor \nx4) \\
+    5  & $C_3$ & c      & $C_1$      & (\nx3 \lor \underline{x_4 \lor \nx4}) \\
+    6  & $E_2$ & e      & $E_1$      & (\underline{x_1 \lor \nx1} \lor d) \\
+    7  & $E_3$ & e      & $E_1$      & (\nx1 \lor \underline{d \lor \n d}) \\
+    8  & $D_3$ & d      & $D_1, D_2$ & (\underline{\nx2 \lor x_2} \lor x_3),\ (\nx2 \lor \underline{x_3 \lor \nx3}) \\
+    9  & $A_1$ & \n a   & $A_3, A_4$ & (\underline{\nx3 \lor x_3} \lor x_2),\ (\nx3 \lor \underline{x_2 \lor \nx2}) \\
+    10 & $A_2$ & \n a   & $A_3, A_4$ & (x_3 \lor \underline{\nx2 \lor x_2}),\ (\underline{x_3 \lor \nx3} \lor \nx2) \\
+    \bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Phase 2: Pure Literale.}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}rl>{$}c<{$}l@{}}
+    \toprule
+    Nr. & Klausel & \ell & Begründung \\
+    \midrule
+    11, 12 & $B_1$, $E_1$ & \nx1 & $x_1$ kommt nach Entfernen von $B_3, E_2$ nicht mehr positiv vor \\
+    13     & $G_2$        & e    & $\n e$ kommt nach Entfernen von $G_3$ nur noch in $E_1$ vor (entfernt) \\
+    14, 15 & $D_1$, $D_2$ & \n d & $d$ kommt nach Entfernen von $D_3, E_1$ nicht mehr positiv vor \\
+    16     & $A_3$        & x_2  & einziger Partner $A_4$: Resolvente $(\underline{x_3 \lor \nx3} \lor a)$ \\
+    17     & $A_4$        & \nx2 & $x_2$ kommt nicht mehr vor \\
+    18     & $B_2$        & \n a & $a$ kommt nicht mehr vor \\
+    19     & $F_1$        & b    & $\n b$ kommt nicht mehr vor \\
+    20, 21 & $H_1$, $H_2$ & \n h & $h$ kommt nicht mehr vor \\
+    22     & $G_1$        & \n g & $g$ kommt nicht mehr vor \\
+    23     & $C_1$        & \n c & $c$ kommt nicht mehr vor \\
+    \bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{Ergebnis}
+
+\begin{center}
+\fbox{\parbox{0.85\textwidth}{\centering
+    Nach Unit-Propagation und BCE bleibt die leere Klauselmenge $\emptyset$ übrig, d.\,h. $F$ ist erfüllbar.}}
+\end{center}
+
+
+\newpage
+% =============================================================================
+\section*{Übungsblatt 1 -- Aufgabe 1: Graphfärbung durch inkrementelles SAT-Solving}
+% =============================================================================
+
+\subsection*{Grundidee}
+
+Für jede Farbe bekommen alle Knoten eine neue Variable, von denen jeder Knoten genau eine haben muss. Wenn vorgegeben ist, dass zwei Knoten benachbart sind, darf keine Farbe die gleiche Sein, wie die Farbe eines Nachbarn.
+
+\subsection*{Umsetzung}
+
+Das Programm bedenkt eine neue Farbe, wenn mit vorhandener Anzahl Farben der Graph nicht gelöst werden kann. Da eine neue Farbe pro knoten ein neues XOR für alle möglichen Farben der Knoten bedeutet, müsste das alte XOR verworfen werden. Da dies ohne ein komplettes reset nicht geht, werden zuerst alle möglichen Farben (Anzahl Knoten) pro Knoten als Möglichkeit definiert.
+
+Alle Farben, die während einer Iteration noch nicht erwägt werden sollen, werden mit \texttt{assume()} ausgeschaltet.
+
+\texttt{XORlastColor()} liest die DMACS Datei und definiert, dass keine zwei benachbarten Farben die gleichen sein können („XOR“ ist hier nicht richtig, der Name ist ein Fragment einer alten Funktion)
+
+Die für DSJC125.1 gefundene 5-Färbung wurde unabhängig geprüft: Keine der 736 Kanten verbindet zwei gleichfarbige Knoten. Bei DSJC1000.1 sind in der Literatur Färbungen mit etwa 20 Farben bekannt. Die UNSAT-Beweise für die dazwischenliegenden $k$ werden mit jedem Schritt deutlich schwerer, daher ist für diese Instanz in vertretbarer Zeit kein Ergebnis zu erwarten.
+
+Ausschnitt der Ausgabe für DSJC125.1:
+\begin{lstlisting}[language={}, numbers=none]
+./build/graphColor DSJC125.1.col
+Inkrementelles SAT-Programm gestartet.
+IPASIR: cadical-3.0.1-c607304
+Pruefe die Faerbbarkeit mit 1 Farben.
+Pruefe die Faerbbarkeit mit 2 Farben.
+Pruefe die Faerbbarkeit mit 3 Farben.
+Pruefe die Faerbbarkeit mit 4 Farben.
+Pruefe die Faerbbarkeit mit 5 Farben.
+SAT mit 5 Farben.
+\end{lstlisting}
+\begin{multicols}{4}
+\begin{lstlisting}[language={}, numbers=none, frame=none, backgroundcolor={}]
+Knoten 1: Farbe 4
+Knoten 2: Farbe 1
+Knoten 3: Farbe 2
+Knoten 4: Farbe 1
+Knoten 5: Farbe 1
+Knoten 6: Farbe 4
+Knoten 7: Farbe 3
+Knoten 8: Farbe 3
+Knoten 9: Farbe 3
+Knoten 10: Farbe 1
+Knoten 11: Farbe 5
+Knoten 12: Farbe 3
+Knoten 13: Farbe 3
+Knoten 14: Farbe 1
+Knoten 15: Farbe 2
+Knoten 16: Farbe 2
+Knoten 17: Farbe 3
+Knoten 18: Farbe 1
+Knoten 19: Farbe 4
+Knoten 20: Farbe 1
+Knoten 21: Farbe 4
+Knoten 22: Farbe 2
+Knoten 23: Farbe 2
+Knoten 24: Farbe 2
+Knoten 25: Farbe 4
+Knoten 26: Farbe 3
+Knoten 27: Farbe 2
+Knoten 28: Farbe 2
+Knoten 29: Farbe 3
+Knoten 30: Farbe 5
+Knoten 31: Farbe 4
+Knoten 32: Farbe 2
+Knoten 33: Farbe 2
+Knoten 34: Farbe 5
+Knoten 35: Farbe 5
+Knoten 36: Farbe 3
+Knoten 37: Farbe 1
+Knoten 38: Farbe 5
+Knoten 39: Farbe 4
+Knoten 40: Farbe 4
+Knoten 41: Farbe 1
+Knoten 42: Farbe 1
+Knoten 43: Farbe 1
+Knoten 44: Farbe 1
+Knoten 45: Farbe 1
+Knoten 46: Farbe 5
+Knoten 47: Farbe 2
+Knoten 48: Farbe 5
+Knoten 49: Farbe 2
+Knoten 50: Farbe 3
+Knoten 51: Farbe 4
+Knoten 52: Farbe 4
+Knoten 53: Farbe 3
+Knoten 54: Farbe 1
+Knoten 55: Farbe 5
+Knoten 56: Farbe 3
+Knoten 57: Farbe 2
+Knoten 58: Farbe 1
+Knoten 59: Farbe 3
+Knoten 60: Farbe 1
+Knoten 61: Farbe 5
+Knoten 62: Farbe 4
+Knoten 63: Farbe 1
+Knoten 64: Farbe 4
+Knoten 65: Farbe 2
+Knoten 66: Farbe 5
+Knoten 67: Farbe 3
+Knoten 68: Farbe 4
+Knoten 69: Farbe 5
+Knoten 70: Farbe 1
+Knoten 71: Farbe 1
+Knoten 72: Farbe 2
+Knoten 73: Farbe 1
+Knoten 74: Farbe 1
+Knoten 75: Farbe 3
+Knoten 76: Farbe 3
+Knoten 77: Farbe 2
+Knoten 78: Farbe 3
+Knoten 79: Farbe 2
+Knoten 80: Farbe 2
+Knoten 81: Farbe 4
+Knoten 82: Farbe 5
+Knoten 83: Farbe 2
+Knoten 84: Farbe 5
+Knoten 85: Farbe 5
+Knoten 86: Farbe 3
+Knoten 87: Farbe 4
+Knoten 88: Farbe 4
+Knoten 89: Farbe 3
+Knoten 90: Farbe 5
+Knoten 91: Farbe 1
+Knoten 92: Farbe 5
+Knoten 93: Farbe 4
+Knoten 94: Farbe 2
+Knoten 95: Farbe 4
+Knoten 96: Farbe 4
+Knoten 97: Farbe 3
+Knoten 98: Farbe 5
+Knoten 99: Farbe 4
+Knoten 100: Farbe 2
+Knoten 101: Farbe 4
+Knoten 102: Farbe 2
+Knoten 103: Farbe 4
+Knoten 104: Farbe 4
+Knoten 105: Farbe 5
+Knoten 106: Farbe 3
+Knoten 107: Farbe 5
+Knoten 108: Farbe 3
+Knoten 109: Farbe 2
+Knoten 110: Farbe 4
+Knoten 111: Farbe 1
+Knoten 112: Farbe 4
+Knoten 113: Farbe 5
+Knoten 114: Farbe 3
+Knoten 115: Farbe 1
+Knoten 116: Farbe 1
+Knoten 117: Farbe 1
+Knoten 118: Farbe 5
+Knoten 119: Farbe 2
+Knoten 120: Farbe 5
+Knoten 121: Farbe 3
+Knoten 122: Farbe 2
+Knoten 123: Farbe 3
+Knoten 124: Farbe 3
+Knoten 125: Farbe 3
+\end{lstlisting}
+\end{multicols}
+
+\subsection*{Quellcode}
+
+\lstinputlisting{graphColor.cc}
+
+
+\newpage
+% =============================================================================
+\section*{Übungsblatt 1 -- Aufgabe 2: Sudoku Challenge}
+% =============================================================================
+
+\subsection*{Grundidee}
+
+\subsection*{Ein- und Ausgabe}
+
+Das Skript sucht die Rätsel im Unterordner \texttt{sudokus/} und wird so gestartet:
+\begin{lstlisting}[language={}, numbers=none]
+python3 sudoku.py --input puzzle03a.sudoku
+\end{lstlisting}
+
+\subsection*{Beispiel: \texttt{puzzle03a.sudoku} (Ordnung 3)}
+
+\begin{minipage}[t]{0.42\textwidth}
+Eingabe ($0$ = leeres Feld):
+\begin{lstlisting}[language={}, numbers=none]
+3
+6 0 0 0 0 0 0 0 3
+8 0 0 4 5 6 1 0 0
+0 5 0 0 0 0 0 0 0
+0 1 5 9 0 0 3 0 0
+0 0 0 0 1 0 0 0 0
+0 6 0 0 8 0 5 0 7
+0 0 2 0 0 0 0 0 0
+9 0 0 0 0 1 7 4 0
+4 7 0 0 9 0 0 0 6
+\end{lstlisting}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.54\textwidth}
+Ausgabe (Laufzeit ca.\ $0{,}08$\,s):
+\begin{lstlisting}[language={}, numbers=none]
+SAT
+ 6  9  4 |  1  7  8 |  2  5  3  Zeile  1
+ 8  2  3 |  4  5  6 |  1  7  9  Zeile  2
+ 1  5  7 |  2  3  9 |  4  6  8  Zeile  3
+------------------------
+ 7  1  5 |  9  6  2 |  3  8  4  Zeile  4
+ 3  4  8 |  7  1  5 |  6  9  2  Zeile  5
+ 2  6  9 |  3  8  4 |  5  1  7  Zeile  6
+------------------------
+ 5  8  2 |  6  4  7 |  9  3  1  Zeile  7
+ 9  3  6 |  8  2  1 |  7  4  5  Zeile  8
+ 4  7  1 |  5  9  3 |  8  2  6  Zeile  9
+\end{lstlisting}
+\end{minipage}
+
+Alle Vorgaben sind erhalten, und jede Zeile, Spalte und jeder Block enthält die Zahlen $1$--$9$ genau einmal.
+
+\subsection*{Quellcode (\texttt{sudoku.py})}
+
+\lstinputlisting[language=Python]{sudoku.py}
+
 \end{document}
