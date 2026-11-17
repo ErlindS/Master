@@ -1,0 +1,27 @@
+variante;geraet;n;erster_lauf_ms;median_ms;gb_s;korrekt;selector
+stencil1_2d;NVIDIA L40S;4096;86.122;20.022;670.35;ja;cuda:gpu
+stencil1_2d_sync;NVIDIA L40S;4096;24.509;21.238;631.96;ja;cuda:gpu
+stencil2_1d;NVIDIA L40S;4096;70.384;27.965;479.95;ja;cuda:gpu
+stencil3_lokal_B16;NVIDIA L40S;4096;34.738;19.775;678.73;ja;cuda:gpu
+stencil1_2d;NVIDIA L40S;8192;81.906;80.273;668.81;ja;cuda:gpu
+stencil1_2d_sync;NVIDIA L40S;8192;82.820;81.169;661.42;ja;cuda:gpu
+stencil2_1d;NVIDIA L40S;8192;112.947;111.179;482.89;ja;cuda:gpu
+stencil3_lokal_B16;NVIDIA L40S;8192;80.938;78.668;682.45;ja;cuda:gpu
+reduktion1_atomar;NVIDIA L40S;16777216;31923.854;31837.647;0.00;ja;cuda:gpu
+reduktion2_lokal_W256;NVIDIA L40S;16777216;22.664;2.918;23.00;ja;cuda:gpu
+reduktion3_gruppe_W256;NVIDIA L40S;16777216;28.712;2.792;24.03;ja;cuda:gpu
+reduktion4_builtin;NVIDIA L40S;16777216;42.895;0.052;1298.37;ja;cuda:gpu
+reduktion1_atomar;NVIDIA L40S;67108864;30986.366;31041.246;0.01;ja;cuda:gpu
+reduktion2_lokal_W256;NVIDIA L40S;67108864;3.416;1.305;205.74;ja;cuda:gpu
+reduktion3_gruppe_W256;NVIDIA L40S;67108864;3.572;1.282;209.40;ja;cuda:gpu
+reduktion4_builtin;NVIDIA L40S;67108864;3.771;0.487;551.05;ja;cuda:gpu
+cuda_stencil_global_B16;NVIDIA L40S;4096;20.170;20.003;670.99;ja;cuda
+cuda_stencil_shared_B16;NVIDIA L40S;4096;19.935;19.685;681.83;ja;cuda
+cuda_stencil_global_B16;NVIDIA L40S;8192;80.536;79.993;671.15;ja;cuda
+cuda_stencil_shared_B16;NVIDIA L40S;8192;77.550;77.213;695.31;ja;cuda
+cuda_reduktion_atomar;NVIDIA L40S;16777216;1.729;1.576;42.57;ja;cuda
+cuda_reduktion_shared_W256;NVIDIA L40S;16777216;0.188;0.025;2695.35;ja;cuda
+cuda_reduktion_cub;NVIDIA L40S;16777216;0.114;0.023;2873.55;ja;cuda
+cuda_reduktion_atomar;NVIDIA L40S;67108864;1.870;1.699;158.04;ja;cuda
+cuda_reduktion_shared_W256;NVIDIA L40S;67108864;0.527;0.364;737.90;ja;cuda
+cuda_reduktion_cub;NVIDIA L40S;67108864;0.399;0.375;715.33;ja;cuda

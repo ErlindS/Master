@@ -1,0 +1,17 @@
+stufe;geraet;n;erster_lauf_ms;median_ms;transfer_ms;gflops;korrekt
+cuda_1_managed;NVIDIA L40S;1024;3.608;0.417;0.000;5154.13;ja
+cuda_2_device_B16;NVIDIA L40S;1024;1.610;0.559;0.931;3844.93;ja
+cuda_4_tiling_T16;NVIDIA L40S;1024;1.492;0.450;0.921;4775.45;ja
+cuda_cublas;NVIDIA L40S;1024;177.846;0.221;0.929;9707.46;ja
+cuda_4_tiling_T8;NVIDIA L40S;1024;1.621;0.559;0.923;3839.41;ja
+cuda_4_tiling_T16;NVIDIA L40S;1024;1.502;0.450;0.923;4770.14;ja
+cuda_4_tiling_T32;NVIDIA L40S;1024;1.550;0.483;0.966;4445.66;ja
+cuda_4_tiling_T64;;1024;;;;;startet_nicht
+cuda_1_managed;NVIDIA L40S;2048;14.058;3.197;0.000;5374.24;ja
+cuda_2_device_B16;NVIDIA L40S;2048;7.284;3.321;3.861;5173.47;ja
+cuda_4_tiling_T16;NVIDIA L40S;2048;6.443;2.496;3.865;6882.99;ja
+cuda_cublas;NVIDIA L40S;2048;33.374;0.485;3.864;35403.80;ja
+cuda_4_tiling_T8;NVIDIA L40S;2048;7.282;3.339;3.870;5144.69;ja
+cuda_4_tiling_T16;NVIDIA L40S;2048;6.480;2.488;3.867;6905.85;ja
+cuda_4_tiling_T32;NVIDIA L40S;2048;6.673;2.678;3.990;6414.10;ja
+cuda_4_tiling_T64;;2048;;;;;startet_nicht
