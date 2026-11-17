@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Theorienstatik</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/theme/white.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbfaf7; --ink:#1d2433; --muted:#5d6678; --line:#d9d6cf;
+  --core:#b4442c; --mid:#d98b3a; --outer:#4f8a8b; --edge:#3b5b92; --ok:#2f7d4f; --bad:#a83232;
+  --card:#ffffff;
+  --r-background-color:var(--bg); --r-main-color:var(--ink); --r-heading-color:var(--ink);
+  --r-main-font:'Inter',system-ui,sans-serif; --r-heading-font:'Inter',system-ui,sans-serif;
+  --r-heading-font-weight:800; --r-heading-text-transform:none; --r-main-font-size:34px;
+  --r-link-color:var(--edge);
+}
+body{background:var(--bg)}
+.reveal h1{font-size:2.3em;letter-spacing:-.02em}
+.reveal h2{font-size:1.45em;letter-spacing:-.01em;margin-bottom:.6em}
+.reveal h3{font-size:1em;color:var(--muted);font-weight:600}
+.reveal .kicker{font-size:.55em;text-transform:uppercase;letter-spacing:.14em;color:var(--core);font-weight:700;margin-bottom:.3em}
+.reveal .muted{color:var(--muted)}
+.reveal .small{font-size:.7em}
+.reveal .tiny{font-size:.5em}
+.reveal ul{margin-left:1em}
+.reveal li{margin:.35em 0}
+.mono,.formula{font-family:'JetBrains Mono',monospace}
+.formula{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.5em .8em;display:inline-block;font-size:.8em}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1em;text-align:left}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:.8em;text-align:left}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:.7em;text-align:left}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:.7em .8em;font-size:.68em;box-shadow:0 4px 18px rgba(0,0,0,.05)}
+.card>b:first-child{display:block;font-size:1.15em;margin-bottom:.3em}
+.card.core{border-top:6px solid var(--core)} .card.mid{border-top:6px solid var(--mid)}
+.card.outer{border-top:6px solid var(--outer)} .card.edge{border-top:6px solid var(--edge)}
+.card.ok{border-top:6px solid var(--ok)} .card.bad{border-top:6px solid var(--bad)}
+.def{border-left:6px solid var(--edge);background:var(--card);padding:.6em 1em;border-radius:0 12px 12px 0;text-align:left;font-size:.72em}
+.tag{display:inline-block;padding:.1em .55em;border-radius:999px;font-size:.6em;font-weight:700;color:#fff}
+.tag.core{background:var(--core)} .tag.mid{background:var(--mid)} .tag.outer{background:var(--outer)} .tag.edge{background:var(--edge)}
+
+/* ---- Kern/Peripherie-Ringe ---- */
+.rings{position:relative;width:560px;height:560px;margin:0 auto}
+.ring{position:absolute;border-radius:50%;display:flex;justify-content:center;align-items:flex-start;text-align:center;color:#fff;font-weight:700;font-size:.45em;padding:.9em 70px 0;box-sizing:border-box;line-height:1.25}
+.ring.r4{width:560px;height:560px;left:0;top:0;background:var(--outer)}
+.ring.r3{width:420px;height:420px;left:70px;top:70px;background:var(--mid)}
+.ring.r2{width:280px;height:280px;left:140px;top:140px;background:#c96a33}
+.ring.r1{width:150px;height:150px;left:205px;top:205px;background:var(--core);align-items:center;padding:0;font-size:.6em}
+.rings-wrap{display:grid;grid-template-columns:560px 1fr;gap:1.2em;align-items:center;text-align:left}
+
+/* ---- Planetenbahnen ---- */
+.orbits{display:grid;grid-template-columns:1fr 1fr;gap:1.5em}
+.sky{position:relative;height:300px;background:#141a2b;border-radius:16px;overflow:hidden}
+.sun{position:absolute;width:34px;height:34px;border-radius:50%;background:#f7c948;left:calc(50% - 17px);top:calc(50% - 17px);box-shadow:0 0 30px #f7c948}
+.orbit{position:absolute;border:1px dashed rgba(255,255,255,.3);border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%)}
+.planet{position:absolute;width:16px;height:16px;border-radius:50%;left:50%;top:50%;margin:-8px}
+.spin{animation:spin linear infinite}
+@keyframes spin{from{transform:rotate(0deg) translateX(var(--r)) rotate(0deg)}to{transform:rotate(360deg) translateX(var(--r)) rotate(-360deg)}}
+.wobble{animation:wobble 9s linear infinite}
+@keyframes wobble{0%{transform:rotate(0deg) translateX(110px)}50%{transform:rotate(180deg) translateX(118px)}100%{transform:rotate(360deg) translateX(110px)}}
+.ghost{border:2px dashed #ffffffaa;background:transparent}
+.sky .lbl{position:absolute;bottom:10px;left:14px;color:#cfd6e6;font-size:.45em}
+
+/* ---- Netz ---- */
+.net{position:relative;width:1000px;height:470px;margin:0 auto}
+.net svg{position:absolute;inset:0}
+.node{position:absolute;padding:.25em .6em;border-radius:10px;background:var(--card);border:2px solid var(--line);font-size:.48em;font-weight:600;transform:translate(-50%,-50%);white-space:nowrap}
+.node.phys{border-color:var(--edge)} .node.bio{border-color:var(--ok)} .node.soc{border-color:var(--mid)}
+.legend{font-size:.5em;text-align:left}
+.legend span{display:inline-block;width:28px;height:4px;vertical-align:middle;margin-right:.4em}
+
+/* ---- Flussdiagramm ---- */
+.flow{display:flex;align-items:center;justify-content:center;gap:.5em;flex-wrap:wrap}
+.box{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:.4em .7em;font-size:.6em}
+.arrow{font-size:.9em;color:var(--muted)}
+.big-chain{font-family:'JetBrains Mono',monospace;font-size:1.3em;display:flex;gap:.4em;justify-content:center;align-items:center}
+.big-chain .emp{color:var(--edge);font-weight:700}
+.big-chain .th{color:var(--core);font-weight:700}
+
+/* ---- Zeitstrahl ---- */
+.timeline{position:relative;height:150px;margin:1em 40px 0}
+.timeline .axis{position:absolute;left:0;right:0;top:70px;height:6px;background:var(--line);border-radius:3px}
+.timeline .fill{position:absolute;left:0;top:70px;height:6px;background:var(--core);border-radius:3px;width:0;transition:width 1.4s ease}
+.timeline.go .fill{width:100%}
+.stage{position:absolute;top:0;transform:translateX(-50%);text-align:center;font-size:.5em;width:220px}
+.stage .dot{width:22px;height:22px;border-radius:50%;background:var(--core);margin:58px auto 8px}
+
+.reveal .fragment.blur{filter:blur(6px);opacity:.3;visibility:inherit}
+.reveal .fragment.blur.visible{filter:none;opacity:1}
+.strike{text-decoration:line-through;text-decoration-color:var(--bad);text-decoration-thickness:3px;color:var(--muted)}
+.reveal .fragment.strike-in::after{content:"";position:absolute;left:-4px;right:-4px;top:50%;height:4px;background:var(--bad);transform:scaleX(0);transform-origin:left;transition:transform .5s}
+.reveal .fragment.strike-in{opacity:1;visibility:inherit}
+.reveal .fragment.strike-in.visible::after{transform:scaleX(1)}
+.src{position:absolute;bottom:-40px;right:0;font-size:.38em;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<!-- 1 Titel -->
+<section data-background-gradient="linear-gradient(135deg,#fbfaf7 0%,#f1ece2 100%)">
+  <div class="kicker">Wissenschaftstheorie · Kap. 5.3 – 5.5</div>
+  <h1>Theorienstatik</h1>
+  <h3>Struktur, Netze und Holismus wissenschaftlicher Theorien<br>am Beispiel von Piagets Entwicklungstheorie</h3>
+  <p class="small muted" style="margin-top:2em">Seminarvortrag · [Name] · [Datum]</p>
+  <aside class="notes">Begrüßung. Thema: Wie sind Theorien statisch aufgebaut – also unabhängig von ihrer historischen Entwicklung (das wäre Theoriendynamik)? Gliederung kommt auf der nächsten Folie.</aside>
+</section>
+
+<!-- 2 Gliederung -->
+<section>
+  <h2>Gliederung</h2>
+  <div class="grid4">
+    <div class="card core fragment fade-up"><b>0 · Auftakt</b>Holismus der Überprüfung &amp; ad-hoc-Hypothesen</div>
+    <div class="card mid fragment fade-up"><b>1 · Struktur</b>Vier Gliederungen einer Theorie (5.3.1)</div>
+    <div class="card outer fragment fade-up"><b>2 · Theoriennetze</b>Intertheoretische Relationen &amp; Begriffsarten (5.3.2)</div>
+    <div class="card edge fragment fade-up"><b>3 · Merkmale</b>Holismus, Kreativität, Hempels Dilemma (5.4) – Fallbeispiel Piaget (5.5)</div>
+  </div>
+  <aside class="notes">Vier Blöcke. Der Auftakt schließt an Kap. 5.2 an und motiviert, warum man zwischen Kern und Peripherie unterscheiden muss.</aside>
+</section>
+
+<!-- 3 Lakatos -->
+<section>
+  <div class="kicker">0 · Auftakt</div>
+  <h2>Was tun, wenn die Prognose scheitert?</h2>
+  <div class="flow">
+    <div class="box">Theorieversion<br><b>Kern + Hilfshypothesen</b></div><div class="arrow">⟶</div>
+    <div class="box">Prognose P</div><div class="arrow">⟶</div>
+    <div class="box" style="border-color:var(--bad)">Beobachtung ¬P</div>
+  </div>
+  <p class="fragment fade-up small" style="margin-top:1em">Logisch folgt nur: <b>mindestens eine</b> Prämisse ist falsch – aber nicht welche.<br><span class="muted">→ Holismus der Überprüfung</span></p>
+  <div class="def fragment fade-up" style="margin-top:.8em"><b>Lakatos (1974):</b> Theorievertreter schützen zuerst den <span style="color:var(--core)"><b>Kern</b></span> und ändern Hilfshypothesen an der <span style="color:var(--outer)"><b>Peripherie</b></span> – sie postulieren z. B. einen bisher unbekannten Störfaktor.</div>
+  <aside class="notes">Das klingt nach Immunisierung, ist aber oft rational – solange der postulierte Störfaktor unabhängig überprüfbar ist. Dazu zwei historische Beispiele.</aside>
+</section>
+
+<!-- 4 Neptun / Vulkan -->
+<section>
+  <div class="kicker">0 · Auftakt</div>
+  <h2>Zwei Störfaktoren, zwei Ausgänge</h2>
+  <div class="orbits">
+    <div>
+      <div class="sky">
+        <div class="sun"></div>
+        <div class="orbit" style="width:220px;height:220px"></div>
+        <div class="planet wobble" style="background:#7fd1e8"></div>
+        <div class="orbit" style="width:280px;height:280px"></div>
+        <div class="planet spin fragment" style="--r:140px;background:#3f6fd8;animation-duration:16s"></div>
+        <div class="lbl">Uranus weicht ab → Neptun postuliert (1846)</div>
+      </div>
+      <p class="small fragment"><span class="tag" style="background:var(--ok)">bestätigt</span> Neptun wird mit stärkeren Teleskopen gefunden – Triumph der Newtonschen Physik.</p>
+    </div>
+    <div>
+      <div class="sky">
+        <div class="sun"></div>
+        <div class="orbit" style="width:120px;height:120px"></div>
+        <div class="planet spin" style="--r:60px;background:#c0a080;animation-duration:4s"></div>
+        <div class="planet spin ghost fragment" style="--r:35px;animation-duration:2.5s"></div>
+        <div class="lbl">Merkur weicht ab → „Vulkan“ postuliert (1856)</div>
+      </div>
+      <p class="small fragment"><span class="tag" style="background:var(--bad)">nie gefunden</span> Erklärung erst durch einen <b>neuen Kern</b>: allgemeine Relativitätstheorie.</p>
+    </div>
+  </div>
+  <aside class="notes">Gleiche Strategie (Le Verrier), unterschiedlicher Ausgang. Bei Neptun hat die Hilfshypothese neuen, überprüfbaren Gehalt produziert und wurde bestätigt. Bei Vulkan nicht – am Ende musste der Kern geändert werden.</aside>
+</section>
+
+<!-- 5 ad hoc -->
+<section>
+  <div class="kicker">0 · Auftakt</div>
+  <h2>Ad-hoc-Hypothesen sind kontextabhängig</h2>
+  <div class="def">H ist <b>ad hoc relativ zu einem Hintergrundsystem S zum Zeitpunkt t</b>, wenn H nur angenommen wurde, um einen Theoriekern in S mit einer Beobachtung verträglich zu machen – H hat in S zu t keine unabhängige Bestätigung.</div>
+  <div class="flow" style="margin-top:1em">
+    <div class="box fragment" data-fragment-index="1">Produziert H später<br><b>neuen empirischen Gehalt?</b></div>
+    <div class="arrow fragment" data-fragment-index="2">⟶ ja ⟶</div>
+    <div class="box fragment" data-fragment-index="2" style="border-color:var(--ok)">bestätigt <i>oder</i> falsifiziert<br><b>→ nicht mehr ad hoc</b></div>
+  </div>
+  <div class="flow fragment" data-fragment-index="3" style="margin-top:.5em">
+    <div class="arrow">⟶ nie ⟶</div>
+    <div class="box" style="border-color:var(--bad)">dauerhaft ad hoc<br><b>→ auch der Kern muss revidiert werden</b></div>
+  </div>
+  <aside class="notes">Wichtig: Die momentane ad-hoc-Artigkeit ist kein endgültiges Urteil. Erst wenn H auch künftig keinen überprüfbaren Gehalt liefert, wird sie zum Problem.</aside>
+</section>
+
+<!-- 6 Vier Gliederungen -->
+<section>
+  <div class="kicker">1 · Die Struktur wissenschaftlicher Theorien (5.3.1)</div>
+  <h2>Vier Arten, eine Theorie T zu gliedern</h2>
+  <div class="grid2">
+    <div class="card edge fragment fade-right"><b>① Sprache</b>Gesamtsprache ⊃ empirische / vortheoretische Teilsprache</div>
+    <div class="card outer fragment fade-left"><b>② Logische Natur</b>Axiome Ax(T) vs. Konsequenzen C(T)</div>
+    <div class="card mid fragment fade-right"><b>③ Begriffliche Natur</b>rein theoretisch · gemischt · empirisch</div>
+    <div class="card core fragment fade-left"><b>④ Epistemischer Status</b>Kern · Spezialgesetze · Peripherie</div>
+  </div>
+  <aside class="notes">Diese vier Dimensionen sind voneinander unabhängig – ein Satz kann z. B. Axiom, gemischt und peripher zugleich sein.</aside>
+</section>
+
+<!-- 7 Sprache + Axiome -->
+<section>
+  <div class="kicker">1 · Struktur</div>
+  <h2>① Sprache &amp; ② logische Natur</h2>
+  <div class="grid2" style="align-items:center">
+    <div style="position:relative;height:330px">
+      <div style="position:absolute;inset:0;border-radius:50%;background:#e6eef8;border:3px solid var(--edge)"></div>
+      <div class="small" style="position:absolute;top:28px;width:100%;text-align:center;color:var(--edge);font-weight:700">Gesamtsprache von T</div>
+      <div class="small muted" style="position:absolute;top:70px;width:100%;text-align:center">+ theoretische Begriffe</div>
+      <div class="fragment zoom-in" style="position:absolute;left:22%;top:38%;width:56%;height:52%;border-radius:50%;background:#fff;border:3px dashed var(--outer);display:flex;align-items:center;justify-content:center;text-align:center" ><span class="tiny" style="font-size:.55em"><b>empirische /<br>vortheoretische<br>Teilsprache</b><br>+ Logik/Mathematik</span></div>
+    </div>
+    <div>
+      <ul class="small">
+        <li class="fragment">T wird mit ihren <b>Axiomen Ax(T)</b> identifiziert; Konsequenzen bilden den Gehalt <span class="mono">C(T)</span></li>
+        <li class="fragment">Axiome = <b>alle nicht ableitbaren</b> Annahmen – auch Hilfshypothesen!</li>
+        <li class="fragment">„Natürliche“ Axiome: konjunktiv unzerlegbare Gehaltsteile</li>
+        <li class="fragment">Nicht immer eindeutig: Newtonsche Mechanik → <b>Lagrange</b> <i>und</i> <b>Hamilton</b></li>
+      </ul>
+    </div>
+  </div>
+  <aside class="notes">Natürliche Axiomatisierung ist relevant für Bestätigung, Wahrheitsnähe und Vereinheitlichung (Kap. 5.9–5.11).</aside>
+</section>
+
+<!-- 8 Begriffliche Natur -->
+<section>
+  <div class="kicker">1 · Struktur</div>
+  <h2>③ Begriffliche Natur der Sätze</h2>
+  <div class="grid3">
+    <div class="card core fragment fade-up"><b>rein theoretisch</b>nur theoretische (+ logische) Begriffe<br><span class="mono">∀x(φx → ψx)</span></div>
+    <div class="card mid fragment fade-up"><b>gemischt</b>empirische <i>und</i> theoretische Begriffe<br><span class="mono">Fa ∧ φa</span></div>
+    <div class="card edge fragment fade-up"><b>empirisch</b>nur empirische / vortheoretische Begriffe<br><span class="mono">∀x(Fx → Gx)</span></div>
+  </div>
+  <div class="def fragment fade-up" style="margin-top:1em"><b>Zuordnungsgesetze</b> ⊂ gemischte Sätze: stellen eine <i>relevante</i> Verbindung zwischen empirischem Begriff Fx und theoretischem Begriff φx her. <span class="muted">Fa ∧ φa ist gemischt, aber kein Zuordnungsgesetz.</span></div>
+  <p class="small fragment">Typisch: <b>Axiome</b> = theoretische Gesetze + Zuordnungsgesetze → <b>empirische Sätze</b> folgen als Konsequenzen.</p>
+  <aside class="notes">Beispiel für ein Zuordnungsgesetz: Eine Messvorschrift, die festlegt, unter welchen Testbedingungen ein beobachtbares Ergebnis das Vorliegen einer theoretischen Eigenschaft anzeigt.</aside>
+</section>
+
+<!-- 9 Kern & Peripherie (Ringe) -->
+<section data-auto-animate>
+  <div class="kicker">1 · Struktur</div>
+  <h2>④ Kern und Peripherie</h2>
+  <div class="rings-wrap">
+    <div class="rings">
+      <div class="ring r4" data-id="r4">Peripherie<br>Systembedingungen, Hilfshypothesen</div>
+      <div class="ring r3" data-id="r3">kernferne Spezialgesetze</div>
+      <div class="ring r2" data-id="r2">kernnahe Spezialgesetze</div>
+      <div class="ring r1" data-id="r1">KERN</div>
+    </div>
+    <div class="small">
+      <p class="fragment"><span class="tag core">Kern</span> definiert die <b>historische Identität</b> – ändert er sich, entsteht eine <i>andere Theorie</i>.</p>
+      <p class="fragment"><span class="tag outer">Peripherie</span> charakterisiert nur die <b>aktuelle Version</b> – Änderung = neue Version, gleiche Theorie.</p>
+      <p class="fragment muted">Die Grenze ist <b>graduell</b> und nur für Axiome klar – Konsequenzen folgen oft aus Kern + Peripherie.</p>
+    </div>
+  </div>
+  <aside class="notes">Nachbildung von Abb. 5.3-3. Diese Ringe tauchen beim Piaget-Beispiel wieder auf.</aside>
+</section>
+
+<!-- 10 Theoriennetz -->
+<section>
+  <div class="kicker">2 · Theoriennetze (5.3.2)</div>
+  <h2>Drei intertheoretische Relationen</h2>
+  <p class="small muted">Theoriennetz ⊃ Theorienverbände ⊃ Theorieelemente</p>
+  <div class="grid3">
+    <div class="card outer fragment fade-up"><b>1 · Spezialisierung</b>bildet hierarchische Theorienverbände (Kap. 5.2)</div>
+    <div class="card edge fragment fade-up"><b>2 · Vortheoretizität</b>T₁ ist Vortheorie von T₂ ⇔ nichtempirische Begriffe von T₁ ⊊ nichtempirische Begriffe von T₂</div>
+    <div class="card core fragment fade-up"><b>3 · Reduktion</b>strikt oder approximativ – verbindet auch <i>theoretisch heterogene</i> Theorien</div>
+  </div>
+  <div class="grid2 fragment fade-up" style="margin-top:.9em">
+    <div class="card"><b>strikt</b>Gasgesetz <span class="mono">pV ∝ T</span> → statistische Mechanik, wenn Temperatur = mittlere kinetische Energie</div>
+    <div class="card"><b>approximativ</b>Klassische Mechanik → spezielle Relativitätstheorie, wenn <span class="mono">v ≪ c</span></div>
+  </div>
+  <aside class="notes">Bei 1 und 2 werden gleichlautende Begriffe identifiziert (theoretisch homogen). Bei Reduktion nicht – dort braucht es Brückenprinzipien wie Temperatur = mittlere kinetische Energie.</aside>
+</section>
+
+<!-- 11 Netz-Grafik -->
+<section>
+  <div class="kicker">2 · Theoriennetze</div>
+  <h2>Das Netz der Wissenschaften</h2>
+  <div class="net">
+    <svg viewBox="0 0 1000 470">
+      <g stroke="#3b5b92" stroke-width="3" class="fragment" data-fragment-index="1">
+        <line x1="150" y1="90" x2="330" y2="60"/><line x1="150" y1="90" x2="300" y2="190"/>
+        <line x1="330" y1="60" x2="300" y2="190"/><line x1="330" y1="60" x2="500" y2="110"/>
+        <line x1="300" y1="190" x2="500" y2="110"/><line x1="500" y1="110" x2="470" y2="250"/>
+        <line x1="300" y1="190" x2="470" y2="250"/><line x1="150" y1="90" x2="160" y2="250"/><line x1="160" y1="250" x2="300" y2="190"/>
+      </g>
+      <g stroke="#3b5b92" stroke-width="2" stroke-dasharray="6 6" class="fragment" data-fragment-index="2">
+        <line x1="470" y1="250" x2="420" y2="370"/>
+      </g>
+      <g stroke="#2f7d4f" stroke-width="3" class="fragment" data-fragment-index="3">
+        <line x1="760" y1="120" x2="840" y2="230"/><line x1="760" y1="120" x2="660" y2="210"/>
+      </g>
+      <g stroke="#d98b3a" stroke-width="2" stroke-dasharray="4 8" class="fragment" data-fragment-index="4">
+        <line x1="840" y1="230" x2="860" y2="390"/><line x1="660" y1="210" x2="640" y2="400"/><line x1="660" y1="210" x2="420" y2="370"/>
+      </g>
+    </svg>
+    <div class="node phys" style="left:150px;top:90px">Mechanik</div>
+    <div class="node phys" style="left:330px;top:60px">Elektrodynamik</div>
+    <div class="node phys" style="left:300px;top:190px">Thermodynamik</div>
+    <div class="node phys" style="left:500px;top:110px">Quantenphysik</div>
+    <div class="node phys" style="left:470px;top:250px">Chemie</div>
+    <div class="node phys" style="left:160px;top:250px">Kinematik</div>
+    <div class="node bio fragment" data-fragment-index="2" style="left:420px;top:370px">Neuropsychologie</div>
+    <div class="node bio fragment" data-fragment-index="3" style="left:760px;top:120px">Evolutionsbiologie</div>
+    <div class="node bio fragment" data-fragment-index="3" style="left:840px;top:230px">Verhaltensbiologie</div>
+    <div class="node bio fragment" data-fragment-index="3" style="left:660px;top:210px">Populationsgenetik</div>
+    <div class="node soc fragment" data-fragment-index="4" style="left:860px;top:390px">Sozialwissenschaften</div>
+    <div class="node soc fragment" data-fragment-index="4" style="left:640px;top:400px">Psychologie</div>
+  </div>
+  <div class="legend">
+    <span style="background:var(--edge)"></span>dichtes physikalisch-chemisches Netz &nbsp;
+    <span style="background:var(--ok)"></span>relativ autonomes evolutionsbiologisches Netz &nbsp;
+    <span style="background:var(--mid)"></span>Export zentraler Begriffe in höhere Disziplinen
+  </div>
+  <aside class="notes">Illustrative Skizze, keine Abbildung aus dem Buch. Kernaussage: Physik und Chemie bilden ein dichtes Netz; Evolutionsbiologie importiert wenig, exportiert aber zentrale Begriffe in Psychologie, Human- und Sozialwissenschaften. In den höheren Disziplinen gibt es eher konkurrierende Ansätze als vereinheitlichende Fundamentaltheorien.</aside>
+</section>
+
+<!-- 12 Begriffsarten Def -->
+<section>
+  <div class="kicker">2 · Arten theoretischer Begriffe (Def. 5.3-1)</div>
+  <h2>Wer erklärt die Bedeutung von τ?</h2>
+  <div class="grid3">
+    <div class="card edge fragment fade-up"><b>vortheoretisch</b>nicht T-theoretisch, aber T*-theoretisch für eine <b>Vortheorie</b> T* von T<br><br><span class="muted">Bsp.: Ortsfunktion in der Mechanik – erklärt durch die Kinematik</span></div>
+    <div class="card core fragment fade-up"><b>T-theoretisch</b>aus T folgt mindestens ein <b>Zuordnungsgesetz</b> für τ:<br><span class="mono" style="font-size:.9em">∀x∀t(Bxt → (τ(x) ↔ Rxt))</span><br><span class="muted">B, R empirisch oder vortheoretisch</span></div>
+    <div class="card mid fragment fade-up"><b>extern theoretisch</b>nicht T-theoretisch, aber T*-theoretisch für eine <b>andere</b> Theorie T* (keine Vortheorie)<br><br><span class="muted">Bsp.: „elektrische Ladung“ in der chemischen Atomtheorie</span></div>
+  </div>
+  <aside class="notes">Ohne diese Feinunterscheidung müsste man sich ständig auf das gesamte Theoriennetz beziehen – das ist unpraktisch. Die Zuordnungsgesetz-Form: Unter Testbedingung B hat x die Eigenschaft τ genau dann, wenn das Resultat R eintritt.</aside>
+</section>
+
+<!-- 13 Klassifikation -->
+<section>
+  <div class="kicker">2 · Arten theoretischer Begriffe</div>
+  <h2>Disjunkte Begriffskategorien einer Theorie T</h2>
+  <div style="display:flex;height:130px;border-radius:14px;overflow:hidden;font-size:.5em;color:#fff;font-weight:700;text-align:center">
+    <div class="fragment" style="flex:2;background:var(--edge);display:flex;align-items:center;justify-content:center;padding:.4em">(a) empirisch<br>Beobachtungs- &amp; Dispositionsbegriffe</div>
+    <div class="fragment" style="flex:1.4;background:var(--outer);display:flex;align-items:center;justify-content:center;padding:.4em">(b) vortheoretisch</div>
+    <div class="fragment" style="flex:1.6;background:var(--core);display:flex;align-items:center;justify-content:center;padding:.4em">(c.1) T-theoretisch</div>
+    <div class="fragment" style="flex:1.4;background:var(--mid);display:flex;align-items:center;justify-content:center;padding:.4em">(c.2) extern theoretisch</div>
+    <div class="fragment" style="flex:1;background:#8a8f99;display:flex;align-items:center;justify-content:center;padding:.4em">(d) spekulativ<br>ohne empirischen Gehalt</div>
+  </div>
+  <p class="tiny muted" style="text-align:center">(c.1) + (c.2) = theoretisch im engeren Sinne</p>
+  <div class="def fragment fade-up" style="margin-top:.6em"><b>Vergleich mit Sneed (1971):</b> τ ist T-theoretisch ⇔ <i>jede</i> Messung von τ setzt T voraus. Entspricht der obigen Definition, wenn eine Messmethode als Zuordnungsgesetz verstanden wird. <b>Unterschied:</b> Hier dürfen auch andere Theorien T′ Zuordnungsgesetze für τ liefern.</div>
+  <aside class="notes">Die strukturalistische Alternative von Gähde und Balzer (theorieintern) erwies sich laut Text als zu weit: Danach wären auch einfache empirische Begriffe T-theoretisch.</aside>
+</section>
+
+<!-- 14 Holismus -->
+<section>
+  <div class="kicker">3 · Methodische Merkmale (5.4.1)</div>
+  <h2>Systemcharakter → dreifacher Holismus</h2>
+  <p class="small">Ein einzelnes Axiom hat meist <b>keinen</b> empirischen Gehalt – erst das Zusammenwirken mehrerer.</p>
+  <div class="flow">
+    <div class="box fragment fade-right" style="border-color:var(--core)"><b>Bedeutung</b><br>theoretischer Begriffe hängt an Kernaxiomen<br><span class="muted">→ analytisch/synthetisch nicht trennbar</span></div>
+    <div class="arrow fragment">⟹</div>
+    <div class="box fragment fade-right" style="border-color:var(--mid)"><b>Empirischer Gehalt</b><br>nur ganze Systeme treffen auf Erfahrung</div>
+    <div class="arrow fragment">⟹</div>
+    <div class="box fragment fade-right" style="border-color:var(--outer)"><b>Überprüfung</b><br>Widerspruch zeigt nicht, <i>welche</i> Hypothese falsch ist</div>
+  </div>
+  <p class="small fragment" style="margin-top:1em"><b>Duhem (1908):</b> Es gibt kein <i>experimentum crucis</i>. · <b>Quine (1951):</b> empirische Unterbestimmtheit</p>
+  <p class="tiny muted fragment">Moderater Holismus: Nicht <i>alle</i> Überzeugungen und nicht <i>alle</i> Begriffe sind theorieabhängig.</p>
+  <aside class="notes">Die drei Holismen bauen aufeinander auf. Neurath hat dasselbe 1914/15 herausgearbeitet.</aside>
+</section>
+
+<!-- 15-17 Modus Tollens (auto-animate) -->
+<section data-auto-animate>
+  <div class="kicker">3 · Holismus der Überprüfung (Ms. 5.4-1)</div>
+  <h2 data-id="mt-h">Deduktionslogischer Hintergrund</h2>
+  <div class="formula" data-id="mt1" style="font-size:1em">{H₁, …, Hₙ} ⊢ P</div>
+  <aside class="notes">Das Hypothesensystem impliziert eine Prognose P.</aside>
+</section>
+<section data-auto-animate>
+  <div class="kicker">3 · Holismus der Überprüfung (Ms. 5.4-1)</div>
+  <h2 data-id="mt-h">Deduktionslogischer Hintergrund</h2>
+  <div class="formula" data-id="mt1" style="font-size:.7em;opacity:.5">{H₁, …, Hₙ} ⊢ P</div><br>
+  <div class="formula" data-id="mt2" style="font-size:1em;margin-top:.5em;border-color:var(--bad)">¬P ⊢ ¬(H₁ ∧ … ∧ Hₙ)</div>
+  <p class="small muted" data-id="mt-c">per Modus Tollens</p>
+  <aside class="notes">Beobachtet man ¬P, folgt per Modus Tollens die Negation der Konjunktion.</aside>
+</section>
+<section data-auto-animate>
+  <div class="kicker">3 · Holismus der Überprüfung (Ms. 5.4-1)</div>
+  <h2 data-id="mt-h">Deduktionslogischer Hintergrund</h2>
+  <div class="formula" data-id="mt1" style="font-size:.6em;opacity:.4">{H₁, …, Hₙ} ⊢ P</div><br>
+  <div class="formula" data-id="mt2" style="font-size:.7em;margin-top:.4em;opacity:.6">¬P ⊢ ¬(H₁ ∧ … ∧ Hₙ)</div><br>
+  <div class="formula" data-id="mt3" style="font-size:1.05em;margin-top:.4em;border-color:var(--core)">≡ ¬H₁ ∨ … ∨ ¬Hₙ</div>
+  <p class="small" data-id="mt-c">„<b>Mindestens eine</b> Prämisse ist falsch“ – aber welche?</p>
+  <div class="def fragment fade-up small" style="margin-top:.6em"><b>Probabilistisch / nichtmonoton</b> ist es noch schwächer: Man muss gar keine Hᵢ aufgeben – eine neue Hilfshypothese <b>H*</b>, die die Folgerung von P blockiert, genügt.</div>
+  <aside class="notes">De Morgan. Das ist exakt die Situation von Le Verrier: Welche Prämisse ist falsch – Newtons Gravitationsgesetz oder die Annahme, dass es keine weiteren Planeten gibt?</aside>
+</section>
+
+<!-- 18-19 Empirische Kreativität -->
+<section data-auto-animate>
+  <div class="kicker">3 · Epistemische Tugenden (5.4.2)</div>
+  <h2 data-id="ek-h">① Empirische Kreativität</h2>
+  <div class="grid2" style="text-align:center">
+    <div><div class="big-chain" data-id="ek1"><span class="emp">F</span>→<span class="th">φ</span></div><p class="small muted" data-id="ek1t">H₁ = ∀x(Fx → φx)<br>E(H₁) = ∅</p></div>
+    <div><div class="big-chain" data-id="ek2"><span class="th">φ</span>→<span class="emp">G</span></div><p class="small muted" data-id="ek2t">H₂ = ∀x(φx → Gx)<br>E(H₂) = ∅</p></div>
+  </div>
+  <p class="small" data-id="ek-q">Jede Hypothese für sich: <b>kein</b> empirischer Gehalt.</p>
+  <aside class="notes">F und G sind empirische Prädikate, φ ist theoretisch. Einzeln sagen die Hypothesen nichts Beobachtbares aus.</aside>
+</section>
+<section data-auto-animate>
+  <div class="kicker">3 · Epistemische Tugenden (5.4.2)</div>
+  <h2 data-id="ek-h">① Empirische Kreativität</h2>
+  <div class="big-chain" style="font-size:1.6em"><span data-id="ek1" class="emp">F</span><span class="th" style="opacity:.35">→ φ →</span><span data-id="ek2" class="emp">G</span></div>
+  <p class="small" data-id="ek-q">H₁ ∧ H₂ ⊢ <b class="mono">∀x(Fx → Gx)</b> – ein <b>neues empirisches Gesetz</b></p>
+  <div class="formula fragment fade-up" style="margin-top:.4em">E(H₁∧H₂) ⊃ C(E(H₁) ∪ E(H₂))</div>
+  <p class="small fragment" style="margin-top:.8em">⇒ Auch gehaltlose <b>metaphysische Spekulation</b> kann später, im Kontext einer neuen Theorie, fruchtbar werden.</p>
+  <aside class="notes">„⊃“ steht für echte Obermenge. Das Ganze ist empirisch mehr als die Summe seiner Teile.</aside>
+</section>
+
+<!-- 20 Vereinheitlichung + Hempel -->
+<section>
+  <div class="kicker">3 · Epistemische Tugenden (5.4.2)</div>
+  <h2>② Vereinheitlichung · ③ Neuartige Voraussagen</h2>
+  <div class="grid2">
+    <div class="card outer fragment fade-up"><b>Vereinheitlichung</b>Qualitativ verschiedene Phänomene einheitlich erklären – viele empirische Gesetze auf wenige Prinzipien zurückführen.<br><span class="muted">Präzise nur mit Gehaltselementen, sonst drohen Paradoxien (Kap. 6.4.3).</span></div>
+    <div class="card edge fragment fade-up"><b>Neuartige Voraussagen</b>Theorien sagen Phänomene voraus, die beim Aufstellen nicht bekannt waren – wichtig für die Bestätigung (Kap. 5.9–5.10).</div>
+  </div>
+  <p class="small fragment" style="margin-top:1em">Alle drei Leistungen gehen über bloße empirische Verallgemeinerung hinaus …</p>
+  <aside class="notes">Überleitung: Genau diese Leistungen sind die Antwort auf Hempels Dilemma.</aside>
+</section>
+
+<section>
+  <div class="kicker">3 · Antwort auf Hempels Dilemma</div>
+  <h2>Das Dilemma des Theoretikers</h2>
+  <p class="small muted">Hempel (1958), Verschärfung von Putnams Herausforderung (1962)</p>
+  <div class="grid2">
+    <div class="card bad fragment"><b>Horn (a)</b>Theoretische Begriffe erfüllen <b>keine</b> empirische Rolle → überflüssig.</div>
+    <div class="card bad fragment"><b>Horn (b)</b>Sie erfüllen eine empirische Rolle → ebenfalls überflüssig, die empirischen Konsequenzen E(T) leisten dasselbe.</div>
+  </div>
+  <div class="def fragment fade-up" style="margin-top:1em;border-color:var(--ok)"><b>Antwort:</b> Horn (b) ist falsch. Ersetzt man T₁, T₂ durch E(T₁), E(T₂), gehen <b>Kreativität, Vereinheitlichung und neuartige Voraussagen verloren</b>. Das gilt für die Craig-Methode wie für Ramsey-Sätze: Ramsey(T₁) ∧ Ramsey(T₂) ist schwächer als Ramsey(T₁ ∧ T₂).</div>
+  <aside class="notes">Theoretische Begriffe sind also unverzichtbar, gerade weil sie verschiedene Theorien miteinander verknüpfen.</aside>
+</section>
+
+<!-- 22 Piaget Stufen -->
+<section>
+  <div class="kicker">4 · Fallbeispiel (5.5)</div>
+  <h2>Piagets kognitive Entwicklungstheorie</h2>
+  <div class="timeline" id="tl">
+    <div class="axis"></div><div class="fill"></div>
+    <div class="stage" style="left:12%"><div class="dot"></div><b>~2 J.</b><br>sensomotorisch</div>
+    <div class="stage" style="left:50%"><div class="dot" style="width:30px;height:30px;margin-top:54px"></div><b>6–7 J.</b><br><b>konkret-operationell</b></div>
+    <div class="stage" style="left:88%"><div class="dot"></div><b>13–14 J.</b><br>formal-operationell</div>
+  </div>
+  <div class="grid3" style="margin-top:1.4em">
+    <div class="card core fragment fade-up"><b>Perspektivenwechsel</b>eigene vs. fremde Sehperspektive<br><span class="muted">Test: Gebirgsmodell</span></div>
+    <div class="card core fragment fade-up"><b>Reversibilität</b>Operationen sind umkehrbar<br><span class="muted">Test: Zahltest (Münzen)</span></div>
+    <div class="card core fragment fade-up"><b>Invariantenerkennung</b>Anzahl / Substanzmenge bleibt erhalten<br><span class="muted">Test: Tonkugel → Wurst</span></div>
+  </div>
+  <aside class="notes">Kernthese: Intelligenzentwicklung beruht auf stufenförmig ausgebildeten, allgemeinen logisch-strukturellen Fähigkeiten. Einmal ausgebildet, werden sie schnell überall angewandt. Ergebnis der Tests: vor 6 Jahren meist nicht beherrscht, nach 7 Jahren durchweg.</aside>
+</section>
+
+<!-- 23 Piaget in Ringen (auto-animate mit Folie 9) -->
+<section data-auto-animate>
+  <div class="kicker">4 · Fallbeispiel</div>
+  <h2>Piagets Theorie in Kern und Peripherie</h2>
+  <div class="rings-wrap">
+    <div class="rings">
+      <div class="ring r4" data-id="r4">I1–3<br>Indikatorgesetze (Tests)</div>
+      <div class="ring r3" data-id="r3">S2–4 · Beispiel-Fähigkeiten</div>
+      <div class="ring r2" data-id="r2">S1 · 6–7 Jahre</div>
+      <div class="ring r1" data-id="r1">K1–4</div>
+    </div>
+    <div class="small">
+      <p class="fragment"><span class="tag core">K1–4</span> Stufenthese + drei Fähigkeiten: <b>mit ihnen steht und fällt die Theorie</b></p>
+      <p class="fragment"><span class="tag mid">S1–4</span> Spezialgesetze: Altersangabe und konkrete Beispiele – noch theoretisch</p>
+      <p class="fragment"><span class="tag outer">I1–3</span> Zuordnungsgesetze: Gebirgs-, Zahl-, Tonkugeltest – am weitesten außen</p>
+      <p class="fragment"><b>P:</b> Fast alle Kinder scheitern vor 6 an den Tests und bestehen sie nach 7.</p>
+    </div>
+  </div>
+  <aside class="notes">Gleiche Ringstruktur wie vorhin, jetzt mit Piagets Gesetzen gefüllt (Schema 5.5-1). Die Zuordnung von S1 und S2–4 zu den Ringen ist meine Visualisierung; im Text gelten alle S als Spezialgesetze mit zentralem Status.</aside>
+</section>
+
+<!-- 24 Formale Rekonstruktion -->
+<section>
+  <div class="kicker">4 · Fallbeispiel</div>
+  <h2>Formale Rekonstruktion</h2>
+  <div style="text-align:left;font-size:.62em;line-height:1.7">
+    <div class="fragment"><span class="tag core">K2–4</span> <span class="mono">∀x(KSx ↔ Kᵢx)</span> <span class="muted">— Stufe erreicht ⇔ Kompetenz Kᵢ</span></div>
+    <div class="fragment"><span class="tag mid">S2–4</span> <span class="mono">∀x(Kᵢx ↔ Aᵢx)</span> <span class="muted">— abstrakte Kompetenz ⇔ konkrete Fähigkeit</span></div>
+    <div class="fragment"><span class="tag outer">I1–3</span> <span class="mono">∀x(Tᵢx → (Aᵢx ↔ BTᵢx))</span> <span class="muted">— beim Test: Fähigkeit ⇔ Test bestanden</span></div>
+    <div class="fragment"><span class="tag mid">S1</span> <span class="mono">Unter6(x) ⇒ ¬KSx, &nbsp;Über7(x) ⇒ KSx</span> <span class="muted">— normisch (⇒), nicht strikt</span></div>
+    <hr class="fragment" style="border:0;border-top:2px solid var(--line);margin:.5em 0">
+    <div class="fragment"><span class="tag edge">P</span> <span class="mono">Unter6(x) ⇒ (Tᵢx → ¬BTᵢx), &nbsp;Über7(x) ⇒ (Tᵢx → BTᵢx)</span></div>
+  </div>
+  <p class="small fragment" style="margin-top:.6em">K1 ist nicht direkt nötig, erzwingt aber die Lesart als <b>Äquivalenzen</b>. Nur deshalb folgt auch der erste Teil von P (Scheitern vor 6).</p>
+  <aside class="notes">S1 ist normisch, weil es außergewöhnliche Kinder gibt. Die Prognose folgt per Wahrscheinlichkeitslogik aus den deduktiven Zwischenkonklusionen ∀x(KSx→(Tix→BTix)) und ∀x(¬KSx→(Tix→¬BTix)).</aside>
+</section>
+
+<!-- 25 Replikation / Lakatos -->
+<section>
+  <div class="kicker">4 · Fallbeispiel: Holismus in Aktion</div>
+  <h2>Replikationen: Kern retten, Peripherie ändern</h2>
+  <div class="grid2">
+    <div class="card bad fragment fade-up"><b>Befund</b>Gebirge durch eine <b>vierfarbige Schachtel</b> ersetzt → Kinder bestehen den Perspektiventest schon mit <b>4 Jahren</b>.</div>
+    <div class="card ok fragment fade-up"><b>Reaktion (Lakatos-Devise)</b>Kern <b>nicht</b> aufgegeben. Piagets Sehtest war nicht selektiv: Er testet zusätzlich <b>räumliches Vorstellungsvermögen</b> (mentale Rotation).</div>
+  </div>
+  <div class="flow fragment fade-up" style="margin-top:.9em">
+    <div class="box"><span class="strike">S1: Stufe mit 6–7 J.</span> → <b>früher</b></div>
+    <div class="box"><span class="strike">I1: Gebirgstest</span> → <b>adäquaterer Test</b></div>
+    <div class="box" style="border-color:var(--core)"><b>K1–4 bleiben</b></div>
+  </div>
+  <p class="small fragment" style="margin-top:.8em">Ebenso beim Zahltest: versteckte Schwierigkeitsvariable <b>Sprachverständnis</b> („mehr“, „gleich viel“).</p>
+  <aside class="notes">Genau das Muster von Le Verrier: Bei einem Konflikt mit der Erfahrung werden erst periphere Gesetze (S1 und I1) geändert. Hier endet der vorgegebene Textabschnitt (S. 298).</aside>
+</section>
+
+<!-- 26 Fazit -->
+<section>
+  <h2>Fazit</h2>
+  <ul class="small" style="text-align:left">
+    <li class="fragment">Theorien lassen sich nach <b>Sprache, Logik, Begriffstyp</b> und <b>epistemischem Status</b> gliedern.</li>
+    <li class="fragment">Die <b>Kern/Peripherie</b>-Unterscheidung erklärt, warum Wissenschaftler bei Konflikten zuerst Hilfshypothesen ändern – und wann das legitim ist.</li>
+    <li class="fragment">Theorien stehen in <b>Netzen</b>: Spezialisierung, Vortheoretizität, Reduktion → vortheoretische, T-theoretische und externe Begriffe.</li>
+    <li class="fragment">Der <b>Systemcharakter</b> erzeugt Holismus, aber auch empirische Kreativität – die Antwort auf Hempels Dilemma.</li>
+  </ul>
+  <div class="def fragment fade-up" style="margin-top:.8em"><b>Diskussion:</b> Wann wird das Retten des Kerns zur Immunisierung? Wie lange darf eine Hilfshypothese ad hoc bleiben?</div>
+  <aside class="notes">Diskussionsfragen zum Abschluss.</aside>
+</section>
+
+<!-- 27 Quelle -->
+<section>
+  <h2>Quelle</h2>
+  <p class="small" style="text-align:left">[Autor, Titel, Auflage, Verlag, Jahr], Kap. 5.3–5.5, S. 284–298. DOI: 10.5771/9783748947615</p>
+  <p class="tiny muted" style="text-align:left">Zitierte Sekundärliteratur u. a.: Lakatos 1974 · Grünbaum 1976 · Balzer &amp; Mühlhölzer 1982 · Sneed 1971 · Stegmüller 1973/1986 · Duhem 1908 · Quine 1951 · Hempel 1958 · Putnam 1962 · Brainerd 1978</p>
+  <p class="tiny muted" style="text-align:left">Abbildungen: eigene Darstellungen</p>
+</section>
+
+</div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/notes/notes.min.js"></script>
+<script>
+Reveal.initialize({
+  hash:true, slideNumber:'c/t', transition:'slide', backgroundTransition:'fade',
+  width:1280, height:720, margin:0.06, center:true,
+  autoAnimateDuration:0.9, autoAnimateEasing:'cubic-bezier(.4,0,.2,1)',
+  plugins:[RevealNotes]
+});
+Reveal.on('slidechanged', e => {
+  const tl = e.currentSlide.querySelector('#tl');
+  if (tl) { tl.classList.remove('go'); requestAnimationFrame(() => requestAnimationFrame(() => tl.classList.add('go'))); }
+});
+</script>
+</body>
+</html>

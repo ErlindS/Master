@@ -1,0 +1,17 @@
+stufe;geraet;n;erster_lauf_ms;median_ms;transfer_ms;gflops;korrekt
+cuda_1_managed;NVIDIA GeForce RTX 5060 Ti;1024;4.115;1.380;0.000;1556.31;ja
+cuda_2_device_B16;NVIDIA GeForce RTX 5060 Ti;1024;2.516;1.494;0.956;1437.20;ja
+cuda_4_tiling_T16;NVIDIA GeForce RTX 5060 Ti;1024;2.391;1.139;0.956;1885.65;ja
+cuda_cublas;NVIDIA GeForce RTX 5060 Ti;1024;60.278;0.275;0.996;7813.89;ja
+cuda_4_tiling_T8;NVIDIA GeForce RTX 5060 Ti;1024;2.661;1.439;0.951;1491.94;ja
+cuda_4_tiling_T16;NVIDIA GeForce RTX 5060 Ti;1024;2.286;1.131;0.954;1898.75;ja
+cuda_4_tiling_T32;NVIDIA GeForce RTX 5060 Ti;1024;2.268;1.179;0.974;1821.02;ja
+cuda_4_tiling_T64;;1024;;;;;startet_nicht
+cuda_1_managed;NVIDIA GeForce RTX 5060 Ti;2048;20.521;11.319;0.000;1517.75;ja
+cuda_2_device_B16;NVIDIA GeForce RTX 5060 Ti;2048;15.569;11.185;3.696;1535.98;ja
+cuda_4_tiling_T16;NVIDIA GeForce RTX 5060 Ti;2048;12.181;8.361;3.860;2054.71;ja
+cuda_cublas;NVIDIA GeForce RTX 5060 Ti;2048;47.870;1.199;3.909;14332.59;ja
+cuda_4_tiling_T8;NVIDIA GeForce RTX 5060 Ti;2048;15.411;11.150;3.688;1540.75;ja
+cuda_4_tiling_T16;NVIDIA GeForce RTX 5060 Ti;2048;11.998;8.366;3.872;2053.63;ja
+cuda_4_tiling_T32;NVIDIA GeForce RTX 5060 Ti;2048;12.728;8.891;3.782;1932.30;ja
+cuda_4_tiling_T64;;2048;;;;;startet_nicht

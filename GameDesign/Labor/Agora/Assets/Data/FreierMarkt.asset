@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9290a662d024f579abd03d8d578034d, type: 3}
+  m_Name: FreierMarkt
+  m_EditorClassIdentifier: Assembly-CSharp::EconomySystem
+  displayName: Freier Markt
+  description: Preise entstehen aus Angebot und Nachfrage. Der Staat erhebt nur eine Marktsteuer.
+  tickSeconds: 1
+  startTreasury: 400
+  startFirmCapital: 150
+  startResidentMoney: 10
+  wage: 5
+  goodsPerShift: 2
+  shiftSeconds: 3
+  startPrice: 4
+  priceAdjust: 0.05
+  fixedPrice: 0
+  minPrice: 1
+  maxPrice: 50
+  taxRate: 0.1
+  growthThreshold: 0.6
+  shrinkThreshold: 0.2
+  growthChancePerTick: 0.15
+  institutionBonus: 0.05
