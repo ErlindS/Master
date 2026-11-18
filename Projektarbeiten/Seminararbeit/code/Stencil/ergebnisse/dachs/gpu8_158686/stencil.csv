@@ -1,0 +1,13 @@
+variante;geraet;n;erster_lauf_ms;median_ms;gb_s;korrekt;selector
+stencil1_2d;NVIDIA H100 80GB HBM3;4096;59.031;10.402;1290.33;ja;cuda:gpu
+stencil1_2d_sync;NVIDIA H100 80GB HBM3;4096;12.264;11.165;1202.13;ja;cuda:gpu
+stencil2_1d;NVIDIA H100 80GB HBM3;4096;82.427;31.821;421.79;ja;cuda:gpu
+stencil3_lokal_B16;NVIDIA H100 80GB HBM3;4096;38.785;10.780;1245.07;ja;cuda:gpu
+stencil1_2d;NVIDIA H100 80GB HBM3;8192;36.408;34.596;1551.82;ja;cuda:gpu
+stencil1_2d_sync;NVIDIA H100 80GB HBM3;8192;37.166;35.388;1517.09;ja;cuda:gpu
+stencil2_1d;NVIDIA H100 80GB HBM3;8192;128.348;126.333;424.97;ja;cuda:gpu
+stencil3_lokal_B16;NVIDIA H100 80GB HBM3;8192;45.188;43.417;1236.56;ja;cuda:gpu
+cuda_stencil_global_B16;NVIDIA H100 80GB HBM3;4096;7.471;7.212;1861.09;ja;cuda
+cuda_stencil_shared_B16;NVIDIA H100 80GB HBM3;4096;17.906;17.647;760.56;ja;cuda
+cuda_stencil_global_B16;NVIDIA H100 80GB HBM3;8192;28.266;28.143;1907.68;ja;cuda
+cuda_stencil_shared_B16;NVIDIA H100 80GB HBM3;8192;70.491;70.209;764.68;ja;cuda

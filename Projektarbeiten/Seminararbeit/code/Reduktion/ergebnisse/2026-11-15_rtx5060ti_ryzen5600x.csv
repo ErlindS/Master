@@ -1,0 +1,23 @@
+variante;geraet;n;erster_lauf_ms;median_ms;gb_s;korrekt;selector
+reduktion1_atomar;NVIDIA GeForce RTX 5060 Ti;16777216;8612.756;8589.760;0.01;ja;cuda:gpu
+reduktion2_lokal_W256;NVIDIA GeForce RTX 5060 Ti;16777216;1.146;0.708;94.81;ja;cuda:gpu
+reduktion3_gruppe_W256;NVIDIA GeForce RTX 5060 Ti;16777216;1.032;0.628;106.89;ja;cuda:gpu
+reduktion4_builtin;NVIDIA GeForce RTX 5060 Ti;16777216;0.885;0.227;295.95;ja;cuda:gpu
+reduktion1_atomar;NVIDIA GeForce RTX 5060 Ti;67108864;8343.144;8332.164;0.03;ja;cuda:gpu
+reduktion2_lokal_W256;NVIDIA GeForce RTX 5060 Ti;67108864;1.132;0.665;403.63;ja;cuda:gpu
+reduktion3_gruppe_W256;NVIDIA GeForce RTX 5060 Ti;67108864;1.188;0.661;406.14;ja;cuda:gpu
+reduktion4_builtin;NVIDIA GeForce RTX 5060 Ti;67108864;1.414;0.755;355.69;ja;cuda:gpu
+reduktion1_atomar;AMD Ryzen 5 5600X 6-Core Processor             ;16777216;214.080;113.046;0.59;ja;opencl:cpu
+reduktion2_lokal_W256;AMD Ryzen 5 5600X 6-Core Processor             ;16777216;106.436;3.357;19.99;ja;opencl:cpu
+reduktion3_gruppe_W256;AMD Ryzen 5 5600X 6-Core Processor             ;16777216;97.783;3.015;22.26;ja;opencl:cpu
+reduktion4_builtin;AMD Ryzen 5 5600X 6-Core Processor             ;16777216;161.512;3.960;16.95;ja;opencl:cpu
+reduktion1_atomar;AMD Ryzen 5 5600X 6-Core Processor             ;67108864;215.896;113.952;2.36;ja;opencl:cpu
+reduktion2_lokal_W256;AMD Ryzen 5 5600X 6-Core Processor             ;67108864;120.801;15.005;17.89;ja;opencl:cpu
+reduktion3_gruppe_W256;AMD Ryzen 5 5600X 6-Core Processor             ;67108864;109.076;15.742;17.05;ja;opencl:cpu
+reduktion4_builtin;AMD Ryzen 5 5600X 6-Core Processor             ;67108864;188.433;16.743;16.03;ja;opencl:cpu
+cuda_reduktion_atomar;NVIDIA GeForce RTX 5060 Ti;16777216;1.399;1.269;52.89;ja;cuda
+cuda_reduktion_shared_W256;NVIDIA GeForce RTX 5060 Ti;16777216;0.276;0.167;401.32;ja;cuda
+cuda_reduktion_cub;NVIDIA GeForce RTX 5060 Ti;16777216;0.302;0.166;404.27;ja;cuda
+cuda_reduktion_atomar;NVIDIA GeForce RTX 5060 Ti;67108864;1.492;1.331;201.68;ja;cuda
+cuda_reduktion_shared_W256;NVIDIA GeForce RTX 5060 Ti;67108864;0.771;0.641;418.68;ja;cuda
+cuda_reduktion_cub;NVIDIA GeForce RTX 5060 Ti;67108864;0.766;0.640;419.24;ja;cuda

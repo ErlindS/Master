@@ -1,0 +1,5 @@
+# gebaute Programme
+bin/
+build_*/
+build_*.log
+wget-log*

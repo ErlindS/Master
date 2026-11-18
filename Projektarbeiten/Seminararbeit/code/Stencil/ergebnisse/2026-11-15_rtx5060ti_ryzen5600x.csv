@@ -1,0 +1,21 @@
+variante;geraet;n;erster_lauf_ms;median_ms;gb_s;korrekt;selector
+stencil1_2d;NVIDIA GeForce RTX 5060 Ti;4096;39.804;39.128;343.02;ja;cuda:gpu
+stencil1_2d_sync;NVIDIA GeForce RTX 5060 Ti;4096;39.747;40.012;335.44;ja;cuda:gpu
+stencil2_1d;NVIDIA GeForce RTX 5060 Ti;4096;49.397;49.287;272.32;ja;cuda:gpu
+stencil3_lokal_B16;NVIDIA GeForce RTX 5060 Ti;4096;44.105;43.463;308.81;ja;cuda:gpu
+stencil1_2d;NVIDIA GeForce RTX 5060 Ti;8192;151.242;150.177;357.49;ja;cuda:gpu
+stencil1_2d_sync;NVIDIA GeForce RTX 5060 Ti;8192;151.434;150.309;357.18;ja;cuda:gpu
+stencil2_1d;NVIDIA GeForce RTX 5060 Ti;8192;240.058;240.148;223.56;ja;cuda:gpu
+stencil3_lokal_B16;NVIDIA GeForce RTX 5060 Ti;8192;179.241;178.929;300.05;ja;cuda:gpu
+stencil1_2d;AMD Ryzen 5 5600X 6-Core Processor             ;4096;906.279;740.451;18.13;ja;opencl:cpu
+stencil1_2d_sync;AMD Ryzen 5 5600X 6-Core Processor             ;4096;872.189;755.546;17.76;ja;opencl:cpu
+stencil2_1d;AMD Ryzen 5 5600X 6-Core Processor             ;4096;1239.141;1168.556;11.49;ja;opencl:cpu
+stencil3_lokal_B16;AMD Ryzen 5 5600X 6-Core Processor             ;4096;1544.408;1398.152;9.60;ja;opencl:cpu
+stencil1_2d;AMD Ryzen 5 5600X 6-Core Processor             ;8192;3600.163;3445.937;15.58;ja;opencl:cpu
+stencil1_2d_sync;AMD Ryzen 5 5600X 6-Core Processor             ;8192;3389.252;3325.674;16.14;ja;opencl:cpu
+stencil2_1d;AMD Ryzen 5 5600X 6-Core Processor             ;8192;4562.815;4610.164;11.65;ja;opencl:cpu
+stencil3_lokal_B16;AMD Ryzen 5 5600X 6-Core Processor             ;8192;6207.577;6140.180;8.74;ja;opencl:cpu
+cuda_stencil_global_B16;NVIDIA GeForce RTX 5060 Ti;4096;36.195;36.189;370.88;ja;cuda
+cuda_stencil_shared_B16;NVIDIA GeForce RTX 5060 Ti;4096;43.840;43.888;305.82;ja;cuda
+cuda_stencil_global_B16;NVIDIA GeForce RTX 5060 Ti;8192;145.643;146.033;367.64;ja;cuda
+cuda_stencil_shared_B16;NVIDIA GeForce RTX 5060 Ti;8192;180.493;180.889;296.80;ja;cuda
