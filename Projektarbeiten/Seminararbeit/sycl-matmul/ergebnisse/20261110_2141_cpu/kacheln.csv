@@ -1,0 +1,11 @@
+auswahl;geraet;tile;n;median_ms;gflops;status;gewaehlt
+omp;AdaptiveCpp OpenMP host device;8;1024;35.198;61.01;ok;
+omp;AdaptiveCpp OpenMP host device;16;1024;28.031;76.61;ok;
+omp;AdaptiveCpp OpenMP host device;32;1024;17.120;125.44;ok;
+omp;AdaptiveCpp OpenMP host device;64;1024;86.593;24.80;ok;
+omp;AdaptiveCpp OpenMP host device;auto;1024;17.464;122.97;ok;32
+omp;AdaptiveCpp OpenMP host device;8;2048;283.954;60.50;ok;
+omp;AdaptiveCpp OpenMP host device;16;2048;221.122;77.69;ok;
+omp;AdaptiveCpp OpenMP host device;32;2048;150.647;114.04;ok;
+omp;AdaptiveCpp OpenMP host device;64;2048;647.568;26.53;ok;
+omp;AdaptiveCpp OpenMP host device;auto;2048;156.930;109.47;ok;32

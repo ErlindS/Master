@@ -1,0 +1,21 @@
+auswahl;geraet;tile;n;median_ms;gflops;status;gewaehlt
+opencl:cpu;AMD Ryzen 5 5600X 6-Core Processor;8;1024;25.735;83.45;ok;
+opencl:cpu;AMD Ryzen 5 5600X 6-Core Processor;16;1024;15.659;137.14;ok;
+opencl:cpu;AMD Ryzen 5 5600X 6-Core Processor;32;1024;11.414;188.15;ok;
+opencl:cpu;AMD Ryzen 5 5600X 6-Core Processor;64;1024;12.394;173.27;ok;
+opencl:cpu;AMD Ryzen 5 5600X 6-Core Processor;auto;1024;11.756;182.67;ok;32
+opencl:cpu;AMD Ryzen 5 5600X 6-Core Processor;8;2048;179.718;95.59;ok;
+opencl:cpu;AMD Ryzen 5 5600X 6-Core Processor;16;2048;112.662;152.49;ok;
+opencl:cpu;AMD Ryzen 5 5600X 6-Core Processor;32;2048;101.590;169.11;ok;
+opencl:cpu;AMD Ryzen 5 5600X 6-Core Processor;64;2048;98.818;173.85;ok;
+opencl:cpu;AMD Ryzen 5 5600X 6-Core Processor;auto;2048;93.649;183.45;ok;64
+cuda:gpu;NVIDIA GeForce RTX 5060 Ti;8;1024;1.801;1192.50;ok;
+cuda:gpu;NVIDIA GeForce RTX 5060 Ti;16;1024;1.541;1393.48;ok;
+cuda:gpu;NVIDIA GeForce RTX 5060 Ti;32;1024;1.616;1328.79;ok;
+cuda:gpu;;64;1024;;;startet_nicht;
+cuda:gpu;NVIDIA GeForce RTX 5060 Ti;auto;1024;1.745;1230.75;ok;16
+cuda:gpu;NVIDIA GeForce RTX 5060 Ti;8;2048;14.496;1185.11;ok;
+cuda:gpu;NVIDIA GeForce RTX 5060 Ti;16;2048;12.053;1425.33;ok;
+cuda:gpu;NVIDIA GeForce RTX 5060 Ti;32;2048;12.618;1361.52;ok;
+cuda:gpu;;64;2048;;;startet_nicht;
+cuda:gpu;NVIDIA GeForce RTX 5060 Ti;auto;2048;12.657;1357.35;ok;16

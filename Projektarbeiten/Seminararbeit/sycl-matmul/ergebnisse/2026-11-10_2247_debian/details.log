@@ -1,0 +1,65 @@
+### Stufen auf opencl:cpu
+[stufe5] AMD Ryzen 5 5600X 6-Core Processor             : max. Work-Group 8192, max. je Dimension 8192 x 8192, lokaler Speicher 262144 Byte
+[stufe5] T = 8: 0.389 ms
+[stufe5] T = 16: 0.307 ms
+[stufe5] T = 32: 0.224 ms
+[stufe5] T = 64: 0.275 ms
+[stufe5] gewählt: T = 32 (Auswahl 249.5 ms)
+[stufe5] AMD Ryzen 5 5600X 6-Core Processor             : max. Work-Group 8192, max. je Dimension 8192 x 8192, lokaler Speicher 262144 Byte
+[stufe5] T = 8: 2.878 ms
+[stufe5] T = 16: 1.768 ms
+[stufe5] T = 32: 1.589 ms
+[stufe5] T = 64: 1.894 ms
+[stufe5] gewählt: T = 32 (Auswahl 283.7 ms)
+[stufe5] AMD Ryzen 5 5600X 6-Core Processor             : max. Work-Group 8192, max. je Dimension 8192 x 8192, lokaler Speicher 262144 Byte
+[stufe5] T = 8: 22.702 ms
+[stufe5] T = 16: 14.651 ms
+[stufe5] T = 32: 11.494 ms
+[stufe5] T = 64: 12.085 ms
+[stufe5] gewählt: T = 32 (Auswahl 499.5 ms)
+[stufe5] AMD Ryzen 5 5600X 6-Core Processor             : max. Work-Group 8192, max. je Dimension 8192 x 8192, lokaler Speicher 262144 Byte
+[stufe5] T = 8: 180.997 ms
+[stufe5] T = 16: 113.711 ms
+[stufe5] T = 32: 93.467 ms
+[stufe5] T = 64: 92.647 ms
+[stufe5] gewählt: T = 64 (Auswahl 2195.8 ms)
+### Stufen auf cuda:gpu
+[stufe5] NVIDIA GeForce RTX 5060 Ti: max. Work-Group 1024, max. je Dimension 1024 x 1024, lokaler Speicher 101376 Byte
+[stufe5] T = 8: 0.087 ms
+[stufe5] T = 16: 0.062 ms
+[stufe5] T = 32: 0.078 ms
+[stufe5] T = 64: vom Gerät nicht erlaubt
+[stufe5] gewählt: T = 16 (Auswahl 31.5 ms)
+[stufe5] NVIDIA GeForce RTX 5060 Ti: max. Work-Group 1024, max. je Dimension 1024 x 1024, lokaler Speicher 101376 Byte
+[stufe5] T = 8: 0.265 ms
+[stufe5] T = 16: 0.235 ms
+[stufe5] T = 32: 0.269 ms
+[stufe5] T = 64: vom Gerät nicht erlaubt
+[stufe5] gewählt: T = 16 (Auswahl 4.4 ms)
+[stufe5] NVIDIA GeForce RTX 5060 Ti: max. Work-Group 1024, max. je Dimension 1024 x 1024, lokaler Speicher 101376 Byte
+[stufe5] T = 8: 1.942 ms
+[stufe5] T = 16: 1.705 ms
+[stufe5] T = 32: 1.820 ms
+[stufe5] T = 64: vom Gerät nicht erlaubt
+[stufe5] gewählt: T = 16 (Auswahl 23.8 ms)
+[stufe5] NVIDIA GeForce RTX 5060 Ti: max. Work-Group 1024, max. je Dimension 1024 x 1024, lokaler Speicher 101376 Byte
+[stufe5] T = 8: 14.571 ms
+[stufe5] T = 16: 12.616 ms
+[stufe5] T = 32: 13.497 ms
+[stufe5] T = 64: vom Gerät nicht erlaubt
+[stufe5] gewählt: T = 16 (Auswahl 167.1 ms)
+### Kachelexperiment
+### Auswahl Stufe 5 auf opencl:cpu (n = 1024)
+[stufe5] AMD Ryzen 5 5600X 6-Core Processor             : max. Work-Group 8192, max. je Dimension 8192 x 8192, lokaler Speicher 262144 Byte
+[stufe5] T = 8: 20.715 ms
+[stufe5] T = 16: 13.977 ms
+[stufe5] T = 32: 11.677 ms
+[stufe5] T = 64: 11.945 ms
+[stufe5] gewählt: T = 32 (Auswahl 488.9 ms)
+### Auswahl Stufe 5 auf cuda:gpu (n = 1024)
+[stufe5] NVIDIA GeForce RTX 5060 Ti: max. Work-Group 1024, max. je Dimension 1024 x 1024, lokaler Speicher 101376 Byte
+[stufe5] T = 8: 1.965 ms
+[stufe5] T = 16: 1.701 ms
+[stufe5] T = 32: 1.825 ms
+[stufe5] T = 64: vom Gerät nicht erlaubt
+[stufe5] gewählt: T = 16 (Auswahl 24.2 ms)

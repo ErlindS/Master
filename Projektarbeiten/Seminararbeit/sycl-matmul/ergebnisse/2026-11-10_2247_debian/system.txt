@@ -1,0 +1,18 @@
+== Rechner
+debian
+Tue 10 Nov 22:47:40 CET 2026
+== CPU
+CPU(s):                                  12
+Model name:                              AMD Ryzen 5 5600X 6-Core Processor
+CPU(s) scaling MHz:                      97%
+== GPU
+name, driver_version, memory.total [MiB]
+NVIDIA GeForce RTX 5060 Ti, 615.71.10, 16311 MiB
+== Compiler
+DPC++ compiler 7.2.0 build based on:
+== Geräte
+[opencl:cpu][opencl:0] Intel(R) OpenCL, AMD Ryzen 5 5600X 6-Core Processor              OpenCL 3.1 (Build 0) [2026.22.10.0.01_160000]
+[opencl:cpu][opencl:1] Intel(R) OpenCL, AMD Ryzen 5 5600X 6-Core Processor              OpenCL 3.1 (Build 0) [2026.22.10.0.01_160000]
+[cuda:gpu][cuda:0] NVIDIA CUDA BACKEND, NVIDIA GeForce RTX 5060 Ti 12.0 [CUDA 13.4]
+== Einstellungen
+SIZES=256 512 1024 2048 REPS=5 TILES=8 16 32 64 DEVICES=opencl:cpu cuda:gpu

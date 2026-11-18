@@ -1,0 +1,36 @@
+
+=== n = 1024 ===
+  cuda:gpu     = NVIDIA GeForce RTX 5060 Ti
+  opencl:cpu   = AMD Ryzen 5 5600X 6-Core Processor
+
+  T                     cuda:gpu                opencl:cpu      PP
+  ----------------------------------------------------------------
+  8       1192.5 GFLOPS (  86%)      83.5 GFLOPS (  44%)    0.58
+  16      1393.5 GFLOPS ( 100%)     137.1 GFLOPS (  73%)    0.84
+  32      1328.8 GFLOPS (  95%)     188.2 GFLOPS ( 100%)    0.98
+  64                 läuft nicht     173.3 GFLOPS (  92%)    0.00
+  auto    1230.8 GFLOPS (  88%)     182.7 GFLOPS (  97%)    0.92
+
+  beste Kachel auf cuda:gpu    : T = 16
+  beste Kachel auf opencl:cpu  : T = 32
+  bester fester Wert für alle Geräte: T = 32 (PP = 0.98)
+  Stufe 5 (zur Laufzeit gewählt):     PP = 0.92 (cuda:gpu: T = 16, opencl:cpu: T = 32)
+  pro Gerät von Hand abgestimmt:      PP = 1.00 (per Definition)
+
+=== n = 2048 ===
+  cuda:gpu     = NVIDIA GeForce RTX 5060 Ti
+  opencl:cpu   = AMD Ryzen 5 5600X 6-Core Processor
+
+  T                     cuda:gpu                opencl:cpu      PP
+  ----------------------------------------------------------------
+  8       1185.1 GFLOPS (  83%)      95.6 GFLOPS (  55%)    0.66
+  16      1425.3 GFLOPS ( 100%)     152.5 GFLOPS (  88%)    0.93
+  32      1361.5 GFLOPS (  96%)     169.1 GFLOPS (  97%)    0.96
+  64                 läuft nicht     173.8 GFLOPS ( 100%)    0.00
+  auto    1357.3 GFLOPS (  95%)     183.4 GFLOPS ( 106%)    0.98
+
+  beste Kachel auf cuda:gpu    : T = 16
+  beste Kachel auf opencl:cpu  : T = 64
+  bester fester Wert für alle Geräte: T = 32 (PP = 0.96)
+  Stufe 5 (zur Laufzeit gewählt):     PP = 0.98 (cuda:gpu: T = 16, opencl:cpu: T = 64)
+  pro Gerät von Hand abgestimmt:      PP = 1.00 (per Definition)

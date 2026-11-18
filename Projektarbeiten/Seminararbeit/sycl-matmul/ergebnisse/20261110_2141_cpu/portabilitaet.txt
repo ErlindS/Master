@@ -1,0 +1,32 @@
+
+=== n = 1024 ===
+  omp          = AdaptiveCpp OpenMP host device
+
+  T                          omp      PP
+  --------------------------------------
+  8         61.0 GFLOPS (  49%)    0.49
+  16        76.6 GFLOPS (  61%)    0.61
+  32       125.4 GFLOPS ( 100%)    1.00
+  64        24.8 GFLOPS (  20%)    0.20
+  auto     123.0 GFLOPS (  98%)    0.98
+
+  beste Kachel auf omp         : T = 32
+  bester fester Wert für alle Geräte: T = 32 (PP = 1.00)
+  Stufe 5 (zur Laufzeit gewählt):     PP = 0.98 (omp: T = 32)
+  pro Gerät von Hand abgestimmt:      PP = 1.00 (per Definition)
+
+=== n = 2048 ===
+  omp          = AdaptiveCpp OpenMP host device
+
+  T                          omp      PP
+  --------------------------------------
+  8         60.5 GFLOPS (  53%)    0.53
+  16        77.7 GFLOPS (  68%)    0.68
+  32       114.0 GFLOPS ( 100%)    1.00
+  64        26.5 GFLOPS (  23%)    0.23
+  auto     109.5 GFLOPS (  96%)    0.96
+
+  beste Kachel auf omp         : T = 32
+  bester fester Wert für alle Geräte: T = 32 (PP = 1.00)
+  Stufe 5 (zur Laufzeit gewählt):     PP = 0.96 (omp: T = 32)
+  pro Gerät von Hand abgestimmt:      PP = 1.00 (per Definition)
