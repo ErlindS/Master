@@ -3,6 +3,7 @@
 public class OrderStatusChangedToAwaitingValidationIntegrationEventHandler(
     CatalogContext catalogContext,
     ICatalogIntegrationEventService catalogIntegrationEventService,
+    IConfiguration configuration,
     ILogger<OrderStatusChangedToAwaitingValidationIntegrationEventHandler> logger) :
     IIntegrationEventHandler<OrderStatusChangedToAwaitingValidationIntegrationEvent>
 {
@@ -21,6 +22,22 @@ public class OrderStatusChangedToAwaitingValidationIntegrationEventHandler(
                 var confirmedOrderStockItem = new ConfirmedOrderStockItem(catalogItem.Id, hasStock);
 
                 confirmedOrderStockItems.Add(confirmedOrderStockItem);
+            }
+        }
+
+        // Fehler F4 (Projektarbeit): Fehler in der Geschäftslogik wird verschluckt.
+        // Die Prüfung "scheitert", die Ausnahme wird gefangen und nur auf Debug geloggt.
+        // Es wird kein Ergebnis-Ereignis veröffentlicht -> Bestellung bleibt in "AwaitingValidation" hängen.
+        if (configuration.GetValue<bool>("Faults:SwallowStockValidation"))
+        {
+            try
+            {
+                throw new InvalidOperationException($"Stock validation failed for order {@event.OrderId}");
+            }
+            catch (InvalidOperationException ex)
+            {
+                logger.LogDebug(ex, "Stock validation skipped");
+                return;
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
@@ -40,6 +41,14 @@ public static partial class Extensions
     /// </remarks>
     public static IHostApplicationBuilder AddBasicServiceDefaults(this IHostApplicationBuilder builder)
     {
+        // Fehlerinjektion (Projektarbeit): Feature-Flags F4/F5 und Konfiguration F7 zur Laufzeit umschaltbar.
+        // Die Datei wird zuletzt geladen und überschreibt damit appsettings und Umgebungsvariablen.
+        var faultsFile = Environment.GetEnvironmentVariable("FAULTS_FILE");
+        if (!string.IsNullOrEmpty(faultsFile))
+        {
+            builder.Configuration.AddJsonFile(faultsFile, optional: true, reloadOnChange: true);
+        }
+
         // Default health checks assume the event bus and self health checks
         builder.AddDefaultHealthChecks();
 

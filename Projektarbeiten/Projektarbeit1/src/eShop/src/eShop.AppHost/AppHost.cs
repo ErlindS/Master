@@ -20,35 +20,41 @@ var identityDb = postgres.AddDatabase("identitydb");
 var orderDb = postgres.AddDatabase("orderingdb");
 var webhooksDb = postgres.AddDatabase("webhooksdb");
 
+// Fehlerinjektion (Projektarbeit): Toxiproxy vor PostgreSQL (F1) und Redis (F6), Feature-Flags (F4, F5, F7)
+builder.AddFaultFlags();
+var toxiproxy = builder.ExecutionContext.IsRunMode ? builder.AddToxiproxy(postgres, redis) : null;
+var pgEndpoint = postgres.Resource.PrimaryEndpoint;
+var redisEndpoint = redis.Resource.PrimaryEndpoint;
+
 var launchProfileName = ShouldUseHttpForEndpoints() ? "http" : "https";
 
 // Services
 var identityApi = builder.AddDotnetProject("identity-api", "../Identity.API", o => o.LaunchProfileName = launchProfileName)
     .WithExternalHttpEndpoints()
-    .WithReference(identityDb)
+    .WithReferenceViaToxiproxy(identityDb, pgEndpoint, toxiproxy, "postgres")
     .WithHttpHealthCheck("/health");
 
 var identityEndpoint = identityApi.GetEndpoint(launchProfileName);
     
 var basketApi = builder.AddDotnetProject("basket-api", "../Basket.API")
-    .WithReference(redis)
+    .WithReferenceViaToxiproxy(redis, redisEndpoint, toxiproxy, "redis")
     .WithReference(rabbitMq).WaitFor(rabbitMq)
     .WithEnvironment("Identity__Url", identityEndpoint);
 redis.WithParentRelationship(basketApi);
 
 var catalogApi = builder.AddDotnetProject("catalog-api", "../Catalog.API")
     .WithReference(rabbitMq).WaitFor(rabbitMq)
-    .WithReference(catalogDb);
+    .WithReferenceViaToxiproxy(catalogDb, pgEndpoint, toxiproxy, "postgres");
 
 var orderingApi = builder.AddDotnetProject("ordering-api", "../Ordering.API")
     .WithReference(rabbitMq).WaitFor(rabbitMq)
-    .WithReference(orderDb).WaitFor(orderDb)
+    .WithReferenceViaToxiproxy(orderDb, pgEndpoint, toxiproxy, "postgres").WaitFor(orderDb)
     .WithHttpHealthCheck("/health")
     .WithEnvironment("Identity__Url", identityEndpoint);
 
 builder.AddDotnetProject("order-processor", "../OrderProcessor")
     .WithReference(rabbitMq).WaitFor(rabbitMq)
-    .WithReference(orderDb)
+    .WithReferenceViaToxiproxy(orderDb, pgEndpoint, toxiproxy, "postgres")
     .WaitFor(orderingApi); // wait for the orderingApi to be ready because that contains the EF migrations
     
 builder.AddDotnetProject("payment-processor", "../PaymentProcessor")
@@ -56,7 +62,7 @@ builder.AddDotnetProject("payment-processor", "../PaymentProcessor")
 
 var webHooksApi = builder.AddDotnetProject("webhooks-api", "../Webhooks.API")
     .WithReference(rabbitMq).WaitFor(rabbitMq)
-    .WithReference(webhooksDb)
+    .WithReferenceViaToxiproxy(webhooksDb, pgEndpoint, toxiproxy, "postgres")
     .WithEnvironment("Identity__Url", identityEndpoint);
 
 // Reverse proxies

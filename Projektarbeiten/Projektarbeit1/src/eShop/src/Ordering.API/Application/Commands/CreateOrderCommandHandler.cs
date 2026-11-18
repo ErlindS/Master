@@ -11,14 +11,17 @@ public class CreateOrderCommandHandler
     private readonly IMediator _mediator;
     private readonly IOrderingIntegrationEventService _orderingIntegrationEventService;
     private readonly ILogger<CreateOrderCommandHandler> _logger;
+    private readonly IConfiguration _configuration;
 
     // Using DI to inject infrastructure persistence Repositories
     public CreateOrderCommandHandler(IMediator mediator,
         IOrderingIntegrationEventService orderingIntegrationEventService,
         IOrderRepository orderRepository,
         IIdentityService identityService,
-        ILogger<CreateOrderCommandHandler> logger)
+        ILogger<CreateOrderCommandHandler> logger,
+        IConfiguration configuration)
     {
+        _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
         _identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
@@ -28,6 +31,13 @@ public class CreateOrderCommandHandler
 
     public async Task<bool> Handle(CreateOrderCommand message, CancellationToken cancellationToken)
     {
+        // Fehler F5 (Projektarbeit): Dienst rechnet zu lange (echte CPU-Last, kein Task.Delay).
+        var cpuBurnMs = _configuration.GetValue<int>("Faults:CpuBurnMs");
+        if (cpuBurnMs > 0)
+        {
+            BurnCpu(TimeSpan.FromMilliseconds(cpuBurnMs));
+        }
+
         // Add Integration event to clean the basket
         var orderStartedIntegrationEvent = new OrderStartedIntegrationEvent(message.UserId);
         await _orderingIntegrationEventService.AddAndSaveEventAsync(orderStartedIntegrationEvent);
@@ -49,6 +59,16 @@ public class CreateOrderCommandHandler
         _orderRepository.Add(order);
 
         return await _orderRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
+    }
+
+    private static void BurnCpu(TimeSpan duration)
+    {
+        var sw = System.Diagnostics.Stopwatch.StartNew();
+        Span<byte> buffer = stackalloc byte[32];
+        while (sw.Elapsed < duration)
+        {
+            System.Security.Cryptography.SHA256.HashData(buffer, buffer);
+        }
     }
 }
 
