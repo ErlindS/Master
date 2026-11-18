@@ -1,0 +1,185 @@
+\documentclass[10pt, aspectratio=169]{beamer}
+
+% --- Pakete ---
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[autostyle=true,german=quotes]{csquotes}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta}
+
+% --- Farben (HKA Corporate) ---
+\definecolor{hkared}{RGB}{198, 42, 18}
+\definecolor{hkagray}{RGB}{100, 100, 100}
+
+% --- Beamer-Stil ---
+\usetheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamercolor{structure}{fg=hkared}
+\setbeamercolor{frametitle}{fg=hkared}
+\setbeamercolor{title}{fg=hkared}
+\setbeamerfont{frametitle}{series=\bfseries}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{footline}{%
+  \hbox to \paperwidth{\hspace{1em}\color{hkagray}\tiny
+  Projektarbeit 1 -- Telemetrie \hfill \insertframenumber/\inserttotalframenumber\hspace{1em}}\vspace{0.6em}}
+
+\tikzset{
+  >={Stealth[length=2mm]},
+  box/.style={rounded corners=3pt, align=center, minimum height=11mm, text width=2.3cm, font=\footnotesize},
+  lastn/.style={box, draw=hkagray, fill=hkagray!12},
+  fehlern/.style={box, draw=hkared, fill=hkared!15},
+  sysn/.style={box, draw=black!80, fill=white, line width=0.9pt},
+  teln/.style={box, draw=hkagray, fill=hkagray!5},
+}
+
+\title{Wie feingranular muss Observability sein?}
+\subtitle{Zwischenstand Projektarbeit 1}
+\author{Erlind Sejdiu}
+\institute{Hochschule Karlsruhe -- Master Informatik}
+\date{\today}
+
+\begin{document}
+
+% =============================================================================
+\begin{frame}
+  \centering
+  \includegraphics[width=0.22\textwidth]{HKA.jpg}\\[0.6cm]
+  {\color{hkared}\rule{0.7\textwidth}{1pt}}\\[0.4cm]
+  {\Large\bfseries\color{hkared}\inserttitle}\\[0.25cm]
+  {\large\insertsubtitle}\\[0.4cm]
+  {\color{hkared}\rule{0.7\textwidth}{1pt}}\\[0.6cm]
+  \insertauthor\\[0.1cm]
+  {\small\color{hkagray}\insertdate}
+\end{frame}
+
+% =============================================================================
+\begin{frame}{Überblick}
+  \begin{enumerate}\setlength{\itemsep}{1em}
+    \item \textbf{Was wurde gemacht?}\\
+      {\small\color{hkagray}Versuchsaufbau und Lastskripte}
+    \item \textbf{Was ist für nächste Woche geplant?}\\
+      {\small\color{hkagray}Granularität der Instrumentierung anpassen}
+    \item \textbf{Offene Fragen}
+  \end{enumerate}
+\end{frame}
+
+% =============================================================================
+\section{Was wurde gemacht?}
+
+\begin{frame}{Was wurde gemacht: Versuchsaufbau}
+  \centering
+  \begin{tikzpicture}
+    \node[lastn] (L) at (0,0) {\textbf{Last}\\k6, offenes Modell};
+    \node[fehlern] (F) at (3.6,1.6) {\textbf{Fehler F1--F7}\\Toxiproxy, Flags};
+    \node[sysn] (S) at (3.6,0) {\textbf{eShop (.NET)}\\Microservices};
+    \node[teln] (T) at (7.2,0) {\textbf{Telemetrie}\\OpenTelemetry};
+    \node[teln] (M) at (10.8,0) {\textbf{Messung}\\Kosten + Nutzen};
+    \draw[->] (L) -- (S);
+    \draw[->, hkared, thick] (F) -- (S);
+    \draw[->] (S) -- (T);
+    \draw[->] (T) -- (M);
+  \end{tikzpicture}
+
+  \vspace{0.6cm}
+  \begin{itemize}\setlength{\itemsep}{0.3em}
+    \item Testsystem \textbf{eShop} lokal per Aspire-AppHost lauffähig
+    \item Messaufbau aus bestehenden Arbeiten übernommen (Nõu et al., OXN, TrainTicket, RCAEval)
+    \item Aufbau wird vor der Bewertung eingefroren, jede Messung ist per Skript wiederholbar
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Was wurde gemacht: Fehlerinjektion}
+  \small
+  \begin{tabularx}{\textwidth}{@{}l l X@{}}
+    \toprule
+    \textbf{ID} & \textbf{Fehler} & \textbf{Umsetzung} \\
+    \midrule
+    F1 & Datenbank langsam              & Toxiproxy: 300\,ms Latenz auf Postgres \\
+    F2 & Basket.API ausgefallen         & Dienst stoppen \\
+    F3 & OrderProcessor hängt           & Prozess pausieren (\texttt{SIGSTOP}) \\
+    F4 & Fehler in Geschäftslogik verschluckt & Feature-Flag in Catalog.API \\
+    F5 & Dienst rechnet zu lange        & Feature-Flag: 300\,ms CPU-Last in Ordering.API \\
+    F6 & Redis nicht erreichbar         & Toxiproxy-Proxy deaktiviert \\
+    F7 & falsche Konfiguration          & Zahlungen schlagen fehl (PaymentProcessor) \\
+    \bottomrule
+  \end{tabularx}
+
+  \vspace{0.5cm}
+  \begin{itemize}
+    \item Steuerung über \texttt{fault.py}: \texttt{inject}, \texttt{clear}, \texttt{status}
+    \item \texttt{random}: verdeckter Zufallsfehler für die Fehlersuche, später per \texttt{reveal} aufdeckbar
+    \item Fehler zur Laufzeit schaltbar, ohne Neustart der Dienste
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Was wurde gemacht: Lastskripte (k6)}
+  \begin{columns}[T]
+    \begin{column}{0.5\textwidth}
+      \textbf{Messlauf \texttt{eshop.js}}
+      \begin{itemize}\small
+        \item feste Ankunftsrate (offenes Modell), Standard 10 Sessions/s
+        \item Mix: 80\,\% Stöbern, 20\,\% Bestellen (deterministisch)
+        \item Phasen: 2\,min Aufwärmen, 5\,min Messung, 1\,min Ende
+        \item Parameter per \texttt{-e}: \texttt{RATE}, \texttt{RUN\_ID}, \texttt{ORDER\_SHARE}, \dots
+        \item Zusammenfassung je Lauf als JSON
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \textbf{Ablauf einer Session}
+      \begin{itemize}\small
+        \item \emph{Stöbern:} Startseite, Artikelliste, Filter, 1--3 Detailseiten
+        \item \emph{Bestellen:} Login, Warenkorb (gRPC), \texttt{POST /api/orders}, Bestellliste
+        \item danach asynchron über RabbitMQ: OrderProcessor, PaymentProcessor, Lagerbestand
+      \end{itemize}
+    \end{column}
+  \end{columns}
+
+  \vspace{0.4cm}
+  \textbf{Gültigkeit eines Laufs} {\small(nur Messphase, sonst Exit-Code 99)}
+  \begin{itemize}\small
+    \item HTTP-Fehler $\le$ 1\,\%, Checks und Bestellungen $>$ 99\,\% erfolgreich
+    \item keine verworfenen Iterationen (Zielrate erreicht), p95 $<$ 2\,s
+  \end{itemize}
+\end{frame}
+
+% =============================================================================
+\section{Nächste Woche}
+
+\begin{frame}{Nächste Woche: Granularität anpassen}
+  Die Instrumentierung des eShop in vier Stufen umsetzen:
+
+  \vspace{0.3cm}
+  \small
+  \begin{tabularx}{\textwidth}{@{}l l X@{}}
+    \toprule
+    \textbf{Stufe} & \textbf{Inhalt} & \textbf{Beispiel \enquote{Bestellung abschicken}} \\
+    \midrule
+    S0 & keine Traces              & -- \\
+    S1 & nur automatisch           & HTTP-Request, SQL-Insert, Publish \\
+    S2 & + fachliche Schritte      & zusätzlich \enquote{prüfen}, \enquote{speichern}, \enquote{Ereignis senden} \\
+    S3 & + Methoden                & zusätzlich Adressprüfung, Positionen, Mapping \\
+    \bottomrule
+  \end{tabularx}
+
+  \vspace{0.5cm}
+  \begin{itemize}
+    \item Stufe per Konfiguration umschaltbar, damit alle Läufe denselben Aufbau nutzen
+    \item erste Testläufe mit den Lastskripten je Stufe
+  \end{itemize}
+\end{frame}
+
+% =============================================================================
+\section{Offene Fragen}
+
+\begin{frame}{Offene Fragen}
+  \centering
+  \vfill
+  {\Large\color{hkagray}Aktuell keine offenen Fragen.}
+  \vfill
+\end{frame}
+
+\end{document}
