@@ -8,7 +8,7 @@
 //
 // Der Kernel selbst ist identisch zu Stufe 1.
 //
-// Ziel für die Präsentation: Datentransfer wird sichtbar und messbar.
+// Datentransfer wird gegenüber Stufe 1 sichtbar und getrennt messbar.
 // Gerade bei kleinen Matrizen kostet das Kopieren oft mehr als die Rechnung.
 //
 // Neue Konzepte: malloc_device, memcpy, Trennung Host-/Geräte-Speicher

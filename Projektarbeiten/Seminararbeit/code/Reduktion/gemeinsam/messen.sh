@@ -8,7 +8,10 @@
 #   bash gemeinsam/messen.sh                  # -> ergebnisse/<datum>_<rechner>.csv
 #
 # Einstellungen: DEVICES="cuda:gpu opencl:cpu", REPS=5, SIZES="16777216 67108864",
-#   BIN_DIR=bin (Ordner mit den gebauten Programmen)
+#   BIN_DIR=bin (Ordner mit den gebauten Programmen),
+#   VARIANTEN="reduktion5_gemeinsam reduktion6_buffer" (nur diese messen),
+#   GRUPPEN="64 256 1024" (Gruppengrößen für reduktion7_geraet, leer = überspringen),
+#   SELECTOR_VAR=ONEAPI_DEVICE_SELECTOR (AdaptiveCpp: ACPP_VISIBILITY_MASK, DEVICES="hip omp")
 
 set -uo pipefail
 cd "$(dirname "$0")/.."   # Ordner Reduktion
@@ -17,25 +20,36 @@ DEVICES="${DEVICES:-cuda:gpu opencl:cpu}"
 REPS="${REPS:-5}"
 SIZES="${SIZES:-16777216 67108864}"
 B="${BIN_DIR:-bin}"
+SELECTOR_VAR="${SELECTOR_VAR:-ONEAPI_DEVICE_SELECTOR}"
 mkdir -p ergebnisse
 OUT="${1:-ergebnisse/$(date +%Y-%m-%d)_$(hostname -s).csv}"
 
 echo "variante;geraet;n;erster_lauf_ms;median_ms;gb_s;korrekt;selector" > "$OUT"
 
-run() {   # run <selector|cuda> <programm> <n>
-  local sel="$1" bin="$2" n="$3" line
+run() {   # run <selector|cuda> <programm> <n> [parameter]
+  local sel="$1" bin="$2" n="$3" par="${4:-}" line
   if [ "$sel" = "cuda" ]; then
-    line=$("$bin" "$n" "$REPS" 2>/dev/null)
+    line=$("$bin" "$n" "$REPS" $par 2>/dev/null)
   else
-    line=$(ONEAPI_DEVICE_SELECTOR="$sel" "$bin" "$n" "$REPS" 2>/dev/null)
+    line=$(env "$SELECTOR_VAR=$sel" "$bin" "$n" "$REPS" $par 2>/dev/null)
   fi
   if [ -n "$line" ]; then echo "$line;$sel" | tee -a "$OUT"
   else echo "$(basename "$bin");;$n;;;;startet_nicht;$sel" | tee -a "$OUT"; fi
 }
 
+# Die Stufen-Gegenstücke stehen in derselben Reihenfolge wie die Stufen der
+# Matrixmultiplikation: 5 = Stufe 1 (gemeinsamer Speicher), 6 = Stufe 2b
+# (Buffer), 1 bis 4 = Gerätespeicher mit steigender Gruppenarbeit,
+# 7 = Stufe 5 (Gruppengröße vom Gerät).
+GRUPPEN="${GRUPPEN:-64 256 1024}"   # Gruppengrößen W für reduktion7_geraet, leer = überspringen
+VARIANTEN="${VARIANTEN:-reduktion5_gemeinsam reduktion6_buffer reduktion6_buffer_wieder \
+                        reduktion1_atomar reduktion2_lokal reduktion3_gruppe \
+                        reduktion4_builtin reduktion7_geraet}"
+
 for dev in $DEVICES; do
   for n in $SIZES; do
-    for b in reduktion1_atomar reduktion2_lokal reduktion3_gruppe reduktion4_builtin; do run "$dev" "$B/$b" "$n"; done
+    for b in $VARIANTEN; do run "$dev" "$B/$b" "$n"; done
+    for w in $GRUPPEN; do run "$dev" "$B/reduktion7_geraet" "$n" "$w"; done
   done
 done
 

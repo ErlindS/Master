@@ -70,6 +70,7 @@ amd_bereit() {
   if ! ls "$DPCPP_HOME/lib" | grep -q '^libur_adapter_hip\.so'; then
     warn "AMD übersprungen: $DPCPP_HOME/lib enthält keinen HIP-Adapter (libur_adapter_hip.so)."
     warn "  Das DPC++-Release kann AMD-GPUs damit nicht ansprechen."
+    warn "  Für die MI300A AdaptiveCpp nutzen: im Ordner code  bash gemeinsam/dachs/amd.sh install"
     return 1
   fi
   if [ -z "${ROCM_PATH:-}" ] && [ ! -d /opt/rocm ]; then

@@ -12,6 +12,9 @@
 #
 # Ergebnis: ergebnisse/dachs/<partition>_<jobid>/
 #
+# Von außen steuerbar (sbatch gibt die Umgebung weiter):
+#   REPS=3 SIZES="..." VARIANTEN="..." GRUPPEN="" sbatch -p gpu8 gemeinsam/dachs.sbatch
+#
 #SBATCH --job-name=sycl-reduktion
 #SBATCH --partition=gpu1
 #SBATCH --gres=gpu:1
@@ -19,7 +22,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=32G
-#SBATCH --time=01:00:00
+#SBATCH --time=04:00:00
 #SBATCH --output=ergebnisse/dachs/slurm_%j.out
 
 set -uo pipefail
@@ -36,6 +39,6 @@ mkdir -p "$OUT"
   echo "== DPC++"; clang++ --version | head -n 1
 } > "$OUT/system.txt" 2>&1
 
-DEVICES="cuda:gpu" REPS=5 bash gemeinsam/messen.sh "$OUT/reduktion.csv"
+DEVICES="cuda:gpu" REPS="${REPS:-5}" bash gemeinsam/messen.sh "$OUT/reduktion.csv"
 
 echo "Fertig: $OUT"

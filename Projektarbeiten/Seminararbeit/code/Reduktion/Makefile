@@ -9,6 +9,7 @@
 #   make cuda                                              -> CUDA (-arch=native)
 #   make cuda ARCH="-gencode arch=compute_89,code=sm_89 -gencode arch=compute_90,code=sm_90"
 #                                                          -> CUDA für L40S und H100 (DACHS)
+#   make COMPILER=acpp EXTRA=--acpp-targets=generic         -> AdaptiveCpp (z. B. AMD MI300A)
 #   make ITER=200                                          -> mehr Stencil-Zeitschritte
 
 SYCL_CXX     ?= clang++
@@ -19,9 +20,15 @@ ARCH         ?= -arch=native
 BIN          ?= bin
 
 INC        := -I../gemeinsam
-SYCL_FLAGS := -fsycl -O3 -std=c++17 -DITER=$(ITER) $(INC)
-ifneq ($(SYCL_TARGETS),)
-  SYCL_FLAGS += -fsycl-targets=$(SYCL_TARGETS)
+ifeq ($(COMPILER),acpp)
+  # AdaptiveCpp: Ziel über EXTRA=--acpp-targets=... oder ACPP_TARGETS
+  SYCL_CXX   := acpp
+  SYCL_FLAGS := -O3 -std=c++17 -DITER=$(ITER) $(INC)
+else
+  SYCL_FLAGS := -fsycl -O3 -std=c++17 -DITER=$(ITER) $(INC)
+  ifneq ($(SYCL_TARGETS),)
+    SYCL_FLAGS += -fsycl-targets=$(SYCL_TARGETS)
+  endif
 endif
 SYCL_FLAGS += $(EXTRA)
 NVFLAGS    := -O3 -std=c++17 $(ARCH) -DITER=$(ITER) $(INC) $(NVEXTRA)
@@ -30,7 +37,9 @@ DEPS   := ../gemeinsam/common.hpp ../gemeinsam/probleme.hpp ../gemeinsam/sycl_ra
 CUDEPS := ../gemeinsam/common.hpp ../gemeinsam/probleme.hpp ../gemeinsam/cuda_rahmen.cuh
 
 all: sycl
-sycl: $(BIN)/reduktion1_atomar $(BIN)/reduktion2_lokal $(BIN)/reduktion3_gruppe $(BIN)/reduktion4_builtin
+sycl: $(BIN)/reduktion1_atomar $(BIN)/reduktion2_lokal $(BIN)/reduktion3_gruppe \
+      $(BIN)/reduktion4_builtin $(BIN)/reduktion5_gemeinsam $(BIN)/reduktion6_buffer \
+      $(BIN)/reduktion6_buffer_wieder $(BIN)/reduktion7_geraet
 cuda: $(BIN)/cuda_reduktion_atomar $(BIN)/cuda_reduktion_shared $(BIN)/cuda_reduktion_cub
 
 $(BIN):
@@ -46,6 +55,18 @@ $(BIN)/reduktion3_gruppe: 3_Gruppe/Sycl/reduktion3_gruppe.cpp $(DEPS) | $(BIN)
 	$(SYCL_CXX) $(SYCL_FLAGS) -o $@ $<
 
 $(BIN)/reduktion4_builtin: 4_Eingebaut/Sycl/reduktion4_builtin.cpp $(DEPS) | $(BIN)
+	$(SYCL_CXX) $(SYCL_FLAGS) -o $@ $<
+
+$(BIN)/reduktion5_gemeinsam: 5_Gemeinsam/Sycl/reduktion5_gemeinsam.cpp $(DEPS) | $(BIN)
+	$(SYCL_CXX) $(SYCL_FLAGS) -o $@ $<
+
+$(BIN)/reduktion6_buffer: 6_Buffer/Sycl/reduktion6_buffer.cpp $(DEPS) | $(BIN)
+	$(SYCL_CXX) $(SYCL_FLAGS) -o $@ $<
+
+$(BIN)/reduktion6_buffer_wieder: 6_Buffer/Sycl/reduktion6_buffer.cpp $(DEPS) | $(BIN)
+	$(SYCL_CXX) $(SYCL_FLAGS) -DBUFFER_WIEDER -o $@ $<
+
+$(BIN)/reduktion7_geraet: 7_Geraet/Sycl/reduktion7_geraet.cpp $(DEPS) | $(BIN)
 	$(SYCL_CXX) $(SYCL_FLAGS) -o $@ $<
 
 $(BIN)/cuda_reduktion_atomar: 1_Atomar/Cuda/cuda_reduktion_atomar.cu $(CUDEPS) | $(BIN)

@@ -34,7 +34,10 @@ ifeq ($(COMPILER),acpp)
   CXX        := acpp
   SYCL_FLAGS := -O3
 else
-  CXX        := icpx
+  # icpx (Intel oneAPI) wenn vorhanden, sonst clang++ aus dem DPC++-Release
+  # (so auf DACHS, wo nur das Release aus ~/sycl installiert ist).
+  # Übersteuern jederzeit mit:  make CXX=<compiler>
+  CXX        := $(shell command -v icpx >/dev/null 2>&1 && echo icpx || echo clang++)
   SYCL_FLAGS := -fsycl -O3
   ifdef SYCL_TARGETS
     SYCL_FLAGS += -fsycl-targets=$(SYCL_TARGETS)

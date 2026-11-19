@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600&family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#fbfaf7; --ink:#1c1e22; --ink2:#3b3f46; --grey:#8a8f97; --line:#d4d5d8; --faint:#ecebe6;
+  --paper:#fbfaf7; --ink:#1c1e22; --ink2:#3b3f46; --grey:#6e737b; --line:#d4d5d8; --faint:#ecebe6;
   --acc:#b3412a; --acc-soft:#f2ddd6;
   --rtx:#b9bdc4; --l40:#6c727b; --h100:#24272c; --cpu:#b3412a;
   --r-background-color:var(--paper); --r-main-color:var(--ink); --r-heading-color:var(--ink);
@@ -22,260 +22,239 @@
 body{background:var(--paper)}
 .reveal .slides section{text-align:left}
 .reveal h1{font-size:96px;line-height:1;margin:0 0 .15em}
-.reveal h2{font-size:42px;margin:0 0 24px;padding-bottom:12px;border-bottom:1px solid var(--line);max-width:960px}
-.reveal p{font-size:24px;line-height:1.4;margin:0 0 .5em}
-.reveal ul{margin-left:1.1em} .reveal li{font-size:23px;line-height:1.4;margin:.2em 0}
+.reveal h2{font-size:40px;margin:0 0 20px;padding-bottom:10px;border-bottom:1px solid var(--line);max-width:960px}
+.reveal p{font-size:23px;line-height:1.4;margin:0 0 .5em}
+.reveal ul{margin-left:1.1em} .reveal li{font-size:22px;line-height:1.4;margin:.25em 0}
 .muted{color:var(--grey)} .acc{color:var(--acc)} .mono{font-family:'Source Code Pro',monospace}
-.small{font-size:20px!important} .tiny{font-size:16px!important}
+.small{font-size:19.5px!important;line-height:1.38!important} .tiny{font-size:16px!important;line-height:1.35!important}
 .serif{font-family:'Source Serif 4',Georgia,serif}
-.cols2{display:grid;grid-template-columns:1fr 1fr;gap:48px}
-.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:36px}
-.cols3 h4,.cols2 h4{font-family:'Source Sans 3',sans-serif;font-size:22px;font-weight:700;margin:0 0 6px;text-transform:none;letter-spacing:0;padding-top:8px;border-top:2px solid var(--ink)}
-.cols3 p,.cols2 p{font-size:20px}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;align-items:start}
+.cols3 h4,.cols2 h4{font-family:'Source Sans 3',sans-serif;font-size:21px;font-weight:700;margin:0 0 6px;text-transform:none;letter-spacing:0;padding-top:8px;border-top:2px solid var(--ink)}
+.cols3 p,.cols2 p{font-size:19.5px}
 .n{display:inline-block;width:1.4em;color:var(--acc);font-weight:700}
 
 /* Stufenleiste oben rechts */
-.sbar{position:absolute;top:14px;right:0;display:flex;gap:4px;font-size:15px;color:var(--grey);align-items:center}
-.sbar span{display:inline-block;min-width:28px;text-align:center;padding:2px 4px;border:1px solid var(--line);border-radius:3px;background:var(--paper)}
-.sbar span.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.sbar{position:absolute;top:12px;right:0;display:flex;gap:4px;font-size:15px;color:var(--grey);align-items:center}
+.sbar span{display:inline-block;min-width:28px;text-align:center;padding:2px 5px;border:1px solid var(--line);border-radius:3px;background:var(--paper)}
+.sbar span.on{background:var(--ink);color:#fff;border-color:var(--ink);font-weight:600}
 
 /* Footer */
-#foot{position:fixed;left:3%;right:3%;bottom:12px;display:flex;justify-content:space-between;font:14px 'Source Sans 3',sans-serif;color:var(--grey);z-index:20;pointer-events:none;transition:opacity .3s}
+#foot{position:fixed;left:3%;right:3%;bottom:12px;display:flex;justify-content:space-between;font:14px 'Source Sans 3',sans-serif;color:var(--grey);z-index:20;pointer-events:none;transition:opacity .25s}
 #foot.hide{opacity:0}
 
 /* Code */
-.reveal pre{width:100%;box-shadow:none;font-size:17px;margin:0}
-.reveal pre code,.reveal pre code.hljs{background:#f3f2ee;border:1px solid var(--line);border-radius:4px;padding:14px 18px;max-height:520px;line-height:1.45}
+.reveal pre{width:100%;box-shadow:none;font-size:16px;margin:0}
+.reveal pre code,.reveal pre code.hljs{background:#f3f2ee;border:1px solid var(--line);border-radius:4px;padding:12px 16px;max-height:480px;line-height:1.45}
 
-/* Bühnen-Diagramme (auto-animate) */
-.stage{position:relative;width:1100px;margin:6px auto 0}
-.el{position:absolute;box-sizing:border-box;border:2px solid var(--ink);background:var(--paper);display:flex;align-items:center;justify-content:center;font-size:19px;border-radius:4px;color:var(--ink)}
-.el.lab{align-items:flex-start;justify-content:flex-start;padding:5px 10px;font-weight:600}
-.el.neu{border-color:var(--ink);border-width:3px;color:var(--ink)}
-.el.alt{border-color:#c9cbcf;border-width:2px;color:var(--grey)}
-.el.fill.neu{background:var(--ink);color:#fff}
-.el.fill.alt{background:var(--faint);color:var(--grey)}
-.el.wi{border-radius:3px}
-.el.wi.neu{background:#fff}
-.el.group{background:transparent}
-.el.bare{border:none;background:none;font-size:16px;color:var(--ink)}
-.el.barrier{border:none;border-top:3px dashed var(--ink);background:none;border-radius:0}
-.el.chip{font-family:'Source Code Pro',monospace;font-weight:600}
-.el.loc{font-size:16px;text-align:center;line-height:1.2}
-.ov{position:absolute;left:0;top:0;width:1100px;height:440px;pointer-events:none;overflow:visible}
-.ov text{font:16px 'Source Code Pro',monospace}
-.present .wi.run{animation:wipulse 1.8s ease-in-out infinite}
-@keyframes wipulse{0%,100%{background:#fff}50%{background:var(--ink)}}
-.flyer{position:absolute;left:300px;top:184px;width:56px;height:30px;background:var(--acc);color:#fff;font-size:15px;font-weight:700;border-radius:3px;display:flex;align-items:center;justify-content:center;opacity:0}
-.present .flywrap.visible .flyer{animation:fly 2.6s ease-in-out infinite}
-@keyframes fly{0%{left:300px;opacity:0}12%{opacity:1}75%{left:640px;opacity:1}100%{left:700px;opacity:0}}
-.pkt{position:absolute;top:366px;width:30px;height:28px;font:600 14px 'Source Code Pro',monospace;display:flex;align-items:center;justify-content:center;border:2px solid var(--acc);color:var(--acc);background:var(--paper);border-radius:3px;opacity:0}
-.pkt.dsh{border-style:dashed}
-.present .visible>.pkt.r{animation:pktR 2.4s linear infinite;animation-delay:var(--d)}
-.present .visible>.pkt.l{animation:pktL 2.4s linear infinite;animation-delay:var(--d)}
-@keyframes pktR{0%{left:478px;opacity:0}10%{opacity:1}85%{opacity:1}100%{left:565px;opacity:0}}
-@keyframes pktL{0%{left:565px;opacity:0}10%{opacity:1}85%{opacity:1}100%{left:478px;opacity:0}}
-.present .cycAB{animation:cAB 6s infinite} .present .cycK{animation:cK 6s infinite} .present .cycC{animation:cC 6s infinite}
-.present .cycWI{animation:cWI 6s infinite}
-@keyframes cAB{0%,4%{background:var(--paper);color:var(--ink)}8%,28%{background:var(--acc);color:#fff;border-color:var(--acc)}33%,100%{background:var(--paper);color:var(--ink)}}
-@keyframes cK{0%,33%{background:var(--faint);color:var(--grey)}37%,60%{background:var(--acc);color:#fff;border-color:var(--acc)}65%,100%{background:var(--faint);color:var(--grey)}}
-@keyframes cC{0%,65%{background:var(--paper);color:var(--ink)}69%,88%{background:var(--acc);color:#fff;border-color:var(--acc)}92%,100%{background:var(--paper);color:var(--ink)}}
-@keyframes cWI{0%,35%{background:var(--paper)}42%,58%{background:var(--acc-soft)}65%,100%{background:var(--paper)}}
-.present .locP{animation:locP 4.5s infinite} .present .barP{animation:barP 4.5s infinite}
-@keyframes locP{0%,5%{background:var(--paper)}12%,30%{background:var(--acc-soft)}40%,100%{background:var(--paper)}}
-@keyframes barP{0%,32%{border-top-color:var(--ink)}38%,52%{border-top-color:var(--acc)}60%,100%{border-top-color:var(--ink)}}
-.legendline{font-size:19px;color:var(--grey);margin-top:6px}
-.legendline b{color:var(--ink)}
+/* Titelgitter (deterministisch, einmaliger Einblendeffekt bei no-preference) */
+#titleGrid{display:grid;grid-template-columns:repeat(10,30px);gap:5px;position:absolute;right:20px;top:120px}
+#titleGrid div{width:30px;height:30px;background:var(--faint);border-radius:2px}
+#titleGrid div.k{background:var(--ink)}
+#titleGrid div.a{background:var(--acc)}
 
-/* Datei-Kästen Problem/Idee */
-.el.file{font-family:'Source Code Pro',monospace;font-size:18px;flex-direction:column;line-height:1.15;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,0 100%)}
-.el.file small{font-family:'Source Sans 3',sans-serif;color:var(--grey);font-size:15px}
-.el.hw{background:var(--faint);border-color:var(--ink2);font-size:18px}
+/* SVG-Diagramme */
+.diag-svg{width:100%;height:auto;display:block}
+.diag-svg text{font-family:'Source Sans 3',system-ui,sans-serif}
+.diag-svg .mono-t{font-family:'Source Code Pro',monospace}
+.draw{stroke-dasharray:1;stroke-dashoffset:0}
 
-/* gezeichnete Linien */
-.draw{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .9s ease}
-.present .draw.auto{stroke-dashoffset:0;transition-delay:var(--dl,.3s)}
-.fragment.visible .draw,.draw.fragment.visible{stroke-dashoffset:0}
-
-/* Tabelle (booktabs) */
-table.bt{border-collapse:collapse;font-size:22px;margin:10px 0 0}
-table.bt th,table.bt td{padding:8px 22px;text-align:center;border:none}
-table.bt th{font-weight:600;border-bottom:1px solid var(--ink);font-size:19px}
+/* Tabellen (booktabs) */
+table.bt{border-collapse:collapse;font-size:21px;margin:6px 0 0;font-variant-numeric:tabular-nums}
+table.bt th,table.bt td{padding:7px 18px;text-align:center;border:none}
+table.bt th{font-weight:600;border-bottom:1px solid var(--ink);font-size:18px}
 table.bt thead tr:first-child th{border-top:2px solid var(--ink)}
 table.bt tbody tr:last-child td{border-bottom:2px solid var(--ink)}
 table.bt td:first-child,table.bt th:first-child{text-align:left}
 table.bt tr.sycl td{font-weight:700;background:var(--acc-soft)}
-.y{color:var(--ink)} .no{color:#b6b8bc} .p{color:var(--grey)}
+table.bt.compact{width:100%;font-size:18px}
+table.bt.compact th,table.bt.compact td{padding:7px 10px;text-align:right}
+table.bt.compact th{font-size:16px}
+table.bt.compact th.grp{text-align:center;border-bottom:1px solid var(--line)}
+table.bt.compact td:first-child,table.bt.compact th:first-child{text-align:left}
+table.bt.mini{width:100%;font-size:15.5px;margin:4px 0 10px}
+table.bt.mini th,table.bt.mini td{padding:6px 7px;text-align:right;white-space:nowrap}
+table.bt.mini th{font-size:14.5px}
+table.bt.mini td:first-child,table.bt.mini th:first-child{text-align:left}
+.y{color:var(--ink)} .no{color:#9ca0a7} .p{color:var(--grey)}
 
-/* Markierung (Textmarker) */
-.mark{background:linear-gradient(var(--acc-soft),var(--acc-soft)) no-repeat 0 85%/0% 40%;transition:background-size .8s ease}
-.reveal .slides section .fragment.custom.visible .mark,.mark.on{background-size:100% 40%}
-blockquote.q{margin:0;padding:6px 0 6px 24px;border-left:4px solid var(--acc);font-family:'Source Serif 4',Georgia,serif;font-size:28px;line-height:1.45;width:auto;box-shadow:none;background:none;font-style:normal}
+/* Hervorhebungen & Zitat */
+.mark{background:linear-gradient(var(--acc-soft),var(--acc-soft)) no-repeat 0 85%/100% 40%}
+blockquote.q{margin:6px 0 0;padding:8px 0 8px 24px;border-left:4px solid var(--acc);font-family:'Source Serif 4',Georgia,serif;font-size:28px;line-height:1.45;width:auto;box-shadow:none;background:none;font-style:normal}
+.reveal .slides section .fragment.custom{opacity:1;visibility:inherit}
 
-/* Matrixmultiplikation */
-.mm{display:flex;align-items:center;justify-content:center;gap:26px;margin-top:4px}
-.mg{display:grid;grid-template-columns:repeat(8,26px);gap:3px}
-.mg div{width:26px;height:26px;background:var(--faint);border-radius:2px;transition:background .12s}
-.mg div.hl{background:var(--acc-soft);box-shadow:inset 0 0 0 2px var(--acc)}
-.mg div.hl2{background:var(--acc-soft)}
-.mg div.cur{background:var(--acc)}
-.mg div.done{background:var(--ink)}
-#mmC.par div{transition:background .3s}
-.mlab{font:600 26px 'Source Serif 4',serif;text-align:center;margin-bottom:6px}
-.op{font:500 40px 'Source Serif 4',serif;color:var(--grey)}
-.mminfo{text-align:center;font-size:21px;margin-top:14px;min-height:1.4em}
+/* Matrixmultiplikation C = A * B (Folie 5) */
+.mm-layout{display:grid;grid-template-columns:1.38fr 1fr;gap:28px;align-items:stretch;margin-top:4px}
+.mm-card{background:#f5f4f0;border:1px solid var(--line);border-top:3px solid var(--ink);border-radius:4px;padding:16px 20px;display:flex;flex-direction:column;justify-content:space-between;gap:14px}
+.mm-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.mm-badge{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:3px 10px;font-size:14.5px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+.mm{display:flex;align-items:center;justify-content:center;gap:14px}
+.mg{display:grid;grid-template-columns:repeat(6,24px);gap:3px}
+.mg div{width:24px;height:24px;background:var(--paper);border:1px solid var(--line);box-sizing:border-box;border-radius:2px;transition:background-color .14s ease,border-color .14s ease}
+.mg div.hl{background:var(--acc-soft);border-color:var(--acc)}
+.mg div.hl2{background:var(--acc-soft);border-color:#d8a397}
+.mg div.cur{background:var(--acc);border-color:var(--acc)}
+.mg div.done{background:var(--ink);border-color:var(--ink)}
+.mlab{font:600 21px 'Source Serif 4',serif;text-align:center;margin-bottom:5px}
+.op{font:500 32px 'Source Serif 4',serif;color:var(--grey)}
+.mminfo{text-align:center;font-size:17.5px;color:var(--grey);min-height:1.4em}
+.mm-side{display:flex;flex-direction:column;justify-content:space-between;gap:12px}
+.mode-card{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--line);border-radius:4px;padding:12px 15px;transition:border-color .2s,background-color .2s}
+.mode-card.active{border-color:var(--line);border-left-color:var(--acc);background:#f8f3f0}
+.mode-card h4{font-family:'Source Sans 3',sans-serif;font-size:18.5px;font-weight:700;margin:0 0 6px;border-top:none;padding-top:0}
+.mode-card p{font-size:16.5px;line-height:1.35;margin:6px 0 0;color:var(--ink2)}
+.mini-seq{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.mini-seq span{font:600 13px 'Source Code Pro',monospace;background:var(--faint);border:1px solid var(--line);border-radius:3px;padding:2px 6px;color:var(--ink)}
+.mini-seq i{font-style:normal;color:var(--grey);font-size:14px}
+.mini-par{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.mini-par span{font:600 12.5px 'Source Code Pro',monospace;text-align:center;background:var(--acc-soft);border:1px solid #d8a397;border-radius:3px;padding:3px 4px;color:var(--ink)}
+.mm-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.mm-kpis div{background:#f5f4f0;border:1px solid var(--line);border-radius:4px;padding:9px 10px;text-align:center}
+.mm-kpis b{display:block;font:600 24px 'Source Serif 4',serif;color:var(--ink);line-height:1.1}
+.mm-kpis span{font-size:14px;color:var(--grey)}
 
-/* Treppe */
-.stairs{display:flex;align-items:flex-end;gap:12px;height:430px;margin-top:4px}
-.stairs .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;font-size:16px;line-height:1.25}
-.stairs .col b{font:600 30px 'Source Serif 4',serif;display:block}
-.stairs .col .t{font-weight:700;font-size:17px;margin:2px 0}
-.stairs .col .c{color:var(--grey);min-height:3.8em}
-.stairs .col .bar{flex:none;width:100%;height:0;background:var(--ink);margin-top:8px;transition:height .7s cubic-bezier(.3,.7,.2,1)}
-.stairs .col.b2 .bar{background:repeating-linear-gradient(45deg,#9aa0a8 0 5px,#d6d8db 5px 10px)}
-.reveal .slides section .stairs .col.fragment.visible .bar{height:var(--h)}
+/* Horizontale Portierungs-Pipeline (Folie 6) */
+.pipe-phases{display:grid;grid-template-columns:repeat(6,1fr);gap:22px;margin:2px 0 12px}
+.pphase{font-size:14px;font-weight:700;color:var(--grey);border-bottom:2px solid var(--line);padding-bottom:4px}
+.pphase.acc{color:var(--acc);border-bottom-color:var(--acc)}
+.pipe-main{display:grid;grid-template-columns:repeat(6,1fr);gap:22px;align-items:stretch}
+.pipe-node{position:relative;background:#f5f4f0;border:1px solid var(--line);border-top:4px solid var(--nc,var(--ink));border-radius:4px;padding:10px 10px 12px;display:flex;flex-direction:column;gap:6px}
+.pipe-node:not(:last-child)::after{content:"→";position:absolute;right:-18px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--grey);font-weight:700}
+.pipe-num{font:600 24px 'Source Serif 4',serif;line-height:1;color:var(--ink)}
+.pipe-title{font-size:17px;font-weight:700;line-height:1.2;color:var(--ink)}
+.pipe-desc{font-size:14.5px;line-height:1.3;color:var(--ink2)}
+.ptags{display:flex;flex-wrap:wrap;gap:4px;margin-top:auto;padding-top:4px}
+.ptag{font:600 12px 'Source Code Pro',monospace;background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:2px 5px;color:var(--ink2);white-space:nowrap}
+.pipe-sub{display:grid;grid-template-columns:repeat(6,1fr);gap:22px;margin-top:20px}
+.pipe-branch{position:relative;grid-column:3 / span 4;background:#f5f4f0;border:1.5px dashed var(--grey);border-left:4px solid var(--grey);border-radius:4px;padding:11px 16px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.pipe-branch::before{content:"";position:absolute;left:82px;top:-21px;height:20px;border-left:2px dashed var(--grey)}
 
-/* Geräte */
-.mach{border:2px solid var(--ink);border-radius:4px;padding:14px 20px 18px}
-.mach h4{margin:0 0 10px;font:600 24px 'Source Serif 4',serif;text-transform:none}
-.dev{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-top:1px solid var(--line);font-size:22px}
-.dev i{font-style:normal;color:var(--grey);font-size:18px}
-.dev .sw{display:inline-block;width:14px;height:14px;margin-right:10px;border-radius:2px;vertical-align:-1px}
-.dev.off{color:#b6b8bc;position:relative}
-.dev.off:after{content:"";position:absolute;left:0;top:50%;height:2px;background:#b6b8bc;width:0;transition:width .6s}
-.reveal .slides section .dev.off.fragment.custom.visible:after{width:100%}
+/* Versuchsaufbau 3-Spalten-Flow (Folie 7) */
+.exp-flow{display:grid;grid-template-columns:1fr 24px 1.22fr 24px 1.12fr;gap:6px;align-items:stretch;margin-top:4px}
+.exp-col{background:#f5f4f0;border:1px solid var(--line);border-top:3px solid var(--ink);border-radius:4px;padding:13px 15px;display:flex;flex-direction:column;gap:10px}
+.exp-col-h{font:600 20px 'Source Serif 4',serif;color:var(--ink);margin:0 0 2px}
+.exp-arrow{display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--grey);font-weight:700}
+.exp-item{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:9px 12px}
+.exp-item-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:3px}
+.exp-item-top b{font-size:17px;color:var(--ink)}
+.exp-badge{font:600 13px 'Source Code Pro',monospace;background:var(--faint);border:1px solid var(--line);border-radius:3px;padding:1px 6px;color:var(--ink2);white-space:nowrap}
+.exp-item p{font-size:15.5px;line-height:1.32;margin:0;color:var(--ink2)}
+.exp-grp{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:8px 12px}
+.exp-grp-t{font-size:13.5px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--grey);margin-bottom:4px}
+.dev{display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-top:1px solid var(--line);font-size:17.5px}
+.dev:first-of-type{border-top:none}
+.dev i{font-style:normal;color:var(--grey);font-size:14.5px}
+.dev .sw{display:inline-block;width:12px;height:12px;margin-right:8px;border-radius:2px;vertical-align:-1px}
+.dev.off{color:#9ca0a7}
+.dev.off span:first-child{text-decoration:line-through}
 
-/* Übersetzung */
-.tr text{font:17px 'Source Sans 3',sans-serif;fill:var(--ink)}
-.tr .m{font-family:'Source Code Pro',monospace;font-size:16px}
-.tr .lbl{font-weight:700;font-size:20px}
-.tr .g{fill:var(--grey)}
-
-/* Speicherebenen */
-.pyr{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:10px}
-.reveal .lvl{height:70px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:21px;font-weight:600;border-radius:3px;width:0;overflow:hidden;white-space:nowrap;transition:width .8s cubic-bezier(.3,.7,.2,1)}
-.reveal .slides section .lvl.fragment.custom.visible{width:var(--w)}
-
-/* nd_range */
-.ndr{display:grid;grid-template-columns:repeat(8,46px);gap:3px;padding:3px}
-.ndr div{width:46px;height:46px;background:var(--faint);border-radius:2px;transition:background .5s,box-shadow .5s}
-.ndr.groups div.g0,.ndr.groups div.g3{background:#dcd9d0}
-.ndr.groups div.g1,.ndr.groups div.g2{background:#c5c1b6}
-.ndr div.me{background:var(--acc)!important}
-
-/* Kachelung */
-.tl{display:flex;align-items:center;gap:22px;justify-content:center}
+/* Infobox & Kachelung (Folie 10) */
+.box-muted{background:#f3f2ee;border:1px solid var(--line);border-radius:4px;padding:12px 18px}
+.tl{display:flex;align-items:center;gap:20px;justify-content:center;margin-top:4px}
 .tg{display:grid;grid-template-columns:repeat(6,28px);gap:3px}
-.tg div{width:28px;height:28px;background:var(--faint);border-radius:2px;transition:background .3s,box-shadow .3s}
+.tg div{width:28px;height:28px;background:var(--faint);border-radius:2px;transition:background-color .25s ease}
 .tg div.tile{background:var(--acc-soft);box-shadow:inset 0 0 0 2px var(--acc)}
-.tg div.used{background:#e2e0da}
+.tg div.used{background:#d7d5ce}
 .tg div.tgt{box-shadow:inset 0 0 0 2px var(--ink)}
-.locm{border:2px solid var(--ink);border-radius:4px;padding:10px 14px;text-align:center}
-.locm .lg{display:grid;grid-template-columns:repeat(2,28px);gap:3px;justify-content:center;margin:4px 0 10px}
-.locm .lg div{width:28px;height:28px;background:var(--faint);border-radius:2px;transition:background .4s}
+.locm{border:2px solid var(--ink);border-radius:4px;padding:10px 14px;text-align:center;background:var(--paper)}
+.locm .lg{display:grid;grid-template-columns:repeat(2,28px);gap:3px;justify-content:center;margin:4px 0 8px}
+.locm .lg div{width:28px;height:28px;background:var(--faint);border-radius:2px;transition:background-color .25s ease}
 .locm .lg div.on{background:var(--acc-soft);box-shadow:inset 0 0 0 2px var(--acc)}
 .locm small{font-size:15px;color:var(--grey);display:block}
-.reveal ul.phases{list-style:none;margin:0!important;padding:0}
-.reveal ul.phases li{list-style:none}
-.phases li{font-size:20px;padding:6px 12px;border-left:4px solid var(--line);color:var(--grey);transition:all .3s;margin:4px 0}
-.phases li.on{border-left-color:var(--acc);color:var(--ink);font-weight:600;background:var(--acc-soft)}
-#tlInfo{font-size:18px;color:var(--grey);text-align:center;margin-top:6px}
+.phases-wrap{display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-width:265px}
+.reveal ul.phases{list-style:none;margin:0!important;padding:0;width:100%}
+.reveal ul.phases li{list-style:none;font-size:18.5px;padding:7px 12px;border-left:4px solid var(--line);color:var(--grey);margin:5px 0;transition:border-color .2s,color .2s,background-color .2s}
+.reveal ul.phases li.on{border-left-color:var(--acc);color:var(--ink);font-weight:600;background:var(--acc-soft)}
+#tlInfo{font-size:17.5px;color:var(--grey);text-align:center;margin-top:8px;min-height:1.4em}
 
-/* Diagramme */
-.charts{display:grid;grid-template-columns:repeat(4,1fr);gap:30px}
-.chart h5{margin:0 0 30px;font:700 19px 'Source Sans 3',sans-serif;text-transform:none;letter-spacing:0}
-.bars{display:flex;align-items:flex-end;gap:6px;height:220px;border-bottom:1.5px solid var(--ink2)}
-.bar{flex:1;position:relative;height:0;background:#a9adb4;transition:height .9s cubic-bezier(.3,.7,.2,1)}
-.bar.hatch{background:repeating-linear-gradient(45deg,#c3c6cb 0 4px,#eceae5 4px 8px)}
-.bar.best{background:var(--acc)}
-.bar span{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);font-size:14px;padding-bottom:3px;white-space:nowrap;opacity:0;transition:opacity .3s}
-.bars.go .bar span{opacity:1;transition-delay:1s}
+/* Stufe 5 Ablauf (Folie 11) */
+.flow .row{display:grid;grid-template-columns:86px 1fr;align-items:center;gap:14px;margin:12px 0;font-size:20px;position:relative}
+.flow .track{height:30px;position:relative;background:var(--faint);border-radius:2px;display:flex;align-items:center}
+.flow .track.fail{background:none}
+.flow .fb{height:100%;width:var(--w);background:#8d9299;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;box-sizing:border-box;color:#fff;font-size:15px;font-weight:600;border-radius:2px;transform-origin:left;transform:scaleX(1)}
+.flow .fb.best{background:var(--acc)}
+.flow .strike{position:absolute;left:0;top:50%;height:3px;background:var(--acc);width:100%;transform-origin:left;transform:scaleX(1)}
+
+/* Header-Zeile & Steuerbuttons */
+.h-row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;border-bottom:1px solid var(--line);margin:0 0 16px;padding-bottom:10px}
+.h-row h2{border-bottom:none;margin:0;padding-bottom:0;max-width:none}
+.ctrl-bar{display:inline-flex;align-items:center;gap:10px;flex-shrink:0}
+.n-toggle{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--paper);flex-shrink:0}
+.n-btn{border:none;background:none;padding:5px 12px;font:600 16px 'Source Sans 3',sans-serif;color:var(--grey);cursor:pointer;transition:background-color .2s,color .2s}
+.n-btn.on{background:var(--ink);color:#fff}
+.ctrl-btn{border:1px solid var(--line);background:var(--paper);border-radius:4px;padding:5px 12px;font:600 15px 'Source Sans 3',sans-serif;color:var(--ink2);cursor:pointer;transition:background-color .2s,border-color .2s,color .2s}
+.ctrl-btn:hover{border-color:var(--ink);color:var(--ink)}
+
+/* Balkendiagramme (Compositor scaleY über .bar-fill) */
+.charts{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.chart h5{margin:0 0 28px;font:700 19px 'Source Sans 3',sans-serif;text-transform:none;letter-spacing:0}
+.bars{display:flex;align-items:flex-end;gap:6px;height:210px;border-bottom:1.5px solid var(--ink2)}
+.bar{flex:1;position:relative;height:100%}
+.bar-fill{position:absolute;left:0;right:0;bottom:0;height:var(--h,0%);background:#a9adb4;border-radius:2px 2px 0 0;transform-origin:bottom;transform:scaleY(1)}
+.bar.hatch .bar-fill{background:repeating-linear-gradient(45deg,#c3c6cb 0 4px,#eceae5 4px 8px)}
+.bar.best .bar-fill{background:var(--acc)}
+.bar.d1 .bar-fill{background:var(--rtx)} .bar.d2 .bar-fill{background:var(--l40)} .bar.d3 .bar-fill{background:var(--h100)} .bar.d4 .bar-fill{background:var(--cpu)}
+.bar span{position:absolute;bottom:calc(var(--h,0%) + 3px);left:50%;transform:translateX(-50%);font-size:14px;white-space:nowrap}
 .bar.x span{color:var(--acc);font-weight:700;font-size:17px}
 .xl{display:flex;gap:6px;font-size:14px;color:var(--grey);margin-top:4px}.xl div{flex:1;text-align:center}
-.d1{background:var(--rtx)!important}.d2{background:var(--l40)!important}.d3{background:var(--h100)!important}.d4{background:var(--cpu)!important}
-.legend{font-size:17px;display:flex;gap:26px;margin-top:12px;color:var(--ink2)}
+.legend{font-size:17px;display:flex;gap:26px;margin-top:12px;color:var(--ink2);align-items:center}
 .legend i{display:inline-block;width:14px;height:14px;border-radius:2px;vertical-align:-1px;margin-right:6px}
-.eff{display:grid;grid-template-columns:repeat(4,1fr);gap:34px}
-.egrp{padding:8px 10px 6px;border-radius:4px;transition:box-shadow .4s}
-.egrp h5{margin:0 0 28px;font:600 22px 'Source Serif 4',serif;text-transform:none}
+.d1{background:var(--rtx)}.d2{background:var(--l40)}.d3{background:var(--h100)}.d4{background:var(--cpu)}
+.eff{display:grid;grid-template-columns:repeat(4,1fr);gap:30px}
+.egrp{padding:8px 10px 6px;border-radius:4px;transition:box-shadow .3s ease}
+.egrp.fragment.custom.visible{box-shadow:0 0 0 2px var(--acc)}
+.egrp h5{margin:0 0 26px;font:600 22px 'Source Serif 4',serif;text-transform:none}
 .pp{font-size:20px;font-weight:700;margin-top:6px}
-.reveal .slides section .egrp.fragment.custom.visible{box-shadow:0 0 0 2px var(--acc)}
-.stackrow{display:grid;grid-template-columns:170px 1fr 70px;gap:16px;align-items:center;font-size:20px;margin:10px 0}
-.stack{display:flex;height:40px}
-.stack div{height:100%;width:0;transition:width 1.1s cubic-bezier(.3,.7,.2,1);display:flex;align-items:center;padding-left:8px;color:#fff;font-size:15px;white-space:nowrap;overflow:hidden;box-sizing:border-box}
-.big{font:600 84px 'Source Serif 4',serif;line-height:1}
-.flow .row{display:grid;grid-template-columns:90px 1fr;align-items:center;gap:14px;margin:12px 0;font-size:21px;position:relative}
-.flow .track{height:30px;position:relative}
-.flow .fb{height:100%;width:0;background:#a9adb4;transition:width 1s cubic-bezier(.3,.7,.2,1);display:flex;align-items:center;justify-content:flex-end;padding-right:0;overflow:hidden;box-sizing:border-box;color:#fff;font-size:14px}
-.reveal .slides section .flow .fb.fragment.custom.visible{width:var(--w);padding-right:6px}
-.reveal .slides section .flow .fb.best.fragment.custom.visible{background:var(--acc)}
-.reveal .strike{position:absolute;left:0;top:50%;height:3px;background:var(--acc);width:100%;transform:scaleX(0);transform-origin:left;transition:transform .6s}
-.reveal .slides section .strike.fragment.custom.visible{transform:scaleX(1)}
 
-/* Paar-Balken SYCL vs. CUDA */
-.pairs{display:flex;gap:26px;align-items:flex-start}
-.pg{flex:1 1 0;min-width:0;transition:flex-grow .9s cubic-bezier(.3,.7,.2,1),opacity .6s}
-.pg.late{flex-grow:0;opacity:0;overflow:hidden}
-.barset.rescaled .pg.late{flex-grow:1;opacity:1}
-.pbars{display:flex;gap:4px;align-items:flex-end;height:230px;border-bottom:1.5px solid var(--ink2)}
-.plab{font-size:16px;text-align:center;margin-top:6px;line-height:1.2;white-space:nowrap}
-.prat{font-size:18px;text-align:center;font-weight:700;margin-top:3px;min-height:1.3em}
-.bar.sy{background:var(--ink)} .bar.cu{background:#a9adb4}
-.bar.na span{color:var(--grey)}
-.barset.go .bar span{opacity:1;transition-delay:1s}
-.pairs.small .pbars{height:150px}
-/* Zeitbalken Atomics */
-.tline{display:grid;grid-template-columns:200px 1fr 110px;gap:14px;align-items:center;font-size:20px;margin:8px 0}
-.tbar{height:30px;width:0;min-width:3px;transition:width 2.6s linear}
-/* Konkurrenz um eine Speicherzelle */
-.lane{position:relative;height:120px;width:520px}
-.lane .cell{position:absolute;left:470px;top:42px;width:36px;height:36px;border:3px solid var(--acc);border-radius:3px;font:600 13px 'Source Code Pro',monospace;display:flex;align-items:center;justify-content:center;color:var(--acc)}
-.lane .dot{position:absolute;left:0;top:var(--y);width:16px;height:16px;border-radius:2px;background:var(--ink2);opacity:0}
-.present .lane.cu .dot{animation:dGo 2.4s infinite;animation-delay:var(--d)}
-.present .lane.sy .dot{animation:dRetry 6s infinite;animation-delay:var(--d)}
-@keyframes dGo{0%{left:0;top:var(--y);opacity:1}40%{left:448px;top:52px;opacity:1}46%,100%{left:448px;top:52px;opacity:0}}
-@keyframes dRetry{0%{left:0;top:var(--y);opacity:1}18%{left:430px;top:52px}28%{left:330px;top:var(--y)}46%{left:430px;top:52px}56%{left:330px;top:var(--y)}76%{left:448px;top:52px;opacity:1}80%,100%{left:448px;top:52px;opacity:0}}
-.lane .ll{position:absolute;left:0;top:-4px;font-size:17px;color:var(--grey)}
-/* Reduktionsbaum */
-#redTree g.rw{opacity:0;transition:opacity .45s}
-#redTree g.rw.on{opacity:1}
-#redTree text{font:600 16px 'Source Code Pro',monospace}
-#redTree .bl{font:15px 'Source Sans 3',sans-serif;fill:#8a8f97}
+/* Gestapelte Transfer-Balken (Folie 13) */
+.stackrow{display:grid;grid-template-columns:170px 1fr 70px;gap:16px;align-items:center;font-size:20px;margin:12px 0}
+.stack{display:flex;height:42px;border-radius:2px;overflow:hidden;clip-path:inset(0 0 0 0)}
+.stack div{height:100%;display:flex;align-items:center;padding-left:10px;color:#fff;font-size:15px;white-space:nowrap;overflow:hidden;box-sizing:border-box}
+.big{font:600 68px 'Source Serif 4',serif;line-height:1}
+.kpistrip{display:flex;gap:28px;flex-wrap:wrap;background:#f3f2ee;border:1px solid var(--line);border-radius:4px;padding:8px 16px;margin-bottom:14px;font-size:18px;align-items:baseline}
 
-/* Titel */
-#titleGrid{display:grid;grid-template-columns:repeat(10,30px);gap:5px;position:absolute;right:20px;top:120px}
-#titleGrid div{width:30px;height:30px;background:var(--faint);border-radius:2px}
-.present #titleGrid div{animation:tg 3.2s ease-in-out infinite}
-@keyframes tg{0%,100%{background:var(--faint)}50%{background:var(--ink)}}
-#titleGrid div.a{animation-name:tga}
-@keyframes tga{0%,100%{background:var(--faint)}50%{background:var(--acc)}}
+/* Einmalige Einblend- und Einstiegsanimationen: nur bei prefers-reduced-motion: no-preference */
+@media (prefers-reduced-motion: no-preference){
+  .anim-enabled section:not(.anim-go) #titleGrid div{opacity:0;transform:scale(.85)}
+  .anim-enabled section.anim-go #titleGrid div{opacity:1;transform:scale(1);transition:opacity .45s ease,transform .45s cubic-bezier(.22,.8,.28,1);transition-delay:var(--dl,0ms)}
 
-/* Stufen-Ergebnistabelle & Toggle */
-.h-row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;border-bottom:1px solid var(--line);margin:0 0 24px;padding-bottom:12px}
-.h-row h2{border-bottom:none;margin:0;padding-bottom:0;max-width:none}
-.n-toggle{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--paper);flex-shrink:0}
-.n-btn{border:none;background:none;padding:5px 12px;font:600 16px 'Source Sans 3',sans-serif;color:var(--grey);cursor:pointer;transition:background .2s,color .2s}
-.n-btn.on{background:var(--ink);color:#fff}
-table.bt.perf-tbl{width:100%;font-size:17px;margin:8px 0 0}
-table.bt.perf-tbl th,table.bt.perf-tbl td{padding:7px 10px}
-table.bt.perf-tbl th{font-size:16px}
-.pcell{display:flex;flex-direction:column;gap:3px;min-width:120px}
-.pcell-top{display:flex;justify-content:space-between;align-items:baseline;font-size:16px;font-variant-numeric:tabular-nums}
-.pcell-top b{font-weight:700}
-.pcell-top span{font-size:14px;color:var(--grey)}
-.pbar-wrap{height:7px;background:var(--faint);border-radius:2px;overflow:hidden}
-.pbar{height:100%;background:#8a8f97;border-radius:2px;transition:width .7s ease}
-.pbar.best{background:var(--acc)}
-.pbar.hatch{background:repeating-linear-gradient(45deg,#a9adb4 0 4px,#eceae5 4px 8px)}
+  .anim-enabled section:not(.anim-go) .draw{stroke-dashoffset:1}
+  .anim-enabled section.anim-go .draw{stroke-dashoffset:0;transition:stroke-dashoffset .6s ease;transition-delay:var(--dl,.15s)}
+
+  .anim-enabled section:not(.anim-go) .mark{background-size:0% 40%}
+  .anim-enabled section.anim-go .mark{background-size:100% 40%;transition:background-size .65s ease;transition-delay:var(--dl,.2s)}
+  .anim-enabled .fragment:not(.visible) .mark{background-size:0% 40%}
+  .anim-enabled .fragment.visible .mark{background-size:100% 40%;transition:background-size .6s ease .15s}
+
+  .anim-enabled section:not(.anim-go) .pipe-node,
+  .anim-enabled section:not(.anim-go) .pipe-branch{opacity:0;transform:translateY(10px)}
+  .anim-enabled section.anim-go .pipe-node,
+  .anim-enabled section.anim-go .pipe-branch{opacity:1;transform:translateY(0);transition:opacity .45s ease,transform .45s cubic-bezier(.22,.8,.28,1);transition-delay:calc(var(--i,0) * 55ms)}
+
+  .anim-enabled section:not(.anim-go) .exp-col{opacity:0;transform:translateY(8px)}
+  .anim-enabled section.anim-go .exp-col{opacity:1;transform:translateY(0);transition:opacity .45s ease,transform .45s cubic-bezier(.22,.8,.28,1);transition-delay:var(--dl,0ms)}
+
+  .anim-enabled section:not(.anim-go) .flow .fb,
+  .anim-enabled section:not(.anim-go) .flow .strike{transform:scaleX(0)}
+  .anim-enabled section.anim-go .flow .fb{transform:scaleX(1);transition:transform .55s cubic-bezier(.22,.8,.28,1);transition-delay:calc(var(--i,0) * 80ms)}
+  .anim-enabled section.anim-go .flow .strike{transform:scaleX(1);transition:transform .45s ease .28s}
+
+  .anim-enabled section:not(.anim-go) .bar-fill{transform:scaleY(0)}
+  .anim-enabled section.anim-go .bar-fill{transform:scaleY(1);transition:transform .55s cubic-bezier(.22,.8,.28,1),height .35s ease;transition-delay:calc(var(--i,0) * 35ms),0s}
+  .anim-enabled section.anim-go .bar span{transition:bottom .35s ease}
+
+  .anim-enabled section:not(.anim-go) .stack{clip-path:inset(0 100% 0 0)}
+  .anim-enabled section.anim-go .stack{clip-path:inset(0 0 0 0);transition:clip-path .6s cubic-bezier(.22,.8,.28,1) .12s}
+}
 </style>
 </head>
 <body>
 <div class="reveal"><div class="slides">
 
-<!-- 1 Titel -->
+<!-- 1 Titel [00:00–00:30 · 0:30] -->
 <section data-sec="" data-nofoot>
-  <div id="titleGrid"></div>
-  <div style="margin-top:110px;max-width:720px">
+  <div id="titleGrid" aria-hidden="true"></div>
+  <div style="margin-top:110px;max-width:740px">
     <h1>SYCL</h1>
     <p class="serif" style="font-size:34px;line-height:1.25;margin:0">Portable heterogene Programmierung mit C++</p>
     <p class="muted" style="font-size:24px;margin-top:6px">Problemstellung, Anwendungsfälle und Programmiermodell</p>
@@ -283,460 +262,654 @@ table.bt.perf-tbl th{font-size:16px}
     <p style="font-size:22px;margin:0">Erlind Sejdiu</p>
     <p class="muted" style="font-size:19px">Seminararbeit · Master Informatik · Hochschule Karlsruhe · WS 2026/27<br>Betreuer: Prof. Dr.-Ing. Holger Vogelsang</p>
   </div>
-  <aside class="notes">Begrüßung. Thema: Kann man mit einem C++-Quellcode CPUs und GPUs verschiedener Hersteller programmieren – und läuft das dann auch überall schnell?</aside>
+  <aside class="notes">[00:00–00:30 · 0:30] Begrüßung und Thema: Kann ein einziger C++-Quellcode auf CPUs und GPUs verschiedener Hersteller laufen – und bleibt er dabei schnell?</aside>
 </section>
 
-<!-- 2 Problem -->
-<section data-auto-animate data-sec="Problemstellung">
+<!-- 2 Problemstellung [00:30–01:25 · 0:55] -->
+<section data-sec="Problemstellung">
   <h2>Ein Rechner, viele Programmiermodelle</h2>
-  <div class="stage" style="height:280px">
-    <div class="el file neu" data-id="f1" style="left:20px;top:10px;width:230px;height:62px">matmul.cu<small>CUDA</small></div>
-    <div class="el file neu" data-id="f2" style="left:300px;top:10px;width:230px;height:62px">matmul.hip<small>HIP</small></div>
-    <div class="el file neu" data-id="f3" style="left:580px;top:10px;width:230px;height:62px">matmul_ze.cpp<small>Level Zero</small></div>
-    <div class="el file neu" data-id="f4" style="left:860px;top:10px;width:230px;height:62px">matmul.cl<small>OpenCL</small></div>
-    <svg class="ov" viewBox="0 0 1100 440">
-      <defs><marker id="ahP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="#1c1e22"/></marker></defs>
-      <g stroke="#1c1e22" stroke-width="2.5" fill="none" marker-end="url(#ahP)">
-        <path class="draw auto" pathLength="1" d="M135,74 L135,196"/><path class="draw auto" pathLength="1" style="--dl:.45s" d="M415,74 L415,196"/>
-        <path class="draw auto" pathLength="1" style="--dl:.6s" d="M695,74 L695,196"/><path class="draw auto" pathLength="1" style="--dl:.75s" d="M975,74 L975,196"/>
-      </g>
-    </svg>
-    <div class="el hw" data-id="h1" style="left:20px;top:200px;width:230px;height:54px">NVIDIA</div>
-    <div class="el hw" data-id="h2" style="left:300px;top:200px;width:230px;height:54px">AMD</div>
-    <div class="el hw" data-id="h3" style="left:580px;top:200px;width:230px;height:54px">Intel</div>
-    <div class="el hw" data-id="h4" style="left:860px;top:200px;width:230px;height:54px">CPU</div>
+  <svg class="diag-svg" viewBox="0 0 1100 250" role="img" aria-label="Vier getrennte Codebasen für NVIDIA, AMD, Intel und CPU">
+    <defs>
+      <marker id="ahP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="#1c1e22"/></marker>
+    </defs>
+    <g stroke="#1c1e22" stroke-width="2.5" fill="#fbfaf7">
+      <polygon points="20,10 234,10 250,26 250,74 20,74"/>
+      <polygon points="300,10 514,10 530,26 530,74 300,74"/>
+      <polygon points="580,10 794,10 810,26 810,74 580,74"/>
+      <polygon points="860,10 1074,10 1090,26 1090,74 860,74"/>
+    </g>
+    <g text-anchor="middle">
+      <text x="135" y="38" class="mono-t" font-size="18" fill="#1c1e22">matmul.cu</text>
+      <text x="135" y="60" font-size="15" fill="#6e737b">CUDA</text>
+      <text x="415" y="38" class="mono-t" font-size="18" fill="#1c1e22">matmul.hip</text>
+      <text x="415" y="60" font-size="15" fill="#6e737b">HIP</text>
+      <text x="695" y="38" class="mono-t" font-size="18" fill="#1c1e22">matmul_ze.cpp</text>
+      <text x="695" y="60" font-size="15" fill="#6e737b">Level Zero</text>
+      <text x="975" y="38" class="mono-t" font-size="18" fill="#1c1e22">matmul.cl</text>
+      <text x="975" y="60" font-size="15" fill="#6e737b">OpenCL</text>
+    </g>
+    <g stroke="#1c1e22" stroke-width="2.5" fill="none" marker-end="url(#ahP)">
+      <path class="draw" pathLength="1" style="--dl:100ms" d="M135,76 L135,176"/>
+      <path class="draw" pathLength="1" style="--dl:200ms" d="M415,76 L415,176"/>
+      <path class="draw" pathLength="1" style="--dl:300ms" d="M695,76 L695,176"/>
+      <path class="draw" pathLength="1" style="--dl:400ms" d="M975,76 L975,176"/>
+    </g>
+    <g stroke="#3b3f46" stroke-width="2" fill="#ecebe6">
+      <rect x="20" y="180" width="230" height="54" rx="4"/>
+      <rect x="300" y="180" width="230" height="54" rx="4"/>
+      <rect x="580" y="180" width="230" height="54" rx="4"/>
+      <rect x="860" y="180" width="230" height="54" rx="4"/>
+    </g>
+    <g text-anchor="middle" font-size="19" font-weight="600" fill="#1c1e22">
+      <text x="135" y="213">NVIDIA</text>
+      <text x="415" y="213">AMD</text>
+      <text x="695" y="213">Intel</text>
+      <text x="975" y="213">CPU</text>
+    </g>
+  </svg>
+  <div class="cols3" style="margin-top:26px">
+    <div><h4><span class="n">1</span>Herstellerbindung</h4><p>CUDA läuft nur auf NVIDIA. AMD nutzt HIP, Intel Level Zero.</p></div>
+    <div><h4><span class="n">2</span>Mehrfache Codebasen</h4><p>Wer mehrere Hersteller unterstützt, pflegt mehrere Implementierungen parallel.</p></div>
+    <div><h4><span class="n">3</span>Abstraktion vs. Kontrolle</h4><p>OpenCL ist hardwarenah und aufwendig, OpenMP-Direktiven lassen wenig Kontrolle über Speicher und Ausführung.</p></div>
   </div>
-  <div class="cols3" style="margin-top:22px">
-    <div class="fragment"><h4><span class="n">1</span>Herstellerbindung</h4><p>CUDA läuft nur auf NVIDIA. AMD hat HIP, Intel Level Zero.</p></div>
-    <div class="fragment"><h4><span class="n">2</span>Mehrfache Codebasen</h4><p>Wer mehrere Hersteller unterstützen will, pflegt mehrere Implementierungen parallel.</p></div>
-    <div class="fragment"><h4><span class="n">3</span>Abstraktion vs. Kontrolle</h4><p>OpenCL ist hardwarenah und aufwendig, OpenMP-Direktiven lassen wenig Kontrolle über Speicher und Ausführung.</p></div>
-  </div>
-  <aside class="notes">Drei Probleme, die SYCL lösen will. Am Ende kommen wir in der Diskussion auf genau diese drei zurück.</aside>
+  <aside class="notes">[00:30–01:25 · 0:55] Drei Ausgangsprobleme: Herstellerbindung, mehrfache Codebasen und der Zielkonflikt zwischen Abstraktion und hardwarenaher Kontrolle. Genau auf diese drei Probleme kommen wir in der Diskussion zurück.</aside>
 </section>
 
-<!-- 4 Vergleich -->
+<!-- 3 Stand der Technik & Implementierungen [01:25–02:45 · 1:20] -->
 <section data-sec="Stand der Technik">
-  <h2>SYCL im Vergleich</h2>
-  <table class="bt">
-    <thead><tr><th></th><th>herstellerunabhängig</th><th>offener Standard</th><th>Standard-C++</th><th>Kontrolle</th></tr></thead>
+  <h2>SYCL im Vergleich &amp; Implementierungen</h2>
+  <table class="bt" style="width:100%">
+    <thead><tr><th></th><th>herstellerunabh.</th><th>offener Standard</th><th>Standard-C++</th><th>Kontrolle</th></tr></thead>
     <tbody>
-    <tr class="fragment"><td>CUDA</td><td class="no">–</td><td class="no">–</td><td class="p">(✓)</td><td class="y">✓</td></tr>
-    <tr class="fragment"><td>OpenCL</td><td class="y">✓</td><td class="y">✓</td><td class="no">–</td><td class="y">✓</td></tr>
-    <tr class="fragment"><td>OpenMP-Offload</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="p">(✓)</td></tr>
-    <tr class="fragment"><td>Kokkos / RAJA</td><td class="y">✓</td><td class="no">–</td><td class="y">✓</td><td class="p">(✓)</td></tr>
-    <tr class="fragment sycl"><td>SYCL</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+      <tr><td>CUDA</td><td class="no">–</td><td class="no">–</td><td class="p">(✓)</td><td class="y">✓</td></tr>
+      <tr><td>OpenCL</td><td class="y">✓</td><td class="y">✓</td><td class="no">–</td><td class="y">✓</td></tr>
+      <tr><td>OpenMP-Offload</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="p">(✓)</td></tr>
+      <tr><td>Kokkos / RAJA</td><td class="y">✓</td><td class="no">–</td><td class="y">✓</td><td class="p">(✓)</td></tr>
+      <tr class="sycl"><td>SYCL (C++17-Standard)</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
     </tbody>
   </table>
-  <p class="tiny muted" style="margin-top:6px">(✓) = eingeschränkt</p>
-  <p class="fragment" style="margin-top:22px">Frühere Studien: SYCL oft konkurrenzfähig, aber stark abhängig von <b>Implementierung</b> und <b>Parametrierung</b>.</p>
-  <p class="fragment muted">Offen bleibt: Welcher Schritt einer Portierung wirkt wie auf welchem Gerät?</p>
-  <aside class="notes">Vier Entwurfsziele: Portabilität, Offenheit, Produktivität, Kontrolle. Kokkos und RAJA verfolgen ähnliche Ziele, sind aber kein offener Industriestandard. Die Lücke in der Literatur motiviert die schrittweise Untersuchung.</aside>
+  <p class="tiny muted" style="margin-top:4px">(✓) = eingeschränkt · Kokkos und RAJA verfolgen ähnliche Ziele, sind aber kein offener Industriestandard.</p>
+  <div class="cols2" style="margin-top:16px;gap:36px">
+    <div><h4>DPC++ (Data Parallel C++)</h4><p>Intels LLVM-basierte SYCL-Implementierung innerhalb von oneAPI; unterstützt über Plugins neben Intel- auch NVIDIA- und AMD-GPUs.</p></div>
+    <div><h4>AdaptiveCpp (ehemals hipSYCL)</h4><p>Herstellerunabhängige Open-Source-Implementierung der Universität Heidelberg mit Single-Pass-Compiler für CUDA, HIP, Level Zero und OpenMP.</p></div>
+  </div>
+  <p class="small muted" style="margin-top:10px"><b>Literaturstand:</b> Studien gegen natives CUDA (Deakin/McIntosh-Smith, Breyer et al.) zeigen konkurrenzfähige Leistung, aber starke Abhängigkeit von Implementierung, Codeerzeugung und Parametrierung.</p>
+  <aside class="notes">[01:25–02:45 · 1:20] Vier Entwurfsziele von SYCL: Portabilität, Offenheit, Produktivität, Kontrolle. Wichtig: SYCL ist eine Spezifikation, kein Compiler. Die zwei Hauptimplementierungen kurz einführen: DPC++ (Intel/oneAPI) und AdaptiveCpp (Uni Heidelberg, Single-Pass). Frühere Studien zeigen gute Ergebnisse gegen CUDA, lassen aber offen, welcher Portierungsschritt was bewirkt.</aside>
 </section>
 
-<!-- 5 Forschungsfrage -->
+<!-- 4 Forschungsfrage [02:45–03:30 · 0:45] -->
 <section data-sec="Forschungsfrage">
   <h2>Überall lauffähig ≠ überall schnell</h2>
-  <blockquote class="q">Wie adressiert das Programmiermodell von SYCL die drei Probleme, und erreicht ein schrittweise portiertes Programm neben <span class="fragment custom" data-fragment-index="1"><span class="mark">funktionaler Portabilität</span></span> auch <span class="fragment custom" data-fragment-index="2"><span class="mark">Performance-Portabilität</span></span> zwischen CPU und GPU?</blockquote>
-  <div class="cols2" style="margin-top:40px">
-    <div class="fragment" data-fragment-index="3"><h4>F1 · Konzepte</h4><p>Welche Konzepte des Programmiermodells braucht eine Portierung, und welches der drei Probleme lösen sie?</p></div>
-    <div class="fragment" data-fragment-index="4"><h4>F2 · Portabilität</h4><p>Welche Stufen laufen unverändert auf verschiedenen Geräten, welche Parameter bleiben gerätespezifisch?</p></div>
+  <blockquote class="q">Wie adressiert das Programmiermodell von SYCL die drei Probleme, und erreicht ein schrittweise portiertes Programm neben <span class="mark" style="--dl:180ms">funktionaler Portabilität</span> auch <span class="mark" style="--dl:450ms">Performance-Portabilität</span> zwischen CPU und GPU?</blockquote>
+  <div class="cols2" style="margin-top:44px">
+    <div><h4>F1 · Konzepte</h4><p>Welche Konzepte des Programmiermodells braucht eine Portierung, und welches der drei Probleme lösen sie?</p></div>
+    <div><h4>F2 · Performance-Portabilität</h4><p>Welche Stufen laufen unverändert auf verschiedenen Geräten, welche Parameter bleiben gerätespezifisch?</p></div>
   </div>
+  <aside class="notes">[02:45–03:30 · 0:45] Zentrale Unterscheidung: Funktionale Portabilität (läuft korrekt) vs. Performance-Portabilität (läuft überall mit hohem Leistungsanteil). F1 klärt den Konzeptbaukasten, F2 die messbare Wirkung auf CPU und GPUs.</aside>
 </section>
 
-<!-- 6 Methode: MatMul -->
+<!-- 5 Methode: Untersuchungsgegenstand C = A * B [03:30–04:20 · 0:50] -->
 <section id="mmSlide" data-sec="Methode">
-  <h2>Untersuchungsgegenstand: C = A · B</h2>
-  <div class="mm">
-    <div><div class="mlab">A</div><div class="mg" id="mmA"></div></div>
-    <div class="op">·</div>
-    <div><div class="mlab">B</div><div class="mg" id="mmB"></div></div>
-    <div class="op">=</div>
-    <div><div class="mlab">C</div><div class="mg" id="mmC"></div></div>
+  <div class="h-row">
+    <h2>Untersuchungsgegenstand: C = A · B</h2>
+    <div class="ctrl-bar">
+      <div class="n-toggle" role="group" aria-label="Ausführungsmodus">
+        <button type="button" class="n-btn on" data-mm="seq" aria-pressed="true">Sequentiell</button>
+        <button type="button" class="n-btn" data-mm="par" aria-pressed="false">Parallel</button>
+      </div>
+      <button type="button" class="ctrl-btn" id="mmPause">Pause</button>
+    </div>
   </div>
-  <div class="mminfo"><b id="mmMode">Stufe 0 · sequentiell:</b> <span id="mmInfo"></span></div>
-  <span class="fragment" id="mmParFrag" data-fragment-index="1"></span>
-  <p class="small muted" style="text-align:center;margin-top:16px">2n³ Gleitkommaoperationen bei 3n² Werten · gut parallelisierbar · leicht auf Korrektheit prüfbar</p>
-  <aside class="notes">Jedes Element von C ist ein Skalarprodukt aus einer Zeile von A und einer Spalte von B. Die Elemente sind unabhängig voneinander – genau das nutzt Stufe 1: ein Work-Item je Element.</aside>
+  <div class="mm-layout">
+    <div class="mm-card">
+      <div class="mm-head">
+        <span class="mono" style="font-size:16px;color:var(--ink2)">C[i, j] = ∑ A[i, k] · B[k, j]</span>
+        <span class="mm-badge" id="mmBadge">Stufe 0 · Schritt 1 / 36</span>
+      </div>
+      <div class="mm">
+        <div><div class="mlab">A</div><div class="mg" id="mmA"></div></div>
+        <div class="op">·</div>
+        <div><div class="mlab">B</div><div class="mg" id="mmB"></div></div>
+        <div class="op">=</div>
+        <div><div class="mlab">C</div><div class="mg" id="mmC"></div></div>
+      </div>
+      <div class="mminfo" id="mmInfo">ein Element nach dem anderen</div>
+    </div>
+    <div class="mm-side">
+      <div class="mode-card active" id="mmCardSeq">
+        <h4>Stufe 0 · sequentiell</h4>
+        <div class="mini-seq"><span>c₀</span><i>→</i><span>c₁</span><i>→</i><span>c₂</span><i>→</i><span>…</span><i>→</i><span>c₃₅</span></div>
+        <p>Ein CPU-Kern arbeitet drei Schleifen nacheinander ab.</p>
+      </div>
+      <div class="mode-card" id="mmCardPar">
+        <h4>Stufe 1 · datenparallel</h4>
+        <div class="mini-par"><span>WI(0,0)</span><span>WI(0,1)</span><span>…</span><span>WI(i,j)</span></div>
+        <p>Jedes Element von C ist unabhängig → ein Work-Item je Ergebnis.</p>
+      </div>
+      <div class="mm-kpis">
+        <div><b>2n³</b><span>FLOPs</span></div>
+        <div><b>3n²</b><span>Werte</span></div>
+        <div><b>O(n)</b><span>FLOPs / Wert</span></div>
+      </div>
+    </div>
+  </div>
+  <span class="fragment custom" id="mmParFrag" data-fragment-index="1" aria-hidden="true"></span>
+  <aside class="notes">[03:30–04:20 · 0:50] Jedes Element von C ist ein unabhängiges Skalarprodukt aus Zeile i von A und Spalte j von B. Ein Klick (oder der Modus-Schalter) zeigt den Schritt zu Stufe 1: ein Work-Item je Element von C, alle gleichzeitig.</aside>
 </section>
 
-<!-- 7 Stufen -->
+<!-- 6 Methode: Portierung in Stufen [04:20–05:25 · 1:05] -->
 <section data-sec="Methode">
   <h2>Portierung in Stufen</h2>
-  <div class="stairs">
-    <div class="col fragment custom" style="--h:30px"><b>0</b><div class="t">sequentiell</div><div class="c">ein CPU-Kern</div><div class="bar"></div></div>
-    <div class="col fragment custom" style="--h:80px"><b>1</b><div class="t">ein Work-Item je Element</div><div class="c">Queue, Kernel, Indexraum, USM shared</div><div class="bar"></div></div>
-    <div class="col fragment custom" style="--h:130px"><b>2</b><div class="t">Gerätespeicher, Kopien</div><div class="c">USM device, Events</div><div class="bar"></div></div>
-    <div class="col fragment custom b2" style="--h:130px"><b>2b</b><div class="t">Buffer statt Zeiger</div><div class="c">Accessoren, autom. Abhängigkeiten</div><div class="bar"></div></div>
-    <div class="col fragment custom" style="--h:180px"><b>3</b><div class="t">Work-Group-Größe</div><div class="c">nd_range</div><div class="bar"></div></div>
-    <div class="col fragment custom" style="--h:230px"><b>4</b><div class="t">Kachelung</div><div class="c">Command Group, lokaler Speicher, Barriere</div><div class="bar"></div></div>
-    <div class="col fragment custom" style="--h:280px"><b>5</b><div class="t">Kachel zur Laufzeit</div><div class="c">Geräteabfragen, Spec. Constants</div><div class="bar"></div></div>
+  <div class="pipe-phases">
+    <div class="pphase" style="grid-column:1">Ausgangspunkt</div>
+    <div class="pphase" style="grid-column:2 / span 2">Funktionale Portabilität &amp; Speicher</div>
+    <div class="pphase acc" style="grid-column:4 / span 3">Hardwarenahe Optimierung &amp; Anpassung</div>
   </div>
-  <aside class="notes">Jede Stufe führt nur so viele neue Konzepte ein wie nötig – das beantwortet F1. Die Wirkung jedes Schritts lässt sich getrennt messen – das beantwortet F2. 2b ist eine Variante von Stufe 2.</aside>
+  <div class="pipe-main">
+    <div class="pipe-node" style="--i:0;--nc:#9ca0a7">
+      <div class="pipe-num">0</div>
+      <div class="pipe-title">Sequentiell</div>
+      <div class="pipe-desc">1 CPU-Kern</div>
+      <div class="ptags"><span class="ptag">C++ Baseline</span></div>
+    </div>
+    <div class="pipe-node" style="--i:1;--nc:#7d828b">
+      <div class="pipe-num">1</div>
+      <div class="pipe-title">Parallel</div>
+      <div class="pipe-desc">1 WI je Element</div>
+      <div class="ptags"><span class="ptag">queue</span><span class="ptag">range</span><span class="ptag">USM shared</span></div>
+    </div>
+    <div class="pipe-node" style="--i:2;--nc:#5b6068">
+      <div class="pipe-num">2</div>
+      <div class="pipe-title">Gerätespeicher</div>
+      <div class="pipe-desc">explizite Kopien</div>
+      <div class="ptags"><span class="ptag">USM device</span><span class="ptag">Events</span></div>
+    </div>
+    <div class="pipe-node" style="--i:3;--nc:#3b3f46">
+      <div class="pipe-num">3</div>
+      <div class="pipe-title">Work-Groups</div>
+      <div class="pipe-desc">feste Gruppengröße</div>
+      <div class="ptags"><span class="ptag">nd_range</span><span class="ptag">Work-Group</span></div>
+    </div>
+    <div class="pipe-node" style="--i:4;--nc:var(--ink)">
+      <div class="pipe-num">4</div>
+      <div class="pipe-title">Kachelung</div>
+      <div class="pipe-desc">lokaler Speicher</div>
+      <div class="ptags"><span class="ptag">local_accessor</span><span class="ptag">group_barrier</span></div>
+    </div>
+    <div class="pipe-node" style="--i:5;--nc:var(--acc)">
+      <div class="pipe-num">5</div>
+      <div class="pipe-title">Angepasst</div>
+      <div class="pipe-desc">Kachel zur Laufzeit</div>
+      <div class="ptags"><span class="ptag">get_info</span><span class="ptag">Spec. Const.</span></div>
+    </div>
+  </div>
+  <div class="pipe-sub">
+    <div class="pipe-branch" style="--i:6">
+      <div>
+        <div class="pipe-title"><b>2b</b> · Alternative zu Stufe 2: Buffer &amp; Accessoren</div>
+        <div class="pipe-desc" style="margin-top:3px">Implizite Datentransfers und automatische Abhängigkeiten statt expliziter Zeiger (USM device)</div>
+      </div>
+      <div class="ptags" style="margin-top:0;padding-top:0;flex-shrink:0"><span class="ptag">buffer</span><span class="ptag">accessor</span><span class="ptag">DAG</span></div>
+    </div>
+  </div>
+  <div class="cols2" style="margin-top:24px">
+    <div><h4>F1 · Konzepte</h4><p class="small">Jede Stufe ergänzt nur die minimal nötigen Sprachmittel.</p></div>
+    <div><h4>F2 · Messbarkeit</h4><p class="small">Wirkung jedes Schritts isoliert auf CPU und GPUs messbar.</p></div>
+  </div>
+  <aside class="notes">[04:20–05:25 · 1:05] Klarer horizontaler Portierungspfad von sequentiell bis zur Laufzeitanpassung. Stufe 2b zweigt als alternative Speicherabstraktion (Buffer &amp; Accessoren) ab. Jede Stufe beantwortet F1 konzeptionell und F2 messtechnisch.</aside>
 </section>
 
-<!-- 8 Geräte -->
+<!-- 7 Methode: Versuchsaufbau [05:25–06:25 · 1:00] -->
 <section data-sec="Methode">
-  <h2>Vier Geräte, ein Quellcode</h2>
-  <div class="cols2">
-    <div class="mach"><h4>Arbeitsplatzrechner</h4>
-      <div class="dev"><span><span class="sw" style="background:var(--cpu)"></span>AMD Ryzen 5 5600X</span><i>6 Kerne · OpenCL</i></div>
-      <div class="dev"><span><span class="sw" style="background:var(--rtx)"></span>NVIDIA RTX 5060 Ti</span><i>CUDA</i></div>
+  <h2>Versuchsaufbau: Hardware, Compiler &amp; Fallbeispiele</h2>
+  <div class="exp-flow">
+    <div class="exp-col" style="--dl:0ms">
+      <div class="exp-col-h">1 · Quellcode &amp; Compiler</div>
+      <div class="exp-item">
+        <div class="exp-item-top"><b>SYCL (1 Quellcode)</b><span class="exp-badge">DPC++ 7.2</span></div>
+        <p>Identischer C++17-Code für alle Geräte, je Rechner einmal übersetzt.</p>
+      </div>
+      <div class="exp-item">
+        <div class="exp-item-top"><b>Natives CUDA (Referenz)</b><span class="exp-badge">nvcc 13.4 / 12.8</span></div>
+        <p>Gleicher Algorithmus auf allen 3 GPUs + <span class="mono">cuBLAS</span> (FP32 ohne TF32) &amp; <span class="mono">CUB</span>.</p>
+      </div>
     </div>
-    <div class="mach"><h4>DACHS-Cluster, HS Esslingen</h4>
-      <div class="dev"><span><span class="sw" style="background:var(--l40)"></span>NVIDIA L40S</span><i>CUDA</i></div>
-      <div class="dev"><span><span class="sw" style="background:var(--h100)"></span>NVIDIA H100</span><i>CUDA</i></div>
-      <div class="dev off fragment custom"><span>AMD MI300A</span><i>im Messzeitraum nicht verfügbar</i></div>
+    <div class="exp-arrow" aria-hidden="true">→</div>
+    <div class="exp-col" style="--dl:110ms">
+      <div class="exp-col-h">2 · Vier Zielgeräte</div>
+      <div class="exp-grp">
+        <div class="exp-grp-t">Arbeitsplatzrechner</div>
+        <div class="dev"><span><span class="sw" style="background:var(--cpu)"></span>AMD Ryzen 5 5600X</span><i>6 Kerne · OpenCL</i></div>
+        <div class="dev"><span><span class="sw" style="background:var(--rtx)"></span>NVIDIA RTX 5060 Ti</span><i>CUDA</i></div>
+      </div>
+      <div class="exp-grp">
+        <div class="exp-grp-t">DACHS-Cluster, HS Esslingen</div>
+        <div class="dev"><span><span class="sw" style="background:var(--l40)"></span>NVIDIA L40S</span><i>CUDA</i></div>
+        <div class="dev"><span><span class="sw" style="background:var(--h100)"></span>NVIDIA H100</span><i>CUDA</i></div>
+        <div class="dev off"><span>AMD MI300A</span><i>nicht verfügbar</i></div>
+      </div>
+    </div>
+    <div class="exp-arrow" aria-hidden="true">→</div>
+    <div class="exp-col" style="--dl:220ms">
+      <div class="exp-col-h">3 · Drei Fallbeispiele</div>
+      <div class="exp-item">
+        <div class="exp-item-top"><b>1 · Matrixmultiplikation</b><span class="exp-badge">GFLOPS / ms</span></div>
+        <p>rechengebunden · Stufen 0–5 + <span class="mono">cuBLAS</span></p>
+      </div>
+      <div class="exp-item">
+        <div class="exp-item-top"><b>2 · 2D-Stencil (Jacobi)</b><span class="exp-badge">GB/s</span></div>
+        <p>speichergebunden · 2D / 1D / lokal</p>
+      </div>
+      <div class="exp-item">
+        <div class="exp-item-top"><b>3 · Reduktion (Summe)</b><span class="exp-badge">GB/s</span></div>
+        <p>synchronisationsgeb. · Atomics / Baum / <span class="mono">reduction</span> / <span class="mono">CUB</span></p>
+      </div>
     </div>
   </div>
-  <ul style="margin-top:30px">
-    <li class="fragment"><b>DPC++ 7.2</b> · derselbe Quellcode für alle Geräte · je Rechner einmal übersetzt, dann unverändert ausgeführt</li>
-    <li class="fragment">Zeit misst der Host (monotone Uhr) vom Einreichen bis zum Ende des Wartens – gleich für alle Stufen · Median aus 5 Läufen</li>
-    <li class="fragment">Ergänzend auf der RTX 5060 Ti: <b>natives CUDA 13.4</b> als Vergleich und zwei weitere Fallbeispiele (Stencil, Reduktion)</li>
-  </ul>
+  <div class="kpistrip" style="margin-top:16px;justify-content:center;font-size:16.5px">
+    <span><b>Zeitmessung:</b> Host-Uhr (<span class="mono">steady_clock</span>), einheitlich über alle Stufen</span>
+    <span class="muted">·</span>
+    <span><b>Auswertung:</b> Median aus 5 Läufen (JIT-Erstlauf getrennt)</span>
+    <span class="muted">·</span>
+    <span><b>Prüfung:</b> jede Variante gegen Host-Referenz verifiziert</span>
+  </div>
+  <aside class="notes">[05:25–06:25 · 1:00] Durchgängiger Versuchsaufbau: Ein SYCL-Quellcode und native CUDA-Referenzen laufen auf vier Geräten über Arbeitsplatz und DACHS-Cluster (AMD MI300A war nicht verfügbar) in drei komplementären Fallbeispielen.</aside>
 </section>
 
-<!-- 10 Code Stufe 1 -->
-<section data-auto-animate data-sec="Konzepte" data-stufe="1">
-  <h2 data-id="code-h">Stufe 1: der erste Kernel</h2>
-  <pre data-id="code"><code class="language-cpp" data-trim data-line-numbers="1|2-4|6|7-8|9-12|">
-sycl::queue q;                                   // wählt das Gerät
+<!-- 8 Konzepte Stufe 1 [06:25–07:40 · 1:15] -->
+<section data-sec="Konzepte" data-stufe="1">
+  <h2>Stufe 1: Single-Source &amp; Ausführungsmodell</h2>
+  <div class="cols2" style="grid-template-columns:1.15fr 1fr;gap:30px">
+    <div>
+      <pre><code class="language-cpp">sycl::queue q;                                   // wählt Gerät
 float* A = sycl::malloc_shared&lt;float&gt;(n * n, q); // USM shared
 float* B = sycl::malloc_shared&lt;float&gt;(n * n, q);
 float* C = sycl::malloc_shared&lt;float&gt;(n * n, q);
 
 q.parallel_for(sycl::range&lt;2&gt;{n, n}, [=](sycl::id&lt;2&gt; idx) {
-    const std::size_t i = idx[0];
-    const std::size_t j = idx[1];
-    float sum = 0.0f;
-    for (std::size_t k = 0; k &lt; n; ++k)
-      sum += A[i * n + k] * B[k * n + j];
-    C[i * n + j] = sum;
-}).wait();
-  </code></pre>
-  <p class="tiny muted" style="margin-top:10px">Host- und Gerätecode in einer Datei (Single-Source). Im Kernel nicht erlaubt: Ausnahmen, Rekursion, virtuelle Aufrufe, dynamischer Speicher.</p>
-  <aside class="notes">Kernel als Lambda, Variablen per Kopie übernommen. Der Compiler erkennt den Gerätecode und übersetzt ihn zusätzlich für die Zielgeräte. Keine eigene Kernelsprache wie bei CUDA oder OpenCL.</aside>
-</section>
-
-<!-- 12–15 Programmiermodell als wachsendes Bild -->
-<section data-auto-animate data-sec="Konzepte" data-stufe="1">
-  <h2 data-id="st-h">Host, Queue, Kernel, Work-Items</h2>
-  <div class="stage" data-stage="1" style="height:310px"></div>
-  <div class="cols3" style="margin-top:14px">
-    <div class="fragment" data-fragment-index="1"><p class="small"><span class="n">1</span>Der Host reicht den Kernel über eine <b>Queue</b> ein. Jede Queue gehört zu genau einem Gerät.</p></div>
-    <div class="fragment" data-fragment-index="2"><p class="small"><span class="n">2</span>Das Gerät führt ihn als viele <b>Work-Items</b> aus, eines je Element von C.</p></div>
-    <div class="fragment" data-fragment-index="3"><p class="small"><span class="n">3</span>Einreichen ist <b>asynchron</b>: der Host arbeitet weiter, bis er wartet.</p></div>
+  const std::size_t i = idx[0];
+  const std::size_t j = idx[1];
+  float sum = 0.0f;
+  for (std::size_t k = 0; k &lt; n; ++k)
+    sum += A[i * n + k] * B[k * n + j];
+  C[i * n + j] = sum;
+}).wait();</code></pre>
+      <p class="tiny muted" style="margin-top:10px">Im Kernel nicht erlaubt: Ausnahmen, Rekursion, virtuelle Aufrufe, dynamischer Speicher.</p>
+    </div>
+    <div>
+      <svg class="diag-svg" viewBox="0 0 540 245" role="img" aria-label="Host reicht Kernel über Queue an Work-Items auf dem Gerät ein">
+        <defs><marker id="ah1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="#1c1e22"/></marker></defs>
+        <rect x="4" y="4" width="228" height="236" rx="4" fill="#fbfaf7" stroke="#1c1e22" stroke-width="2.5"/>
+        <text x="16" y="28" font-size="18" font-weight="700" fill="#1c1e22">Host</text>
+        <rect x="18" y="44" width="200" height="38" rx="4" fill="#fbfaf7" stroke="#1c1e22" stroke-width="2"/>
+        <text x="118" y="69" text-anchor="middle" font-size="16" fill="#1c1e22">Hauptprogramm</text>
+        <rect x="18" y="96" width="200" height="128" rx="4" fill="#fbfaf7" stroke="#1c1e22" stroke-width="2"/>
+        <text x="28" y="118" font-size="16" font-weight="600" fill="#1c1e22">Queue</text>
+        <rect x="58" y="140" width="120" height="44" rx="4" fill="#1c1e22"/>
+        <text x="118" y="168" text-anchor="middle" font-size="17" font-weight="600" fill="#fff">Kernel</text>
+        <path class="draw" pathLength="1" style="--dl:180ms" d="M218,162 L294,162" stroke="#1c1e22" stroke-width="2.5" fill="none" marker-end="url(#ah1)"/>
+        <rect x="298" y="4" width="238" height="236" rx="4" fill="#fbfaf7" stroke="#1c1e22" stroke-width="2.5"/>
+        <text x="312" y="28" font-size="18" font-weight="700" fill="#1c1e22">Gerät (GPU / CPU)</text>
+        <g fill="#fff" stroke="#1c1e22" stroke-width="2">
+          <rect x="322" y="96" width="40" height="40" rx="3"/><rect x="372" y="96" width="40" height="40" rx="3"/>
+          <rect x="422" y="96" width="40" height="40" rx="3"/><rect x="472" y="96" width="40" height="40" rx="3"/>
+          <rect x="322" y="146" width="40" height="40" rx="3"/><rect x="372" y="146" width="40" height="40" rx="3"/>
+          <rect x="422" y="146" width="40" height="40" rx="3"/><rect x="472" y="146" width="40" height="40" rx="3"/>
+        </g>
+        <text x="417" y="216" text-anchor="middle" font-size="15" fill="#6e737b">Work-Items im Indexraum</text>
+      </svg>
+      <ul style="margin-top:14px">
+        <li class="small"><b>Single-Source:</b> Host- und Gerätecode als C++-Lambda in einer Datei.</li>
+        <li class="small"><b>Indexraum:</b> Ein Work-Item je Element von C.</li>
+        <li class="small"><b>Asynchron:</b> Einreichen in die Queue kehrt sofort zurück; Gerät wählt der Device Selector / Backend.</li>
+      </ul>
+    </div>
   </div>
-  <aside class="notes">Ein Kernel beschreibt nur, was ein einzelnes Work-Item tut. Der Indexraum legt fest, wie viele es gibt. Jedes Work-Item kennt seine Position und wählt darüber seine Daten.</aside>
+  <aside class="notes">[06:25–07:40 · 1:15] Kernidee von Stufe 1: Kein eigenes .cu/.cl nötig, Kernel ist ein C++-Lambda. Der Compiler erzeugt für die angegebenen Ziel-Backends Gerätecode; AdaptiveCpp generiert eine gemeinsame IR für JIT zur Laufzeit.</aside>
 </section>
 
-<section data-auto-animate data-sec="Konzepte" data-stufe="2">
-  <h2 data-id="st-h">Speichermodell: wer kopiert wann?</h2>
-  <div class="stage" data-stage="2" style="height:430px"></div>
-  <div class="cols3" style="margin-top:8px">
-    <div class="fragment" data-fragment-index="1"><p class="small"><b>USM shared</b> (Stufe 1): ein Zeiger für Host und Gerät, die Laufzeit verschiebt automatisch – bequem, Transfer unsichtbar.</p></div>
-    <div class="fragment" data-fragment-index="2"><p class="small"><b>USM device</b> (Stufe 2): Daten nur auf dem Gerät, der Host kopiert ausdrücklich – mehr Code, Transfer steuerbar.</p></div>
-    <div class="fragment" data-fragment-index="3"><p class="small"><b>Buffer + Accessoren</b> (Stufe 2b): Accessor sagt lesen/schreiben, die Laufzeit leitet Kopien ab.</p></div>
+<!-- 9 Konzepte Stufe 2 [07:40–08:45 · 1:05] -->
+<section data-sec="Konzepte" data-stufe="2">
+  <h2>Speichermodell: USM &amp; Buffer</h2>
+  <svg class="diag-svg" viewBox="0 0 1100 325" role="img" aria-label="Speichermodell: Bekanntes grau, Host- und Gerätespeicher sowie explizite und automatische Transfers hervorgehoben">
+    <defs>
+      <marker id="ahG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="#c4c6ca"/></marker>
+      <marker id="ahB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="#1c1e22"/></marker>
+      <marker id="ahR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="#b3412a"/></marker>
+    </defs>
+    <!-- Bekanntes (grau) -->
+    <rect x="4" y="4" width="460" height="206" rx="4" fill="#fbfaf7" stroke="#c9cbcf" stroke-width="2"/>
+    <text x="16" y="28" font-size="18" font-weight="600" fill="#6e737b">Host</text>
+    <rect x="24" y="42" width="420" height="36" rx="4" fill="#fbfaf7" stroke="#c9cbcf" stroke-width="2"/>
+    <text x="234" y="66" text-anchor="middle" font-size="16" fill="#6e737b">Hauptprogramm</text>
+    <rect x="24" y="90" width="420" height="106" rx="4" fill="#fbfaf7" stroke="#c9cbcf" stroke-width="2"/>
+    <text x="36" y="114" font-size="16" font-weight="600" fill="#6e737b">Queue (Events → Abhängigkeitsgraph)</text>
+    <rect x="44" y="132" width="96" height="40" rx="4" fill="#fbfaf7" stroke="#1c1e22" stroke-width="2"/>
+    <text x="92" y="157" text-anchor="middle" font-size="15" fill="#1c1e22">Kopie A/B</text>
+    <rect x="184" y="132" width="100" height="40" rx="4" fill="#ecebe6" stroke="#c9cbcf" stroke-width="2"/>
+    <text x="234" y="157" text-anchor="middle" font-size="15" fill="#6e737b">Kernel</text>
+    <rect x="328" y="132" width="96" height="40" rx="4" fill="#fbfaf7" stroke="#1c1e22" stroke-width="2"/>
+    <text x="376" y="157" text-anchor="middle" font-size="15" fill="#1c1e22">Kopie C</text>
+    <path class="draw" pathLength="1" style="--dl:120ms" d="M140,152 L181,152" stroke="#1c1e22" stroke-width="2" fill="none" marker-end="url(#ahB)"/>
+    <path class="draw" pathLength="1" style="--dl:220ms" d="M284,152 L325,152" stroke="#1c1e22" stroke-width="2" fill="none" marker-end="url(#ahB)"/>
+    <line x1="444" y1="112" x2="628" y2="112" stroke="#c4c6ca" stroke-width="2" marker-end="url(#ahG)"/>
+    <rect x="632" y="4" width="464" height="206" rx="4" fill="#fbfaf7" stroke="#c9cbcf" stroke-width="2"/>
+    <text x="646" y="28" font-size="18" font-weight="600" fill="#6e737b">Gerät (GPU / CPU)</text>
+    <g fill="#fff" stroke="#c9cbcf" stroke-width="2">
+      <rect x="676" y="64" width="38" height="38" rx="3"/><rect x="726" y="64" width="38" height="38" rx="3"/><rect x="776" y="64" width="38" height="38" rx="3"/><rect x="826" y="64" width="38" height="38" rx="3"/>
+      <rect x="876" y="64" width="38" height="38" rx="3"/><rect x="926" y="64" width="38" height="38" rx="3"/><rect x="976" y="64" width="38" height="38" rx="3"/><rect x="1026" y="64" width="38" height="38" rx="3"/>
+      <rect x="676" y="114" width="38" height="38" rx="3"/><rect x="726" y="114" width="38" height="38" rx="3"/><rect x="776" y="114" width="38" height="38" rx="3"/><rect x="826" y="114" width="38" height="38" rx="3"/>
+      <rect x="876" y="114" width="38" height="38" rx="3"/><rect x="926" y="114" width="38" height="38" rx="3"/><rect x="976" y="114" width="38" height="38" rx="3"/><rect x="1026" y="114" width="38" height="38" rx="3"/>
+    </g>
+    <!-- Neues (schwarz / akzent) -->
+    <rect x="4" y="230" width="460" height="86" rx="4" fill="#fbfaf7" stroke="#1c1e22" stroke-width="3"/>
+    <text x="16" y="256" font-size="18" font-weight="700" fill="#1c1e22">Host-Speicher</text>
+    <g stroke="#1c1e22" stroke-width="2" fill="#fbfaf7">
+      <rect x="260" y="248" width="48" height="48" rx="3"/><rect x="322" y="248" width="48" height="48" rx="3"/><rect x="384" y="248" width="48" height="48" rx="3"/>
+    </g>
+    <g text-anchor="middle" class="mono-t" font-size="17" font-weight="600" fill="#1c1e22">
+      <text x="284" y="278">A</text><text x="346" y="278">B</text><text x="408" y="278">C</text>
+    </g>
+    <rect x="632" y="230" width="464" height="86" rx="4" fill="#fbfaf7" stroke="#1c1e22" stroke-width="3"/>
+    <text x="646" y="256" font-size="18" font-weight="700" fill="#1c1e22">Gerätespeicher (USM device)</text>
+    <g stroke="#1c1e22" stroke-width="2" fill="#fbfaf7">
+      <rect x="896" y="248" width="48" height="48" rx="3"/><rect x="958" y="248" width="48" height="48" rx="3"/><rect x="1020" y="248" width="48" height="48" rx="3"/>
+    </g>
+    <g text-anchor="middle" class="mono-t" font-size="17" font-weight="600" fill="#1c1e22">
+      <text x="920" y="278">A</text><text x="982" y="278">B</text><text x="1044" y="278">C</text>
+    </g>
+    <line x1="470" y1="252" x2="626" y2="252" stroke="#1c1e22" stroke-width="2.5" stroke-dasharray="7 5" marker-start="url(#ahB)" marker-end="url(#ahB)"/>
+    <text x="548" y="240" text-anchor="middle" font-size="15" fill="#1c1e22">USM shared (autom.)</text>
+    <path class="draw" pathLength="1" style="--dl:320ms" d="M470,292 L626,292" stroke="#b3412a" stroke-width="3" fill="none" marker-start="url(#ahR)" marker-end="url(#ahR)"/>
+    <text x="548" y="314" text-anchor="middle" font-size="15" font-weight="600" fill="#b3412a">USM device (q.memcpy)</text>
+  </svg>
+  <div class="cols3" style="margin-top:20px">
+    <div><h4>USM shared (Stufe 1)</h4><p>Ein Zeiger für Host und Gerät; Laufzeit verschiebt automatisch – bequem, aber Transfer unsichtbar.</p></div>
+    <div><h4>USM device + Events (Stufe 2)</h4><p>Daten im Gerätespeicher, Kopien explizit; Events steuern den DAG auf out-of-order-Queues.</p></div>
+    <div><h4>Buffer + Accessoren (Stufe 2b)</h4><p>Abstrakte Kapselung mit Zugriffsmodus; Laufzeit leitet Kopien und Abhängigkeiten selbst ab.</p></div>
   </div>
-  <aside class="notes">Grau ist bereits Bekanntes, schwarz das Neue – wie in den Abbildungen der Arbeit. Daneben gibt es USM host: Daten bleiben im Host-Speicher, das Gerät greift über den Bus zu.</aside>
+  <aside class="notes">[07:40–08:45 · 1:05] Graue Elemente sind aus Stufe 1 bekannt, schwarz/rot sind neu. Out-of-order-Queue erlaubt gleichzeitige Kopie A und Kopie B. Daneben existiert noch USM host für direkten Buszugriff.</aside>
 </section>
 
-<!-- Kachelung Animation -->
+<!-- 10 Konzepte Stufe 4 [08:45–10:00 · 1:15] HALBZEIT -->
 <section id="tlSlide" data-sec="Konzepte" data-stufe="4">
-  <h2>Kachelung im lokalen Speicher</h2>
+  <h2>Hierarchische Ausführung &amp; Kachelung</h2>
   <div class="tl">
     <div><div class="mlab">A</div><div class="tg" id="tA"></div></div>
     <div class="op">·</div>
     <div><div class="mlab">B</div><div class="tg" id="tB"></div></div>
     <div class="op">=</div>
     <div><div class="mlab">C</div><div class="tg" id="tC"></div></div>
-    <div class="locm" style="margin-left:14px"><small>lokaler Speicher</small>
-      <div class="lg" id="lA"></div><div class="lg" id="lB"></div><small>Kachel A · Kachel B</small></div>
-    <ul class="phases" id="tlPh">
-      <li>1 · gemeinsam laden</li><li>2 · Barriere</li><li>3 · rechnen</li>
-    </ul>
+    <div class="locm" style="margin-left:10px">
+      <small>lokaler Speicher</small>
+      <div class="lg" id="lA"><div></div><div></div><div></div><div></div></div>
+      <div class="lg" id="lB"><div></div><div></div><div></div><div></div></div>
+      <small>Kachel A · Kachel B</small>
+    </div>
+    <div class="phases-wrap">
+      <ul class="phases" id="tlPh">
+        <li>1 · gemeinsam laden</li>
+        <li>2 · Barriere</li>
+        <li>3 · rechnen</li>
+      </ul>
+      <button type="button" class="ctrl-btn" id="tlPause">Pause</button>
+    </div>
   </div>
-  <div id="tlInfo"></div>
-  <p class="small" style="margin-top:22px">Jeder Wert aus dem langsamen globalen Speicher wird einmal geladen und dann <b>T-mal</b> aus dem schnellen lokalen Speicher gelesen.</p>
-  <aside class="notes">Jedes Work-Item lädt einen Wert der Kachel. Barriere: erst rechnen, wenn alle geladen haben. Dann rechnen alle mit den gemeinsam geladenen Werten, wieder Barriere, nächste Kachel.</aside>
+  <div id="tlInfo">Kachel 2 von 3 · Teilsummen in C wachsen mit jeder Kachel</div>
+  <div class="cols2" style="margin-top:20px;gap:36px">
+    <div class="box-muted small"><b>Zweistufiger Indexraum (<span class="mono">nd_range</span>):</b> globaler Bereich wird in gleich große <b>Work-Groups</b> unterteilt (Stufe 3). Nur innerhalb einer Work-Group gibt es schnellen lokalen Speicher und Barrieren.</div>
+    <div class="box-muted small"><b>Command Group &amp; Speicherhierarchie (Stufe 4):</b> <span class="mono">local_accessor</span> reserviert schnellen On-Chip-Speicher vor dem Kernelstart; jeder globale Wert wird nur noch einmal pro Kachel geladen und T-mal lokal gelesen.</div>
+  </div>
+  <aside class="notes">[08:45–10:00 · 1:15 · HALBZEIT] Halbzeit! Stufen 3 und 4 geben die volle Kontrolle über Work-Groups und On-Chip-Speicherhierarchie (global → lokal → Register). Ohne Barriere drohen Datenrennen; über Work-Groups hinweg gibt es keine Barriere.</aside>
 </section>
 
-<!-- Stufe 5 -->
+<!-- 11 Konzepte Stufe 5 [10:00–11:00 · 1:00] -->
 <section data-sec="Konzepte" data-stufe="5">
   <h2>Stufe 5: Kachelgröße zur Laufzeit wählen</h2>
-  <div class="cols2" style="grid-template-columns:1.15fr 1fr;gap:60px">
+  <div class="cols2" style="grid-template-columns:1.15fr 1fr;gap:52px;margin-top:10px">
     <div class="flow">
-      <p class="small muted" style="margin-bottom:4px">Ablauf, Beispiel RTX 5060 Ti, n = 2048</p>
-      <div class="row"><span class="mono">T = 8</span><div class="track"><div class="fb fragment custom" data-fragment-index="2" style="--w:83%">83 %</div></div></div>
-      <div class="row"><span class="mono">T = 16</span><div class="track"><div class="fb best fragment custom" data-fragment-index="2" style="--w:100%">100 %</div></div></div>
-      <div class="row"><span class="mono">T = 32</span><div class="track"><div class="fb fragment custom" data-fragment-index="2" style="--w:96%">96 %</div></div></div>
-      <div class="row"><span class="mono">T = 64</span><div class="track" style="display:flex;align-items:center"><span class="small muted fragment" data-fragment-index="1">4096 Work-Items &gt; max. 1024</span></div><div class="strike fragment custom" data-fragment-index="1"></div></div>
-      <p class="small" style="margin-top:14px"><span class="fragment" data-fragment-index="1"><b>1</b> filtern</span><span class="fragment" data-fragment-index="2"> → <b>2</b> kurz messen</span><span class="fragment" data-fragment-index="3"> → <b>3</b> <span class="acc"><b>beste wählen</b></span></span></p>
+      <p class="small muted" style="margin-bottom:8px">Ablauf, Beispiel RTX 5060 Ti, n = 2048</p>
+      <div class="row"><span class="mono">T = 8</span><div class="track"><div class="fb" style="--w:83%;--i:0">83 %</div></div></div>
+      <div class="row"><span class="mono">T = 16</span><div class="track"><div class="fb best" style="--w:100%;--i:1">100 %</div></div></div>
+      <div class="row"><span class="mono">T = 32</span><div class="track"><div class="fb" style="--w:96%;--i:2">96 %</div></div></div>
+      <div class="row"><span class="mono">T = 64</span><div class="track fail"><span class="small muted">4096 Work-Items &gt; max. 1024</span><div class="strike"></div></div></div>
+      <p class="small" style="margin-top:20px"><b>1</b> filtern → <b>2</b> kurz messen → <b>3</b> <span class="acc"><b>beste Kachel wählen</b></span></p>
     </div>
     <div>
-      <div class="fragment" data-fragment-index="4"><h4 style="font:700 21px 'Source Sans 3';border-top:2px solid var(--ink);padding-top:8px;margin:0 0 6px">Geräteabfragen</h4><p class="small"><span class="mono">max_work_group_size</span>, <span class="mono">local_mem_size</span> schließen unmögliche Kachelgrößen aus.</p></div>
-      <div class="fragment" data-fragment-index="5"><h4 style="font:700 21px 'Source Sans 3';border-top:2px solid var(--ink);padding-top:8px;margin:14px 0 6px">Specialization Constants</h4><p class="small">T wird beim JIT als Konstante eingesetzt – bei DPC++ für CUDA nur <b>emuliert</b>.</p></div>
-      <div class="fragment" data-fragment-index="6"><h4 style="font:700 21px 'Source Sans 3';border-top:2px solid var(--ink);padding-top:8px;margin:14px 0 6px">Fehlerbehandlung</h4><p class="small">synchron: <span class="mono">sycl::exception</span><br>asynchron: Async Handler + <span class="mono">wait_and_throw</span></p></div>
+      <h4>Geräteabfragen</h4><p class="small"><span class="mono">max_work_group_size</span> und <span class="mono">local_mem_size</span> schließen ungültige Kacheln vor dem Start aus.</p>
+      <h4 style="margin-top:16px">Specialization Constants</h4><p class="small">T wird beim JIT als Konstante übergeben – DPC++ emuliert dies für CUDA jedoch nur.</p>
+      <h4 style="margin-top:16px">Fehlerbehandlung</h4><p class="small">synchron via <span class="mono">sycl::exception</span> · asynchron über Async Handler und <span class="mono">wait_and_throw</span>.</p>
     </div>
   </div>
-  <aside class="notes">Werte links: Effizienz der Kachelgrößen auf der RTX bei n = 2048, also Leistung relativ zur besten Kachelgröße.</aside>
+  <aside class="notes">[10:00–11:00 · 1:00] Stufe 5 verbindet ein einziges Kompilat mit gerätespezifischer Anpassung zur Laufzeit. AdaptiveCpp unterstützt Specialization Constants nur über eine eigene Erweiterung (sycl::specialized).</aside>
 </section>
 
-<!-- Ergebnis: Speedup -->
-<section data-sec="Ergebnisse">
-  <h2>Funktional portabel: überall korrekt</h2>
-  <p>Alle Stufen liefen <b>ohne Codeänderung</b> auf allen vier Geräten mit korrektem Ergebnis.</p>
-  <p class="muted small" style="margin-top:30px">Stufe 1 gegenüber Stufe 0, n = 1024</p>
-  <div class="cols3" style="margin-top:12px">
-    <div class="fragment"><div class="big"><span class="count" data-to="90">0</span>×</div><p class="small" style="margin-top:8px;border-top:4px solid var(--cpu);padding-top:6px">Ryzen 5 5600X</p></div>
-    <div class="fragment"><div class="big"><span class="count" data-to="2200">0</span>×</div><p class="small" style="margin-top:8px;border-top:4px solid var(--rtx);padding-top:6px">RTX 5060 Ti</p></div>
-    <div class="fragment"><div class="big"><span class="count" data-to="15800">0</span>×</div><p class="small" style="margin-top:8px;border-top:4px solid var(--h100);padding-top:6px">H100</p></div>
-  </div>
-  <aside class="notes">Den größten Sprung bringt die erste Parallelisierung. Auf der CPU rund 90-fach, auf den GPUs 2200- bis 15800-fach.</aside>
-</section>
-
-<!-- GFLOPS je Stufe -->
+<!-- 12 Ergebnisse: Leistung je Stufe [11:00–12:25 · 1:25] -->
 <section id="gflopsSlide" data-sec="Ergebnisse">
   <div class="h-row">
     <h2 id="gflopsTitle">Leistung je Stufe in GFLOPS, n = 2048</h2>
     <div class="n-toggle" role="group" aria-label="Matrixgröße">
-      <button type="button" class="n-btn on" data-size="2048">n = 2048</button>
-      <button type="button" class="n-btn" data-size="1024">n = 1024</button>
+      <button type="button" class="n-btn on" data-size="2048" aria-pressed="true">n = 2048</button>
+      <button type="button" class="n-btn" data-size="1024" aria-pressed="false">n = 1024</button>
     </div>
+  </div>
+  <div class="kpistrip">
+    <span><b>Funktional portabel:</b> Alle Stufen ohne Codeänderung auf allen 4 Geräten korrekt.</span>
+    <span class="muted">Stufe 1 vs. Stufe 0 (n = 1024): <b style="color:var(--ink)">90×</b> CPU · <b style="color:var(--ink)">2200×</b> RTX · <b style="color:var(--ink)">15 800×</b> H100</span>
   </div>
   <div class="charts">
     <div class="chart"><h5>RTX 5060 Ti</h5><div class="bars" data-max="1700" data-best data-n2048="1108,1110,863,1595,1426,1350" data-n1024="1102,1094,645,1573,1388,1240">
-      <div class="bar" data-v="1108"><span>1108</span></div><div class="bar" data-v="1110"><span>1110</span></div><div class="bar hatch" data-v="863"><span>863</span></div><div class="bar" data-v="1595"><span>1595</span></div><div class="bar" data-v="1426"><span>1426</span></div><div class="bar" data-v="1350"><span>1350</span></div></div>
+      <div class="bar"><div class="bar-fill"></div><span></span></div><div class="bar"><div class="bar-fill"></div><span></span></div><div class="bar hatch"><div class="bar-fill"></div><span></span></div><div class="bar"><div class="bar-fill"></div><span></span></div><div class="bar"><div class="bar-fill"></div><span></span></div><div class="bar"><div class="bar-fill"></div><span></span></div></div>
       <div class="xl"><div>1</div><div>2</div><div>2b</div><div>3</div><div>4</div><div>5</div></div></div>
     <div class="chart"><h5>L40S</h5><div class="bars" data-max="6000" data-best data-n2048="2938,2938,1847,5563,4933,4678" data-n1024="3489,3471,1261,5231,4704,3624">
-      <div class="bar" data-v="2938"><span>2938</span></div><div class="bar" data-v="2938"><span>2938</span></div><div class="bar hatch" data-v="1847"><span>1847</span></div><div class="bar" data-v="5563"><span>5563</span></div><div class="bar" data-v="4933"><span>4933</span></div><div class="bar" data-v="4678"><span>4678</span></div></div>
+      <div class="bar"><div class="bar-fill"></div><span></span></div><div class="bar"><div class="bar-fill"></div><span></span></div><div class="bar hatch"><div class="bar-fill"></div><span></span></div><div class="bar"><div class="bar-fill"></div><span></span></div><div class="bar"><div class="bar-fill"></div><span></span></div><div class="bar"><div class="bar-fill"></div><span></span></div></div>
       <div class="xl"><div>1</div><div>2</div><div>2b</div><div>3</div><div>4</div><div>5</div></div></div>
     <div class="chart"><h5>H100</h5><div class="bars" data-max="6800" data-best data-n2048="4793,4811,2468,5351,6348,5497" data-n1024="6044,6110,1246,4858,5853,3317">
-      <div class="bar" data-v="4793"><span>4793</span></div><div class="bar" data-v="4811"><span>4811</span></div><div class="bar hatch" data-v="2468"><span>2468</span></div><div class="bar" data-v="5351"><span>5351</span></div><div class="bar" data-v="6348"><span>6348</span></div><div class="bar" data-v="5497"><span>5497</span></div></div>
+      <div class="bar"><div class="bar-fill"></div><span></span></div><div class="bar"><div class="bar-fill"></div><span></span></div><div class="bar hatch"><div class="bar-fill"></div><span></span></div><div class="bar"><div class="bar-fill"></div><span></span></div><div class="bar"><div class="bar-fill"></div><span></span></div><div class="bar"><div class="bar-fill"></div><span></span></div></div>
       <div class="xl"><div>1</div><div>2</div><div>2b</div><div>3</div><div>4</div><div>5</div></div></div>
     <div class="chart"><h5>Ryzen 5 5600X</h5><div class="bars" data-max="190" data-best data-n2048="43,43,28,51,149,176" data-n1024="43,41,31,51,151,179">
-      <div class="bar" data-v="43"><span>43</span></div><div class="bar" data-v="43"><span>43</span></div><div class="bar hatch" data-v="28"><span>28</span></div><div class="bar" data-v="51"><span>51</span></div><div class="bar" data-v="149"><span>149</span></div><div class="bar" data-v="176"><span>176</span></div></div>
+      <div class="bar"><div class="bar-fill"></div><span></span></div><div class="bar"><div class="bar-fill"></div><span></span></div><div class="bar hatch"><div class="bar-fill"></div><span></span></div><div class="bar"><div class="bar-fill"></div><span></span></div><div class="bar"><div class="bar-fill"></div><span></span></div><div class="bar"><div class="bar-fill"></div><span></span></div></div>
       <div class="xl"><div>1</div><div>2</div><div>2b</div><div>3</div><div>4</div><div>5</div></div></div>
   </div>
-  <p class="tiny muted" style="margin-top:6px">Jedes Gerät mit eigener Skala · <span class="acc">■</span> schnellste Stufe des Geräts · Median aus 5 Läufen</p>
+  <p class="tiny muted" style="margin-top:6px">Eigene Skala je Gerät · <span class="acc">■</span> schnellste Stufe · schraffiert: Stufe 2b (inkl. Transfer) · Median aus 5 Läufen</p>
   <ul style="margin-top:8px">
-    <li class="fragment small"><b>Stufe 3</b> (nur Work-Group-Größe) schlägt die Kachelung auf RTX und L40S um rund 10 %.</li>
-    <li class="fragment small"><b>Stufe 4</b> gewinnt auf der H100, auf der CPU bringt sie das 3,5-Fache von Stufe 2.</li>
+    <li class="small"><b>Stufe 3</b> (Work-Group W = 16) schlägt die Kachelung auf RTX und L40S um rund 10 % (+44 bis 89 % gegenüber Stufe 2).</li>
+    <li class="small"><b>Stufe 4</b> (T = 16) gewinnt auf der H100 (+32 %) und bringt auf der CPU das 3,5-Fache von Stufe 2.</li>
   </ul>
-  <aside class="notes">Stufe 3 gegenüber Stufe 2: RTX und L40S +44 bis 89 %, CPU rund +20 %, nur die H100 bei n = 1024 um 20 % langsamer. Kachelung gegenüber Stufe 2 bei n = 2048: RTX +28 %, L40S +68 %, H100 +32 %, CPU 3,5-fach. Welche Optimierung sich lohnt, hängt selbst bei GPUs eines Herstellers vom Gerät ab.</aside>
+  <aside class="notes">[11:00–12:25 · 1:25] Wichtigste Beobachtung: Selbst innerhalb desselben GPU-Herstellers lohnt sich nicht jede Optimierung auf jedem Modell gleich. Bei Bedarf live auf n = 1024 umschalten (dort ist Stufe 2 auf der H100 mit 6110 GFLOPS sogar am schnellsten).</aside>
 </section>
 
-<!-- Stufen-Überblick: Vergleich über alle Geräte -->
+<!-- 13 Ergebnisse: Transfer vs. Rechnung [12:25–13:20 · 0:55] -->
 <section data-sec="Ergebnisse">
-  <h2>Stufen-Überblick: Wie gut performt jede Stufe?</h2>
-  <p class="small muted">Prozent vom Geräte-Bestwert und GFLOPS bei n = 2048 (Stufe 0: n = 1024 auf 1 CPU-Kern)</p>
-  <table class="bt perf-tbl">
+  <h2>Je schneller die GPU, desto teurer der Transfer</h2>
+  <p class="small muted">Stufe 2, n = 2048 · Kernelzeit gegenüber Transferzeit (Median aus 5 Läufen)</p>
+  <div style="margin-top:20px">
+    <div class="stackrow"><div>Ryzen 5 5600X</div><div class="stack"><div style="background:var(--l40);width:98.8%">Kernel 398,78 ms</div><div style="background:var(--acc);width:1.2%;padding-left:0"></div></div><div>1 %</div></div>
+    <div class="stackrow"><div>RTX 5060 Ti</div><div class="stack"><div style="background:var(--l40);width:78.8%">Kernel 15,47 ms</div><div style="background:var(--acc);width:21.2%">4,16 ms</div></div><div>27 %</div></div>
+    <div class="stackrow"><div>L40S</div><div class="stack"><div style="background:var(--l40);width:72.9%">Kernel 5,85 ms</div><div style="background:var(--acc);width:27.1%">2,17 ms</div></div><div>37 %</div></div>
+    <div class="stackrow"><div>H100</div><div class="stack"><div style="background:var(--l40);width:57.4%">Kernel 3,57 ms</div><div style="background:var(--acc);width:42.6%">2,65 ms</div></div><div>74 %</div></div>
+  </div>
+  <p class="tiny muted">Balken auf 100 % je Gerät normiert · rechte Spalte = Transferzeit relativ zur Kernelzeit · Transfer CPU: 4,97 ms</p>
+  <div class="box-muted small" style="margin-top:24px">
+    <b>Buffer (Stufe 2b):</b> Verstecken das Kopieren hinter Accessoren – sind auf keinem Gerät schneller als Stufe 2 und brauchen außer auf der RTX <b>12 bis 64 % mehr Zeit</b>.
+  </div>
+  <aside class="notes">[12:25–13:20 · 0:55] Alle Laufzeiten konsistent mit zwei Nachkommastellen. Auf der RTX kostet der Transfer rund ein Viertel der Kernelzeit, auf der H100 bereits drei Viertel (und auf der CPU ist er mit 1 % vernachlässigbar).</aside>
+</section>
+
+<!-- 14 Ergebnisse: Performance-Portabilität [13:20–14:20 · 1:00] -->
+<section id="ppSlide" data-sec="Ergebnisse">
+  <h2>Performance-Portabilität je Kachelgröße, n = 2048</h2>
+  <div class="eff" style="margin-top:12px">
+    <div class="egrp"><h5>T = 8</h5><div class="bars" data-max="110" data-vals="83,85,69,55">
+      <div class="bar d1"><div class="bar-fill"></div><span></span></div><div class="bar d2"><div class="bar-fill"></div><span></span></div><div class="bar d3"><div class="bar-fill"></div><span></span></div><div class="bar d4"><div class="bar-fill"></div><span></span></div></div><div class="pp">PP 0,71</div></div>
+    <div class="egrp fragment custom" data-fragment-index="1"><h5>T = 16</h5><div class="bars" data-max="110" data-vals="100,100,100,88">
+      <div class="bar d1"><div class="bar-fill"></div><span></span></div><div class="bar d2"><div class="bar-fill"></div><span></span></div><div class="bar d3"><div class="bar-fill"></div><span></span></div><div class="bar d4"><div class="bar-fill"></div><span></span></div></div><div class="pp acc">PP 0,97</div></div>
+    <div class="egrp"><h5>T = 32</h5><div class="bars" data-max="110" data-vals="96,98,91,97">
+      <div class="bar d1"><div class="bar-fill"></div><span></span></div><div class="bar d2"><div class="bar-fill"></div><span></span></div><div class="bar d3"><div class="bar-fill"></div><span></span></div><div class="bar d4"><div class="bar-fill"></div><span></span></div></div><div class="pp">PP 0,95</div></div>
+    <div class="egrp fragment custom" data-fragment-index="1"><h5>T = 64</h5><div class="bars" data-max="110" data-vals="0,0,0,100">
+      <div class="bar x"><div class="bar-fill"></div><span>✗</span></div><div class="bar x"><div class="bar-fill"></div><span>✗</span></div><div class="bar x"><div class="bar-fill"></div><span>✗</span></div><div class="bar d4"><div class="bar-fill"></div><span></span></div></div><div class="pp acc">PP 0</div></div>
+  </div>
+  <div class="legend"><span><i class="d1"></i>RTX</span><span><i class="d2"></i>L40S</span><span><i class="d3"></i>H100</span><span><i class="d4"></i>CPU</span><span class="muted">Effizienz in % der besten Kachel je Gerät</span></div>
+  <p class="small fragment" data-fragment-index="1" style="margin-top:18px">Ausgerechnet die beste CPU-Kachel (<b>T = 64</b> → 4096 Work-Items) <b>startet auf keiner GPU</b> (max. 1024) → PP = 0. Bei n = 1024 erreicht <b>T = 32</b> die beste PP (0,94).</p>
+  <aside class="notes">[13:20–14:20 · 1:00] PP nach Pennycook et al. (2016) als harmonisches Mittel der Effizienzen über alle vier Geräte. Ein Klick hebt den Kontrast zwischen T = 16 (PP 0,97) und T = 64 (PP 0) hervor.</aside>
+</section>
+
+<!-- 15 Ergebnisse: Stufe 5 [14:20–15:05 · 0:45] -->
+<section data-sec="Ergebnisse">
+  <h2>Automatische Wahl (Stufe 5): robust, aber nicht optimal</h2>
+  <div class="cols3" style="margin-top:34px">
+    <div><div class="big">0,95</div><h4 style="margin-top:14px">wählt richtig</h4><p>Findet auf allen vier Geräten die beste Kachelgröße: PP <b>0,95</b> (n = 2048) bzw. <b>0,76</b> (n = 1024) statt 0 bei T = 64.</p></div>
+    <div><div class="big">5–43 %</div><h4 style="margin-top:14px">langsamer als Stufe 4</h4><p>auf den GPUs bei gleicher Kachelgröße – DPC++ emuliert Specialization Constants für CUDA, T bleibt keine Compile-Zeit-Konstante.</p></div>
+    <div><div class="big">3,6–8×</div><h4 style="margin-top:14px">längerer erster Lauf</h4><p>bei n = 1024 durch die Auswahlmessung. Allein die JIT-Kompilierung dauert schon bis zu <b>14×</b> länger als Folgeläufe.</p></div>
+  </div>
+  <aside class="notes">[14:20–15:05 · 0:45] Stufe 5 verhindert Abstürze und ersetzt das manuelle Raten von T, zahlt dafür aber auf den GPUs 5–43 % Dauerbetrieb-Overhead wegen emulierter Specialization Constants.</aside>
+</section>
+
+<!-- 16 Vergleich mit CUDA (Matmul) [15:05–16:35 · 1:30] -->
+<section data-sec="Vergleich mit CUDA">
+  <h2>Matrixmultiplikation: SYCL vs. natives CUDA &amp; cuBLAS</h2>
+  <table class="bt compact">
     <thead>
       <tr>
-        <th>Stufe</th>
-        <th>Ryzen 5 5600X</th>
-        <th>RTX 5060 Ti</th>
-        <th>L40S</th>
-        <th>H100</th>
-        <th>Einordnung</th>
+        <th rowspan="2">Variante (n = 2048, GFLOPS)</th>
+        <th colspan="3" class="grp">RTX 5060 Ti</th>
+        <th colspan="3" class="grp">L40S</th>
+        <th colspan="3" class="grp">H100</th>
+      </tr>
+      <tr>
+        <th>SYCL</th><th>CUDA</th><th>Anteil</th>
+        <th>SYCL</th><th>CUDA</th><th>Anteil</th>
+        <th>SYCL</th><th>CUDA</th><th>Anteil</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><b>0</b> · Sequentiell</td>
-        <td><div class="pcell"><div class="pcell-top"><span>&lt;1 %</span><span>0,5</span></div><div class="pbar-wrap"><div class="pbar" style="width:1%"></div></div></div></td>
-        <td><div class="pcell"><div class="pcell-top"><span>&lt;0,1 %</span><span>0,5</span></div><div class="pbar-wrap"><div class="pbar" style="width:1%"></div></div></div></td>
-        <td><div class="pcell"><div class="pcell-top"><span>&lt;0,1 %</span><span>0,3</span></div><div class="pbar-wrap"><div class="pbar" style="width:1%"></div></div></div></td>
-        <td><div class="pcell"><div class="pcell-top"><span>&lt;0,1 %</span><span>0,4</span></div><div class="pbar-wrap"><div class="pbar" style="width:1%"></div></div></div></td>
-        <td class="small">Ausgangspunkt (4,3–6,7 s)</td>
+        <td>Globaler Speicher (W = 16, St. 3)</td>
+        <td>1595</td><td>1536</td><td>104 %</td>
+        <td>5563</td><td>5173</td><td>108 %</td>
+        <td>5351</td><td>5353</td><td>100 %</td>
       </tr>
       <tr>
-        <td><b>1</b> · USM shared</td>
-        <td><div class="pcell"><div class="pcell-top"><b>24 %</b><span>43</span></div><div class="pbar-wrap"><div class="pbar" style="width:24%"></div></div></div></td>
-        <td><div class="pcell"><div class="pcell-top"><b>69 %</b><span>1108</span></div><div class="pbar-wrap"><div class="pbar" style="width:69%"></div></div></div></td>
-        <td><div class="pcell"><div class="pcell-top"><b>53 %</b><span>2938</span></div><div class="pbar-wrap"><div class="pbar" style="width:53%"></div></div></div></td>
-        <td><div class="pcell"><div class="pcell-top"><b>76 %</b><span>4793</span></div><div class="pbar-wrap"><div class="pbar" style="width:76%"></div></div></div></td>
-        <td class="small">Riesensprung (90–15 800×)</td>
+        <td>Kachelung (T = 16, St. 4)</td>
+        <td>1426</td><td>2055</td><td class="acc"><b>69 %</b></td>
+        <td>4933</td><td>6883</td><td class="acc"><b>72 %</b></td>
+        <td>6348</td><td>7949</td><td class="acc"><b>80 %</b></td>
       </tr>
       <tr>
-        <td><b>2</b> · USM device</td>
-        <td><div class="pcell"><div class="pcell-top"><b>24 %</b><span>43</span></div><div class="pbar-wrap"><div class="pbar" style="width:24%"></div></div></div></td>
-        <td><div class="pcell"><div class="pcell-top"><b>70 %</b><span>1110</span></div><div class="pbar-wrap"><div class="pbar" style="width:70%"></div></div></div></td>
-        <td><div class="pcell"><div class="pcell-top"><b>53 %</b><span>2938</span></div><div class="pbar-wrap"><div class="pbar" style="width:53%"></div></div></div></td>
-        <td><div class="pcell"><div class="pcell-top"><b>76 %</b><span>4811</span></div><div class="pbar-wrap"><div class="pbar" style="width:76%"></div></div></div></td>
-        <td class="small">Kernel wie 1, Transfer sichtbar</td>
+        <td>Kachelung (T = 32, St. 4)</td>
+        <td>1362</td><td>1932</td><td class="acc"><b>70 %</b></td>
+        <td>4815</td><td>6414</td><td class="acc"><b>75 %</b></td>
+        <td>5774</td><td>8538</td><td class="acc"><b>68 %</b></td>
       </tr>
       <tr>
-        <td><b>2b</b> · Buffer</td>
-        <td><div class="pcell"><div class="pcell-top"><b>16 %</b><span>28</span></div><div class="pbar-wrap"><div class="pbar hatch" style="width:16%"></div></div></div></td>
-        <td><div class="pcell"><div class="pcell-top"><b>54 %</b><span>863</span></div><div class="pbar-wrap"><div class="pbar hatch" style="width:54%"></div></div></div></td>
-        <td><div class="pcell"><div class="pcell-top"><b>33 %</b><span>1847</span></div><div class="pbar-wrap"><div class="pbar hatch" style="width:33%"></div></div></div></td>
-        <td><div class="pcell"><div class="pcell-top"><b>39 %</b><span>2468</span></div><div class="pbar-wrap"><div class="pbar hatch" style="width:39%"></div></div></div></td>
-        <td class="small">Overhead durch Buffer (inkl. Transfer)</td>
-      </tr>
-      <tr>
-        <td><b>3</b> · nd_range</td>
-        <td><div class="pcell"><div class="pcell-top"><b>29 %</b><span>51</span></div><div class="pbar-wrap"><div class="pbar" style="width:29%"></div></div></div></td>
-        <td><div class="pcell"><div class="pcell-top"><b class="acc">100 %</b><span>1595</span></div><div class="pbar-wrap"><div class="pbar best" style="width:100%"></div></div></div></td>
-        <td><div class="pcell"><div class="pcell-top"><b class="acc">100 %</b><span>5563</span></div><div class="pbar-wrap"><div class="pbar best" style="width:100%"></div></div></div></td>
-        <td><div class="pcell"><div class="pcell-top"><b>84 %</b><span>5351</span></div><div class="pbar-wrap"><div class="pbar" style="width:84%"></div></div></div></td>
-        <td class="small"><b>Bestwert RTX &amp; L40S</b> (W = 16)</td>
-      </tr>
-      <tr>
-        <td><b>4</b> · Kachelung</td>
-        <td><div class="pcell"><div class="pcell-top"><b>85 %</b><span>149</span></div><div class="pbar-wrap"><div class="pbar" style="width:85%"></div></div></div></td>
-        <td><div class="pcell"><div class="pcell-top"><b>89 %</b><span>1426</span></div><div class="pbar-wrap"><div class="pbar" style="width:89%"></div></div></div></td>
-        <td><div class="pcell"><div class="pcell-top"><b>89 %</b><span>4933</span></div><div class="pbar-wrap"><div class="pbar" style="width:89%"></div></div></div></td>
-        <td><div class="pcell"><div class="pcell-top"><b class="acc">100 %</b><span>6348</span></div><div class="pbar-wrap"><div class="pbar best" style="width:100%"></div></div></div></td>
-        <td class="small"><b>Bestwert H100</b>, +3,5× CPU (T = 16)</td>
-      </tr>
-      <tr>
-        <td><b>5</b> · Angepasst</td>
-        <td><div class="pcell"><div class="pcell-top"><b class="acc">100 %</b><span>176</span></div><div class="pbar-wrap"><div class="pbar best" style="width:100%"></div></div></div></td>
-        <td><div class="pcell"><div class="pcell-top"><b>85 %</b><span>1350</span></div><div class="pbar-wrap"><div class="pbar" style="width:85%"></div></div></div></td>
-        <td><div class="pcell"><div class="pcell-top"><b>84 %</b><span>4678</span></div><div class="pbar-wrap"><div class="pbar" style="width:84%"></div></div></div></td>
-        <td><div class="pcell"><div class="pcell-top"><b>87 %</b><span>5497</span></div><div class="pbar-wrap"><div class="pbar" style="width:87%"></div></div></div></td>
-        <td class="small"><b>Bestwert CPU</b>, robust (PP 0,95)</td>
+        <td>cuBLAS SGEMM (FP32 ohne TF32)</td>
+        <td>–</td><td>14 333</td><td>–</td>
+        <td>–</td><td>35 404</td><td>–</td>
+        <td>–</td><td>46 211</td><td>–</td>
       </tr>
     </tbody>
   </table>
-  <p class="tiny muted" style="margin-top:8px">Laufzeit (n = 2048): GPUs 2,7–15,5 ms (CPU 98–399 ms) · Bei n = 1024 erreicht Stufe 2 auf der H100 6110 GFLOPS (100 %), Stufe 3 fällt auf 4858 (80 %) und Stufe 5 auf 3317 (54 %).</p>
-  <aside class="notes">Diese Übersicht zeigt auf einen Blick, was jede Portierungsstufe auf welchem Gerät bringt. Stufe 1 liefert den größten Sprung. Stufe 2 kostet keine Rechenleistung, macht aber den Transfer sichtbar. Stufe 2b ist auf allen Geräten langsamer. Stufe 3 reicht auf RTX und L40S bereits für das Maximum, während auf H100 und CPU erst die Kachelung (Stufe 4 bzw. Stufe 5 auf der CPU) die volle Leistung abruft.</aside>
-</section>
-
-<!-- Transfer -->
-<section data-sec="Ergebnisse">
-  <h2>Je schneller die GPU, desto teurer der Transfer</h2>
-  <p class="small muted">Stufe 2, n = 2048 · Kernelzeit und Transferzeit</p>
-  <div style="margin-top:18px">
-    <div class="stackrow"><div>Ryzen 5 5600X</div><div class="stack"><div style="background:var(--l40)" data-w="98.8">Kernel 399 ms</div><div style="background:var(--acc)" data-w="1.2"></div></div><div>1 %</div></div>
-    <div class="stackrow"><div>RTX 5060 Ti</div><div class="stack"><div style="background:var(--l40)" data-w="78.8">Kernel 15,5 ms</div><div style="background:var(--acc)" data-w="21.2">4,2 ms</div></div><div>27 %</div></div>
-    <div class="stackrow"><div>L40S</div><div class="stack"><div style="background:var(--l40)" data-w="72.9">Kernel 5,9 ms</div><div style="background:var(--acc)" data-w="27.1">2,2 ms</div></div><div>37 %</div></div>
-    <div class="stackrow"><div>H100</div><div class="stack"><div style="background:var(--l40)" data-w="57.4">Kernel 3,6 ms</div><div style="background:var(--acc)" data-w="42.6">2,7 ms</div></div><div>74 %</div></div>
-  </div>
-  <p class="tiny muted">Balken normiert je Gerät · Prozent = Transferzeit relativ zur Kernelzeit</p>
-  <p class="fragment" style="margin-top:26px"><b>Buffer (Stufe 2b)</b> verstecken den Transfer – und brauchen außer auf der RTX <b>12 bis 64 % mehr Zeit</b> als Stufe 2.</p>
-  <aside class="notes">Auf der RTX ein Viertel, auf der H100 drei Viertel der Kernelzeit, auf der CPU vernachlässigbar. USM device macht das erst sichtbar.</aside>
-</section>
-
-<!-- Effizienz / PP -->
-<section data-sec="Ergebnisse">
-  <h2>Performance-Portabilität je Kachelgröße, n = 2048</h2>
-  <div class="eff">
-    <div class="egrp"><h5>T = 8</h5><div class="bars" data-max="110">
-      <div class="bar d1" data-v="83"><span>83</span></div><div class="bar d2" data-v="85"><span>85</span></div><div class="bar d3" data-v="69"><span>69</span></div><div class="bar d4" data-v="55"><span>55</span></div></div><div class="pp">PP 0,71</div></div>
-    <div class="egrp fragment custom" data-fragment-index="2"><h5>T = 16</h5><div class="bars" data-max="110">
-      <div class="bar d1" data-v="100"><span>100</span></div><div class="bar d2" data-v="100"><span>100</span></div><div class="bar d3" data-v="100"><span>100</span></div><div class="bar d4" data-v="88"><span>88</span></div></div><div class="pp acc">PP 0,97</div></div>
-    <div class="egrp"><h5>T = 32</h5><div class="bars" data-max="110">
-      <div class="bar d1" data-v="96"><span>96</span></div><div class="bar d2" data-v="98"><span>98</span></div><div class="bar d3" data-v="91"><span>91</span></div><div class="bar d4" data-v="97"><span>97</span></div></div><div class="pp">PP 0,95</div></div>
-    <div class="egrp fragment custom" data-fragment-index="1"><h5>T = 64</h5><div class="bars" data-max="110">
-      <div class="bar x" data-v="0"><span>✗</span></div><div class="bar x" data-v="0"><span>✗</span></div><div class="bar x" data-v="0"><span>✗</span></div><div class="bar d4" data-v="100"><span>100</span></div></div><div class="pp acc">PP 0</div></div>
-  </div>
-  <div class="legend"><span><i class="d1"></i>RTX</span><span><i class="d2"></i>L40S</span><span><i class="d3"></i>H100</span><span><i class="d4"></i>CPU</span><span class="muted">Effizienz in % der besten Kachel je Gerät</span></div>
-  <p class="small fragment" data-fragment-index="1" style="margin-top:16px">Die beste Kachel der CPU (T = 64 → 4096 Work-Items) <b>startet auf keiner GPU</b> (max. 1024) → PP = 0.</p>
-  <aside class="notes">PP = harmonisches Mittel der Effizienzen über alle Geräte (Pennycook). Läuft eine Konfiguration auf einem Gerät nicht, ist die PP null. Bei n = 1024 ist T = 32 mit 0,94 am besten.</aside>
-</section>
-
-<!-- Stufe 5 Ergebnis -->
-<section data-sec="Ergebnisse">
-  <h2>Automatische Wahl: robust, aber nicht optimal</h2>
-  <div class="cols3" style="margin-top:20px">
-    <div class="fragment"><div class="big" style="font-size:64px">0,95</div><h4 style="margin-top:12px">wählt richtig</h4><p>Findet auf allen vier Geräten die beste Kachelgröße. PP 0,95 (n = 2048) statt 0 bei T = 64.</p></div>
-    <div class="fragment"><div class="big" style="font-size:64px">5–43 %</div><h4 style="margin-top:12px">langsamer als Stufe 4</h4><p>auf den GPUs mit gleicher Kachel – vermutlich, weil DPC++ Specialization Constants für CUDA nur emuliert.</p></div>
-    <div class="fragment"><div class="big" style="font-size:64px">3,6–8×</div><h4 style="margin-top:12px">längerer erster Lauf</h4><p>bei n = 1024 wegen der Auswahl. Schon die JIT-Kompilierung allein: bis zu 14× länger als Folgeläufe.</p></div>
-  </div>
-  <aside class="notes">Bei n = 1024 liegt die PP von Stufe 5 bei 0,76, also unter dem besten festen Wert (T = 32 mit 0,94). Die Kachelgröße ist für den Compiler wegen der Emulation keine Konstante.</aside>
-</section>
-
-<!-- ======== Vergleich mit CUDA ======== -->
-<section data-sec="Vergleich mit CUDA">
-  <h2>SYCL gegen natives CUDA · RTX 5060 Ti, n = 2048</h2>
-  <div class="barset pairs" id="cuBars" data-max="2200" data-pairs='[["Stufe 1<br>shared / managed",1086,1518,"0,72*"],["Stufe 3<br>Block 16 × 16",1576,1536,"1,03"],["Stufe 4<br>Kachel T = 16",1385,2054,"<span class=acc>0,67</span>"],["Stufe 4<br>Kachel T = 32",1319,1932,"<span class=acc>0,68</span>"],["cuBLAS<br>SGEMM",null,14333,"",1]]'></div>
-  <div class="legend"><span><i style="background:var(--ink)"></i>SYCL (DPC++ 7.2)</span><span><i style="background:#a9adb4"></i>CUDA 13.4</span><span class="muted">GFLOPS · darunter SYCL / CUDA</span></div>
-  <ul style="margin-top:14px">
-    <li class="fragment small">Ohne lokalen Speicher (Stufe 3) ist SYCL <b>gleich schnell</b> wie CUDA – die Abstraktion kostet nichts.</li>
-    <li class="fragment small">Mit Kachelung nur <b>zwei Drittel</b>: in CUDA ist die Kachel schneller als Stufe 3, in SYCL langsamer → vermutlich Codeerzeugung von DPC++ für lokalen Speicher und Barrieren.</li>
-    <li class="fragment small" data-rescale="cuBars" data-to="15000"><b>cuBLAS</b> ist rund 7-mal so schnell wie der beste handgeschriebene Kernel – beide Modelle lassen gleich viel liegen.</li>
+  <ul style="margin-top:16px">
+    <li class="small"><b>Ohne lokalen Speicher (Stufe 3):</b> SYCL erreicht <b>100–108 %</b> von nativem CUDA – die Abstraktion kostet hier nichts.</li>
+    <li class="small"><b>Mit Kachelung (Stufe 4):</b> SYCL fällt auf <b>68–80 %</b> zurück, während CUDA auf allen GPUs um +33 bis +60 % zulegt → Ursache ist DPC++' Codeerzeugung für lokalen Speicher und Barrieren (T = 64 scheitert auch in CUDA an 1024 Threads/Block).</li>
+    <li class="small"><b>cuBLAS:</b> 5–7× schneller als der beste handgeschriebene Kernel (Register-Blocking; in SYCL übernimmt oneMKL).</li>
   </ul>
-  <p class="tiny muted" style="margin-top:6px">* Stufe 1: SYCL wählt die Work-Group-Größe selbst, CUDA nutzt 16 × 16 · beide direkt nacheinander gemessen (14.11.), daher leicht andere SYCL-Werte als in den vorigen Folien · T = 64 startet in beiden Modellen nicht</p>
-  <aside class="notes">Die T = 64-Grenze kommt von der Hardware (1024 Threads je Block), nicht von SYCL. Nächster Schritt wäre ein Blick in das erzeugte PTX: group_barrier gegenüber bar.sync, Adressrechnung.</aside>
+  <aside class="notes">[15:05–16:35 · 1:30] Direktes Ergebnis des Betreuer-Feedbacks: Dank vollständiger CUDA-Messungen auf RTX, L40S und H100 zeigt sich ein klares Muster. Die Einbuße von Stufe 4 liegt nicht am Algorithmus, sondern an der Übersetzung von local_accessor/group_barrier in DPC++.</aside>
 </section>
 
-<!-- ======== Weitere Fallbeispiele ======== -->
+<!-- 17 Weitere Fallbeispiele [16:35–18:00 · 1:25] -->
 <section data-sec="Weitere Fallbeispiele">
-  <h2>Stencil: praktisch verlustfrei portiert</h2>
-  <div class="cols2" style="grid-template-columns:2.2fr 1fr;gap:50px">
-    <div><p class="small muted" style="margin-bottom:26px">RTX 5060 Ti, n = 8192 (256 MB je Gitter), GB/s</p>
-      <div class="barset pairs" data-max="420" data-pairs='[["2D, global",357,368,"97 %"],["2D, Warten<br>je Schritt",357,null,""],["1D<br>linearisiert",224,null,""],["lokaler<br>Speicher",300,297,"101 %"]]'></div></div>
-    <div><p class="small muted" style="margin-bottom:26px">Ryzen 5 5600X, GB/s</p>
-      <div class="barset pairs small" data-single data-max="20" data-pairs='[["2D",15.6,null,""],["sync",16.1,null,""],["1D",11.7,null,""],["lokal",8.7,null,""]]'></div></div>
+  <h2>Speichergebundene Kernel: Stencil &amp; Reduktion</h2>
+  <div class="cols2" style="gap:34px">
+    <div>
+      <h4>2D-Stencil (n = 8192 · 256 MB/Gitter, GB/s)</h4>
+      <table class="bt mini">
+        <thead><tr><th>Variante</th><th>RTX</th><th>L40S</th><th>H100</th><th>CPU</th></tr></thead>
+        <tbody>
+          <tr><td>2D global</td><td>357 / 368</td><td>669 / 671</td><td>1552 / 1908</td><td>15,6</td></tr>
+          <tr><td>2D Sync/Schritt</td><td>357 / –</td><td>661 / –</td><td>1517 / –</td><td>16,1</td></tr>
+          <tr><td>1D linearisiert</td><td>224 / –</td><td>483 / –</td><td>425 / –</td><td>11,7</td></tr>
+          <tr><td>lokal (T = 16)</td><td>300 / 297</td><td>682 / 695</td><td>1237 / 765</td><td>8,7</td></tr>
+        </tbody>
+      </table>
+      <p class="tiny muted" style="margin-bottom:8px">GPUs: SYCL / CUDA · CPU (Ryzen 5 5600X): SYCL</p>
+      <ul style="margin-top:6px">
+        <li class="small">Einfacher 2D-Stencil erreicht <b>81–100 %</b> von CUDA; mit lokalem Speicher auf der H100 sogar <b>+62 %</b> schneller.</li>
+        <li class="small">Warten nach jedem Schritt kostet ≤ 2 %, Linearisierung auf 1D dagegen 28–73 %.</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Reduktion (n = 2²⁶ · 256 MB, GB/s)</h4>
+      <table class="bt mini">
+        <thead><tr><th>Variante</th><th>RTX</th><th>L40S</th><th>H100</th><th>CPU</th></tr></thead>
+        <tbody>
+          <tr><td>Atomic / WI</td><td><b class="acc">0,03</b> / 202</td><td><b class="acc">0,01</b> / 158</td><td><b class="acc">0,01</b> / 142</td><td>2,4</td></tr>
+          <tr><td>Baum lokal</td><td>404 / 419</td><td>206 / 738</td><td>111 / 2166</td><td>17,9</td></tr>
+          <tr><td>reduce_over_grp</td><td>406 / –</td><td>209 / –</td><td>106 / –</td><td>17,1</td></tr>
+          <tr><td>reduction / CUB</td><td>356 / 419</td><td>551 / 715</td><td>1020 / 2792</td><td>16,0</td></tr>
+        </tbody>
+      </table>
+      <p class="tiny muted" style="margin-bottom:8px">GPUs: SYCL / CUDA (bzw. CUB) · Median aus 5 Läufen</p>
+      <ul style="margin-top:6px">
+        <li class="small"><b>Float-Atomics:</b> DPC++ erzeugt eine CAS-Schleife im PTX → Faktor <b>6300–20 500</b> langsamer (8,3–39 s vs. &lt; 2 ms).</li>
+        <li class="small">Baumreduktion fällt von 96 % (RTX) auf <b>28 %</b> (L40S) und <b>5 %</b> (H100); <span class="mono">sycl::reduction</span> erreicht 37–85 % von CUB.</li>
+      </ul>
+    </div>
   </div>
-  <div class="legend"><span><i style="background:var(--ink)"></i>SYCL</span><span><i style="background:#a9adb4"></i>CUDA</span></div>
-  <ul style="margin-top:12px">
-    <li class="fragment small">Einfacher Stencil erreicht <b>97 %</b> der CUDA-Bandbreite.</li>
-    <li class="fragment small"><b>Lokaler Speicher lohnt sich nicht</b> – weder in SYCL (−16 %) noch in CUDA (−19 %), auf der CPU halbiert er die Bandbreite. Die Caches fangen die Lesezugriffe ab.</li>
-    <li class="fragment small">1D ist langsamer als 2D (Division und Modulo für den Index) · Warten nach jedem Schritt kostet bei n = 8192 nichts.</li>
-  </ul>
-  <aside class="notes">Ob eine Optimierung hilft, hängt vom Problem ab, nicht vom Programmiermodell. Overhead pro Kernelstart: bei n = 1024 (Kernel ca. 10 µs) sank die Bandbreite durch Warten nach jedem Schritt von 814 auf 479 GB/s. Abram et al. (ISC 2025) berichten für ihre Kernel, dass 1D schneller ist – hier das Gegenteil.</aside>
+  <aside class="notes">[16:35–18:00 · 1:25] Speichergebundene Gegenprobe auf allen vier Geräten: Der Stencil portiert nahezu verlustfrei. Bei der Reduktion offenbart sich ein zweiter Compiler-Flaschenhals: Float-Atomics als CAS-Schleife statt nativem atom.add.</aside>
 </section>
 
-<section data-sec="Weitere Fallbeispiele">
-  <h2>Reduktion: gleichauf – bis auf Atomics</h2>
-  <div class="cols2" style="grid-template-columns:2.2fr 1fr;gap:50px">
-    <div><p class="small muted" style="margin-bottom:26px">RTX 5060 Ti, n = 2<sup>26</sup> (256 MB), GB/s</p>
-      <div class="barset pairs" data-max="460" data-pairs='[["Atomic je<br>Work-Item",0.03,202,"<span class=acc>≈ 0</span>"],["Baum, lokaler<br>Speicher",404,419,"96 %"],["reduce_over<br>_group",406,null,""],["eingebaut<br>/ CUB",356,419,"85 %"]]'></div></div>
-    <div><p class="small muted" style="margin-bottom:26px">Ryzen 5 5600X, GB/s</p>
-      <div class="barset pairs small" data-single data-max="20" data-pairs='[["Atomic",2.4,null,""],["Baum",17.9,null,""],["Gruppe",17.1,null,""],["eingeb.",16.0,null,""]]'></div></div>
-  </div>
-  <div class="legend"><span><i style="background:var(--ink)"></i>SYCL</span><span><i style="background:#a9adb4"></i>CUDA</span></div>
-  <ul style="margin-top:12px">
-    <li class="fragment small">Mit Kooperation in der Work-Group erreicht SYCL <b>96–97 %</b> von CUDA.</li>
-    <li class="fragment small">Bei kleinem n (2<sup>24</sup>) kostet jedes Atomic je Work-Group einen festen Aufwand: nur ein Viertel der CUDA-Bandbreite. <span class="mono" style="font-size:18px">sycl::reduction</span> umgeht das (296 GB/s).</li>
-    <li class="fragment small">Die Reihenfolge der Varianten ist auf CPU und GPU nicht dieselbe.</li>
-  </ul>
-  <aside class="notes">Werte bei n = 2^24: SYCL Baum 95, Gruppe 107, eingebaut 296 GB/s; CUDA Shared 401, CUB 404 GB/s. Die CPU erreicht 16–18 GB/s, die GPU mehr als das 20-Fache.</aside>
-</section>
-
-<!-- Diskussion -->
+<!-- 18 Diskussion [18:00–19:10 · 1:10] -->
 <section data-sec="Diskussion">
   <h2>Antworten auf F1 und F2</h2>
   <div class="cols2">
-    <div class="fragment"><h4>F1 · Konzepte</h4>
-      <p class="small"><b>Herstellerbindung</b> und <b>mehrfache Codebasen</b> löst schon Stufe 1: Single-Source und Backends. Auf einem Rechner läuft sogar dieselbe ausführbare Datei auf CPU und GPU.</p>
-      <p class="small"><b>Abstraktion vs. Kontrolle</b> entschärft ein gestufter Einstieg: USM shared reicht für ein lauffähiges Programm, Transfer, Work-Groups und lokaler Speicher geben schrittweise Kontrolle zurück. Buffer gehen den umgekehrten Weg – bequem, bis zu 64 % Laufzeitkosten.</p></div>
-    <div class="fragment"><h4>F2 · Performance-Portabilität</h4>
-      <p class="small">Funktional ist jede Stufe portabel, die Leistung <b>nicht von selbst</b>. SYCL vereinheitlicht die Schnittstelle, nicht die Hardware.</p>
-      <p class="small">Kachelgröße und Optimierungswahl bleiben gerätespezifisch – auch je nach Problem. Stufe 5 macht die Bindung an Geräteparameter <b>handhabbar</b>.</p>
-      <p class="small">Gegenüber <b>nativem CUDA</b> gleichauf ohne lokalen Speicher, beim Stencil (97 %) und bei der Reduktion (96–97 %). Abstand bei Kachelung (67 %) und Float-Atomics (Faktor 6000) – die <b>Implementierung</b> zählt.</p></div>
+    <div><h4>F1 · Konzepte</h4>
+      <p class="small"><b>Herstellerbindung</b> und <b>mehrfache Codebasen</b> löst schon Stufe 1 durch Single-Source in Standard-C++ und Backends (auf einem Rechner sogar eine gemeinsame ausführbare Datei für CPU und GPU).</p>
+      <p class="small"><b>Abstraktion vs. Kontrolle</b> entschärft der gestufte Einstieg: USM shared reicht zum Start; USM device, Events, Work-Groups und lokaler Speicher geben schrittweise Kontrolle zurück. Buffer sparen Abhängigkeitsangaben, kosten aber bis zu 64 % Laufzeit.</p>
+    </div>
+    <div><h4>F2 · Performance-Portabilität</h4>
+      <p class="small">Funktional ist jede Stufe portabel, Leistung entsteht <b>nicht von selbst</b>: Kachelgrößen und Optimierungen bleiben geräteabhängig, Stufe 5 macht dies aber handhabbar.</p>
+      <p class="small">Gegenüber <b>nativem CUDA</b> erreicht SYCL ohne lokalen Speicher und beim einfachen Stencil <b>81–108 %</b>. Abstände entstehen bei der Codeerzeugung für lokalen Speicher/Barrieren (<b>69–80 %</b>) und Gleitkomma-Atomics (bis hinab zu <b>5 %</b> auf der H100).</p>
+    </div>
   </div>
-  <p class="tiny muted fragment" style="margin-top:18px;border-top:1px solid var(--line);padding-top:10px"><b>Grenzen:</b> CUDA-Vergleich und weitere Fallbeispiele nur auf RTX 5060 Ti (und Ryzen) · GPUs nur eines Herstellers · eine Implementierung · PP gilt nur für diese Gerätemenge · Host-Zeitmessung inkl. Einreichen</p>
-  <aside class="notes">Specialization Constants: DPC++ emuliert sie für CUDA, AdaptiveCpp bietet sie nur über eine eigene Erweiterung. Welche Parameter variiert werden müssen, muss der Programmierer weiterhin selbst wissen. Profiling-Events würden vor allem kleine Matrizen genauer messen.</aside>
+  <div class="box-muted tiny muted" style="margin-top:20px">
+    <b>Grenzen:</b> 3 Kernel · GPUs nur eines Herstellers · 1 Implementierung (DPC++) · PP gilt nur für diese Gerätemenge · CUDA-Matmul-Vergleich in getrennten <span class="mono">nvcc</span>-Läufen (13.4 / 12.8) · kein nativer CPU-OpenMP/BLAS-Vergleich · Host-Zeitmessung enthält Auftragsstart.
+  </div>
+  <aside class="notes">[18:00–19:10 · 1:10] Direkter Rückbezug zu Problemstellung, Forschungsfrage und Methodengrenzen – alle Zahlen stimmen exakt mit Kapitel 7 der Arbeit überein.</aside>
 </section>
 
-<!-- Fazit -->
+<!-- 19 Fazit [19:10–20:00 · 0:50] -->
 <section data-sec="Fazit">
   <h2>Fazit</h2>
-  <p class="serif fragment" style="font-size:34px;line-height:1.3;margin-top:10px">„Einmal schreiben, überall ausführen“<br><span class="muted" style="font-size:30px">gilt für die</span> <span class="fragment custom"><span class="mark">Korrektheit</span></span>.</p>
-  <p class="serif fragment" style="font-size:34px;line-height:1.3;margin-top:22px">Die Abstimmung für hohe Leistung<br><span class="muted" style="font-size:30px">bleibt beim</span> <span class="fragment custom"><span class="mark">Programmierer</span></span>.</p>
-  <p class="serif fragment" style="font-size:30px;line-height:1.3;margin-top:26px">Der Abstand zu CUDA entsteht <span class="muted">bei lokalem Speicher und Atomics –</span> <span class="fragment custom"><span class="mark">in der Implementierung</span></span>.</p>
-  <p class="fragment small" style="margin-top:30px"><b>Ausblick:</b> erzeugtes PTX von DPC++ und CUDA vergleichen · CUDA-Vergleich auf L40S und H100 · AMD MI300A · zweite Implementierung (AdaptiveCpp)</p>
-  <p class="fragment muted" style="margin-top:24px">Vielen Dank – Fragen?</p>
+  <p class="serif" style="font-size:33px;line-height:1.3;margin-top:16px">„Einmal schreiben, überall ausführen“<br><span class="muted" style="font-size:29px">gilt für die</span> <span class="mark" style="--dl:180ms">Korrektheit</span>.</p>
+  <p class="serif fragment" data-fragment-index="1" style="font-size:33px;line-height:1.3;margin-top:24px">Die Abstimmung für hohe Leistung<br><span class="muted" style="font-size:29px">bleibt beim</span> <span class="mark">Programmierer</span>.</p>
+  <div class="fragment" data-fragment-index="2">
+    <p class="serif" style="font-size:30px;line-height:1.3;margin-top:24px">Der Abstand zu nativem CUDA entsteht <span class="muted">bei lokalem Speicher und Atomics –</span> <span class="mark">in der Implementierung</span>.</p>
+    <div class="box-muted small" style="margin-top:28px">
+      <b>Ausblick:</b> GPUs weiterer Hersteller (AMD MI300A) · zweite Implementierung (AdaptiveCpp) · PTX-Vergleich für Kachelung · Profiling-Events für kleine Matrizen.
+    </div>
+    <p class="muted" style="margin-top:22px">Vielen Dank – Fragen?</p>
+  </div>
+  <aside class="notes">[19:10–20:00 · 0:50] Punktlandung bei 20:00 Minuten. Drei klare Kernaussagen in zwei Klicks, Ausblick und Überleitung in die Fragerunde.</aside>
 </section>
 
-<!-- Quellen -->
+<!-- 20 Quellen [Q&A / Backup] -->
 <section data-sec="Quellen">
   <h2>Ausgewählte Quellen</h2>
-  <ul class="tiny" style="line-height:1.55;list-style:none;margin-left:0">
+  <ul class="tiny" style="line-height:1.6;list-style:none;margin-left:0">
     <li>The Khronos SYCL Working Group: SYCL 2020 Specification</li>
-    <li>Reinders et al.: Data Parallel C++ (2023)</li>
-    <li>Intel: DPC++ (intel/llvm) · AdaptiveCpp-Repository</li>
-    <li>Alpay, Heuveline: SYCL beyond OpenCL – hipSYCL (2020) · One Pass to Bind Them – Single-Pass-SYCL-Compiler (2023)</li>
+    <li>Reinders et al.: Data Parallel C++: Programming Accelerated Systems Using C++ and SYCL (2023)</li>
+    <li>Intel Corporation: Intel LLVM-based Compiler (DPC++) · AdaptiveCpp Contributors: AdaptiveCpp</li>
+    <li>Alpay, Heuveline: SYCL beyond OpenCL – hipSYCL (2020) · One Pass to Bind Them (2023)</li>
     <li>Deakin, McIntosh-Smith: Evaluating the Performance of HPC-Style SYCL Applications (2020)</li>
     <li>Breyer, Van Craen, Pflüger: SYCL, OpenCL, CUDA und OpenMP am Beispiel SVM (2022)</li>
     <li>Pennycook, Sewall, Lee: A Metric for Performance Portability (2016) · Implications of a Metric … (2019)</li>
+    <li>Volkov, Demmel: Benchmarking GPUs to Tune Dense Linear Algebra (2008)</li>
     <li>Hwu, Kirk, El Hajj: Programming Massively Parallel Processors (2022)</li>
     <li>Nickolls et al.: CUDA (2008) · Stone et al.: OpenCL (2010) · Edwards et al.: Kokkos (2014) · Beckingsale et al.: RAJA (2019)</li>
   </ul>
-  <p class="tiny muted">Vollständiges Verzeichnis: siehe Seminararbeit. Abbildungen und Messdaten: eigene.</p>
+  <p class="tiny muted" style="margin-top:14px">Vollständiges Verzeichnis: siehe Seminararbeit. Alle Abbildungen und Messdaten: eigene.</p>
+  <aside class="notes">[Q&amp;A / Backup] Quellenfolie für Rückfragen.</aside>
 </section>
 
 </div></div>
@@ -746,223 +919,286 @@ q.parallel_for(sycl::range&lt;2&gt;{n, n}, [=](sycl::id&lt;2&gt; idx) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/notes/notes.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/highlight/highlight.min.js"></script>
 <script>
-/* ---------- Programmiermodell-Bühne (Bekanntes grau, Neues schwarz) ---------- */
-function el(id,p,cls,html){return `<div class="el ${cls}" data-id="${id}" style="left:${p[0]}px;top:${p[1]}px;width:${p[2]}px;height:${p[3]}px">${html||''}</div>`;}
-function stage(n){
-  const A=n>1?'alt':'neu'; let h='';
-  h+=el('host',[0,0,470,300],'lab '+A,'Host');
-  h+=el('dev',[600,0,500,300],'lab '+A,n===4?'Gerät · Work-Groups':'Gerät (GPU oder CPU)');
-  h+=el('prog',[25,48,420,44],A,'Hauptprogramm');
-  h+=el('queue',[25,112,420,168],'lab '+A,'Queue');
-  if(n<3) h+=el('kern',[170,180,120,42],'fill '+A,'Kernel');
-  else h+=el('kern',[185,180,100,38],'fill alt'+(n===3?' cycK':''),'Kernel');
-  if(n>=3){const c=n===3?'neu':'alt';
-    h+=el('kA',[45,146,110,38],c+(n===3?' cycAB':''),'Kopie A');
-    h+=el('kB',[45,214,110,38],c+(n===3?' cycAB':''),'Kopie B');
-    h+=el('kC',[320,180,110,38],c+(n===3?' cycC':''),'Kopie C');}
-  if(n===4){h+=el('cg',[176,171,118,56],'neu group','');h+=el('cgl',[176,232,200,26],'bare','Command Group');}
-  for(let k=0;k<16;k++){let p;
-    if(n<4){const c=k%8,r=k>>3;p=[632+c*56,110+r*56,40,40];}
-    else{const c8=k%8,g=c8>>2,c=c8%4,r=k>>3;p=[625+g*245+15+c*50,62+r*50,36,36];}
-    h+=el('wi'+k,p,'wi '+(n===1?'neu run':'alt')+(n===3?' cycWI':''));}
-  if(n===4){for(let g=0;g<2;g++){const x=625+g*245;
-    h+=el('grp'+g,[x,45,220,235],'neu group','');
-    h+=el('bar'+g,[x+10,170,200,4],'barrier barP','');
-    h+=el('loc'+g,[x+15,186,190,80],'neu loc locP','lokaler<br>Speicher');}
-}
-  if(n>=2){const m=n===2?'neu':'alt';
-    h+=el('hmem',[0,340,470,80],'lab '+m,'Host-Speicher');
-    h+=el('dmem',[600,340,500,80],'lab '+m,n===4?'globaler Gerätespeicher':'Gerätespeicher');
-    ['A','B','C'].forEach((x,i)=>{h+=el('h'+x,[250+i*62,357,46,46],'chip '+m,x);h+=el('d'+x,[880+i*62,357,46,46],'chip '+m,x);});}
-  // Linien
-  const D='#1c1e22',G='#c4c6ca';
-  let s=`<svg class="ov" viewBox="0 0 1100 440"><defs>
-   <marker id="aD${n}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="${D}"/></marker>
-   <marker id="aG${n}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="${G}"/></marker>
-   <marker id="aR${n}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="#b3412a"/></marker></defs>`;
-  s+=n===1?`<path class="draw auto" pathLength="1" style="--dl:.9s" d="M445,201 L597,201" stroke="${D}" stroke-width="3" fill="none" marker-end="url(#aD1)"/>`
-          :`<path d="M445,201 L597,201" stroke="${G}" stroke-width="2" fill="none" marker-end="url(#aG${n})"/>`;
-  if(n===2){
-    s+=`<g class="fragment fade-in-then-out" data-fragment-index="1"><path d="M472,380 L597,380" stroke="#b3412a" stroke-width="2.5" stroke-dasharray="8 6" fill="none" marker-start="url(#aR2)" marker-end="url(#aR2)"/><text x="535" y="430" text-anchor="middle" fill="#b3412a">automatisch</text></g>`;
-    s+=`<g class="fragment" data-fragment-index="2"><path d="M472,380 L597,380" stroke="#b3412a" stroke-width="3" fill="none" marker-start="url(#aR2)" marker-end="url(#aR2)"/><text x="535" y="430" text-anchor="middle" fill="#b3412a">q.memcpy</text></g>`;}
-  if(n>=3) s+=`<path d="M472,380 L597,380" stroke="${G}" stroke-width="2" fill="none" marker-start="url(#aG${n})" marker-end="url(#aG${n})"/>`;
-  if(n>=3){const c=n===3?D:G,m=n===3?'aD3':'aG4',w=n===3?2.5:2,cl=n===3?'class="draw auto" pathLength="1"':'';
-    s+=`<g stroke="${c}" stroke-width="${w}" fill="none" marker-end="url(#${m})"><path ${cl} d="M155,165 L183,193"/><path ${cl} d="M155,233 L183,206"/><path ${cl} d="M285,199 L318,199"/></g>`;}
-  if(n===4) s+=`<text x="1100" y="324" text-anchor="end" fill="#1c1e22" style="font-size:15px">- - - Barriere</text>`;
-  s+='</svg>';
-  let extra='';
-  if(n===1) extra=`<div class="fragment flywrap" data-fragment-index="1"><div class="flyer">Kernel</div></div>`;
-  if(n===2){
-    extra+=`<div class="fragment fade-in-then-out" data-fragment-index="1"><div class="pkt dsh r" style="--d:0s">A</div><div class="pkt dsh r" style="--d:.8s">B</div><div class="pkt dsh l" style="--d:1.6s">C</div></div>`;
-    extra+=`<div class="fragment" data-fragment-index="2"><div class="pkt r" style="--d:0s">A</div><div class="pkt r" style="--d:.8s">B</div><div class="pkt l" style="--d:1.6s">C</div></div>`;}
-  return h+s+extra;
-}
-document.querySelectorAll('[data-stage]').forEach(d=>d.innerHTML=stage(+d.dataset.stage));
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (!reduceMotion) document.documentElement.classList.add('anim-enabled');
+
+/* ---------- Deterministisches Titelgitter (10x10) ---------- */
+(function () {
+  const g = document.getElementById('titleGrid');
+  if (!g) return;
+  const dark = new Set([12,13,22,23,34,35,44,45,66,67,76,77]);
+  const acc = new Set([4,14,24,25,52,53,84,85]);
+  for (let i = 0; i < 100; i++) {
+    const d = document.createElement('div');
+    if (acc.has(i)) d.className = 'a';
+    else if (dark.has(i)) d.className = 'k';
+    const r = Math.floor(i / 10), c = i % 10;
+    d.style.setProperty('--dl', ((r + c) * 24) + 'ms');
+    g.appendChild(d);
+  }
+})();
 
 /* ---------- Stufenleiste ---------- */
-document.querySelectorAll('section[data-stufe]').forEach(s=>{
-  const cur=s.dataset.stufe, b=document.createElement('div'); b.className='sbar';
-  b.innerHTML='Stufe '+['0','1','2','2b','3','4','5'].map(x=>`<span data-id="sb${x}" class="${x===cur?'on':''}">${x}</span>`).join('');
+document.querySelectorAll('section[data-stufe]').forEach((s) => {
+  const cur = s.dataset.stufe;
+  const b = document.createElement('div');
+  b.className = 'sbar';
+  b.innerHTML = 'Stufe ' + ['0', '1', '2', '2b', '3', '4', '5']
+    .map((x) => `<span class="${x === cur ? 'on' : ''}">${x}</span>`).join('');
   s.appendChild(b);
 });
 
-/* ---------- Titelgitter ---------- */
-(function(){const g=document.getElementById('titleGrid');for(let i=0;i<100;i++){const d=document.createElement('div');if(Math.random()<.08)d.className='a';d.style.animationDelay=(Math.random()*3.2).toFixed(2)+'s';g.appendChild(d);}})();
+/* ---------- Matrixmultiplikation: sequentiell vs. parallel (Folie 5, 6x6) ---------- */
+const MM = { timer: null, mode: 'seq', step: 0, paused: false };
+['mmA', 'mmB', 'mmC'].forEach((id) => {
+  const g = document.getElementById(id);
+  for (let i = 0; i < 36; i++) g.appendChild(document.createElement('div'));
+});
+const cells = (id) => document.getElementById(id).children;
 
-/* ---------- nd_range ---------- */
-(function(){const n=document.getElementById('ndr');if(!n)return;for(let r=0;r<8;r++)for(let c=0;c<8;c++){const d=document.createElement('div');d.className='g'+((r>=4)*2+(c>=4));if(r===5&&c===6)d.dataset.me='1';n.appendChild(d);}})();
+function mmDrawSeq(step) {
+  const A = cells('mmA'), B = cells('mmB'), C = cells('mmC');
+  const i = Math.floor(step / 6), j = step % 6;
+  for (let k = 0; k < 36; k++) {
+    A[k].className = Math.floor(k / 6) === i ? 'hl' : '';
+    B[k].className = (k % 6) === j ? 'hl' : '';
+    C[k].style.transitionDelay = '0ms';
+    C[k].className = k < step ? 'done' : (k === step ? 'cur' : '');
+  }
+  document.getElementById('mmBadge').textContent = `Stufe 0 · Schritt ${step + 1} / 36`;
+  document.getElementById('mmInfo').textContent = 'ein Element nach dem anderen';
+}
 
-/* ---------- Matrixmultiplikation: sequentiell vs. parallel ---------- */
-const MM={timer:null,mode:'seq',step:0};
-['mmA','mmB','mmC'].forEach(id=>{const g=document.getElementById(id);for(let i=0;i<64;i++)g.appendChild(document.createElement('div'));});
-const cells=id=>document.getElementById(id).children;
-function mmSeq(){const A=cells('mmA'),B=cells('mmB'),C=cells('mmC'),s=MM.step,i=s>>3,j=s%8;
-  for(let k=0;k<64;k++){A[k].className=(k>>3)===i?'hl':'';B[k].className=k%8===j?'hl':'';C[k].className=k<s?'done':(k===s?'cur':'');}
-  document.getElementById('mmInfo').textContent=`ein Element nach dem anderen – Schritt ${s+1} von 64`;
-  MM.step=(s+1)%64;}
-function mmPar(){const A=cells('mmA'),B=cells('mmB'),C=cells('mmC');
-  for(let k=0;k<64;k++){A[k].className='hl2';B[k].className='hl2';C[k].style.transitionDelay='0s';C[k].className='';}
-  document.getElementById('mmInfo').textContent='ein Work-Item je Element – alle 64 gleichzeitig';
-  setTimeout(()=>{for(let k=0;k<64;k++){C[k].style.transitionDelay=(Math.random()*.5).toFixed(2)+'s';C[k].className='done';}},350);}
-function mmStart(){mmStop();document.getElementById('mmC').classList.toggle('par',MM.mode==='par');
-  document.getElementById('mmMode').textContent=MM.mode==='seq'?'Stufe 0 · sequentiell:':'Stufe 1 · parallel:';
-  if(MM.mode==='seq'){MM.step=0;for(const c of cells('mmC'))c.style.transitionDelay='0s';mmSeq();MM.timer=setInterval(mmSeq,150);}
-  else{mmPar();MM.timer=setInterval(mmPar,2400);}}
-function mmStop(){clearInterval(MM.timer);MM.timer=null;}
+function mmDrawPar() {
+  const A = cells('mmA'), B = cells('mmB'), C = cells('mmC');
+  for (let k = 0; k < 36; k++) {
+    A[k].className = 'hl2';
+    B[k].className = 'hl2';
+    C[k].className = '';
+    C[k].style.transitionDelay = '0ms';
+  }
+  document.getElementById('mmBadge').textContent = 'Stufe 1 · 36 Work-Items parallel';
+  document.getElementById('mmInfo').textContent = 'ein Work-Item je Element – alle 36 gleichzeitig';
+  if (reduceMotion) {
+    for (let k = 0; k < 36; k++) C[k].className = 'done';
+    return;
+  }
+  void document.getElementById('mmC').offsetWidth;
+  requestAnimationFrame(() => {
+    for (let k = 0; k < 36; k++) {
+      const r = Math.floor(k / 6), c = k % 6;
+      C[k].style.transitionDelay = ((r + c) * 32) + 'ms';
+      C[k].className = 'done';
+    }
+  });
+}
 
-/* ---------- Kachelung ---------- */
-const TL={timer:null,step:0};
-['tA','tB','tC'].forEach(id=>{const g=document.getElementById(id);for(let i=0;i<36;i++)g.appendChild(document.createElement('div'));});
-['lA','lB'].forEach(id=>{const g=document.getElementById(id);for(let i=0;i<4;i++)g.appendChild(document.createElement('div'));});
-function tlTick(){const s=TL.step%10,A=cells('tA'),B=cells('tB'),C=cells('tC'),ph=document.getElementById('tlPh').children,lA=cells('lA'),lB=cells('lB');
-  if(s===9){for(let k=0;k<36;k++){A[k].className='';B[k].className='';C[k].style.background='';}
-    [...ph].forEach(l=>l.className='');[...lA,...lB].forEach(d=>d.className='');document.getElementById('tlInfo').textContent='';TL.step++;return;}
-  const t=Math.floor(s/3),p=s%3;
-  for(let k=0;k<36;k++){const r=Math.floor(k/6),c=k%6;
-    const inA=(r===2||r===3)&&(c>>1)===t, usedA=(r===2||r===3)&&(c>>1)<t;
-    const inB=(c===2||c===3)&&(r>>1)===t, usedB=(c===2||c===3)&&(r>>1)<t;
-    A[k].className=inA?'tile':usedA?'used':'';B[k].className=inB?'tile':usedB?'used':'';
-    const tg=(r===2||r===3)&&(c===2||c===3); C[k].className=tg?'tgt':'';
-    if(tg){const done=t+(p===2?1:0);C[k].style.background=done?`rgba(28,30,34,${(done/3).toFixed(2)})`:'';}}
-  [...ph].forEach((l,i)=>l.className=i===p?'on':'');
-  [...lA,...lB].forEach(d=>d.className=p===0||p===2||p===1?'on':'');
-  document.getElementById('tlInfo').textContent=`Kachel ${t+1} von 3 · Teilsummen in C wachsen mit jeder Kachel`;
-  TL.step++;}
-function tlStart(){tlStop();TL.step=0;tlTick();TL.timer=setInterval(tlTick,1100);}
-function tlStop(){clearInterval(TL.timer);TL.timer=null;}
+function mmSyncControls() {
+  document.querySelectorAll('#mmSlide [data-mm]').forEach((b) => {
+    const on = b.dataset.mm === MM.mode;
+    b.classList.toggle('on', on);
+    b.setAttribute('aria-pressed', String(on));
+  });
+  document.getElementById('mmCardSeq').classList.toggle('active', MM.mode === 'seq');
+  document.getElementById('mmCardPar').classList.toggle('active', MM.mode === 'par');
+  document.getElementById('mmPause').textContent = MM.paused ? 'Abspielen' : 'Pause';
+}
 
-/* ---------- Paar-Balken aufbauen ---------- */
-const fmt=v=>String(v).replace('.',',');
-const pbar=(v,c)=>v==null?`<div class="bar ${c} na" data-v="0"><span>–</span></div>`:`<div class="bar ${c}" data-v="${v}"><span>${fmt(v)}</span></div>`;
-document.querySelectorAll('.pairs').forEach(p=>{
-  p.innerHTML=JSON.parse(p.dataset.pairs).map(([l,a,b,r,late])=>
-    `<div class="pg${late?' late':''}"><div class="pbars">${pbar(a,'sy')}${p.hasAttribute('data-single')?'':pbar(b,'cu')}</div><div class="plab">${l}</div><div class="prat">${r||''}</div></div>`).join('');});
-function setBars(b,max,stagger){b.querySelectorAll('.bar').forEach((x,i)=>{x.style.transition='';x.style.transitionDelay=stagger?(i*0.09)+'s':'0s';x.style.height=Math.min(100,100*x.dataset.v/max)+'%';});}
+function mmStop() {
+  clearInterval(MM.timer);
+  MM.timer = null;
+}
 
-/* ---------- Wärmeleitung (Stencil) ---------- */
-const HT={timer:null};
-function heatStop(){clearInterval(HT.timer);HT.timer=null;}
-function heatStart(){heatStop();const c=document.getElementById('heat'),x=c.getContext('2d'),N=36,cs=c.width/N;
-  let u=new Float32Array(N*N),v=new Float32Array(N*N),it=0;
-  const reset=()=>{u.fill(0);v.fill(0);for(let j=0;j<N;j++){u[j]=1;v[j]=1;}it=0;};reset();
-  const draw=()=>{for(let i=0;i<N;i++)for(let j=0;j<N;j++){const t=Math.min(1,u[i*N+j]*1.5);
-      x.fillStyle=`rgb(${Math.round(236+(179-236)*t)},${Math.round(235+(65-235)*t)},${Math.round(230+(42-230)*t)})`;x.fillRect(j*cs,i*cs,cs-1,cs-1);}
-    const ci=1+Math.floor(it/(N-2))%(N-2),cj=1+it%(N-2);x.strokeStyle='#1c1e22';x.lineWidth=2;
-    [[0,0],[-1,0],[1,0],[0,-1],[0,1]].forEach(([a,b])=>x.strokeRect((cj+b)*cs+1,(ci+a)*cs+1,cs-3,cs-3));};
-  const step=()=>{for(let s=0;s<3;s++){for(let i=1;i<N-1;i++)for(let j=1;j<N-1;j++)v[i*N+j]=.25*(u[(i-1)*N+j]+u[(i+1)*N+j]+u[i*N+j-1]+u[i*N+j+1]);const t=u;u=v;v=t;}
-    it++;draw();if(it>400)reset();};
-  draw();HT.timer=setInterval(step,50);}
+function mmStart() {
+  mmStop();
+  mmSyncControls();
+  if (MM.mode === 'par') {
+    mmDrawPar();
+    return;
+  }
+  if (reduceMotion) {
+    mmDrawSeq(14);
+    return;
+  }
+  mmDrawSeq(MM.step);
+  if (!MM.paused) {
+    MM.timer = setInterval(() => {
+      MM.step = (MM.step + 1) % 36;
+      mmDrawSeq(MM.step);
+    }, 180);
+  }
+}
 
-/* ---------- Reduktionsbaum ---------- */
-const RT={timer:null,step:0};
-(function(){const sv=document.getElementById('redTree');if(!sv)return;const rows=[[3,1,4,1,5,9,2,6],[8,10,6,7,5,9,2,6],[14,17,6,7,5,9,2,6],[31,17,6,7,5,9,2,6]];
-  const act=[8,4,2,1],X=k=>10+k*64,Y=r=>8+r*84,W=50,H=34;let h='';
-  rows.forEach((row,r)=>{h+=`<g class="rw" id="rw${r}">`;
-    if(r>0){const st=act[r];for(let k=0;k<st;k++){h+=`<path d="M${X(k)+W/2},${Y(r-1)+H} L${X(k)+W/2},${Y(r)}" stroke="#1c1e22" stroke-width="2"/><path d="M${X(k+st)+W/2},${Y(r-1)+H} L${X(k)+W/2+6},${Y(r)}" stroke="#b3412a" stroke-width="2"/>`;}
-      h+=`<line x1="0" x2="660" y1="${Y(r)-8}" y2="${Y(r)-8}" stroke="#1c1e22" stroke-width="1.5" stroke-dasharray="5 5" opacity=".35"/>`;}
-    row.forEach((v,k)=>{const live=k<act[r];h+=`<rect x="${X(k)}" y="${Y(r)}" width="${W}" height="${H}" rx="3" fill="${live?(r===3?'#b3412a':'#fbfaf7'):'#ecebe6'}" stroke="${live?'#1c1e22':'#d4d5d8'}" stroke-width="2"/><text x="${X(k)+W/2}" y="${Y(r)+23}" text-anchor="middle" fill="${live?(r===3?'#fff':'#1c1e22'):'#b6b8bc'}">${v}</text>`;});
-    h+=`<text class="bl" x="525" y="${Y(r)+22}">${r===0?'':'Barriere · stride '+act[r]}</text></g>`;});
-  sv.innerHTML=h;})();
-function redTick(){const s=RT.step%6;for(let r=0;r<4;r++)document.getElementById('rw'+r).classList.toggle('on',r<=s&&s<5);RT.step++;}
-function redStart(){redStop();RT.step=0;redTick();RT.timer=setInterval(redTick,1100);}
-function redStop(){clearInterval(RT.timer);RT.timer=null;}
-
-/* ---------- Atomics: Arbeitspakete ---------- */
-document.querySelectorAll('.lane').forEach(l=>{for(let k=0;k<7;k++){const d=document.createElement('div');d.className='dot';d.style.setProperty('--y',(18+k*14)+'px');d.style.setProperty('--d',(k*(l.classList.contains('cu')?.3:.8))+'s');l.appendChild(d);}});
-
-/* ---------- Reveal ---------- */
-Reveal.initialize({
-  hash:true, slideNumber:false, transition:'fade', transitionSpeed:'fast', backgroundTransition:'none',
-  width:1280, height:720, margin:0.05, center:false,
-  autoAnimateDuration:0.9, autoAnimateEasing:'cubic-bezier(.4,0,.2,1)',
-  plugins:[RevealNotes, RevealHighlight]
+document.querySelectorAll('#mmSlide [data-mm]').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    MM.mode = btn.dataset.mm;
+    if (MM.mode === 'seq') MM.step = 0;
+    mmStart();
+  });
 });
 
-document.querySelectorAll('.bars[data-best]').forEach(b=>{let m=null;b.querySelectorAll('.bar').forEach(x=>{if(!m||+x.dataset.v>+m.dataset.v)m=x;});m.classList.add('best');});
+document.getElementById('mmPause').addEventListener('click', () => {
+  if (MM.mode === 'par') {
+    mmDrawPar();
+    return;
+  }
+  MM.paused = !MM.paused;
+  mmStart();
+});
 
-/* ---------- GFLOPS n=1024 / n=2048 Umschalter ---------- */
-document.querySelectorAll('#gflopsSlide .n-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    const sz=btn.dataset.size, slide=document.getElementById('gflopsSlide');
-    slide.querySelectorAll('.n-btn').forEach(b=>b.classList.toggle('on',b===btn));
-    document.getElementById('gflopsTitle').textContent=`Leistung je Stufe in GFLOPS, n = ${sz}`;
-    slide.querySelectorAll('.bars').forEach(b=>{
-      const vals=(sz==='1024'?b.dataset.n1024:b.dataset.n2048).split(',').map(Number);
-      const max=+b.dataset.max;
-      let m=null;
-      b.querySelectorAll('.bar').forEach((x,i)=>{
-        x.classList.remove('best');
-        x.dataset.v=vals[i];
-        x.querySelector('span').textContent=vals[i];
-        x.style.transitionDelay='0s';
-        x.style.height=(100*vals[i]/max)+'%';
-        if(!m||vals[i]>+m.dataset.v)m=x;
-      });
-      if(m)m.classList.add('best');
+/* ---------- Kachelung im lokalen Speicher (Folie 10) ---------- */
+const TL = { timer: null, step: 4, paused: false };
+['tA', 'tB', 'tC'].forEach((id) => {
+  const g = document.getElementById(id);
+  for (let i = 0; i < 36; i++) g.appendChild(document.createElement('div'));
+});
+
+function tlRender(step) {
+  const s = step % 9;
+  const t = Math.floor(s / 3), p = s % 3;
+  const A = cells('tA'), B = cells('tB'), C = cells('tC');
+  const ph = document.getElementById('tlPh').children;
+  const lA = cells('lA'), lB = cells('lB');
+  for (let k = 0; k < 36; k++) {
+    const r = Math.floor(k / 6), c = k % 6;
+    const inA = (r === 2 || r === 3) && (c >> 1) === t;
+    const usedA = (r === 2 || r === 3) && (c >> 1) < t;
+    const inB = (c === 2 || c === 3) && (r >> 1) === t;
+    const usedB = (c === 2 || c === 3) && (r >> 1) < t;
+    A[k].className = inA ? 'tile' : usedA ? 'used' : '';
+    B[k].className = inB ? 'tile' : usedB ? 'used' : '';
+    const tg = (r === 2 || r === 3) && (c === 2 || c === 3);
+    C[k].className = tg ? 'tgt' : '';
+    const done = t + (p === 2 ? 1 : 0);
+    C[k].style.backgroundColor = tg && done ? `rgba(28,30,34,${(done / 3).toFixed(2)})` : '';
+  }
+  [...ph].forEach((li, i) => { li.className = i === p ? 'on' : ''; });
+  [...lA, ...lB].forEach((d) => { d.className = 'on'; });
+  document.getElementById('tlInfo').textContent = `Kachel ${t + 1} von 3 · Teilsummen in C wachsen mit jeder Kachel`;
+}
+
+function tlStop() {
+  clearInterval(TL.timer);
+  TL.timer = null;
+}
+
+function tlStart() {
+  tlStop();
+  document.getElementById('tlPause').textContent = TL.paused ? 'Abspielen' : 'Pause';
+  if (reduceMotion) {
+    tlRender(4);
+    return;
+  }
+  tlRender(TL.step);
+  if (!TL.paused) {
+    TL.timer = setInterval(() => {
+      TL.step = (TL.step + 1) % 9;
+      tlRender(TL.step);
+    }, 1350);
+  }
+}
+
+document.getElementById('tlPause').addEventListener('click', () => {
+  TL.paused = !TL.paused;
+  tlStart();
+});
+
+/* ---------- Balkendiagramme setzen ---------- */
+function applyBars(container, vals, markBest) {
+  const max = +container.dataset.max;
+  let bestBar = null;
+  container.querySelectorAll('.bar').forEach((bar, i) => {
+    bar.classList.remove('best');
+    const v = vals[i];
+    if (v === undefined) return;
+    bar.dataset.v = v;
+    bar.style.setProperty('--i', i);
+    const h = Math.min(100, (100 * v) / max) + '%';
+    bar.style.setProperty('--h', h);
+    const label = bar.querySelector('span');
+    if (label && !bar.classList.contains('x')) label.textContent = v;
+    if (markBest && (!bestBar || v > +bestBar.dataset.v)) bestBar = bar;
+  });
+  if (bestBar) bestBar.classList.add('best');
+}
+
+document.querySelectorAll('#gflopsSlide .bars').forEach((b) => {
+  applyBars(b, b.dataset.n2048.split(',').map(Number), b.hasAttribute('data-best'));
+});
+document.querySelectorAll('#ppSlide .bars').forEach((b) => {
+  applyBars(b, b.dataset.vals.split(',').map(Number), false);
+});
+
+/* ---------- GFLOPS n=2048 / n=1024 Umschalter ---------- */
+document.querySelectorAll('#gflopsSlide .n-btn').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const sz = btn.dataset.size;
+    const slide = document.getElementById('gflopsSlide');
+    slide.querySelectorAll('.n-btn').forEach((b) => {
+      const on = b === btn;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-pressed', String(on));
+    });
+    document.getElementById('gflopsTitle').textContent = `Leistung je Stufe in GFLOPS, n = ${sz}`;
+    slide.querySelectorAll('.bars').forEach((b) => {
+      const vals = (sz === '1024' ? b.dataset.n1024 : b.dataset.n2048).split(',').map(Number);
+      applyBars(b, vals, b.hasAttribute('data-best'));
     });
   });
 });
 
-function animateSlide(s){
-  s.querySelectorAll('.barset').forEach(b=>{
-    b.classList.remove('go','rescaled'); b.querySelectorAll('.bar').forEach(x=>{x.style.transition='none';x.style.height='0';});
-    setTimeout(()=>{b.classList.add('go');setBars(b,+b.dataset.max,true);},250);
-  });
-  s.querySelectorAll('.tbar').forEach(x=>{x.style.transition='none';x.style.width='0';setTimeout(()=>{x.style.transition='';x.style.width=x.dataset.w+'%';},400);});
-  heatStop(); redStop();
-  if(s.id==='wbSlide'){heatStart();redStart();}
-  s.querySelectorAll('.bars').forEach(b=>{
-    const max=+b.dataset.max, bars=b.querySelectorAll('.bar');
-    b.classList.remove('go'); bars.forEach(x=>{x.style.transition='none';x.style.height='0';});
-    setTimeout(()=>{b.classList.add('go');bars.forEach((x,i)=>{x.style.transition='';x.style.transitionDelay=(i*0.09)+'s';x.style.height=(100*x.dataset.v/max)+'%';});},250);
-  });
-  s.querySelectorAll('.stack').forEach((st,r)=>st.querySelectorAll('div').forEach((x,i)=>{
-    x.style.transition='none';x.style.width='0';
-    setTimeout(()=>{x.style.transition='';x.style.transitionDelay=(r*0.25+i*0.9)+'s';x.style.width=x.dataset.w+'%';},250);}));
-  mmStop(); tlStop();
-  if(s.id==='mmSlide'){MM.mode=document.getElementById('mmParFrag').classList.contains('visible')?'par':'seq';mmStart();}
-  if(s.id==='tlSlide') tlStart();
-  // Footer
-  const f=document.getElementById('foot');f.classList.toggle('hide',s.hasAttribute('data-nofoot'));
-  document.getElementById('fsec').textContent=s.dataset.sec||'';
-  document.getElementById('fnum').textContent=(Reveal.getIndices().h+1)+' / '+Reveal.getTotalSlides();
-}
-Reveal.on('ready',e=>animateSlide(e.currentSlide));
-Reveal.on('slidechanged',e=>animateSlide(e.currentSlide));
-
-Reveal.on('fragmentshown',e=>{
-  const s=Reveal.getCurrentSlide(), n=s.querySelector('#ndr');
-  if(n){const i=+e.fragment.dataset.fragmentIndex;if(i>=1)n.classList.add('groups');if(i>=2)n.querySelector('[data-me]').classList.add('me');}
-  if(e.fragment.id==='mmParFrag'){MM.mode='par';mmStart();}
-  if(e.fragment.dataset.rescale){const b=document.getElementById(e.fragment.dataset.rescale);b.classList.add('rescaled');setBars(b,+e.fragment.dataset.to,false);}
-  const c=e.fragment.querySelector('.count'); if(c){const to=+c.dataset.to,t0=performance.now();
-    (function step(t){const p=Math.min(1,(t-t0)/1500);c.textContent=Math.round(to*(1-Math.pow(1-p,3))).toLocaleString('de-DE');if(p<1)requestAnimationFrame(step);})(t0);}
+/* ---------- Reveal ---------- */
+Reveal.initialize({
+  hash: true,
+  slideNumber: false,
+  transition: reduceMotion ? 'none' : 'fade',
+  transitionSpeed: 'fast',
+  backgroundTransition: 'none',
+  width: 1280,
+  height: 720,
+  margin: 0.05,
+  center: false,
+  plugins: [RevealNotes, RevealHighlight]
 });
-Reveal.on('fragmenthidden',e=>{
-  const n=Reveal.getCurrentSlide().querySelector('#ndr');
-  if(n){const i=+e.fragment.dataset.fragmentIndex;if(i<=1)n.classList.remove('groups');if(i<=2)n.querySelector('[data-me]').classList.remove('me');}
-  if(e.fragment.id==='mmParFrag'){MM.mode='seq';mmStart();}
-  if(e.fragment.dataset.rescale){const b=document.getElementById(e.fragment.dataset.rescale);b.classList.remove('rescaled');setBars(b,+b.dataset.max,false);}
+
+function onSlideActive(s) {
+  mmStop();
+  tlStop();
+  if (s.id === 'mmSlide') {
+    MM.mode = document.getElementById('mmParFrag').classList.contains('visible') ? 'par' : 'seq';
+    if (MM.mode === 'seq') MM.step = 0;
+    mmStart();
+  }
+  if (s.id === 'tlSlide') {
+    if (!TL.paused) TL.step = 0;
+    tlStart();
+  }
+  if (!reduceMotion) {
+    s.classList.remove('anim-go');
+    void s.offsetWidth;
+    requestAnimationFrame(() => s.classList.add('anim-go'));
+  }
+  const f = document.getElementById('foot');
+  f.classList.toggle('hide', s.hasAttribute('data-nofoot'));
+  document.getElementById('fsec').textContent = s.dataset.sec || '';
+  document.getElementById('fnum').textContent = (Reveal.getIndices().h + 1) + ' / ' + Reveal.getTotalSlides();
+}
+
+Reveal.on('ready', (e) => onSlideActive(e.currentSlide));
+Reveal.on('slidechanged', (e) => onSlideActive(e.currentSlide));
+
+Reveal.on('fragmentshown', (e) => {
+  if (e.fragment.id === 'mmParFrag') {
+    MM.mode = 'par';
+    mmStart();
+  }
+});
+Reveal.on('fragmenthidden', (e) => {
+  if (e.fragment.id === 'mmParFrag') {
+    MM.mode = 'seq';
+    MM.step = 0;
+    mmStart();
+  }
 });
 </script>
 </body>

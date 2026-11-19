@@ -17,13 +17,14 @@
 \usepackage{pifont}
 \usepackage{etoolbox}
 \usepackage{caption}
+\usepackage{float}
 \usepackage{tikz}
-\usetikzlibrary{positioning,patterns,arrows.meta,fit}
+\usetikzlibrary{positioning,patterns,arrows.meta,fit,decorations.pathreplacing}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
 \usepackage{sansmath}
+
 % Einheitlicher, schlichter Stil für alle Abbildungen (schwarz/grau, druckbar)
-% Serifenlose Schrift wie in den draw.io-Abbildungen (Latin Modern Sans)
 \tikzset{
     every picture/.style={line width=0.4pt, >={Latex[length=1.6mm, width=1.1mm]},
         execute at begin picture={\sffamily\sansmath}},
@@ -35,20 +36,23 @@
     neu/.style={draw=black, line width=1.1pt},
     auftrag/.style={kasten, minimum height=0.4cm, inner sep=2pt},
 }
+
 % Gemeinsamer Rahmen der Stufenabbildungen (Host, Gerät, Hauptprogramm)
-\newcommand{\stufenrahmen}{%
-    \draw (0,0) rectangle (6.2,3.3);
-    \node[anchor=north, titel] at (3.1,3.25) {Host};
-    \draw (7.0,0) rectangle (14.5,3.3);
-    \node[anchor=north east, titel] at (14.4,3.25) {Gerät};
-    \node[kasten, alt, minimum width=5.6cm] (prog) at (3.1,2.45) {Hauptprogramm};
-    \draw[->, gray!60] (prog.south) -- (3.1,1.75);
+\newcommand{\stufenrahmen}[1][alt]{%
+    \draw[#1] (0,0) rectangle (5.7,3.3);
+    \node[anchor=north, titel, #1, draw=none] at (2.85,3.25) {Host (z.\,B.\ CPU)};
+    \draw[#1] (7.2,0) rectangle (14.9,3.3);
+    \node[anchor=north east, titel, #1, draw=none] at (14.8,3.25) {Gerät (z.\,B.\ GPU)};
+    \node[kasten, #1, minimum width=5.1cm] (prog) at (2.85,2.45) {Hauptprogramm};
+    \draw[->, #1] (prog.south) -- (2.85,1.75);
 }
+
 % Work-Items zweier Gruppen, Stil als Argument
 \newcommand{\workitems}[1]{%
-    \foreach \g in {7.6,10.3} \foreach \i in {0,...,3} \foreach \j in {0,1}
+    \foreach \g in {7.5,10.0} \foreach \i in {0,...,3} \foreach \j in {0,1}
         \draw[#1, fill=white] (\g+\i*0.45,2.0+\j*0.42) rectangle ++(0.36,0.32);
 }
+
 \usepackage[backend=biber,style=ieee,urldate=long]{biblatex}
 \addbibresource{sycl.bib}
 \usepackage{listings}
@@ -79,10 +83,8 @@
 \AtBeginEnvironment{tabularx}{\singlespacing}
 \AtBeginEnvironment{tikzpicture}{\singlespacing}
 \captionsetup{font=small, labelfont=bf}
+\captionsetup[table]{position=top, skip=6pt}
 \AtBeginBibliography{\singlespacing}
-
-% Markierung für Stellen, die noch ergänzt/geprüft werden müssen
-\newcommand{\offen}[1]{\textcolor{red}{[#1]}}
 
 % Verweis auf eine Stelle im Quellcode des Anhangs: \stelle{label}{Zeilen}
 \newcommand{\stelle}[2]{(\hyperref[#1]{\ref*{#1}, Z.~#2})}
@@ -90,10 +92,9 @@
 \begin{document}
 
 % ---------------------------------------------------------------------------
-% Titelei (römische Seitenzahlen, Titelblatt ohne Nummer)
+% Titelei (Titelseite ohne Seitenanker, danach römische Seitenzahlen)
 % ---------------------------------------------------------------------------
-\pagenumbering{Roman}
-
+\hypersetup{pageanchor=false}
 \begin{titlepage}
     \raggedright
     Erlind Sejdiu\\
@@ -102,12 +103,13 @@
 
     \begin{center}
         {\LARGE\bfseries SYCL\\[0.3em]
-        Portable heterogene Programmierung mit C++\\[0.3em]
-        \large Problemstellung, Anwendungsfälle und Programmiermodell\par}
+        Portable heterogene\\
+        Programmierung mit C++\\[0.4em]
+        \large Problemstellung, Programmiermodell und Performance-Portabilität\par}
         \vspace{2cm}
         {\large Seminararbeit\\
         der Hochschule Karlsruhe\\
-        im Master Studiengang Informatik\\
+        im Masterstudiengang Informatik\\
         im Wintersemester 2026/27\par}
     \end{center}
     \vfill
@@ -116,8 +118,22 @@
         Abgabedatum: & 30.11.2026
     \end{tabular}
 \end{titlepage}
-
+\clearpage
+\hypersetup{pageanchor=true}
+\pagenumbering{Roman}
 \setcounter{page}{1}
+
+% ---------------------------------------------------------------------------
+% Zusammenfassung
+% ---------------------------------------------------------------------------
+\section*{Zusammenfassung}
+\addcontentsline{toc}{section}{Zusammenfassung}
+
+Heterogene Rechnersysteme verbinden CPUs mit spezialisierten Beschleunigern wie GPUs, erschweren die Softwareentwicklung jedoch durch herstellerspezifische Schnittstellen, doppelte Codebasen und den Zielkonflikt zwischen Abstraktion und hardwarenaher Kontrolle. Der offene Standard SYCL verspricht eine einheitliche Codebasis in Standard-C++ für Geräte verschiedener Hersteller. Diese Arbeit untersucht, welche Konzepte des SYCL-Programmiermodells bei einer schrittweisen Portierung benötigt werden und ob neben funktionaler Portabilität auch Performance-Portabilität zwischen CPU und GPU erreicht wird.
+
+Dazu wird eine Matrixmultiplikation in fünf aufbauenden Stufen von sequentiellem C++ nach SYCL portiert und durch zwei speichergebundene Fallbeispiele (2D-Stencil und Reduktion) ergänzt. Gemessen wird mit DPC++~7.2 auf einer CPU (AMD Ryzen~5~5600X) sowie drei NVIDIA-GPUs (RTX~5060~Ti, L40S, H100) im direkten Vergleich zu nativem CUDA, cuBLAS und CUB\@. Die Ergebnisse zeigen, dass sämtliche Programme ohne Codeänderung korrekt auf allen Geräten laufen. Die erreichte Leistung bleibt jedoch stark abhängig von gerätespezifischen Parametern wie der Kachelgröße sowie von der Codeerzeugung der Implementierung für das jeweilige Backend -- insbesondere bei lokalem Speicher (69 bis 80\,\% von CUDA), der Emulation von Specialization Constants auf CUDA und gleitkommabasierten atomaren Operationen.
+
+\newpage
 \tableofcontents
 \newpage
 \listoffigures
@@ -129,29 +145,32 @@
 % ---------------------------------------------------------------------------
 \pagenumbering{arabic}
 
-\section{Problemstellung}\label{sec:problem}
 % ---------------------------------------------------------------------------
+\section{Einleitung}\label{sec:einleitung}
+% ---------------------------------------------------------------------------
+
+\subsection{Problemstellung}\label{sec:problem}
 
 Rechenleistung liegt heutzutage in verschiedenen Formen vor. Neben der CPU
-stehen in fast jedem Rechner GPUs und andere technische Komponenten zur Verfügung, die datenparallele
-Aufgaben schnell bearbeiten können. Die Software, um diese Geräte jeweils anzusprechen, kann variieren, denn jeder Hersteller bringt sein eigenes
-Programmiermodell mit. Für die Software ergeben sich daraus drei Probleme.
+stehen in fast jedem Rechner GPUs und weitere Beschleuniger zur Verfügung, die
+datenparallele Aufgaben schnell bearbeiten können. Die Software, um diese
+Geräte jeweils anzusprechen, variiert jedoch, denn die großen Hardwarehersteller
+pflegen eigene Schnittstellen. Für die Softwareentwicklung ergeben sich daraus
+drei Probleme:
 
 \begin{enumerate}[nosep]
-    \item \textbf{Herstellerbindung.} CUDA läuft nur auf NVIDIA-GPUs
-    \cite{nickolls2008cuda}. AMD (HIP) und Intel (Level~Zero) haben eigene
-    Schnittstellen.
-    \item \textbf{Mehrfache Codebasen.} Wer mehrere Hersteller unterstützen
-    will, pflegt mehrere Implementierungen parallel.
-    \item \textbf{Abstraktion gegen Kontrolle.} Offene Alternativen sind
+    \item Herstellerbindung: CUDA läuft nur auf NVIDIA-GPUs
+    \cite{nickolls2008cuda}. AMD (HIP \cite{amd_hip}) und Intel (Level~Zero
+    \cite{intel_level_zero}) stellen eigene Programmierschnittstellen bereit.
+    \item Mehrfache Codebasen: Wer mehrere Hersteller unterstützen
+    will, muss mehrere Implementierungen parallel pflegen.
+    \item Abstraktion gegen Kontrolle: Offene Alternativen sind
     entweder sehr hardwarenah und aufwendig wie OpenCL
-    \cite{stone2010opencl} oder lassen wie OpenMP-Direktiven wenig Kontrolle
-    über Speicher und Ausführung.
+    \cite{stone2010opencl} oder erlauben wie OpenMP-Direktiven \cite{openmp_spec}
+    wenig Kontrolle über Speicherhierarchie und Ausführung.
 \end{enumerate}
 
-% ---------------------------------------------------------------------------
-\section{Forschungsfrage}\label{sec:frage}
-% ---------------------------------------------------------------------------
+\subsection{Forschungsfrage und Aufbau}\label{sec:frage}
 
 SYCL ist ein offener Standard der Khronos Group, der diese Probleme lösen
 will. Mit einem einzigen Quellcode in Standard-C++ soll auf CPUs und GPUs
@@ -161,25 +180,24 @@ verschiedener Hersteller dasselbe Programm laufen \cite{khronos2020sycl}
 \begin{figure}[htbp]
 \centering
 \begin{tikzpicture}[
-    code/.style={kasten, minimum width=2.2cm},
-    hw/.style={kastengrau, minimum width=1.3cm},
+    code/.style={kasten, minimum width=5.8cm, minimum height=0.5cm},
+    hw/.style={kastengrau, minimum width=1.35cm},
 ]
-    \node[code, minimum width=4.4cm] (s) at (9.3,1.4) {SYCL-Quellcode};
-    \node[code, minimum width=4.4cm] (i) at (9.3,0.7) {DPC++ / AdaptiveCpp};
-    \node[hw] (g1) at (6.7,-0.2) {NVIDIA};
-    \node[hw] (g2) at (8.43,-0.2) {AMD};
-    \node[hw] (g3) at (10.17,-0.2) {Intel};
-    \node[hw] (g4) at (11.9,-0.2) {CPU};
-    \draw[->] (s) -- (i);
+    \node[code] (s) at (0,1.65) {SYCL-Quellcode};
+    \node[code] (i) at (0,0.82) {SYCL-Implementierung (DPC++ / AdaptiveCpp)};
+    \node[hw] (g1) at (-2.7,-0.05) {NVIDIA};
+    \node[hw] (g2) at (-0.9,-0.05) {AMD};
+    \node[hw] (g3) at (0.9,-0.05) {Intel};
+    \node[hw] (g4) at (2.7,-0.05) {CPU};
+    \draw[->] (s.south) -- (i.north);
     \foreach \g in {g1,g2,g3,g4} \draw[->] (i.south) -- (\g.north);
 \end{tikzpicture}
-\caption{SYCL-Codebasis für alle Backends}
+\caption[SYCL-Codebasis für mehrere Backends]{Eine gemeinsame SYCL-Codebasis wird auf verschiedene Backends und Geräte abgebildet}
 \label{fig:codebasen}
 \end{figure}
 
-
 Ob ein Programm überall läuft, ist jedoch etwas anderes, als ob es überall
-schnell läuft. Diese Arbeit untersucht deshalb die folgende Frage.
+schnell läuft. Diese Arbeit untersucht deshalb die folgende Forschungsfrage:
 
 \begin{quote}
 Wie adressiert das Programmiermodell von SYCL die drei genannten
@@ -198,230 +216,347 @@ bleiben gerätespezifisch?
 \section{Stand der Technik}\label{sec:stand}
 % ---------------------------------------------------------------------------
 
-SYCL basiert auf C++17 \cite{khronos2020sycl}. Konkrete Implementierungen des Standards wie DPC++
-\cite{intel_llvm} und AdaptiveCpp \cite{alpay2020hipsycl, adaptivecpp} bilden
+SYCL basiert auf C++17 \cite{khronos2020sycl} und ist zunächst eine
+Spezifikation, die von konkreten Compilern und Laufzeitumgebungen umgesetzt
+wird. Die beiden wichtigsten Open-Source-Implementierungen sind DPC++ und
+AdaptiveCpp. DPC++ ist eine LLVM-basierte
+SYCL-Implementierung von Intel, die neben
+Intel-Hardware über entsprechende Plugins auch NVIDIA- und AMD-GPUs unterstützt
+\cite{intel_llvm, reinders2023dpcpp}. AdaptiveCpp (ehemals hipSYCL) ist eine
+herstellerunabhängige Implementierung der Universität Heidelberg, die
+Gerätecode in einem einzigen Compiler-Durchlauf für verschiedene Backends
+erzeugt \cite{alpay2020hipsycl, adaptivecpp, alpay2023sscp}. Beide bilden
 den Standard über Backends wie CUDA, HIP, Level~Zero, OpenCL oder OpenMP auf
-die Hardware ab und übersetzen den Gerätecode meist erst beim ersten Start
-just in time für das konkrete Gerät \cite{alpay2023sscp}. Den drei
-Problemen setzt SYCL vier Entwurfsziele entgegen. Portabilität (ein
+die Zielhardware ab und übersetzen den Gerätecode meist erst beim ersten
+Start just in time für das konkrete Gerät \cite{alpay2023sscp}.
+
+Sycl weist grundsätzlich 4 Entwurfsziele auf. Portabilität (ein
 Quellcode, viele Backends), Offenheit (ein Standard mit mehreren
 unabhängigen Implementierungen), Produktivität (Host- und Gerätecode
 in einer Datei in Standard-C++) und Kontrolle (Hardwarekonzepte wie
 lokaler Speicher bleiben zugänglich). Tabelle~\ref{tab:vergleich} ordnet
 SYCL entlang dieser Ziele ein. Kokkos \cite{edwards2014kokkos} und RAJA
-\cite{beckingsale2019raja} verfolgen ähnliche Ziele, sind aber kein offener
-Industriestandard.
+\cite{beckingsale2019raja} verfolgen ähnliche Ziele als C++-Bibliotheken, sind
+aber kein offener Industriestandard.
 
 \begin{table}[htbp]
 \centering
 \small
 \newcommand{\ja}{\ding{51}}
 \newcommand{\nein}{--}
-\newcommand{\teils}{($\checkmark$)}
+\newcommand{\teils}{(\ding{51})}
+\caption[SYCL im Vergleich zu anderen Programmiermodellen]{SYCL im Vergleich zu anderen Programmiermodellen ((\ding{51}) = eingeschränkt)}
+\label{tab:vergleich}
 \begin{tabular}{@{}lcccc@{}}
 \toprule
- & \textbf{herstellerunabh.} & \textbf{offener Standard} & \textbf{Standard-C++} & \textbf{Kontrolle} \\
+ & herstellerunabh. & offener Standard & Standard-C++ & Kontrolle \\
 \midrule
 CUDA            & \nein   & \nein   & \teils & \ja \\
 OpenCL          & \ja     & \ja     & \nein  & \ja \\
 OpenMP-Offload  & \ja     & \ja     & \ja    & \teils \\
 Kokkos/RAJA     & \ja     & \nein   & \ja    & \teils \\
-\textbf{SYCL}   & \ja     & \ja     & \ja    & \ja \\
+SYCL            & \ja     & \ja     & \ja    & \ja \\
 \bottomrule
 \end{tabular}
-\caption{SYCL im Vergleich zu anderen Programmiermodellen (($\checkmark$) = eingeschränkt)}
-\label{tab:vergleich}
 \end{table}
 
 Eingesetzt wird SYCL vor allem im wissenschaftlichen Rechnen auf Systemen
 verschiedener Hersteller, etwa auf dem Supercomputer Aurora oder in GROMACS,
-bei der Migration von CUDA-Anwendungen mit dem Werkzeug SYCLomatic und in
+bei der Migration von CUDA-Anwendungen mit dem Werkzeug SYCLomatic sowie in
 portablen Bibliotheken wie oneMKL \cite{reinders2023dpcpp}. Frühere Studien
-fanden SYCL auf vielen Plattformen konkurrenzfähig mit herstellerspezifischem
-Code, aber deutlich abhängig von Implementierung und Parametrierung
-\cite{deakin2020sycl, breyer2022svm}. Offen bleibt in diesen Arbeiten meist,
-welcher Schritt einer Portierung welchen Effekt auf welchem Gerät hat.
-Hier setzt die vorliegende Seminararbeit an.
+zeigen im Vergleich zu nativem CUDA auf NVIDIA-GPUs, dass SYCL über das
+CUDA-Backend für viele HPC- und Lernalgorithmen nahe an die
+herstellerspezifische Leistung heranreicht, die tatsächlich erreichte
+Geschwindigkeit jedoch deutlich von Implementierung, Codeerzeugung und
+Parametrierung abhängt \cite{deakin2020sycl, breyer2022svm}. Für CPUs
+beobachten Abram et al.\ \cite{abram2025sycl} zudem erhebliche Unterschiede
+zwischen eindimensionalen und mehrdimensionalen Indexräumen bei DPC++ und
+AdaptiveCpp. Offen bleibt in diesen Arbeiten meist, welcher Schritt einer
+schrittweisen Portierung welchen Effekt auf welchem Gerät hat und an welchen
+konkreten Sprachmitteln ein Abstand zu nativem CUDA entsteht. Hier setzt die
+vorliegende Arbeit an.
 
-\newpage
 % ---------------------------------------------------------------------------
 \section{Methode}\label{sec:methode}
 % ---------------------------------------------------------------------------
 
-Untersucht wird die Multiplikation $C = A \cdot B$ zweier $n \times
-n$-Matrizen. Das Problem benötigt
-$2n^3$ Gleitkommaoperationen bei $3n^2$ Werten Datenvolumen, ist gut
-parallelisierbar und leicht auf Korrektheit prüfbar. Ein sequentielles
-C++-Programm wird in Stufen nach SYCL überführt, wobei jede Stufe nur so viele
-neue Konzepte einführt, wie für ihren Schritt nötig sind
-(Tabelle~\ref{tab:stufen}). Abschnitt~\ref{sec:konzepte} erklärt diese
-Konzepte zunächst allgemein und in der Reihenfolge, in der sie gebraucht
-werden. Anhang~\ref{sec:anhang} zeigt mit dem Quellcode aller Stufen, wie sie
-umgesetzt sind. Das beantwortet F1. Zugleich lässt sich die
-Wirkung jedes Schritts getrennt messen, was F2 beantwortet.
+\subsection{Fallbeispiele}\label{sec:m-fallbeispiele}
+
+Im Mittelpunkt steht die Multiplikation zweier gleich großer quadratischer
+Matrizen. Sie führt sehr viele Rechenoperationen auf vergleichsweise wenigen
+Daten aus, ist also \emph{rechengebunden}: Ihre Laufzeit hängt vor allem davon
+ab, wie schnell ein Gerät rechnen kann. Zugleich ist sie einfach genug für einen
+schrittweisen Umbau und leicht gegen eine Berechnung auf der CPU prüfbar.
+
+Viele praktische Probleme sind dagegen \emph{speichergebunden}: Sie rechnen wenig,
+müssen dafür ständig Daten aus dem Speicher holen, sodass die
+Speichergeschwindigkeit zum Flaschenhals wird. Dafür stehen zwei weitere
+Beispiele. Der 5-Punkt-Stencil simuliert, wie sich Wärme auf einer quadratischen
+Platte ausbreitet: In 100 Zeitschritten wird jeder Punkt des Gitters durch den
+Mittelwert seiner vier Nachbarn ersetzt. Die Reduktion bildet die Summe einer
+langen Zahlenreihe; hier müssen alle Teilergebnisse des gesamten Geräts zu einem
+einzigen Wert zusammenfließen.
+
+\subsection{Schrittweise Portierung}\label{sec:m-portierung}
+
+Ausgangspunkt ist ein rein sequentielles C++-Programm für die
+Matrixmultiplikation, das nur einen einzigen CPU-Kern nutzt (Stufe~0). Es wird in
+mehreren Stufen nach SYCL überführt; jede Stufe nimmt genau eine Veränderung vor
+und führt nur die Konzepte ein, die dieser Schritt benötigt
+(Tabelle~\ref{tab:stufen}). Kapitel~\ref{sec:konzepte} erklärt sie in dieser
+Reihenfolge, der Quellcode steht in Anhang~\ref{sec:anhang}~(F1). Weil jede Stufe
+einzeln gemessen wird, zeigt sich zudem, was jeder Schritt auf jedem Gerät
+bringt~(F2).
 
 \begin{table}[htbp]
 \centering
-\small
+\footnotesize
+\caption[Stufen der Portierung und eingeführte Konzepte]{Stufen der Portierung und die dabei eingeführten Konzepte}
+\label{tab:stufen}
 \begin{tabularx}{\textwidth}{@{}c>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
 \toprule
-\textbf{Stufe} & \textbf{Änderung} & \textbf{Neue Konzepte} \\
+Stufe & Änderung & Neue Konzepte \\
 \midrule
 0 & Sequentielles Ausgangsprogramm auf einem CPU-Kern & -- \\
-1 & Ein Work-Item je Element von $C$ & Host und Gerät, Queue, Kernel, Indexraum, USM shared, Backends, Geräteauswahl \\
-2 & Getrennter Gerätespeicher, explizites Kopieren & USM device, explizite Kopien, Events, Abhängigkeiten \\
-2b & Variante von Stufe~2: Buffer statt Zeiger, Kopieren implizit & Buffer, Accessoren, automatische Abhängigkeiten \\
-3 & Work-Group-Größe selbst festlegen, noch ohne lokalen Speicher & nd\_range, Work-Group \\
-4 & Kachelung im lokalen Speicher mit fester Kachelgröße & Command Group, lokaler Speicher, Barriere \\
-5 & Kachelgröße zur Laufzeit passend zum Gerät wählen & Geräteabfragen, Specialization Constants, synchrone und asynchrone Fehlerbehandlung \\
+1 & Die Arbeit wird auf viele parallele Einheiten verteilt & Host und Gerät, Queue, Kernel, Indexraum, gemeinsamer Speicher, Backends, Geräteauswahl \\
+2 & Eigener Gerätespeicher, Daten werden ausdrücklich hin- und zurückkopiert & Gerätespeicher, explizite Kopien, asynchrone Ausführung und Abhängigkeiten \\
+2b & Variante von Stufe~2: Kopieren übernimmt die Bibliothek & Buffer, Accessoren, automatische Abhängigkeiten \\
+3 & Die Arbeit wird selbst in Gruppen eingeteilt, noch ohne schnellen Zwischenspeicher & Work-Group und selbst gewählte Gruppengröße \\
+4 & Rechnen in Kacheln fester Größe im schnellen Zwischenspeicher der Gruppe & Command Group, lokaler Speicher, Barriere \\
+5 & Kachelgröße erst beim Programmstart passend zum Gerät gewählt & Geräteabfragen, nachträglich eingesetzte Konstanten, Fehlerbehandlung \\
 \bottomrule
 \end{tabularx}
-\caption{Stufen der Portierung und die dabei eingeführten Konzepte}
-\label{tab:stufen}
 \end{table}
 
-Gemessen wird mit DPC++~7.2 \cite{intel_llvm} auf vier Geräten. Ein AMD
-Ryzen~5 5600X (sechs Kerne, OpenCL-Backend) und eine NVIDIA GeForce
-RTX~5060~Ti stecken im selben Arbeitsplatzrechner. Eine NVIDIA L40S und eine
-NVIDIA H100 stehen auf dem DACHS-Cluster der Hochschule Esslingen. Alle GPUs
-laufen über das CUDA-Backend. Der Quellcode ist für alle Geräte derselbe.
-Jede Stufe wird je Rechner einmal übersetzt und läuft dort unverändert. Die
-AMD MI300A des Clusters war im Messzeitraum nicht verfügbar.
+Stencil und Reduktion werden nicht stufenweise aufgebaut; hier werden Varianten
+desselben Verfahrens verglichen: beim Stencil die Anordnung der parallelen Arbeit
+in einem ein- oder zweidimensionalen Gitter (eine Beobachtung von Abram et al.\
+\cite{abram2025sycl}), ein zusätzliches Warten der CPU nach jedem Zeitschritt (um
+die Startzeit eines Auftrags zu messen) sowie eine Variante mit schnellem
+Zwischenspeicher. Bei der Reduktion reicht die Spanne von einer gemeinsamen
+Summe, auf die alle Einheiten addieren, über ein Zusammenfassen je Gruppe bis zu
+einer fertigen Abstraktion von SYCL.
 
-Die Matrixmultiplikation ist rechengebunden. Um zu prüfen, ob die Befunde
-auch für speichergebundene Probleme gelten, kommen zwei weitere Fallbeispiele
-hinzu: ein 2D-Stencil (Wärmeleitung nach dem Jacobi-Verfahren mit fünf
-Punkten, 100 Zeitschritte) und die Reduktion, also die Summe von $n$
-Gleitkommazahlen. Sie führen weitere Konzepte ein: einen linearisierten
-Indexraum, atomare Operationen (\texttt{atomic\_\allowbreak ref}),
-Gruppenkollektive (\texttt{reduce\_\allowbreak over\_\allowbreak group}) und
-die eingebaute Reduktion (\texttt{sycl::\allowbreak reduction}). Für beide gibt es Gegenstücke in nativem CUDA mit
-demselben Algorithmus, für die Reduktion zusätzlich die Bibliothek CUB.
-Kennzahl ist die effektive Bandbreite, also die mindestens zu bewegende
-Datenmenge geteilt durch die Laufzeit.
+\subsection{Versuchsaufbau}\label{sec:m-aufbau}
 
-Die Zeit misst der Host mit der monotonen Uhr der C++-Standardbibliothek vom Einreichen eines Auftrags bis zum
-Ende des Wartens auf ihn. Die Host-Messung wurde gewählt, weil sie für alle
-Stufen gleich funktioniert.
+Gemessen wird mit dem SYCL-Compiler DPC++~7.2 \cite{intel_llvm} auf vier
+Geräten: einem Arbeitsplatzrechner mit einer AMD-CPU (sechs Kerne) und einer
+NVIDIA GeForce RTX~5060~Ti sowie den Rechenzentrums-GPUs L40S und H100 des
+DACHS-Clusters der Hochschule Esslingen. Jedes Programm wird pro Rechner einmal
+übersetzt, ohne es auf eine bestimmte GPU festzulegen, und läuft dort unverändert
+auf allen Geräten. Die AMD-GPU des Clusters war im Messzeitraum nicht
+verfügbar.
 
-\newpage
+Ob diese Portabilität Leistung kostet, zeigt der Vergleich mit CUDA, der
+herstellereigenen Schnittstelle von NVIDIA: Die wichtigsten Varianten aller drei
+Fallbeispiele sind zusätzlich in CUDA umgesetzt, mit demselben Verfahren und
+derselben Zeitmessung. Als Obergrenze dienen zwei von NVIDIA optimierte
+Bibliotheken, cuBLAS \cite{nvidia_cublas} für die Matrixmultiplikation und CUB
+\cite{nvidia_cub} für die Reduktion. Angaben zu Hardware, Compilern und
+Problemgrößen stehen in Anhang~\ref{sec:messbedingungen}.
+
+\subsection{Messgrößen}\label{sec:m-messgroessen}
+
+Gemessen wird die Laufzeit auf der CPU, für alle Stufen und beide
+Programmiermodelle gleich: von der Übergabe des Auftrags an das Gerät bis zum
+Vorliegen des Ergebnisses. Angegeben ist der mittlere Wert
+(Median) aus fünf Läufen; der erste Lauf wird getrennt ausgewiesen, weil in ihm
+noch der Gerätecode erzeugt wird und er deshalb länger dauert
+(Abschnitt~\ref{sec:k-grundlagen}). Jedes Ergebnis wird gegen eine Berechnung auf
+der CPU geprüft.
+
+Damit sich Geräte und Problemgrößen vergleichen lassen, wird die Laufzeit
+umgerechnet: bei der Matrixmultiplikation in Rechenoperationen pro Sekunde
+(GFLOPS), bei Stencil und Reduktion in die pro Sekunde bewegte Datenmenge (GB/s);
+höher ist besser.
+
+Für die zweite Teilfrage zählt, ob eine Einstellung wie die Kachelgröße auf allen
+Geräten gleichzeitig gut funktioniert. Dafür dient die
+Performance-Portabilität nach Pennycook et al.\ \cite{pennycook2016metric}: Sie
+prüft je Gerät, wie nah die Einstellung an das beste Ergebnis desselben Programms
+auf diesem Gerät herankommt \cite{pennycook2019implications}, und fasst diese
+Werte so zusammen (harmonisches Mittel), dass ein schlechtes Gerät das Ergebnis
+stark senkt. Der Wert ist eins, wenn die Einstellung überall die beste ist, und
+null, sobald das Programm auf einem Gerät nicht läuft.
+
 % ---------------------------------------------------------------------------
 \section{Konzepte des Programmiermodells}\label{sec:konzepte}
 % ---------------------------------------------------------------------------
 
-Dieses Kapitel erklärt die Konzepte von SYCL unabhängig von der Matrixmultiplikation.
-Die Reihenfolge folgt den Stufen aus Tabelle~\ref{tab:stufen}, sodass jedes
-Konzept dort steht, wo es bei der Portierung zum ersten Mal gebraucht wird.
-Die Abbildungen~\ref{fig:stufe1}, \ref{fig:usm}, \ref{fig:stufe2} und~\ref{fig:stufe3} bauen aufeinander auf.
-Bereits Bekanntes ist grau gezeichnet, Neues dick schwarz. Wie die Konzepte im
-Quellcode der Matrixmultiplikation umgesetzt sind, zeigt Anhang~\ref{sec:anhang}.
+Dieses Kapitel erklärt die Konzepte von SYCL unabhängig von der
+Matrixmultiplikation. Die Reihenfolge folgt den Stufen aus
+Tabelle~\ref{tab:stufen}, sodass jedes Konzept dort steht, wo es bei der
+Portierung zum ersten Mal gebraucht wird. Die Abbildungen~\ref{fig:stufe1},
+\ref{fig:usm}, \ref{fig:stufe2} und~\ref{fig:stufe3} bauen aufeinander auf:
+Bereits Bekanntes ist grau gezeichnet, Neues dick schwarz. Verweise in
+Klammern zeigen auf die zugehörigen Zeilen im Quellcode des Anhangs~\ref{sec:anhang}.
 
 \subsection{Host, Gerät und Kernel}\label{sec:k-grundlagen}
 
-SYCL unterscheidet zwei Rollen. Der Host ist die CPU, auf der das
-Hauptprogramm läuft. Ein Gerät ist die Hardware, die rechnet, etwa
-eine GPU oder auch die CPU selbst. Ein Kernel ist
-eine Funktion, die auf dem Gerät vielfach parallel ausgeführt wird. Jede
-einzelne Ausführung heißt Work-Item. Wie viele Work-Items es gibt und
-wie sie angeordnet sind, legt der Indexraum fest. Jedes Work-Item kennt seine Position
-im Indexraum und wählt darüber die Daten aus, die es bearbeitet. Ein Kernel
-beschreibt also nur, was ein einzelnes Work-Item tut.
-Der Host übergibt Kernel nicht direkt an das Gerät, sondern über eine
-Queue. Jede Queue ist mit genau einem Gerät verbunden
-(Abbildung~\ref{fig:stufe1}). Das Einreichen ist asynchron. Der Aufruf kehrt
-sofort zurück, und der Host kann weiterarbeiten, bis er das Ergebnis
-tatsächlich braucht und ausdrücklich darauf wartet.
+SYCL unterscheidet zwei Rollen: Der Host ist die CPU, auf der das
+Hauptprogramm läuft; ein Gerät ist die Hardware, die rechnet, etwa eine GPU
+oder auch die CPU selbst. Ein Kernel ist eine Funktion, die auf dem Gerät
+vielfach parallel ausgeführt wird. Jede einzelne Ausführung heißt Work-Item. Wie
+viele Work-Items es gibt und wie sie angeordnet sind, legt der Indexraum fest.
+Jedes Work-Item kennt seine Position im Indexraum und wählt darüber die Daten
+aus, die es bearbeitet. Ein Kernel beschreibt also nur, was ein einzelnes
+Work-Item tut. Der Host übergibt Kernel nicht direkt an das Gerät, sondern
+über eine Queue. Jede Queue ist mit genau einem Gerät verbunden
+(Abbildung~\ref{fig:stufe1}). Das Einreichen ist asynchron: Der Aufruf kehrt
+sofort zurück, und der Host kann weiterarbeiten, bis er das Ergebnis tatsächlich
+braucht und ausdrücklich darauf wartet.
 
 \begin{figure}[htbp]
 \centering
-% Quelle: Diagramme/selbsterstellt/draw.drawio (Page-1, unten)
-\includegraphics[width=\textwidth]{Diagramme/selbsterstellt/Stufe1.pdf}
-\caption{Grundaufbau (Stufe~1). Der Host reicht einen Kernel über eine Queue
-ein, das Gerät führt ihn als viele Work-Items aus}
+\begin{tikzpicture}[font=\scriptsize]
+    \stufenrahmen[neu]
+    % Queue und Kernel
+    \draw[neu] (0.3,0.2) rectangle (5.4,1.75);
+    \node[anchor=north west, titel] at (0.3,1.75) {Queue};
+    \node[kastengrau, neu, minimum width=2.3cm, minimum height=0.55cm] (k) at (2.85,0.9) {Kernel};
+    % Einreichen-Pfeil (zwischen 5.7 und 7.2 ist 1.5 cm Platz)
+    \draw[->, neu] (5.4,1.45) -- (7.2,1.45);
+    \node[above, font=\scriptsize] at (6.45,1.48) {einreichen};
+    % Work-Items im Indexraum
+    \workitems{neu}
+    \filldraw[neu, fill=gray!50] (11.35,2.42) rectangle ++(0.36,0.32);
+    \node[anchor=west] (wi) at (12.2,1.85) {ein Work-Item};
+    \draw[->, neu] (wi.north) -- (11.72,2.52);
+    \draw[decorate, decoration={brace, amplitude=4pt, mirror}, line width=0.8pt]
+        (7.5,1.88) -- node[below=5pt] {Work-Items im Indexraum} (11.71,1.88);
+\end{tikzpicture}
+\caption[Grundaufbau (Stufe~1)]{Grundaufbau (Stufe~1). Der Host reicht einen Kernel über eine Queue ein, das Gerät führt ihn als viele Work-Items aus}
 \label{fig:stufe1}
 \end{figure}
 
-Host- und Gerätecode stehen in derselben C++-Quelldatei
-(Single-Source) \cite{khronos2020sycl}. Der Kernel wird meist als
-Lambda-Ausdruck geschrieben und kann Variablen des Hauptprogramms als Kopie
-übernehmen. Der Compiler erkennt den Gerätecode und übersetzt ihn zusätzlich
-für die Zielgeräte, entweder in einem eigenen Durchlauf je Ziel oder, wie
-AdaptiveCpp, in einem einzigen gemeinsamen Durchlauf \cite{alpay2023sscp}.
-Weil Geräte keine vollständige C++-Umgebung besitzen, gelten im Kernel
-Einschränkungen. Ausnahmen, Rekursion, virtuelle Funktionsaufrufe und
+Host- und Gerätecode stehen in derselben C++-Quelldatei (Single-Source)
+\cite{khronos2020sycl}. Der Kernel wird meist als Lambda-Ausdruck geschrieben
+und übernimmt Variablen des Hauptprogramms als Kopie \stelle{lst:stufe1}{24--44}:
+
+\begin{lstlisting}
+sycl::queue q;
+q.parallel_for(sycl::range<2>{n, n}, [=](sycl::id<2> idx) {
+  const std::size_t i = idx[0], j = idx[1];
+  float sum = 0.0f;
+  for (std::size_t k = 0; k < n; ++k) sum += A[i * n + k] * B[k * n + j];
+  C[i * n + j] = sum;
+}).wait();
+\end{lstlisting}
+
+\noindent Der Compiler erkennt den Gerätecode und übersetzt ihn zusätzlich für
+die Zielgeräte, entweder in einem eigenen Durchlauf je Ziel (DPC++) oder, wie
+AdaptiveCpp, in einem einzigen gemeinsamen Durchlauf \cite{alpay2023sscp}. Weil
+Geräte keine vollständige C++-Umgebung besitzen, gelten im Kernel
+Einschränkungen: Ausnahmen, Rekursion, virtuelle Funktionsaufrufe und
 dynamische Speicheranforderung sind dort nicht erlaubt. Gegenüber CUDA oder
-OpenCL entfällt damit eine eigene Kernelsprache. Es bleibt bei einer Codebasis
+OpenCL entfällt damit eine eigene Kernelsprache; es bleibt bei einer Codebasis
 in Standard-C++.
 
 Jedes Gerät spricht die Implementierung über ein Backend an, etwa CUDA für
 NVIDIA-GPUs, HIP für AMD-GPUs, Level~Zero für Intel-GPUs oder OpenCL für
 CPUs. Welches Gerät eine Queue nutzt, bestimmt ein Device Selector, der jedem
-verfügbaren Gerät eine Bewertung gibt und das am besten bewertete wählt.
-Wie der Gerätecode in die ausführbare Datei gelangt, hängt von der
-Implementierung ab. Bei DPC++ wird er je Ziel entweder als
-Zwischendarstellung (PTX für NVIDIA, SPIR-V für Intel) oder als fertiger
-Maschinencode (etwa für AMD-GPUs) abgelegt. Ein Gerät, das beim Übersetzen
-nicht angegeben wurde, erfordert dort eine Neuübersetzung. AdaptiveCpp legt
-im generischen Modus stattdessen eine gemeinsame LLVM-Zwischendarstellung ab,
-die erst zur Laufzeit beim ersten Start eines Kernels just in time für das
-vorhandene Gerät in PTX, SPIR-V oder AMD-Maschinencode übersetzt wird
-\cite{alpay2023sscp}. So läuft dieselbe Datei ohne Neuübersetzung auf GPUs
-verschiedener Hersteller, der erste Kernelstart ist dafür langsamer als alle
-folgenden.
+verfügbaren Gerät eine Bewertung gibt und das am besten bewertete wählt (im
+Versuchsaufbau über \texttt{ONEAPI\_DEVICE\_SELECTOR} gesteuert). Wie der
+Gerätecode in die ausführbare Datei gelangt, hängt von der Implementierung ab:
+Bei DPC++ wird er je Ziel entweder als Zwischendarstellung (PTX für NVIDIA,
+SPIR-V für Intel/CPU) oder als fertiger Maschinencode (etwa für AMD-GPUs)
+abgelegt. Ein Gerät, für dessen Zielarchitektur beim Übersetzen kein Abbild
+eingebettet wurde, erfordert eine Neuübersetzung. AdaptiveCpp legt im
+generischen Modus stattdessen eine gemeinsame LLVM-Zwischendarstellung ab, die
+erst zur Laufzeit beim ersten Start eines Kernels just in time für das vorhandene
+Gerät übersetzt wird \cite{alpay2023sscp}. Dadurch ist der erste Kernelstart
+langsamer als alle folgenden.
 
 \subsection{Speichermodell}\label{sec:k-speicher}
 
 Host und Gerät besitzen häufig getrennte Speicher, etwa den Arbeitsspeicher
-des Rechners und den Grafikspeicher einer GPU. SYCL bietet zwei Wege, Daten
-zwischen ihnen zu verwalten, Unified Shared Memory (USM) und
-Buffer.
+des Rechners und den Grafikspeicher einer GPU\@. SYCL bietet zwei Wege, Daten
+zwischen ihnen zu verwalten: Unified Shared Memory (USM) und Buffer.
 
-USM arbeitet mit gewöhnlichen C++-Zeigern, die je nach Variante auf Host,
-Gerät oder beiden gültig sind \cite{khronos2020sycl}. Bei USM host liegen die
-Daten im Host-Speicher, und das Gerät greift über den Bus darauf zu. Bei USM shared
-gilt derselbe Zeiger auf Host und Gerät. Die Laufzeit verschiebt die Daten
-automatisch dorthin, wo zugegriffen wird. Das ist bequem, verbirgt aber,
-wann und wie viel kopiert wird. Bei USM device liegen die Daten nur im
-Gerätespeicher, und der Host kopiert sie ausdrücklich hin und zurück. Das
-verlangt mehr Code, macht den Transfer aber sichtbar und steuerbar
-(Abbildung~\ref{fig:usm}).
+USM arbeitet mit gewöhnlichen C++-Zeigern, die je nach Variante auf Host, Gerät
+oder beiden gültig sind \cite{khronos2020sycl}. Bei \emph{USM host}
+(\texttt{malloc\_host}) liegen die Daten im Host-Speicher, und das Gerät
+greift über den Bus darauf zu. Bei \emph{USM shared} (\texttt{malloc\_\allowbreak shared})
+gilt derselbe Zeiger auf Host und Gerät; die Laufzeit verschiebt die Daten
+automatisch dorthin, wo zugegriffen wird. Das ist bequem, verbirgt aber, wann
+und wie viel kopiert wird \stelle{lst:stufe1}{28--30}. Bei \emph{USM device}
+(\texttt{malloc\_device}) liegen die Daten ausschließlich im Gerätespeicher,
+und der Host kopiert sie ausdrücklich per \texttt{memcpy} hin und zurück
+\stelle{lst:stufe2}{33--52}. Das verlangt mehr Code, macht den Transfer aber
+sichtbar und getrennt messbar (Abbildung~\ref{fig:usm}).
 
 \begin{figure}[htbp]
 \centering
-% Quelle: Diagramme/selbsterstellt/draw.drawio (Page-1, Elemente usm-*)
-\includegraphics[width=\textwidth]{Diagramme/selbsterstellt/Speicher.pdf}
-\caption{Speichermodell, aufbauend auf Stufe~1. Neu sind Host- und
-Gerätespeicher mit den Matrizen $A$, $B$, $C$. Bei USM device kopiert der
-Host die Daten ausdrücklich (durchgezogen), bei USM shared verschiebt die
-Laufzeit sie automatisch (gestrichelt). Stufe~1 verwendet USM shared}
+\begin{tikzpicture}[font=\scriptsize]
+    \stufenrahmen[alt]
+    \draw[alt] (0.3,0.2) rectangle (5.4,1.75);
+    \node[anchor=north west, text=black!55] at (0.3,1.75) {Queue};
+    \node[auftrag, kastengrau, alt, minimum width=2.1cm] at (2.85,0.9) {Kernel};
+    \draw[->, gray!60] (5.4,1.45) -- (7.2,1.45);
+    \node[above, text=black!55] at (6.45,1.48) {einreichen};
+    \workitems{alt}
+    % Explizite Trennung: Host-Speicher <-> Gerätespeicher (USM device)
+    \node[kasten, neu, minimum width=5.7cm, minimum height=1.15cm, anchor=north west] (hs) at (0,-0.35) {};
+    \node[anchor=north, font=\scriptsize] at (2.85,-0.42) {Host-Speicher (z.\,B.\ \texttt{std::vector})};
+    \foreach \x/\l in {1.1/A, 2.85/B, 4.6/C}
+        \node[kasten, neu, minimum width=0.6cm, minimum height=0.35cm] at (\x,-1.14) {\l};
+    \node[kasten, neu, minimum width=5.7cm, minimum height=1.15cm, anchor=north west] (gs) at (9.2,-0.35) {};
+    \node[anchor=north, font=\scriptsize] at (12.05,-0.42) {Gerätespeicher (USM device)};
+    \foreach \x/\l in {10.3/A, 12.05/B, 13.8/C}
+        \node[kasten, neu, minimum width=0.6cm, minimum height=0.35cm] at (\x,-1.14) {\l};
+    \draw[<->, neu] (hs.east) -- node[above] {explizite Kopie} node[below] {(\texttt{memcpy})} (gs.west);
+    % Darunter USM shared: ein gemeinsamer Zeiger, automatische Migration
+    \draw[neu, dashed] (0,-1.78) rectangle (14.9,-2.58);
+    \node[anchor=west, font=\scriptsize] at (0.2,-2.18) {USM shared (\texttt{malloc\_shared}): gemeinsamer Zeiger};
+    \draw[<->, neu, dashed] (7.4,-2.34) -- node[above=1pt, font=\scriptsize] {automatische Migration} (12.8,-2.34);
+    \node[anchor=east, font=\scriptsize] at (14.7,-2.18) {$A, B, C$};
+\end{tikzpicture}
+\caption[Speichermodell (USM device vs.\ USM shared)]{Speichermodell, aufbauend auf Stufe~1. Neu sind Host- und Gerätespeicher: Bei USM device kopiert der Host ausdrücklich (durchgezogen), bei USM shared migriert die Laufzeit automatisch über einen gemeinsamen Zeiger (gestrichelt)}
 \label{fig:usm}
 \end{figure}
 
-Buffer sind die ältere, abstraktere Alternative. Ein Buffer kapselt die
-Daten, und ein Kernel greift nur über Accessoren darauf zu, die
-zugleich angeben, ob gelesen, geschrieben oder beides wird. Aus diesen
-Angaben leitet die Laufzeit selbst ab, wann Daten kopiert werden müssen und
-welche Kernel voneinander abhängen. Der Programmierer verliert dafür die
-direkte Kontrolle über Zeitpunkt und Umfang der Kopien
+Buffer sind die ältere, abstraktere Alternative \stelle{lst:stufe2b}{36--54}. Ein
+\texttt{sycl::buffer} kapselt die Daten des Host-Felds, und ein Kernel greift
+nur über Accessoren darauf zu, die zugleich den Zugriffsmodus angeben
+(\texttt{read\_only}, \texttt{write\_only}). Aus diesen Angaben leitet die
+Laufzeit selbst ab, wann Daten kopiert werden müssen und welche Kernel
+voneinander abhängen; das Zurückschreiben zum Host wird ausgelöst, sobald der
+Buffer seinen Gültigkeitsbereich verlässt. Der Programmierer gewinnt Komfort,
+verliert dafür aber die direkte Kontrolle über Zeitpunkt und Umfang der Kopien
 \cite{reinders2023dpcpp}.
 
 Auf dem Gerät selbst gibt es mehrere Speicherebenen
-(Abbildung~\ref{fig:speicher}). Der globale Speicher ist groß, für
-alle Work-Items sichtbar, aber vergleichsweise langsam. Der lokale
-Speicher ist klein und schnell und wird nur von den Work-Items einer
-Work-Group geteilt (Abschnitt~\ref{sec:k-hierarchie}). Der private
-Speicher, auf der GPU meist Register, gehört einem einzelnen Work-Item. Je
-weiter unten eine Ebene liegt, desto schneller und kleiner ist sie. Daten so
-zu verteilen, dass häufig gelesene Werte in den schnellen Ebenen liegen, ist
-der wichtigste Hebel für Leistung \cite{hwu2022pmpp}.
+(Abbildung~\ref{fig:speicher}). Der globale Speicher ist groß und für alle
+Work-Items sichtbar, aber vergleichsweise langsam. Der lokale Speicher ist klein
+und schnell und wird nur von den Work-Items einer Work-Group geteilt
+(Abschnitt~\ref{sec:k-hierarchie}). Der private Speicher, auf der GPU meist
+Register, gehört einem einzelnen Work-Item. Je tiefer eine Ebene in dieser
+Hierarchie liegt, desto schneller und kleiner ist sie. Daten so zu verteilen,
+dass häufig gelesene Werte in den schnellen Ebenen liegen, ist der wichtigste
+Hebel für Leistung \cite{hwu2022pmpp}.
 
 \begin{figure}[htbp]
 \centering
-% Quelle: Diagramme/selbsterstellt/draw.drawio (Page-1, Elemente ebenen-*)
-\includegraphics[width=\textwidth]{Diagramme/selbsterstellt/Speicherebenen.pdf}
-\caption{Speicherebenen in SYCL, aufbauend auf Abbildung~\ref{fig:usm}. Neu
-sind die Ebenen auf dem Gerät. Nach unten werden sie kleiner, schneller und
-von weniger Work-Items geteilt}
+\begin{tikzpicture}[font=\scriptsize]
+    % Links: Host-Speicher (grau)
+    \draw[alt] (0,0) rectangle (4.0,3.3);
+    \node[anchor=north, titel, text=black!55] at (2.0,3.25) {Host};
+    \node[kasten, alt, minimum width=3.4cm, minimum height=2.2cm] (hs) at (2.0,1.4) {Host-Speicher};
+    % Verbindung
+    \draw[<->, gray!60] (4.0,2.55) -- node[above, text=black!55] {Kopie} (5.4,2.55);
+    % Rechts: Gerät mit globalem (grau), lokalem und privatem Speicher (neu)
+    \draw[alt] (5.4,0) rectangle (14.9,3.3);
+    \node[anchor=north east, titel, text=black!55] at (14.8,3.25) {Gerät (z.\,B.\ GPU)};
+    \node[kasten, alt, minimum width=8.9cm, minimum height=0.52cm] at (10.15,2.55) {globaler Gerätespeicher (USM device / Buffer)};
+    \foreach \x/\w in {5.7/1, 10.35/2} {
+        \draw[neu] (\x,0.2) rectangle (\x+4.25,2.05);
+        \node[anchor=north west, font=\scriptsize] at (\x+0.05,2.02) {Work-Group \w};
+        \node[kastengrau, neu, minimum width=3.85cm, minimum height=0.45cm] at (\x+2.125,1.32) {lokaler Speicher};
+        \node[kasten, neu, minimum width=1.7cm, minimum height=0.42cm] at (\x+1.06,0.55) {privat};
+        \node[kasten, neu, minimum width=1.7cm, minimum height=0.42cm] at (\x+3.19,0.55) {privat};
+    }
+\end{tikzpicture}
+\caption[Speicherebenen in SYCL]{Speicherebenen in SYCL, aufbauend auf Abbildung~\ref{fig:usm}. Neu sind die geräteinternen Ebenen je Work-Group (lokaler Speicher) und je Work-Item (privat/Register); nach unten werden sie kleiner und schneller}
 \label{fig:speicher}
 \end{figure}
 
@@ -430,73 +565,77 @@ von weniger Work-Items geteilt}
 Da Kopien und Kernel asynchron eingereicht werden, muss die Laufzeit wissen,
 in welcher Reihenfolge sie ausgeführt werden dürfen. Ein Kernel darf zum
 Beispiel erst starten, wenn seine Eingabedaten auf dem Gerät angekommen sind.
-Jeder Auftrag an die Queue liefert dafür ein Event. Spätere Aufträge
-können angeben, auf welche Events sie warten. Aus diesen Abhängigkeiten baut
-die Laufzeit einen gerichteten azyklischen Graphen und führt Aufträge, die
-nicht voneinander abhängen, gleichzeitig aus
+Jeder Auftrag an eine Queue liefert dafür ein \texttt{sycl::event}. Spätere
+Aufträge können angeben, auf welche Events sie warten (\texttt{depends\_on}).
+Aus diesen Abhängigkeiten baut die Laufzeit einen gerichteten azyklischen
+Graphen (DAG) und führt unabhängige Aufträge gleichzeitig aus
 (Abbildung~\ref{fig:stufe2}) \cite{reinders2023dpcpp}.
 
-Eine Queue ist standardmäßig out-of-order. Sie darf Aufträge in
+Eine Queue ist standardmäßig \emph{out-of-order}: Sie darf Aufträge in
 beliebiger Reihenfolge ausführen, solange die angegebenen Abhängigkeiten
-eingehalten werden. Eine in-order-Queue führt dagegen alle Aufträge
-streng nacheinander aus. Das ist einfacher, verschenkt aber Parallelität
-zwischen unabhängigen Aufträgen. Wer Buffer verwendet, muss Abhängigkeiten
-nicht selbst angeben, weil die Laufzeit sie aus den Accessoren ableitet. Die
-gröbste Form der Synchronisation ist das Warten des Hosts auf die gesamte
-Queue. Danach ist sicher jeder bisher eingereichte Auftrag beendet.
+eingehalten werden. Eine \emph{in-order}-Queue (verwendet beim Stencil) führt
+dagegen alle Aufträge streng nacheinander aus. Das ist bei iterativen
+Zeitschritten einfacher, verschenkt bei unabhängigen Aufträgen jedoch
+Parallelität. Wer Buffer verwendet, muss Abhängigkeiten nicht selbst angeben,
+weil die Laufzeit sie aus den Accessoren ableitet. Die gröbste Form der
+Synchronisation ist das Warten des Hosts auf die gesamte Queue
+(\texttt{q.wait()}). In \texttt{stufe2\_usm\_device.cpp} \stelle{lst:stufe2}{37--52}
+werden die beiden Eingabekopien von $A$ und $B$ gemeinsam in eine
+out-of-order-Queue eingereicht; zwischen Kopie, Kernel und Rückkopie wartet der
+Host jedoch explizit, damit Transfer- und Kernelzeiten sauber getrennt messbar
+bleiben. Die Funktion \texttt{matmul\_tiled} in Stufe~5 gibt dagegen bereits ein
+\texttt{sycl::event} zurück \stelle{lst:stufe5}{39--82}.
 
 \begin{figure}[htbp]
 \centering
 \begin{tikzpicture}[font=\scriptsize]
-    \stufenrahmen
+    \stufenrahmen[alt]
     % Queue mit Abhängigkeitsgraph
-    \draw[alt] (0.3,0.2) rectangle (5.9,1.75);
+    \draw[alt] (0.3,0.2) rectangle (5.4,1.75);
     \node[anchor=north west, text=black!55] at (0.3,1.75) {Queue};
-    \node[auftrag, neu] (ka) at (1.05,1.05) {Kopie $A$};
-    \node[auftrag, neu] (kb) at (1.05,0.5) {Kopie $B$};
-    \node[auftrag, kastengrau, alt] (k) at (3.1,0.78) {Kernel};
-    \node[auftrag, neu] (kc) at (5.0,0.78) {Kopie $C$};
+    \node[auftrag, neu] (ka) at (1.0,1.05) {Kopie $A$};
+    \node[auftrag, neu] (kb) at (1.0,0.5) {Kopie $B$};
+    \node[auftrag, kastengrau, alt] (k) at (2.85,0.78) {Kernel};
+    \node[auftrag, neu] (kc) at (4.6,0.78) {Kopie $C$};
     \draw[->, neu] (ka) -- (k);
     \draw[->, neu] (kb) -- (k);
     \draw[->, neu] (k) -- (kc);
-    \draw[->, gray!60] (5.9,1.45) -- (7.0,1.45);
+    \draw[->, gray!60] (5.4,1.45) -- (7.2,1.45);
     % Work-Items
     \workitems{alt}
     % Speicher
-    \node[kasten, alt, minimum width=6.2cm, minimum height=0.55cm, anchor=south west] (hs) at (0,-0.85) {Host-Speicher ($A$, $B$, $C$)};
-    \node[kasten, neu, minimum width=7.5cm, minimum height=0.55cm, anchor=south west] (gs) at (7.0,-0.85) {Gerätespeicher ($A$, $B$, $C$)};
+    \node[kasten, alt, minimum width=5.7cm, minimum height=0.55cm, anchor=south west] (hs) at (0,-0.85) {Host-Speicher ($A$, $B$, $C$)};
+    \node[kasten, neu, minimum width=7.7cm, minimum height=0.55cm, anchor=south west] (gs) at (7.2,-0.85) {Gerätespeicher ($A$, $B$, $C$)};
     \draw[<->, neu] (hs) -- (gs);
 \end{tikzpicture}
-\caption{Getrennter Speicher und Abhängigkeiten (Stufe~2). Neu sind der
-Gerätespeicher und explizite Kopien, deren Abhängigkeiten als Pfeile in der
-Queue stehen. Kopie $A$ und Kopie $B$ hängen nicht voneinander ab und können
-gleichzeitig laufen}
+\caption[Getrennter Speicher und Abhängigkeiten (Stufe~2)]{Getrennter Speicher und Abhängigkeiten (Stufe~2). Explizite Kopien und ihre Abhängigkeiten bilden einen gerichteten Graphen in der Queue; Kopie $A$ und Kopie $B$ können gleichzeitig laufen}
 \label{fig:stufe2}
 \end{figure}
 
 \subsection{Hierarchische Ausführung und lokaler Speicher}\label{sec:k-hierarchie}
 
-Im einfachen Indexraum aus Abschnitt~\ref{sec:k-grundlagen} sind alle
-Work-Items gleichberechtigt und können nicht zusammenarbeiten. Für
+Im einfachen Indexraum (\texttt{sycl::range}) aus Abschnitt~\ref{sec:k-grundlagen}
+sind alle Work-Items gleichberechtigt und können nicht zusammenarbeiten. Für
 Optimierungen erlaubt SYCL deshalb einen zweistufigen Indexraum, die
-nd\_range. Sie besteht aus einem globalen Bereich und einem lokalen
+\texttt{nd\_range}. Sie besteht aus einem globalen Bereich und einem lokalen
 Bereich, der den globalen in gleich große Work-Groups aufteilt
-(Abbildung~\ref{fig:ndrange}). Der globale Bereich muss dafür in jeder
-Dimension ein Vielfaches des lokalen sein. Jedes Work-Item kennt nun drei
-Positionen, seine globale ID im gesamten Indexraum, seine lokale ID innerhalb
-der Work-Group und die ID seiner Work-Group. Beim einfachen Indexraum teilt die
-Laufzeit die Work-Items ebenfalls in Work-Groups auf, wählt deren Größe aber
-selbst. Erst die nd\_range gibt diese Entscheidung an das Programm.
+(Abbildung~\ref{fig:ndrange}). Der globale Bereich muss dafür in jeder Dimension
+ein Vielfaches des lokalen sein (bei unpassenden Matrixgrößen wird aufgerundet
+und im Kernel per Randprüfung abgebrochen \stelle{lst:stufe3}{44, 57}). Jedes
+Work-Item kennt nun drei Positionen: seine globale ID im gesamten Indexraum,
+seine lokale ID innerhalb der Work-Group und die ID seiner Work-Group. Beim
+einfachen Indexraum teilt die Laufzeit die Work-Items ebenfalls in Work-Groups
+auf, wählt deren Größe aber selbst; erst die \texttt{nd\_range} übergibt diese
+Entscheidung an das Programm \stelle{lst:stufe3}{52--63}.
 
 \begin{figure}[htbp]
 \centering
 \begin{tikzpicture}[font=\scriptsize]
     % Gitter 8 x 8, Zeile i nach unten, Spalte j nach rechts
-    \foreach \i in {0,...,7} \foreach \j in {0,...,7}
-        \draw[gray!50] (\j*0.4,-\i*0.4) rectangle ++(0.4,-0.4);
+    % Erst Work-Group (1,1) hinterlegen, dann Work-Item (5,6), dann Gitterlinien
+    \fill[gray!18] (1.6,-1.6) rectangle (3.2,-3.2);
     \fill[gray!70] (2.4,-2.0) rectangle ++(0.4,-0.4);
-    \fill[gray!20] (1.6,-1.6) rectangle (2.4,-2.0);
-    \draw[gray!50] (1.6,-1.6) grid[step=0.4] (2.4,-2.0);
+    \draw[gray!55] (0,0) grid[step=0.4] (3.2,-3.2);
     \draw[line width=1.1pt] (0,0) rectangle (3.2,-3.2);
     \draw[line width=1.1pt] (1.6,0) -- (1.6,-3.2);
     \draw[line width=1.1pt] (0,-1.6) -- (3.2,-1.6);
@@ -511,162 +650,218 @@ selbst. Erst die nd\_range gibt diese Entscheidung an das Programm.
     \draw[->] (wg.west) -- (3.0,-0.8);
     \node[anchor=north] at (1.6,-3.35) {globaler Bereich $8 \times 8$};
 \end{tikzpicture}
-\caption{Eine nd\_range mit globalem Bereich $8 \times 8$ und lokalem Bereich
-$4 \times 4$. Dick umrandet sind die vier Work-Groups}
+\caption[Aufbau einer \texttt{nd\_range}]{Eine \texttt{nd\_range} mit globalem Bereich $8 \times 8$ und lokalem Bereich $4 \times 4$. Grau hinterlegt ist Work-Group $(1,1)$ mit dem hervorgehobenen Work-Item $(5,6)$}
 \label{fig:ndrange}
 \end{figure}
 
 Die Work-Items einer Work-Group laufen auf derselben Recheneinheit und teilen
-sich deren lokalen Speicher (Abbildung~\ref{fig:speicher}). Sie können damit
-zusammenarbeiten. Typischerweise lädt jedes Work-Item einen Teil der Daten
-aus dem globalen in den lokalen Speicher, und anschließend lesen alle
-Work-Items die gemeinsam geladenen Werte. Damit kein Work-Item einen Wert
-liest, bevor ein anderes ihn geschrieben hat, synchronisieren sie sich an
-einer Barriere. Jedes Work-Item wartet dort, bis alle Work-Items seiner
-Gruppe sie erreicht haben, und erst danach sind die Schreibzugriffe der
-anderen sichtbar. Eine Barriere über Work-Groups hinweg gibt es nicht.
-Work-Groups laufen unabhängig voneinander und in beliebiger Reihenfolge,
-weshalb sie nur über das Ende eines Kernels synchronisiert werden können.
+sich deren lokalen Speicher (Abbildung~\ref{fig:speicher}). Typischerweise lädt
+jedes Work-Item einen Teil der Daten aus dem globalen in den lokalen Speicher,
+und anschließend lesen alle Work-Items die gemeinsam geladenen Werte. Damit kein
+Work-Item einen Wert liest, bevor ein anderes ihn geschrieben hat,
+synchronisieren sie sich über \texttt{sycl::\allowbreak group\_\allowbreak barrier}
+\stelle{lst:stufe4}{60--87}:
 
-Lokaler Speicher wird nicht im Kernel angelegt, sondern vor dem Start
-reserviert, da die Laufzeit seinen Bedarf kennen muss, bevor sie die
-Work-Groups auf die Recheneinheiten verteilt. Der Host reicht den Kernel dazu
-zusammen mit dieser Reservierung als Command Group ein
+\begin{lstlisting}
+q.submit([&](sycl::handler& h) {
+  sycl::local_accessor<float, 2> tileA({T, T}, h);
+  sycl::local_accessor<float, 2> tileB({T, T}, h);
+  h.parallel_for(sycl::nd_range<2>{{np, np}, {T, T}}, [=](sycl::nd_item<2> it) {
+    // Kachel laden, Barriere, Teilprodukt berechnen, Barriere
+    tileA[li][lj] = ...;  tileB[li][lj] = ...;
+    sycl::group_barrier(it.get_group());
+    for (std::size_t k = 0; k < T; ++k) sum += tileA[li][k] * tileB[k][lj];
+    sycl::group_barrier(it.get_group());
+  });
+});
+\end{lstlisting}
+
+\noindent Eine Barriere über Work-Groups hinweg existiert nicht: Work-Groups
+laufen unabhängig und in beliebiger Reihenfolge, weshalb sie nur über das Ende
+eines Kernels synchronisiert werden können.
+
+Lokaler Speicher wird nicht im Kernel, sondern vor dem Start reserviert, da die
+Laufzeit seinen Bedarf kennen muss, bevor sie Work-Groups auf die
+Recheneinheiten verteilt. Der Host reicht den Kernel dazu zusammen mit dieser
+Reservierung als Command Group über \texttt{q.submit} ein
 (Abbildung~\ref{fig:stufe3}). Eine Command Group bündelt einen Auftrag mit
-allem, was er braucht, also Speicher, Accessoren und Abhängigkeiten. Die
-Kurzformen aus den vorigen Abschnitten sind nur eine Abkürzung dafür.
+Speicherreservierungen, Accessoren und Abhängigkeiten; die Kurzformen auf
+\texttt{q.parallel\_for} aus den vorigen Abschnitten sind Abkürzungen dafür.
 
 \begin{figure}[htbp]
 \centering
 \begin{tikzpicture}[font=\scriptsize]
-    \stufenrahmen
+    \stufenrahmen[alt]
     % Queue mit Command Group
-    \draw[alt] (0.3,0.2) rectangle (5.9,1.75);
+    \draw[alt] (0.3,0.2) rectangle (5.4,1.75);
     \node[anchor=north west, text=black!55] at (0.3,1.75) {Queue};
-    \node[auftrag, alt] (ka) at (1.05,1.05) {Kopie $A$};
-    \node[auftrag, alt] (kb) at (1.05,0.5) {Kopie $B$};
-    \node[auftrag, kastengrau, alt] (k) at (3.1,0.78) {Kernel};
-    \node[auftrag, alt] (kc) at (5.0,0.78) {Kopie $C$};
+    \node[auftrag, alt] (ka) at (1.0,1.05) {Kopie $A$};
+    \node[auftrag, alt] (kb) at (1.0,0.5) {Kopie $B$};
+    \node[auftrag, kastengrau, alt] (k) at (2.85,0.78) {Kernel};
+    \node[auftrag, alt] (kc) at (4.6,0.78) {Kopie $C$};
     \node[draw, neu, inner sep=4pt, fit=(k)] (cg) {};
     \node[above=0pt of cg] {Command Group};
     \draw[->, gray!60] (ka) -- (cg);
     \draw[->, gray!60] (kb) -- (cg);
     \draw[->, gray!60] (cg) -- (kc);
-    \draw[->, gray!60] (5.9,1.45) -- (7.0,1.45);
+    \draw[->, gray!60] (5.4,1.45) -- (7.2,1.45);
     % Work-Groups mit lokalem Speicher und Barriere
     \workitems{alt}
-    \foreach \g in {7.6,10.3} {
+    \foreach \g in {7.5,10.0} {
         \draw[neu] (\g-0.12,0.35) rectangle (\g+1.83,2.88);
         \draw[neu, dashed] (\g-0.02,1.72) -- (\g+1.73,1.72);
         \node[kasten, neu, align=center, minimum width=1.6cm] at (\g+0.855,0.95) {lokaler\\Speicher};
     }
-    \node[anchor=west] (bar) at (12.4,1.72) {Barriere};
-    \draw[->] (bar.west) -- (12.05,1.72);
-    \node[anchor=west] (wg) at (12.4,0.6) {Work-Group};
-    \draw[->] (wg.west) -- (12.13,0.6);
+    \node[anchor=west] (bar) at (12.3,1.72) {Barriere};
+    \draw[->] (bar.west) -- (11.75,1.72);
+    \node[anchor=west] (wg) at (12.3,0.6) {Work-Group};
+    \draw[->] (wg.west) -- (11.83,0.6);
     % Speicher
-    \node[kasten, alt, minimum width=6.2cm, minimum height=0.55cm, anchor=south west] (hs) at (0,-0.85) {Host-Speicher ($A$, $B$, $C$)};
-    \node[kasten, alt, minimum width=7.5cm, minimum height=0.55cm, anchor=south west] (gs) at (7.0,-0.85) {globaler Gerätespeicher ($A$, $B$, $C$)};
+    \node[kasten, alt, minimum width=5.7cm, minimum height=0.55cm, anchor=south west] (hs) at (0,-0.85) {Host-Speicher ($A$, $B$, $C$)};
+    \node[kasten, alt, minimum width=7.7cm, minimum height=0.55cm, anchor=south west] (gs) at (7.2,-0.85) {globaler Gerätespeicher ($A$, $B$, $C$)};
     \draw[<->, gray!60] (hs) -- (gs);
 \end{tikzpicture}
-\caption{Hierarchische Ausführung (Stufen~3 und~4). Neu sind Work-Groups
-(Stufe~3) sowie Command Group, lokaler Speicher und Barriere (Stufe~4)}
+\caption[Hierarchische Ausführung (Stufen~3 und~4)]{Hierarchische Ausführung (Stufen~3 und~4). Neu sind Work-Groups (Stufe~3) sowie Command Group, lokaler Speicher und Barriere (Stufe~4)}
 \label{fig:stufe3}
 \end{figure}
 
-\newpage
+\subsection{Geräteabfragen, Spezialisierung, Fehler und Kollektive}\label{sec:k-anpassung}
+
+Soll ein einziges Programm gerätespezifische Parameter erst zur Laufzeit
+anpassen, ohne beim Start abzustürzen, erweitert Stufe~5 das Programmiermodell
+um drei Mechanismen \cite{khronos2020sycl}:
+
+\begin{itemize}[nosep]
+    \item \textbf{Geräteabfragen:} Über \texttt{d.get\_info<...>()} liest der
+    Host Hardwaregrenzen vor dem Kernelstart aus, etwa
+    \texttt{max\_\allowbreak work\_\allowbreak group\_\allowbreak size},
+    \texttt{max\_\allowbreak work\_\allowbreak item\_\allowbreak sizes} und
+    \texttt{local\_\allowbreak mem\_\allowbreak size} \stelle{lst:stufe5}{103--144}.
+    Kandidaten, die diese Grenzen überschreiten (wie $T=64$ mit 4096 Work-Items
+    auf einer GPU), werden übersprungen.
+    \item \textbf{Specialization Constants:} Damit Parameter wie die Kachelgröße
+    $T$ zur Laufzeit gewählt und dennoch vom JIT-Compiler wie Konstanten
+    optimiert werden können (z.\,B.\ zum Abrollen der inneren Schleife), bietet
+    SYCL~2020 die Bezeichner \texttt{specialization\_\allowbreak id},
+    \texttt{set\_\allowbreak specialization\_\allowbreak constant} und
+    \texttt{kernel\_\allowbreak handler} \stelle{lst:stufe5}{30, 49, 60--62}.
+    Während SPIR-V-Ziele dies nativ unterstützen, emuliert DPC++ Specialization
+    Constants für CUDA in \texttt{Spec\allowbreak Constants\allowbreak Pass}
+    über einen versteckten Parameterpuffer \cite{dpcpp_spec_const}; AdaptiveCpp
+    bietet stattdessen die eigene Erweiterung \texttt{sycl::\allowbreak specialized}
+    an \cite{adaptivecpp_ext}.
+    \item \textbf{Fehlerbehandlung:} SYCL trennt synchrone Fehler beim
+    Einreichen (abgefangen per \texttt{try/catch} um \texttt{sycl::\allowbreak exception})
+    von asynchronen Fehlern während der Ausführung auf dem Gerät. Letztere
+    sammelt die Laufzeit und übergibt sie an einen der Queue mitgegebenen
+    \texttt{async\_\allowbreak handler}, sobald der Host
+    \texttt{wait\_\allowbreak and\_\allowbreak throw()}
+    aufruft \stelle{lst:stufe5}{93--98, 145--161, 205--210}.
+\end{itemize}
+
+\noindent Für das Fallbeispiel Reduktion kommen drei Sprachmittel hinzu:
+\texttt{sycl::\allowbreak atomic\_\allowbreak ref} ermöglicht atomare
+Aktualisierungen auf gemeinsamem Speicher mit wählbarer Speicherordnung und
+Reichweite (Gerätescope);
+\texttt{sycl::\allowbreak reduce\_\allowbreak over\_\allowbreak group} fasst
+Werte einer Work-Group portabel über ein Gruppenkollektiv zusammen, sodass die
+Implementierung Hardwarebefehle wie Warp-Shuffles nutzen kann; und
+\texttt{sycl::\allowbreak reduction} abstrahiert die gesamte Reduktion direkt in den
+\texttt{parallel\_\allowbreak for}-Aufruf, indem die Laufzeit Zwischenspeicher, Baumtiefe
+und atomare Zusammenführung selbst wählt \cite{khronos2020sycl}.
+
 % ---------------------------------------------------------------------------
 \section{Ergebnisse}\label{sec:ergebnisse}
 % ---------------------------------------------------------------------------
 
-Alle Stufen liefen ohne Codeänderung auf allen vier Geräten und lieferten
-überall ein korrektes Ergebnis. Tabelle~\ref{tab:stufenmessung} zeigt die
-Leistung jeder Stufe, Tabelle~\ref{tab:zeiten} die zugehörigen Laufzeiten.
-Die folgenden Abschnitte gehen die Stufen der Reihe nach durch.
+Alle Stufen und Varianten liefen ohne Codeänderung auf allen vier Geräten und
+lieferten überall ein korrektes Ergebnis. Abbildung~\ref{fig:cuda_vergleich}
+fasst den direkten Leistungsvergleich zwischen SYCL und nativem CUDA (bzw.\
+CUB) über alle drei Fallbeispiele zusammen; die vollständigen Messwerte stehen
+in Anhang~\ref{sec:messungen}.
 
-\begin{table}[htbp]
+\begin{figure}[htbp]
 \centering
-\footnotesize
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{@{}l*{8}{>{\raggedleft\arraybackslash}p{0.95cm}}@{}}
-\toprule
- & \multicolumn{2}{c}{\textbf{RTX 5060 Ti}} & \multicolumn{2}{c}{\textbf{L40S}} & \multicolumn{2}{c}{\textbf{H100}} & \multicolumn{2}{c}{\textbf{Ryzen 5 5600X}} \\
-\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(l){8-9}
-\textbf{Stufe} & 1024 & 2048 & 1024 & 2048 & 1024 & 2048 & 1024 & 2048 \\
-\midrule
-0 (ein CPU-Kern)        & 0,5  & --   & 0,3  & --   & 0,4  & --   & 0,5 & --  \\
-1 (USM shared)          & 1102 & 1108 & 3489 & 2938 & 6044 & 4793 & 43  & 43  \\
-2 (USM device)          & 1094 & 1110 & 3471 & 2938 & 6110 & 4811 & 41  & 43  \\
-2b (Buffer, mit Transfer) & 645 & 863 & 1261 & 1847 & 1246 & 2468 & 31  & 28  \\
-3 (nd\_range, $W = 16$) & 1573 & 1595 & 5231 & 5563 & 4858 & 5351 & 51  & 51  \\
-4 (Kachelung, $T = 16$) & 1388 & 1426 & 4704 & 4933 & 5853 & 6348 & 151 & 149 \\
-5 (angepasst)           & 1240 & 1350 & 3624 & 4678 & 3317 & 5497 & 179 & 176 \\
-\bottomrule
-\end{tabular}
-\caption{Leistung je Stufe in GFLOPS für $n = 1024$ und $n = 2048$ (Median aus
-fünf Läufen). Stufe~0 läuft auf einem Kern der jeweiligen Host-CPU}
-\label{tab:stufenmessung}
-\end{table}
+\pgfplotsset{
+    every axis/.append style={
+        font=\scriptsize,
+        grid style={gray!25, densely dotted}, ymajorgrids,
+        tick align=outside, tick pos=left,
+        legend style={draw=none, fill=none, font=\scriptsize},
+        legend cell align=left,
+    }
+}
+\begin{tikzpicture}
+\begin{axis}[
+    width=13.5cm, height=5.5cm, ybar, bar width=6pt, enlarge x limits=0.11,
+    ymin=0, ymax=180, ytick={0,25,50,75,100,125,150,175},
+    symbolic x coords={m3,m4,s2d,slok,rbaum,rbuilt}, xtick=data,
+    xticklabels={
+        {Matmul\\global (St.\,3)},
+        {Matmul\\Kachel ($T{=}16$)},
+        {Stencil\\2D global},
+        {Stencil\\lokal ($T{=}16$)},
+        {Reduktion\\Baum lokal},
+        {Reduktion\\eingebaut (CUB)}
+    },
+    xticklabel style={align=center, font=\scriptsize},
+    ylabel={Relative Leistung (\% von CUDA / CUB)},
+    legend style={at={(0.5,1.02)}, anchor=south, legend columns=3, /tikz/every even column/.append style={column sep=10pt}},
+    legend image code/.code={\draw[#1] (0cm,-0.08cm) rectangle (0.3cm,0.1cm);},
+]
+\addplot[fill=gray!60, draw=black]
+    coordinates {(m3,104) (m4,69) (s2d,97) (slok,101) (rbaum,96) (rbuilt,85)};
+\addlegendentry{RTX 5060 Ti}
+\addplot[fill=black, draw=black]
+    coordinates {(m3,108) (m4,72) (s2d,100) (slok,98) (rbaum,28) (rbuilt,77)};
+\addlegendentry{L40S}
+\addplot[fill=gray!25, draw=black]
+    coordinates {(m3,100) (m4,80) (s2d,81) (slok,162) (rbaum,5) (rbuilt,37)};
+\addlegendentry{H100}
+\draw[dashed, black!70, line width=0.7pt] ({rel axis cs:0,0}|-{axis cs:m3,100}) -- ({rel axis cs:1,0}|-{axis cs:m3,100});
+\end{axis}
+\end{tikzpicture}
+\caption[SYCL im Vergleich zu nativem CUDA über alle Fallbeispiele]{Leistung der SYCL-Varianten relativ zu nativem CUDA bzw.\ CUB (gestrichelte Linie = 100\,\%) bei der jeweils größten Problemgröße ($n=2048$, $n=8192$ bzw.\ $n=2^{26}$)}
+\label{fig:cuda_vergleich}
+\end{figure}
 
-\begin{table}[htbp]
-\centering
-\footnotesize
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{@{}l*{8}{>{\raggedleft\arraybackslash}p{0.95cm}}@{}}
-\toprule
- & \multicolumn{2}{c}{\textbf{RTX 5060 Ti}} & \multicolumn{2}{c}{\textbf{L40S}} & \multicolumn{2}{c}{\textbf{H100}} & \multicolumn{2}{c}{\textbf{Ryzen 5 5600X}} \\
-\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(l){8-9}
-\textbf{Stufe} & 1024 & 2048 & 1024 & 2048 & 1024 & 2048 & 1024 & 2048 \\
-\midrule
-0 (ein CPU-Kern)        & 4319 & --    & 6666 & --    & 5600 & --    & 4319 & --   \\
-1 (USM shared)          & 1,95 & 15,50 & 0,62 & 5,85  & 0,36 & 3,58  & 49,6 & 399  \\
-2 Kernel                & 1,96 & 15,47 & 0,62 & 5,85  & 0,35 & 3,57  & 52,5 & 399  \\
-\quad Transfer          & 1,14 & 4,16  & 0,61 & 2,17  & 0,70 & 2,65  & 0,90 & 4,97 \\
-2b Kernel und Transfer  & 3,33 & 19,90 & 1,70 & 9,30  & 1,72 & 6,96  & 68,4 & 612  \\
-3 Kernel ($W = 16$)     & 1,37 & 10,77 & 0,41 & 3,09  & 0,44 & 3,21  & 42,3 & 335  \\
-4 Kernel ($T = 16$)     & 1,55 & 12,05 & 0,46 & 3,48  & 0,37 & 2,71  & 14,2 & 115  \\
-\quad Transfer          & 1,53 & 4,06  & 0,59 & 3,29  & 0,72 & 2,55  & 0,70 & 4,64 \\
-5 Kernel (angepasst)    & 1,73 & 12,73 & 0,59 & 3,67  & 0,65 & 3,13  & 12,0 & 97,7 \\
-\quad erster Lauf mit Auswahl & 26,0 & 182 & 13,4 & 58,7 & 14,3 & 54,1 & 512 & 2291 \\
-\bottomrule
-\end{tabular}
-\caption{Laufzeit je Stufe in ms für $n = 1024$ und $n = 2048$ (Median aus fünf
-Läufen). Ab Stufe~2 sind Kernel- und Transferzeit getrennt erfasst, außer bei
-Stufe~2b. Die Transferzeit von Stufe~3 und~5 entspricht der von Stufe~2
-bzw.~4}
-\label{tab:zeiten}
-\end{table}
+\subsection{Matrixmultiplikation}\label{sec:e-matmul}
 
 \paragraph{Parallelisierung und Transfer (Stufen 1 bis 2b).}
-Den größten Sprung bringt Stufe~1. Bei $n = 1024$ ist sie auf der CPU rund
-90-mal so schnell wie das sequentielle Ausgangsprogramm, auf den GPUs
-2200-mal (RTX) bis 15\,800-mal (H100). Stufe~2 macht den Transfer sichtbar.
-Je schneller eine GPU rechnet, desto stärker fällt er ins Gewicht. Bei
-$n = 2048$ beträgt er auf der RTX ein Viertel, auf der H100 drei Viertel der
-Kernelzeit. Auf der CPU ist er vernachlässigbar. Buffer (Stufe~2b) sind auf
-keinem Gerät schneller als Stufe~2. Außer auf der RTX brauchen sie 12 bis
-64\,\% mehr Zeit.
+Den größten Sprung bringt Stufe~1 (Tabelle~\ref{tab:stufenmessung}). Bei
+$n = 1024$ ist sie auf der CPU rund 87-mal so schnell wie die bewusst einfache,
+nicht cache-optimierte \texttt{i-j-k}-Schleife aus Stufe~0, auf den GPUs
+2200-mal (RTX) bis 15\,600-mal (H100). Stufe~2 macht den Datentransfer sichtbar
+(Tabelle~\ref{tab:zeiten}). Je schneller eine GPU rechnet, desto stärker fällt
+er ins Gewicht: Bei $n = 2048$ beträgt er auf der RTX 27\,\% der Kernelzeit,
+auf der L40S 37\,\% und auf der H100 74\,\%. Auf der CPU ist er mit 1\,\%
+vernachlässigbar. Buffer (Stufe~2b) sind auf keinem Gerät schneller als
+Stufe~2; außer auf der RTX (+1 bis +7\,\%) benötigen sie 12 bis 64\,\% mehr
+Gesamtzeit. Zu beachten ist jedoch, dass in Stufe~2b die Buffer je Messlauf neu
+erzeugt und freigegeben werden, die Messwerte also auch Allokationskosten
+enthalten.
 
 \paragraph{Work-Groups und Kachelung (Stufen 3 und 4).}
 Schon das Festlegen der Work-Group-Größe (Stufe~3) steigert die Leistung
-gegenüber Stufe~2, auf RTX und L40S um 44 bis 89\,\%, auf der CPU um rund
-20\,\%. Nur die H100 wird bei $n = 1024$ um 20\,\% langsamer. Die Kachelung
-(Stufe~4) bringt bei $n = 2048$ gegenüber Stufe~2 28\,\% (RTX), 68\,\% (L40S)
-und 32\,\% (H100) mehr Leistung, auf der CPU sogar das 3,5-Fache. Auf RTX und
-L40S bleibt sie damit aber rund 10\,\% hinter Stufe~3 zurück, auf H100 und
-CPU ist sie klar schneller. Welche Optimierung sich lohnt, hängt also selbst
+gegenüber Stufe~2, auf RTX und L40S um 44 bis 89\,\% (vermutlich durch eine
+günstigere, zweidimensionale Zugriffsgeometrie für Caches), auf der CPU um
+19 bis 24\,\%. Nur die H100 wird bei $n = 1024$ um 20\,\% langsamer. Die
+Kachelung (Stufe~4) bringt bei $n = 2048$ gegenüber Stufe~2 28\,\% (RTX), 68\,\%
+(L40S) und 32\,\% (H100) mehr Leistung, auf der CPU sogar das 3,5-Fache, da die
+Blockbildung dort L1- und L2-Caches effektiv ausnutzt. Auf RTX und L40S bleibt
+Stufe~4 damit aber rund 11\,\% hinter Stufe~3 zurück; nur auf H100 und CPU ist
+sie klar schneller als Stufe~3. Welche Optimierung sich lohnt, hängt also selbst
 bei GPUs eines Herstellers vom Gerät ab.
 
 \paragraph{Kachelgröße und Performance-Portabilität.}
-Abbildung~\ref{fig:ergebnisse} zeigt die Effizienz jeder Kachelgröße, also
-ihre Leistung im Verhältnis zur besten Kachelgröße desselben Geräts. Die
-Performance-Portabilität (PP) ist das harmonische Mittel dieser Effizienzen
-über alle Geräte. Läuft eine Kachelgröße auf einem Gerät nicht, ist ihre PP
-null \cite{pennycook2016metric}. Auf allen GPUs ist $T = 16$ am schnellsten,
-auf der CPU $T = 32$ ($n = 1024$) bzw.\ $T = 64$ ($n = 2048$). Ausgerechnet
-$T = 64$ startet aber auf keiner GPU. Eine Work-Group hätte dann 4096
-Work-Items, die GPUs erlauben höchstens 1024. Die beste PP erreicht bei
-$n = 2048$ $T = 16$ (0,97), bei $n = 1024$ $T = 32$ (0,94).
+Abbildung~\ref{fig:ergebnisse} zeigt die Effizienz jeder Kachelgröße bei
+$n = 2048$ und die daraus berechnete PP (vollständige Werte für beide
+Problemgrößen inklusive Stufe~5 in Tabelle~\ref{tab:kacheln}). Auf allen GPUs
+ist die Kachelgröße $T = 16$ am schnellsten, auf der CPU hingegen $T = 32$
+($n = 1024$) bzw.\ $T = 64$ ($n = 2048$). Ausgerechnet $T = 64$ startet auf
+keiner GPU, da eine Work-Group mit 4096 Work-Items das Hardwarelimit von 1024
+überschreitet. Die beste PP unter den festen Werten erreicht bei $n = 2048$
+$T = 16$ ($0{,}97$), bei $n = 1024$ dagegen $T = 32$ ($0{,}94$).
 
 \begin{figure}[htbp]
 \centering
@@ -681,7 +876,7 @@ $n = 2048$ $T = 16$ (0,97), bei $n = 1024$ $T = 32$ (0,94).
 }
 \begin{tikzpicture}
 \begin{axis}[
-    width=8.5cm, ybar, bar width=4.5pt, enlarge x limits=0.16,
+    width=9.0cm, ybar, bar width=4.5pt, enlarge x limits=0.16,
     ymin=0, ymax=115, ytick={0,25,50,75,100},
     symbolic x coords={8,16,32,64}, xtick=data,
     xticklabels={{$T{=}8$\\PP 0{,}71},{$T{=}16$\\PP 0{,}97},{$T{=}32$\\PP 0{,}95},{$T{=}64$\\PP 0}},
@@ -705,123 +900,172 @@ $n = 2048$ $T = 16$ (0,97), bei $n = 1024$ $T = 32$ (0,94).
 \node[font=\scriptsize, rotate=90, anchor=west] at ([xshift=-4.5pt]axis cs:64,2) {startet nicht};
 \end{axis}
 \end{tikzpicture}
-\caption{Effizienz und Performance-Portabilität je Kachelgröße bei $n = 2048$}
+\caption[Effizienz und Performance-Portabilität je Kachelgröße ($n = 2048$)]{Effizienz (Application Efficiency) und Performance-Portabilität je Kachelgröße bei $n = 2048$ in Stufe~4}
 \label{fig:ergebnisse}
 \end{figure}
 
 \paragraph{Automatische Anpassung (Stufe 5).}
-Stufe~5 schließt $T = 64$ per Geräteabfrage aus, misst die übrigen
-Kachelgrößen kurz und wählt auf allen vier Geräten die beste. Im
-Dauerbetrieb erreicht sie auf den GPUs trotzdem 5 bis 43\,\% weniger
-Leistung als Stufe~4 mit derselben Kachelgröße. Vermutlich liegt das daran,
-dass DPC++ Specialization Constants für CUDA nur emuliert. Die Kachelgröße
-ist für den Compiler damit keine Konstante. Ihre PP liegt mit 0,95
-($n = 2048$) bzw.\ 0,76 ($n = 1024$) unter dem besten festen Wert, aber weit
-über der PP von 0 für $T = 64$. Der erste Lauf dauert bei $n = 1024$ wegen
-der Auswahl 3,6- bis achtmal so lang wie in Stufe~4. Schon ohne Auswahl ist
-er wegen der JIT-Kompilierung bis zu 14-mal so lang wie die folgenden Läufe.
+Stufe~5 schließt $T = 64$ auf den GPUs per Geräteabfrage aus, misst die übrigen
+Kachelgrößen kurz und wählt auf allen vier Geräten die jeweils beste ($T = 16$
+auf allen GPUs, $T = 32$ bzw.\ $T = 64$ auf der CPU). Auf den GPUs erreicht
+sie im Dauerbetrieb trotzdem 5 bis 43\,\% weniger Leistung als Stufe~4 mit
+derselben festen Kachelgröße. Ursache ist vermutlich, dass DPC++ Specialization
+Constants auf dem CUDA-Backend über einen Parameterpuffer emuliert
+\cite{dpcpp_spec_const}; die Kachelgröße steht dem PTX-Compiler somit nicht als
+Compile-Zeit-Konstante zur Verfügung. Auf der CPU (OpenCL mit nativer
+SPIR-V-Unterstützung) tritt dagegen kein solcher Einbruch auf: Stufe~5 liegt
+mit 179 bzw.\ 176\,GFLOPS klar vor Stufe~4 mit festem $T = 16$ und im Rahmen
+der Messstreuung auf dem Niveau der besten festen Kachelgröße
+(Tabelle~\ref{tab:kacheln}). Ihre PP liegt mit $0{,}94$ ($n = 2048$) bzw.\
+$0{,}76$ ($n = 1024$) zwar unter dem besten festen Wert, verhindert aber den
+Totalausfall ($\text{PP} = 0$) von $T = 64$. Der erste Lauf dauert bei
+$n = 1024$ wegen der Kandidatensuche 3,6- bis 8-mal so lang wie in Stufe~4;
+schon ohne Auswahl ist der erste Lauf wegen der JIT-Übersetzung bis zu 14-mal
+(H100, Stufe~1) bzw.\ 10-mal (CPU, Stufe~4) langsamer als der Median der
+Folgeläufe (Tabelle~\ref{tab:zeiten}).
 
-\begin{table}[htbp]
-\centering
-\footnotesize
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{@{}l*{7}{r}@{}}
-\toprule
- & \multicolumn{2}{c}{\textbf{RTX 5060 Ti}} & \multicolumn{2}{c}{\textbf{L40S}} & \multicolumn{2}{c}{\textbf{H100}} & \textbf{Ryzen} \\
-\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(l){8-8}
-\textbf{Variante} & SYCL & CUDA & SYCL & CUDA & SYCL & CUDA & SYCL \\
-\midrule
-\multicolumn{8}{@{}l}{\textit{Stencil, $n = 8192$}} \\
-2D, globaler Speicher          & 357  & 368  & 669  & 671  & 1552 & 1908 & 15,6 \\
-2D, Warten nach jedem Schritt  & 357  & --   & 661  & --   & 1517 & --   & 16,1 \\
-1D linearisiert                & 224  & --   & 483  & --   & 425  & --   & 11,7 \\
-lokaler Speicher ($T = 16$)    & 300  & 297  & 682  & 695  & 1237 & 765  & 8,7  \\
-\addlinespace
-\multicolumn{8}{@{}l}{\textit{Reduktion, $n = 2^{26}$}} \\
-Atomic je Work-Item            & 0,03 & 202  & 0,01 & 158  & 0,01 & 142  & 2,4  \\
-Baum im lokalen Speicher       & 404  & 419  & 206  & 738  & 111  & 2166 & 17,9 \\
-\texttt{reduce\_over\_group}   & 406  & --   & 209  & --   & 106  & --   & 17,1 \\
-eingebaut (\texttt{reduction}/CUB) & 356 & 419 & 551 & 715 & 1020 & 2792 & 16,0 \\
-\bottomrule
-\end{tabular}
-\caption{Effektive Bandbreite in GB/s für Stencil (256\,MB je Gitter) und
-Reduktion (256\,MB), Median aus fünf Läufen. -- = keine CUDA-Variante}
-\label{tab:weitere}
-\end{table}
+\paragraph{Vergleich mit CUDA.}
+Ohne lokalen Speicher (Stufe~3) liegt SYCL mit 100 bis 108\,\% auf allen drei
+GPUs mindestens gleichauf mit demselben Kernel in CUDA
+(Abbildung~\ref{fig:cuda_vergleich}, Tabelle~\ref{tab:matmul_cuda}). Die
+Abstraktion kostet hier keine Leistung. Mit Kachelung im lokalen Speicher
+(Stufe~4) fällt SYCL dagegen zurück und erreicht bei $T = 16$ nur 69\,\% (RTX),
+72\,\% (L40S) und 80\,\% (H100) der CUDA-Leistung, bei $T = 32$ 68 bis 75\,\%.
+Entscheidend ist der Richtungsunterschied: In CUDA beschleunigt die Kachelung
+mit $T = 16$ den Kernel auf allen drei GPUs deutlich, um 34\,\% auf der RTX,
+33\,\% auf der L40S und 48\,\% auf der H100, mit $T = 32$ auf der H100 sogar um
+60\,\%. Dass Stufe~4 in SYCL auf RTX und L40S rund 11\,\% langsamer ist als
+Stufe~3 und auf der H100 $T = 16$ statt $T = 32$ bevorzugt, liegt somit nicht
+am Algorithmus, sondern an der Codeerzeugung von DPC++ (auch bedingt durch die
+generische PTX-Übersetzung ohne \texttt{-{}-cuda-gpu-arch}) für lokalen Speicher
+und Barrieren. $T = 64$ startet auch in CUDA nicht; die Grenze von 1024 Threads
+je Block ist eine Eigenschaft der Hardware. Die Herstellerbibliothek cuBLAS
+\cite{nvidia_cublas} ist auf allen drei GPUs 5- bis 7-mal so schnell wie der
+jeweils schnellste selbst geschriebene CUDA-Kernel. Beide Modelle lassen ohne
+weitergehende Optimierungen wie Register-Blocking \cite{volkov2008gemm} den
+Großteil der Spitzenleistung liegen.
 
-\paragraph{Stencil und Reduktion.}
-Auch alle Varianten der beiden weiteren Fallbeispiele liefen ohne
-Codeänderung auf allen Geräten und rechneten korrekt
-(Tabelle~\ref{tab:weitere}). Beim Stencil erreicht die einfache SYCL-Variante
-97\,\% (RTX), 100\,\% (L40S) und 81\,\% (H100) der Bandbreite desselben
-Kernels in CUDA. Mit lokalem Speicher liegt SYCL auf RTX und L40S gleichauf
-und ist auf der H100 sogar um 62\,\% schneller. Wartet der Host nach jedem
-Zeitschritt, sinkt die Bandbreite um höchstens 2\,\%. Der linearisierte
-Indexraum kostet dagegen 28\,\% (L40S) bis 73\,\% (H100).
+\subsection{Stencil}\label{sec:e-stencil}
 
-Bei der Reduktion entscheidet die Übersetzung atomarer Operationen. Mit einem
-Atomic je Work-Item braucht SYCL 8,3\,s (RTX), 31\,s (L40S) und 39\,s (H100),
-CUDA 1,3 bis 1,9\,ms. Das ist ein Faktor von 6300 bis 20\,500. DPC++
-übersetzt die Addition auf Gleitkommazahlen für das CUDA-Backend in eine
-Compare-and-Swap-Schleife statt in den nativen Befehl, den CUDA nutzt. Das
-zeigt der erzeugte PTX-Code. Je mehr Rechenkerne um dieselbe Speicherzelle
-konkurrieren, desto teurer wird die Schleife. Die Baumreduktion im lokalen
-Speicher braucht nur ein Atomic je Work-Group. Sie erreicht auf der RTX
-96\,\% von CUDA, auf der L40S aber nur 28\,\% und auf der H100 5\,\%.
-Vermutlich wirkt auch hier die Schleife, das ist jedoch nicht belegt.
-\texttt{sycl::reduction} ist auf L40S und H100 die schnellste SYCL-Variante
-und erreicht 77 bzw.\ 37\,\% von CUB. Kleinere Probleme ($n = 2^{24}$, 64\,MB)
-passen in den L2-Cache der L40S und messen deshalb den Cache statt des
-Speichers. Sie sind nicht dargestellt.
+Beim Stencil erreicht die einfache 2D-SYCL-Variante 97\,\% (RTX), 100\,\%
+(L40S) und 81\,\% (H100) der Bandbreite desselben Kernels in CUDA
+(Abbildung~\ref{fig:cuda_vergleich}, Tabelle~\ref{tab:stencil}). Der
+zusätzliche Aufwand von lokalem Speicher mit Halo-Laden und Barriere lohnt sich
+kaum, da die Hardware-Caches die Nachbarschaftszugriffe großteils abfangen:
+Auf der L40S bringt er 2\,\%, auf RTX ($-16\,\%$) und CPU ($-44\,\%$) kostet er
+Bandbreite. Bemerkenswert ist die H100: Während lokaler Speicher in SYCL dort
+20\,\% Bandbreite kostet, bricht das identische CUDA-Gegenstück um 60\,\% ein,
+sodass SYCL auf der H100 um 62\,\% schneller ist (1237 gegen 765\,GB/s). Die
+genaue Ursache in der PTX-/SASS-Codeerzeugung der Halo-Schleife (etwa
+Registerdruck oder Adressrechnung) wurde nicht weiter untersucht.
+
+Wartet der Host nach jedem der 100 Zeitschritte, sinkt die Bandbreite bei
+$n = 8192$ um höchstens 2\,\%, weil die reine Kernelzeit ($0{,}35$ bis
+$1{,}5\text{\,ms}$ je Schritt) den Synchronisationsaufwand überdeckt. Der auf
+eine Dimension abgeflachte Indexraum kostet dagegen auf allen Geräten 25\,\%
+(CPU) bis 73\,\% (H100) Leistung. Anders als bei den von Abram et al.\
+\cite{abram2025sycl} untersuchten CPU-Kerneln überwiegen hier offenbar die in
+jedem Work-Item anfallende 64-Bit-Ganzzahldivision und Modulo-Operation durch
+$n - 2 = 8190$ bei der Rückrechnung der Koordinaten.
+
+\subsection{Reduktion}\label{sec:e-reduktion}
+
+Bei der Reduktion entscheidet die Übersetzung atomarer Operationen
+(Tabelle~\ref{tab:reduktion}). Addiert jedes Work-Item über
+\texttt{sycl::atomic\_ref} atomar auf das Gesamtergebnis, benötigt SYCL 8,3\,s
+(RTX), 31\,s (L40S) und 39\,s (H100), CUDA dagegen 1,3 bis 1,9\,ms -- ein
+Faktor von 6300 bis 20\,500. Das aus dem Geräte-IR von DPC++ mit \texttt{llc}
+erzeugte PTX belegt den Grund: Statt des nativen Gleitkommabefehls von CUDA
+erzeugt DPC++ für \texttt{atomic\_ref<float>::fetch\_add} eine
+Compare-and-Swap-Schleife (\texttt{atom.relaxed.gpu.global.cas.b32}), die den
+Wert liest, neu berechnet und nur zurückschreibt, wenn kein anderes Work-Item
+ihn inzwischen verändert hat. Je mehr Recheneinheiten konkurrieren, desto
+häufiger muss die Schleife wiederholt werden.
+
+Die Baumreduktion im lokalen Speicher benötigt nur noch ein Atomic je
+Work-Group. Sie erreicht auf der RTX 96\,\% von CUDA, fällt auf der L40S aber
+auf 28\,\% und auf der H100 auf 5\,\% zurück; vermutlich wirkt auch hier bei
+steigender Multiprozessor-Zahl dieselbe Compare-and-Swap-Schleife auf der
+einzelnen Zieladresse, was am PTX dieses Kernels jedoch nicht gesondert geprüft
+wurde. Das Gruppenkollektiv \texttt{reduce\_\allowbreak over\_\allowbreak group} vereinfacht zwar den
+Kernelcode, liefert auf allen vier Geräten aber praktisch dieselben Werte wie
+die manuelle Baumreduktion (406 vs.\ 404\,GB/s auf RTX, 209 vs.\ 206 auf L40S,
+106 vs.\ 111 auf H100, 17,1 vs.\ 17,9 auf der CPU), da ebenfalls abschließend ein
+\texttt{atomic\_ref} je Gruppe ausgeführt wird. Die eingebaute Reduktion
+\texttt{sycl::reduction} ist auf L40S und H100 die schnellste SYCL-Variante und
+erreicht 77 bzw.\ 37\,\% der Bibliothek CUB \cite{nvidia_cub}, während sie auf
+RTX (85\,\%) und CPU (16,0 vs.\ 17,9\,GB/s) knapp hinter den
+Work-Group-Varianten bleibt. Zwei unabhängige Messläufe auf der H100 zeigten
+für Stencil und Reduktion eine Abweichung von höchstens 1 bzw.\ 4\,\%.
 
 % ---------------------------------------------------------------------------
 \section{Diskussion}\label{sec:diskussion}
 % ---------------------------------------------------------------------------
 
 \paragraph{F1: Konzepte.}
-Herstellerbindung und mehrfache Codebasen löst bereits Stufe~1.
-Single-Source in Standard-C++ und Backends lassen denselben Quellcode auf
-allen Geräten laufen. Auf einem Rechner läuft sogar dieselbe ausführbare
-Datei ohne Neuübersetzung auf CPU und GPU. Den Konflikt
-zwischen Abstraktion und Kontrolle entschärft SYCL durch einen gestuften
-Einstieg (Tabelle~\ref{tab:stufen}). Ein einfacher Indexraum mit USM shared
-reicht für ein lauffähiges Programm. Expliziter Transfer, Work-Groups und
-lokaler Speicher geben schrittweise Kontrolle zurück. Buffer gehen den
-umgekehrten Weg. Sie nehmen dem Programmierer die Abhängigkeiten ab und
-kosten dafür bis zu 64\,\% Laufzeit.
+Herstellerbindung und mehrfache Codebasen löst bereits Stufe~1: Single-Source
+in Standard-C++ und Backends lassen denselben Quellcode auf allen getesteten
+Geräten laufen; auf demselben Rechner läuft sogar dieselbe ausführbare Datei
+ohne Neuübersetzung auf CPU und GPU\@. Den Konflikt zwischen Abstraktion und
+Kontrolle entschärft SYCL durch einen gestuften Einstieg
+(Tabelle~\ref{tab:stufen}). Ein einfacher Indexraum mit USM shared reicht für
+ein lauffähiges Programm. Expliziter Transfer, Work-Groups und lokaler Speicher
+geben schrittweise hardwarenahe Kontrolle zurück. Buffer gehen den umgekehrten
+Weg: Sie nehmen dem Programmierer die Abhängigkeiten ab, erschweren aber eine
+feingranulare Messung und kosten im untersuchten Aufbau (inklusive
+Allokation/Freigabe je Lauf) bis zu 64\,\% Gesamtlaufzeit.
 
 \paragraph{F2: Performance-Portabilität.}
-Funktional ist jede Stufe portabel, die Leistung ist es nicht von selbst.
-SYCL vereinheitlicht die Schnittstelle, nicht die Hardware. Die beste
-Kachelgröße der CPU startet auf keiner GPU, und dieselbe Optimierung wirkt
-selbst auf GPUs eines Herstellers unterschiedlich. Auch die Implementierung
-zählt. DPC++ emuliert Specialization Constants für CUDA, AdaptiveCpp bietet
-sie nur über eine eigene Erweiterung an. Das deckt sich mit früheren
-Studien \cite{deakin2020sycl}. Stufe~5 hebt die Bindung an Geräteparameter
-nicht auf, macht sie aber handhabbar. Sie verhindert den Abbruch und findet
-in einem einzigen Quellcode die beste Kachelgröße. Einen gut gewählten
-festen Wert schlägt sie wegen der Emulation aber nicht. Welche Parameter
+Funktional ist jede Stufe portabel, die Leistung ist es nicht von selbst. SYCL
+vereinheitlicht die Schnittstelle, nicht die Hardware: Die beste Kachelgröße
+der CPU startet auf keiner GPU, und dieselbe Optimierung wirkt selbst auf GPUs
+eines Herstellers unterschiedlich. Auch die Implementierung zählt. DPC++ emuliert
+Specialization Constants für CUDA \cite{dpcpp_spec_const}, während AdaptiveCpp
+sie nur über eine eigene Erweiterung anbietet \cite{adaptivecpp_ext}. Das deckt
+sich mit früheren Studien \cite{deakin2020sycl}. Stufe~5 hebt die Bindung an
+Geräteparameter nicht auf, macht sie aber handhabbar: Sie verhindert den Abbruch
+und findet in einem einzigen Quellcode die jeweils beste Kachelgröße. Einen gut
+gewählten festen Wert schlägt sie auf den GPUs wegen der Emulation nicht, auf
+der CPU ohne Emulation erreicht sie ihn dagegen nahezu. Welche Parameter
 variiert werden müssen, muss der Programmierer weiterhin selbst wissen.
-Die weiteren Fallbeispiele bestätigen das. Der speichergebundene Stencil
-portiert nahezu verlustfrei, die Reduktion dagegen hängt an der Übersetzung
-der atomaren Operationen. Dieselbe Variante liegt auf der RTX gleichauf mit
-CUDA und erreicht auf der H100 nur 5\,\%. Ob ein Kernel performance-portabel
-ist, hängt damit auch davon ab, welche Sprachmittel er nutzt und wie gut die
-Implementierung sie für das jeweilige Backend umsetzt.
+
+Die weiteren Fallbeispiele bestätigen dieses Bild. Ohne lokalen Speicher
+(Stufe~3) und beim einfachen 2D-Stencil erreicht SYCL die Leistung von nativem
+CUDA nahezu vollständig (81 bis 108\,\%). Große Leistungsunterschiede gegenüber
+CUDA entstehen dort, wo die Codeerzeugung der Implementierung für komplexe
+Sprachmittel ins Gewicht fällt: bei lokalem Speicher und Barrieren
+(Matrixmultiplikation Stufe~4: 69 bis 80\,\%, beim Stencil auf der H100 dagegen
+162\,\%) sowie insbesondere bei Gleitkomma-Atomics in der Reduktion
+(Baumreduktion 96\,\% auf RTX, aber nur 5\,\% auf H100). Ob ein Kernel
+performance-portabel ist, hängt damit stark davon ab, welche Sprachmittel er
+nutzt und wie gut der Compiler sie auf das jeweilige Backend abbildet.
 
 \paragraph{Grenzen.}
-Untersucht wurden drei Kernel, GPUs nur eines Herstellers und eine
-Implementierung. Die PP-Werte gelten nur für diese Gerätemenge
-\cite{pennycook2019implications}. Mit nativem CUDA verglichen wurden nur
-Stencil und Reduktion, nicht die Matrixmultiplikation. Die
-Zeiten wurden auf dem Host gemessen und enthalten das Einreichen der
-Aufträge. Profiling-Events würden vor allem kleine Matrizen genauer messen.
+Untersucht wurden drei Kernel, GPUs nur eines Herstellers (die AMD MI300A war
+im Messzeitraum nicht verfügbar) und nur eine SYCL-Implementierung (DPC++). Die
+berechneten PP-Werte gelten als Application Efficiency relativ zur besten
+eigenen Kachelgröße und nur für diese konkrete Gerätemenge
+\cite{pennycook2019implications}; gegen cuBLAS erreichen auch die
+handgeschriebenen CUDA-Kernel nur 14 bis 19\,\%. Weitere methodische Grenzen
+liegen im Aufbau: (1) DPC++ wurde für alle NVIDIA-GPUs generisch ohne
+\texttt{-{}-cuda-gpu-arch} übersetzt, während \texttt{nvcc} gezielt native
+Architekturen erzeugte; (2) es wurden fünf Wiederholungen je Punkt als Median
+erfasst, ohne Streuungsmaße oder Konfidenzintervalle auszuweisen (eine
+Doppelmessung auf der H100 ergab Abweichungen $\le 4\,\%$); (3) Stufe~0 bildet
+eine unoptimierte \texttt{i-j-k}-Basislinie, und für die CPU fehlt ein
+Vergleich mit OpenMP oder einer optimierten BLAS-Bibliothek; (4) in Stufe~2b
+enthalten die Buffer-Zeiten wiederkehrende Allokationen je Lauf; (5) die
+Host-Zeitmessung schließt bei kleinen Matrizen den Einreich-Overhead mit ein.
 
 \paragraph{Fazit.}
 SYCL hält sein Versprechen \enquote{einmal schreiben, überall ausführen} für
-die Korrektheit. Die Abstimmung für hohe Leistung nimmt es dem Programmierer
-aber nicht ab. Folgearbeiten sollten GPUs weiterer Hersteller wie die AMD
-MI300A und eine zweite Implementierung wie AdaptiveCpp einbeziehen.
+die funktionale Korrektheit. Die Abstimmung für hohe Leistung nimmt es dem
+Programmierer aber nicht ab, und im Detail entscheiden Compiler-Backends über
+den Abstand zu nativem CUDA\@. Folgearbeiten sollten GPUs weiterer Hersteller
+wie die AMD MI300A sowie AdaptiveCpp als zweite Implementierung einbeziehen
+und die PTX-/SASS-Codeerzeugung sowohl bei DPC++ mit gezielter
+Architekturvorgabe (\texttt{-{}-cuda-\allowbreak gpu-\allowbreak arch}) als auch beim H100-Stencil
+systematisch prüfen.
 
 \newpage
 \printbibliography[heading=bibintoc, title={Literaturverzeichnis}]
@@ -831,13 +1075,199 @@ MI300A und eine zweite Implementierung wie AdaptiveCpp einbeziehen.
 % ---------------------------------------------------------------------------
 \newpage
 \appendix
+\section{Messergebnisse}\label{sec:messungen}
+
+\subsection{Messbedingungen}\label{sec:messbedingungen}
+
+\begin{itemize}[nosep]
+    \item \textbf{SYCL:} DPC++~7.2 (Open-Source-Release von \texttt{intel/llvm}),
+    kompiliert mit \texttt{-fsycl -O3} und
+    \texttt{-fsycl-targets=\allowbreak nvptx64-\allowbreak nvidia-\allowbreak cuda,\allowbreak spir64}
+    ohne explizites \texttt{-{}-cuda-\allowbreak gpu-\allowbreak arch}. Das Zielgerät wird zur Laufzeit
+    über \texttt{ONEAPI\_\allowbreak DEVICE\_\allowbreak SELECTOR} gewählt: GPUs über das CUDA-Backend,
+    der Ryzen~5~5600X über die Intel OpenCL-CPU-Laufzeit. Das sequentielle
+    Ausgangsprogramm (Stufe~0) wird mit \texttt{g++ -O3 -std=c++17} übersetzt.
+    \item \textbf{Hardware:} Arbeitsplatzrechner mit AMD Ryzen~5~5600X (6 Kerne)
+    und NVIDIA GeForce RTX~5060~Ti (16\,GB, CUDA~13.4); DACHS-Cluster der
+    Hochschule Esslingen mit L40S (Host AMD EPYC~9254) und
+    H100 80\,GB HBM3 (Host AMD EPYC~9454), jeweils CUDA-Toolkit~12.8 auf
+    Treiber-CUDA~13.2.
+    \item \textbf{CUDA:} übersetzt mit \texttt{nvcc -O3 -std=c++17} und
+    \texttt{-arch=native} (RTX) bzw.\ auf DACHS mit \texttt{-gencode} für
+    \texttt{compute\_89}/\texttt{sm\_89} (L40S) und
+    \texttt{compute\_90}/\texttt{sm\_90} (H100).
+    Der Kernel im globalen Speicher nutzt feste $16 \times 16$-Blöcke
+    und entspricht damit Stufe~3 mit $W = 16$, da CUDA stets eine Blockgröße
+    verlangt. Der gekachelte Kernel im Shared Memory entspricht Stufe~4 für
+    $T \in \{8, 16, 32, 64\}$.
+    \item \textbf{cuBLAS:} SGEMM in einfacher Genauigkeit (FP32). Die
+    TF32-Tensor-Cores sind abgeschaltet
+    (\texttt{CUBLAS\_\allowbreak PEDANTIC\_\allowbreak MATH}), damit dieselbe
+    Rechengenauigkeit verglichen wird wie in den eigenen Kerneln.
+    \item \textbf{Problemgrößen:} Matrixmultiplikation $n = 1024$ und $n = 2048$
+    (Stufe~0 nur bis $n = 1024$). Stencil $n = 8192$ (256\,MB je Gitter) mit
+    100 Zeitschritten. Reduktion $n = 2^{26}$ (256\,MB). Kleinere Probleme
+    ($n = 2^{24}$, 64\,MB) passen in den L2-Cache der L40S (96\,MB) und messen
+    deshalb den Cache statt des Speichers; sie sind nicht dargestellt.
+    \item \textbf{Zeitmessung:} \texttt{std::chrono::steady\_clock} auf dem Host,
+    Median aus fünf Läufen nach einem getrennt erfassten ersten Lauf. Zwei
+    unabhängige Messläufe von Stencil und Reduktion auf der H100 zeigten
+    Abweichungen $\le 1\,\%$ (Stencil) bzw.\ $\le 4\,\%$ (Reduktion). Das
+    Kachelgrößen-Experiment (Tabelle~\ref{tab:kacheln}) wurde in einem eigenen
+    Durchlauf erfasst.
+\end{itemize}
+
+\subsection{Matrixmultiplikation}\label{sec:a-matmul}
+
+\begin{table}[H]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\caption[Matrixmultiplikation: Leistung je Stufe (GFLOPS)]{Matrixmultiplikation: Leistung je Stufe in GFLOPS für $n = 1024$ und $n = 2048$ (Median aus fünf Läufen). Stufe~0 läuft auf einem Kern der jeweiligen Host-CPU (Ryzen~5~5600X bzw.\ EPYC~9254 / 9454)}
+\label{tab:stufenmessung}
+\begin{tabular}{@{}l*{8}{>{\raggedleft\arraybackslash}p{0.95cm}}@{}}
+\toprule
+ & \multicolumn{2}{c}{RTX 5060 Ti} & \multicolumn{2}{c}{L40S} & \multicolumn{2}{c}{H100} & \multicolumn{2}{c}{Ryzen 5 5600X} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(l){8-9}
+Stufe & 1024 & 2048 & 1024 & 2048 & 1024 & 2048 & 1024 & 2048 \\
+\midrule
+0 (ein CPU-Kern)        & 0,5  & --   & 0,3  & --   & 0,4  & --   & 0,5 & --  \\
+1 (USM shared)          & 1102 & 1108 & 3489 & 2938 & 6044 & 4793 & 43  & 43  \\
+2 (USM device)          & 1094 & 1110 & 3471 & 2938 & 6110 & 4811 & 41  & 43  \\
+2b (Buffer, mit Transfer) & 645 & 863 & 1261 & 1847 & 1246 & 2468 & 31  & 28  \\
+3 (\texttt{nd\_range}, $W = 16$) & 1573 & 1595 & 5231 & 5563 & 4858 & 5351 & 51  & 51  \\
+4 (Kachelung, $T = 16$) & 1388 & 1426 & 4704 & 4933 & 5853 & 6348 & 151 & 149 \\
+5 (angepasst)           & 1240 & 1350 & 3624 & 4678 & 3317 & 5497 & 179 & 176 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3.5pt}
+\caption[Matrixmultiplikation: Laufzeit je Stufe (ms)]{Matrixmultiplikation: Laufzeit je Stufe in ms für $n = 1024$ und $n = 2048$ (Median aus fünf Läufen; exemplarisch mit erstem Lauf für Stufen~1, 4 und~5). Ab Stufe~2 sind Kernel- und Transferzeit getrennt erfasst, außer bei Stufe~2b}
+\label{tab:zeiten}
+\begin{tabular}{@{}l*{8}{r}@{}}
+\toprule
+ & \multicolumn{2}{c}{RTX 5060 Ti} & \multicolumn{2}{c}{L40S} & \multicolumn{2}{c}{H100} & \multicolumn{2}{c}{Ryzen 5 5600X} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(l){8-9}
+Stufe & 1024 & 2048 & 1024 & 2048 & 1024 & 2048 & 1024 & 2048 \\
+\midrule
+0 (ein CPU-Kern)              & 4319,38 & --     & 6665,88 & --    & 5600,27 & --    & 4319,38 & --      \\
+1 (USM shared)                & 1,95    & 15,50  & 0,62    & 5,85  & 0,36    & 3,58  & 49,64   & 398,64  \\
+\quad erster Lauf (JIT)       & 4,28    & 23,06  & 4,47    & 13,63 & 4,93    & 13,08 & 178,39  & 526,63  \\
+2 Kernel                      & 1,96    & 15,47  & 0,62    & 5,85  & 0,35    & 3,57  & 52,51   & 398,78  \\
+\quad Transfer                & 1,14    & 4,16   & 0,61    & 2,17  & 0,70    & 2,65  & 0,90    & 4,97    \\
+2b Kernel und Transfer        & 3,33    & 19,90  & 1,70    & 9,30  & 1,72    & 6,96  & 68,40   & 611,88  \\
+3 Kernel ($W = 16$)           & 1,37    & 10,77  & 0,41    & 3,09  & 0,44    & 3,21  & 42,33   & 334,61  \\
+4 Kernel ($T = 16$)           & 1,55    & 12,05  & 0,46    & 3,48  & 0,37    & 2,71  & 14,24   & 115,04  \\
+\quad Transfer                & 1,53    & 4,06   & 0,59    & 3,29  & 0,72    & 2,55  & 0,70    & 4,64    \\
+\quad erster Lauf (JIT)       & 3,22    & 16,55  & 3,42    & 8,85  & 3,29    & 7,25  & 142,91  & 245,22  \\
+5 Kernel (angepasst)          & 1,73    & 12,73  & 0,59    & 3,67  & 0,65    & 3,13  & 11,98   & 97,72   \\
+\quad erster Lauf mit Auswahl & 25,97   & 181,91 & 13,35   & 58,73 & 14,32   & 54,08 & 511,65  & 2291,03 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4.5pt}
+\caption[Matrixmultiplikation: Effizienz je Kachelgröße und PP]{Matrixmultiplikation: Effizienz in \% der besten festen Kachelgröße desselben Geräts und Performance-Portabilität (PP) für $n = 1024$ und $n = 2048$ (\textsuperscript{*}für PP auf 100\,\% gedeckelt)}
+\label{tab:kacheln}
+\begin{tabular}{@{}llrrrrr@{}}
+\toprule
+$n$ & Kachelgröße & RTX 5060 Ti & L40S & H100 & Ryzen 5 5600X & PP \\
+\midrule
+1024 & $T = 8$  & 86  & 85  & 70  & 44  & 0,66 \\
+     & $T = 16$ & 100 & 100 & 100 & 73  & 0,92 \\
+     & $T = 32$ & 95  & 90  & 92  & 100 & 0,94 \\
+     & $T = 64$ & startet nicht & startet nicht & startet nicht & 92 & 0 \\
+     & Stufe 5 (angepasst) & 88 ($T{=}16$) & 77 ($T{=}16$) & 57 ($T{=}16$) & 97 ($T{=}32$) & 0,76 \\
+\midrule
+2048 & $T = 8$  & 83  & 85  & 69  & 55  & 0,71 \\
+     & $T = 16$ & 100 & 100 & 100 & 88  & 0,97 \\
+     & $T = 32$ & 96  & 98  & 91  & 97  & 0,95 \\
+     & $T = 64$ & startet nicht & startet nicht & startet nicht & 100 & 0 \\
+     & Stufe 5 (angepasst) & 95 ($T{=}16$) & 95 ($T{=}16$) & 87 ($T{=}16$) & 106\textsuperscript{*} ($T{=}64$) & 0,94 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\caption[Matrixmultiplikation im Vergleich zu CUDA und cuBLAS]{Matrixmultiplikation im Vergleich zu CUDA und cuBLAS in GFLOPS bei $n = 2048$ (FP32 ohne TF32, Median aus fünf Läufen)}
+\label{tab:matmul_cuda}
+\begin{tabular}{@{}l*{6}{r}@{}}
+\toprule
+ & \multicolumn{2}{c}{RTX 5060 Ti} & \multicolumn{2}{c}{L40S} & \multicolumn{2}{c}{H100} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(l){6-7}
+Variante ($n = 2048$) & SYCL & CUDA & SYCL & CUDA & SYCL & CUDA \\
+\midrule
+Globaler Speicher ($W = 16$, Stufe~3) & 1595 & 1536  & 5563 & 5173  & 5351 & 5353  \\
+Kachelung ($T = 16$, Stufe~4)         & 1426 & 2055  & 4933 & 6883  & 6348 & 7949  \\
+Kachelung ($T = 32$, Stufe~4)         & 1362 & 1932  & 4815 & 6414  & 5774 & 8538  \\
+cuBLAS SGEMM (FP32)                   & --   & 14333 & --   & 35404 & --   & 46211 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Stencil}\label{sec:a-stencil}
+
+\begin{table}[H]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\caption[Stencil: effektive Bandbreite (GB/s)]{Stencil: effektive Bandbreite in GB/s (256\,MB je Gitter, 100 Zeitschritte, Median aus fünf Läufen; -- = keine CUDA-Variante)}
+\label{tab:stencil}
+\begin{tabular}{@{}l*{7}{r}@{}}
+\toprule
+ & \multicolumn{2}{c}{RTX 5060 Ti} & \multicolumn{2}{c}{L40S} & \multicolumn{2}{c}{H100} & Ryzen \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(l){8-8}
+Variante ($n = 8192$) & SYCL & CUDA & SYCL & CUDA & SYCL & CUDA & SYCL \\
+\midrule
+2D, globaler Speicher          & 357  & 368  & 669  & 671  & 1552 & 1908 & 15,6 \\
+2D, Warten nach jedem Schritt  & 357  & --   & 661  & --   & 1517 & --   & 16,1 \\
+1D linearisiert                & 224  & --   & 483  & --   & 425  & --   & 11,7 \\
+lokaler Speicher ($T = 16$)    & 300  & 297  & 682  & 695  & 1237 & 765  & 8,7  \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Reduktion}\label{sec:a-reduktion}
+
+\begin{table}[H]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\caption[Reduktion: effektive Bandbreite (GB/s)]{Reduktion: effektive Bandbreite in GB/s (256\,MB, Median aus fünf Läufen; -- = keine CUDA-Variante)}
+\label{tab:reduktion}
+\begin{tabular}{@{}l*{7}{r}@{}}
+\toprule
+ & \multicolumn{2}{c}{RTX 5060 Ti} & \multicolumn{2}{c}{L40S} & \multicolumn{2}{c}{H100} & Ryzen \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(l){8-8}
+Variante ($n = 2^{26}$) & SYCL & CUDA & SYCL & CUDA & SYCL & CUDA & SYCL \\
+\midrule
+Atomic je Work-Item                  & 0,03 & 202  & 0,01 & 158  & 0,01 & 142  & 2,4  \\
+Baum im lokalen Speicher             & 404  & 419  & 206  & 738  & 111  & 2166 & 17,9 \\
+\texttt{reduce\_over\_group}         & 406  & --   & 209  & --   & 106  & --   & 17,1 \\
+eingebaut (\texttt{reduction}/CUB)   & 356  & 419  & 551  & 715  & 1020 & 2792 & 16,0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\newpage
+\addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
 \section{Quellcode der Matrixmultiplikation}\label{sec:anhang}
 
 Die folgenden Listings zeigen den vollständigen Quellcode der Stufen~0 bis~5.
 Die Work-Group-Größe von Stufe~3 wird beim Übersetzen mit \texttt{-DWGSIZE=16}
 gesetzt, die Kachelgröße von Stufe~4 mit \texttt{-DTILE=8|16|32|64}. Stufe~5
-wählt sie zur Laufzeit. Das Gerät
-wird für alle Stufen über \texttt{ONEAPI\_DEVICE\_SELECTOR} gewählt.
+wählt sie zur Laufzeit. Das Gerät wird für alle Stufen über
+\texttt{ONEAPI\_DEVICE\_SELECTOR} gewählt.
 
 \subsection{Stufe 0 -- Sequentielles Ausgangsprogramm}\label{lst:stufe0}
 \lstinputlisting{code/Matmul/Stufe0/Normal/stufe0_sequentiell.cpp}

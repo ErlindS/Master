@@ -4,8 +4,8 @@
 // keine Parallelisierung. Dient als Ausgangspunkt und Referenz für
 // Laufzeit und Korrektheit.
 //
-// Bild für die Folie: drei verschachtelte Schleifen. Jedes Element C[i][j]
-// ist das Skalarprodukt aus Zeile i von A und Spalte j von B.
+// Drei verschachtelte Schleifen: Jedes Element C[i][j] ist das
+// Skalarprodukt aus Zeile i von A und Spalte j von B.
 
 #include "common.hpp"
 
