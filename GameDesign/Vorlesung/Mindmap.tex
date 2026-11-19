@@ -1,0 +1,304 @@
+\documentclass[11pt]{article}
+
+% --- Folienformat 16:9 (identisch zu Zeitgeist_Handel.tex, 960x540bp = 33.87x19.05cm) ---
+\usepackage[paperwidth=960bp, paperheight=540bp, margin=0pt]{geometry}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc, shapes.geometric, backgrounds, shadows}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+
+% --- Farbpalette ---
+\definecolor{bgCanvas}{RGB}{252, 251, 248}
+\definecolor{hkared}{RGB}{198, 42, 18}
+\definecolor{inkDark}{RGB}{38, 42, 48}
+\definecolor{inkMuted}{RGB}{105, 112, 122}
+
+\definecolor{colAgora}{RGB}{205, 152, 24}    % Agora & Kern-Kreislauf
+\definecolor{colSozial}{RGB}{42, 109, 184}    % Sozialer Treffpunkt & Gesellschaft
+\definecolor{colHandel}{RGB}{200, 75, 49}     % Handelsplatz & Wirtschaft
+\definecolor{colPolitik}{RGB}{120, 78, 178}   % Politik & Ordnung
+\definecolor{colWerte}{RGB}{42, 148, 92}      % Normen / Werte
+\definecolor{colInfra}{RGB}{30, 136, 142}     % Infrastruktur
+
+\tikzset{
+  % --- Knoten-Hierarchie (4 Ebenen) ---
+  agoraNode/.style = {
+    ellipse, draw=colAgora!85!black, line width=2.0pt, fill=colAgora!18, text=inkDark,
+    minimum width=3.15cm, minimum height=1.48cm, align=center,
+    font=\large\bfseries,
+    drop shadow={shadow xshift=0.6pt, shadow yshift=-1.1pt, opacity=0.14, fill=black}
+  },
+  pillarNode/.style = {
+    ellipse, draw=#1!85!black, line width=1.8pt, fill=#1!14, text=inkDark,
+    minimum width=3.95cm, minimum height=1.35cm, align=center, inner sep=4pt,
+    font=\normalsize\bfseries,
+    drop shadow={shadow xshift=0.55pt, shadow yshift=-1.0pt, opacity=0.12, fill=black}
+  },
+  conceptNode/.style = {
+    rounded corners=8pt, draw=#1!85!black, line width=1.15pt, fill=#1!8, text=inkDark,
+    minimum width=2.65cm, minimum height=0.88cm, align=center, inner xsep=8pt, inner ysep=4.5pt,
+    font=\small\bfseries,
+    drop shadow={shadow xshift=0.45pt, shadow yshift=-0.85pt, opacity=0.10, fill=black}
+  },
+  leafChip/.style = {
+    rounded corners=5pt, draw=#1!65, line width=0.8pt, fill=white, text=inkDark,
+    minimum height=0.54cm, align=center, inner xsep=6.5pt, inner ysep=2.8pt,
+    font=\scriptsize,
+    drop shadow={shadow xshift=0.35pt, shadow yshift=-0.7pt, opacity=0.08, fill=black}
+  },
+  leafAccent/.style = {
+    leafChip=#1, fill=#1!12, draw=#1!85!black, line width=0.95pt, font=\scriptsize\bfseries
+  },
+  % --- Kanten & Pfeile ---
+  mmBranch/.style = {
+    line width=1.35pt, draw=#1!80!black
+  },
+  mmTwig/.style = {
+    line width=1.0pt, draw=#1!72!black
+  },
+  coreArrow/.style = {
+    line width=1.65pt, draw=colAgora!85!black,
+    -{Stealth[length=2.8mm, width=2.0mm]},
+    preaction={draw=bgCanvas, line width=4.5pt, arrows=-}
+  },
+  relArrow/.style = {
+    line width=1.05pt, draw=#1!82!black,
+    -{Stealth[length=2.4mm, width=1.7mm]},
+    preaction={draw=bgCanvas, line width=4.0pt, arrows=-}
+  },
+  macroArrow/.style = {
+    line width=1.65pt, draw=#1!85!black,
+    -{Stealth[length=3.3mm, width=2.4mm]},
+    preaction={draw=bgCanvas, line width=5.2pt, arrows=-}
+  },
+  % --- Label-Badges ---
+  coreLabel/.style = {
+    font=\scriptsize\bfseries, text=colAgora!65!black, fill=bgCanvas,
+    draw=colAgora!45, line width=0.5pt, rounded corners=3pt,
+    inner xsep=3.5pt, inner ysep=1.8pt, align=center
+  },
+  relLabel/.style = {
+    font=\scriptsize\bfseries, text=#1!78!black, fill=bgCanvas,
+    rounded corners=2.5pt, inner xsep=2.5pt, inner ysep=1.5pt, align=center
+  },
+  macroLabel/.style = {
+    font=\footnotesize\bfseries, text=#1!82!black, fill=bgCanvas,
+    draw=#1!45, line width=0.6pt, rounded corners=3.5pt,
+    inner xsep=4pt, inner ysep=2pt, align=center
+  },
+}
+
+\begin{document}
+\begin{tikzpicture}[remember picture, overlay, shift={(current page.center)}]
+
+  % --- Seitenhintergrund & subtile Aura hinter dem Agora-Kern ---
+  \begin{scope}[on background layer]
+    \fill[bgCanvas] (current page.south west) rectangle (current page.north east);
+    \fill[colAgora!7, draw=colAgora!25, dashed, line width=0.8pt]
+      (-0.8, 0.2) ellipse (7.2cm and 4.15cm);
+  \end{scope}
+
+  % --- Titel (oben links) ---
+  \fill[hkared] (-16.1, 8.85) rectangle ++(0.18, -1.02);
+  \node[anchor=north west, font=\Large\bfseries, text=inkDark, inner sep=0pt]
+    at (-15.72, 8.83) {Mindmap: Agora};
+  \node[anchor=north west, font=\scriptsize, text=inkMuted, inner sep=0pt]
+    at (-15.72, 8.18) {Sozialer Treffpunkt $\cdot$ Politik $\cdot$ Handelsplatz};
+
+  % ==========================================================================
+  % KNOTEN
+  % ==========================================================================
+
+  % --- Ebene 0: Zentrum (mit doppeltem Innenring ohne double+shadow-Konflikt) ---
+  \node[agoraNode] (AG) at (-0.8, -0.1) {Agora};
+  \draw[colAgora!45, line width=0.8pt] (AG) ellipse (1.42cm and 0.61cm);
+
+  % --- Ebene 1: Drei Hauptsäulen ---
+  \node[pillarNode=colSozial]  (ST) at (-0.8, 2.75)  {Sozialer Treffpunkt};
+  \node[pillarNode=colHandel]  (H)  at (-5.6, -2.15) {Handelsplatz};
+  \node[pillarNode=colPolitik] (P)  at (4.0, -2.15)  {Politik};
+
+  % --- Ebene 2 & 3: Oben (Gesellschaft & Freizeit) ---
+  \node[conceptNode=colSozial] (F) at (-7.0, 5.2) {Freizeitaktivität};
+  \node[leafChip=colSozial]    (F1) at (-8.8, 7.25) {Spielen};
+  \node[leafChip=colSozial]    (F2) at (-5.4, 7.25) {Demonstrieren};
+
+  \node[conceptNode=colSozial] (M) at (0.6, 5.45)
+    {{\scriptsize\mdseries(unterschiedliche)}\\[-1pt]Menschen};
+  \node[leafChip=colSozial]    (M1) at (-1.5, 7.45) {Richter, Gauner};
+  \node[leafChip=colSozial]    (M2) at (1.5, 7.45)  {Kinder};
+  \node[leafAccent=colSozial]  (M3) at (4.5, 6.65)  {Arbeiter};
+
+  % --- Ebene 2: Links (Infrastruktur) ---
+  \node[conceptNode=colInfra]  (I) at (-12.5, 0.2) {Infrastruktur};
+
+  % --- Ebene 2: Unten (Wirtschaft) ---
+  \node[conceptNode=colHandel] (R) at (-6.4, -5.65) {Ressourcen};
+  \node[conceptNode=colHandel] (U) at (-0.8, -5.85) {Unternehmen};
+
+  % --- Ebene 2 & 3: Rechts (Werte & Ordnung) ---
+  \node[conceptNode=colWerte]  (N)  at (7.0, 2.75) {Normen / Werte};
+  \node[leafChip=colWerte]     (N1) at (7.6, 4.75) {Vertrauen};
+
+  \node[conceptNode=colPolitik] (G)  at (8.4, -0.55) {Gesetze};
+  \node[leafChip=colPolitik]    (G1) at (11.2, 0.45) {Steuern};
+  \node[leafChip=colPolitik]    (G2) at (11.3, -0.55) {Soziales};
+  \node[leafChip=colPolitik]    (G3) at (11.3, -1.55) {Grundwerte};
+
+  \node[conceptNode=colPolitik] (INS)  at (8.2, -3.65) {Institutionen};
+  \node[leafChip=colPolitik]    (INS1) at (11.2, -2.75) {Banken};
+  \node[leafChip=colPolitik]    (INS2) at (11.4, -3.65) {Bundestag};
+  \node[leafChip=colPolitik]    (INS3) at (11.1, -4.55) {Staat};
+
+  % ==========================================================================
+  % KANTEN & PFEILE
+  % ==========================================================================
+
+  % --- 1. Kern-Kreislauf um Agora (im Uhrzeigersinn) ---
+  \draw[coreArrow] (H.north) to[out=88, in=182]
+    node[coreLabel, pos=0.52]{Jobs, Waren} (ST.west);
+  \draw[coreArrow] (ST.east) to[out=-2, in=92]
+    node[coreLabel, pos=0.50]{erstellt} (P.north);
+  \draw[coreArrow] (P.west) --
+    node[coreLabel, pos=0.50]{definiert die Regeln} (H.east);
+
+  % --- 2. Organische Mindmap-Zweige (ungerichtet, geschmeidige C-Kurven) ---
+  \draw[mmBranch=colSozial] (ST.148) to[out=145, in=-25] (F.south east);
+  \draw[mmTwig=colSozial]   (F.115)  to[out=145, in=-85] (F1.south);
+  \draw[mmTwig=colSozial]   (F.65)   to[out=35, in=-95]  (F2.south);
+
+  \draw[mmBranch=colSozial] (ST.65)  to[out=52, in=-105] (M.south);
+  \draw[mmTwig=colSozial]   (M.118)  to[out=145, in=-85] (M1.south);
+  \draw[mmTwig=colSozial]   (M.78)   to[out=55, in=-95]  (M2.south);
+  \draw[mmTwig=colSozial]   (M.east) to[out=16, in=192]  (M3.west);
+
+  \draw[mmTwig=colWerte]    (N.north) to[out=52, in=-95] (N1.south);
+
+  \draw[mmTwig=colPolitik]  (G.east)       to[out=28, in=180]  (G1.west);
+  \draw[mmTwig=colPolitik]  (G.east)       --                  (G2.west);
+  \draw[mmTwig=colPolitik]  (G.east)       to[out=-28, in=180] (G3.west);
+
+  \draw[mmTwig=colPolitik]  (INS.east)     to[out=26, in=180]  (INS1.west);
+  \draw[mmTwig=colPolitik]  (INS.east)     --                  (INS2.west);
+  \draw[mmTwig=colPolitik]  (INS.east)     to[out=-26, in=180] (INS3.west);
+
+  % --- 3. Gerichtete Detail-Beziehungen ---
+  % Menschen -> Freizeitaktivität
+  \draw[relArrow=colSozial] (M.west) to[out=184, in=-2]
+    node[relLabel=colSozial, pos=0.50]{brauchen} (F.east);
+
+  % Infrastruktur-Anbindungen (ST & H)
+  \draw[relArrow=colSozial] (ST.175) to[out=192, in=28]
+    node[relLabel=colSozial, pos=0.46]{nutzt} (I.north east);
+  \draw[relArrow=colHandel] (H.166) to[out=168, in=-12]
+    node[relLabel=colHandel, pos=0.50]{benötigt} (I.east);
+
+  % Wirtschaft & Politik
+  \draw[relArrow=colHandel] (H.south west) to[out=250, in=84]
+    node[relLabel=colHandel, pos=0.68]{bietet an / nutzt} (R.north);
+  \draw[relArrow=colHandel] (H.south east) to[out=-52, in=140]
+    node[relLabel=colHandel, pos=0.68]{erstellt} (U.north west);
+  \draw[relArrow=colHandel] (U.west) --
+    node[relLabel=colHandel, pos=0.50]{nutzt} (R.east);
+  \draw[relArrow=colHandel] (U.north east) to[out=42, in=-128]
+    node[relLabel=colHandel, pos=0.50]{beeinflusst} (P.south);
+
+  % Politik -> Gesetze / Institutionen / Normen & Werte
+  \draw[relArrow=colPolitik] (P.east) to[out=28, in=180]
+    node[relLabel=colPolitik, pos=0.46]{erstellt} (G.west);
+  \draw[relArrow=colPolitik] (P.south east) to[out=-28, in=180]
+    node[relLabel=colPolitik, pos=0.46]{bildet} (INS.west);
+
+  \draw[relArrow=colSozial] (ST.12) to[out=6, in=176]
+    node[relLabel=colSozial, pos=0.50]{besitzt} (N.west);
+  \draw[relArrow=colPolitik] (P.north east) to[out=105, in=238]
+    node[relLabel=colPolitik, pos=0.50]{versucht\\[-1pt]umzusetzen} (N.south west);
+
+  % --- 4. Prominente äußere Wirkungskreisläufe (Macro-Pfeile) ---
+  % Infrastruktur -> Freizeitaktivität: ermöglicht
+  \draw[macroArrow=colInfra] (I.north) to[out=92, in=182]
+    node[macroLabel=colInfra, pos=0.46]{ermöglicht} (F.west);
+
+  % Politik -> Infrastruktur: fördert
+  \draw[macroArrow=colPolitik] (P.215) .. controls (1.5, -4.3) and (-9.2, -4.5) ..
+    node[macroLabel=colPolitik, pos=0.35]{fördert} (I.285);
+
+  % Unternehmen -> Infrastruktur: benötigen
+  \draw[macroArrow=colHandel] (U.south west) .. controls (-3.8, -7.55) and (-11.7, -7.25) ..
+    node[macroLabel=colHandel, pos=0.48]{benötigen} (I.248);
+
+  % Institutionen -> Unternehmen: helfen
+  \draw[macroArrow=colPolitik] (INS.south west) to[out=215, in=6]
+    node[macroLabel=colPolitik, pos=0.50]{helfen} (U.10);
+
+  % Unternehmen -> Normen / Werte: müssen zeigen (mittlerer Rechts-Orbit)
+  \draw[macroArrow=colHandel] (U.348)
+    .. controls (4.2, -7.25) and (13.4, -6.95) .. (13.5, -1.6)
+    node[macroLabel=colHandel, pos=0.55]{müssen\\[-1pt]zeigen}
+    .. controls (13.55, 1.95) and (11.2, 2.75) .. (N.east);
+
+  % Arbeiter -> Unternehmen: brauchen (äußerster Rechts-Orbit)
+  \draw[macroArrow=colSozial] (M3.east)
+    .. controls (9.8, 7.2) and (15.2, 5.2) .. (15.3, -1.5)
+    node[macroLabel=colSozial, pos=0.50]{brauchen}
+    .. controls (15.4, -7.9) and (7.0, -8.35) .. (U.south east);
+
+  % ==========================================================================
+  % LEGENDE (unten links, ohne verschachtelte tikzpicture-Umgebung)
+  % ==========================================================================
+  \begin{scope}[shift={(-16.1, -6.55)}]
+    \filldraw[fill=white!92!bgCanvas, draw=black!12, rounded corners=5pt, line width=0.6pt]
+      (0, 0) rectangle (4.55, -2.30);
+    \node[anchor=north west, font=\scriptsize\bfseries, text=inkDark, inner sep=0pt]
+      at (0.24, -0.18) {Legende};
+
+    % Zeile 1: Pfeil-Typen
+    \draw[colAgora!85!black, line width=1.4pt, -{Stealth[length=2.0mm, width=1.4mm]}]
+      (0.24, -0.66) -- (0.76, -0.66);
+    \node[anchor=west, font=\tiny, text=inkDark, inner sep=0pt] at (0.86, -0.66) {Kern-Kreislauf};
+
+    \draw[colSozial!80!black, line width=1.3pt]
+      (2.40, -0.66) -- (2.92, -0.66);
+    \node[anchor=west, font=\tiny, text=inkDark, inner sep=0pt] at (3.02, -0.66) {Mindmap-Zweig};
+
+    % Zeile 2: Pfeil-Typen
+    \draw[inkMuted, line width=1.0pt, -{Stealth[length=1.9mm, width=1.4mm]}]
+      (0.24, -1.04) -- (0.76, -1.04);
+    \node[anchor=west, font=\tiny, text=inkDark, inner sep=0pt] at (0.86, -1.04) {Wirkungsbezug};
+
+    \draw[inkMuted, line width=1.6pt, -{Stealth[length=2.3mm, width=1.7mm]}]
+      (2.40, -1.04) -- (2.92, -1.04);
+    \node[anchor=west, font=\tiny, text=inkDark, inner sep=0pt] at (3.02, -1.04) {Makro-Schleife};
+
+    % Trennlinie
+    \draw[black!10, line width=0.5pt] (0.24, -1.30) -- (4.31, -1.30);
+
+    % Zeile 3 & 4: Farbcodes
+    \fill[colSozial, rounded corners=1pt] (0.24, -1.58) rectangle ++(0.18, 0.18);
+    \node[anchor=west, font=\tiny, text=inkDark, inner sep=0pt] at (0.50, -1.49) {Gesellschaft};
+
+    \fill[colHandel, rounded corners=1pt] (1.72, -1.58) rectangle ++(0.18, 0.18);
+    \node[anchor=west, font=\tiny, text=inkDark, inner sep=0pt] at (1.98, -1.49) {Wirtschaft};
+
+    \fill[colPolitik, rounded corners=1pt] (3.12, -1.58) rectangle ++(0.18, 0.18);
+    \node[anchor=west, font=\tiny, text=inkDark, inner sep=0pt] at (3.38, -1.49) {Politik};
+
+    \fill[colWerte, rounded corners=1pt] (0.24, -1.98) rectangle ++(0.18, 0.18);
+    \node[anchor=west, font=\tiny, text=inkDark, inner sep=0pt] at (0.50, -1.89) {Werte};
+
+    \fill[colInfra, rounded corners=1pt] (1.72, -1.98) rectangle ++(0.18, 0.18);
+    \node[anchor=west, font=\tiny, text=inkDark, inner sep=0pt] at (1.98, -1.89) {Infrastruktur};
+  \end{scope}
+
+\end{tikzpicture}
+\end{document}
