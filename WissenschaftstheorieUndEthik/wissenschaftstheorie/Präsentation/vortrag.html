@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Theorienstatik</title>
+<style>
+:root{
+  --bg:#eceef0; --surface:#fbfcfd; --surface2:#f3f5f7;
+  --ink:#15181c; --ink2:#444b54; --muted:#79818b;
+  --line:#c3c9d0; --rule:#aab2bb;
+  --accent:#44596b; --accent-soft:#dfe5ea;
+  --shadow:0 1px 2px rgba(18,22,26,.07), 0 6px 18px rgba(18,22,26,.05);
+  --font:"Inter","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+}
+html[data-theme="dark"]{
+  --bg:#0e1114; --surface:#171b20; --surface2:#1d2229;
+  --ink:#e7eaed; --ink2:#b3bac2; --muted:#7d868f;
+  --line:#2d343c; --rule:#3a424b;
+  --accent:#9db4c6; --accent-soft:#222a32;
+  --shadow:none;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font-family:var(--font);
+  -webkit-font-smoothing:antialiased;font-feature-settings:"ss01","cv05";}
+
+#stage{position:fixed;inset:0;overflow:hidden}
+#cam{position:absolute;top:0;left:0;transform-origin:0 0;
+  transition:transform 1100ms cubic-bezier(.62,.02,.24,1);will-change:transform}
+
+/* ---------- Knoten ---------- */
+.node{position:absolute;background:var(--surface);border:2px solid var(--line);border-radius:18px;
+  padding:34px 42px;box-shadow:var(--shadow);
+  opacity:0;transform:translateY(14px) scale(.985);
+  transition:opacity 520ms ease, transform 520ms cubic-bezier(.3,0,.2,1), border-color 400ms ease, background 400ms ease,
+    left 1100ms cubic-bezier(.62,.02,.24,1), top 1100ms cubic-bezier(.62,.02,.24,1),
+    width 1100ms cubic-bezier(.62,.02,.24,1), height 1100ms cubic-bezier(.62,.02,.24,1);
+  display:flex;flex-direction:column;justify-content:center;pointer-events:none}
+.node.on{opacity:1;transform:none}
+.node .num{font-size:38px;color:var(--accent);font-variant-numeric:tabular-nums;letter-spacing:.06em;margin-bottom:10px}
+.node .t{font-size:90px;line-height:1.14;font-weight:600;letter-spacing:-.015em}
+.node .s{font-size:50px;line-height:1.3;color:var(--ink2);margin-top:18px;font-weight:400}
+.node .s em{color:var(--muted);font-style:normal}
+
+.node.root{background:var(--surface2);border-color:var(--rule);border-width:1.5px}
+.node.root .t{font-size:112px;letter-spacing:-.025em}
+.node.root .s{font-size:50px;color:var(--muted)}
+
+.node.sec{background:transparent;border:none;box-shadow:none;padding:0}
+.node.sec .t{font-size:112px;letter-spacing:-.025em}
+.node.sec .s{font-size:50px;color:var(--muted);margin-top:16px}
+.node.sec::after{content:"";display:block;width:180px;height:4px;background:var(--rule);margin-top:34px}
+
+.node.kid{background:var(--surface);min-height:200px}
+.node.kid .t{font-size:48px;font-weight:550;line-height:1.16}
+.node.kid .s{font-size:36px;margin-top:12px}
+
+.node.form{background:var(--surface2);border-style:solid}
+.node.form .t{font-family:var(--mono);font-size:44px;font-weight:500;letter-spacing:-.015em;line-height:1.45}
+.node.form .s{font-family:var(--font);font-size:34px}
+
+.node.key{border-color:var(--accent);background:var(--accent-soft)}
+/* Beispielkasten — der rote Faden */
+.node.ex{background:var(--accent-soft);border-color:var(--accent)}
+.node.ex .t{font-size:34px;letter-spacing:.04em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.node.ex .s{font-size:36px;line-height:1.52;color:var(--ink2);margin-top:16px}
+.node .s b{color:var(--ink);font-weight:600}
+
+/* Schlussbild */
+.node.final{background:var(--accent-soft);border-color:var(--accent);padding:44px 54px;min-height:0}
+.node.final .t{font-size:62px;letter-spacing:-.02em}
+.node.final .s{font-size:44px;line-height:1.9;margin-top:26px}
+.node.final .s b{color:var(--accent);font-variant-numeric:tabular-nums}
+.node.final .s em{color:var(--muted);font-style:normal}
+
+/* Gliederung */
+.node.agenda{background:transparent;border:none;box-shadow:none;padding:16px 0;min-height:0;
+  border-bottom:1.5px solid var(--line);border-radius:0;display:block}
+.node.agenda .t{display:inline;font-size:46px;color:var(--accent);font-variant-numeric:tabular-nums}
+.node.agenda .s{display:inline;font-size:44px;margin-left:44px;color:var(--ink)}
+.node.agenda .s em{color:var(--muted);font-style:normal}
+
+/* Netzdiagramm im Lösungsband */
+.node.net .s{margin-top:18px}
+.node.net svg{width:100%;height:auto;display:block}
+.node.net svg text{fill:currentColor}
+.node.net svg .bx{fill:var(--surface);stroke:var(--rule);stroke-width:2.5}
+.node.net svg .me{fill:var(--surface2);stroke:var(--accent);stroke-width:4}
+.node.net svg .ln{stroke:var(--accent);stroke-width:3;fill:none}
+.node.net svg .lb{fill:var(--accent);font-size:38px;letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+.node.net svg .ti{font-size:50px;font-weight:600}
+.node.net svg .su{font-size:36px;opacity:.72}
+
+/* Dauerstreifen mit der Beispieltheorie auf jeder Achsenfolie */
+.node.strip{background:transparent;border:none;border-bottom:2px solid var(--line);border-radius:0;
+  box-shadow:none;padding:0 0 26px 0}
+.node.strip .t{font-size:30px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.node.strip .s{font-size:40px;line-height:1.62;margin-top:16px}
+
+/* Folienmodus: unterste Ebene sieht aus wie eine gewöhnliche Folie */
+#cam[data-mode="slide"] .node.head{background:transparent;border:none;border-bottom:4px solid var(--rule);
+  border-radius:0;box-shadow:none;padding:0 0 26px 0}
+#cam[data-mode="slide"] .node.head .t{font-size:104px}
+#cam[data-mode="slide"] .node.head .s{font-size:48px;color:var(--muted)}
+#cam[data-mode="slide"] .node.kid{border-radius:12px}
+#cam[data-mode="slide"] .node.kid.form{min-height:0;padding:24px 34px}
+#cam[data-mode="slide"] .node.ex{padding:26px 34px}
+/* Ansichtspunkte im Folienmodus einzeilig */
+#cam[data-mode="slide"] .node.kid:not(.ex):not(.strip):not(.form){display:block;min-height:0;padding:22px 34px}
+#cam[data-mode="slide"] .node.kid:not(.ex):not(.strip):not(.form) .t,
+#cam[data-mode="slide"] .node.kid:not(.ex):not(.strip):not(.form) .s{display:inline}
+#cam[data-mode="slide"] .node.kid:not(.ex):not(.strip):not(.form) .s{margin-left:40px}
+/* Lösungsband */
+#cam[data-mode="slide"] .node.ex .s{font-size:38px;line-height:1.5}
+
+.node.q{background:transparent;border:none;box-shadow:none;align-items:flex-start}
+.node.q .t{font-size:170px;letter-spacing:-.035em;font-weight:600}
+.node.q .s{font-size:44px;color:var(--muted);margin-top:22px}
+
+/* ---------- Kanten ---------- */
+#cam.measuring, #cam.measuring *{transition:none !important}
+
+#cam[data-z="far"] .node.head .s{opacity:0;height:0;margin-top:0;overflow:hidden;transition:opacity 260ms ease}
+#cam[data-z="near"] .node.head .s{opacity:1;transition:opacity 500ms ease 250ms}
+
+#wires{position:absolute;top:0;left:0;overflow:visible;pointer-events:none}
+#wires path{fill:none;stroke:var(--rule);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round;
+  transition:stroke-dashoffset 760ms cubic-bezier(.55,0,.25,1), opacity 300ms ease;opacity:0}
+#wires path.on{opacity:1}
+
+/* ---------- HUD ---------- */
+#hud{position:fixed;left:0;right:0;bottom:0;height:46px;display:flex;align-items:center;gap:20px;
+  padding:0 24px;font-size:13px;color:var(--muted);letter-spacing:.055em;text-transform:uppercase;
+  background:linear-gradient(to top,var(--bg) 55%,transparent);z-index:20}
+#hud b{font-weight:500;color:var(--ink2);text-transform:none;letter-spacing:.01em;font-size:14px}
+#bar{position:fixed;left:0;top:0;height:2px;background:var(--accent);width:0;
+  transition:width 600ms cubic-bezier(.5,0,.2,1);z-index:21}
+#clock{margin-left:auto;font-variant-numeric:tabular-nums;font-size:13px}
+#clock.run{color:var(--ink2)}
+
+#notes{position:fixed;left:24px;right:24px;bottom:58px;max-width:900px;background:var(--surface);
+  border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:8px;padding:16px 20px;
+  font-size:17px;line-height:1.5;color:var(--ink2);box-shadow:var(--shadow);z-index:19;display:none}
+#notes.on{display:block}
+#notes .cue{display:block;font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+
+#help{position:fixed;inset:0;background:color-mix(in srgb,var(--bg) 93%,transparent);z-index:30;
+  display:none;align-items:center;justify-content:center}
+#help.on{display:flex}
+#help div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:34px 42px;
+  box-shadow:var(--shadow);font-size:18px;line-height:2.05}
+#help kbd{font-family:var(--mono);font-size:15px;background:var(--surface2);border:1px solid var(--line);
+  border-bottom-width:2px;border-radius:5px;padding:2px 8px;margin-right:12px;color:var(--ink)}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<div id="stage"><div id="cam"><svg id="wires"></svg></div></div>
+<div id="hud"><span id="chap"></span><b id="cue"></b><span id="clock">00:00</span></div>
+<div id="notes"><span class="cue">Notiz</span><span id="ntext"></span></div>
+<div id="help"><div>
+  <p><kbd>&rarr;</kbd> weiter &nbsp; <kbd>&larr;</kbd> zurück</p>
+  <p><kbd>N</kbd> Notizen &nbsp; <kbd>T</kbd> hell / dunkel</p>
+  <p><kbd>O</kbd> Gesamtkarte &nbsp; <kbd>Pos1</kbd> Anfang</p>
+  <p><kbd>L</kbd> Uhr starten / anhalten &nbsp; <kbd>F</kbd> Vollbild &nbsp; <kbd>R</kbd> Layout neu berechnen</p>
+  <p><kbd>?</kbd> schließen</p>
+</div></div>
+
+<script>
+/* =======================================================================
+   SZENE
+   ===================================================================== */
+const REGIONS = [
+{ id:'A', kind:'root', title:'Theorie',
+  chap:'5.3.1 · Struktur wissenschaftlicher Theorien',
+  strip:{t:'Unsere Beispieltheorie',
+         s:'<b>K</b>&nbsp;&nbsp; Eine Infektion erhöht die Körpertemperatur.<br>'+
+           '<b>Z</b>&nbsp;&nbsp; Thermometer 3 Minuten unter der Zunge: erhöhte Körpertemperatur ⟺ Anzeige über 38 °C.<br>'+
+           '<b>H</b>&nbsp;&nbsp; Anna hat eine Infektion · das Thermometer ist geeicht · nichts Heißes getrunken.<br>'+
+           '<b>P</b>&nbsp;&nbsp; Das Thermometer zeigt mehr als 38 °C.'},
+  card:{t:'Unser Beispiel: die Fiebertheorie',
+        s:'<b>K</b>&nbsp; Eine Infektion löst eine Immunreaktion aus, die die Körpertemperatur erhöht.<br>'+
+          '<b>Z</b>&nbsp; Thermometer 3 Minuten unter der Zunge: erhöhte Körpertemperatur ⟺ Anzeige über 38 °C.<br>'+
+          '<b>H</b>&nbsp; Hilfshypothesen: Anna hat eine Infektion · das Thermometer ist geeicht · sie hat nichts Heißes getrunken.<br>'+
+          '<b>P</b>&nbsp; Das Thermometer zeigt mehr als 38 °C.',
+        note:'Die vier Zeilen vorlesen. Dann ansagen: Wir stellen jetzt vier verschiedene Fragen an genau diese Liste — die Liste ändert sich nie, nur die Frage.'},
+  intro:'Kapitel 5 fragt: Wie sind Theorien gebaut und wie bewertet man sie empirisch? Schurz gliedert T auf viererlei Weise. Entscheidend: das sind vier Schnitte durch dasselbe Objekt, keine Hierarchie.',
+  heads:[
+   { n:'(1.)', t:'Sprache', s:'Welche Begriffe sind zugelassen?',
+     note:'Achse 1 teilt den Wortschatz. 2 min.',
+     kids:[
+      {t:'logisch-mathematisch', s:'Sagen nichts über die Welt, sie halten die Sätze zusammen &nbsp;— &nbsp;∀ · → · = · d/dt', note:'Trägt keinen Weltinhalt. Kommt in BEIDEN Sprachen vor — darum bei Schurz immer „neben den logisch-mathematischen Begriffen“.'},
+      {t:'empirisch / vortheoretisch', s:'Feststellbar, ohne die Theorie zu glauben &nbsp;— &nbsp;Ort, Zeit, Zeigerstellung, Anzeige', note:'Kriterium: Zwei Leute, die über T uneins sind, können sich hier einigen. „Vortheoretisch“ ist relativ zu T — nicht absolut.'},
+      {t:'theoretisch', s:'Erst durch die Theorie eingeführt, nicht direkt beobachtbar &nbsp;— &nbsp;Masse, Kraft, Infektion', note:'Wird erst DURCH T eingeführt, nicht direkt beobachtbar, Bedeutung hängt an den Gesetzen.'},
+      {k:'form', t:'L(T)  ⊃  Lₑ(T)', s:'Die Gesamtsprache enthält alle drei Sorten, die Teilsprache lässt die theoretischen weg', note:'Die Pointe der Achse: Lₑ(T) ist das Interface zur Erfahrung. F = m·a ist dort nicht einmal formulierbar — die Begriffe fehlen.'},
+      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>logisch-math.</b> ∀ · = &nbsp;&nbsp; <b>beobachtbar</b> Anzeige „38,4“ · 3 Minuten · Zunge &nbsp;&nbsp; <b>theoretisch</b> Infektion · Immunreaktion · Körpertemperatur<br><b>P</b> steht in Lₑ(T) &nbsp;·&nbsp; <b>K</b> steht dort <b>nicht</b> — „Infektion“ sieht man nicht.', note:'Warum ist Körpertemperatur theoretisch? Weil man immer nur eine Anzeige sieht, nie die Temperatur selbst. Faustregel: Streiche alle theoretischen Begriffe aus einem Satz — bleibt ein vollständiger Satz übrig, gehört er zur Teilsprache.'},
+     ]},
+   { n:'(2.)', t:'Axiom / Konsequenz', s:'Logische Natur der Sätze',
+     note:'Achse 2 teilt die Sätze. 2 min.',
+     kids:[
+      {t:'Axiome — Ax(T)', s:'Werden vorausgesetzt, nicht abgeleitet &nbsp;— &nbsp;Kernaxiome ebenso wie Hilfshypothesen', note:'Schurz identifiziert die Theorie mit Ax(T) — nicht mit der Wolke von allem, was folgt.'},
+      {t:'Konsequenzen — C(T)', s:'Folgen logisch oder probabilistisch aus den Axiomen &nbsp;— &nbsp;relevanter Gehalt Cₑ(T)', note:'Cₑ filtert leere Mitläufer heraus (Def. 3.12-3): „A oder der Mond ist aus Käse“ folgt formal, sagt aber nichts.'},
+      {t:'„natürliche“ Axiome', s:'Konjunktiv unzerlegbar — sonst ist nicht sagbar, <em>welcher</em> Teil falsifiziert wurde', note:'Man darf die Theorie NICHT als ein Riesenaxiom K1∧K2∧K3 schreiben. Sonst ist nicht mehr sagbar, welcher Teil falsifiziert wurde. Wird bei Piaget unmittelbar wichtig.'},
+      {k:'form', t:'Lagrange  ≠  Hamilton', s:'Dieselbe Mechanik, zwei Axiomatisierungen: Axiom ist eine Rolle, keine Eigenschaft des Satzes', note:'Darum: „Axiom“ ist eine ROLLE im System, keine Eigenschaft des Satzes. Energieerhaltung ist bei Newton Konsequenz, bei Lagrange fast Axiom.'},
+      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>Axiome — vorausgesetzt</b> K · Z · H &nbsp;&nbsp;&nbsp; <b>Konsequenz — ausgerechnet</b> P<br>Auch „das Thermometer ist geeicht“ ist ein Axiom: nicht heilig, sondern nicht abgeleitet.', note:'Dieselben vier Zeilen, andere Frage. Betonen: Auch die banale Annahme „das Thermometer ist geeicht“ ist ein Axiom.'},
+     ]},
+   { n:'(3.)', t:'Satzarten', s:'Begriffliche Natur der Sätze — welche Begriffe stehen im Satz?',
+     note:'Achse 3 ist das Scharnier: Achse 1 angewandt auf einzelne Sätze. 2 min.',
+     kids:[
+      {t:'rein theoretisch', s:'Enthält neben Logik und Mathematik nur theoretische Begriffe &nbsp;— &nbsp;F = G·m₁m₂/r²', note:'Nur theoretische Begriffe neben Logik/Mathematik.'},
+      {t:'gemischt', s:'Verbindet beide Sorten; die wichtige Untermenge sind die <em>Zuordnungsgesetze</em>', note:'Die wichtige Untermenge: Zuordnungsgesetze verbinden einen empirischen mit einem theoretischen Begriff. Aber nicht jeder gemischte Satz ist eines — Fa ∧ φa verbindet nichts.'},
+      {t:'empirisch', s:'Enthält nur Beobachtbares — nur solche Sätze kollidieren direkt mit den Daten', note:'Nur empirische/vortheoretische Begriffe. Das ist die Angriffsfläche gegenüber der Erfahrung.'},
+      {k:'form', t:'∀x∀t ( Bxt → ( τx ↔ Rxt ) )', s:'Testbedingung B, theoretischer Begriff τ, empirische Reaktion R &nbsp;— &nbsp;B und R aus Lₑ(T)', note:'Testbedingung B, theoretischer Begriff τ, empirische Reaktion R. Diese Formel kommt bei Piaget als Indikatorgesetz wieder.'},
+      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>rein theoretisch</b> K &nbsp;&nbsp; <b>gemischt — Zuordnungsgesetz</b> Z &nbsp;&nbsp; <b>empirisch</b> P<br>Ohne Z keine Zahl auf dem Display — die Theorie sagte dann überhaupt nichts vorher.', note:'Z ist die Brücke. Unterschied zu (2.) laut sagen: Das hier sieht man dem einzelnen Satz an, die Rolle als Axiom nicht.'},
+     ]},
+   { n:'(4.)', t:'Kern / Peripherie', s:'Epistemischer Status der Axiome',
+     note:'Achse 4 teilt nur die AXIOME — nicht die Konsequenzen. 2 min.',
+     kids:[
+      {t:'Kern', s:'Ändert man ihn, ist es eine andere Theorie — er definiert ihre historische Identität', note:'Kern geändert = andere Theorie. Genau darum ging der Streit um Piaget.'},
+      {t:'Spezialgesetze', s:'Kernnäher oder kernferner; verfeinerbar, ohne den Kern anzutasten', note:'Die Unterscheidung ist graduell, kein scharfer Schnitt.'},
+      {t:'Peripherie', s:'Systembedingungen und Hilfshypothesen — betreffen nur die aktuelle Theorieversion', note:'Betrifft nur die aktuelle Theorieversion. Wird sie geändert, ändert sich die Version, nicht die Theorie.'},
+      {k:'form', t:'nur für Ax(T) unproblematisch', s:'Für Konsequenzen willkürlich: sie folgen aus Kernaxiom <em>plus</em> peripherer Hypothese', note:'Schurz schränkt selbst ein. Für Konsequenzen ist die Zuordnung willkürlich — und genau daraus entsteht der Holismus in 5.4.1.'},
+      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>Kern</b> K &nbsp;&nbsp; <b>Indikatorgesetz</b> Z &nbsp;&nbsp; <b>Peripherie</b> H<br><b>Das Thermometer zeigt 36,8. Wer ist schuld — K, Z oder H?</b>', note:'Die Schlussfrage offen stehen lassen — sie ist die Brücke zu 5.4.1 und zu Piaget. In der Praxis repariert man zuerst die Peripherie: neues Thermometer. Erst wenn das immer wieder scheitert, rührt man an K.'},
+     ]}
+  ],
+  synth:{ k:'key form', t:'empirischer Gehalt  =  C(T)  ∩  Lₑ(T)', s:'Achse (2) geschnitten mit Achse (1)',
+          from:['A1k4','A2k2','A3k3'],
+          note:'Die Zielaussage von 5.3.1: Keine Achse allein liefert den empirischen Gehalt. Er ist ein SCHNITT — deshalb braucht man alle vier Einteilungen. Hinweis geben: dasselbe Raster tragen wir gleich an Piaget heran.'},
+  mindnote:'Gesamtbild stehen lassen und kurz schweigen. Hier sieht man, dass die vier Achsen dasselbe Objekt aus vier Richtungen zerlegen.',
+  qnote:'Rückfallfragen: Warum darf man die Theorie nicht als ein einziges Axiom schreiben? Ist „Temperatur“ empirisch oder theoretisch? → Überleitung zu 5.3.2.'
+},
+
+{ id:'B', kind:'sec', title:'5.3.2  Theoriennetze', sub:'Intertheoretische Relationen und Arten theoretischer Begriffe · 5 min',
+  chap:'5.3.2 · Theoriennetze',
+  strip:{t:'Unsere Beispieltheorie',
+         s:'<b>K</b>&nbsp;&nbsp; Eine Infektion erhöht die Körpertemperatur.<br>'+
+           '<b>Z</b>&nbsp;&nbsp; Thermometer 3 Minuten unter der Zunge: erhöhte Körpertemperatur ⟺ Anzeige über 38 °C.<br>'+
+           '<b>H</b>&nbsp;&nbsp; Anna hat eine Infektion · das Thermometer ist geeicht · nichts Heißes getrunken.<br>'+
+           '<b>P</b>&nbsp;&nbsp; Das Thermometer zeigt mehr als 38 °C.'},
+  intro:'Bisher stand T isoliert da. Das war eine Idealisierung — reale Theorien hängen in einem Netz. Daraus folgt: „theoretisch“ ist keine Eigenschaft, sondern eine Relation.',
+  heads:[
+   { n:'', t:'Drei Relationen', s:'wie Theorien im Netz verbunden sind', note:'1,5 min. Nicht in den Relationen versinken — sie sind das Vehikel für die Begriffstypologie.',
+     kids:[
+      {t:'Spezialisierung', s:'hierarchische Theorienverbände', note:'Allgemeine Mechanik → Gravitationsmechanik → Planetenbewegung.'},
+      {t:'Vortheoretizität', s:'nichtempirische Begriffe von T₁ ⊂ denen von T₂', note:'Kinematik (Ort, Zeit) ist Vortheorie der Mechanik (Ort, Zeit, Masse, Kraft).'},
+      {t:'Reduktion', s:'strikt oder approximativ · verbindet <em>heterogene</em> Theorien', note:'Gasgesetz → statistische Mechanik; klassische Mechanik → SRT für v ≪ c. Die ersten beiden Relationen identifizieren gleichlautende Begriffe, die Reduktion muss sie erst umdeuten.'},
+      {k:'ex net', ex:1, t:'Unser Beispiel im Netz', s:'<svg viewBox="0 0 2900 700" xmlns="http://www.w3.org/2000/svg"><path class="ln" d="M1450 140 V280"/><path class="ln" d="M680 350 H1080"/><path class="ln" d="M1820 350 H2220"/><path class="ln" d="M1450 420 V560"/><rect class="bx" x="1030" y="20" width="840" height="120" rx="14"/><text class="ti" x="1450" y="97" text-anchor="middle">Theorie der Immunreaktion</text><rect class="me" x="1080" y="280" width="740" height="140" rx="14"/><text class="ti" x="1450" y="343" text-anchor="middle">Fiebertheorie</text><text class="su" x="1450" y="392" text-anchor="middle">unser Theorieelement</text><rect class="bx" x="40" y="295" width="640" height="110" rx="14"/><text x="360" y="345" text-anchor="middle" style="font-size:42px;font-weight:600">Temperatur- und</text><text x="360" y="389" text-anchor="middle" style="font-size:42px;font-weight:600">Zeitmessung</text><rect class="bx" x="2220" y="295" width="640" height="110" rx="14"/><text class="ti" x="2540" y="367" text-anchor="middle">Mikrobiologie</text><rect class="bx" x="1030" y="560" width="840" height="120" rx="14"/><text class="ti" x="1450" y="618" text-anchor="middle">Immunologie</text><text class="su" x="1450" y="662" text-anchor="middle">Pyrogene, Sollwert im Hypothalamus</text><text class="lb" x="1478" y="222" text-anchor="start">Spezialisierung</text><text class="lb" x="880" y="322" text-anchor="middle">Vortheorie</text><text class="lb" x="2020" y="322" text-anchor="middle">externe Theorie</text><text class="lb" x="1478" y="502" text-anchor="start">Reduktion</text></svg>', note:'Jetzt der Perspektivwechsel: Bisher war die Fiebertheorie das Ganze. Ab hier ist sie ein Theorieelement unter anderen. Die vier Nachbarn einzeln benennen und jeweils die Relation dazusagen — oben Spezialisierung, links Vortheorie, rechts externe Theorie, unten Reduktion.'}
+     ]},
+   { n:'', t:'Begriffsarten', s:'fünf disjunkte Kategorien theoretischer Begriffe', note:'2 min. Das ist der Ertrag des Abschnitts.',
+     kids:[
+      {t:'empirisch', s:'rot, Zeigerstellung', note:'Beobachtungs- und empirische Dispositionsbegriffe.'},
+      {t:'vortheoretisch', s:'Ortsfunktion — erklärt in der Kinematik', note:'Durch eine unproblematische Vortheorie erklärt, oft über eine Messkette.'},
+      {t:'T-theoretisch', s:'Masse, Kraft — T selbst liefert das Zuordnungsgesetz', note:'Hier schließt sich der Kreis zu Achse (3).'},
+      {t:'extern theoretisch', s:'Ladung in der chemischen Atomtheorie', note:'Von einer anderen Theorie im Netz erklärt, die KEINE Vortheorie von T ist. Ohne diese Kategorie müsste man sich immer auf das ganze Netz beziehen — „enorm unpraktisch“.'},
+      {k:'key', t:'spekulativ', s:'nirgends im Netz an ein Zuordnungsgesetz angebunden', note:'Kein Aufzählungsrest, sondern ein Kritikinstrument: solche Begriffe sind ohne empirischen Gehalt.'},
+      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>empirisch</b> die Anzeige „38,4“ &nbsp;&nbsp; <b>vortheoretisch</b> Grad Celsius, Minute &nbsp;&nbsp; <b>T-theoretisch</b> Infektion, erhöhte Körpertemperatur — Z liefert die Messvorschrift<br><b>extern theoretisch</b> Bakterienstamm, erklärt in der Mikrobiologie &nbsp;&nbsp; <b>spekulativ</b> ein „Krankheitsdämon“ — nirgends eine Messvorschrift', note:'Die fünf Kategorien einmal an unserer Theorie durchgehen. Die letzte ist der Testfall: Wer einen Krankheitsdämon annimmt, erklärt nichts, weil der Begriff an keiner Stelle des Netzes messbar wird.'}
+     ]},
+   { n:'', t:'Def. 5.3-1', s:'wann ist ein Begriff τ T-theoretisch?', note:'1,5 min.',
+     kids:[
+      {k:'form', t:'∀x∀t ( Bᵢxt → ( τ(x) ↔ Rᵢxt ) )', s:'aus T folgt mindestens ein Zuordnungsgesetz für τ', note:'B und R müssen empirisch oder vortheoretisch sein — deshalb hing das an den Relationen.'},
+      {k:'key', t:'Ein theoretischer Begriff verdient seinen Platz,<br>wenn die Theorie sagt, wie man ihn misst.', s:'', note:'Das ist der Satz, den man mitnehmen soll.'},
+      {t:'Abgrenzung', s:'Sneed zu eng · Gähde / Balzer zu weit', note:'Strukturalismus-Streit wirklich nur in einem Satz. Wenn die Zeit läuft: überspringen.'},
+      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>Z ist genau so ein Zuordnungsgesetz:</b> B = Thermometer 3 Minuten unter der Zunge &nbsp;·&nbsp; τ = erhöhte Körpertemperatur &nbsp;·&nbsp; R = Anzeige über 38 °C<br>Also ist τ <b>T-theoretisch</b>. Für einen Mikrobiologen, der Bakterien zählt, wäre „Infektion“ dagegen vortheoretisch — derselbe Begriff, zwei Stellungen im Netz.', note:'Hier schließt sich der Kreis: Unser Z aus 5.3.1 ist der Beleg dafür, dass die Begriffe der Fiebertheorie nicht spekulativ sind. Und die zweite Zeile ist die Pointe des ganzen Abschnitts.'}
+     ]}
+  ],
+  qnote:'Rückfallfrage: Ist „Gen“ T-theoretisch oder extern theoretisch? Je nachdem, ob man Genetik oder Biochemie als T nimmt — genau das ist der Punkt.'
+},
+
+{ id:'C', kind:'sec', title:'5.4.1  Systemcharakter', sub:'Holismus der Bedeutung, des Gehalts und der Überprüfung · 5 min',
+  chap:'5.4.1 · Systemcharakter und Holismus',
+  strip:{t:'Unsere Beispieltheorie',
+         s:'<b>K</b>&nbsp;&nbsp; Eine Infektion erhöht die Körpertemperatur.<br>'+
+           '<b>Z</b>&nbsp;&nbsp; Thermometer 3 Minuten unter der Zunge: erhöhte Körpertemperatur ⟺ Anzeige über 38 °C.<br>'+
+           '<b>H</b>&nbsp;&nbsp; Anna hat eine Infektion · das Thermometer ist geeicht · nichts Heißes getrunken.<br>'+
+           '<b>P</b>&nbsp;&nbsp; Das Thermometer zeigt mehr als 38 °C.'},
+  intro:'Ein einzelnes Axiom hat im Regelfall noch gar keinen empirischen Gehalt. Erst die Konjunktion mehrerer Hypothesen erzeugt ihn. Daraus folgen drei Arten von Holismus.',
+  heads:[
+   { n:'', t:'Drei Holismen', s:'eine Ableitungskette, keine Liste', note:'2 min. Betonen: aus 1 folgt 2, aus 2 folgt 3.',
+     kids:[
+      {t:'Holismus der Bedeutung', s:'theoretische Begriffe bekommen Bedeutung durch die Kernaxiome', note:'Folge: analytisch und synthetisch sind in Theoriensystemen nicht mehr trennbar.'},
+      {t:'Holismus des Gehalts', s:'nur das ganze System ist mit Erfahrung konfrontierbar', note:'Weil nur das ganze System empirischen Gehalt erzeugt.'},
+      {t:'Holismus der Überprüfung', s:'bei Konflikt steckt <em>irgendwo</em> ein Fehler — logisch unbestimmt, wo', note:'Das ist der am Ende von 5.2 schon angekündigte Punkt.'},
+      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>Bedeutung</b> Was „erhöhte Körpertemperatur“ heißt, legen K und Z gemeinsam fest — kein Lexikon<br><b>Gehalt</b> K allein sagt nichts Beobachtbares; erst K ∧ Z ∧ H erzeugen P<br><b>Überprüfung</b> Zeigt das Thermometer 36,8, weiß man nur: irgendwo im Paket steckt der Fehler', note:'Die drei Holismen sind eine Kette: aus dem ersten folgt der zweite, aus dem zweiten der dritte. Am Beispiel laut durchsprechen.'}
+     ]},
+   { n:'', t:'Der logische Kern', s:'Ms. 5.4-1', note:'2 min. Die Formel langsam vorlesen, sie ist das Herz des Kapitels.',
+     kids:[
+      {k:'form', t:'{H₁,…,Hₙ} ⊨ P', s:'das Hypothesensystem impliziert die Prognose', note:'Ausgangslage.'},
+      {k:'form key', t:'¬P ⇒ ¬H₁ ∨ … ∨ ¬Hₙ', s:'Modus Tollens liefert nur eine <em>Disjunktion</em>', note:'Mindestens eine Prämisse ist falsch — aber welche, sagt die Logik nicht. Das ist die ganze Pointe.'},
+      {t:'probabilistisch noch schwächer', s:'eine neue Hilfshypothese H* genügt, um die Folgerung zu blockieren', note:'Man muss dann nicht einmal eine Hypothese verwerfen.'},
+      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>K ∧ Z ∧ H ⊨ P</b> &nbsp;&nbsp; Anzeige 36,8 &nbsp;⇒&nbsp; <b>¬K ∨ ¬Z ∨ ¬H</b><br>Vier Kandidaten: Anna ist gar nicht infiziert (H) · das Thermometer ist kaputt (H) · unter der Zunge misst man zu ungenau (Z) · <b>nicht jede Infektion erzeugt Fieber (K)</b>', note:'Die vier Kandidaten einzeln nennen und zeigen, dass die Logik keinen davon auszeichnet. Die letzte Möglichkeit ist die, die die Medizin tatsächlich gewählt hat.'}
+     ]},
+   { n:'', t:'Einordnung', s:'wer das gesagt hat — und wie weit', note:'1 min.',
+     kids:[
+      {t:'Duhem 1908', s:'es gibt kein <em>experimentum crucis</em>', note:'Kein Experiment kann endgültig zwingen, den Kern preiszugeben.'},
+      {t:'Neurath · Quine', s:'empirische Unterbestimmtheit von Theorien', note:'Verschiedene, empirisch äquivalente Reparaturen sind möglich.'},
+      {k:'key', t:'moderater Holismus', s:'nicht alle Bedeutungen sind theorieabhängig', note:'Wichtige Abgrenzung gegen den Radikalholismus — beliebte Prüfungsfrage.'},
+      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>Kein experimentum crucis</b> Eine einzelne Anzeige 36,8 zwingt nie, K aufzugeben — man wechselt erst das Thermometer<br><b>Moderat</b> Deshalb muss man nicht die halbe Medizin in Zweifel ziehen; „Minute“ und „Grad Celsius“ bleiben unberührt<br><b>Probabilistisch</b> Es genügt sogar, H* zu ergänzen: „Anna hat fiebersenkende Mittel genommen“', note:'Hier den Unterschied zum Radikalholismus betonen — das ist die beliebteste Prüfungsfrage zu diesem Abschnitt.'}
+     ]}
+  ],
+  qnote:null
+},
+
+{ id:'D', kind:'sec', title:'5.4.2  Drei epistemische Tugenden', sub:'Empirische Kreativität, Vereinheitlichung, neuartige Voraussagen · 5 min',
+  chap:'5.4.2 · Tugenden und Hempels Dilemma',
+  strip:{t:'Unsere Beispieltheorie',
+         s:'<b>K</b>&nbsp;&nbsp; Eine Infektion erhöht die Körpertemperatur.<br>'+
+           '<b>Z</b>&nbsp;&nbsp; Thermometer 3 Minuten unter der Zunge: erhöhte Körpertemperatur ⟺ Anzeige über 38 °C.<br>'+
+           '<b>H</b>&nbsp;&nbsp; Anna hat eine Infektion · das Thermometer ist geeicht · nichts Heißes getrunken.<br>'+
+           '<b>P</b>&nbsp;&nbsp; Das Thermometer zeigt mehr als 38 °C.'},
+  intro:'Wenn Theorien nur zusammenfassen, was man ohnehin beobachtet — wozu dann theoretische Begriffe? Drei Tugenden geben die Antwort.',
+  heads:[
+   { n:'', t:'Kreativität', s:'die Konjunktion erzeugt mehr als die Summe', note:'2 min. Die stärkste Idee des Abschnitts.',
+     kids:[
+      {k:'form', t:'E(H₁ ∧ H₂)  ⊃  C( E(H₁) ∪ E(H₂) )', s:'Ms. 5.4-2 · „⊃“ = echte Obermenge', note:'Der empirische Gehalt der Konjunktion geht über die Vereinigung der Einzelgehalte hinaus.'},
+      {k:'form key', t:'H₁ = ∀x(Fx→φx)   E(H₁) = ∅<br>H₂ = ∀x(φx→Gx)   E(H₂) = ∅<br>H₁ ∧ H₂ ⊨ ∀x(Fx→Gx)', s:'zwei gehaltlose Sätze erzeugen ein prüfbares Gesetz', note:'φ wirkt als Brücke. Am Whiteboard-Tempo vorrechnen — das überzeugt mehr als jede Behauptung.'},
+      {t:'Folge', s:'auch Spekulationen können später fruchtbar werden', note:'E(H) leer, aber E(T ∧ H) groß. Daher die mögliche Fruchtbarkeit metaphysischer Spekulationen (Kap. 1.2.2).'},
+      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>K₁</b> Wer Kontakt mit einem Erkrankten hatte → hat eine Infektion &nbsp;&nbsp; E(K₁) = ∅<br><b>K₂</b> Wer eine Infektion hat → Anzeige über 38 °C &nbsp;&nbsp; E(K₂) = ∅<br><b>K₁ ∧ K₂ ⊨</b> Wer Kontakt hatte, zeigt über 38 °C &nbsp;—&nbsp; ein prüfbares Gesetz aus zwei gehaltlosen Sätzen', note:'Das ist die stärkste Folie des Abschnitts. Langsam vorrechnen: Beide Sätze enden bzw. beginnen bei „Infektion“ — unbeobachtbar. Zusammen entsteht ein Gesetz, das nur Beobachtbares verbindet.'}
+     ]},
+   { n:'', t:'Vereinheitlichung', s:'viele empirische Gesetze auf wenige Prinzipien', note:'1 min.',
+     kids:[
+      {t:'qualitativ Verschiedenes einheitlich erklären', s:'Newton: Fall, Pendel, Planeten, Gezeiten', note:'Zurückverweisen auf Kepler als Konsequenz aus Achse (2).'},
+      {t:'präzise nur über Gehaltselemente', s:'irrelevante und redundante Konsequenzen ausscheiden', note:'Sonst drohen Paradoxien (Kap. 6.4.3). Ein Halbsatz genügt.'},
+      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'Fieber · Schüttelfrost · erhöhte Leukozytenzahl · Abgeschlagenheit<br>Vier qualitativ verschiedene Phänomene, <b>eine</b> theoretische Ursache — das ist die Vereinheitlichungsleistung.', note:'Kurz halten. Der Punkt: Ohne den theoretischen Begriff „Infektion“ wären das vier unverbundene Regelmäßigkeiten.'}
+     ]},
+   { n:'', t:'Voraussagen', s:'neuartig, über den Ausgangsbereich hinaus', note:'30 Sekunden.',
+     kids:[
+      {t:'bereichsübergreifend', s:'bedeutsam für Theorienbestätigung (Kap. 5.9–5.10)', note:'Kurz halten, die Vorarbeit steckt in 5.1 und 5.2.'},
+      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'Wenn Fieber eine <b>Abwehrreaktion</b> ist und nicht bloß ein Symptom, dann müsste Fiebersenkung den Krankheitsverlauf <b>verlängern</b>.<br>Eine Voraussage über einen Bereich, aus dem die Theorie gar nicht gewonnen wurde.', note:'30 Sekunden. Genau das ist eine neuartige Voraussage: Sie folgt aus dem theoretischen Kern, nicht aus induktiver Verallgemeinerung der Ausgangsdaten.'}
+     ]},
+   { n:'', t:'Hempels Dilemma', s:'das <em>theoretician’s dilemma</em> — und die Antwort', note:'1,5 min. Pointe des ganzen Kapitels 5.4.',
+     kids:[
+      {t:'(a) keine empirische Rolle', s:'⇒ theoretische Begriffe werden nicht benötigt', note:'Vorgeschichte: Putnams Herausforderung 1962.'},
+      {t:'(b) eine empirische Rolle', s:'⇒ ebenfalls nicht benötigt, die empirischen Konsequenzen täten es auch', note:'Hempel 1958 verschärft Putnam.'},
+      {k:'key', t:'Antwort: alle drei Tugenden gingen verloren', s:'E(T₁), E(T₂) sind nicht kreativ, vereinheitlichen nicht, sagen nichts Neues voraus', note:'Gilt gegen Craigs Methode wie gegen Ramsey-Sätze: die Konjunktion der Ramsey-Sätze ist schwächer als der Ramsey-Satz der Konjunktion.'},
+      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'Ersetzt man die Theorie durch ihren empirischen Gehalt — „wer Kontakt hatte, zeigt über 38 °C“ —, bleibt eine Faustregel.<br>Weg sind: die Verbindung zu Schüttelfrost und Leukozyten, die Voraussage über Fiebersenker, und jede Erklärung, <b>warum</b> das so ist.<br><b>„Infektion“ ist das Scharnier zwischen den beiden beobachtbaren Enden.</b>', note:'Pointe des ganzen Kapitels 5.4: Der unbeobachtbare Begriff ist nicht überflüssig, er trägt die Verbindung. Streicht man ihn, zerfällt das Gesetz in zwei Hälften, die nichts mehr sagen.'}
+     ]}
+  ],
+  qnote:'Rückfallfrage: Wenn eine Theorie nur das Beobachtbare zusammenfasst — was geht verloren? Antwort: genau diese drei Tugenden.'
+},
+
+{ id:'E', kind:'sec', title:'5.5  Das Beispiel Piaget', sub:'Alles bisher Gesagte an einem Fall aus der Psychologie · 10 min',
+  chap:'5.5 · Fallbeispiel Piaget',
+  intro:'Schurz hatte angekündigt, dass die an der Physik gewonnenen Einsichten auch in den Humanwissenschaften gelten. Hier ist der Beleg.',
+  heads:[
+   { n:'', t:'Die Theorie', s:'Kernthesen und Stufen', note:'2 min. Nur so viel Psychologie wie nötig — Thema ist die Theoriestruktur.',
+     kids:[
+      {k:'key', t:'K1  Kernthese', s:'Intelligenzentwicklung beruht auf stufenförmiger Ausbildung <em>allgemeiner logisch-struktureller</em> Fähigkeiten', note:'Einmal ausgebildet, sofort überall anwendbar. Vorher wird die Aufgabe schlicht „nicht begriffen“.'},
+      {t:'Drei Stufen', s:'sensomotorisch 2 J. · <em>konkret-operationell 6–7 J.</em> · formal-operationell 13–14 J.', note:'Wir konzentrieren uns auf die konkret-operationelle Stufe.'},
+      {t:'Drei Fähigkeiten', s:'Perspektivenwechsel · Reversibilität · Invariantenerkennung', note:'Invarianz untersucht Piaget in zwei Bereichen: Anzahl von Gegenständen und Menge einer Substanz.'}
+     ]},
+   { n:'', t:'Die Tests', s:'= Zuordnungsgesetze für hochtheoretische Thesen', note:'2 min. Laut sagen: Das sind nicht bloß Experimente, das sind die Brücken nach Lₑ(T).',
+     kids:[
+      {t:'Gebirgsmodell', s:'Wie sieht der Berg von der anderen Seite aus?  →  Perspektivenwechsel', note:'Kind darf vorher herumgehen, sitzt dann auf einer Seite.'},
+      {t:'Münztest', s:'gleiche Anzahl, eng oder weit gelegt  →  Invarianz der Zahl', note:'„Sind hier mehr, gleich viel oder weniger Münzen?“'},
+      {t:'Tonkugel', s:'Kugel zur Wurst gezogen  →  Invarianz der Substanz', note:'Befund über alle Tests: vor 6 Jahren überwiegend nicht beherrscht, nach 7 Jahren durchwegs.'}
+     ]},
+   { n:'', t:'Rekonstruktion', s:'(5.5-1) die Ableitung der Prognose', note:'2 min. Zielfolie: hier sind die Achsen (1), (2) und (4) gleichzeitig sichtbar.',
+     kids:[
+      {k:'form', t:'K1–K4   Kerngesetze<br>S1–S4   Spezialgesetze<br>I1–I3   Indikatorgesetze', s:'alles Ax(T), formuliert in L(T)', note:'Schurz schreibt: K1–4, S1–4 und I1–3 implizieren logisch die Prognose P.'},
+      {k:'form key', t:'⊨  P', s:'7-Jährige bestehen Münz-, Umschütt- und Tonkugeltest', note:'P allein ist C(T) ∩ Lₑ(T) — der empirische Gehalt. Nur das kollidiert direkt mit Daten.'}
+     ]},
+   { n:'', t:'Der Konflikt', s:'Peripherie ändern oder den Kern aufgeben?', note:'3 min. Höhepunkt des Vortrags — der Holismus aus 5.4.1 als reale Kontroverse.',
+     kids:[
+      {t:'Siegel 1978', s:'nonverbale Lernexperimente: schon 4–5-Jährige bestehen den Zahltest', note:'Fraktion 1: nur die Peripherie ändern — S1 und I2 anpassen. Bekam dadurch Auftrieb.'},
+      {t:'Aussagenlogik', s:'Modus Ponens mit 3 Jahren, Modus Tollens teils nie', note:'Obwohl beide laut Piaget zu DERSELBEN abstrakt-strukturellen Fähigkeit gehören. Das lässt sich nicht mit einem Indikatorgesetz reparieren.'},
+      {t:'Objekterhaltung', s:'Ball hinter der Wand mit 2 Jahren — Zucker im Wasser nicht mit 6', note:'Dieselbe Fähigkeit, zwei Anwendungen, Jahre auseinander. Fraktion 2: das trifft den Kern.'},
+      {k:'key', t:'K1*', s:'Entwicklung <em>inhaltsspezifischer</em> Fähigkeiten, später differenziert und generalisiert', note:'Kern ersetzt = neue Theorie. Damit war ein alternatives Paradigma bzw. Forschungsprogramm geschaffen.'}
+     ]}
+  ],
+  synth:{ k:'key', t:'Die Daten sagen nicht, welche Prämisse fällt.', s:'S1? I2? K1? — die Entscheidung ist nicht logisch erzwungen',
+          from:['E3k2','E4k4'],
+          note:'Schlussbogen: Zuordnungsgesetze (5.3.2) machen K1 prüfbar · geprüft wird nur K+S+I zusammen (5.4.1) · Modus Tollens lässt offen, wo der Fehler sitzt · ob Peripherie oder Kern fällt, entscheidet über die Identität der Theorie (5.3.1, Achse 4).'},
+  mindnote:'Und genau hier setzt 5.6 Theoriendynamik an: Nach welchen Regeln DARF man revidieren? → Lakatos.',
+  qnote:'Rückfallfragen: War Piagets Theorie damit falsifiziert? Nein — logisch war auch die Peripherieänderung möglich, es war eine Entscheidung. Was hätte Lakatos gesagt? → Vorgriff auf 5.6.'
+}
+];
+
+/* =======================================================================
+   LAYOUT
+   ===================================================================== */
+const COLW=1240, NW=1100, KW=1120, KH=200, KGAP=64;
+const CW=4*COLW+1000;
+const R_TOP=360, GAP_SEC=250, GAP_HEAD=210, GAP_SYNTH=300, GAP_Q=420, R_PITCH=420;
+const SL_L=1760, SL_GAP=120, SL_R=1180, SL_W=SL_L+SL_GAP+SL_R, SL_TITLEGAP=150, SL_ROWGAP=38;
+
+const cam=document.getElementById('cam'), wires=document.getElementById('wires');
+const nodes=[], edges=[], byId={};
+function mk(o){ o.sw=o.sw||o.tw; nodes.push(o); byId[o.id]=o; return o; }
+
+const TITLE=mk({id:'YY', cls:'sec', num:'', t:'Theoriestatik',
+  s:'Gerhard Schurz, <em>Wissenschaftstheorie</em>, Kap. 5.3–5.5<br>'+
+    '<b>Erlind Sejdiu</b> &nbsp;·&nbsp; Matrikelnummer 106357 &nbsp;·&nbsp; 23.11.2026',
+  tw:2900, tx:CW/2});
+
+const AGH=mk({id:'AG', cls:'sec', num:'', t:'Gliederung', s:'Fünf Abschnitte, ein Beispiel — 35 Minuten', tw:2600, tx:CW/2});
+const AG=[
+ ['5.3.1','Struktur wissenschaftlicher Theorien — die vier Gliederungen','10 min'],
+ ['5.3.2','Theoriennetze — woher die Begriffe ihren Status haben','5 min'],
+ ['5.4.1','Systemcharakter — der Preis: Holismus','5 min'],
+ ['5.4.2','Drei Tugenden — der Ertrag','5 min'],
+ ['5.5','Das Beispiel Piaget — alles an einem Fall','10 min'],
+].map((a,i)=>mk({id:'AG'+(i+1), cls:'kid agenda', num:'', t:a[0], s:a[1]+' &nbsp;·&nbsp; <em>'+a[2]+'</em>', tw:2600, tx:CW/2}));
+
+REGIONS.forEach(R=>{
+  const ids=[];
+  R.sec=mk({id:R.id, cls:R.kind==='root'?'root':'sec', num:'', t:R.title, s:R.sub,
+            tw:R.kind==='root'?1560:1760, tx:CW/2});
+  ids.push(R.sec.id);
+  if(R.card){
+    R.cardNode=mk({id:R.id+'C', cls:'kid form key', num:'', t:R.card.t, s:R.card.s, tw:3000, tx:CW/2});
+    ids.push(R.cardNode.id);
+    edges.push({id:'e-'+R.sec.id+'-'+R.cardNode.id, a:R.sec.id, b:R.cardNode.id, kind:'curve'});
+  }
+  if(R.strip){
+    R.stripNode=mk({id:R.id+'T', cls:'kid strip', num:'', t:R.strip.t, s:R.strip.s, tw:SL_W, tx:CW/2});
+  }
+  const parent=R.cardNode||R.sec;
+  const c=R.heads.length, startX=CW/2-(c-1)*COLW/2;
+  R.headNodes=[];
+  R.heads.forEach((H,i)=>{
+    const hid=R.id+(i+1);
+    const hn=mk({id:hid, cls:'head', num:H.n, t:H.t, s:H.s, tw:NW, sw:SL_W, tx:startX+i*COLW});
+    hn.kids=[]; R.headNodes.push(hn); ids.push(hid);
+    edges.push({id:'e-'+parent.id+'-'+hid, a:parent.id, b:hid, kind:'curve'});
+    const hasEx=H.kids.some(k=>k.ex);
+    H.kids.forEach((K,j)=>{
+      const kn=mk({id:hid+'k'+(j+1), cls:'kid '+(K.k||''), num:'', t:K.t, s:K.s||'',
+                   tw:KW, sw:SL_W, tx:hn.tx+70, ex:!!K.ex});
+      hn.kids.push(kn); ids.push(kn.id);
+      edges.push({id:'e-'+hid+'-'+kn.id, a:hid, b:kn.id, kind:'bus'});
+    });
+  });
+  if(R.synth){
+    R.synthNode=mk({id:R.id+'S', cls:'kid '+(R.synth.k||''), num:'', t:R.synth.t, s:R.synth.s, tw:2600, tx:CW/2});
+    R.synthId=R.synthNode.id; ids.push(R.synthId);
+    R.synth.from.forEach(f=>edges.push({id:'e-'+f+'-'+R.synthId, a:f, b:R.synthId, kind:'curve'}));
+  }
+  if(R.qnote!==null){
+    R.qNode=mk({id:R.id+'Q', cls:'q', num:'', t:'Fragen?', s:R.chap, tw:1900, tx:CW/2});
+    R.qId=R.qNode.id; ids.push(R.qId);
+  }
+  R.ids=ids; R.secId=R.sec.id;
+});
+const FIN=mk({id:'FN', cls:'kid final', num:'', t:'Die Fiebertheorie durch das ganze Kapitel',
+  s:'<b>5.3.1</b>&nbsp;&nbsp; Vier Fragen an K, Z, H, P — und P allein ist der empirische Gehalt.<br>'+
+    '<b>5.3.2</b>&nbsp;&nbsp; Dieselbe Theorie als <em>ein Element im Netz</em>: Vortheorie, externe Theorie, Reduktion.<br>'+
+    '<b>5.4.1</b>&nbsp;&nbsp; Die Anzeige 36,8 — und die Logik sagt nicht, ob K, Z oder H fällt.<br>'+
+    '<b>5.4.2</b>&nbsp;&nbsp; „Kontakt → über 38 °C“ aus zwei gehaltlosen Sätzen: dafür braucht es „Infektion“.<br>'+
+    '<b>5.5</b>&nbsp;&nbsp;&nbsp;&nbsp; Dieselbe Lage bei Piaget: S1, I2 — oder doch K1?', tw:2900, tx:CW/2});
+const CLOSE=mk({id:'ZZ', cls:'sec', num:'', t:'5.6 Theoriendynamik',
+  s:'Nach welchen Regeln <em>darf</em> man revidieren? → Lakatos', tw:2400, tx:CW/2});
+
+/* ---- DOM ---- */
+nodes.forEach(n=>{
+  const d=document.createElement('div');
+  d.className='node '+(n.cls||'');
+  d.innerHTML=(n.num?`<span class="num">${n.num}</span>`:'')+`<span class="t">${n.t}</span>`+(n.s?`<span class="s">${n.s}</span>`:'');
+  cam.appendChild(d); n.el=d;
+});
+
+/* ---- Höhen exakt messen: ohne Transform, aufgerundet ---- */
+function measure(mode){
+  cam.classList.add('measuring');
+  const t=cam.style.transform; cam.style.transform='none';
+  cam.dataset.mode=mode; cam.dataset.z=(mode==='slide'?'near':'far');
+  void cam.offsetHeight;                    // Übergänge sind jetzt wirklich aus
+  nodes.forEach(n=>{ n.el.style.width=(mode==='slide'?n.sw:n.tw)+'px'; n.el.style.height='auto'; });
+  void cam.offsetHeight;                    // Umbruch bei der neuen Breite erzwingen
+  nodes.forEach(n=>{ n[mode==='slide'?'hS':'hT']=Math.ceil(n.el.getBoundingClientRect().height)+6; });
+  cam.style.transform=t;
+}
+
+function place(n,mode){
+  const sl=(mode==='slide');
+  n.cx=sl?n.sx:n.tx; n.cy=sl?n.sy:n.ty; n.w=sl?n.sw:n.tw; n.h=sl?n.hS:n.hT;
+  const s=n.el.style;
+  s.left=(n.cx-n.w/2)+'px'; s.top=(n.cy-n.h/2)+'px'; s.width=n.w+'px'; s.height=n.h+'px';
+}
+
+const E={};
+let CH=0;
+let cur=-1;
+
+/* ---- Vollständige Neuberechnung: messen, stapeln, Kanten zeichnen ---- */
+function layout(){
+  cam.classList.add('measuring');
+  measure('slide'); measure('tree');
+
+  /* Baumanordnung */
+  let y=R_TOP;
+  TITLE.ty=y+TITLE.hT/2; y=TITLE.ty+TITLE.hT/2+620;
+  AGH.ty=y+AGH.hT/2; y+=AGH.hT+70;
+  AG.forEach(n=>{ n.ty=y+n.hT/2; y+=n.hT+26; });
+  y+=760;
+  REGIONS.forEach(R=>{
+    R.sec.ty=y+R.sec.hT/2;
+    let headTop=y+R.sec.hT+GAP_SEC;
+    if(R.cardNode){
+      R.cardNode.ty=y+R.sec.hT+170+R.cardNode.hT/2;
+      headTop=R.cardNode.ty+R.cardNode.hT/2+210;
+    }
+    const headH=Math.max(...R.headNodes.map(n=>n.hT));
+    R.headNodes.forEach(n=>{ n.hT=headH; n.ty=headTop+headH/2; });
+    const kidTop=headTop+headH+GAP_HEAD;
+    let bottom=headTop+headH;
+    R.headNodes.forEach(n=>{
+      let cy=kidTop;
+      n.kids.forEach(k=>{ k.ty=cy+k.hT/2; cy+=k.hT+KGAP; });
+      bottom=Math.max(bottom, cy-KGAP);
+    });
+    if(R.synthNode){ R.synthNode.ty=bottom+GAP_SYNTH+R.synthNode.hT/2; bottom=R.synthNode.ty+R.synthNode.hT/2; }
+    if(R.qNode){ R.qNode.ty=bottom+GAP_Q+R.qNode.hT/2; bottom=R.qNode.ty+R.qNode.hT/2; }
+    y=bottom+R_PITCH;
+  });
+  FIN.ty=y+FIN.hT/2; y=FIN.ty+FIN.hT/2+560;
+  CLOSE.ty=y+CLOSE.hT/2;
+  CH=CLOSE.ty+CLOSE.hT/2+400;
+
+  /* Folienanordnung */
+  nodes.forEach(n=>{ n.sx=n.tx; n.sy=n.ty; if(!n.hS) n.hS=n.hT; });
+  REGIONS.forEach(R=>{
+    R.headNodes.forEach(hn=>{
+      const cx=Math.min(Math.max(hn.tx, 200+SL_W/2), CW-200-SL_W/2);
+      const top=hn.ty-hn.hT/2;
+      hn.sx=cx; hn.sy=top+hn.hS/2;
+      let y2=top+hn.hS+80;
+      if(R.stripNode){ hn.stripY=y2+R.stripNode.hS/2; y2+=R.stripNode.hS+76; }
+      hn.kids.forEach(k=>{ if(!k.ex){ k.sx=cx; k.sy=y2+k.hS/2; y2+=k.hS+SL_ROWGAP; } });
+      y2=y2-SL_ROWGAP+86;
+      hn.kids.forEach(k=>{ if(k.ex){ k.sx=cx; k.sy=y2+k.hS/2; y2+=k.hS; } });
+      hn.slideBottom=y2;
+    });
+  });
+
+  cam.dataset.mode='tree';
+  nodes.forEach(n=>place(n,'tree'));
+  wires.setAttribute('width',CW); wires.setAttribute('height',CH);
+
+  /* Kanten neu zeichnen */
+  edges.forEach(e=>{
+    const a=byId[e.a], b=byId[e.b];
+    let d;
+    if(e.kind==='bus'){
+      const bx=a.tx-a.tw/2+46, ay=a.ty+a.hT/2, by=b.ty, bl=b.tx-b.tw/2;
+      d=`M ${bx} ${ay} L ${bx} ${by-22} Q ${bx} ${by} ${bx+22} ${by} L ${bl} ${by}`;
+    }else{
+      const ax=a.tx, ay=a.ty+a.hT/2, bx2=b.tx, by2=b.ty-b.hT/2, m=(by2-ay)/2;
+      d=`M ${ax} ${ay} C ${ax} ${ay+m} ${bx2} ${by2-m} ${bx2} ${by2}`;
+    }
+    if(!e.el){
+      e.el=document.createElementNS('http://www.w3.org/2000/svg','path');
+      wires.appendChild(e.el); E[e.id]=e.el;
+    }
+    e.el.setAttribute('d',d);
+    e.len=e.el.getTotalLength();
+    e.el.style.strokeDasharray=e.len;
+    if(!e.el.classList.contains('on')) e.el.style.strokeDashoffset=e.len;
+  });
+  void cam.offsetHeight;
+  requestAnimationFrame(()=>cam.classList.remove('measuring'));
+}
+layout();
+
+/* Neu berechnen, sobald Schriften geladen sind und bei Größenänderung */
+function relayout(){ layout(); if(cur>=0) go(cur); }
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(relayout);
+addEventListener('load', relayout);
+
+/* =======================================================================
+   SCHRITTE
+   ===================================================================== */
+const STEPS=[];
+STEPS.push({fit:['YY'], vis:['YY'], chap:'Wissenschaftstheorie', cue:'Titel',
+  note:'Begrüßung. Einordnung: Kapitel 5 heißt „Theorien und ihre empirische Bewertung“. 5.1 und 5.2 hatten Messung und das Newton-Beispiel. Wir machen die Systematik und enden dort, wo 5.6 Theoriendynamik anfängt.'});
+STEPS.push({fit:['AG',...AG.map(n=>n.id)], vis:['AG',...AG.map(n=>n.id)],
+  chap:'Wissenschaftstheorie', cue:'Gliederung',
+  note:'30 Sekunden, nicht länger. Den roten Faden ansagen: erst das Begriffsgerüst, dann die Gütekriterien, dann ein echter Fall. Und: Alle fünf Abschnitte werden an derselben kleinen Beispieltheorie durchgespielt, die gleich kommt.'});
+const ov=R=>{
+  const par=R.cardNode?R.cardNode.id:R.secId;
+  const a=[R.secId,...R.heads.map((h,i)=>R.id+(i+1)),...R.heads.map((h,i)=>'e-'+par+'-'+R.id+(i+1))];
+  if(R.cardNode) a.push(R.cardNode.id,'e-'+R.secId+'-'+R.cardNode.id);
+  return a;
+};
+
+REGIONS.forEach(R=>{
+  STEPS.push({fit:[R.secId], vis:[R.secId], chap:R.chap, cue:R.title.replace(/\s+/g,' '), note:R.intro});
+  if(R.cardNode) STEPS.push({fit:[R.secId,R.cardNode.id], vis:[R.secId,R.cardNode.id,'e-'+R.secId+'-'+R.cardNode.id],
+    chap:R.chap, cue:'Die Theorie', note:R.card.note});
+  STEPS.push({fit:ov(R).filter(x=>!x.startsWith('e-')), vis:ov(R), chap:R.chap, cue:'Überblick',
+              note:(R.id==='A')?'Die vier Kästen stehen jetzt da. WICHTIG: das sind vier Schnitte durch dasselbe Objekt, keine Gliederungsebenen. Ankündigen, dass wir in jeden einzeln hineingehen und jedes Mal hierher zurückkehren.':'Überblick über den Abschnitt. Ankündigen, in welcher Reihenfolge wir hineingehen.'});
+
+  R.heads.forEach((H,i)=>{
+    const hid=R.id+(i+1);
+    const kidIds=H.kids.map((k,j)=>hid+'k'+(j+1));
+    const fit=[hid,...kidIds];
+    const exIds=kidIds.filter((id,j)=>H.kids[j].ex);
+    const norm=kidIds.filter((id,j)=>!H.kids[j].ex);
+    let shown=[];
+    H.kids.forEach((K,j)=>{
+      if(K.ex) return;
+      shown=shown.concat(kidIds[j]);
+      const last=(shown.length===norm.length);
+      STEPS.push({fit:fit.concat(R.stripNode?[R.stripNode.id]:[]),
+                  vis:[hid,...shown,...(last?exIds:[])].concat(R.stripNode?[R.stripNode.id]:[]),
+                  chap:R.chap, cue:(H.n?H.n+' ':'')+H.t,
+                  note:(shown.length===1?(H.note?H.note+'  ':''):'')+K.note});
+    });
+    STEPS.push({fit:ov(R).filter(x=>!x.startsWith('e-')), vis:ov(R), chap:R.chap, cue:'zurück zum Überblick',
+                note:'Verbindungen lösen sich, alle Punkte sind wieder da. Kurz Luft holen, dann weiter mit dem nächsten Punkt.'});
+  });
+
+  const all=R.ids.filter(x=>x!==R.qId && !(byId[x]&&/(^| )net( |$)/.test(byId[x].cls||'')));
+  const allE=edges.filter(e=>all.includes(e.a)&&all.includes(e.b)).map(e=>e.id);
+  STEPS.push({fit:all, vis:[...all,...allE], chap:R.chap, cue:'Gesamtbild',
+              note:R.mindnote||'Alles zusammen. Kurz stehen lassen — das ist die Karte des Abschnitts.'});
+  if(R.synthId) STEPS.push({fit:all, vis:[...all,...allE], chap:R.chap, cue:'Zielaussage', note:R.synth.note});
+  if(R.qId) STEPS.push({fit:[R.qId], vis:[R.qId], chap:R.chap, cue:'Fragen', note:R.qnote});
+});
+STEPS.push({fit:['FN'], vis:['FN'], chap:'Schluss', cue:'Alles zusammen',
+  note:'Die Schlussfolie: dieselbe Theorie, fünfmal aus einer anderen Richtung betrachtet. Zeile für Zeile durchgehen, das ist die Zusammenfassung des ganzen Vortrags.'});
+STEPS.push({fit:['ZZ'], vis:['ZZ'], chap:'Schluss', cue:'Übergang',
+            note:'Bogen schlagen: Struktur (5.3.1) → Netz (5.3.2) → Holismus (5.4.1) → Tugenden (5.4.2) → der Fall (5.5). Die Frage, die offen bleibt, ist die von 5.6: Nach welchen Regeln darf man revidieren? Danke sagen.'});
+
+/* =======================================================================
+   KAMERA + ABLAUF
+   ===================================================================== */
+function fitTo(ids){
+  let x1=1e9,y1=1e9,x2=-1e9,y2=-1e9;
+  ids.forEach(id=>{const n=byId[id]; if(!n)return;
+    x1=Math.min(x1,n.cx-n.w/2); x2=Math.max(x2,n.cx+n.w/2);
+    y1=Math.min(y1,n.cy-n.h/2); y2=Math.max(y2,n.cy+n.h/2);});
+  const pad=170, w=x2-x1+2*pad, h=y2-y1+2*pad;
+  const vw=innerWidth, vh=innerHeight-46;
+  const s=Math.min(vw/w, vh/h, 1.0);
+  const cx=(x1+x2)/2, cy=(y1+y2)/2;
+  cam.style.transform=`translate(${vw/2}px,${vh/2}px) scale(${s}) translate(${-cx}px,${-cy}px)`;
+}
+function go(i){
+  if(i<0||i>=STEPS.length) return;
+  cur=i; const S=STEPS[i], vis=new Set(S.vis);
+  const solo=(S.fit.filter(id=>byId[id]&&byId[id].cls==='head').length===1);
+  const mode=solo?'slide':'tree';
+  cam.dataset.z = solo?'near':'far';
+  cam.dataset.mode = mode;
+  if(mode==='slide'){
+    const hn=byId[S.fit.find(id=>byId[id]&&byId[id].cls==='head')];
+    const R=REGIONS.find(r=>r.headNodes&&r.headNodes.indexOf(hn)>=0);
+    if(R&&R.stripNode&&hn.stripY!=null){ R.stripNode.sx=hn.sx; R.stripNode.sy=hn.stripY; }
+  }
+  nodes.forEach(n=>{ place(n,mode); n.el.classList.toggle('on',vis.has(n.id)); });
+  edges.forEach(e=>{const on=(mode==='tree')&&vis.has(e.id);
+    e.el.classList.toggle('on',on);
+    e.el.style.strokeDashoffset=on?0:e.len;});
+  fitTo(S.fit);
+  document.getElementById('chap').textContent=S.chap;
+  document.getElementById('cue').textContent=S.cue||'';
+  document.getElementById('ntext').innerHTML=S.note||'';
+  document.getElementById('bar').style.width=((i+1)/STEPS.length*100)+'%';
+  location.hash=i;
+}
+
+/* Uhr */
+let t0=null, tick=null;
+function clock(){
+  const el=document.getElementById('clock');
+  if(!t0){el.textContent='00:00';el.classList.remove('run');return;}
+  const s=Math.floor((Date.now()-t0)/1000);
+  el.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+  el.classList.add('run');
+}
+function toggleClock(){
+  if(tick){clearInterval(tick);tick=null;t0=null;clock();}
+  else{t0=Date.now();tick=setInterval(clock,1000);clock();}
+}
+
+addEventListener('keydown',e=>{
+  const k=e.key;
+  if(k==='ArrowRight'||k===' '||k==='PageDown'||k==='Enter'){e.preventDefault();go(cur+1);}
+  else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();go(cur-1);}
+  else if(k==='Home'){go(0);}
+  else if(k==='End'){go(STEPS.length-1);}
+  else if(k==='n'||k==='N'){document.getElementById('notes').classList.toggle('on');}
+  else if(k==='t'||k==='T'){const h=document.documentElement;
+    h.dataset.theme=h.dataset.theme==='dark'?'light':'dark';}
+  else if(k==='o'||k==='O'){
+    for(let i=cur;i<STEPS.length;i++){ if(STEPS[i].cue==='Gesamtbild'){go(i);return;} }
+    go(STEPS.length-1);
+  }
+  else if(k==='l'||k==='L'){toggleClock();}
+  else if(k==='r'||k==='R'){relayout();}
+  else if(k==='f'||k==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();}
+  else if(k==='?'){document.getElementById('help').classList.toggle('on');}
+  else if(k==='Escape'){document.getElementById('help').classList.remove('on');}
+});
+addEventListener('click',e=>{if(!e.target.closest('#help')) go(cur+1);});
+addEventListener('contextmenu',e=>{e.preventDefault();go(cur-1);});
+let rt=null;
+addEventListener('resize',()=>{ clearTimeout(rt); rt=setTimeout(relayout,160); });
+
+document.documentElement.dataset.theme='light';
+go(parseInt(location.hash.slice(1))||0);
+</script>
+</body>
+</html>

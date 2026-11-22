@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Theorienstatik</title>
+
+<link rel="stylesheet" href="reveal/dist/reset.css">
+<link rel="stylesheet" href="reveal/dist/reveal.css">
+<link rel="stylesheet" href="reveal/dist/theme/black.css" id="theme">
+
+<style>
+  :root{
+    --akzent:#22c55e;          /* Gruen = Animationsschritte, wie in der Skizze */
+    --akzent-weich:rgba(34,197,94,.14);
+    --dim:#8a8f98;
+  }
+  .reveal{ font-size:30px; }
+  .reveal h1{ font-size:1.9em; }
+  .reveal h2{ font-size:1.35em; margin-bottom:.4em; }
+  .reveal h3{ font-size:1.05em; color:var(--dim); font-weight:400; letter-spacing:.02em; }
+  .reveal section{ text-align:left; }
+  .reveal .slides section.zentriert{ text-align:center; }
+  .reveal ul{ display:block; margin-left:1.1em; }
+  .reveal li{ margin:.35em 0; }
+
+  /* Kapitel-/Zeitmarke oben rechts */
+  .marke{ position:absolute; top:-1.6em; right:0; font-size:.5em; color:var(--dim); letter-spacing:.08em; text-transform:uppercase; }
+
+  /* Achsen-Leiste: zeigt dauerhaft, wo im Gesamtbild wir gerade bohren */
+  .achsen{ display:flex; gap:.5em; margin:0 0 .9em 0; font-size:.45em; }
+  .achsen span{ flex:1; padding:.45em .6em; border:1px solid #333; border-radius:.35em; color:var(--dim); text-align:center; }
+  .achsen[data-active="1"] span:nth-child(1),
+  .achsen[data-active="2"] span:nth-child(2),
+  .achsen[data-active="3"] span:nth-child(3),
+  .achsen[data-active="4"] span:nth-child(4){
+    border-color:var(--akzent); color:#fff; background:var(--akzent-weich);
+  }
+
+  /* Die vier Kaesten der Uebersichtsfolie */
+  .kasten-reihe{ display:grid; grid-template-columns:repeat(4,1fr); gap:.6em; margin-top:.6em; }
+  .kasten{ border:2px solid #444; border-radius:.5em; padding:.7em .6em; min-height:4.6em; }
+  .kasten .nr{ color:var(--akzent); font-weight:700; display:block; margin-bottom:.25em; }
+  .kasten .was{ font-size:.62em; color:var(--dim); display:block; margin-top:.3em; }
+  .kasten.hell{ border-color:var(--akzent); background:var(--akzent-weich); }
+
+  /* Zwei-/Dreispalter */
+  .spalten{ display:grid; grid-template-columns:1fr 1fr; gap:1.2em; align-items:start; }
+  .spalten.drei{ grid-template-columns:repeat(3,1fr); }
+  .spalten h4{ color:var(--akzent); font-size:.68em; margin:0 0 .3em 0; text-transform:uppercase; letter-spacing:.06em; }
+  .spalten ul{ font-size:.72em; margin-left:.9em; }
+
+  /* Formel-/Zitatkasten */
+  .formel{ border-left:3px solid var(--akzent); background:#1a1a1a; padding:.6em .9em; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.7em; margin:.6em 0; }
+  .quelle{ color:var(--dim); font-size:.5em; margin-top:.5em; }
+  .pointe{ border:1px solid var(--akzent); border-radius:.4em; padding:.6em .9em; background:var(--akzent-weich); font-size:.8em; margin-top:.7em; }
+
+  .reveal table{ font-size:.62em; width:100%; }
+  .reveal table th{ color:var(--akzent); font-weight:600; }
+  .reveal table td,.reveal table th{ padding:.3em .5em; }
+
+  .t{ color:var(--akzent); }
+  .reveal .tief{ font-size:.55em; color:var(--dim); margin-top:.8em; }
+
+  /* "Reinbohren"-Hinweis: wo es nach unten weitergeht */
+  .bohren{ position:absolute; bottom:-1.2em; left:0; font-size:.45em; color:var(--dim); }
+</style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- ========================================================= -->
+<!-- TITEL + AGENDA                                      ~1 min -->
+<!-- ========================================================= -->
+<section class="zentriert">
+  <h1>Theorienstatik</h1>
+  <h3>Gerhard Schurz, <em>Wissenschaftstheorie</em>, Kap. 5.3&ndash;5.5 (S. 285&ndash;300)</h3>
+  <p class="tief">TODO: Name &middot; Modul Wissenschaftstheorie &middot; 23.11.2026</p>
+  <aside class="notes">
+    Begruessung. Einordnung: Kap. 5 = "Theorien und ihre empirische Bewertung".
+    5.1/5.2 hatten Messung und das Newton-Beispiel; wir machen jetzt die Systematik
+    und enden da, wo 5.6 Theoriendynamik anfaengt.
+  </aside>
+</section>
+
+<section>
+  <span class="marke">Agenda &middot; 35 min</span>
+  <h2>Fahrplan</h2>
+  <ul>
+    <li class="fragment"><strong>5.3.1</strong> Struktur wissenschaftlicher Theorien &mdash; die vier Gliederungen <span class="tief">(10 min)</span></li>
+    <li class="fragment"><strong>5.3.2</strong> Theoriennetze und Arten theoretischer Begriffe <span class="tief">(5 min)</span></li>
+    <li class="fragment"><strong>5.4.1</strong> Systemcharakter und Holismus <span class="tief">(5 min)</span></li>
+    <li class="fragment"><strong>5.4.2</strong> Drei epistemische Tugenden &mdash; Hempels Dilemma <span class="tief">(5 min)</span></li>
+    <li class="fragment"><strong>5.5</strong> Fallbeispiel Piaget <span class="tief">(10 min)</span></li>
+  </ul>
+  <aside class="notes">30 Sekunden, nicht laenger. Roter Faden ansagen: erst das Begriffsgeruest, dann die Guetekriterien, dann ein echter Fall, an dem alles zusammenlaeuft.</aside>
+</section>
+
+<!-- ========================================================= -->
+<!-- BLOCK 1 -- 5.3.1                                   10 min  -->
+<!-- ========================================================= -->
+
+<!-- Folie 1 der Skizze: Theorie-Definition + die vier Kaesten -->
+<section>
+  <span class="marke">5.3.1 &middot; Folie 1</span>
+  <h2>Was ist eine Theorie &mdash; und wie zerlegt man sie?</h2>
+
+  <!-- Schritt 1 -->
+  <div class="fragment">
+    <div class="formel">T = System von Gesetzeshypothesen &nbsp;&middot;&nbsp; wir identifizieren T mit der Menge ihrer Axiome <strong>Ax(T)</strong></div>
+  </div>
+
+  <!-- Schritt 2: die vier Kaesten -->
+  <div class="fragment">
+    <p style="font-size:.7em;margin:.4em 0 0 0;">Schurz gliedert T auf <strong>viererlei Weise</strong>:</p>
+    <div class="kasten-reihe">
+      <div class="kasten"><span class="nr">(1.)</span>Sprache<span class="was">welche Begriffe?</span></div>
+      <div class="kasten"><span class="nr">(2.)</span>Logische Natur der Saetze<span class="was">Axiom oder Konsequenz?</span></div>
+      <div class="kasten"><span class="nr">(3.)</span>Begriffliche Natur der Saetze<span class="was">welche Begriffe im Satz?</span></div>
+      <div class="kasten"><span class="nr">(4.)</span>Epistemischer Status<span class="was">Kern oder Peripherie?</span></div>
+    </div>
+  </div>
+
+  <div class="fragment pointe">Das sind <strong>vier Schnitte durch dasselbe Objekt</strong> &mdash; keine Gliederungsebenen, keine Hierarchie.</div>
+
+  <aside class="notes">
+    2 min. WICHTIG: Der haeufigste Denkfehler ist, (1)-(4) als Verschachtelung zu lesen.
+    Nur Achse (1) teilt die Sprache; (2) und (3) teilen Saetze; (4) teilt nur die Axiome.
+    Ankuendigen: wir gehen jetzt in jeden Kasten einzeln rein und kommen jedes Mal hierher zurueck.
+  </aside>
+</section>
+
+<!-- Folie 2 der Skizze: Achse (1), mit Drilldown -->
+<section>
+  <section>
+    <span class="marke">5.3.1 &middot; Achse 1</span>
+    <div class="achsen" data-active="1"><span>1 Sprache</span><span>2 Axiom / Konsequenz</span><span>3 Satzarten</span><span>4 Kern / Peripherie</span></div>
+    <h2>(1.) Die Sprache von T</h2>
+
+    <div class="spalten">
+      <div>
+        <ul>
+          <li class="fragment"><span class="t">logisch-mathematisch</span></li>
+          <li class="fragment"><span class="t">empirisch / vortheoretisch</span></li>
+          <li class="fragment"><span class="t">theoretisch</span></li>
+        </ul>
+      </div>
+      <div class="fragment">
+        <h4>Beispiele</h4>
+        <ul>
+          <li>&forall;, &rarr;, =, +, d/dt</li>
+          <li>Ort, Zeit, Zeigerstellung, "Kind sagt ..."</li>
+          <li>Masse, Kraft, Gen, Kompetenz</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="fragment formel">
+      Gesamtsprache&nbsp; L(T) &nbsp;=&nbsp; log./math. + empirisch + theoretisch<br>
+      Teilsprache&nbsp;&nbsp;&nbsp; L<sub>e</sub>(T) = log./math. + empirisch &nbsp;&nbsp; <span style="color:#22c55e">&sub; L(T)</span>
+    </div>
+    <div class="fragment pointe">"Vortheoretisch" ist <strong>relativ zu T</strong> &mdash; nicht absolut. (Warum, kommt in 5.3.2.)</div>
+    <div class="bohren">&darr; Zerlegung eines konkreten Satzes</div>
+    <aside class="notes">
+      2 min. Reihenfolge der Schritte wie in der Skizze: erst die drei Begriffsarten einzeln,
+      dann die Beispielspalte, dann die Teilsprachen-Formel.
+      Pointe: Lₑ(T) ist das Interface zur Erfahrung &mdash; F = m&middot;a ist dort gar nicht formulierbar.
+    </aside>
+  </section>
+
+  <section>
+    <span class="marke">5.3.1 &middot; Achse 1 &middot; vertieft</span>
+    <h2>Zerlegungsuebung</h2>
+    <div class="formel">&forall;x: Masse(x) = 2 kg &nbsp;&rarr;&nbsp; Beschleunigung(x) = 5 m/s&sup2;</div>
+    <ul style="font-size:.78em">
+      <li class="fragment">logisch-math.: &forall;, &rarr;, =, Zahlen</li>
+      <li class="fragment">empirisch: Beschleunigung (aus Ort + Zeit messbar)</li>
+      <li class="fragment">theoretisch: <span class="t">Masse</span></li>
+      <li class="fragment">&rArr; <strong>gemischter Satz</strong>, lebt nur in L(T)</li>
+    </ul>
+    <div class="fragment formel">&exist;t: Ort(Koerper, t) = 3,2 m &nbsp;&rarr;&nbsp; reiner L<sub>e</sub>(T)-Satz &mdash; <strong>das</strong> ist die Angriffsflaeche</div>
+    <aside class="notes">Optionale Tiefe. Wenn die Zeit knapp ist, diese Folie ueberspringen (Pfeil nach rechts statt nach unten).</aside>
+  </section>
+</section>
+
+<!-- Folie 3 der Skizze: Achse (2) -->
+<section>
+  <section>
+    <span class="marke">5.3.1 &middot; Achse 2</span>
+    <div class="achsen" data-active="2"><span>1 Sprache</span><span>2 Axiom / Konsequenz</span><span>3 Satzarten</span><span>4 Kern / Peripherie</span></div>
+    <h2>(2.) Logische Natur der Saetze</h2>
+    <div class="spalten">
+      <div class="fragment">
+        <h4>Axiome &mdash; Ax(T)</h4>
+        <ul><li>werden <em>angenommen</em></li><li>nicht ableitbar</li><li>Kernaxiome <em>und</em> Hilfshypothesen</li></ul>
+      </div>
+      <div class="fragment">
+        <h4>Konsequenzen &mdash; C(T)</h4>
+        <ul><li>folgen logisch oder probabilistisch</li><li>relevanter Gehalt C<sub>e</sub>(T)</li></ul>
+      </div>
+    </div>
+    <div class="fragment pointe">Axiome sollen <strong>"natuerlich"</strong> sein: konjunktiv unzerlegbar. Sonst ist nicht sagbar, <em>welcher</em> Teil falsifiziert wurde.</div>
+    <p class="tief fragment">Nicht immer eindeutig: Newton hat zwei natuerliche Axiomatisierungen &mdash; Lagrange und Hamilton.</p>
+    <div class="bohren">&darr; Newton-Beispiele</div>
+    <aside class="notes">
+      2 min. Kernsatz: Axiome werden angenommen, Konsequenzen abgeleitet.
+      Relativitaet betonen: Energieerhaltung ist bei Newton Konsequenz, bei Lagrange fast Axiom.
+      "Axiom" ist eine Rolle im System, keine Eigenschaft des Satzes.
+    </aside>
+  </section>
+
+  <section>
+    <span class="marke">5.3.1 &middot; Achse 2 &middot; vertieft</span>
+    <h2>Newton: Ax(T) gegen C(T)</h2>
+    <table>
+      <tr><th>Axiome</th><th>Konsequenzen</th></tr>
+      <tr><td>Traegheitsgesetz</td><td>Keplersche Gesetze</td></tr>
+      <tr><td>F = m &middot; a</td><td>Energieerhaltung</td></tr>
+      <tr><td>actio = reactio</td><td>Pendelformel T = 2&pi;&radic;(l/g)</td></tr>
+      <tr><td>F = G&middot;m&#8321;m&#8322;/r&sup2;</td><td>Fallgesetz s = &frac12;gt&sup2;</td></tr>
+      <tr><td>Systembedingungen, CP-Hypothesen</td><td>"Mars steht am 1.3.2027 bei X"</td></tr>
+    </table>
+    <p class="tief fragment">Kepler war historisch eigenstaendige Theorie &mdash; bei Newton wird sie <em>ausgerechnet</em>.</p>
+    <aside class="notes">Optional. Gutes Argument fuer Vereinheitlichung (kommt in 5.4.2 wieder).</aside>
+  </section>
+</section>
+
+<!-- Folie 4 der Skizze: Achse (3) -->
+<section>
+  <section>
+    <span class="marke">5.3.1 &middot; Achse 3</span>
+    <div class="achsen" data-active="3"><span>1 Sprache</span><span>2 Axiom / Konsequenz</span><span>3 Satzarten</span><span>4 Kern / Peripherie</span></div>
+    <h2>(3.) Begriffliche Natur der Saetze</h2>
+    <div class="spalten drei">
+      <div class="fragment"><h4>rein theoretisch</h4><ul><li>nur theoret. Begriffe</li><li>F = G&middot;m&#8321;m&#8322;/r&sup2;</li></ul></div>
+      <div class="fragment"><h4>gemischt</h4><ul><li>beides</li><li>F = m &middot; d&sup2;x/dt&sup2;</li></ul></div>
+      <div class="fragment"><h4>empirisch</h4><ul><li>nur empir. Begriffe</li><li>x(t&#8321;) = 3,2 m</li></ul></div>
+    </div>
+    <div class="fragment pointe"><strong>Zuordnungsgesetze</strong> sind die wichtige Untermenge der gemischten Saetze. Ohne sie: kein empirischer Gehalt.</div>
+    <p class="tief fragment">Aber: nicht jeder gemischte Satz ist ein Zuordnungsgesetz (Fa &and; &phi;a verbindet nichts).</p>
+    <div class="bohren">&darr; Zuordnungsgesetze als Bruecken</div>
+    <aside class="notes">
+      2 min. Hier Achse (1) auf einzelne Saetze angewandt &mdash; das ist das Scharnier.
+      Satz aus dem Buch: Axiome sind meist rein theoretisch oder Zuordnungsgesetze,
+      die empirischen Saetze ergeben sich als Konsequenzen.
+    </aside>
+  </section>
+
+  <section>
+    <span class="marke">5.3.1 &middot; Achse 3 &middot; vertieft</span>
+    <h2>Dasselbe Phaenomen, zwei Sprachen</h2>
+    <table>
+      <tr><th>empirisch</th><th>theoretisch</th></tr>
+      <tr><td>Waage zeigt 2,0 kg</td><td>Masse m = 2,0 kg</td></tr>
+      <tr><td>Lackmuspapier wird rot</td><td>pH &lt; 7</td></tr>
+      <tr><td>Kind besteht den Muenztest</td><td>Kind hat Erhaltungskompetenz</td></tr>
+      <tr><td>Person waehlt A statt B</td><td>Nutzen(A) &gt; Nutzen(B)</td></tr>
+    </table>
+    <div class="fragment pointe">Jede Zeile <em>ist</em> ein Zuordnungsgesetz. Zeile 3 kommt in 5.5 als Indikatorgesetz I&#8322; wieder.</div>
+    <aside class="notes">Optional, aber sehr nuetzlich als Vorbereitung auf Piaget.</aside>
+  </section>
+</section>
+
+<!-- Folie 5 der Skizze: Achse (4) -->
+<section>
+  <span class="marke">5.3.1 &middot; Achse 4</span>
+  <div class="achsen" data-active="4"><span>1 Sprache</span><span>2 Axiom / Konsequenz</span><span>3 Satzarten</span><span>4 Kern / Peripherie</span></div>
+  <h2>(4.) Epistemischer Status der Axiome</h2>
+  <ul>
+    <li class="fragment"><span class="t">Kernaxiome</span> &mdash; definieren die <strong>historische Identitaet</strong>: Kern geaendert = andere Theorie</li>
+    <li class="fragment"><span class="t">Spezialgesetze</span> &mdash; kernnaeher oder kernferner</li>
+    <li class="fragment"><span class="t">Peripherie</span> &mdash; Systembedingungen, Hilfshypothesen: nur die <em>aktuelle Theorieversion</em></li>
+  </ul>
+  <div class="fragment pointe">Zwei Einschraenkungen von Schurz selbst: die Grenze ist <strong>graduell</strong>, und sie ist <strong>nur fuer Axiome</strong> unproblematisch.</div>
+  <p class="tief fragment">Bei Konsequenzen willkuerlich: sie folgen typisch aus Kernaxiom <em>plus</em> peripherer Hilfshypothese.</p>
+  <aside class="notes">
+    2 min. Gilt nur fuer Axiome &mdash; das ist der Grund, warum (4) nicht parallel zu (1)-(3) steht.
+    Vorgriff: genau diese Unterscheidung treibt in 5.5 die ganze Piaget-Debatte (S1/I2 aendern oder K1 aufgeben?).
+  </aside>
+</section>
+
+<!-- Folie 6 der Skizze: Gesamtbild -->
+<section>
+  <span class="marke">5.3.1 &middot; Gesamtbild</span>
+  <h2>Ein Satz, vier Achsen</h2>
+  <div class="kasten-reihe">
+    <div class="kasten hell"><span class="nr">(1.)</span>Sprache<span class="was">L(T) &sup; L<sub>e</sub>(T)</span></div>
+    <div class="kasten hell"><span class="nr">(2.)</span>Logisch<span class="was">Ax(T) &rarr; C(T)</span></div>
+    <div class="kasten hell"><span class="nr">(3.)</span>Begrifflich<span class="was">theor. / gemischt / empirisch</span></div>
+    <div class="kasten hell"><span class="nr">(4.)</span>Episteme<span class="was">Kern &hellip; Peripherie</span></div>
+  </div>
+  <table class="fragment" style="margin-top:.7em">
+    <tr><th></th><th>F = m&middot;a</th><th>x(t&#8321;) = 3,2 m</th></tr>
+    <tr><td>(1)</td><td>in L(T), nicht in L<sub>e</sub>(T)</td><td>in L<sub>e</sub>(T)</td></tr>
+    <tr><td>(2)</td><td>Axiom</td><td>Konsequenz</td></tr>
+    <tr><td>(3)</td><td>gemischt / Zuordnungsgesetz</td><td>rein empirisch</td></tr>
+    <tr><td>(4)</td><td>Kern</td><td>&mdash; (gilt nur fuer Axiome)</td></tr>
+  </table>
+  <div class="fragment formel" style="margin-top:.6em">
+    empirischer Gehalt von T &nbsp;=&nbsp; <strong>C(T)</strong> <span class="t">&cap;</span> <strong>L<sub>e</sub>(T)</strong> &nbsp;&nbsp; &larr; Achse (2) geschnitten mit Achse (1)
+  </div>
+  <aside class="notes">
+    2 min, das ist die Zielfolie von 5.3.1. Hier den Bogen schlagen:
+    Keine der vier Achsen allein liefert den empirischen Gehalt &mdash; er ist ein Schnitt.
+    Genau deshalb braucht man alle vier Einteilungen.
+  </aside>
+</section>
+
+<section class="zentriert">
+  <h2>Fragen zu 5.3.1?</h2>
+  <aside class="notes">
+    Rueckfallfragen, falls Stille: Warum darf man die Theorie nicht als ein einziges Axiom schreiben?
+    Ist "Temperatur" empirisch oder theoretisch? (Antwort: kommt drauf an, bezueglich welcher Theorie &mdash; Ueberleitung zu 5.3.2.)
+  </aside>
+</section>
+
+<!-- ========================================================= -->
+<!-- BLOCK 2 -- 5.3.2                                     5 min -->
+<!-- ========================================================= -->
+<section>
+  <section>
+    <span class="marke">5.3.2 &middot; 5 min</span>
+    <h2>Theoriennetze</h2>
+    <p class="fragment">Bisher war T isoliert betrachtet. Real haengt jede Theorie in einem <strong>Netz</strong>.</p>
+    <ul>
+      <li class="fragment"><span class="t">Spezialisierung</span> &mdash; hierarchische Theorienverbaende</li>
+      <li class="fragment"><span class="t">Vortheoretizitaet</span> &mdash; T&#8321; Vortheorie von T&#8322;: nichtempirische Begriffe von T&#8321; echte Teilmenge von T&#8322;<br><span class="tief">Kinematik (Ort, Zeit) &sub; Mechanik (Ort, Zeit, Masse, Kraft)</span></li>
+      <li class="fragment"><span class="t">Reduktion</span>, strikt oder approximativ &mdash; verbindet <em>heterogene</em> Theorien<br><span class="tief">Gasgesetz &rarr; statistische Mechanik; klassische Mechanik &rarr; SRT fuer v &laquo; c</span></li>
+    </ul>
+    <div class="fragment pointe">Die ersten beiden <strong>identifizieren</strong> gleichlautende Begriffe. Reduktion muss sie erst <strong>umdeuten</strong>.</div>
+    <div class="bohren">&darr; Netzlandschaft der Disziplinen</div>
+    <aside class="notes">1,5 min. Nicht in den Relationen versinken &mdash; sie sind nur das Vehikel fuer die Begriffstypologie auf der naechsten Folie.</aside>
+  </section>
+
+  <section>
+    <span class="marke">5.3.2 &middot; vertieft</span>
+    <h2>Wie dicht ist das Netz?</h2>
+    <ul style="font-size:.8em">
+      <li class="fragment">Physik + Chemie: <strong>dichtes</strong> Netz</li>
+      <li class="fragment">Evolutionsbiologie: <strong>autonom</strong> &mdash; importiert wenig, exportiert viel in Psychologie und Sozialwissenschaften</li>
+      <li class="fragment">"Hoehere" Disziplinen: statt Fundamentaltheorien <strong>konkurrierende Ansaetze</strong> + Faktenwissen</li>
+    </ul>
+    <div class="fragment pointe">Schurz' Programm: die Ergebnisse gelten trotzdem auch dort &mdash; Einloesung in 5.5.</div>
+    <aside class="notes">Optional. Das ist die explizite Bruecke zum Piaget-Kapitel.</aside>
+  </section>
+</section>
+
+<section>
+  <section>
+    <span class="marke">5.3.2</span>
+    <h2>Arten theoretischer Begriffe</h2>
+    <p class="fragment tief" style="margin-top:0">"theoretisch" ist keine Eigenschaft eines Begriffs &mdash; sondern eine Relation zu T <em>und</em> zum Netz N.</p>
+    <table>
+      <tr><th>Kategorie</th><th>erklaert durch</th><th>Beispiel</th></tr>
+      <tr class="fragment"><td>(a) empirisch</td><td>Beobachtung</td><td>rot, Zeigerstellung</td></tr>
+      <tr class="fragment"><td>(b) vortheoretisch</td><td>Vortheorie von T</td><td>Ortsfunktion (Kinematik)</td></tr>
+      <tr class="fragment"><td>(c.1) T-theoretisch</td><td>T selbst</td><td>Masse, Kraft</td></tr>
+      <tr class="fragment"><td>(c.2) extern theoretisch</td><td>andere Theorie im Netz</td><td>Ladung in der Chemie</td></tr>
+      <tr class="fragment"><td>(d) <span class="t">spekulativ</span></td><td>nichts davon</td><td>&rarr; ohne empirischen Gehalt</td></tr>
+    </table>
+    <div class="fragment pointe">(d) ist kein Aufzaehlungsrest, sondern ein <strong>Kritikinstrument</strong>.</div>
+    <div class="bohren">&darr; Def. 5.3-1 und der Sneed-Streit</div>
+    <aside class="notes">
+      2 min. Praktischer Grund fuer die Verfeinerung woertlich aus dem Buch:
+      sonst muesste man sich immer auf das gesamte Netz beziehen, "was enorm unpraktisch ist".
+    </aside>
+  </section>
+
+  <section>
+    <span class="marke">5.3.2 &middot; vertieft</span>
+    <h2>Def. 5.3-1(ii): T-theoretisch</h2>
+    <div class="formel">&forall;x&forall;t ( B&#7522;xt &rarr; ( &tau;(x) &harr; R&#7522;xt ) )</div>
+    <ul style="font-size:.72em">
+      <li class="fragment">B = Testbedingung, R = empirische Reaktion &mdash; beide in L<sub>e</sub>(T)</li>
+      <li class="fragment">Piaget: B = Muenztest vorgelegt &middot; &tau; = Erhaltungskompetenz &middot; R = "gleich viele"</li>
+      <li class="fragment"><strong>Ein theoretischer Begriff verdient seinen Platz, wenn die Theorie sagt, wie man ihn misst.</strong></li>
+    </ul>
+    <p class="tief fragment">Abgrenzung: Sneeds Kriterium ist Schurz zu eng, das von Gaehde/Balzer zu weit. <em>Ein Satz genuegt.</em></p>
+    <aside class="notes">Den Strukturalismus-Streit wirklich nur in einem Satz. Wenn die Zeit laeuft: Folie weglassen, die Formel kommt in 5.5 ohnehin wieder.</aside>
+  </section>
+</section>
+
+<section class="zentriert">
+  <h2>Fragen zu 5.3.2?</h2>
+  <aside class="notes">Rueckfallfrage: Ist "Gen" T-theoretisch oder extern theoretisch? Je nachdem, ob man Genetik oder Biochemie als T nimmt.</aside>
+</section>
+
+<!-- ========================================================= -->
+<!-- BLOCK 3 -- 5.4.1                                     5 min -->
+<!-- ========================================================= -->
+<section>
+  <span class="marke">5.4.1 &middot; 5 min</span>
+  <h2>Systemcharakter</h2>
+  <div class="fragment formel">Ein einzelnes Axiom hat im Regelfall <strong>noch gar keinen</strong> empirischen Gehalt. Erst die Konjunktion mehrerer Hypothesen erzeugt ihn.</div>
+  <p class="fragment">Daraus folgen drei Arten von Holismus:</p>
+  <div class="spalten drei">
+    <div class="fragment"><h4>1 Bedeutung</h4><ul><li>theoret. Begriffe bekommen Bedeutung durch die Kernaxiome</li><li>&rArr; analytisch/synthetisch nicht mehr trennbar</li></ul></div>
+    <div class="fragment"><h4>2 Gehalt</h4><ul><li>nur das <em>ganze System</em> ist mit Erfahrung konfrontierbar</li></ul></div>
+    <div class="fragment"><h4>3 Ueberpruefung</h4><ul><li>bei Konflikt: <em>irgendwo</em> steckt ein Fehler</li><li>logisch unbestimmt, <em>wo</em></li></ul></div>
+  </div>
+  <aside class="notes">2 min. Reihenfolge ist eine Ableitungskette: aus 1 folgt 2, aus 2 folgt 3. Das explizit sagen.</aside>
+</section>
+
+<section>
+  <span class="marke">5.4.1</span>
+  <h2>Der logische Kern des Holismus</h2>
+  <div class="formel">
+    {H&#8321;,&hellip;,H&#8345;} &#8872; P<br>
+    &not;P &nbsp;&rArr;&nbsp; &not;(H&#8321; &and; &hellip; &and; H&#8345;) &nbsp;&equiv;&nbsp; &not;H&#8321; &or; &hellip; &or; &not;H&#8345;
+  </div>
+  <p class="fragment">Modus Tollens liefert nur eine <strong>Disjunktion</strong> &mdash; mindestens eine Praemisse ist falsch, aber welche?</p>
+  <ul>
+    <li class="fragment"><strong>Duhem</strong> (1908): kein <em>experimentum crucis</em></li>
+    <li class="fragment"><strong>Neurath</strong> (1914/15), <strong>Quine</strong> (1951): empirische Unterbestimmtheit</li>
+  </ul>
+  <div class="fragment pointe">Probabilistisch ist es noch schwaecher: statt eine Hypothese zu verwerfen, genuegt eine <strong>neue Hilfshypothese H*</strong>, die die Folgerung blockiert.</div>
+  <p class="tief fragment">Schurz betont: das ist ein <strong>moderater</strong> Holismus &mdash; nicht alle Bedeutungen sind theorieabhaengig.</p>
+  <aside class="notes">
+    3 min. Die Formel langsam vorlesen, sie ist das Herz des Kapitels.
+    Abgrenzung gegen Quine-Radikalholismus explizit machen &mdash; beliebte Pruefungsfrage.
+    Hier keine eigene Fragenfolie, direkt weiter zu 5.4.2.
+  </aside>
+</section>
+
+<!-- ========================================================= -->
+<!-- BLOCK 4 -- 5.4.2                                     5 min -->
+<!-- ========================================================= -->
+<section>
+  <section>
+    <span class="marke">5.4.2 &middot; 5 min</span>
+    <h2>Drei epistemische Tugenden</h2>
+    <ul>
+      <li class="fragment"><span class="t">Empirische Kreativitaet</span> &mdash; die Konjunktion erzeugt mehr als die Summe</li>
+      <li class="fragment"><span class="t">Vereinheitlichung</span> &mdash; viele empirische Gesetze auf wenige Prinzipien</li>
+      <li class="fragment"><span class="t">Neuartige Voraussagen</span> &mdash; ueber den Ausgangsbereich hinaus</li>
+    </ul>
+    <div class="fragment formel">Ms. 5.4-2: &nbsp; E(H&#8321; &and; H&#8322;) &nbsp;&sup;&nbsp; C( E(H&#8321;) &cup; E(H&#8322;) )</div>
+    <div class="fragment pointe">Darum koennen selbst gehaltlose Spekulationen spaeter fruchtbar werden: E(H) leer, aber E(T &and; H) gross.</div>
+    <div class="bohren">&darr; das Beispiel dazu</div>
+    <aside class="notes">2 min. Vereinheitlichung braucht Gehaltselemente, sonst drohen Paradoxien (Kap. 6.4.3) &mdash; ein Halbsatz genuegt.</aside>
+  </section>
+
+  <section>
+    <span class="marke">5.4.2 &middot; vertieft</span>
+    <h2>Kreativitaet in zwei Zeilen</h2>
+    <div class="formel">
+      H&#8321; = &forall;x(Fx &rarr; &phi;x) &nbsp;&nbsp; E(H&#8321;) = &empty;<br>
+      H&#8322; = &forall;x(&phi;x &rarr; Gx) &nbsp;&nbsp; E(H&#8322;) = &empty;<br>
+      <span class="t">H&#8321; &and; H&#8322; &#8872; &forall;x(Fx &rarr; Gx)</span> &nbsp;&nbsp; empirisch!
+    </div>
+    <p class="fragment">Zwei einzeln gehaltlose Saetze erzeugen gemeinsam ein pruefbares empirisches Gesetz &mdash; weil &phi; als Bruecke wirkt.</p>
+    <aside class="notes">Das ist die beste Folie des Blocks. Falls die Zeit knapp ist, lieber die vorige kuerzen als diese.</aside>
+  </section>
+</section>
+
+<section>
+  <span class="marke">5.4.2</span>
+  <h2>Hempels Dilemma des Theoretikers</h2>
+  <p class="fragment tief">Vorgeschichte: Putnams Herausforderung (1962) &mdash; worin besteht die positive Funktion theoretischer Begriffe?</p>
+  <div class="spalten">
+    <div class="fragment"><h4>(a)</h4><p style="font-size:.75em">Theoretische Begriffe erfuellen <strong>keine</strong> empirische Rolle &rArr; ueberfluessig.</p></div>
+    <div class="fragment"><h4>(b)</h4><p style="font-size:.75em">Sie erfuellen <strong>eine</strong> &rArr; ebenfalls ueberfluessig, denn die empirischen Konsequenzen taeten es auch.</p></div>
+  </div>
+  <div class="fragment pointe">
+    Schurz' Antwort: Ersetzt man T&#8321;, T&#8322; durch E(T&#8321;), E(T&#8322;), gehen <strong>alle drei Tugenden</strong> verloren &mdash;
+    keine Kreativitaet, keine Vereinheitlichung, keine bereichsuebergreifenden Voraussagen.
+  </div>
+  <p class="tief fragment">Gilt gegen Craigs Methode ebenso wie gegen Ramsey-Saetze: die Konjunktion der Ramsey-Saetze ist schwaecher als der Ramsey-Satz der Konjunktion.</p>
+  <aside class="notes">3 min. Das ist die Pointe von 5.4 insgesamt: der Systemcharakter ist genau das, was theoretische Begriffe unersetzbar macht.</aside>
+</section>
+
+<section class="zentriert">
+  <h2>Fragen zu 5.4?</h2>
+  <aside class="notes">Rueckfallfrage: Wenn eine Theorie nur das Beobachtbare zusammenfasst &mdash; was geht verloren? (Antwort: genau die drei Tugenden.)</aside>
+</section>
+
+<!-- ========================================================= -->
+<!-- BLOCK 5 -- 5.5 Piaget                               10 min -->
+<!-- ========================================================= -->
+<section class="zentriert">
+  <h2>5.5 &nbsp;Das Beispiel Piaget</h2>
+  <h3>Alles bisher Gesagte an einem Fall aus der Psychologie</h3>
+  <aside class="notes">Uebergang: Schurz hatte in 5.3.2 angekuendigt, dass die an der Physik gewonnenen Einsichten uebertragbar sind. Das ist der Beleg.</aside>
+</section>
+
+<section>
+  <span class="marke">5.5 &middot; Theorie</span>
+  <h2>Piagets Kernthesen</h2>
+  <ul>
+    <li class="fragment"><strong>K1:</strong> Intelligenzentwicklung beruht auf stufenfoermiger Ausbildung <em>allgemeiner logisch-struktureller</em> Faehigkeiten</li>
+    <li class="fragment">Einmal ausgebildet &rarr; sofort ueberall anwendbar. Vorher: wird schlicht "nicht begriffen".</li>
+    <li class="fragment">Stufen: sensomotorisch (2 J.) &middot; <span class="t">konkret-operationell (6&ndash;7 J.)</span> &middot; formal-operationell (13&ndash;14 J.)</li>
+  </ul>
+  <div class="fragment pointe">Drei Faehigkeiten der konkret-operationellen Stufe: <strong>Perspektivenwechsel</strong>, <strong>Reversibilitaet</strong>, <strong>Invariantenerkennung</strong></div>
+  <aside class="notes">2 min. Nur so viel Psychologie wie noetig &mdash; das Thema ist die Theoriestruktur, nicht Piaget.</aside>
+</section>
+
+<section>
+  <span class="marke">5.5 &middot; Messung</span>
+  <h2>Die Tests = Zuordnungsgesetze</h2>
+  <div class="spalten drei">
+    <div class="fragment"><h4>Gebirgsmodell</h4><ul><li>Kind soll sagen, wie der Berg von anderer Seite aussieht</li><li>&rarr; Perspektivenwechsel</li></ul></div>
+    <div class="fragment"><h4>Muenztest</h4><ul><li>gleiche Anzahl, eng vs. weit gelegt</li><li>&rarr; Invarianz der Zahl</li></ul></div>
+    <div class="fragment"><h4>Tonkugel</h4><ul><li>Kugel zur Wurst gezogen: mehr, gleich, weniger?</li><li>&rarr; Invarianz der Substanz</li></ul></div>
+  </div>
+  <div class="fragment formel">Befund: vor 6 Jahren ueberwiegend nicht beherrscht, nach 7 Jahren durchwegs</div>
+  <div class="fragment pointe">Genau die Form aus Def. 5.3-1(ii): &forall;x&forall;t ( B&#7522;xt &rarr; ( &tau;(x) &harr; R&#7522;xt ) )</div>
+  <aside class="notes">2 min. Hier den Rueckbezug laut machen: Das sind keine blossen Experimente, das sind die Bruecken, die K1 ueberhaupt erst empirisch angreifbar machen.</aside>
+</section>
+
+<section>
+  <span class="marke">5.5 &middot; Rekonstruktion</span>
+  <h2>(5.5-1): Die Ableitung</h2>
+  <div class="formel">
+    K1&ndash;K4 &nbsp;Kerngesetze<br>
+    S1&ndash;S4 &nbsp;Spezialgesetze &nbsp;<span class="tief">(Alter, Stufenzuordnung)</span><br>
+    I1&ndash;I3 &nbsp;Indikatorgesetze &nbsp;<span class="tief">(Tests)</span><br>
+    <span class="t">&#8595; logisch</span><br>
+    <strong>P</strong>: 7-Jaehrige bestehen Muenz-, Umschuett- und Tonkugeltest
+  </div>
+  <ul>
+    <li class="fragment">Alles oberhalb des Strichs: <strong>Ax(T)</strong>, formuliert in L(T)</li>
+    <li class="fragment">P allein: <strong>C(T) &cap; L<sub>e</sub>(T)</strong> &mdash; der empirische Gehalt</li>
+  </ul>
+  <aside class="notes">2 min. Zielfolie des Blocks: hier sind Achse (1), (2) und (4) gleichzeitig sichtbar. Langsam machen.</aside>
+</section>
+
+<section>
+  <span class="marke">5.5 &middot; Anomalien</span>
+  <h2>Der Konflikt mit der Erfahrung</h2>
+  <ul>
+    <li class="fragment"><strong>Siegel 1978:</strong> nonverbale Lernexperimente &rarr; schon 4&ndash;5-Jaehrige bestehen den Zahltest</li>
+    <li class="fragment">&rArr; Fraktion 1: nur <span class="t">Peripherie</span> aendern &mdash; S1 und I2 anpassen</li>
+    <li class="fragment"><strong>Aussagenlogik:</strong> Modus Ponens mit 3 Jahren, Modus Tollens teils nie &mdash; obwohl laut Piaget <em>dieselbe</em> Faehigkeit</li>
+    <li class="fragment"><strong>Objekterhaltung:</strong> Ball hinter der Wand mit 2 Jahren, Zucker im Wasser nicht mit 6</li>
+    <li class="fragment">&rArr; Fraktion 2: das trifft den <span class="t">Kern</span></li>
+  </ul>
+  <div class="fragment pointe">K1* : Entwicklung <strong>inhaltsspezifischer</strong> Faehigkeiten, die spaeter differenziert und generalisiert werden &rarr; neues Paradigma.</div>
+  <aside class="notes">
+    3 min. Hoehepunkt der Praesentation: Der Holismus aus 5.4.1 ist hier nicht Theorie, sondern eine reale
+    wissenschaftliche Kontroverse &mdash; und die Frage "Peripherie oder Kern?" ist genau Achse (4).
+  </aside>
+</section>
+
+<section>
+  <span class="marke">Abschluss</span>
+  <h2>Was der Fall zeigt</h2>
+  <ul>
+    <li class="fragment">Theoretische Begriffe (Stufe, Kompetenz) brauchen <strong>Zuordnungsgesetze</strong> &mdash; sonst waeren sie spekulativ <span class="tief">(5.3.2)</span></li>
+    <li class="fragment">Geprueft wird nie ein Satz, sondern <strong>K + S + I zusammen</strong> <span class="tief">(5.4.1)</span></li>
+    <li class="fragment">Die Daten sagen nicht, <em>welche</em> Praemisse faellt &mdash; S1? I2? K1? <span class="tief">(Modus Tollens)</span></li>
+    <li class="fragment">Die Entscheidung Peripherie / Kern entscheidet ueber die <strong>Identitaet der Theorie</strong> <span class="tief">(5.3.1, Achse 4)</span></li>
+  </ul>
+  <div class="fragment pointe">Und damit sind wir bei der Frage, die Kap. 5.6 <strong>Theoriendynamik</strong> stellt: Nach welchen Regeln <em>darf</em> man revidieren? &rarr; Lakatos</div>
+  <aside class="notes">1 min. Sauberer Schluss mit Uebergabe an den naechsten Vortragenden bzw. ans naechste Kapitel.</aside>
+</section>
+
+<section class="zentriert">
+  <h2>Fragen zu 5.5?</h2>
+  <p class="tief">Danke.</p>
+  <aside class="notes">
+    Rueckfallfragen: War Piagets Theorie damit falsifiziert? (Nein &mdash; logisch war auch Peripherieaenderung moeglich; es war eine Entscheidung.)
+    Was haette ein Lakatos dazu gesagt? &rarr; Vorgriff 5.6.
+  </aside>
+</section>
+
+</div>
+</div>
+
+<script src="reveal/dist/reveal.js"></script>
+<script src="reveal/plugin/notes/notes.js"></script>
+<script src="reveal/plugin/zoom/zoom.js"></script>
+<script src="reveal/plugin/search/search.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    transition: 'slide',
+    backgroundTransition: 'fade',
+    navigationMode: 'default',
+    plugins: [ RevealNotes, RevealZoom, RevealSearch ]
+  });
+</script>
+</body>
+</html>
