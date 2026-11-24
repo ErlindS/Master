@@ -1,0 +1,1977 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SYCL — Portable heterogene Programmierung mit C++</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   SWISS CONFERENCE / KEYNOTE DESIGN SYSTEM
+   Calm, light, high-whitespace, hairline rules, one restrained accent.
+   ========================================================================== */
+:root {
+  --bg: #fcfcfd;
+  --surface: #f4f6f9;
+  --surface-2: #e9eef5;
+  --ink: #0f172a;
+  --ink-2: #334155;
+  --muted: #64748b;
+  --rule: #e2e8f0;
+  --rule-strong: #94a3b8;
+
+  /* Single primary academic accent + restrained semantic red */
+  --acc: #1d4ed8;
+  --acc-soft: #eff6ff;
+  --acc-mid: #93c5fd;
+  --warn: #b91c1c;
+  --warn-soft: #fef2f2;
+
+  /* Restrained chart palette (monochrome slate + cobalt) */
+  --ch-1: #94a3b8;  /* RTX 5060 Ti */
+  --ch-2: #475569;  /* L40S */
+  --ch-3: #0f172a;  /* H100 */
+  --ch-4: #1d4ed8;  /* CPU / Highlight */
+
+  /* Light academic code highlighting */
+  --tok-kw: #1d4ed8;
+  --tok-ty: #0f766e;
+  --tok-fn: #0f172a;
+  --tok-nu: #b45309;
+  --tok-cm: #64748b;
+
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Consolas, monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #e8ecf1;
+  color: var(--ink);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   16:9 STAGE
+   ========================================================================== */
+#viewport {
+  position: fixed;
+  inset: 0 0 38px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#deck {
+  width: 1280px;
+  height: 720px;
+  background: var(--bg);
+  position: relative;
+  transform-origin: center center;
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  padding: 52px 72px 44px;
+  display: none;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.slide.active { display: flex; }
+
+/* ==========================================================================
+   DIRECTIONAL VIEW TRANSITIONS (modern-web-guidance compliant)
+   ========================================================================== */
+@keyframes slide-to-left {
+  to { transform: translateX(-5%); opacity: 0; }
+}
+@keyframes slide-from-right {
+  from { transform: translateX(5%); opacity: 0; }
+}
+@keyframes slide-to-right {
+  to { transform: translateX(5%); opacity: 0; }
+}
+@keyframes slide-from-left {
+  from { transform: translateX(-5%); opacity: 0; }
+}
+
+::view-transition-group(root) {
+  animation: 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+html:active-view-transition-type(forward)::view-transition-old(root) { animation-name: slide-to-left; }
+html:active-view-transition-type(forward)::view-transition-new(root) { animation-name: slide-from-right; }
+html:active-view-transition-type(backward)::view-transition-old(root) { animation-name: slide-to-right; }
+html:active-view-transition-type(backward)::view-transition-new(root) { animation-name: slide-from-left; }
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(root) { animation: none !important; }
+}
+
+/* ==========================================================================
+   TYPOGRAPHY & HEADER
+   ========================================================================== */
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--rule);
+  flex-shrink: 0;
+}
+
+.sec-tag {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--acc);
+  margin-bottom: 6px;
+}
+
+h1 {
+  font-size: 64px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--ink);
+}
+
+h2 {
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.18;
+  color: var(--ink);
+}
+
+h3 {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+p { font-size: 17.5px; line-height: 1.5; color: var(--ink-2); }
+.small { font-size: 15px; line-height: 1.48; }
+.tiny { font-size: 13px; line-height: 1.4; }
+.muted { color: var(--muted); }
+.acc { color: var(--acc); }
+.warn { color: var(--warn); }
+.mono { font-family: var(--mono); }
+.num { font-variant-numeric: tabular-nums; }
+
+/* Minimal Stage Indicator (1-5) */
+.stufen {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.stufen span { padding-bottom: 3px; border-bottom: 2px solid transparent; }
+.stufen span.done { color: var(--ink-2); }
+.stufen span.cur { color: var(--acc); font-weight: 700; border-bottom-color: var(--acc); }
+
+/* ==========================================================================
+   FRAGMENTS (Click-by-Click Reveals)
+   ========================================================================== */
+.frag { opacity: 0; transform: translateY(10px); pointer-events: none; }
+.frag.shown { opacity: 1; transform: translateY(0); pointer-events: auto; }
+@media (prefers-reduced-motion: no-preference) {
+  .frag { transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+}
+
+/* ==========================================================================
+   CLEAN LAYOUTS (No boxed cards, hairline structure)
+   ========================================================================== */
+.cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; flex: 1; min-height: 0; }
+.cols-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
+.cols-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+
+.col-rule {
+  padding-top: 14px;
+  border-top: 2px solid var(--ink);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.col-rule.acc-top { border-top-color: var(--acc); }
+.col-rule.muted-top { border-top: 1px solid var(--rule); }
+
+/* Clean Controls */
+.ctrl { display: inline-flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.tabs {
+  display: inline-flex;
+  border-bottom: 1px solid var(--rule);
+  gap: 18px;
+}
+.tabs button {
+  border: none;
+  background: none;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted);
+  padding: 4px 0 8px;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+}
+.tabs button.on { color: var(--acc); font-weight: 600; border-bottom-color: var(--acc); }
+.tabs button:focus-visible, .text-btn:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
+
+.text-btn {
+  border: 1px solid var(--rule-strong);
+  background: var(--bg);
+  color: var(--ink-2);
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.text-btn:hover { border-color: var(--ink); color: var(--ink); }
+
+/* ==========================================================================
+   CODE BLOCKS (Light, crisp, editorial — no traffic lights)
+   ========================================================================== */
+.code-wrap {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.code-head {
+  padding: 7px 16px;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+pre.code {
+  padding: 16px 18px;
+  font-family: var(--mono);
+  font-size: 13.8px;
+  line-height: 1.56;
+  color: var(--ink);
+  overflow: auto;
+  white-space: pre;
+}
+pre.code .hl {
+  display: block;
+  background: var(--acc-soft);
+  border-left: 3px solid var(--acc);
+  margin: 0 -18px;
+  padding: 0 15px;
+}
+.kw { color: var(--tok-kw); font-weight: 600; }
+.ty { color: var(--tok-ty); }
+.fn { color: var(--tok-fn); font-weight: 600; }
+.nu { color: var(--tok-nu); }
+.cm { color: var(--tok-cm); }
+
+/* ==========================================================================
+   PHOTO SLOTS (Real Drop-In Images with Clean Wireframe Fallback)
+   ========================================================================== */
+.photo-slot {
+  position: relative;
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.photo-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.photo-slot .ph {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 5px;
+  padding: 12px;
+  color: var(--muted);
+}
+.photo-slot.missing {
+  border-style: dashed;
+  border-color: var(--rule-strong);
+}
+.photo-slot.missing img { display: none; }
+.photo-slot.missing .ph { display: flex; }
+.photo-slot .ph b { font-size: 13.5px; color: var(--ink-2); font-weight: 600; }
+.photo-slot .ph code { font-family: var(--mono); font-size: 11.5px; color: var(--acc); }
+
+/* ==========================================================================
+   SLIDE-SPECIFIC MINIMAL STYLES
+   ========================================================================== */
+
+/* Slide 2: Story Grid */
+.story-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr 1fr;
+  gap: 22px 28px;
+  flex: 1;
+  min-height: 0;
+}
+.story-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-height: 0;
+}
+.story-cell .photo-slot { flex: 1; min-height: 0; }
+.story-cap {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.story-cap span { font-family: var(--mono); font-size: 12.5px; color: var(--muted); font-weight: 500; }
+
+.story-problem {
+  flex: 1;
+  border: 1.5px solid var(--warn);
+  background: var(--warn-soft);
+  border-radius: 4px;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Slide 5: 3 Mini Visualizations + 5-Stage Timeline */
+.viz-box {
+  height: 150px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+.m4 { display: grid; grid-template-columns: repeat(4, 17px); gap: 3px; }
+.m4 div { width: 17px; height: 17px; background: var(--surface-2); border-radius: 2px; }
+.m4 div.hi { background: var(--acc-mid); }
+.m4 div.cur { background: var(--acc); }
+
+.s6 { display: grid; grid-template-columns: repeat(6, 18px); gap: 3px; }
+.s6 div { width: 18px; height: 18px; background: var(--surface-2); border-radius: 2px; }
+.s6 div.nb { background: var(--acc-mid); }
+.s6 div.ctr { background: var(--acc); }
+
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--rule);
+  margin-top: auto;
+}
+.tl-item { display: flex; flex-direction: column; gap: 4px; }
+.tl-item .tl-n { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--acc); }
+.tl-item b { font-size: 15px; color: var(--ink); }
+.tl-item span { font-size: 13px; color: var(--muted); line-height: 1.35; }
+
+/* Slide 10: Tiling */
+.t6 { display: grid; grid-template-columns: repeat(6, 22px); gap: 3px; }
+.t6 div { width: 22px; height: 22px; background: var(--surface); border: 1px solid var(--rule); border-radius: 2px; }
+.t6 div.tile { background: var(--acc-soft); border-color: var(--acc); }
+.t6 div.used { background: var(--surface-2); }
+.t6 div.tgt { border-color: var(--ink); border-width: 1.5px; }
+
+.phase-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 8px;
+}
+.phase-step {
+  padding: 8px 10px;
+  border-top: 2px solid var(--rule);
+  font-size: 13.5px;
+  color: var(--muted);
+}
+.phase-step.on { border-top-color: var(--acc); color: var(--ink); font-weight: 600; }
+
+/* Slide 11: Candidate Screening */
+.cand { display: grid; grid-template-columns: 64px 1fr 110px; align-items: center; gap: 16px; font-size: 15px; }
+.cand-bar-bg { height: 26px; background: var(--surface); border-radius: 2px; overflow: hidden; display: flex; align-items: center; }
+.cand-bar { height: 100%; background: var(--ch-1); display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; font-family: var(--mono); font-size: 12px; font-weight: 600; color: #fff; }
+.cand-bar.best { background: var(--acc); }
+.cand-bar.fail { width: 100%; background: var(--warn-soft); border: 1px dashed var(--warn); color: var(--warn); justify-content: center; }
+
+/* ==========================================================================
+   PUBLICATION-GRADE CHARTS (Slides 12, 13, 14)
+   ========================================================================== */
+.chart-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; flex: 1; }
+.ch-col { display: flex; flex-direction: column; }
+.ch-title { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+.ch-title b { font-size: 16px; color: var(--ink); }
+.ch-title span { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+
+.bars {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  padding-top: 28px;
+  border-bottom: 1.5px solid var(--ink);
+  min-height: 230px;
+  background-image: linear-gradient(to top, transparent 98%, var(--rule) 98%);
+  background-size: 100% 25%;
+}
+.bcol { flex: 1; height: 100%; position: relative; display: flex; align-items: flex-end; }
+.bfill { width: 100%; height: var(--h, 0%); background: var(--bc, var(--ch-1)); border-radius: 2px 2px 0 0; }
+.bcol.best .bfill { background: var(--acc); }
+.bcol.hatch .bfill { background: repeating-linear-gradient(45deg, #cbd5e1 0 4px, #f1f5f9 4px 8px); border: 1px solid #94a3b8; border-bottom: none; }
+.bval {
+  position: absolute;
+  bottom: calc(var(--h, 0%) + 5px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.bcol.best .bval { color: var(--acc); font-weight: 700; }
+.bcol.fail .bval { color: var(--warn); font-weight: 700; font-size: 14px; }
+.blabs { display: flex; gap: 8px; margin-top: 8px; font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
+.blabs span { flex: 1; text-align: center; }
+
+/* Horizontal Bars (Slide 13) */
+.hbars { display: flex; flex-direction: column; gap: 11px; margin-top: 12px; }
+.hbar { display: grid; grid-template-columns: 168px 1fr 84px; align-items: center; gap: 12px; font-size: 14px; }
+.htrack { height: 18px; background: var(--surface); border-radius: 2px; overflow: hidden; }
+.hfill { height: 100%; background: var(--ch-2); border-radius: 2px; }
+.hfill.acc { background: var(--acc); }
+.hfill.warn { background: var(--warn); }
+.hfill.ref { background: var(--ink); }
+.hfill.light { background: var(--ch-1); }
+
+/* Grouped CUDA Chart (Slide 14) */
+.cuda-wrap { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.cuda-area {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 28px;
+  position: relative;
+  padding-top: 28px;
+  border-bottom: 1.5px solid var(--ink);
+  background-image: linear-gradient(to top, transparent 98.5%, var(--rule) 98.5%);
+  background-size: 100% 25%;
+}
+.ref-line {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 55.55%; /* 100 / 180 */
+  border-top: 1.5px dashed var(--ink);
+  pointer-events: none;
+  z-index: 2;
+}
+.ref-line span {
+  position: absolute;
+  right: 0;
+  top: -21px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--bg);
+  padding: 0 6px;
+}
+.cgrp { display: flex; align-items: flex-end; gap: 6px; height: 100%; position: relative; z-index: 3; }
+.cbar { flex: 1; height: 100%; position: relative; display: flex; align-items: flex-end; }
+.cbar-f { width: 100%; height: var(--h, 0%); background: var(--c); border-radius: 2px 2px 0 0; }
+.cbar span {
+  position: absolute;
+  bottom: calc(var(--h, 0%) + 5px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.cuda-xl { display: grid; grid-template-columns: repeat(6, 1fr); gap: 28px; margin-top: 10px; text-align: center; font-size: 13.5px; color: var(--ink); font-weight: 600; }
+
+.legend { display: flex; gap: 22px; font-size: 13.5px; color: var(--ink-2); align-items: center; }
+.legend i { display: inline-block; width: 11px; height: 11px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+
+/* Bottom Takeaway Strip */
+.takeaway {
+  padding-top: 14px;
+  border-top: 1px solid var(--rule);
+  font-size: 15.5px;
+  color: var(--ink-2);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 24px;
+}
+.takeaway b { color: var(--ink); }
+
+/* ==========================================================================
+   MINIMAL HUD & PRESENTER OVERLAYS
+   ========================================================================== */
+#progress {
+  position: fixed;
+  left: 0; bottom: 38px;
+  height: 2px;
+  background: var(--acc);
+  width: 0%;
+  z-index: 51;
+}
+@media (prefers-reduced-motion: no-preference) {
+  #progress { transition: width 0.25s ease; }
+}
+
+#hud {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: 38px;
+  background: var(--bg);
+  border-top: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 16px;
+  font-size: 12.5px;
+  color: var(--muted);
+  z-index: 50;
+}
+.hud-r { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.hud-b {
+  border: none;
+  background: none;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 3px 6px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+.hud-b:hover { color: var(--ink); background: var(--surface); }
+#timer.run { color: var(--acc); font-weight: 600; }
+
+#notes {
+  position: fixed;
+  left: 24px; right: 24px; bottom: 48px;
+  max-width: 880px;
+  margin: 0 auto;
+  background: var(--bg);
+  border: 1px solid var(--rule-strong);
+  border-left: 3px solid var(--acc);
+  border-radius: 4px;
+  padding: 14px 18px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+  z-index: 60;
+  display: none;
+}
+#notes.open { display: block; }
+#notes .nm { font-family: var(--mono); font-size: 11.5px; color: var(--acc); font-weight: 600; margin-bottom: 5px; }
+#notes p { font-size: 15px; color: var(--ink); line-height: 1.5; }
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  z-index: 80;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+}
+.modal.open { display: flex; }
+.modal-box {
+  background: var(--bg);
+  border: 1px solid var(--rule-strong);
+  border-radius: 6px;
+  padding: 24px 28px;
+  max-width: 1080px;
+  width: 100%;
+  max-height: 86vh;
+  overflow: auto;
+}
+.ov-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 16px; }
+.ov-btn {
+  text-align: left;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 11px 13px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ov-btn:hover, .ov-btn.cur { border-color: var(--acc); background: var(--acc-soft); }
+.ov-btn small { font-family: var(--mono); font-size: 11px; color: var(--acc); }
+.ov-btn b { font-size: 13.5px; color: var(--ink); font-weight: 600; }
+
+kbd {
+  font-family: var(--mono);
+  font-size: 12px;
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  padding: 2px 7px;
+  border-radius: 3px;
+  color: var(--ink);
+}
+</style>
+</head>
+<body>
+
+<div id="viewport">
+  <main id="deck" aria-live="polite">
+
+    <!-- ====================================================================
+         1 · TITEL
+         ==================================================================== -->
+    <section class="slide active" data-sec="Titel" data-title="SYCL — Portable heterogene Programmierung" data-time="00:00"
+             data-note="Kurze Begrüßung und direkter Übergang zur Einstiegsgeschichte auf Folie 2.">
+      <div style="margin:auto 0;max-width:860px;display:flex;flex-direction:column;gap:20px">
+        <div class="sec-tag">Seminararbeit · Master Informatik · Hochschule Karlsruhe</div>
+        <h1>SYCL</h1>
+        <p style="font-size:28px;color:var(--ink);font-weight:500;letter-spacing:-0.015em;line-height:1.28">
+          Portable heterogene Programmierung mit C++
+        </p>
+        <p style="font-size:19px;color:var(--muted)">
+          Problemstellung, Programmiermodell und Performance-Portabilität
+        </p>
+        <div style="width:80px;height:2px;background:var(--acc);margin:14px 0 6px"></div>
+        <div style="display:flex;gap:48px;font-size:16px">
+          <div>
+            <div style="font-weight:600;color:var(--ink)">Erlind Sejdiu</div>
+            <div class="small muted">Wintersemester 2026/27</div>
+          </div>
+          <div>
+            <div style="font-weight:600;color:var(--ink)">Betreuer</div>
+            <div class="small muted">Prof. Dr.-Ing. Holger Vogelsang</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         2 · EINLEITUNG: STORYTELLING (6 Klick-Beats mit echten Bild-Slots)
+         ==================================================================== -->
+    <section class="slide" data-sec="Einleitung" data-title="Ausgangssituation: Herstellerbindung" data-time="00:00–01:00 · 1 min"
+             data-note="1) Ihr seid ein talentierter Softwareentwickler. 2) Ihr vertraut bestimmten Menschen (Jensen Huang) und 3) kauft mehrere NVIDIA-GPUs. 4) Preise steigen / Vertrauen sinkt. 5) Ihr kauft eine AMD-Grafikkarte. 6) Das Problem: Euer NVIDIA-CUDA-Code läuft nicht auf AMD.">
+      <div class="head">
+        <div>
+          <div class="sec-tag">Einleitung · Ausgangssituation</div>
+          <h2>Das Problem der Herstellerbindung</h2>
+        </div>
+        <span class="tiny mono muted">6 Schritte · Klick / →</span>
+      </div>
+
+      <div class="story-grid">
+        <div class="story-cell frag" data-step="1">
+          <div class="photo-slot">
+            <img src="bilder/finger.jpg" alt="Fingerzeig ins Publikum">
+            <div class="ph"><b>Bild-Slot 1 · Entwickler</b><code>bilder/finger.jpg</code></div>
+          </div>
+          <div class="story-cap"><span>01</span>Ihr seid Softwareentwickler</div>
+        </div>
+
+        <div class="story-cell frag" data-step="2">
+          <div class="photo-slot">
+            <img src="bilder/jensen_happy.jpg" alt="Jensen Huang">
+            <div class="ph"><b>Bild-Slot 2 · Vertrauen</b><code>bilder/jensen_happy.jpg</code></div>
+          </div>
+          <div class="story-cap"><span>02</span>Ihr vertraut dem Marktführer</div>
+        </div>
+
+        <div class="story-cell frag" data-step="3">
+          <div class="photo-slot">
+            <img src="bilder/nvidia_gpus.jpg" alt="Mehrere NVIDIA-Grafikkarten">
+            <div class="ph"><b>Bild-Slot 3 · NVIDIA-GPUs</b><code>bilder/nvidia_gpus.jpg</code></div>
+          </div>
+          <div class="story-cap"><span>03</span>Investition in NVIDIA-GPUs (CUDA)</div>
+        </div>
+
+        <div class="story-cell frag" data-step="4">
+          <div class="photo-slot">
+            <img src="bilder/markt_traurig.jpg" alt="Steigende Preise oder sinkendes Vertrauen">
+            <div class="ph"><b>Bild-Slot 4 · Preis / Vertrauen</b><code>bilder/markt_traurig.jpg</code></div>
+          </div>
+          <div class="story-cap"><span>04</span>Preise steigen · Vertrauen schwindet</div>
+        </div>
+
+        <div class="story-cell frag" data-step="5">
+          <div class="photo-slot">
+            <img src="bilder/amd_gpu.jpg" alt="AMD-Grafikkarte">
+            <div class="ph"><b>Bild-Slot 5 · AMD-GPU</b><code>bilder/amd_gpu.jpg</code></div>
+          </div>
+          <div class="story-cap"><span>05</span>Wechsel auf eine AMD-GPU</div>
+        </div>
+
+        <div class="story-cell frag" data-step="6">
+          <div class="story-problem">
+            <div class="tiny mono warn" style="font-weight:700">KONSEQUENZ</div>
+            <h3 class="warn" style="font-size:24px;line-height:1.25">NVIDIA-Code läuft nicht auf AMD.</h3>
+            <p class="small">Proprietäres CUDA (<span class="mono">.cu</span>) bindet die Codebasis an einen Hersteller — für AMD wäre <b>HIP</b> nötig.</p>
+          </div>
+          <div class="story-cap"><span class="warn">06</span>Herstellerbindung (Vendor Lock-in)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         3 · EINLEITUNG: VON CUDA ZU SYCL
+         ==================================================================== -->
+    <section class="slide" data-sec="Einleitung" data-title="Was ist SYCL?" data-time="01:00–02:00 · 1 min"
+             data-note="Oben: Quellcode -> .cu -> NVIDIA, aber keine Verbindung zu AMD (HIP nötig). Klick 1: SYCL als offener Standard der Khronos Group für heterogene Systeme (Gegenteil von homogen). Klick 2: Ein Quellcode -> SYCL-Implementierung (DPC++ von Intel / AdaptiveCpp von Uni Heidelberg) -> NVIDIA, AMD, Intel, CPU. Typischer Einsatz: Großrechenzentren.">
+      <div class="head">
+        <div>
+          <div class="sec-tag">Einleitung · Was ist SYCL?</div>
+          <h2>Ein offener Standard für heterogene Hardware</h2>
+        </div>
+        <span class="tiny mono muted">Khronos Group · C++17</span>
+      </div>
+
+      <!-- Problem diagram -->
+      <div>
+        <div class="tiny mono muted" style="margin-bottom:8px">OHNE SYCL</div>
+        <svg viewBox="0 0 1136 108" width="100%" height="104" role="img" aria-label="Quellcode über CUDA läuft nur auf NVIDIA, nicht auf AMD">
+          <defs>
+            <marker id="m-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="#0f172a"/></marker>
+          </defs>
+          <rect x="2" y="22" width="210" height="58" rx="3" fill="#fcfcfd" stroke="#0f172a" stroke-width="1.6"/>
+          <text x="107" y="56" text-anchor="middle" fill="#0f172a" font-size="16" font-weight="600">Quellcode</text>
+
+          <line x1="212" y1="51" x2="320" y2="51" stroke="#0f172a" stroke-width="1.6" marker-end="url(#m-ink)"/>
+
+          <rect x="326" y="22" width="220" height="58" rx="3" fill="#f4f6f9" stroke="#0f172a" stroke-width="1.6"/>
+          <text x="436" y="48" text-anchor="middle" fill="#0f172a" font-family="JetBrains Mono,monospace" font-size="15.5" font-weight="600">programm.cu</text>
+          <text x="436" y="68" text-anchor="middle" fill="#64748b" font-size="13">CUDA</text>
+
+          <path d="M546,42 L746,24" stroke="#0f172a" stroke-width="1.8" fill="none" marker-end="url(#m-ink)"/>
+          <rect x="752" y="4" width="210" height="42" rx="3" fill="#f4f6f9" stroke="#0f172a" stroke-width="1.6"/>
+          <text x="857" y="30" text-anchor="middle" fill="#0f172a" font-size="15.5" font-weight="600">NVIDIA GPU</text>
+
+          <path d="M546,62 L746,82" stroke="#b91c1c" stroke-width="1.6" stroke-dasharray="6 5" fill="none"/>
+          <line x1="638" y1="63" x2="656" y2="81" stroke="#b91c1c" stroke-width="2.4"/>
+          <line x1="656" y1="63" x2="638" y2="81" stroke="#b91c1c" stroke-width="2.4"/>
+
+          <rect x="752" y="60" width="380" height="42" rx="3" fill="#fef2f2" stroke="#b91c1c" stroke-width="1.5"/>
+          <text x="942" y="86" text-anchor="middle" fill="#b91c1c" font-size="15" font-weight="600">AMD GPU — benötigt HIP</text>
+        </svg>
+      </div>
+
+      <!-- Beat 1: SYCL Introduction -->
+      <div class="frag" data-step="1" style="padding:18px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);display:flex;align-items:baseline;gap:36px">
+        <div style="font-size:44px;font-weight:700;letter-spacing:-0.03em;color:var(--acc);line-height:1">SYCL</div>
+        <div style="flex:1">
+          <p style="color:var(--ink);font-weight:500">
+            Offener Standard der <b>Khronos Group</b> für <b>heterogene</b> Systeme <span class="muted">(unterschiedliche Hardware, Gegenteil von homogen)</span>.
+          </p>
+          <p class="small muted" style="margin-top:4px">
+            Zwei zentrale Implementierungen: <b>DPC++</b> (Intel) und <b>AdaptiveCpp</b> (Uni Heidelberg) · Anwendungsfall: Großrechenzentren &amp; HPC.
+          </p>
+        </div>
+      </div>
+
+      <!-- Beat 2: Fixed SYCL Architecture -->
+      <div class="frag" data-step="2">
+        <div class="tiny mono acc" style="margin-bottom:8px;font-weight:600">MIT SYCL · EINE CODEBASIS</div>
+        <svg viewBox="0 0 1136 138" width="100%" height="134" role="img" aria-label="SYCL-Quellcode über Implementierung auf NVIDIA, AMD, Intel und CPU">
+          <defs>
+            <marker id="m-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="#1d4ed8"/></marker>
+          </defs>
+          <rect x="2" y="36" width="210" height="62" rx="3" fill="#fcfcfd" stroke="#1d4ed8" stroke-width="1.8"/>
+          <text x="107" y="64" text-anchor="middle" fill="#0f172a" font-size="16" font-weight="600">Quellcode</text>
+          <text x="107" y="84" text-anchor="middle" fill="#1d4ed8" font-family="JetBrains Mono,monospace" font-size="12.5">Standard-C++17</text>
+
+          <line x1="212" y1="67" x2="318" y2="67" stroke="#1d4ed8" stroke-width="1.8" marker-end="url(#m-acc)"/>
+
+          <rect x="324" y="24" width="290" height="86" rx="3" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.8"/>
+          <text x="469" y="57" text-anchor="middle" fill="#0f172a" font-size="17" font-weight="600">SYCL-Implementierung</text>
+          <text x="469" y="80" text-anchor="middle" fill="#1d4ed8" font-family="JetBrains Mono,monospace" font-size="13">DPC++  /  AdaptiveCpp</text>
+          <text x="469" y="99" text-anchor="middle" fill="#64748b" font-size="12">erfüllen denselben Standard</text>
+
+          <path d="M614,48 C680,48 690,18 756,18" stroke="#1d4ed8" stroke-width="1.8" fill="none" marker-end="url(#m-acc)"/>
+          <path d="M614,61 C680,61 690,51 756,51" stroke="#1d4ed8" stroke-width="1.8" fill="none" marker-end="url(#m-acc)"/>
+          <path d="M614,74 C680,74 690,84 756,84" stroke="#1d4ed8" stroke-width="1.8" fill="none" marker-end="url(#m-acc)"/>
+          <path d="M614,87 C680,87 690,117 756,117" stroke="#1d4ed8" stroke-width="1.8" fill="none" marker-end="url(#m-acc)"/>
+
+          <rect x="762" y="3" width="370" height="29" rx="3" fill="#f4f6f9" stroke="#cbd5e1" stroke-width="1.4"/>
+          <text x="947" y="22" text-anchor="middle" fill="#0f172a" font-size="14" font-weight="600">NVIDIA GPUs (CUDA-Backend)</text>
+
+          <rect x="762" y="36" width="370" height="29" rx="3" fill="#f4f6f9" stroke="#cbd5e1" stroke-width="1.4"/>
+          <text x="947" y="55" text-anchor="middle" fill="#0f172a" font-size="14" font-weight="600">AMD GPUs (HIP-Backend)</text>
+
+          <rect x="762" y="69" width="370" height="29" rx="3" fill="#f4f6f9" stroke="#cbd5e1" stroke-width="1.4"/>
+          <text x="947" y="88" text-anchor="middle" fill="#0f172a" font-size="14" font-weight="600">Intel GPUs (Level Zero)</text>
+
+          <rect x="762" y="102" width="370" height="29" rx="3" fill="#f4f6f9" stroke="#cbd5e1" stroke-width="1.4"/>
+          <text x="947" y="121" text-anchor="middle" fill="#0f172a" font-size="14" font-weight="600">CPUs &amp; FPGAs (OpenCL / OpenMP)</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         4 · FORSCHUNGSFRAGEN F1 & F2
+         ==================================================================== -->
+    <section class="slide" data-sec="Forschungsfragen" data-title="Forschungsfragen F1 & F2" data-time="02:00–04:00 · 2 min"
+             data-note="Zentrale Unterscheidung: Funktionale Portabilität (läuft überall korrekt) vs. Performance-Portabilität (läuft überall schnell). F1 und F2 nacheinander einblenden.">
+      <div class="head">
+        <div>
+          <div class="sec-tag">Forschungsfragen</div>
+          <h2>Überall lauffähig ≠ überall schnell</h2>
+        </div>
+      </div>
+
+      <div class="cols-2" style="margin-top:32px;align-content:start">
+        <div class="col-rule acc-top frag" data-step="1" style="gap:16px">
+          <div class="tiny mono acc" style="font-weight:700">FORSCHUNGSFRAGE F1 · KONZEPTE</div>
+          <p style="font-size:26px;font-weight:600;color:var(--ink);line-height:1.35;letter-spacing:-0.015em">
+            „Welche Konzepte werden einem zur Portierung von Programmen zur Verfügung gestellt?“
+          </p>
+          <p class="small muted">
+            Vom minimal-invasiven Einstieg bis zur feingranularen Kontrolle über Speicherhierarchie und Ausführung.
+          </p>
+        </div>
+
+        <div class="col-rule frag" data-step="2" style="gap:16px">
+          <div class="tiny mono" style="font-weight:700;color:var(--ink)">FORSCHUNGSFRAGE F2 · HARDWAREABHÄNGIGKEIT</div>
+          <p style="font-size:26px;font-weight:600;color:var(--ink);line-height:1.35;letter-spacing:-0.015em">
+            „Existieren unterschiedliche Implementierungsgrade von SYCL, bei denen man am Ende doch die Hardware berücksichtigen muss?“
+          </p>
+          <p class="small muted">
+            Funktionale Portabilität vs. Performance-Portabilität über CPU und verschiedene GPU-Generationen.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         5 · METHODIK: 3 FALLBEISPIELE & 5 STUFEN
+         ==================================================================== -->
+    <section class="slide" id="slideMethod" data-sec="Methodik" data-title="Fallbeispiele & Stufenmodell" data-time="04:00–05:00 · 1 min"
+             data-note="Drei Fallbeispiele mit unterschiedlichem Charakter: Matrixmultiplikation (rechengebunden), 2D-Stencil (speichergebunden), Reduktion (synchronisationsgebunden). Klick: Alle durchlaufen 5 Stufen — mit jeder Stufe tiefer in den Werkzeugkasten SYCL.">
+      <div class="head">
+        <div>
+          <div class="sec-tag">Methodik · Fallbeispiele</div>
+          <h2>Drei Probleme, fünf Portierungsstufen</h2>
+        </div>
+        <button type="button" class="text-btn" id="btnMethodAnim">Pause</button>
+      </div>
+
+      <div class="cols-3">
+        <div>
+          <div class="viz-box">
+            <div style="display:flex;align-items:center;gap:10px">
+              <div class="m4" id="mDemoA"></div>
+              <span class="muted">·</span>
+              <div class="m4" id="mDemoB"></div>
+              <span class="muted">=</span>
+              <div class="m4" id="mDemoC"></div>
+            </div>
+          </div>
+          <h3>1 · Matrixmultiplikation</h3>
+          <p class="small muted" style="margin-top:4px"><b>Rechengebunden</b> · <span class="mono">2n³</span> FLOPs · Metrik: GFLOPS &amp; ms</p>
+        </div>
+
+        <div>
+          <div class="viz-box">
+            <div class="s6" id="sDemoGrid"></div>
+          </div>
+          <h3>2 · 2D-Stencil (Wärmeleitung)</h3>
+          <p class="small muted" style="margin-top:4px"><b>Speichergebunden</b> · 5-Punkt-Gitter, 100 Schritte · GB/s</p>
+        </div>
+
+        <div>
+          <div class="viz-box">
+            <svg id="rDemoSvg" viewBox="0 0 240 110" width="230" height="106" aria-hidden="true">
+              <g stroke="#cbd5e1" stroke-width="1.6">
+                <line x1="25" y1="22" x2="55" y2="54"/><line x1="85" y1="22" x2="55" y2="54"/>
+                <line x1="145" y1="22" x2="175" y2="54"/><line x1="205" y1="22" x2="175" y2="54"/>
+                <line x1="55" y1="54" x2="115" y2="90"/><line x1="175" y1="54" x2="115" y2="90"/>
+              </g>
+              <g class="r-lvl0">
+                <rect x="12" y="10" width="26" height="20" rx="2" fill="#e9eef5"/>
+                <rect x="72" y="10" width="26" height="20" rx="2" fill="#e9eef5"/>
+                <rect x="132" y="10" width="26" height="20" rx="2" fill="#e9eef5"/>
+                <rect x="192" y="10" width="26" height="20" rx="2" fill="#e9eef5"/>
+              </g>
+              <g class="r-lvl1">
+                <rect x="42" y="44" width="26" height="20" rx="2" fill="#e9eef5"/>
+                <rect x="162" y="44" width="26" height="20" rx="2" fill="#e9eef5"/>
+              </g>
+              <g class="r-lvl2">
+                <rect x="98" y="80" width="34" height="22" rx="2" fill="#e9eef5"/>
+                <text x="115" y="95" text-anchor="middle" fill="#0f172a" font-family="JetBrains Mono,monospace" font-size="12" font-weight="700">Σ</text>
+              </g>
+            </svg>
+          </div>
+          <h3>3 · Reduktion (Summe)</h3>
+          <p class="small muted" style="margin-top:4px"><b>Synchronisationsgebunden</b> · <span class="mono">2²⁶</span> Werte · GB/s</p>
+        </div>
+      </div>
+
+      <div class="timeline frag" data-step="1">
+        <div class="tl-item"><span class="tl-n">STUFE 0</span><b>Sequentiell</b><span>1 CPU-Kern (Baseline)</span></div>
+        <div class="tl-item"><span class="tl-n">STUFE 1</span><b>Parallel</b><span>Queue, Kernel, USM shared</span></div>
+        <div class="tl-item"><span class="tl-n">STUFE 2 / 2b</span><b>Speicher</b><span>USM device vs. Buffer</span></div>
+        <div class="tl-item"><span class="tl-n">STUFE 3</span><b>Struktur</b><span>Abhängigkeiten &amp; nd_range</span></div>
+        <div class="tl-item"><span class="tl-n">STUFE 4</span><b>Kachelung</b><span>Local Memory &amp; Barriere</span></div>
+        <div class="tl-item"><span class="tl-n">STUFE 5</span><b>Anpassung</b><span>Geräteabfrage zur Laufzeit</span></div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         6 · METHODIK: HARDWARE & DACHS-CLUSTER
+         ==================================================================== -->
+    <section class="slide" data-sec="Methodik" data-title="Hardware & Versuchsaufbau" data-time="05:00–06:00 · 1 min"
+             data-note="Vier Zielgeräte: Arbeitsplatzrechner (AMD Ryzen 5 5600X + NVIDIA RTX 5060 Ti 16 GB) und DACHS-Cluster der HS Esslingen (NVIDIA L40S und H100 80 GB). Gemessen: Laufzeit (ms) und Durchsatz (GFLOPS bzw. GB/s), Median aus 5 Läufen. Baselines: Natives CPU-C++ und natives CUDA (+ cuBLAS / CUB).">
+      <div class="head">
+        <div>
+          <div class="sec-tag">Methodik · Versuchsaufbau</div>
+          <h2>Testsysteme: Arbeitsplatz &amp; DACHS-Cluster</h2>
+        </div>
+        <span class="tiny mono muted">DPC++ 7.2 · 1 Quellcode</span>
+      </div>
+
+      <div class="cols-4" style="flex:1;align-items:start">
+        <div class="story-cell">
+          <div class="photo-slot" style="height:148px">
+            <img src="bilder/cpu_5600x.jpg" alt="AMD Ryzen 5 5600X">
+            <div class="ph"><b>CPU · Arbeitsplatz</b><code>bilder/cpu_5600x.jpg</code></div>
+          </div>
+          <div class="tiny mono acc" style="margin-top:4px">ARBEITSPLATZ · CPU</div>
+          <h3>AMD Ryzen 5 5600X</h3>
+          <p class="small muted">6 Kerne · Intel OpenCL CPU</p>
+        </div>
+
+        <div class="story-cell">
+          <div class="photo-slot" style="height:148px">
+            <img src="bilder/rtx_5060ti.jpg" alt="NVIDIA RTX 5060 Ti">
+            <div class="ph"><b>GPU · Arbeitsplatz</b><code>bilder/rtx_5060ti.jpg</code></div>
+          </div>
+          <div class="tiny mono muted" style="margin-top:4px">ARBEITSPLATZ · GPU</div>
+          <h3>NVIDIA RTX 5060 Ti</h3>
+          <p class="small muted">16 GB VRAM · CUDA 13.4</p>
+        </div>
+
+        <div class="story-cell">
+          <div class="photo-slot" style="height:148px">
+            <img src="bilder/l40s.jpg" alt="NVIDIA L40S">
+            <div class="ph"><b>GPU · DACHS-Cluster</b><code>bilder/l40s.jpg</code></div>
+          </div>
+          <div class="tiny mono muted" style="margin-top:4px">DACHS-CLUSTER</div>
+          <h3>NVIDIA L40S</h3>
+          <p class="small muted">HS Esslingen · CUDA-Backend</p>
+        </div>
+
+        <div class="story-cell">
+          <div class="photo-slot" style="height:148px">
+            <img src="bilder/h100.jpg" alt="NVIDIA H100">
+            <div class="ph"><b>GPU · DACHS-Cluster</b><code>bilder/h100.jpg</code></div>
+          </div>
+          <div class="tiny mono muted" style="margin-top:4px">DACHS-CLUSTER</div>
+          <h3>NVIDIA H100</h3>
+          <p class="small muted">80 GB HBM3 · CUDA-Backend</p>
+        </div>
+      </div>
+
+      <div class="cols-3" style="padding-top:20px;border-top:1px solid var(--rule)">
+        <div>
+          <div class="tiny mono muted">METRIKEN</div>
+          <p class="small" style="margin-top:4px"><b>Zeit (ms)</b> sowie <b>GFLOPS</b> (Matmul) bzw. <b>GB/s</b> (Stencil, Reduktion) — Median aus 5 Läufen.</p>
+        </div>
+        <div>
+          <div class="tiny mono muted">BASELINES</div>
+          <p class="small" style="margin-top:4px">Natives <b>CPU-C++</b> (Stufe 0), natives <b>CUDA</b> (<span class="mono">nvcc</span>) sowie <b>cuBLAS</b> (FP32) &amp; <b>CUB</b>.</p>
+        </div>
+        <div>
+          <div class="tiny mono muted">HINWEIS</div>
+          <p class="small" style="margin-top:4px">Einheitliches Binary je Rechner (<span class="mono">ONEAPI_DEVICE_SELECTOR</span>). AMD MI300A im Zeitraum nicht verfügbar.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         7 · KONZEPTE: STUFE 1
+         ==================================================================== -->
+    <section class="slide" data-sec="Konzepte" data-title="Stufe 1: Queue, Kernel & Work-Items" data-time="06:00–07:35 · 1:35"
+             data-note="Minimal-invasivster Einstieg am Beispiel Matrixmultiplikation: Host legt eine Queue an und delegiert einen Kernel an das Gerät. Auf dem Gerät läuft der Kernel als viele Work-Items im 2D-Indexraum.">
+      <div class="head">
+        <div>
+          <div class="sec-tag">Konzepte · Matrixmultiplikation</div>
+          <h2>Stufe 1: Host, Gerät, Queue &amp; Work-Items</h2>
+        </div>
+        <div class="stufen"><span class="cur">1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+      </div>
+
+      <div class="cols-2" style="grid-template-columns:1fr 1.15fr;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:22px">
+          <svg viewBox="0 0 520 230" width="100%" role="img" aria-label="Host delegiert Kernel über Queue an Work-Items auf dem Gerät">
+            <defs>
+              <marker id="m1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="#1d4ed8"/></marker>
+            </defs>
+            <rect x="4" y="6" width="214" height="218" rx="3" fill="#fcfcfd" stroke="#0f172a" stroke-width="1.6"/>
+            <text x="16" y="30" fill="#0f172a" font-size="15" font-weight="600">Host (CPU)</text>
+            <rect x="18" y="44" width="186" height="36" rx="2" fill="#f4f6f9" stroke="#cbd5e1" stroke-width="1.4"/>
+            <text x="111" y="67" text-anchor="middle" fill="#334155" font-size="14">Hauptprogramm</text>
+            <rect x="18" y="94" width="186" height="114" rx="2" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.6"/>
+            <text x="28" y="114" fill="#1d4ed8" font-family="JetBrains Mono,monospace" font-size="13" font-weight="600">sycl::queue</text>
+            <rect x="50" y="134" width="122" height="44" rx="2" fill="#1d4ed8"/>
+            <text x="111" y="161" text-anchor="middle" fill="#fff" font-size="15" font-weight="600">Kernel (λ)</text>
+
+            <line x1="204" y1="156" x2="284" y2="156" stroke="#1d4ed8" stroke-width="1.8" marker-end="url(#m1)"/>
+            <text x="246" y="147" text-anchor="middle" fill="#1d4ed8" font-size="12">delegiert</text>
+
+            <rect x="290" y="6" width="224" height="218" rx="3" fill="#fcfcfd" stroke="#0f172a" stroke-width="1.6"/>
+            <text x="304" y="30" fill="#0f172a" font-size="15" font-weight="600">Gerät (GPU / CPU)</text>
+            <g fill="#fcfcfd" stroke="#0f172a" stroke-width="1.4">
+              <rect x="312" y="68" width="40" height="40" rx="2"/><rect x="360" y="68" width="40" height="40" rx="2"/>
+              <rect x="408" y="68" width="40" height="40" rx="2"/><rect x="456" y="68" width="40" height="40" rx="2"/>
+              <rect x="312" y="116" width="40" height="40" rx="2"/>
+              <rect x="360" y="116" width="40" height="40" rx="2" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.8"/>
+              <rect x="408" y="116" width="40" height="40" rx="2"/><rect x="456" y="116" width="40" height="40" rx="2"/>
+            </g>
+            <text x="380" y="140" text-anchor="middle" fill="#1d4ed8" font-family="JetBrains Mono,monospace" font-size="11" font-weight="700">WI</text>
+            <text x="402" y="190" text-anchor="middle" fill="#334155" font-size="13.5">Work-Items im 2D-Indexraum</text>
+          </svg>
+
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <p class="small"><b>Single-Source:</b> Host- und Gerätecode als C++-Lambda in einer Datei.</p>
+            <p class="small"><b>Queue:</b> Verbindet Hauptprogramm mit genau einem Zielgerät.</p>
+            <p class="small"><b>Indexraum:</b> Ein Work-Item berechnet jeweils ein Element <span class="mono">C[i, j]</span>.</p>
+          </div>
+        </div>
+
+        <div class="code-wrap">
+          <div class="code-head"><span>stufe1_usm_shared.cpp</span><span>Minimal-invasiver Einstieg</span></div>
+          <pre class="code"><span class="hl"><span class="ty">sycl::queue</span> q;  <span class="cm">// wählt Zielgerät</span></span>
+
+<span class="kw">float</span>* A = <span class="fn">sycl::malloc_shared</span>&lt;<span class="kw">float</span>&gt;(n * n, q);
+<span class="kw">float</span>* B = <span class="fn">sycl::malloc_shared</span>&lt;<span class="kw">float</span>&gt;(n * n, q);
+<span class="kw">float</span>* C = <span class="fn">sycl::malloc_shared</span>&lt;<span class="kw">float</span>&gt;(n * n, q);
+
+<span class="hl">q.<span class="fn">parallel_for</span>(<span class="ty">sycl::range</span>&lt;<span class="nu">2</span>&gt;{n, n}, [=](<span class="ty">sycl::id</span>&lt;<span class="nu">2</span>&gt; idx) {</span>
+  <span class="kw">const</span> <span class="ty">std::size_t</span> i = idx[<span class="nu">0</span>];
+  <span class="kw">const</span> <span class="ty">std::size_t</span> j = idx[<span class="nu">1</span>];
+  <span class="kw">float</span> sum = <span class="nu">0.0f</span>;
+  <span class="kw">for</span> (<span class="ty">std::size_t</span> k = <span class="nu">0</span>; k &lt; n; ++k)
+    sum += A[i * n + k] * B[k * n + j];
+  C[i * n + j] = sum;
+}).<span class="fn">wait</span>();</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         8 · KONZEPTE: STUFE 2 — SPEICHERMODELL
+         ==================================================================== -->
+    <section class="slide" data-sec="Konzepte" data-title="Stufe 2: Speichermodell (USM & Buffer)" data-time="07:35–09:15 · 1:40"
+             data-note="Host (RAM) und Gerät (VRAM) haben getrennte Speicher. Zwei Wege in SYCL: USM (Pointer-basiert: Shared = automatisch vs. Device = explizites memcpy) und Buffer (Container mit Accessoren als Endpunkte, Laufzeit kopiert automatisch). Unten umschaltbar zwischen beiden Codebeispielen.">
+      <div class="head">
+        <div>
+          <div class="sec-tag">Konzepte · Getrennte Speicher</div>
+          <h2>Stufe 2: USM vs. Buffer</h2>
+        </div>
+        <div class="stufen"><span class="done">1</span><span class="cur">2</span><span>3</span><span>4</span><span>5</span></div>
+      </div>
+
+      <div class="cols-2" style="flex:0 0 auto;gap:48px">
+        <div class="col-rule acc-top">
+          <h3>Unified Shared Memory (USM · Zeiger)</h3>
+          <p class="small"><b>Shared Allocation</b> (<span class="mono">malloc_shared</span>): Laufzeit verschiebt Daten automatisch zwischen Host und Gerät.</p>
+          <p class="small"><b>Device Allocation</b> (<span class="mono">malloc_device</span>): Daten liegen fest im Gerätespeicher — explizite Kopie per <span class="mono">q.memcpy</span>.</p>
+        </div>
+
+        <div class="col-rule">
+          <h3>Buffer &amp; Accessoren (Stufe 2b · Container)</h3>
+          <p class="small">Ein <span class="mono">sycl::buffer</span> kapselt Daten wie ein Container; Kernel greifen über <b>Accessoren</b> (<span class="mono">read_only</span> / <span class="mono">write_only</span>) darauf zu.</p>
+          <p class="small muted">Transfers und Abhängigkeiten entstehen automatisch — weniger Code, aber weniger Kontrolle.</p>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px;flex:1;min-height:0">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div class="tabs" role="tablist" aria-label="Speichermodell Code">
+            <button type="button" class="on" data-mem="usm">USM device (Stufe 2)</button>
+            <button type="button" data-mem="buf">Buffer &amp; Accessor (Stufe 2b)</button>
+          </div>
+          <span class="tiny mono muted" id="memFile">stufe2_usm_device.cpp</span>
+        </div>
+
+        <div class="code-wrap" style="flex:1">
+          <pre class="code" id="codeUsm"><span class="cm">// Getrennter Speicher: std::vector auf dem Host, malloc_device auf dem Gerät</span>
+<span class="hl"><span class="kw">float</span>* A = <span class="fn">sycl::malloc_device</span>&lt;<span class="kw">float</span>&gt;(n * n, q);</span>
+<span class="kw">float</span>* B = <span class="fn">sycl::malloc_device</span>&lt;<span class="kw">float</span>&gt;(n * n, q);
+<span class="kw">float</span>* C = <span class="fn">sycl::malloc_device</span>&lt;<span class="kw">float</span>&gt;(n * n, q);
+
+<span class="hl">q.<span class="fn">memcpy</span>(A, hA.<span class="fn">data</span>(), bytes);  q.<span class="fn">memcpy</span>(B, hB.<span class="fn">data</span>(), bytes);  q.<span class="fn">wait</span>();</span>
+q.<span class="fn">parallel_for</span>(<span class="ty">sycl::range</span>&lt;<span class="nu">2</span>&gt;{n, n}, [=](<span class="ty">sycl::id</span>&lt;<span class="nu">2</span>&gt; idx) { <span class="cm">/* unveränderter Kernel */</span> }).<span class="fn">wait</span>();
+<span class="hl">q.<span class="fn">memcpy</span>(hC.<span class="fn">data</span>(), C, bytes).<span class="fn">wait</span>();</span></pre>
+
+          <pre class="code" id="codeBuf" style="display:none">{
+  <span class="hl"><span class="ty">sycl::buffer</span>&lt;<span class="kw">float</span>, <span class="nu">1</span>&gt; bA(hA.<span class="fn">data</span>(), n * n), bB(hB.<span class="fn">data</span>(), n * n), bC(hC.<span class="fn">data</span>(), n * n);</span>
+  q.<span class="fn">submit</span>([&amp;](<span class="ty">sycl::handler</span>&amp; h) {
+    <span class="hl"><span class="ty">sycl::accessor</span> A(bA, h, <span class="ty">sycl::read_only</span>);</span>
+    <span class="ty">sycl::accessor</span> B(bB, h, <span class="ty">sycl::read_only</span>);
+    <span class="ty">sycl::accessor</span> C(bC, h, <span class="ty">sycl::write_only</span>, <span class="ty">sycl::no_init</span>);
+    h.<span class="fn">parallel_for</span>(<span class="ty">sycl::range</span>&lt;<span class="nu">2</span>&gt;{n, n}, [=](<span class="ty">sycl::id</span>&lt;<span class="nu">2</span>&gt; idx) { <span class="cm">/* Kernel */</span> });
+  });
+} <span class="cm">// Destruktor schreibt C automatisch auf den Host zurück</span></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         9 · KONZEPTE: STUFE 3 — ABHÄNGIGKEITEN & WORK-GROUPS
+         ==================================================================== -->
+    <section class="slide" data-sec="Konzepte" data-title="Stufe 3: Abhängigkeiten & Work-Groups" data-time="09:15–10:50 · 1:35"
+             data-note="Mehrere Aufträge müssen oft in fester Reihenfolge laufen (z. B. Kopie -> Kernel -> Kopie oder Zeitschritte beim Stencil). Dafür liefert jeder Auftrag ein sycl::event und depends_on baut einen Abhängigkeitsgraphen (DAG). Gleichzeitig führt Stufe 3 mit nd_range die explizite Einteilung in Work-Groups ein.">
+      <div class="head">
+        <div>
+          <div class="sec-tag">Konzepte · Reihenfolge &amp; Hierarchie</div>
+          <h2>Stufe 3: Abhängigkeiten &amp; Work-Groups</h2>
+        </div>
+        <div class="stufen"><span class="done">1</span><span class="done">2</span><span class="cur">3</span><span>4</span><span>5</span></div>
+      </div>
+
+      <div class="cols-2">
+        <div style="display:flex;flex-direction:column;gap:18px">
+          <h3>Abhängigkeitsgraph (DAG)</h3>
+          <svg viewBox="0 0 520 184" width="100%" role="img" aria-label="Kopie A und Kopie B laufen parallel vor dem Kernel, danach Kopie C">
+            <defs>
+              <marker id="m3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="#0f172a"/></marker>
+            </defs>
+            <rect x="6" y="20" width="118" height="44" rx="3" fill="#f4f6f9" stroke="#0f172a" stroke-width="1.5"/>
+            <text x="65" y="47" text-anchor="middle" fill="#0f172a" font-size="14.5" font-weight="600">Kopie A</text>
+
+            <rect x="6" y="112" width="118" height="44" rx="3" fill="#f4f6f9" stroke="#0f172a" stroke-width="1.5"/>
+            <text x="65" y="139" text-anchor="middle" fill="#0f172a" font-size="14.5" font-weight="600">Kopie B</text>
+
+            <path d="M124,42 C170,42 170,88 206,88" stroke="#0f172a" stroke-width="1.6" fill="none" marker-end="url(#m3)"/>
+            <path d="M124,134 C170,134 170,88 206,88" stroke="#0f172a" stroke-width="1.6" fill="none" marker-end="url(#m3)"/>
+
+            <rect x="212" y="60" width="142" height="56" rx="3" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.8"/>
+            <text x="283" y="85" text-anchor="middle" fill="#0f172a" font-size="15.5" font-weight="600">Kernel</text>
+            <text x="283" y="104" text-anchor="middle" fill="#1d4ed8" font-family="JetBrains Mono,monospace" font-size="11.5">depends_on(eA,eB)</text>
+
+            <line x1="354" y1="88" x2="398" y2="88" stroke="#0f172a" stroke-width="1.6" marker-end="url(#m3)"/>
+
+            <rect x="404" y="66" width="110" height="44" rx="3" fill="#f4f6f9" stroke="#0f172a" stroke-width="1.5"/>
+            <text x="459" y="93" text-anchor="middle" fill="#0f172a" font-size="14.5" font-weight="600">Kopie C</text>
+          </svg>
+          <p class="small"><b>Out-of-Order (Standard):</b> Unabhängige Aufträge laufen parallel; Reihenfolge über <span class="mono">sycl::event</span> &amp; <span class="mono">depends_on</span>.</p>
+          <p class="small muted"><b>In-Order-Queue:</b> Streng sequentielle Kette — ideal für iterative Zeitschritte (z. B. 2D-Stencil).</p>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <h3>Hierarchische Ausführung (<span class="mono">nd_range</span>)</h3>
+          <div class="code-wrap">
+            <div class="code-head"><span>stufe3_ndrange.cpp</span><span>Eigene Work-Group-Größe W</span></div>
+            <pre class="code"><span class="kw">const</span> <span class="ty">std::size_t</span> np = (n + W - <span class="nu">1</span>) / W * W;
+
+<span class="hl">q.<span class="fn">parallel_for</span>(</span>
+<span class="hl">  <span class="ty">sycl::nd_range</span>&lt;<span class="nu">2</span>&gt;{{np, np}, {W, W}},</span>
+  [=](<span class="ty">sycl::nd_item</span>&lt;<span class="nu">2</span>&gt; it) {
+    <span class="kw">const</span> <span class="kw">auto</span> i = it.<span class="fn">get_global_id</span>(<span class="nu">0</span>);
+    <span class="kw">const</span> <span class="kw">auto</span> j = it.<span class="fn">get_global_id</span>(<span class="nu">1</span>);
+    <span class="kw">if</span> (i &gt;= n || j &gt;= n) <span class="kw">return</span>;
+    <span class="cm">/* Berechnung C[i, j] */</span>
+  });</pre>
+          </div>
+          <p class="small muted">Das Programm wählt die Gruppengröße <span class="mono">W × W</span> selbst statt die Laufzeit — Voraussetzung für lokalen Speicher.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         10 · KONZEPTE: STUFE 4 — KACHELUNG & LOCAL MEMORY
+         ==================================================================== -->
+    <section class="slide" id="slideTiling" data-sec="Konzepte" data-title="Stufe 4: Kachelung & Local Memory" data-time="10:50–12:30 · 1:40"
+             data-note="Aufteilen in kleinere lokale Räume (Work-Groups): Alle Work-Items einer Gruppe laden gemeinsam eine Kachel in den schnellen lokalen Speicher, synchronisieren über group_barrier und rechnen vielfach auf den lokalen Daten. Das reduziert teure Zugriffe auf den globalen Speicher drastisch.">
+      <div class="head">
+        <div>
+          <div class="sec-tag">Konzepte · Speicherhierarchie</div>
+          <h2>Stufe 4: Kachelung im lokalen Speicher</h2>
+        </div>
+        <div class="ctrl">
+          <button type="button" class="text-btn" id="btnTileAnim">Pause</button>
+          <div class="stufen"><span class="done">1</span><span class="done">2</span><span class="done">3</span><span class="cur">4</span><span>5</span></div>
+        </div>
+      </div>
+
+      <div class="cols-2" style="grid-template-columns:1fr 1.15fr;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline">
+            <span class="tiny mono muted">GLOBALER → LOKALER SPEICHER</span>
+            <span class="tiny mono acc" id="tileBadge" style="font-weight:600">Kachel 1 / 3</span>
+          </div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+            <div><div class="tiny muted" style="text-align:center;margin-bottom:5px">A</div><div class="t6" id="tlA"></div></div>
+            <span class="muted">·</span>
+            <div><div class="tiny muted" style="text-align:center;margin-bottom:5px">B</div><div class="t6" id="tlB"></div></div>
+            <span class="muted">=</span>
+            <div><div class="tiny muted" style="text-align:center;margin-bottom:5px">C</div><div class="t6" id="tlC"></div></div>
+          </div>
+
+          <div class="phase-strip" id="tilePhases">
+            <div class="phase-step on">1. Kachel laden</div>
+            <div class="phase-step">2. group_barrier</div>
+            <div class="phase-step">3. Teilsumme rechnen</div>
+          </div>
+
+          <p class="small muted">
+            <b>Vorteil:</b> Jeder Wert wird pro Work-Group nur <b>1×</b> aus dem langsamen globalen Speicher geladen und <span class="mono">T</span>-mal aus dem schnellen Local Memory wiederverwendet.
+          </p>
+        </div>
+
+        <div class="code-wrap">
+          <div class="code-head"><span>stufe4_tiling.cpp</span><span>Command Group + Local Memory</span></div>
+          <pre class="code" style="font-size:13.2px">q.<span class="fn">submit</span>([&amp;](<span class="ty">sycl::handler</span>&amp; h) {
+  <span class="hl"><span class="ty">sycl::local_accessor</span>&lt;<span class="kw">float</span>, <span class="nu">2</span>&gt; tileA({T, T}, h);</span>
+  <span class="hl"><span class="ty">sycl::local_accessor</span>&lt;<span class="kw">float</span>, <span class="nu">2</span>&gt; tileB({T, T}, h);</span>
+
+  h.<span class="fn">parallel_for</span>(<span class="ty">sycl::nd_range</span>&lt;<span class="nu">2</span>&gt;{{np, np}, {T, T}},
+    [=](<span class="ty">sycl::nd_item</span>&lt;<span class="nu">2</span>&gt; it) {
+      <span class="kw">auto</span> li = it.<span class="fn">get_local_id</span>(<span class="nu">0</span>), lj = it.<span class="fn">get_local_id</span>(<span class="nu">1</span>);
+      <span class="kw">float</span> sum = <span class="nu">0.0f</span>;
+      <span class="kw">for</span> (<span class="ty">std::size_t</span> t = <span class="nu">0</span>; t &lt; n; t += T) {
+        tileA[li][lj] = A[i * n + t + lj];
+        tileB[li][lj] = B[(t + li) * n + j];
+        <span class="hl"><span class="fn">sycl::group_barrier</span>(it.<span class="fn">get_group</span>());</span>
+        <span class="kw">for</span> (<span class="ty">std::size_t</span> k = <span class="nu">0</span>; k &lt; T; ++k)
+          sum += tileA[li][k] * tileB[k][lj];
+        <span class="fn">sycl::group_barrier</span>(it.<span class="fn">get_group</span>());
+      }
+      C[i * n + j] = sum;
+    });
+});</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         11 · KONZEPTE: STUFE 5 — LAUFZEIT-ANPASSUNG
+         ==================================================================== -->
+    <section class="slide" data-sec="Konzepte" data-title="Stufe 5: Kachelgröße zur Laufzeit" data-time="12:30–14:00 · 1:30"
+             data-note="Stufe 5 fragt explizit Hardwaregrenzen ab (max_work_group_size = 1024 auf GPUs), filtert T=64 aus und ermittelt die beste Kachelgröße zur Laufzeit. Zeigt direkt für F2: Manchmal muss der Code eben doch die Hardware kennen.">
+      <div class="head">
+        <div>
+          <div class="sec-tag">Konzepte · Hardwareabhängigkeit</div>
+          <h2>Stufe 5: Kachelgröße zur Laufzeit abfragen</h2>
+        </div>
+        <div class="stufen"><span class="done">1</span><span class="done">2</span><span class="done">3</span><span class="done">4</span><span class="cur">5</span></div>
+      </div>
+
+      <div class="cols-2" style="grid-template-columns:1fr 1.15fr;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <div>
+            <h3>Kandidaten-Prüfung (Beispiel GPU)</h3>
+            <p class="small muted" style="margin-top:4px">Gerätegrenze laut <span class="mono">get_info</span>: max. <b>1024 Work-Items</b> / Gruppe.</p>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div class="cand">
+              <span class="mono" style="font-weight:600">T = 8</span>
+              <div class="cand-bar-bg"><div class="cand-bar" style="width:69%">64 WI · 69 %</div></div>
+              <span class="tiny muted">erlaubt</span>
+            </div>
+            <div class="cand">
+              <span class="mono acc" style="font-weight:700">T = 16</span>
+              <div class="cand-bar-bg"><div class="cand-bar best" style="width:100%">256 WI · 100 %</div></div>
+              <span class="tiny acc" style="font-weight:600">gewählt (GPU)</span>
+            </div>
+            <div class="cand">
+              <span class="mono" style="font-weight:600">T = 32</span>
+              <div class="cand-bar-bg"><div class="cand-bar" style="width:91%">1024 WI · 91 %</div></div>
+              <span class="tiny muted">erlaubt</span>
+            </div>
+            <div class="cand">
+              <span class="mono warn" style="font-weight:700">T = 64</span>
+              <div class="cand-bar-bg"><div class="cand-bar fail">4096 WI &gt; 1024 — übersprungen</div></div>
+              <span class="tiny warn" style="font-weight:600">optimal auf CPU</span>
+            </div>
+          </div>
+
+          <p class="small" style="padding-top:14px;border-top:1px solid var(--rule)">
+            <b>Konsequenz für F2:</b> Ohne Abfrage stürzt die beste CPU-Kachel (<span class="mono">T = 64</span>) auf jeder GPU ab.
+          </p>
+        </div>
+
+        <div class="code-wrap">
+          <div class="code-head"><span>stufe5_anpassung.cpp</span><span>Geräteabfrage &amp; Specialization Constant</span></div>
+          <pre class="code" style="font-size:13.3px"><span class="cm">// 1) Hardwaregrenzen vor dem Kernelstart abfragen</span>
+<span class="hl"><span class="kw">const</span> <span class="kw">auto</span> max_wg = d.<span class="fn">get_info</span>&lt;<span class="ty">info::device::max_work_group_size</span>&gt;();</span>
+<span class="kw">const</span> <span class="kw">auto</span> lmem   = d.<span class="fn">get_info</span>&lt;<span class="ty">info::device::local_mem_size</span>&gt;();
+
+<span class="kw">for</span> (<span class="ty">std::size_t</span> t : {<span class="nu">8</span>, <span class="nu">16</span>, <span class="nu">32</span>, <span class="nu">64</span>}) {
+  <span class="kw">if</span> (t * t &gt; max_wg || <span class="nu">2</span> * t * t * <span class="kw">sizeof</span>(<span class="kw">float</span>) &gt; lmem)
+    <span class="kw">continue</span>;
+  <span class="cm">// Kurzmessung → schnellstes T merken</span>
+}
+
+<span class="cm">// 2) Laufzeitwert als Specialization Constant übergeben</span>
+<span class="hl">h.<span class="fn">set_specialization_constant</span>&lt;tile_id&gt;(T);</span>
+h.<span class="fn">parallel_for</span>(..., [=](<span class="ty">sycl::nd_item</span>&lt;<span class="nu">2</span>&gt; it, <span class="ty">sycl::kernel_handler</span> kh) {
+  <span class="hl"><span class="kw">const</span> <span class="kw">auto</span> tile = kh.<span class="fn">get_specialization_constant</span>&lt;tile_id&gt;();</span>
+});</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         12 · ERGEBNISSE 1: MATRIXMULTIPLIKATION
+         ==================================================================== -->
+    <section class="slide" data-sec="Ergebnisse" data-title="Ergebnisse: Matrixmultiplikation" data-time="14:00–15:20 · 1:20"
+             data-note="Matrixmultiplikation in GFLOPS je Stufe (umschaltbar zwischen n=2048, n=1024 und Kachelgrößen/PP). Stufe 0 liegt bei 0,3–0,5 GFLOPS. Auf RTX & L40S ist Stufe 3 am schnellsten; auf H100 & CPU gewinnt Kachelung (Stufe 4/5). Bei Kacheln & PP sieht man klar: T=64 -> PP=0, T=16 -> PP=0,97, Stufe 5 -> PP=0,94.">
+      <div class="head">
+        <div>
+          <div class="sec-tag">Ergebnisse 1 / 3 · Matrixmultiplikation</div>
+          <h2 id="mmResTitle">Leistung je Stufe in GFLOPS (n = 2048)</h2>
+        </div>
+        <div class="tabs" role="tablist" aria-label="Messansicht Matrixmultiplikation">
+          <button type="button" class="on" data-mmview="2048">Stufen n = 2048</button>
+          <button type="button" data-mmview="1024">Stufen n = 1024</button>
+          <button type="button" data-mmview="pp">Kacheln &amp; PP</button>
+        </div>
+      </div>
+
+      <!-- View 1: Stages GFLOPS -->
+      <div class="chart-4" id="mmChartsStages">
+        <div class="ch-col">
+          <div class="ch-title"><b>RTX 5060 Ti</b><span>GFLOPS</span></div>
+          <div class="bars" data-max="1800" data-n2048="1108,1110,863,1595,1426,1350" data-n1024="1102,1094,645,1573,1388,1240">
+            <div class="bcol"><span class="bval"></span><div class="bfill"></div></div>
+            <div class="bcol"><span class="bval"></span><div class="bfill"></div></div>
+            <div class="bcol hatch"><span class="bval"></span><div class="bfill"></div></div>
+            <div class="bcol"><span class="bval"></span><div class="bfill"></div></div>
+            <div class="bcol"><span class="bval"></span><div class="bfill"></div></div>
+            <div class="bcol"><span class="bval"></span><div class="bfill"></div></div>
+          </div>
+          <div class="blabs"><span>1</span><span>2</span><span>2b</span><span>3</span><span>4</span><span>5</span></div>
+        </div>
+
+        <div class="ch-col">
+          <div class="ch-title"><b>L40S</b><span>GFLOPS</span></div>
+          <div class="bars" data-max="6200" data-n2048="2938,2938,1847,5563,4933,4678" data-n1024="3489,3471,1261,5231,4704,3624">
+            <div class="bcol"><span class="bval"></span><div class="bfill"></div></div>
+            <div class="bcol"><span class="bval"></span><div class="bfill"></div></div>
+            <div class="bcol hatch"><span class="bval"></span><div class="bfill"></div></div>
+            <div class="bcol"><span class="bval"></span><div class="bfill"></div></div>
+            <div class="bcol"><span class="bval"></span><div class="bfill"></div></div>
+            <div class="bcol"><span class="bval"></span><div class="bfill"></div></div>
+          </div>
+          <div class="blabs"><span>1</span><span>2</span><span>2b</span><span>3</span><span>4</span><span>5</span></div>
+        </div>
+
+        <div class="ch-col">
+          <div class="ch-title"><b>H100</b><span>GFLOPS</span></div>
+          <div class="bars" data-max="7000" data-n2048="4793,4811,2468,5351,6348,5497" data-n1024="6044,6110,1246,4858,5853,3317">
+            <div class="bcol"><span class="bval"></span><div class="bfill"></div></div>
+            <div class="bcol"><span class="bval"></span><div class="bfill"></div></div>
+            <div class="bcol hatch"><span class="bval"></span><div class="bfill"></div></div>
+            <div class="bcol"><span class="bval"></span><div class="bfill"></div></div>
+            <div class="bcol"><span class="bval"></span><div class="bfill"></div></div>
+            <div class="bcol"><span class="bval"></span><div class="bfill"></div></div>
+          </div>
+          <div class="blabs"><span>1</span><span>2</span><span>2b</span><span>3</span><span>4</span><span>5</span></div>
+        </div>
+
+        <div class="ch-col">
+          <div class="ch-title"><b>Ryzen 5 5600X</b><span>GFLOPS</span></div>
+          <div class="bars" data-max="200" data-n2048="43,43,28,51,149,176" data-n1024="43,41,31,51,151,179">
+            <div class="bcol"><span class="bval"></span><div class="bfill"></div></div>
+            <div class="bcol"><span class="bval"></span><div class="bfill"></div></div>
+            <div class="bcol hatch"><span class="bval"></span><div class="bfill"></div></div>
+            <div class="bcol"><span class="bval"></span><div class="bfill"></div></div>
+            <div class="bcol"><span class="bval"></span><div class="bfill"></div></div>
+            <div class="bcol"><span class="bval"></span><div class="bfill"></div></div>
+          </div>
+          <div class="blabs"><span>1</span><span>2</span><span>2b</span><span>3</span><span>4</span><span>5</span></div>
+        </div>
+      </div>
+
+      <!-- View 2: Tile Size Efficiency & PP -->
+      <div class="chart-4" id="mmChartsPP" style="display:none">
+        <div class="ch-col">
+          <div class="ch-title"><b>T = 8</b><span>PP = 0,71</span></div>
+          <div class="bars" data-max="115" data-pp="83,85,69,55">
+            <div class="bcol"><span class="bval"></span><div class="bfill" style="--bc:var(--ch-1)"></div></div>
+            <div class="bcol"><span class="bval"></span><div class="bfill" style="--bc:var(--ch-2)"></div></div>
+            <div class="bcol"><span class="bval"></span><div class="bfill" style="--bc:var(--ch-3)"></div></div>
+            <div class="bcol"><span class="bval"></span><div class="bfill" style="--bc:var(--ch-4)"></div></div>
+          </div>
+          <div class="blabs"><span>RTX</span><span>L40S</span><span>H100</span><span>CPU</span></div>
+        </div>
+
+        <div class="ch-col">
+          <div class="ch-title"><b class="acc">T = 16</b><span class="acc" style="font-weight:700">PP = 0,97</span></div>
+          <div class="bars" data-max="115" data-pp="100,100,100,88">
+            <div class="bcol"><span class="bval"></span><div class="bfill" style="--bc:var(--ch-1)"></div></div>
+            <div class="bcol"><span class="bval"></span><div class="bfill" style="--bc:var(--ch-2)"></div></div>
+            <div class="bcol"><span class="bval"></span><div class="bfill" style="--bc:var(--ch-3)"></div></div>
+            <div class="bcol"><span class="bval"></span><div class="bfill" style="--bc:var(--ch-4)"></div></div>
+          </div>
+          <div class="blabs"><span>RTX</span><span>L40S</span><span>H100</span><span>CPU</span></div>
+        </div>
+
+        <div class="ch-col">
+          <div class="ch-title"><b class="warn">T = 64</b><span class="warn" style="font-weight:700">PP = 0</span></div>
+          <div class="bars" data-max="115" data-pp="0,0,0,100">
+            <div class="bcol fail"><span class="bval">✗</span><div class="bfill"></div></div>
+            <div class="bcol fail"><span class="bval">✗</span><div class="bfill"></div></div>
+            <div class="bcol fail"><span class="bval">✗</span><div class="bfill"></div></div>
+            <div class="bcol"><span class="bval"></span><div class="bfill" style="--bc:var(--ch-4)"></div></div>
+          </div>
+          <div class="blabs"><span>RTX</span><span>L40S</span><span>H100</span><span>CPU</span></div>
+        </div>
+
+        <div class="ch-col">
+          <div class="ch-title"><b>Stufe 5 (auto)</b><span>PP = 0,94</span></div>
+          <div class="bars" data-max="115" data-pp="95,95,87,100">
+            <div class="bcol"><span class="bval"></span><div class="bfill" style="--bc:var(--ch-1)"></div></div>
+            <div class="bcol"><span class="bval"></span><div class="bfill" style="--bc:var(--ch-2)"></div></div>
+            <div class="bcol"><span class="bval"></span><div class="bfill" style="--bc:var(--ch-3)"></div></div>
+            <div class="bcol"><span class="bval"></span><div class="bfill" style="--bc:var(--ch-4)"></div></div>
+          </div>
+          <div class="blabs"><span>RTX</span><span>L40S</span><span>H100</span><span>CPU</span></div>
+        </div>
+      </div>
+
+      <div class="takeaway">
+        <span><b>Kernaussage:</b> Stufe 0 (1 CPU-Kern) liegt bei 0,3–0,5 GFLOPS. Welche Optimierungsstufe gewinnt, hängt vom Gerät ab.</span>
+        <span class="tiny mono muted">Blau = Bestwert · 2b schraffiert = inkl. Transfer</span>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         13 · ERGEBNISSE 2: STENCIL & REDUKTION
+         ==================================================================== -->
+    <section class="slide" data-sec="Ergebnisse" data-title="Ergebnisse: Stencil & Reduktion" data-time="15:20–16:40 · 1:20"
+             data-note="Bei speichergebundenen Problemen kippen die Gewichte: Beim Stencil kostet USM shared -74% Bandbreite, Buffer -43% bis -60%; eigene Work-Group W=16 erreicht 101% von CUDA (1931 GB/s). Bei der Reduktion brechen Float-Atomics durch eine CAS-Schleife im PTX um Faktor 20.500 ein (39 s statt 1,9 ms).">
+      <div class="head">
+        <div>
+          <div class="sec-tag">Ergebnisse 2 / 3 · Speicher- &amp; Synchronisationsgebunden</div>
+          <h2>2D-Stencil &amp; Reduktion: Effektive Bandbreite (GB/s)</h2>
+        </div>
+      </div>
+
+      <div class="cols-2">
+        <!-- Stencil -->
+        <div style="display:flex;flex-direction:column">
+          <h3>2D-Stencil · H100 (<span class="mono">n = 8192</span>)</h3>
+          <div class="hbars">
+            <div class="hbar"><span>Stufe 1 (USM shared)</span><div class="htrack"><div class="hfill warn" style="width:21%"></div></div><span class="mono num">410 GB/s</span></div>
+            <div class="hbar"><span>Stufe 2b (Buffer neu)</span><div class="htrack"><div class="hfill light" style="width:32%"></div></div><span class="mono num">623 GB/s</span></div>
+            <div class="hbar"><span>Stufe 2b (Buffer reuse)</span><div class="htrack"><div class="hfill light" style="width:45%"></div></div><span class="mono num">878 GB/s</span></div>
+            <div class="hbar"><span>Stufe 2 (USM device)</span><div class="htrack"><div class="hfill" style="width:80%"></div></div><span class="mono num">1553 GB/s</span></div>
+            <div class="hbar"><span class="acc" style="font-weight:600">Stufe 3 (W = 16)</span><div class="htrack"><div class="hfill acc" style="width:100%"></div></div><span class="mono num acc" style="font-weight:700">1931 GB/s</span></div>
+            <div class="hbar"><span>Stufe 4 (Local, B = 16)</span><div class="htrack"><div class="hfill" style="width:64%"></div></div><span class="mono num">1238 GB/s</span></div>
+            <div class="hbar"><span>Stufe 5 (Spec Const)</span><div class="htrack"><div class="hfill light" style="width:37%"></div></div><span class="mono num">716 GB/s</span></div>
+            <div class="hbar"><span style="font-weight:600">CUDA global (Ref.)</span><div class="htrack"><div class="hfill ref" style="width:99%"></div></div><span class="mono num" style="font-weight:600">1910 GB/s</span></div>
+          </div>
+          <p class="small muted" style="margin-top:auto;padding-top:14px;border-top:1px solid var(--rule)">
+            Speichermodell kostet bis zu <b>−74 %</b> Bandbreite. Eigene Work-Group (<span class="mono">W = 16</span>) erreicht <b>101 %</b> von CUDA.
+          </p>
+        </div>
+
+        <!-- Reduction -->
+        <div style="display:flex;flex-direction:column">
+          <h3>Reduktion · H100 &amp; L40S (<span class="mono">n = 2²⁶</span>)</h3>
+          <div class="hbars">
+            <div class="hbar"><span>Stufe 1–2b (Atomic/WI)</span><div class="htrack"><div class="hfill warn" style="width:1.5%"></div></div><span class="mono num warn" style="font-weight:700">0,01 GB/s</span></div>
+            <div class="hbar"><span>Stufe 3/4 Baum (H100)</span><div class="htrack"><div class="hfill warn" style="width:4%"></div></div><span class="mono num">111 GB/s</span></div>
+            <div class="hbar"><span>Stufe 5 W=1024 (H100)</span><div class="htrack"><div class="hfill light" style="width:20%"></div></div><span class="mono num">557 GB/s</span></div>
+            <div class="hbar"><span class="acc" style="font-weight:600">Stufe 5 W=1024 (L40S)</span><div class="htrack"><div class="hfill acc" style="width:99%"></div></div><span class="mono num acc" style="font-weight:700">711 GB/s</span></div>
+            <div class="hbar"><span>sycl::reduction (H100)</span><div class="htrack"><div class="hfill" style="width:37%"></div></div><span class="mono num">1020 GB/s</span></div>
+            <div class="hbar"><span style="font-weight:600">CUDA / CUB (H100)</span><div class="htrack"><div class="hfill ref" style="width:100%"></div></div><span class="mono num" style="font-weight:600">2792 GB/s</span></div>
+          </div>
+          <p class="small muted" style="margin-top:auto;padding-top:14px;border-top:1px solid var(--rule)">
+            <b class="warn">Faktor 20 500×</b> bei <span class="mono">atomic_ref&lt;float&gt;</span> (39 s vs. 1,9 ms): DPC++ erzeugt CAS-Schleife im PTX. Auf L40S erreicht Stufe 5 jedoch <b>99 % von CUB</b>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         14 · ERGEBNISSE 3: SYCL VS. NATIVES CUDA
+         ==================================================================== -->
+    <section class="slide" data-sec="Ergebnisse" data-title="SYCL im Vergleich zu nativem CUDA" data-time="16:40–17:50 · 1:10"
+             data-note="Gesamtvergleich über alle drei Fallbeispiele relativ zu nativem CUDA bzw. CUB. Ohne Local Memory und beim einfachen Stencil erreicht SYCL 81–108%. Abstände entstehen gezielt bei der Codeerzeugung für lokalen Speicher (69–80%) und Float-Atomics (bis 5% auf H100).">
+      <div class="head">
+        <div>
+          <div class="sec-tag">Ergebnisse 3 / 3 · Gesamtüberblick</div>
+          <h2>Relative Leistung von SYCL zu nativem CUDA / CUB (%)</h2>
+        </div>
+        <div class="legend">
+          <span><i style="background:var(--ch-1)"></i>RTX 5060 Ti</span>
+          <span><i style="background:var(--ch-2)"></i>L40S</span>
+          <span><i style="background:var(--acc)"></i>H100</span>
+        </div>
+      </div>
+
+      <div class="cuda-wrap">
+        <div class="cuda-area">
+          <div class="ref-line"><span>100 % = natives CUDA / CUB</span></div>
+
+          <div class="cgrp">
+            <div class="cbar"><span class="num">104</span><div class="cbar-f" style="--h:57.8%;--c:var(--ch-1)"></div></div>
+            <div class="cbar"><span class="num">108</span><div class="cbar-f" style="--h:60.0%;--c:var(--ch-2)"></div></div>
+            <div class="cbar"><span class="num">100</span><div class="cbar-f" style="--h:55.5%;--c:var(--acc)"></div></div>
+          </div>
+
+          <div class="cgrp">
+            <div class="cbar"><span class="num">69</span><div class="cbar-f" style="--h:38.3%;--c:var(--ch-1)"></div></div>
+            <div class="cbar"><span class="num">72</span><div class="cbar-f" style="--h:40.0%;--c:var(--ch-2)"></div></div>
+            <div class="cbar"><span class="num">80</span><div class="cbar-f" style="--h:44.4%;--c:var(--acc)"></div></div>
+          </div>
+
+          <div class="cgrp">
+            <div class="cbar"><span class="num">97</span><div class="cbar-f" style="--h:53.9%;--c:var(--ch-1)"></div></div>
+            <div class="cbar"><span class="num">100</span><div class="cbar-f" style="--h:55.5%;--c:var(--ch-2)"></div></div>
+            <div class="cbar"><span class="num">81</span><div class="cbar-f" style="--h:45.0%;--c:var(--acc)"></div></div>
+          </div>
+
+          <div class="cgrp">
+            <div class="cbar"><span class="num">101</span><div class="cbar-f" style="--h:56.1%;--c:var(--ch-1)"></div></div>
+            <div class="cbar"><span class="num">98</span><div class="cbar-f" style="--h:54.4%;--c:var(--ch-2)"></div></div>
+            <div class="cbar"><span class="num acc">162</span><div class="cbar-f" style="--h:90.0%;--c:var(--acc)"></div></div>
+          </div>
+
+          <div class="cgrp">
+            <div class="cbar"><span class="num">96</span><div class="cbar-f" style="--h:53.3%;--c:var(--ch-1)"></div></div>
+            <div class="cbar"><span class="num warn">28</span><div class="cbar-f" style="--h:15.5%;--c:var(--warn)"></div></div>
+            <div class="cbar"><span class="num warn">5</span><div class="cbar-f" style="--h:2.8%;--c:var(--warn)"></div></div>
+          </div>
+
+          <div class="cgrp">
+            <div class="cbar"><span class="num">85</span><div class="cbar-f" style="--h:47.2%;--c:var(--ch-1)"></div></div>
+            <div class="cbar"><span class="num">77</span><div class="cbar-f" style="--h:42.8%;--c:var(--ch-2)"></div></div>
+            <div class="cbar"><span class="num">37</span><div class="cbar-f" style="--h:20.5%;--c:var(--acc)"></div></div>
+          </div>
+        </div>
+
+        <div class="cuda-xl">
+          <div>Matmul<br><span class="tiny muted">global (St. 3)</span></div>
+          <div>Matmul<br><span class="tiny muted">Kachel (T = 16)</span></div>
+          <div>Stencil<br><span class="tiny muted">2D global</span></div>
+          <div>Stencil<br><span class="tiny muted">lokal (T = 16)</span></div>
+          <div>Reduktion<br><span class="tiny muted">Baum lokal</span></div>
+          <div>Reduktion<br><span class="tiny muted">sycl::reduction</span></div>
+        </div>
+      </div>
+
+      <div class="takeaway">
+        <span><b>Befund:</b> Ohne Local Memory <b>100–108 %</b> von CUDA — Abstände entstehen im Compiler-Backend bei Local Memory (69–80 %) und Float-Atomics (5–37 %).</span>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         15 · DISKUSSION: BEANTWORTUNG F1 & F2
+         ==================================================================== -->
+    <section class="slide" data-sec="Diskussion" data-title="Beantwortung von F1 und F2" data-time="17:50–19:15 · 1:25"
+             data-note="Direkte Antworten auf beide Forschungsfragen aus Folie 4 plus ehrliche Einordnung der methodischen Grenzen.">
+      <div class="head">
+        <div>
+          <div class="sec-tag">Diskussion</div>
+          <h2>Beantwortung der Forschungsfragen</h2>
+        </div>
+      </div>
+
+      <div class="cols-2" style="align-content:start;margin-top:8px">
+        <div class="col-rule acc-top frag" data-step="1" style="gap:14px">
+          <div class="tiny mono acc" style="font-weight:700">F1 · KONZEPTE ZUR PORTIERUNG</div>
+          <h3>Gestufter Baukasten</h3>
+          <p class="small"><b>Stufe 1</b> löst Herstellerbindung und mehrfache Codebasen durch Single-Source-C++ und Backends.</p>
+          <p class="small"><b>Stufen 2–4</b> lösen den Zielkonflikt Abstraktion vs. Kontrolle schrittweise: USM device, Events, <span class="mono">nd_range</span> und <span class="mono">local_accessor</span>.</p>
+          <p class="small muted"><b>Trade-off:</b> Buffer ersparen Abhängigkeitsangaben, kosten im Aufbau jedoch bis zu 60–64 % Laufzeit/Bandbreite.</p>
+        </div>
+
+        <div class="col-rule frag" data-step="2" style="gap:14px">
+          <div class="tiny mono" style="font-weight:700">F2 · HARDWAREABHÄNGIGKEIT</div>
+          <h3>Ja — Leistung bleibt geräteabhängig</h3>
+          <p class="small"><b>Funktional portabel:</b> Alle Programme liefen unverändert und korrekt auf allen vier Geräten.</p>
+          <p class="small"><b>Hardwaregrenzen:</b> Optimale CPU-Kacheln (<span class="mono">T = 64</span>) starten auf GPUs nicht — Stufe 5 macht Parameter handhabbar.</p>
+          <p class="small muted"><b>Problem &amp; Compiler:</b> Welche Stufe lohnt, hängt vom Problemtyp und der PTX-Codeerzeugung des Backends ab.</p>
+        </div>
+      </div>
+
+      <div class="takeaway tiny muted" style="margin-top:auto">
+        <span><b>Grenzen:</b> 3 Kernel · GPUs eines Herstellers (AMD MI300A nicht verfügbar) · 1 Implementierung (DPC++, generisches PTX) · kein nativer CPU-OpenMP/BLAS-Vergleich.</span>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         16 · FAZIT
+         ==================================================================== -->
+    <section class="slide" data-sec="Fazit" data-title="Fazit & Ausblick" data-time="19:15–20:00 · 0:45"
+             data-note="Drei klare Schlussgedanken zum Mitnehmen, Ausblick auf AMD MI300A und AdaptiveCpp, dann Fragerunde eröffnen.">
+      <div class="head">
+        <div>
+          <div class="sec-tag">Schluss</div>
+          <h2>Fazit</h2>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:28px;margin:auto 0;max-width:960px">
+        <div class="frag" data-step="1" style="display:flex;gap:28px;align-items:baseline">
+          <span class="mono acc" style="font-size:18px;font-weight:700">01</span>
+          <p style="font-size:26px;color:var(--ink);font-weight:500;line-height:1.32">
+            „Einmal schreiben, überall ausführen“ gilt für die <b class="acc">Korrektheit</b>.
+          </p>
+        </div>
+
+        <div class="frag" data-step="2" style="display:flex;gap:28px;align-items:baseline;padding-top:24px;border-top:1px solid var(--rule)">
+          <span class="mono acc" style="font-size:18px;font-weight:700">02</span>
+          <p style="font-size:26px;color:var(--ink);font-weight:500;line-height:1.32">
+            Die Abstimmung für hohe Leistung bleibt beim <b>Programmierer</b> — SYCL vereinheitlicht die Schnittstelle, nicht die Hardware.
+          </p>
+        </div>
+
+        <div class="frag" data-step="3" style="display:flex;gap:28px;align-items:baseline;padding-top:24px;border-top:1px solid var(--rule)">
+          <span class="mono acc" style="font-size:18px;font-weight:700">03</span>
+          <div>
+            <p style="font-size:26px;color:var(--ink);font-weight:500;line-height:1.32">
+              Im Detail entscheiden <b>Compiler &amp; Backends</b> über den Abstand zu nativem CUDA.
+            </p>
+            <p class="small muted" style="margin-top:8px">
+              Ausblick: Messung auf AMD MI300A · Vergleich mit AdaptiveCpp · gezieltes <span class="mono">--cuda-gpu-arch</span>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="takeaway" style="margin-top:auto">
+        <span style="font-size:20px;font-weight:600;color:var(--ink)">Vielen Dank — Fragen?</span>
+        <span class="tiny muted">Erlind Sejdiu · Hochschule Karlsruhe</span>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div id="progress"></div>
+<footer id="hud">
+  <span id="hudSec" style="font-weight:600;color:var(--ink)">Titel</span>
+  <span id="hudTitle"></span>
+  <div class="hud-r">
+    <button type="button" class="hud-b" id="btnPrev" title="Zurück (←)">←</button>
+    <span class="mono num" id="hudNum" style="min-width:48px;text-align:center">1 / 16</span>
+    <button type="button" class="hud-b" id="btnNext" title="Weiter (→)">→</button>
+    <button type="button" class="hud-b" id="timer" title="Timer (L)">00:00</button>
+    <button type="button" class="hud-b" id="btnNotes" title="Notizen (N)">Notizen</button>
+    <button type="button" class="hud-b" id="btnOv" title="Übersicht (O)">Übersicht</button>
+    <button type="button" class="hud-b" id="btnHelp" title="Tastenkürzel (?)">?</button>
+  </div>
+</footer>
+
+<aside id="notes" aria-label="Sprechernotizen">
+  <div class="nm" id="nMeta"></div>
+  <p id="nText"></p>
+</aside>
+
+<div class="modal" id="ovModal" role="dialog" aria-modal="true" aria-label="Folienübersicht">
+  <div class="modal-box">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <h3>Folienübersicht</h3>
+      <button type="button" class="text-btn" id="closeOv">Schließen</button>
+    </div>
+    <div class="ov-grid" id="ovGrid"></div>
+  </div>
+</div>
+
+<div class="modal" id="helpModal" role="dialog" aria-modal="true" aria-label="Tastenkürzel">
+  <div class="modal-box" style="max-width:460px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <h3>Tastenkürzel</h3>
+      <button type="button" class="text-btn" id="closeHelp">Esc</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;font-size:14px;color:var(--ink-2)">
+      <div><kbd>→</kbd> / <kbd>Space</kbd> Weiter</div>
+      <div><kbd>←</kbd> Zurück</div>
+      <div><kbd>N</kbd> Notizen</div>
+      <div><kbd>O</kbd> Übersicht</div>
+      <div><kbd>L</kbd> Timer</div>
+      <div><kbd>F</kbd> Vollbild</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const slides = [...document.querySelectorAll('.slide')];
+  const deck = document.getElementById('deck');
+  const viewport = document.getElementById('viewport');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let cur = 0, step = 0;
+
+  /* ---------- Scale 16:9 Stage ---------- */
+  function fit() {
+    const scale = Math.min((viewport.clientWidth - 20) / 1280, (viewport.clientHeight - 20) / 720);
+    deck.style.transform = `scale(${Math.max(0.25, scale)})`;
+  }
+  window.addEventListener('resize', fit);
+  fit();
+
+  /* ---------- Graceful Photo Slot Fallback ---------- */
+  document.querySelectorAll('.photo-slot img').forEach((img) => {
+    const markMissing = () => img.parentElement.classList.add('missing');
+    img.addEventListener('error', markMissing);
+    if (img.complete && img.naturalWidth === 0) markMissing();
+  });
+
+  /* ---------- Navigation with Directional View Transitions ---------- */
+  const maxStep = (s) => [...s.querySelectorAll('.frag[data-step]')].reduce((m, e) => Math.max(m, +e.dataset.step || 0), 0);
+  const syncFrags = (s, st) => s.querySelectorAll('.frag[data-step]').forEach((e) => e.classList.toggle('shown', +e.dataset.step <= st));
+
+  function syncHud() {
+    const s = slides[cur];
+    document.getElementById('hudSec').textContent = s.dataset.sec || '';
+    document.getElementById('hudTitle').textContent = s.dataset.title || '';
+    document.getElementById('hudNum').textContent = `${cur + 1} / ${slides.length}`;
+    document.getElementById('progress').style.width = `${((cur + 1) / slides.length) * 100}%`;
+    document.getElementById('nMeta').textContent = `${s.dataset.sec} · ${s.dataset.time || ''}`;
+    document.getElementById('nText').textContent = s.dataset.note || '';
+    history.replaceState(null, '', `#${cur + 1}`);
+  }
+
+  function applySlide(idx, st) {
+    slides[cur].classList.remove('active');
+    cur = idx;
+    step = st;
+    slides[cur].classList.add('active');
+    syncFrags(slides[cur], step);
+    syncHud();
+    onActivate(slides[cur]);
+  }
+
+  function goTo(idx, dir, st = 0) {
+    if (idx < 0 || idx >= slides.length || idx === cur) return;
+    const updateDOM = () => applySlide(idx, st);
+    if (!document.startViewTransition || reduceMotion) { updateDOM(); return; }
+    document.startViewTransition({ update: updateDOM, types: [dir] });
+  }
+
+  function next() {
+    if (step < maxStep(slides[cur])) { step++; syncFrags(slides[cur], step); return; }
+    if (cur < slides.length - 1) goTo(cur + 1, 'forward', 0);
+  }
+  function prev() {
+    if (step > 0) { step--; syncFrags(slides[cur], step); return; }
+    if (cur > 0) goTo(cur - 1, 'backward', maxStep(slides[cur - 1]));
+  }
+
+  /* ---------- Slide 5: 3 Mini Problem Demos ---------- */
+  const mA = document.getElementById('mDemoA'), mB = document.getElementById('mDemoB'), mC = document.getElementById('mDemoC');
+  const sG = document.getElementById('sDemoGrid');
+  for (let i = 0; i < 16; i++) { mA.appendChild(document.createElement('div')); mB.appendChild(document.createElement('div')); mC.appendChild(document.createElement('div')); }
+  for (let i = 0; i < 36; i++) sG.appendChild(document.createElement('div'));
+
+  const mAnim = { timer: null, tick: 0, paused: reduceMotion };
+  const btnM = document.getElementById('btnMethodAnim');
+  function drawM(t) {
+    const p = t % 16, r = Math.floor(p / 4), c = p % 4;
+    for (let i = 0; i < 16; i++) {
+      mA.children[i].className = Math.floor(i / 4) === r ? 'hi' : '';
+      mB.children[i].className = (i % 4) === c ? 'hi' : '';
+      mC.children[i].className = i === p ? 'cur' : (i < p ? 'hi' : '');
+    }
+    const sr = 1 + r, sc = 1 + c;
+    for (let i = 0; i < 36; i++) {
+      const rr = Math.floor(i / 6), cc = i % 6;
+      sG.children[i].className = (rr === sr && cc === sc) ? 'ctr' : (Math.abs(rr - sr) + Math.abs(cc - sc) === 1 ? 'nb' : '');
+    }
+    const lvl = t % 3;
+    ['r-lvl0', 'r-lvl1', 'r-lvl2'].forEach((cls, idx) => {
+      document.querySelectorAll(`#rDemoSvg .${cls} rect`).forEach((el) => {
+        el.setAttribute('fill', idx === lvl ? '#93c5fd' : '#e9eef5');
+      });
+    });
+  }
+  const stopM = () => { clearInterval(mAnim.timer); mAnim.timer = null; };
+  function startM() {
+    stopM();
+    btnM.textContent = mAnim.paused ? 'Abspielen' : 'Pause';
+    drawM(mAnim.tick);
+    if (!mAnim.paused) mAnim.timer = setInterval(() => { mAnim.tick++; drawM(mAnim.tick); }, 700);
+  }
+  btnM.addEventListener('click', () => { mAnim.paused = !mAnim.paused; startM(); });
+
+  /* ---------- Slide 8: Memory Code Tabs ---------- */
+  document.querySelectorAll('[data-mem]').forEach((b) => {
+    b.addEventListener('click', () => {
+      const usm = b.dataset.mem === 'usm';
+      document.querySelectorAll('[data-mem]').forEach((x) => x.classList.toggle('on', x === b));
+      document.getElementById('codeUsm').style.display = usm ? 'block' : 'none';
+      document.getElementById('codeBuf').style.display = usm ? 'none' : 'block';
+      document.getElementById('memFile').textContent = usm ? 'stufe2_usm_device.cpp' : 'stufe2b_buffer.cpp';
+    });
+  });
+
+  /* ---------- Slide 10: Tiling Demo ---------- */
+  const tlA = document.getElementById('tlA'), tlB = document.getElementById('tlB'), tlC = document.getElementById('tlC');
+  for (let i = 0; i < 36; i++) { tlA.appendChild(document.createElement('div')); tlB.appendChild(document.createElement('div')); tlC.appendChild(document.createElement('div')); }
+  const tAnim = { timer: null, tick: 0, paused: reduceMotion };
+  const btnT = document.getElementById('btnTileAnim');
+  function drawT(s) {
+    const mod = s % 9, t = Math.floor(mod / 3), ph = mod % 3;
+    for (let k = 0; k < 36; k++) {
+      const r = Math.floor(k / 6), c = k % 6;
+      tlA.children[k].className = ((r === 2 || r === 3) && (c >> 1) === t) ? 'tile' : ((r === 2 || r === 3) && (c >> 1) < t ? 'used' : '');
+      tlB.children[k].className = ((c === 2 || c === 3) && (r >> 1) === t) ? 'tile' : ((c === 2 || c === 3) && (r >> 1) < t ? 'used' : '');
+      const tgt = (r === 2 || r === 3) && (c === 2 || c === 3);
+      tlC.children[k].className = tgt ? 'tgt' : '';
+      const done = t + (ph === 2 ? 1 : 0);
+      tlC.children[k].style.backgroundColor = tgt && done ? `rgba(29,78,216,${(0.2 + done * 0.25).toFixed(2)})` : '';
+    }
+    document.getElementById('tileBadge').textContent = `Kachel ${t + 1} / 3`;
+    [...document.getElementById('tilePhases').children].forEach((el, i) => el.classList.toggle('on', i === ph));
+  }
+  const stopT = () => { clearInterval(tAnim.timer); tAnim.timer = null; };
+  function startT() {
+    stopT();
+    btnT.textContent = tAnim.paused ? 'Abspielen' : 'Pause';
+    drawT(tAnim.tick);
+    if (!tAnim.paused) tAnim.timer = setInterval(() => { tAnim.tick++; drawT(tAnim.tick); }, 1150);
+  }
+  btnT.addEventListener('click', () => { tAnim.paused = !tAnim.paused; startT(); });
+
+  /* ---------- Slide 12: Matmul Charts ---------- */
+  function fillBars(el, vals, markBest, suf = '') {
+    const max = +el.dataset.max;
+    let bestI = -1, bestV = -1;
+    if (markBest) vals.forEach((v, i) => { if (v > bestV) { bestV = v; bestI = i; } });
+    el.querySelectorAll('.bcol').forEach((col, i) => {
+      const v = vals[i];
+      if (v === undefined) return;
+      col.classList.toggle('best', markBest && i === bestI);
+      col.style.setProperty('--h', `${Math.min(100, (v / max) * 100)}%`);
+      const lab = col.querySelector('.bval');
+      if (lab && !col.classList.contains('fail')) lab.textContent = v + suf;
+    });
+  }
+  function setMmView(mode) {
+    const st = document.getElementById('mmChartsStages'), pp = document.getElementById('mmChartsPP'), ti = document.getElementById('mmResTitle');
+    if (mode === 'pp') {
+      st.style.display = 'none'; pp.style.display = 'grid';
+      ti.textContent = 'Kachelgrößen-Effizienz (%) & Performance-Portabilität (n = 2048)';
+      pp.querySelectorAll('.bars').forEach((w) => fillBars(w, w.dataset.pp.split(',').map(Number), false, '%'));
+    } else {
+      st.style.display = 'grid'; pp.style.display = 'none';
+      ti.textContent = `Leistung je Stufe in GFLOPS (n = ${mode})`;
+      st.querySelectorAll('.bars').forEach((w) => fillBars(w, w.dataset[mode === '1024' ? 'n1024' : 'n2048'].split(',').map(Number), true));
+    }
+  }
+  document.querySelectorAll('[data-mmview]').forEach((b) => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('[data-mmview]').forEach((x) => x.classList.toggle('on', x === b));
+      setMmView(b.dataset.mmview);
+    });
+  });
+  setMmView('2048');
+
+  function onActivate(s) {
+    stopM(); stopT();
+    if (s.id === 'slideMethod') startM();
+    if (s.id === 'slideTiling') startT();
+  }
+
+  /* ---------- HUD, Notes, Overview, Timer ---------- */
+  document.getElementById('btnNext').addEventListener('click', next);
+  document.getElementById('btnPrev').addEventListener('click', prev);
+  const notes = document.getElementById('notes');
+  document.getElementById('btnNotes').addEventListener('click', () => notes.classList.toggle('open'));
+
+  const ovModal = document.getElementById('ovModal'), ovGrid = document.getElementById('ovGrid');
+  function openOv() {
+    ovGrid.innerHTML = '';
+    slides.forEach((s, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'ov-btn' + (i === cur ? ' cur' : '');
+      b.innerHTML = `<small>${i + 1} · ${s.dataset.sec}</small><b>${s.dataset.title}</b>`;
+      b.addEventListener('click', () => { ovModal.classList.remove('open'); goTo(i, i > cur ? 'forward' : 'backward', 0); });
+      ovGrid.appendChild(b);
+    });
+    ovModal.classList.add('open');
+  }
+  document.getElementById('btnOv').addEventListener('click', openOv);
+  document.getElementById('closeOv').addEventListener('click', () => ovModal.classList.remove('open'));
+
+  const helpModal = document.getElementById('helpModal');
+  document.getElementById('btnHelp').addEventListener('click', () => helpModal.classList.toggle('open'));
+  document.getElementById('closeHelp').addEventListener('click', () => helpModal.classList.remove('open'));
+
+  let sec = 0, tid = null;
+  const tBtn = document.getElementById('timer');
+  function toggleTimer() {
+    if (tid) { clearInterval(tid); tid = null; tBtn.classList.remove('run'); }
+    else {
+      tBtn.classList.add('run');
+      tid = setInterval(() => {
+        sec++;
+        tBtn.textContent = `${String(Math.floor(sec / 60)).padStart(2, '0')}:${String(sec % 60).padStart(2, '0')}`;
+      }, 1000);
+    }
+  }
+  tBtn.addEventListener('click', toggleTimer);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { ovModal.classList.remove('open'); helpModal.classList.remove('open'); notes.classList.remove('open'); return; }
+    if (ovModal.classList.contains('open') || helpModal.classList.contains('open')) return;
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+    else if (e.key === 'Home') goTo(0, 'backward', 0);
+    else if (e.key === 'End') goTo(slides.length - 1, 'forward', maxStep(slides[slides.length - 1]));
+    else if (e.key.toLowerCase() === 'n') notes.classList.toggle('open');
+    else if (e.key.toLowerCase() === 'o') openOv();
+    else if (e.key.toLowerCase() === 'l') toggleTimer();
+    else if (e.key === '?') helpModal.classList.toggle('open');
+    else if (e.key.toLowerCase() === 'f') {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+      else document.exitFullscreen?.();
+    }
+  });
+
+  const h = parseInt(location.hash.replace('#', ''), 10);
+  if (!Number.isNaN(h) && h >= 1 && h <= slides.length) applySlide(h - 1, 0);
+  else { syncHud(); onActivate(slides[0]); }
+})();
+</script>
+</body>
+</html>
