@@ -172,47 +172,49 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font
    SZENE
    ===================================================================== */
 const REGIONS = [
-{ id:'A', kind:'root', title:'Theorie',
+{ id:'A', kind:'root', title:'Theorie T', sub:'System von Gesetzeshypothesen · wir identifizieren T mit der Menge ihrer Axiome Ax(T)',
   chap:'5.3.1 · Struktur wissenschaftlicher Theorien',
   strip:{t:'Unsere Beispieltheorie',
-         s:'<b>K</b>&nbsp;&nbsp; Eine Infektion erhöht die Körpertemperatur.<br>'+
-           '<b>Z</b>&nbsp;&nbsp; Thermometer 3 Minuten unter der Zunge: erhöhte Körpertemperatur ⟺ Anzeige über 38 °C.<br>'+
-           '<b>H</b>&nbsp;&nbsp; Anna hat eine Infektion · das Thermometer ist geeicht · nichts Heißes getrunken.<br>'+
-           '<b>P</b>&nbsp;&nbsp; Das Thermometer zeigt mehr als 38 °C.'},
+         s:'<b>K</b>&nbsp;&nbsp; Eine Infektion löst eine Immunreaktion aus, die die Körpertemperatur erhöht. &nbsp;<em>Kerngesetz</em><br>'+
+           '<b>S</b>&nbsp;&nbsp; Bei einer bakteriellen Infektion steigt sie über 38 °C. &nbsp;<em>Spezialgesetz</em><br>'+
+           '<b>I</b>&nbsp;&nbsp; Thermometer 3 Minuten unter der Zunge: erhöhte Körpertemperatur genau dann, wenn die Anzeige über 38 °C steht. &nbsp;<em>Indikatorgesetz</em><br>'+
+           '<b>H</b>&nbsp;&nbsp; Anna hat eine bakterielle Infektion · Thermometer geeicht · nichts Heißes getrunken. &nbsp;<em>Hilfshypothesen</em><br>'+
+           '<b>P</b>&nbsp;&nbsp; Das Thermometer zeigt mehr als 38 °C. &nbsp;<em>Prognose</em>'},
   card:{t:'Unser Beispiel: die Fiebertheorie',
-        s:'<b>K</b>&nbsp; Eine Infektion löst eine Immunreaktion aus, die die Körpertemperatur erhöht.<br>'+
-          '<b>Z</b>&nbsp; Thermometer 3 Minuten unter der Zunge: erhöhte Körpertemperatur ⟺ Anzeige über 38 °C.<br>'+
-          '<b>H</b>&nbsp; Hilfshypothesen: Anna hat eine Infektion · das Thermometer ist geeicht · sie hat nichts Heißes getrunken.<br>'+
-          '<b>P</b>&nbsp; Das Thermometer zeigt mehr als 38 °C.',
+        s:'<b>K</b>&nbsp; <em>Kerngesetz</em> — Eine Infektion löst eine Immunreaktion aus, die die Körpertemperatur erhöht.<br>'+
+          '<b>S</b>&nbsp; <em>Spezialgesetz</em> — Bei einer bakteriellen Infektion steigt sie über 38 °C.<br>'+
+          '<b>I</b>&nbsp; <em>Indikatorgesetz</em> — Thermometer 3 Minuten unter der Zunge: erhöhte Körpertemperatur genau dann, wenn die Anzeige über 38 °C steht.<br>'+
+          '<b>H</b>&nbsp; <em>Hilfshypothesen</em> — Anna hat eine bakterielle Infektion · das Thermometer ist geeicht · nichts Heißes getrunken.<br>'+
+          '<b>P</b>&nbsp; <em>Prognose</em> — Das Thermometer zeigt mehr als 38 °C.',
         note:'Die vier Zeilen vorlesen. Dann ansagen: Wir stellen jetzt vier verschiedene Fragen an genau diese Liste — die Liste ändert sich nie, nur die Frage.'},
   intro:'Kapitel 5 fragt: Wie sind Theorien gebaut und wie bewertet man sie empirisch? Schurz gliedert T auf viererlei Weise. Entscheidend: das sind vier Schnitte durch dasselbe Objekt, keine Hierarchie.',
   heads:[
    { n:'(1.)', t:'Sprache', s:'Welche Begriffe sind zugelassen?',
      note:'Achse 1 teilt den Wortschatz. 2 min.',
      kids:[
-      {t:'logisch-mathematisch', s:'Sagen nichts über die Welt, sie halten die Sätze zusammen &nbsp;— &nbsp;∀ · → · = · d/dt', note:'Trägt keinen Weltinhalt. Kommt in BEIDEN Sprachen vor — darum bei Schurz immer „neben den logisch-mathematischen Begriffen“.'},
+      {t:'logisch-mathematisch', s:'Sagen nichts über die Welt, sie halten die Sätze zusammen &nbsp;— &nbsp;„alle“, „wenn … dann“, „ist gleich“, Rechnen', note:'Trägt keinen Weltinhalt. Kommt in BEIDEN Sprachen vor — darum bei Schurz immer „neben den logisch-mathematischen Begriffen“.'},
       {t:'empirisch / vortheoretisch', s:'Feststellbar, ohne die Theorie zu glauben &nbsp;— &nbsp;Ort, Zeit, Zeigerstellung, Anzeige', note:'Kriterium: Zwei Leute, die über T uneins sind, können sich hier einigen. „Vortheoretisch“ ist relativ zu T — nicht absolut.'},
       {t:'theoretisch', s:'Erst durch die Theorie eingeführt, nicht direkt beobachtbar &nbsp;— &nbsp;Masse, Kraft, Infektion', note:'Wird erst DURCH T eingeführt, nicht direkt beobachtbar, Bedeutung hängt an den Gesetzen.'},
-      {k:'form', t:'L(T)  ⊃  Lₑ(T)', s:'Die Gesamtsprache enthält alle drei Sorten, die Teilsprache lässt die theoretischen weg', note:'Die Pointe der Achse: Lₑ(T) ist das Interface zur Erfahrung. F = m·a ist dort nicht einmal formulierbar — die Begriffe fehlen.'},
-      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>logisch-math.</b> ∀ · = &nbsp;&nbsp; <b>beobachtbar</b> Anzeige „38,4“ · 3 Minuten · Zunge &nbsp;&nbsp; <b>theoretisch</b> Infektion · Immunreaktion · Körpertemperatur<br><b>P</b> steht in Lₑ(T) &nbsp;·&nbsp; <b>K</b> steht dort <b>nicht</b> — „Infektion“ sieht man nicht.', note:'Warum ist Körpertemperatur theoretisch? Weil man immer nur eine Anzeige sieht, nie die Temperatur selbst. Faustregel: Streiche alle theoretischen Begriffe aus einem Satz — bleibt ein vollständiger Satz übrig, gehört er zur Teilsprache.'},
+      {k:'form', t:'Gesamtsprache und Teilsprache', s:'Die Gesamtsprache enthält alle drei Sorten, die Teilsprache lässt die theoretischen weg', note:'Die Pointe der Achse: Die Teilsprache ist das Interface zur Erfahrung. Den Kernsatz K kann man dort nicht einmal formulieren — die Begriffe fehlen.'},
+      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>logisch-mathematisch</b> „genau dann, wenn“ in I &nbsp;·&nbsp; „über“, „mehr als“ &nbsp;·&nbsp; „und“ in H &nbsp;·&nbsp; das stillschweigende „immer wenn“ in K und S<br><b>beobachtbar</b> Thermometer · Zunge · 3 Minuten · die Anzeige<br><b>theoretisch</b> Infektion · Immunreaktion · Körpertemperatur<br><b>P</b> steht in der Teilsprache &nbsp;·&nbsp; <b>K</b> steht dort <b>nicht</b> — „Infektion“ sieht man nicht.', note:'Zwei Punkte laut sagen. Erstens: „Immer wenn“ steht in K und S gar nicht da — deutsche Allsätze verstecken den Quantor. Zweitens: Warum ist Körpertemperatur theoretisch? Weil man immer nur eine Anzeige sieht, nie die Temperatur selbst. Faustregel: Streiche alle theoretischen Begriffe aus einem Satz — bleibt ein vollständiger Satz übrig, gehört er zur Teilsprache.'},
      ]},
    { n:'(2.)', t:'Axiom / Konsequenz', s:'Logische Natur der Sätze',
      note:'Achse 2 teilt die Sätze. 2 min.',
      kids:[
       {t:'Axiome — Ax(T)', s:'Werden vorausgesetzt, nicht abgeleitet &nbsp;— &nbsp;Kernaxiome ebenso wie Hilfshypothesen', note:'Schurz identifiziert die Theorie mit Ax(T) — nicht mit der Wolke von allem, was folgt.'},
-      {t:'Konsequenzen — C(T)', s:'Folgen logisch oder probabilistisch aus den Axiomen &nbsp;— &nbsp;relevanter Gehalt Cₑ(T)', note:'Cₑ filtert leere Mitläufer heraus (Def. 3.12-3): „A oder der Mond ist aus Käse“ folgt formal, sagt aber nichts.'},
-      {t:'„natürliche“ Axiome', s:'Konjunktiv unzerlegbar — sonst ist nicht sagbar, <em>welcher</em> Teil falsifiziert wurde', note:'Man darf die Theorie NICHT als ein Riesenaxiom K1∧K2∧K3 schreiben. Sonst ist nicht mehr sagbar, welcher Teil falsifiziert wurde. Wird bei Piaget unmittelbar wichtig.'},
-      {k:'form', t:'Lagrange  ≠  Hamilton', s:'Dieselbe Mechanik, zwei Axiomatisierungen: Axiom ist eine Rolle, keine Eigenschaft des Satzes', note:'Darum: „Axiom“ ist eine ROLLE im System, keine Eigenschaft des Satzes. Energieerhaltung ist bei Newton Konsequenz, bei Lagrange fast Axiom.'},
-      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>Axiome — vorausgesetzt</b> K · Z · H &nbsp;&nbsp;&nbsp; <b>Konsequenz — ausgerechnet</b> P<br>Auch „das Thermometer ist geeicht“ ist ein Axiom: nicht heilig, sondern nicht abgeleitet.', note:'Dieselben vier Zeilen, andere Frage. Betonen: Auch die banale Annahme „das Thermometer ist geeicht“ ist ein Axiom.'},
+      {t:'Konsequenzen — C(T)', s:'Folgen logisch oder probabilistisch aus den Axiomen &nbsp;— &nbsp;der <em>relevante</em> Gehalt zählt, nicht jede Trivialfolgerung', note:'Der relevante Gehalt filtert leere Mitläufer heraus (Def. 3.12-3): „A oder der Mond ist aus Käse“ folgt formal, sagt aber nichts.'},
+      {t:'„natürliche“ Axiome', s:'Konjunktiv unzerlegbar — sonst ist nicht sagbar, <em>welcher</em> Teil falsifiziert wurde', note:'Man darf die Theorie NICHT als einen Riesensatz „K1 und K2 und K3“ schreiben. Sonst ist nicht mehr sagbar, welcher Teil falsifiziert wurde. Wird bei Piaget unmittelbar wichtig.'},
+      {k:'form', t:'Lagrange oder Hamilton', s:'Dieselbe Mechanik, zwei Axiomatisierungen: Axiom ist eine Rolle, keine Eigenschaft des Satzes', note:'Darum: „Axiom“ ist eine ROLLE im System, keine Eigenschaft des Satzes. Energieerhaltung ist bei Newton Konsequenz, bei Lagrange fast Axiom.'},
+      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>Axiome — vorausgesetzt</b> K · S · I · H &nbsp;&nbsp;&nbsp; <b>Konsequenz — ausgerechnet</b> P<br>Auch „das Thermometer ist geeicht“ ist ein Axiom: nicht heilig, sondern nicht abgeleitet.', note:'Dieselben vier Zeilen, andere Frage. Betonen: Auch die banale Annahme „das Thermometer ist geeicht“ ist ein Axiom.'},
      ]},
    { n:'(3.)', t:'Satzarten', s:'Begriffliche Natur der Sätze — welche Begriffe stehen im Satz?',
      note:'Achse 3 ist das Scharnier: Achse 1 angewandt auf einzelne Sätze. 2 min.',
      kids:[
-      {t:'rein theoretisch', s:'Enthält neben Logik und Mathematik nur theoretische Begriffe &nbsp;— &nbsp;F = G·m₁m₂/r²', note:'Nur theoretische Begriffe neben Logik/Mathematik.'},
-      {t:'gemischt', s:'Verbindet beide Sorten; die wichtige Untermenge sind die <em>Zuordnungsgesetze</em>', note:'Die wichtige Untermenge: Zuordnungsgesetze verbinden einen empirischen mit einem theoretischen Begriff. Aber nicht jeder gemischte Satz ist eines — Fa ∧ φa verbindet nichts.'},
+      {t:'rein theoretisch', s:'Enthält neben Logik und Mathematik nur theoretische Begriffe &nbsp;— &nbsp;bei uns K', note:'Nur theoretische Begriffe neben Logik/Mathematik.'},
+      {t:'gemischt', s:'Verbindet beide Sorten; die wichtige Untermenge sind die <em>Zuordnungsgesetze</em>', note:'Die wichtige Untermenge: Zuordnungsgesetze verbinden einen empirischen mit einem theoretischen Begriff. Aber nicht jeder gemischte Satz ist eines: Zwei unverbundene Behauptungen nebeneinander stellen keine Verbindung her.'},
       {t:'empirisch', s:'Enthält nur Beobachtbares — nur solche Sätze kollidieren direkt mit den Daten', note:'Nur empirische/vortheoretische Begriffe. Das ist die Angriffsfläche gegenüber der Erfahrung.'},
-      {k:'form', t:'∀x∀t ( Bxt → ( τx ↔ Rxt ) )', s:'Testbedingung B, theoretischer Begriff τ, empirische Reaktion R &nbsp;— &nbsp;B und R aus Lₑ(T)', note:'Testbedingung B, theoretischer Begriff τ, empirische Reaktion R. Diese Formel kommt bei Piaget als Indikatorgesetz wieder.'},
-      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>rein theoretisch</b> K &nbsp;&nbsp; <b>gemischt — Zuordnungsgesetz</b> Z &nbsp;&nbsp; <b>empirisch</b> P<br>Ohne Z keine Zahl auf dem Display — die Theorie sagte dann überhaupt nichts vorher.', note:'Z ist die Brücke. Unterschied zu (2.) laut sagen: Das hier sieht man dem einzelnen Satz an, die Rolle als Axiom nicht.'},
+      {k:'form', t:'Wenn Testbedingung, dann: Begriff genau dann, wenn Reaktion', s:'So ist jedes Zuordnungsgesetz gebaut — Testbedingung und Reaktion sind beobachtbar, der Begriff dazwischen nicht', note:'Testbedingung, theoretischer Begriff, empirische Reaktion R. Diese Formel kommt bei Piaget als Indikatorgesetz wieder.'},
+      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>rein theoretisch</b> K und S &nbsp;&nbsp; <b>gemischt — Zuordnungsgesetz</b> I &nbsp;&nbsp; <b>empirisch</b> P<br><b>H</b> ist gemischt: „Anna ist infiziert“ ist theoretisch, „Thermometer geeicht“ beobachtbar<br>Ohne I keine Zahl auf dem Display — die Theorie sagte dann überhaupt nichts vorher.', note:'I ist die Brücke. Unterschied zu (2.) laut sagen: Das hier sieht man dem einzelnen Satz an, die Rolle als Axiom nicht.'},
      ]},
    { n:'(4.)', t:'Kern / Peripherie', s:'Epistemischer Status der Axiome',
      note:'Achse 4 teilt nur die AXIOME — nicht die Konsequenzen. 2 min.',
@@ -221,12 +223,19 @@ const REGIONS = [
       {t:'Spezialgesetze', s:'Kernnäher oder kernferner; verfeinerbar, ohne den Kern anzutasten', note:'Die Unterscheidung ist graduell, kein scharfer Schnitt.'},
       {t:'Peripherie', s:'Systembedingungen und Hilfshypothesen — betreffen nur die aktuelle Theorieversion', note:'Betrifft nur die aktuelle Theorieversion. Wird sie geändert, ändert sich die Version, nicht die Theorie.'},
       {k:'form', t:'nur für Ax(T) unproblematisch', s:'Für Konsequenzen willkürlich: sie folgen aus Kernaxiom <em>plus</em> peripherer Hypothese', note:'Schurz schränkt selbst ein. Für Konsequenzen ist die Zuordnung willkürlich — und genau daraus entsteht der Holismus in 5.4.1.'},
-      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>Kern</b> K &nbsp;&nbsp; <b>Indikatorgesetz</b> Z &nbsp;&nbsp; <b>Peripherie</b> H<br><b>Das Thermometer zeigt 36,8. Wer ist schuld — K, Z oder H?</b>', note:'Die Schlussfrage offen stehen lassen — sie ist die Brücke zu 5.4.1 und zu Piaget. In der Praxis repariert man zuerst die Peripherie: neues Thermometer. Erst wenn das immer wieder scheitert, rührt man an K.'},
+      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>Kern</b> K &nbsp;&nbsp; <b>Spezialgesetz</b> S &nbsp;&nbsp; <b>Indikatorgesetz</b> I &nbsp;&nbsp; <b>Peripherie</b> H<br><b>Das Thermometer zeigt 36,8. Wer ist schuld?</b>', note:'Die Schlussfrage offen stehen lassen — sie ist die Brücke zu 5.4.1 und zu Piaget. In der Praxis repariert man zuerst die Peripherie: neues Thermometer. Erst wenn das immer wieder scheitert, rührt man an K.'},
      ]}
   ],
-  synth:{ k:'key form', t:'empirischer Gehalt  =  C(T)  ∩  Lₑ(T)', s:'Achse (2) geschnitten mit Achse (1)',
+  synth:{ k:'key form', t:'Empirischer Gehalt = was folgt UND beobachtbar ist', s:'die Konsequenzen aus Achse (2), eingeschränkt auf die Teilsprache aus Achse (1)',
           from:['A1k4','A2k2','A3k3'],
           note:'Die Zielaussage von 5.3.1: Keine Achse allein liefert den empirischen Gehalt. Er ist ein SCHNITT — deshalb braucht man alle vier Einteilungen. Hinweis geben: dasselbe Raster tragen wir gleich an Piaget heran.'},
+  counter:{t:'Gegenprobe: „Die Erde ist flach“',
+    s:'<b>(1.) Sprache</b> &nbsp;keine theoretischen Begriffe — Gesamtsprache und Teilsprache fallen zusammen<br>'+
+      '<b>(2.) Axiom / Konsequenz</b> &nbsp;ein einziges Axiom, so gut wie keine Konsequenzen<br>'+
+      '<b>(3.) Satzarten</b> &nbsp;kein gemischter Satz, also kein Zuordnungsgesetz — es gibt nichts zu überbrücken<br>'+
+      '<b>(4.) Kern / Peripherie</b> &nbsp;nur Kern. Die Zusätze der realen Bewegung — Eiswand, Kuppel — sind <b>ad hoc</b>: Jeder erklärt eine Beobachtung weg und sagt nichts Neues vorher.<br><br>'+
+      '<b>Nicht das Falschsein ist das Problem, sondern das Leersein.</b>',
+    note:'Gegenprobe zum Schluss: Die vier Achsen taugen nicht nur zum Beschreiben, sondern auch zum Beurteilen. Wichtig laut sagen: Newtons Mechanik ist streng genommen auch falsch und trotzdem eine großartige Theorie. Schlecht ist die flache Erde, weil sie nichts leistet. Vorgriff ankündigen: Warum genau, sehen wir in 5.4.2.'},
   mindnote:'Gesamtbild stehen lassen und kurz schweigen. Hier sieht man, dass die vier Achsen dasselbe Objekt aus vier Richtungen zerlegen.',
   qnote:'Rückfallfragen: Warum darf man die Theorie nicht als ein einziges Axiom schreiben? Ist „Temperatur“ empirisch oder theoretisch? → Überleitung zu 5.3.2.'
 },
@@ -234,16 +243,17 @@ const REGIONS = [
 { id:'B', kind:'sec', title:'5.3.2  Theoriennetze', sub:'Intertheoretische Relationen und Arten theoretischer Begriffe · 5 min',
   chap:'5.3.2 · Theoriennetze',
   strip:{t:'Unsere Beispieltheorie',
-         s:'<b>K</b>&nbsp;&nbsp; Eine Infektion erhöht die Körpertemperatur.<br>'+
-           '<b>Z</b>&nbsp;&nbsp; Thermometer 3 Minuten unter der Zunge: erhöhte Körpertemperatur ⟺ Anzeige über 38 °C.<br>'+
-           '<b>H</b>&nbsp;&nbsp; Anna hat eine Infektion · das Thermometer ist geeicht · nichts Heißes getrunken.<br>'+
-           '<b>P</b>&nbsp;&nbsp; Das Thermometer zeigt mehr als 38 °C.'},
+         s:'<b>K</b>&nbsp;&nbsp; Eine Infektion löst eine Immunreaktion aus, die die Körpertemperatur erhöht. &nbsp;<em>Kerngesetz</em><br>'+
+           '<b>S</b>&nbsp;&nbsp; Bei einer bakteriellen Infektion steigt sie über 38 °C. &nbsp;<em>Spezialgesetz</em><br>'+
+           '<b>I</b>&nbsp;&nbsp; Thermometer 3 Minuten unter der Zunge: erhöhte Körpertemperatur genau dann, wenn die Anzeige über 38 °C steht. &nbsp;<em>Indikatorgesetz</em><br>'+
+           '<b>H</b>&nbsp;&nbsp; Anna hat eine bakterielle Infektion · Thermometer geeicht · nichts Heißes getrunken. &nbsp;<em>Hilfshypothesen</em><br>'+
+           '<b>P</b>&nbsp;&nbsp; Das Thermometer zeigt mehr als 38 °C. &nbsp;<em>Prognose</em>'},
   intro:'Bisher stand T isoliert da. Das war eine Idealisierung — reale Theorien hängen in einem Netz. Daraus folgt: „theoretisch“ ist keine Eigenschaft, sondern eine Relation.',
   heads:[
    { n:'', t:'Drei Relationen', s:'wie Theorien im Netz verbunden sind', note:'1,5 min. Nicht in den Relationen versinken — sie sind das Vehikel für die Begriffstypologie.',
      kids:[
       {t:'Spezialisierung', s:'hierarchische Theorienverbände', note:'Allgemeine Mechanik → Gravitationsmechanik → Planetenbewegung.'},
-      {t:'Vortheoretizität', s:'nichtempirische Begriffe von T₁ ⊂ denen von T₂', note:'Kinematik (Ort, Zeit) ist Vortheorie der Mechanik (Ort, Zeit, Masse, Kraft).'},
+      {t:'Vortheoretizität', s:'die nichtbeobachtbaren Begriffe der einen sind eine Teilmenge der anderen', note:'Kinematik (Ort, Zeit) ist Vortheorie der Mechanik (Ort, Zeit, Masse, Kraft).'},
       {t:'Reduktion', s:'strikt oder approximativ · verbindet <em>heterogene</em> Theorien', note:'Gasgesetz → statistische Mechanik; klassische Mechanik → SRT für v ≪ c. Die ersten beiden Relationen identifizieren gleichlautende Begriffe, die Reduktion muss sie erst umdeuten.'},
       {k:'ex net', ex:1, t:'Unser Beispiel im Netz', s:'<svg viewBox="0 0 2900 700" xmlns="http://www.w3.org/2000/svg"><path class="ln" d="M1450 140 V280"/><path class="ln" d="M680 350 H1080"/><path class="ln" d="M1820 350 H2220"/><path class="ln" d="M1450 420 V560"/><rect class="bx" x="1030" y="20" width="840" height="120" rx="14"/><text class="ti" x="1450" y="97" text-anchor="middle">Theorie der Immunreaktion</text><rect class="me" x="1080" y="280" width="740" height="140" rx="14"/><text class="ti" x="1450" y="343" text-anchor="middle">Fiebertheorie</text><text class="su" x="1450" y="392" text-anchor="middle">unser Theorieelement</text><rect class="bx" x="40" y="295" width="640" height="110" rx="14"/><text x="360" y="345" text-anchor="middle" style="font-size:42px;font-weight:600">Temperatur- und</text><text x="360" y="389" text-anchor="middle" style="font-size:42px;font-weight:600">Zeitmessung</text><rect class="bx" x="2220" y="295" width="640" height="110" rx="14"/><text class="ti" x="2540" y="367" text-anchor="middle">Mikrobiologie</text><rect class="bx" x="1030" y="560" width="840" height="120" rx="14"/><text class="ti" x="1450" y="618" text-anchor="middle">Immunologie</text><text class="su" x="1450" y="662" text-anchor="middle">Pyrogene, Sollwert im Hypothalamus</text><text class="lb" x="1478" y="222" text-anchor="start">Spezialisierung</text><text class="lb" x="880" y="322" text-anchor="middle">Vortheorie</text><text class="lb" x="2020" y="322" text-anchor="middle">externe Theorie</text><text class="lb" x="1478" y="502" text-anchor="start">Reduktion</text></svg>', note:'Jetzt der Perspektivwechsel: Bisher war die Fiebertheorie das Ganze. Ab hier ist sie ein Theorieelement unter anderen. Die vier Nachbarn einzeln benennen und jeweils die Relation dazusagen — oben Spezialisierung, links Vortheorie, rechts externe Theorie, unten Reduktion.'}
      ]},
@@ -254,14 +264,7 @@ const REGIONS = [
       {t:'T-theoretisch', s:'Masse, Kraft — T selbst liefert das Zuordnungsgesetz', note:'Hier schließt sich der Kreis zu Achse (3).'},
       {t:'extern theoretisch', s:'Ladung in der chemischen Atomtheorie', note:'Von einer anderen Theorie im Netz erklärt, die KEINE Vortheorie von T ist. Ohne diese Kategorie müsste man sich immer auf das ganze Netz beziehen — „enorm unpraktisch“.'},
       {k:'key', t:'spekulativ', s:'nirgends im Netz an ein Zuordnungsgesetz angebunden', note:'Kein Aufzählungsrest, sondern ein Kritikinstrument: solche Begriffe sind ohne empirischen Gehalt.'},
-      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>empirisch</b> die Anzeige „38,4“ &nbsp;&nbsp; <b>vortheoretisch</b> Grad Celsius, Minute &nbsp;&nbsp; <b>T-theoretisch</b> Infektion, erhöhte Körpertemperatur — Z liefert die Messvorschrift<br><b>extern theoretisch</b> Bakterienstamm, erklärt in der Mikrobiologie &nbsp;&nbsp; <b>spekulativ</b> ein „Krankheitsdämon“ — nirgends eine Messvorschrift', note:'Die fünf Kategorien einmal an unserer Theorie durchgehen. Die letzte ist der Testfall: Wer einen Krankheitsdämon annimmt, erklärt nichts, weil der Begriff an keiner Stelle des Netzes messbar wird.'}
-     ]},
-   { n:'', t:'Def. 5.3-1', s:'wann ist ein Begriff τ T-theoretisch?', note:'1,5 min.',
-     kids:[
-      {k:'form', t:'∀x∀t ( Bᵢxt → ( τ(x) ↔ Rᵢxt ) )', s:'aus T folgt mindestens ein Zuordnungsgesetz für τ', note:'B und R müssen empirisch oder vortheoretisch sein — deshalb hing das an den Relationen.'},
-      {k:'key', t:'Ein theoretischer Begriff verdient seinen Platz,<br>wenn die Theorie sagt, wie man ihn misst.', s:'', note:'Das ist der Satz, den man mitnehmen soll.'},
-      {t:'Abgrenzung', s:'Sneed zu eng · Gähde / Balzer zu weit', note:'Strukturalismus-Streit wirklich nur in einem Satz. Wenn die Zeit läuft: überspringen.'},
-      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>Z ist genau so ein Zuordnungsgesetz:</b> B = Thermometer 3 Minuten unter der Zunge &nbsp;·&nbsp; τ = erhöhte Körpertemperatur &nbsp;·&nbsp; R = Anzeige über 38 °C<br>Also ist τ <b>T-theoretisch</b>. Für einen Mikrobiologen, der Bakterien zählt, wäre „Infektion“ dagegen vortheoretisch — derselbe Begriff, zwei Stellungen im Netz.', note:'Hier schließt sich der Kreis: Unser Z aus 5.3.1 ist der Beleg dafür, dass die Begriffe der Fiebertheorie nicht spekulativ sind. Und die zweite Zeile ist die Pointe des ganzen Abschnitts.'}
+      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>empirisch</b> die Anzeige auf dem Display &nbsp;&nbsp; <b>vortheoretisch</b> Grad Celsius, Minute &nbsp;&nbsp; <b>T-theoretisch</b> Infektion, erhöhte Körpertemperatur — I liefert die Messvorschrift<br><b>extern theoretisch</b> „bakteriell“ aus H — was eine bakterielle Infektion ist, erklärt die Mikrobiologie &nbsp;&nbsp; <b>spekulativ</b> ein „Krankheitsdämon“ — nirgends eine Messvorschrift', note:'Die fünf Kategorien einmal an unserer Theorie durchgehen. Die letzte ist der Testfall: Wer einen Krankheitsdämon annimmt, erklärt nichts, weil der Begriff an keiner Stelle des Netzes messbar wird.'}
      ]}
   ],
   qnote:'Rückfallfrage: Ist „Gen“ T-theoretisch oder extern theoretisch? Je nachdem, ob man Genetik oder Biochemie als T nimmt — genau das ist der Punkt.'
@@ -270,10 +273,11 @@ const REGIONS = [
 { id:'C', kind:'sec', title:'5.4.1  Systemcharakter', sub:'Holismus der Bedeutung, des Gehalts und der Überprüfung · 5 min',
   chap:'5.4.1 · Systemcharakter und Holismus',
   strip:{t:'Unsere Beispieltheorie',
-         s:'<b>K</b>&nbsp;&nbsp; Eine Infektion erhöht die Körpertemperatur.<br>'+
-           '<b>Z</b>&nbsp;&nbsp; Thermometer 3 Minuten unter der Zunge: erhöhte Körpertemperatur ⟺ Anzeige über 38 °C.<br>'+
-           '<b>H</b>&nbsp;&nbsp; Anna hat eine Infektion · das Thermometer ist geeicht · nichts Heißes getrunken.<br>'+
-           '<b>P</b>&nbsp;&nbsp; Das Thermometer zeigt mehr als 38 °C.'},
+         s:'<b>K</b>&nbsp;&nbsp; Eine Infektion löst eine Immunreaktion aus, die die Körpertemperatur erhöht. &nbsp;<em>Kerngesetz</em><br>'+
+           '<b>S</b>&nbsp;&nbsp; Bei einer bakteriellen Infektion steigt sie über 38 °C. &nbsp;<em>Spezialgesetz</em><br>'+
+           '<b>I</b>&nbsp;&nbsp; Thermometer 3 Minuten unter der Zunge: erhöhte Körpertemperatur genau dann, wenn die Anzeige über 38 °C steht. &nbsp;<em>Indikatorgesetz</em><br>'+
+           '<b>H</b>&nbsp;&nbsp; Anna hat eine bakterielle Infektion · Thermometer geeicht · nichts Heißes getrunken. &nbsp;<em>Hilfshypothesen</em><br>'+
+           '<b>P</b>&nbsp;&nbsp; Das Thermometer zeigt mehr als 38 °C. &nbsp;<em>Prognose</em>'},
   intro:'Ein einzelnes Axiom hat im Regelfall noch gar keinen empirischen Gehalt. Erst die Konjunktion mehrerer Hypothesen erzeugt ihn. Daraus folgen drei Arten von Holismus.',
   heads:[
    { n:'', t:'Drei Holismen', s:'eine Ableitungskette, keine Liste', note:'2 min. Betonen: aus 1 folgt 2, aus 2 folgt 3.',
@@ -281,21 +285,14 @@ const REGIONS = [
       {t:'Holismus der Bedeutung', s:'theoretische Begriffe bekommen Bedeutung durch die Kernaxiome', note:'Folge: analytisch und synthetisch sind in Theoriensystemen nicht mehr trennbar.'},
       {t:'Holismus des Gehalts', s:'nur das ganze System ist mit Erfahrung konfrontierbar', note:'Weil nur das ganze System empirischen Gehalt erzeugt.'},
       {t:'Holismus der Überprüfung', s:'bei Konflikt steckt <em>irgendwo</em> ein Fehler — logisch unbestimmt, wo', note:'Das ist der am Ende von 5.2 schon angekündigte Punkt.'},
-      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>Bedeutung</b> Was „erhöhte Körpertemperatur“ heißt, legen K und Z gemeinsam fest — kein Lexikon<br><b>Gehalt</b> K allein sagt nichts Beobachtbares; erst K ∧ Z ∧ H erzeugen P<br><b>Überprüfung</b> Zeigt das Thermometer 36,8, weiß man nur: irgendwo im Paket steckt der Fehler', note:'Die drei Holismen sind eine Kette: aus dem ersten folgt der zweite, aus dem zweiten der dritte. Am Beispiel laut durchsprechen.'}
+      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>Bedeutung</b> Was „erhöhte Körpertemperatur“ heißt, legen K und I gemeinsam fest — kein Lexikon<br><b>Gehalt</b> K allein sagt nichts Beobachtbares; erst K, S, I und H zusammen erzeugen P<br><b>Überprüfung</b> Zeigt das Thermometer 36,8, weiß man nur: irgendwo im Paket steckt der Fehler', note:'Die drei Holismen sind eine Kette: aus dem ersten folgt der zweite, aus dem zweiten der dritte. Am Beispiel laut durchsprechen.'}
      ]},
    { n:'', t:'Der logische Kern', s:'Ms. 5.4-1', note:'2 min. Die Formel langsam vorlesen, sie ist das Herz des Kapitels.',
      kids:[
-      {k:'form', t:'{H₁,…,Hₙ} ⊨ P', s:'das Hypothesensystem impliziert die Prognose', note:'Ausgangslage.'},
-      {k:'form key', t:'¬P ⇒ ¬H₁ ∨ … ∨ ¬Hₙ', s:'Modus Tollens liefert nur eine <em>Disjunktion</em>', note:'Mindestens eine Prämisse ist falsch — aber welche, sagt die Logik nicht. Das ist die ganze Pointe.'},
+      {k:'form', t:'Aus allen Annahmen zusammen folgt die Prognose', s:'So kommt jede Vorhersage zustande', note:'Ausgangslage.'},
+      {k:'form key', t:'Prognose trifft nicht ein → mindestens eine Annahme ist falsch', s:'Mehr sagt die Logik nicht. Sie nennt keinen Schuldigen, nur: <em>irgendeine</em>', note:'Mindestens eine Prämisse ist falsch — aber welche, sagt die Logik nicht. Das ist die ganze Pointe.'},
       {t:'probabilistisch noch schwächer', s:'eine neue Hilfshypothese H* genügt, um die Folgerung zu blockieren', note:'Man muss dann nicht einmal eine Hypothese verwerfen.'},
-      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>K ∧ Z ∧ H ⊨ P</b> &nbsp;&nbsp; Anzeige 36,8 &nbsp;⇒&nbsp; <b>¬K ∨ ¬Z ∨ ¬H</b><br>Vier Kandidaten: Anna ist gar nicht infiziert (H) · das Thermometer ist kaputt (H) · unter der Zunge misst man zu ungenau (Z) · <b>nicht jede Infektion erzeugt Fieber (K)</b>', note:'Die vier Kandidaten einzeln nennen und zeigen, dass die Logik keinen davon auszeichnet. Die letzte Möglichkeit ist die, die die Medizin tatsächlich gewählt hat.'}
-     ]},
-   { n:'', t:'Einordnung', s:'wer das gesagt hat — und wie weit', note:'1 min.',
-     kids:[
-      {t:'Duhem 1908', s:'es gibt kein <em>experimentum crucis</em>', note:'Kein Experiment kann endgültig zwingen, den Kern preiszugeben.'},
-      {t:'Neurath · Quine', s:'empirische Unterbestimmtheit von Theorien', note:'Verschiedene, empirisch äquivalente Reparaturen sind möglich.'},
-      {k:'key', t:'moderater Holismus', s:'nicht alle Bedeutungen sind theorieabhängig', note:'Wichtige Abgrenzung gegen den Radikalholismus — beliebte Prüfungsfrage.'},
-      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>Kein experimentum crucis</b> Eine einzelne Anzeige 36,8 zwingt nie, K aufzugeben — man wechselt erst das Thermometer<br><b>Moderat</b> Deshalb muss man nicht die halbe Medizin in Zweifel ziehen; „Minute“ und „Grad Celsius“ bleiben unberührt<br><b>Probabilistisch</b> Es genügt sogar, H* zu ergänzen: „Anna hat fiebersenkende Mittel genommen“', note:'Hier den Unterschied zum Radikalholismus betonen — das ist die beliebteste Prüfungsfrage zu diesem Abschnitt.'}
+      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>K, S, I und H zusammen ergeben P.</b> &nbsp; Die Anzeige lautet 36,8 &nbsp;→&nbsp; <b>mindestens eines von K, S, I, H ist falsch</b><br>Anna ist gar nicht infiziert (H) · das Thermometer ist kaputt (H) · unter der Zunge misst man zu ungenau (I) · die Schwelle liegt nicht bei 38 °C (S) · <b>nicht jede Infektion erzeugt Fieber (K)</b>', note:'Die vier Kandidaten einzeln nennen und zeigen, dass die Logik keinen davon auszeichnet. Die letzte Möglichkeit ist die, die die Medizin tatsächlich gewählt hat.'}
      ]}
   ],
   qnote:null
@@ -304,18 +301,19 @@ const REGIONS = [
 { id:'D', kind:'sec', title:'5.4.2  Drei epistemische Tugenden', sub:'Empirische Kreativität, Vereinheitlichung, neuartige Voraussagen · 5 min',
   chap:'5.4.2 · Tugenden und Hempels Dilemma',
   strip:{t:'Unsere Beispieltheorie',
-         s:'<b>K</b>&nbsp;&nbsp; Eine Infektion erhöht die Körpertemperatur.<br>'+
-           '<b>Z</b>&nbsp;&nbsp; Thermometer 3 Minuten unter der Zunge: erhöhte Körpertemperatur ⟺ Anzeige über 38 °C.<br>'+
-           '<b>H</b>&nbsp;&nbsp; Anna hat eine Infektion · das Thermometer ist geeicht · nichts Heißes getrunken.<br>'+
-           '<b>P</b>&nbsp;&nbsp; Das Thermometer zeigt mehr als 38 °C.'},
+         s:'<b>K</b>&nbsp;&nbsp; Eine Infektion löst eine Immunreaktion aus, die die Körpertemperatur erhöht. &nbsp;<em>Kerngesetz</em><br>'+
+           '<b>S</b>&nbsp;&nbsp; Bei einer bakteriellen Infektion steigt sie über 38 °C. &nbsp;<em>Spezialgesetz</em><br>'+
+           '<b>I</b>&nbsp;&nbsp; Thermometer 3 Minuten unter der Zunge: erhöhte Körpertemperatur genau dann, wenn die Anzeige über 38 °C steht. &nbsp;<em>Indikatorgesetz</em><br>'+
+           '<b>H</b>&nbsp;&nbsp; Anna hat eine bakterielle Infektion · Thermometer geeicht · nichts Heißes getrunken. &nbsp;<em>Hilfshypothesen</em><br>'+
+           '<b>P</b>&nbsp;&nbsp; Das Thermometer zeigt mehr als 38 °C. &nbsp;<em>Prognose</em>'},
   intro:'Wenn Theorien nur zusammenfassen, was man ohnehin beobachtet — wozu dann theoretische Begriffe? Drei Tugenden geben die Antwort.',
   heads:[
    { n:'', t:'Kreativität', s:'die Konjunktion erzeugt mehr als die Summe', note:'2 min. Die stärkste Idee des Abschnitts.',
      kids:[
-      {k:'form', t:'E(H₁ ∧ H₂)  ⊃  C( E(H₁) ∪ E(H₂) )', s:'Ms. 5.4-2 · „⊃“ = echte Obermenge', note:'Der empirische Gehalt der Konjunktion geht über die Vereinigung der Einzelgehalte hinaus.'},
-      {k:'form key', t:'H₁ = ∀x(Fx→φx)   E(H₁) = ∅<br>H₂ = ∀x(φx→Gx)   E(H₂) = ∅<br>H₁ ∧ H₂ ⊨ ∀x(Fx→Gx)', s:'zwei gehaltlose Sätze erzeugen ein prüfbares Gesetz', note:'φ wirkt als Brücke. Am Whiteboard-Tempo vorrechnen — das überzeugt mehr als jede Behauptung.'},
-      {t:'Folge', s:'auch Spekulationen können später fruchtbar werden', note:'E(H) leer, aber E(T ∧ H) groß. Daher die mögliche Fruchtbarkeit metaphysischer Spekulationen (Kap. 1.2.2).'},
-      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>K₁</b> Wer Kontakt mit einem Erkrankten hatte → hat eine Infektion &nbsp;&nbsp; E(K₁) = ∅<br><b>K₂</b> Wer eine Infektion hat → Anzeige über 38 °C &nbsp;&nbsp; E(K₂) = ∅<br><b>K₁ ∧ K₂ ⊨</b> Wer Kontakt hatte, zeigt über 38 °C &nbsp;—&nbsp; ein prüfbares Gesetz aus zwei gehaltlosen Sätzen', note:'Das ist die stärkste Folie des Abschnitts. Langsam vorrechnen: Beide Sätze enden bzw. beginnen bei „Infektion“ — unbeobachtbar. Zusammen entsteht ein Gesetz, das nur Beobachtbares verbindet.'}
+      {k:'form', t:'Zwei Sätze zusammen sagen mehr voraus als beide einzeln', s:'Ms. 5.4-2 — der gemeinsame Gehalt ist <em>echt größer</em> als die Summe der einzelnen', note:'Der empirische Gehalt der Konjunktion geht über die Vereinigung der Einzelgehalte hinaus.'},
+      {k:'form key', t:'Satz 1: Wenn A, dann etwas Unbeobachtbares &nbsp;— sagt nichts voraus<br>Satz 2: Wenn dasselbe Unbeobachtbare, dann B &nbsp;— sagt nichts voraus<br>Zusammen: Wenn A, dann B &nbsp;— prüfbar', s:'zwei gehaltlose Sätze erzeugen ein prüfbares Gesetz', note:'Der unbeobachtbare Begriff in der Mitte wirkt als Brücke. Am Whiteboard-Tempo vorrechnen — das überzeugt mehr als jede Behauptung.'},
+      {t:'Folge', s:'auch Spekulationen können später fruchtbar werden', note:'Für sich genommen sagt die Spekulation nichts voraus, zusammen mit einer späteren Theorie sehr wohl. Daher die mögliche Fruchtbarkeit metaphysischer Spekulationen (Kap. 1.2.2).'},
+      {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'<b>A</b> Wer Kontakt mit einem Erkrankten hatte, hat eine Infektion &nbsp;— sagt für sich nichts voraus<br><b>B</b> Wer eine Infektion hat, zeigt über 38 °C &nbsp;— sagt für sich nichts voraus<br><b>A und B zusammen:</b> Wer Kontakt hatte, zeigt über 38 °C &nbsp;—&nbsp; ein prüfbares Gesetz aus zwei gehaltlosen Sätzen', note:'Das ist die stärkste Folie des Abschnitts. Langsam vorrechnen: Beide Sätze enden bzw. beginnen bei „Infektion“ — unbeobachtbar. Zusammen entsteht ein Gesetz, das nur Beobachtbares verbindet.'}
      ]},
    { n:'', t:'Vereinheitlichung', s:'viele empirische Gesetze auf wenige Prinzipien', note:'1 min.',
      kids:[
@@ -330,9 +328,9 @@ const REGIONS = [
      ]},
    { n:'', t:'Hempels Dilemma', s:'das <em>theoretician’s dilemma</em> — und die Antwort', note:'1,5 min. Pointe des ganzen Kapitels 5.4.',
      kids:[
-      {t:'(a) keine empirische Rolle', s:'⇒ theoretische Begriffe werden nicht benötigt', note:'Vorgeschichte: Putnams Herausforderung 1962.'},
-      {t:'(b) eine empirische Rolle', s:'⇒ ebenfalls nicht benötigt, die empirischen Konsequenzen täten es auch', note:'Hempel 1958 verschärft Putnam.'},
-      {k:'key', t:'Antwort: alle drei Tugenden gingen verloren', s:'E(T₁), E(T₂) sind nicht kreativ, vereinheitlichen nicht, sagen nichts Neues voraus', note:'Gilt gegen Craigs Methode wie gegen Ramsey-Sätze: die Konjunktion der Ramsey-Sätze ist schwächer als der Ramsey-Satz der Konjunktion.'},
+      {t:'(a) keine empirische Rolle', s:'Dann werden theoretische Begriffe nicht benötigt', note:'Vorgeschichte: Putnams Herausforderung 1962.'},
+      {t:'(b) eine empirische Rolle', s:'Dann werden sie ebenfalls nicht benötigt — die beobachtbaren Folgerungen täten es auch', note:'Hempel 1958 verschärft Putnam.'},
+      {k:'key', t:'Antwort: alle drei Tugenden gingen verloren', s:'Die beobachtbaren Gehalte allein sind nicht kreativ, vereinheitlichen nicht und sagen nichts Neues voraus', note:'Gilt gegen Craigs Methode wie gegen Ramsey-Sätze: die Konjunktion der Ramsey-Sätze ist schwächer als der Ramsey-Satz der Konjunktion.'},
       {k:'ex', ex:1, t:'Lösung für unser Beispiel', s:'Ersetzt man die Theorie durch ihren empirischen Gehalt — „wer Kontakt hatte, zeigt über 38 °C“ —, bleibt eine Faustregel.<br>Weg sind: die Verbindung zu Schüttelfrost und Leukozyten, die Voraussage über Fiebersenker, und jede Erklärung, <b>warum</b> das so ist.<br><b>„Infektion“ ist das Scharnier zwischen den beiden beobachtbaren Enden.</b>', note:'Pointe des ganzen Kapitels 5.4: Der unbeobachtbare Begriff ist nicht überflüssig, er trägt die Verbindung. Streicht man ihn, zerfällt das Gesetz in zwei Hälften, die nichts mehr sagen.'}
      ]}
   ],
@@ -341,31 +339,47 @@ const REGIONS = [
 
 { id:'E', kind:'sec', title:'5.5  Das Beispiel Piaget', sub:'Alles bisher Gesagte an einem Fall aus der Psychologie · 10 min',
   chap:'5.5 · Fallbeispiel Piaget',
+  card:{cue:'Piaget in vier Zeilen', t:'Piagets Theorie — dieselbe Form wie unser Fieberbeispiel',
+        s:'<b>K1</b>&nbsp;&nbsp; Die Intelligenzentwicklung beruht auf der stufenförmigen Ausbildung <em>allgemeiner</em> logisch-struktureller Fähigkeiten.<br>'+
+          '<b>S1</b>&nbsp;&nbsp; Die konkret-operationelle Stufe wird mit 6–7 Jahren erreicht.<br>'+
+          '<b>I2</b>&nbsp;&nbsp; Wer die Erhaltungskompetenz besitzt, besteht den Münztest.<br>'+
+          '<b>P</b>&nbsp;&nbsp;&nbsp; 7-Jährige bestehen den Münztest.',
+        note:'Die vier Zeilen vorlesen und dann laut sagen: Das ist genau die Form, die wir die ganze Zeit hatten. K1 ist der Kern, I2 ist das Zuordnungsgesetz, S1 ist die Hilfsannahme, P ist die Prognose. Nur das Fachgebiet hat gewechselt.'},
+  strip:{t:'Fieber → Piaget: dieselbe Struktur',
+         s:'<b>K</b> Infektion erhöht die Temperatur &nbsp;→&nbsp; <b>K1</b> stufenförmige Entwicklung allgemeiner Fähigkeiten<br>'+
+           '<b>S</b> bakterielle Infektion: über 38 °C &nbsp;→&nbsp; <b>S1</b> konkret-operationelle Stufe mit 6–7 Jahren<br>'+
+           '<b>I</b> Thermometer 3 min unter der Zunge &nbsp;→&nbsp; <b>I2</b> Münztest<br>'+
+           '<b>H</b> Anna ist infiziert, Thermometer geeicht &nbsp;→&nbsp; <b>H</b> Testsituation, Kind ist 7 Jahre alt<br>'+
+           '<b>P</b> Anzeige über 38 °C &nbsp;→&nbsp; <b>P</b> 7-Jährige bestehen den Münztest'},
   intro:'Schurz hatte angekündigt, dass die an der Physik gewonnenen Einsichten auch in den Humanwissenschaften gelten. Hier ist der Beleg.',
   heads:[
    { n:'', t:'Die Theorie', s:'Kernthesen und Stufen', note:'2 min. Nur so viel Psychologie wie nötig — Thema ist die Theoriestruktur.',
      kids:[
       {k:'key', t:'K1  Kernthese', s:'Intelligenzentwicklung beruht auf stufenförmiger Ausbildung <em>allgemeiner logisch-struktureller</em> Fähigkeiten', note:'Einmal ausgebildet, sofort überall anwendbar. Vorher wird die Aufgabe schlicht „nicht begriffen“.'},
       {t:'Drei Stufen', s:'sensomotorisch 2 J. · <em>konkret-operationell 6–7 J.</em> · formal-operationell 13–14 J.', note:'Wir konzentrieren uns auf die konkret-operationelle Stufe.'},
-      {t:'Drei Fähigkeiten', s:'Perspektivenwechsel · Reversibilität · Invariantenerkennung', note:'Invarianz untersucht Piaget in zwei Bereichen: Anzahl von Gegenständen und Menge einer Substanz.'}
+      {t:'Drei Fähigkeiten', s:'Perspektivenwechsel · Reversibilität · Invariantenerkennung', note:'Invarianz untersucht Piaget in zwei Bereichen: Anzahl von Gegenständen und Menge einer Substanz.'},
+      {k:'ex', ex:1, t:'Werkzeug: Achse (1) und (4) aus 5.3.1', s:'<b>theoretische Begriffe</b> „Stufe“, „Erhaltungskompetenz“ — niemand sieht eine Stufe<br><b>Kern</b> K1 — ändert man K1, ist es eine andere Theorie. Genau wie K im Fieberbeispiel.', note:'Hier nur die Zuordnung benennen: Was wir in 5.3.1 abstrakt sortiert haben, liegt jetzt konkret vor. „Stufe“ ist so unbeobachtbar wie „Infektion“.'},
      ]},
-   { n:'', t:'Die Tests', s:'= Zuordnungsgesetze für hochtheoretische Thesen', note:'2 min. Laut sagen: Das sind nicht bloß Experimente, das sind die Brücken nach Lₑ(T).',
+   { n:'', t:'Die Tests', s:'= Zuordnungsgesetze für hochtheoretische Thesen', note:'2 min. Laut sagen: Das sind nicht bloß Experimente, das sind die Brücken in die beobachtbare Sprache.',
      kids:[
       {t:'Gebirgsmodell', s:'Wie sieht der Berg von der anderen Seite aus?  →  Perspektivenwechsel', note:'Kind darf vorher herumgehen, sitzt dann auf einer Seite.'},
       {t:'Münztest', s:'gleiche Anzahl, eng oder weit gelegt  →  Invarianz der Zahl', note:'„Sind hier mehr, gleich viel oder weniger Münzen?“'},
-      {t:'Tonkugel', s:'Kugel zur Wurst gezogen  →  Invarianz der Substanz', note:'Befund über alle Tests: vor 6 Jahren überwiegend nicht beherrscht, nach 7 Jahren durchwegs.'}
+      {t:'Tonkugel', s:'Kugel zur Wurst gezogen  →  Invarianz der Substanz', note:'Befund über alle Tests: vor 6 Jahren überwiegend nicht beherrscht, nach 7 Jahren durchwegs.'},
+      {k:'ex', ex:1, t:'Werkzeug: Achse (3) aus 5.3.1 und Def. 5.3-1', s:'Jeder Test ist ein <b>Zuordnungsgesetz</b>: Liegt die Testbedingung vor, dann hat das Kind die Kompetenz genau dann, wenn die erwartete Reaktion kommt<br>Ohne diese Tests wäre „Erhaltungskompetenz“ ein <b>spekulativer</b> Begriff — ohne empirischen Gehalt.', note:'Das ist die wichtigste Zuordnung des Vortrags: Piagets Tests sind nicht bloß Experimente, sie sind die Brücken, die seine Begriffe messbar machen. Ohne sie fiele die Theorie unter die Kategorie „spekulativ“ aus 5.3.2.'},
      ]},
    { n:'', t:'Rekonstruktion', s:'(5.5-1) die Ableitung der Prognose', note:'2 min. Zielfolie: hier sind die Achsen (1), (2) und (4) gleichzeitig sichtbar.',
      kids:[
       {k:'form', t:'K1–K4   Kerngesetze<br>S1–S4   Spezialgesetze<br>I1–I3   Indikatorgesetze', s:'alles Ax(T), formuliert in L(T)', note:'Schurz schreibt: K1–4, S1–4 und I1–3 implizieren logisch die Prognose P.'},
-      {k:'form key', t:'⊨  P', s:'7-Jährige bestehen Münz-, Umschütt- und Tonkugeltest', note:'P allein ist C(T) ∩ Lₑ(T) — der empirische Gehalt. Nur das kollidiert direkt mit Daten.'}
+      {k:'form key', t:'Daraus folgt P', s:'7-Jährige bestehen Münz-, Umschütt- und Tonkugeltest', note:'P allein ist der empirische Gehalt: die einzige Folgerung, die zugleich beobachtbar ist. Nur das kollidiert direkt mit Daten.'},
+      {k:'ex', ex:1, t:'Werkzeug: Achse (2) aus 5.3.1', s:'<b>Alle Annahmen</b> = K1–4 · S1–4 · I1–3 &nbsp;&nbsp; vorausgesetzt, nicht abgeleitet<br><b>P</b> = der empirische Gehalt — der einzige Satz, den man nachsehen kann.', note:'Wie beim Fieber: Oberhalb des Strichs steht alles, was angenommen wird. Unterhalb genau ein Satz, der mit Daten kollidieren kann.'},
      ]},
    { n:'', t:'Der Konflikt', s:'Peripherie ändern oder den Kern aufgeben?', note:'3 min. Höhepunkt des Vortrags — der Holismus aus 5.4.1 als reale Kontroverse.',
      kids:[
       {t:'Siegel 1978', s:'nonverbale Lernexperimente: schon 4–5-Jährige bestehen den Zahltest', note:'Fraktion 1: nur die Peripherie ändern — S1 und I2 anpassen. Bekam dadurch Auftrieb.'},
       {t:'Aussagenlogik', s:'Modus Ponens mit 3 Jahren, Modus Tollens teils nie', note:'Obwohl beide laut Piaget zu DERSELBEN abstrakt-strukturellen Fähigkeit gehören. Das lässt sich nicht mit einem Indikatorgesetz reparieren.'},
       {t:'Objekterhaltung', s:'Ball hinter der Wand mit 2 Jahren — Zucker im Wasser nicht mit 6', note:'Dieselbe Fähigkeit, zwei Anwendungen, Jahre auseinander. Fraktion 2: das trifft den Kern.'},
-      {k:'key', t:'K1*', s:'Entwicklung <em>inhaltsspezifischer</em> Fähigkeiten, später differenziert und generalisiert', note:'Kern ersetzt = neue Theorie. Damit war ein alternatives Paradigma bzw. Forschungsprogramm geschaffen.'}
+      {k:'key', t:'K1*', s:'Entwicklung <em>inhaltsspezifischer</em> Fähigkeiten, später differenziert und generalisiert', note:'Kern ersetzt = neue Theorie. Damit war ein alternatives Paradigma bzw. Forschungsprogramm geschaffen.'},
+      {k:'ex', ex:1, t:'Werkzeug: 5.4.1 — der Holismus', s:'<b>P trifft nicht ein</b> &nbsp;→&nbsp; <b>mindestens eines von K1, S1, I2 ist falsch</b> &nbsp;— dieselbe Lage wie beim Thermometer<br>Fraktion 1 ändert die <b>Peripherie</b> (S1, I2). Fraktion 2 gibt den <b>Kern</b> auf (K1). Die Logik entscheidet das nicht.', note:'Und hier der Unterschied zum Fieberbeispiel: Beim Thermometer war es eine Fingerübung. Hier hing ein ganzes Forschungsprogramm daran — und es wurde jahrzehntelang gestritten.'},
      ]}
   ],
   synth:{ k:'key', t:'Die Daten sagen nicht, welche Prämisse fällt.', s:'S1? I2? K1? — die Entscheidung ist nicht logisch erzwungen',
@@ -388,7 +402,7 @@ const cam=document.getElementById('cam'), wires=document.getElementById('wires')
 const nodes=[], edges=[], byId={};
 function mk(o){ o.sw=o.sw||o.tw; nodes.push(o); byId[o.id]=o; return o; }
 
-const TITLE=mk({id:'YY', cls:'sec', num:'', t:'Theoriestatik',
+const TITLE=mk({id:'YY', cls:'sec', num:'', t:'Theorienstatik',
   s:'Gerhard Schurz, <em>Wissenschaftstheorie</em>, Kap. 5.3–5.5<br>'+
     '<b>Erlind Sejdiu</b> &nbsp;·&nbsp; Matrikelnummer 106357 &nbsp;·&nbsp; 23.11.2026',
   tw:2900, tx:CW/2});
@@ -431,19 +445,19 @@ REGIONS.forEach(R=>{
       edges.push({id:'e-'+hid+'-'+kn.id, a:hid, b:kn.id, kind:'bus'});
     });
   });
+  if(R.counter){
+    R.counterNode=mk({id:R.id+'X', cls:'kid final', num:'', t:R.counter.t, s:R.counter.s, tw:2900, tx:CW/2});
+  }
   if(R.synth){
     R.synthNode=mk({id:R.id+'S', cls:'kid '+(R.synth.k||''), num:'', t:R.synth.t, s:R.synth.s, tw:2600, tx:CW/2});
     R.synthId=R.synthNode.id; ids.push(R.synthId);
     R.synth.from.forEach(f=>edges.push({id:'e-'+f+'-'+R.synthId, a:f, b:R.synthId, kind:'curve'}));
   }
-  if(R.qnote!==null){
-    R.qNode=mk({id:R.id+'Q', cls:'q', num:'', t:'Fragen?', s:R.chap, tw:1900, tx:CW/2});
-    R.qId=R.qNode.id; ids.push(R.qId);
-  }
+
   R.ids=ids; R.secId=R.sec.id;
 });
 const FIN=mk({id:'FN', cls:'kid final', num:'', t:'Die Fiebertheorie durch das ganze Kapitel',
-  s:'<b>5.3.1</b>&nbsp;&nbsp; Vier Fragen an K, Z, H, P — und P allein ist der empirische Gehalt.<br>'+
+  s:'<b>5.3.1</b>&nbsp;&nbsp; Vier Fragen an K, S, I, H, P — und P allein ist der empirische Gehalt.<br>'+
     '<b>5.3.2</b>&nbsp;&nbsp; Dieselbe Theorie als <em>ein Element im Netz</em>: Vortheorie, externe Theorie, Reduktion.<br>'+
     '<b>5.4.1</b>&nbsp;&nbsp; Die Anzeige 36,8 — und die Logik sagt nicht, ob K, Z oder H fällt.<br>'+
     '<b>5.4.2</b>&nbsp;&nbsp; „Kontakt → über 38 °C“ aus zwei gehaltlosen Sätzen: dafür braucht es „Infektion“.<br>'+
@@ -465,7 +479,7 @@ function measure(mode){
   const t=cam.style.transform; cam.style.transform='none';
   cam.dataset.mode=mode; cam.dataset.z=(mode==='slide'?'near':'far');
   void cam.offsetHeight;                    // Übergänge sind jetzt wirklich aus
-  nodes.forEach(n=>{ n.el.style.width=(mode==='slide'?n.sw:n.tw)+'px'; n.el.style.height='auto'; });
+  nodes.forEach(n=>{ n.el.style.width=(mode==='slide'?n.sw:n.tw)+'px'; n.el.style.height='auto'; n.el.style.minHeight='0px'; });
   void cam.offsetHeight;                    // Umbruch bei der neuen Breite erzwingen
   nodes.forEach(n=>{ n[mode==='slide'?'hS':'hT']=Math.ceil(n.el.getBoundingClientRect().height)+6; });
   cam.style.transform=t;
@@ -475,7 +489,8 @@ function place(n,mode){
   const sl=(mode==='slide');
   n.cx=sl?n.sx:n.tx; n.cy=sl?n.sy:n.ty; n.w=sl?n.sw:n.tw; n.h=sl?n.hS:n.hT;
   const s=n.el.style;
-  s.left=(n.cx-n.w/2)+'px'; s.top=(n.cy-n.h/2)+'px'; s.width=n.w+'px'; s.height=n.h+'px';
+  s.left=(n.cx-n.w/2)+'px'; s.top=(n.cy-n.h/2)+'px'; s.width=n.w+'px';
+  s.height='auto'; s.minHeight=n.h+'px';
 }
 
 const E={};
@@ -510,6 +525,7 @@ function layout(){
       bottom=Math.max(bottom, cy-KGAP);
     });
     if(R.synthNode){ R.synthNode.ty=bottom+GAP_SYNTH+R.synthNode.hT/2; bottom=R.synthNode.ty+R.synthNode.hT/2; }
+    if(R.counterNode){ R.counterNode.ty=bottom+340+R.counterNode.hT/2; bottom=R.counterNode.ty+R.counterNode.hT/2; }
     if(R.qNode){ R.qNode.ty=bottom+GAP_Q+R.qNode.hT/2; bottom=R.qNode.ty+R.qNode.hT/2; }
     y=bottom+R_PITCH;
   });
@@ -586,7 +602,7 @@ const ov=R=>{
 REGIONS.forEach(R=>{
   STEPS.push({fit:[R.secId], vis:[R.secId], chap:R.chap, cue:R.title.replace(/\s+/g,' '), note:R.intro});
   if(R.cardNode) STEPS.push({fit:[R.secId,R.cardNode.id], vis:[R.secId,R.cardNode.id,'e-'+R.secId+'-'+R.cardNode.id],
-    chap:R.chap, cue:'Die Theorie', note:R.card.note});
+    chap:R.chap, cue:(R.card.cue||'Die Theorie'), note:R.card.note});
   STEPS.push({fit:ov(R).filter(x=>!x.startsWith('e-')), vis:ov(R), chap:R.chap, cue:'Überblick',
               note:(R.id==='A')?'Die vier Kästen stehen jetzt da. WICHTIG: das sind vier Schnitte durch dasselbe Objekt, keine Gliederungsebenen. Ankündigen, dass wir in jeden einzeln hineingehen und jedes Mal hierher zurückkehren.':'Überblick über den Abschnitt. Ankündigen, in welcher Reihenfolge wir hineingehen.'});
 
@@ -600,12 +616,18 @@ REGIONS.forEach(R=>{
     H.kids.forEach((K,j)=>{
       if(K.ex) return;
       shown=shown.concat(kidIds[j]);
-      const last=(shown.length===norm.length);
       STEPS.push({fit:fit.concat(R.stripNode?[R.stripNode.id]:[]),
-                  vis:[hid,...shown,...(last?exIds:[])].concat(R.stripNode?[R.stripNode.id]:[]),
+                  vis:[hid,...shown].concat(R.stripNode?[R.stripNode.id]:[]),
                   chap:R.chap, cue:(H.n?H.n+' ':'')+H.t,
                   note:(shown.length===1?(H.note?H.note+'  ':''):'')+K.note});
     });
+    if(exIds.length){
+      const exNote=H.kids.filter(k=>k.ex).map(k=>k.note||'').join('  ');
+      STEPS.push({fit:fit.concat(R.stripNode?[R.stripNode.id]:[]),
+                  vis:[hid,...norm,...exIds].concat(R.stripNode?[R.stripNode.id]:[]),
+                  chap:R.chap, cue:(H.n?H.n+' ':'')+H.t+' · Lösung',
+                  note:exNote});
+    }
     STEPS.push({fit:ov(R).filter(x=>!x.startsWith('e-')), vis:ov(R), chap:R.chap, cue:'zurück zum Überblick',
                 note:'Verbindungen lösen sich, alle Punkte sind wieder da. Kurz Luft holen, dann weiter mit dem nächsten Punkt.'});
   });
@@ -615,7 +637,8 @@ REGIONS.forEach(R=>{
   STEPS.push({fit:all, vis:[...all,...allE], chap:R.chap, cue:'Gesamtbild',
               note:R.mindnote||'Alles zusammen. Kurz stehen lassen — das ist die Karte des Abschnitts.'});
   if(R.synthId) STEPS.push({fit:all, vis:[...all,...allE], chap:R.chap, cue:'Zielaussage', note:R.synth.note});
-  if(R.qId) STEPS.push({fit:[R.qId], vis:[R.qId], chap:R.chap, cue:'Fragen', note:R.qnote});
+  if(R.counterNode) STEPS.push({fit:[R.counterNode.id], vis:[R.counterNode.id], chap:R.chap, cue:'Gegenprobe', note:R.counter.note});
+  if(R.qnote) STEPS[STEPS.length-1].note += '  ·  Danach kurz Fragen anbieten, ohne eigene Folie. ' + R.qnote;
 });
 STEPS.push({fit:['FN'], vis:['FN'], chap:'Schluss', cue:'Alles zusammen',
   note:'Die Schlussfolie: dieselbe Theorie, fünfmal aus einer anderen Richtung betrachtet. Zeile für Zeile durchgehen, das ist die Zusammenfassung des ganzen Vortrags.'});
