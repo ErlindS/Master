@@ -219,13 +219,8 @@ public class BallGameLogic : MonoBehaviour
     {
         if (countText == null) return;
 
-        List<string> items = new List<string>();
-        foreach (string i in inventory) items.Add(TradeCatalog.Colored(i));
-        string inv = items.Count > 0 ? string.Join(", ", items) : "leer";
-
-        countText.text =
-            $"Münzen: {Coins} / {coinsToWin}    Ruf: {lives}    Bedient: {Served}\n" +
-            $"<size=80%>Inventar ({inventory.Count}/{maxInventory}): {inv}   <color=#999999>[Q] wegwerfen</color></size>";
+        // Anzeige oben links (Münzen / Ruf / Bedient / Inventar) entfernt (auf Wunsch)
+        countText.text = "";
     }
 
     void RebuildVisuals()

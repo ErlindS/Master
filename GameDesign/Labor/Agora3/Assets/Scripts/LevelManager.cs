@@ -111,6 +111,18 @@ public class LevelManager : MonoBehaviour
     public float ringWidth = 0.55f;
     public Color ringColor = new Color(0.15f, 0.55f, 1f);
 
+    [Header("Zufallsmauern (pro Kunde)")]
+    [Tooltip("Baut bei jedem neuen Kunden zufällige Mauerstücke ins Feld")]
+    public bool randomWallsPerCustomer = true;
+    [Tooltip("So viele Mauerstücke je Kunde (min/max)")]
+    public int randomWallsMin = 1;
+    public int randomWallsMax = 2;
+    [Tooltip("Länge eines Mauerstücks in Zellen (min/max)")]
+    public int randomWallLengthMin = 1;
+    public int randomWallLengthMax = 3;
+    [Tooltip("Höchstzahl gleichzeitiger Zufallsmauern – die älteste verschwindet dann")]
+    public int randomWallsMaxTotal = 14;
+
     [Header("Referenzen (werden automatisch gesucht, wenn leer)")]
     public Transform ground;
     public Transform pickUpParent;
@@ -153,6 +165,10 @@ public class LevelManager : MonoBehaviour
 
     private Material baseMaterial;
 
+    // Zufällig gebaute Mauern (jüngste zuletzt)
+    private readonly List<GameObject> randomWalls = new List<GameObject>();
+    private readonly List<List<Vector2Int>> randomWallCells = new List<List<Vector2Int>>();
+
     // Wohin der Spieler als Nächstes sollte (für die Kamera), sonst null
     public Transform CurrentTarget { get; private set; }
 
@@ -186,8 +202,7 @@ public class LevelManager : MonoBehaviour
         if (enemy != null) enemy.gameObject.SetActive(false);
 
         if (createReferenceTable) CreateReferenceTable();
-        if (createRing) BuildRing();
-        CreateOrdersUi();
+        // Blaues Quadrat (Rundweg) und die Bestellliste oben rechts entfernt (auf Wunsch)
 
         BuildShop();
         spawnTimer = firstCustomerDelay;
@@ -278,7 +293,7 @@ public class LevelManager : MonoBehaviour
         machineCenterLocal = (a + b) / 2f;
         Vector3 size = new Vector3(c1 - c0 + 1, 0f, r1 - r0 + 1) * CellSize;
 
-        CreatePad("Machine", machineCenterLocal, size, machineColor, 0.4f);
+        // Blauer Untergrund der Maschine entfernt (auf Wunsch)
 
         // Zahnrad (dreht sich, solange gearbeitet wird) – liegt am Rand, damit der Ball darüber rollt
         GameObject gear = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
@@ -289,9 +304,7 @@ public class LevelManager : MonoBehaviour
         PlaceOnBoard(gear.transform, machineCenterLocal + new Vector3(0f, 0.08f, 0f));
         machineGear = gear.transform;
 
-        machineLabel = CreateLabel("MachineLabel", machineCenterLocal + Vector3.up * 1.6f, 6f, Color.white);
-        machineLabel.rectTransform.sizeDelta = new Vector2(6f, 2.5f);
-        SetMachineLabel(null);
+        // Beschriftung der Maschine ("M" / Baufortschritt) entfernt (auf Wunsch)
     }
 
     void BuildMarket(List<Vector2Int> cells)
@@ -309,7 +322,7 @@ public class LevelManager : MonoBehaviour
         GetBounds(cells, out int r0, out int r1, out int c0, out int c1);
         Vector3 top = CellToBoardLocal(r0, c0, 0f), bottom = CellToBoardLocal(r1, c1, 0f);
         Vector3 center = (top + bottom) / 2f;
-        CreatePad("Market", center, new Vector3(c1 - c0 + 1, 0f, r1 - r0 + 1) * CellSize, marketColor, 0.3f);
+        // Rosa Untergrund des Markts entfernt (auf Wunsch)
 
         // Je Stand: kleiner farbiger Würfel, Name und Preis
         for (int i = 0; i < parts; i++)
@@ -320,11 +333,6 @@ public class LevelManager : MonoBehaviour
             Vector3 s = (CellToBoardLocal(sr0, sc0, 0f) + CellToBoardLocal(sr1, sc1, 0f)) / 2f;
             TradeCatalog.Part part = TradeCatalog.Parts[i];
 
-            // Trennlinie zwischen den Ständen
-            if (i > 0)
-                CreatePad("StallDivider", new Vector3(s.x, 0f, CellToBoardLocal(sr0, 0, 0f).z + CellSize / 2f),
-                          new Vector3((c1 - c0 + 1) * CellSize, 0f, 0.08f), Color.white, 0f, 0.035f);
-
             GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
             cube.name = "Stall " + part.name;
             Destroy(cube.GetComponent<Collider>());
@@ -333,10 +341,9 @@ public class LevelManager : MonoBehaviour
             PlaceOnBoard(cube.transform, s + Vector3.up * 0.6f);
             cube.AddComponent<Rotator>();
 
-            CreateLabel("StallLabel", s + new Vector3(2.2f, 0.3f, 0f), 3.5f, Color.white).text =
-                $"{TradeCatalog.Colored(part.name)}\n<size=80%>{part.price} Münzen</size>";
+            // Beschriftung der Marktstände (Name + Preis) entfernt (auf Wunsch)
         }
-        CreateLabel("MarketLabel", new Vector3(center.x, 0f, top.z) + new Vector3(0f, 1.2f, 1f), 5f, marketColor).text = "<b>Markt</b>";
+        // Beschriftung "Markt" entfernt (auf Wunsch)
     }
 
     void BuildCounter()
@@ -344,12 +351,7 @@ public class LevelManager : MonoBehaviour
         foreach (Vector2Int cell in counterCells)
             CreatePad("CounterSpot", CellToBoardLocal(cell.x, cell.y, 0f), new Vector3(0.9f, 0f, 0.9f),
                       new Color(0.45f, 0.95f, 0.45f), 0.2f);
-        if (counterCells.Count > 0)
-        {
-            GetBounds(counterCells, out int r0, out _, out int c0, out int c1);
-            Vector3 mid = (CellToBoardLocal(r0, c0, 0f) + CellToBoardLocal(r0, c1, 0f)) / 2f;
-            CreateLabel("CounterLabel", mid + new Vector3(0f, 0.1f, -1.6f), 4f, new Color(0.6f, 1f, 0.6f)).text = "Kunden";
-        }
+        // Beschriftung "Kunden" entfernt (auf Wunsch)
     }
 
     // Blaues Quadrat wie in der Skizze: vier Streifen auf dem Boden
@@ -491,6 +493,9 @@ public class LevelManager : MonoBehaviour
 
         if (ball == null || ball.IsGameOver) { counterTaken[slot] = null; yield break; }
 
+        // Mit jedem Kunden wird das Feld ein Stück verwinkelter
+        if (randomWallsPerCustomer) SpawnRandomWalls();
+
         Vector3 navPos = playground.StartPosition + entryLocal;
         if (NavMesh.SamplePosition(navPos, out NavMeshHit hit, 2f, NavMesh.AllAreas)) navPos = hit.position;
         Vector2Int cc = counterCells[slot];
@@ -510,6 +515,153 @@ public class LevelManager : MonoBehaviour
         StartCoroutine(GrowIn(clone.transform));
         customers.Add(clone);
         counterTaken[slot] = clone;
+    }
+
+    // ----- Zufallsmauern -----
+
+    // Baut ein paar zufällige Mauerstücke, ohne dass dabei etwas unerreichbar wird.
+    void SpawnRandomWalls()
+    {
+        int count = Random.Range(Mathf.Min(randomWallsMin, randomWallsMax),
+                                 Mathf.Max(randomWallsMin, randomWallsMax) + 1);
+        List<GameObject> fresh = new List<GameObject>();
+        for (int i = 0; i < count; i++)
+        {
+            GameObject wall = TrySpawnRandomWall();
+            if (wall != null) fresh.Add(wall);
+        }
+        if (fresh.Count == 0) return;
+
+        TrimRandomWalls();
+        RebuildNavMesh();
+        foreach (EnemyMovement e in customers) if (e != null) e.OnNavMeshRebuilt();
+        foreach (GameObject wall in fresh) StartCoroutine(RiseWall(wall.transform));
+    }
+
+    GameObject TrySpawnRandomWall()
+    {
+        for (int attempt = 0; attempt < 60; attempt++)
+        {
+            bool horizontal = Random.value < 0.5f;
+            int length = Random.Range(Mathf.Max(1, Mathf.Min(randomWallLengthMin, randomWallLengthMax)),
+                                      Mathf.Max(1, Mathf.Max(randomWallLengthMin, randomWallLengthMax)) + 1);
+            int row = Random.Range(1, GridSize - 1);
+            int col = Random.Range(1, GridSize - 1);
+
+            List<Vector2Int> cells = new List<Vector2Int>();
+            bool ok = true;
+            for (int i = 0; i < length && ok; i++)
+            {
+                Vector2Int cell = horizontal ? new Vector2Int(row, col + i) : new Vector2Int(row + i, col);
+                if (!CanBuildWallAt(cell.x, cell.y)) ok = false;
+                else cells.Add(cell);
+            }
+            if (!ok) continue;
+
+            foreach (Vector2Int cell in cells) wallGrid[cell.x, cell.y] = true;
+            if (!EverythingReachable())
+            {
+                foreach (Vector2Int cell in cells) wallGrid[cell.x, cell.y] = false;
+                continue;
+            }
+
+            GameObject wall = horizontal
+                ? SpawnWall(row, col, cells.Count)
+                : SpawnWallColumn(row, col, cells.Count);
+            randomWalls.Add(wall);
+            randomWallCells.Add(cells);
+            return wall;
+        }
+        return null;
+    }
+
+    // Älteste Zufallsmauern wieder abräumen, damit das Feld nicht zuwächst
+    void TrimRandomWalls()
+    {
+        while (randomWalls.Count > Mathf.Max(1, randomWallsMaxTotal))
+        {
+            foreach (Vector2Int cell in randomWallCells[0]) wallGrid[cell.x, cell.y] = false;
+            if (randomWalls[0] != null) Destroy(randomWalls[0]);
+            randomWalls.RemoveAt(0);
+            randomWallCells.RemoveAt(0);
+        }
+    }
+
+    // Darf auf dieser Zelle eine Mauer stehen? (nichts Wichtiges zubauen, niemanden einsperren)
+    bool CanBuildWallAt(int row, int col)
+    {
+        if (row < 1 || row >= GridSize - 1 || col < 1 || col >= GridSize - 1) return false;
+        if (wallGrid[row, col] || machineGrid[row, col] || marketStall[row, col] >= 0) return false;
+
+        // Stationen und ihre direkte Umgebung frei lassen
+        foreach (Vector2Int cell in counterCells) if (Near(cell, row, col, 1)) return false;
+        foreach (Vector2Int cell in entryCells) if (Near(cell, row, col, 1)) return false;
+        for (int r = row - 1; r <= row + 1; r++)
+            for (int c = col - 1; c <= col + 1; c++)
+                if (r >= 0 && r < GridSize && c >= 0 && c < GridSize
+                    && (machineGrid[r, c] || marketStall[r, c] >= 0)) return false;
+
+        // Nicht auf oder direkt neben den Ball
+        if (BallCell(out int br, out int bc) && Mathf.Abs(br - row) <= 1 && Mathf.Abs(bc - col) <= 1) return false;
+
+        // Nicht auf einen Kunden
+        foreach (EnemyMovement e in customers)
+        {
+            if (e == null) continue;
+            if (CellOf(e.transform.position, out int er, out int ec)
+                && Mathf.Abs(er - row) <= 1 && Mathf.Abs(ec - col) <= 1) return false;
+        }
+        return true;
+    }
+
+    static bool Near(Vector2Int cell, int row, int col, int radius)
+        => Mathf.Abs(cell.x - row) <= radius && Mathf.Abs(cell.y - col) <= radius;
+
+    bool CellOf(Vector3 worldPos, out int row, out int col)
+    {
+        Vector3 local = worldPos - transform.position;
+        float half = GridSize * CellSize / 2f;
+        col = Mathf.FloorToInt((local.x + half) / CellSize);
+        row = Mathf.FloorToInt((half - local.z) / CellSize);
+        bool inside = row >= 0 && row < GridSize && col >= 0 && col < GridSize;
+        if (!inside) { row = col = -1; }
+        return inside;
+    }
+
+    // Flutfüllung: Sind Theke, Eingänge, Maschine und Markt noch miteinander verbunden?
+    bool EverythingReachable()
+    {
+        if (counterCells.Count == 0) return true;
+        bool[,] seen = new bool[GridSize, GridSize];
+        Queue<Vector2Int> open = new Queue<Vector2Int>();
+        Vector2Int start = counterCells[0];
+        seen[start.x, start.y] = true;
+        open.Enqueue(start);
+        int[] dr = { 1, -1, 0, 0 }, dc = { 0, 0, 1, -1 };
+        while (open.Count > 0)
+        {
+            Vector2Int cur = open.Dequeue();
+            for (int i = 0; i < 4; i++)
+            {
+                int r = cur.x + dr[i], c = cur.y + dc[i];
+                if (r < 0 || r >= GridSize || c < 0 || c >= GridSize) continue;
+                if (seen[r, c] || wallGrid[r, c]) continue;
+                seen[r, c] = true;
+                open.Enqueue(new Vector2Int(r, c));
+            }
+        }
+
+        foreach (Vector2Int cell in counterCells) if (!seen[cell.x, cell.y]) return false;
+        foreach (Vector2Int cell in entryCells) if (!seen[cell.x, cell.y]) return false;
+        for (int r = 0; r < GridSize; r++)
+            for (int c = 0; c < GridSize; c++)
+                if ((machineGrid[r, c] || marketStall[r, c] >= 0) && !seen[r, c]) return false;
+
+        // Ball und Kunden dürfen nicht abgeschnitten werden
+        if (BallCell(out int br, out int bc) && !seen[br, bc]) return false;
+        foreach (EnemyMovement e in customers)
+            if (e != null && CellOf(e.transform.position, out int er, out int ec) && !seen[er, ec]) return false;
+        return true;
     }
 
     // Wunsch aus den freigeschalteten Produkten. Neue Produkte etwas bevorzugen.
@@ -851,6 +1003,24 @@ public class LevelManager : MonoBehaviour
         wall.transform.localScale = new Vector3(length * CellSize, wallHeight, CellSize);
 
         // Unter "Ground" hängen: bewegt sich mit dem Brett und wird vom NavMesh erfasst
+        wall.transform.SetParent(ground != null ? ground : transform, true);
+        return wall;
+    }
+
+    // Senkrechtes Mauerstück (SpawnWall baut nur waagerechte)
+    GameObject SpawnWallColumn(int startRow, int col, int length)
+    {
+        GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        wall.name = "MazeWall";
+        if (wallMaterial != null) wall.GetComponent<Renderer>().sharedMaterial = wallMaterial;
+
+        float centerRow = startRow + (length - 1) / 2f;
+        float half = GridSize * CellSize / 2f;
+        Vector3 boardLocal = new Vector3(-half + (col + 0.5f) * CellSize, wallHeight / 2f,
+                                         half - (centerRow + 0.5f) * CellSize);
+        wall.transform.position = transform.position + boardLocal;
+        wall.transform.rotation = transform.rotation;
+        wall.transform.localScale = new Vector3(CellSize, wallHeight, length * CellSize);
         wall.transform.SetParent(ground != null ? ground : transform, true);
         return wall;
     }

@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.AI;
-using TMPro;
 
 // Kunde (die roten Kugeln, früher die Gegner).
 // Er kommt durch einen Eingang aufs Brett, läuft zu einem freien Platz an der
@@ -106,6 +105,15 @@ public class EnemyMovement : MonoBehaviour
             navMeshAgent.SetDestination(CurrentState == State.Leaving ? exitNav : counterNav);
     }
 
+    // Nach einem NavMesh-Neubau (neue Zufallsmauern) wieder auf dem NavMesh einrasten
+    public void OnNavMeshRebuilt()
+    {
+        if (navMeshAgent == null) return;
+        Vector3 pos = navMeshAgent.nextPosition;
+        if (NavMesh.SamplePosition(pos, out NavMeshHit hit, 3f, NavMesh.AllAreas)) pos = hit.position;
+        Teleport(pos);
+    }
+
     void Update()
     {
         Vector3 boardDelta = board != null ? board.position - boardStartPosition : Vector3.zero;
@@ -178,8 +186,7 @@ public class EnemyMovement : MonoBehaviour
     const float BubbleWidth = 3f, BubbleHeight = 1.8f;
 
     // Weiße Sprechblase mit farbigem Rand (= Geduld):
-    //   oben groß der Name des Produkts
-    //   darunter die nötigen Teile als farbige Kästchen mit Namen, dazwischen "+"
+    //   die nötigen Teile als farbige Kästchen
     //   unten der Geduld-Balken
     void CreateBubble()
     {
@@ -198,20 +205,16 @@ public class EnemyMovement : MonoBehaviour
         Quad("Tail", new Vector3(0f, -BubbleHeight / 2f - 0.05f, 0.02f), new Vector2(0.45f, 0.45f), borderMaterial)
             .localRotation = Quaternion.Euler(0f, 0f, 45f);
 
-        // Produktname
-        Label(Wish.name, new Vector3(0f, 0.55f, -0.02f), 4.2f, true);
-
-        // Teile als Kästchen
+        // Beschriftungen (Produktname, Teilenamen, "+") entfernt (auf Wunsch) –
+        // der Wunsch wird nur noch über die farbigen Kästchen gezeigt.
         int n = Wish.parts.Length;
         float spacing = 0.95f;
         for (int i = 0; i < n; i++)
         {
             float x = (i - (n - 1) / 2f) * spacing;
             string part = Wish.parts[i];
-            Quad("Icon " + part, new Vector3(x, 0f, -0.01f), new Vector2(0.42f, 0.42f),
+            Quad("Icon " + part, new Vector3(x, 0.12f, -0.01f), new Vector2(0.6f, 0.6f),
                  UnlitMaterial(TradeCatalog.ColorOf(part)));
-            Label(part, new Vector3(x, -0.38f, -0.02f), 2.2f, false);
-            if (i < n - 1) Label("+", new Vector3(x + spacing / 2f, 0f, -0.02f), 3.5f, true);
         }
 
         // Geduld-Balken
@@ -231,20 +234,6 @@ public class EnemyMovement : MonoBehaviour
         r.sharedMaterial = mat;
         r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
         return q.transform;
-    }
-
-    void Label(string text, Vector3 localPos, float size, bool bold)
-    {
-        GameObject go = new GameObject("Text");
-        go.transform.SetParent(bubble, false);
-        go.transform.localPosition = localPos;
-        TextMeshPro tmp = go.AddComponent<TextMeshPro>();
-        tmp.rectTransform.sizeDelta = new Vector2(BubbleWidth, 0.6f);
-        tmp.alignment = TextAlignmentOptions.Center;
-        tmp.textWrappingMode = TextWrappingModes.NoWrap;
-        tmp.fontSize = size;
-        tmp.color = new Color(0.1f, 0.1f, 0.1f);
-        tmp.text = bold ? "<b>" + text + "</b>" : text;
     }
 
     // Unbeleuchtet, damit die Farben in der Blase klar und hell bleiben
