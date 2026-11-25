@@ -18,6 +18,7 @@
 \usepackage{etoolbox}
 \usepackage{caption}
 \usepackage{float}
+\usepackage{graphicx}
 \usepackage{tikz}
 \usetikzlibrary{positioning,patterns,arrows.meta,fit,decorations.pathreplacing}
 \usepackage{pgfplots}
@@ -131,7 +132,7 @@
 
 Heterogene Rechnersysteme verbinden CPUs mit spezialisierten Beschleunigern wie GPUs, erschweren die Softwareentwicklung jedoch durch herstellerspezifische Schnittstellen, doppelte Codebasen und den Zielkonflikt zwischen Abstraktion und hardwarenaher Kontrolle. Der offene Standard SYCL verspricht eine einheitliche Codebasis in Standard-C++ für Geräte verschiedener Hersteller. Diese Arbeit untersucht, welche Konzepte des SYCL-Programmiermodells bei einer schrittweisen Portierung benötigt werden und ob neben funktionaler Portabilität auch Performance-Portabilität zwischen CPU und GPU erreicht wird.
 
-Dazu wird eine Matrixmultiplikation in fünf aufbauenden Stufen von sequentiellem C++ nach SYCL portiert; dieselbe Stufenfolge durchlaufen zwei speichergebundene Fallbeispiele (2D-Stencil und Reduktion), sodass sich jeder einzelne Schritt bei einem rechen- und bei einem speichergebundenen Problem vergleichen lässt. Gemessen wird mit DPC++~7.2 auf einer CPU (AMD Ryzen~5~5600X) sowie drei NVIDIA-GPUs (RTX~5060~Ti, L40S, H100) im direkten Vergleich zu nativem CUDA, cuBLAS und CUB\@. Die Ergebnisse zeigen, dass sämtliche Programme ohne Codeänderung korrekt auf allen Geräten laufen. Die erreichte Leistung bleibt jedoch stark abhängig von gerätespezifischen Parametern wie der Kachelgröße sowie von der Codeerzeugung der Implementierung für das jeweilige Backend -- insbesondere bei lokalem Speicher (69 bis 80\,\% von CUDA), der Emulation von Specialization Constants auf CUDA und gleitkommabasierten atomaren Operationen. Bei den speichergebundenen Fallbeispielen entscheiden zudem Stufen, die bei der Matrixmultiplikation kaum ins Gewicht fallen: Gemeinsamer Speicher und Buffer kosten dort 23 bis 74\,\% Bandbreite, und die selbst gewählte Work-Group-Größe hebt den Stencil auf der H100 von 81 auf 101\,\% der CUDA-Leistung.
+Dazu wird eine Matrixmultiplikation in fünf aufbauenden Stufen von sequentiellem C++ nach SYCL portiert. Dieselbe Stufenfolge durchlaufen zwei speichergebundene Fallbeispiele (2D-Stencil und Reduktion), sodass sich jeder einzelne Schritt bei einem rechen- und bei einem speichergebundenen Problem vergleichen lässt. Gemessen wird mit DPC++~7.2 auf einer CPU (AMD Ryzen~5~5600X) sowie drei NVIDIA-GPUs (RTX~5060~Ti, L40S, H100) im direkten Vergleich zu nativem CUDA, cuBLAS und CUB\@. Die Ergebnisse zeigen, dass sämtliche Programme ohne Codeänderung korrekt auf allen Geräten laufen. Die erreichte Leistung bleibt jedoch stark abhängig von gerätespezifischen Parametern wie der Kachelgröße sowie von der Codeerzeugung der Implementierung für das jeweilige Backend -- insbesondere bei lokalem Speicher (69 bis 80\,\% von CUDA), der Emulation von Specialization Constants auf CUDA und gleitkommabasierten atomaren Operationen. Bei den speichergebundenen Fallbeispielen entscheiden zudem Stufen, die bei der Matrixmultiplikation kaum ins Gewicht fallen. Gemeinsamer Speicher und Buffer kosten dort 23 bis 74\,\% Bandbreite, und die selbst gewählte Work-Group-Größe hebt den Stencil auf der H100 von 81 auf 101\,\% der CUDA-Leistung.
 
 \newpage
 \tableofcontents
@@ -152,19 +153,19 @@ Dazu wird eine Matrixmultiplikation in fünf aufbauenden Stufen von sequentielle
 \subsection{Problemstellung}\label{sec:problem}
 
 Rechenleistung liegt heutzutage in verschiedenen Formen vor. Neben der CPU
-stehen in fast jedem Rechner GPUs und weitere Beschleuniger zur Verfügung, die
+stehen in fast jedem Rechner GPUs und weitere Hardware zur Verfügung, die
 datenparallele Aufgaben schnell bearbeiten können. Die Software, um diese
 Geräte jeweils anzusprechen, variiert jedoch, denn die großen Hardwarehersteller
 pflegen eigene Schnittstellen. Für die Softwareentwicklung ergeben sich daraus
-drei Probleme:
+drei Probleme.
 
 \begin{enumerate}[nosep]
-    \item Herstellerbindung: CUDA läuft nur auf NVIDIA-GPUs
+    \item Herstellerbindung. CUDA läuft nur auf NVIDIA-GPUs
     \cite{nickolls2008cuda}. AMD (HIP \cite{amd_hip}) und Intel (Level~Zero
     \cite{intel_level_zero}) stellen eigene Programmierschnittstellen bereit.
-    \item Mehrfache Codebasen: Wer mehrere Hersteller unterstützen
+    \item Mehrfache Codebasen. Wer mehrere Hersteller unterstützen
     will, muss mehrere Implementierungen parallel pflegen.
-    \item Abstraktion gegen Kontrolle: Offene Alternativen sind
+    \item Abstraktion gegen Kontrolle. Offene Alternativen sind
     entweder sehr hardwarenah und aufwendig wie OpenCL
     \cite{stone2010opencl} oder erlauben wie OpenMP-Direktiven \cite{openmp_spec}
     wenig Kontrolle über Speicherhierarchie und Ausführung.
@@ -197,7 +198,7 @@ verschiedener Hersteller dasselbe Programm laufen \cite{khronos2020sycl}
 \end{figure}
 
 Ob ein Programm überall läuft, ist jedoch etwas anderes, als ob es überall
-schnell läuft. Diese Arbeit untersucht deshalb die folgende Forschungsfrage:
+schnell läuft. Diese Arbeit untersucht deshalb die folgende Forschungsfrage.
 
 \begin{quote}
 Wie adressiert das Programmiermodell von SYCL die drei genannten
@@ -230,11 +231,7 @@ den Standard über Backends wie CUDA, HIP, Level~Zero, OpenCL oder OpenMP auf
 die Zielhardware ab und übersetzen den Gerätecode meist erst beim ersten
 Start just in time für das konkrete Gerät \cite{alpay2023sscp}.
 
-Sycl weist grundsätzlich 4 Entwurfsziele auf. Portabilität (ein
-Quellcode, viele Backends), Offenheit (ein Standard mit mehreren
-unabhängigen Implementierungen), Produktivität (Host- und Gerätecode
-in einer Datei in Standard-C++) und Kontrolle (Hardwarekonzepte wie
-lokaler Speicher bleiben zugänglich). Tabelle~\ref{tab:vergleich} ordnet
+Sycl weist grundsätzlich 4 Entwurfsziele auf. Portabilität, Offenheit, Produktivität und Kontrolle. Tabelle~\ref{tab:vergleich} ordnet
 SYCL entlang dieser Ziele ein. Kokkos \cite{edwards2014kokkos} und RAJA
 \cite{beckingsale2019raja} verfolgen ähnliche Ziele als C++-Bibliotheken, sind
 aber kein offener Industriestandard.
@@ -284,14 +281,14 @@ vorliegende Arbeit an.
 
 Untersucht werden drei Fallbeispiele, die alle dieselbe Stufenfolge der
 Portierung durchlaufen (Abschnitt~\ref{sec:m-portierung}). Gegenstand ist nicht
-das Rechenproblem selbst, sondern die \emph{Veränderung} am Programm: Verglichen
+das Rechenproblem selbst, sondern die Veränderung am Programm. Verglichen
 wird, was dasselbe Sprachmittel von SYCL bei unterschiedlich gelagerten Problemen
 und auf den untersuchten Geräten bewirkt.
 
 Die Stufenfolge wird an der Multiplikation zweier quadratischer Matrizen
 entwickelt. Sie führt viele Rechenoperationen auf wenigen Daten aus, ist also
-\emph{rechengebunden}, und lässt sich leicht gegen eine Berechnung auf der CPU
-prüfen. Viele praktische Probleme sind dagegen \emph{speichergebunden}: Sie
+rechengebunden, und lässt sich leicht gegen eine Berechnung auf der CPU
+prüfen. Viele praktische Probleme sind dagegen speichergebunden. Sie
 rechnen wenig, und ihre Laufzeit wird von der Speichergeschwindigkeit bestimmt.
 Dafür stehen ein 5-Punkt-Stencil, der in 100 Zeitschritten die Wärmeausbreitung
 auf einer Platte simuliert, indem jeder Gitterpunkt durch den Mittelwert seiner
@@ -302,7 +299,7 @@ einer einzigen Summe zusammenfasst.
 
 Ausgangspunkt ist ein sequentielles C++-Programm auf einem CPU-Kern (Stufe~0).
 Jede weitere Stufe nimmt genau eine Veränderung vor und führt nur die Konzepte
-ein, die dieser Schritt benötigt (Tabelle~\ref{tab:stufen});
+ein, die dieser Schritt benötigt (Tabelle~\ref{tab:stufen}).
 Kapitel~\ref{sec:konzepte} erklärt sie, der Quellcode steht in
 Anhang~\ref{sec:anhang}~(F1). Weil jede Stufe einzeln gemessen wird, zeigt sich,
 was jeder Schritt auf jedem Gerät bringt~(F2).
@@ -319,7 +316,7 @@ Stufe & Änderung & Neue Konzepte \\
 0 & Sequentielles Ausgangsprogramm auf einem CPU-Kern & -- \\
 1 & Die Arbeit wird auf viele parallele Einheiten verteilt & Host und Gerät, Queue, Kernel, Indexraum, gemeinsamer Speicher, Backends, Geräteauswahl \\
 2 & Eigener Gerätespeicher, Daten werden ausdrücklich hin- und zurückkopiert & Gerätespeicher, explizite Kopien, asynchrone Ausführung und Abhängigkeiten \\
-2b & Variante von Stufe~2: Kopieren übernimmt die Bibliothek & Buffer, Accessoren, automatische Abhängigkeiten \\
+2b & Variante von Stufe~2, Kopieren übernimmt die Bibliothek & Buffer, Accessoren, automatische Abhängigkeiten \\
 3 & Die Arbeit wird selbst in Gruppen eingeteilt, noch ohne schnellen Zwischenspeicher & Work-Group und selbst gewählte Gruppengröße \\
 4 & Rechnen in Kacheln fester Größe im schnellen Zwischenspeicher der Gruppe & Command Group, lokaler Speicher, Barriere \\
 5 & Kachelgröße erst beim Programmstart passend zum Gerät gewählt & Geräteabfragen, nachträglich eingesetzte Konstanten, Fehlerbehandlung \\
@@ -327,26 +324,28 @@ Stufe & Änderung & Neue Konzepte \\
 \end{tabularx}
 \end{table}
 
-Stencil und Reduktion durchlaufen dieselben Stufen; Bezugspunkt ist dort die
-Fassung mit eigenem Gerätespeicher (Stufe~2). Die Buffer-Variante (2b) wird je
+Stencil und Reduktion durchlaufen dieselben Stufen. Bezugspunkt ist dort die
+Fassung mit eigenem Gerätespeicher (Stufe~2), die Buffer-Variante (2b) wird je
 Messung einmal neu angelegt und einmal wiederverwendet. Bei der Reduktion fallen
-die Stufen~3 und~4 zusammen, denn erst das Zusammenfassen im lokalen Speicher
-senkt die atomaren Zugriffe auf das Gesamtergebnis von einem je Work-Item auf
-einen je Gruppe; eine zweite Fassung nutzt dafür ein Gruppenkollektiv. Hinzu
-kommen drei Varianten ohne Gegenstück bei der Matrixmultiplikation: beim Stencil
-ein ein- statt zweidimensionaler Indexraum \cite{abram2025sycl} und ein Warten
-der CPU nach jedem Zeitschritt, das die Startzeit eines Auftrags sichtbar macht,
-bei der Reduktion die fertige Reduktionsabstraktion von SYCL.
+die Stufen~3 und~4 zusammen, denn eine selbst gewählte Gruppengröße allein
+ändert dort nichts. Erst das Zusammenfassen im lokalen Speicher senkt die
+atomaren Zugriffe auf das Gesamtergebnis von einem je Work-Item auf einen je
+Gruppe, eine zweite Fassung nutzt dafür ein Gruppenkollektiv. Drei Varianten
+haben kein Gegenstück bei den übrigen Fallbeispielen. Beim Stencil lässt sich das
+zweidimensionale Gitter auch eindimensional indizieren \cite{abram2025sycl}, und
+weil er 100 Zeitschritte nacheinander startet, macht ein Warten der CPU nach
+jedem Schritt die Startzeit eines Auftrags sichtbar. Für die Reduktion bietet
+SYCL als einziges Fallbeispiel eine fertige Abstraktion.
 
 \subsection{Versuchsaufbau}\label{sec:m-aufbau}
 
-Gemessen wird mit DPC++~7.2 \cite{intel_llvm} auf vier Geräten: einer AMD-CPU
+Gemessen wird mit DPC++~7.2 \cite{intel_llvm} auf vier Geräten, einer AMD-CPU
 (sechs Kerne) und einer NVIDIA GeForce RTX~5060~Ti in einem Arbeitsplatzrechner
 sowie den Rechenzentrums-GPUs L40S und H100 des DACHS-Clusters der Hochschule
 Esslingen. Jedes Programm wird je Rechner einmal übersetzt, ohne es auf eine GPU
 festzulegen, und läuft dort unverändert auf allen Geräten. Als Vergleich sind die
 wichtigsten Varianten aller Fallbeispiele zusätzlich in CUDA umgesetzt, mit
-demselben Verfahren und derselben Zeitmessung; als Obergrenze dienen die
+demselben Verfahren und derselben Zeitmessung. Als Obergrenze dienen die
 NVIDIA-Bibliotheken cuBLAS \cite{nvidia_cublas} und CUB \cite{nvidia_cub}.
 Details zu Hardware, Compilern und Problemgrößen stehen in
 Anhang~\ref{sec:messbedingungen}.
@@ -354,7 +353,7 @@ Anhang~\ref{sec:messbedingungen}.
 \subsection{Messgrößen}\label{sec:m-messgroessen}
 
 Gemessen wird auf der CPU die Zeit von der Übergabe des Auftrags an das Gerät bis
-zum Vorliegen des Ergebnisses. Angegeben ist der Median aus fünf Läufen; der erste
+zum Vorliegen des Ergebnisses. Angegeben ist der Median aus fünf Läufen. Der erste
 Lauf wird getrennt ausgewiesen, weil in ihm noch der Gerätecode erzeugt wird
 (Abschnitt~\ref{sec:k-grundlagen}). Jedes Ergebnis wird gegen eine Berechnung auf
 der CPU geprüft. Zur Vergleichbarkeit wird die Laufzeit in GFLOPS
@@ -362,12 +361,13 @@ der CPU geprüft. Zur Vergleichbarkeit wird die Laufzeit in GFLOPS
 
 Ob eine Einstellung wie die Kachelgröße auf allen Geräten zugleich gut
 funktioniert~(F2), misst die Performance-Portabilität nach Pennycook et al.\
-\cite{pennycook2016metric}: das harmonische Mittel der je Gerät erreichten Anteile
-am besten Ergebnis desselben Programms \cite{pennycook2019implications}. Der Wert
-ist eins, wenn die Einstellung überall die beste ist, und null, sobald das
-Programm auf einem Gerät nicht läuft.
+\cite{pennycook2016metric}. Sie hält je Gerät fest, welchen Anteil die Einstellung
+am dort besten Ergebnis desselben Programms erreicht, und mittelt diese Anteile
+harmonisch, sodass das schwächste Gerät den Wert bestimmt
+\cite{pennycook2019implications}. Er ist eins, wenn die Einstellung überall die
+beste ist, und null, sobald das Programm auf einem Gerät nicht läuft.
 
-
+\newpage
 % ---------------------------------------------------------------------------
 \section{Konzepte des Programmiermodells}\label{sec:konzepte}
 % ---------------------------------------------------------------------------
@@ -380,70 +380,42 @@ bis zur hierarchischen Ausführung und Laufzeitanpassung.
 \subsection{Host, Gerät und Ausführungsmodell}\label{sec:k-grundlagen}
 
 SYCL trennt ein heterogenes System in zwei Rollen
-(Abbildung~\ref{fig:ausfuehrung}): Der \emph{Host} führt das Hauptprogramm aus,
+(Abbildung~\ref{fig:stufe1}). Der Host führt das Hauptprogramm aus,
 verwaltet Ressourcen und koordiniert Rechenaufträge, während ein oder mehrere
-\emph{Geräte} die datenparallele Berechnung übernehmen. Geräte können GPUs, FPGAs
+Geräte die datenparallele Berechnung übernehmen. Geräte können GPUs, FPGAs
 oder auch die CPU selbst sein, auf der der Host läuft. Sie sind nach
-Hersteller-Backends in \emph{Plattformen} gruppiert und werden in einem
-\emph{Kontext} zur gemeinsamen Ressourcenverwaltung zusammengefasst
+Hersteller-Backends in Plattformen gruppiert und werden in einem
+Kontext zur gemeinsamen Ressourcenverwaltung zusammengefasst
 \cite{reinders2023dpcpp}. Welches Gerät genutzt wird, entscheidet zur Laufzeit
-ein \emph{Device Selector}, der die verfügbaren Geräte bewertet und das am
+ein Device Selector, der die verfügbaren Geräte bewertet und das am
 besten bewertete auswählt.
 
 \begin{figure}[htbp]
 \centering
-\begin{tikzpicture}[font=\scriptsize]
-    % Host
-    \draw[neu] (0,0) rectangle (4.5,2.85);
-    \node[anchor=north, titel] at (2.25,2.80) {Host (Hauptprogramm)};
-    \node[kasten, alt, minimum width=3.9cm, minimum height=0.42cm] (sel) at (2.25,2.08) {Plattform / Device Selector};
-    \draw[neu] (0.3,0.18) rectangle (4.2,1.48);
-    \node[anchor=north, font=\scriptsize] at (2.25,1.44) {Queue (Kontext \& Gerät)};
-    \node[kastengrau, neu, minimum width=3.3cm, minimum height=0.44cm] (k) at (2.25,0.60) {Kernel};
-    \draw[->, gray!60] (sel.south) -- (2.25,1.48);
-
-    % Laufzeit & Backend
-    \draw[alt] (5.5,0) rectangle (9.3,2.85);
-    \node[anchor=north, titel, text=black!65] at (7.4,2.80) {Laufzeit \& Übersetzung};
-    \node[kasten, alt, minimum width=3.3cm, align=center] (ir) at (7.4,1.95) {Zwischendarstellung\\(SPIR-V / PTX / LLVM-IR)};
-    \node[kasten, neu, minimum width=3.3cm, align=center] (be) at (7.4,0.72) {Backend \& JIT-Compiler\\(CUDA / HIP / Level Zero)};
-    \draw[->, gray!60] (ir.south) -- (be.north);
-    \draw[->, neu] (4.2,0.72) -- node[above] {einreichen} (5.75,0.72);
-
-    % Gerät
-    \draw[neu] (10.2,0) rectangle (14.8,2.85);
-    \node[anchor=north, titel] at (12.5,2.80) {Zielgerät (CPU / GPU / FPGA)};
-    \draw[->, neu] (9.05,0.72) -- node[above] {Treiber} (10.2,0.72);
-    \foreach \i in {0,...,3} \foreach \j in {0,...,2}
-        \draw[neu, fill=white] (10.45+\i*0.46,1.16+\j*0.40) rectangle ++(0.36,0.31);
-    \filldraw[neu, fill=gray!55] (11.83,1.56) rectangle ++(0.36,0.31);
-    \node[anchor=west, align=left] (wi) at (12.60,1.72) {einzelnes\\Work-Item};
-    \draw[->, neu] (wi.west) -- (12.20,1.72);
-    \draw[decorate, decoration={brace, amplitude=3pt, mirror}, line width=0.8pt]
-        (10.45,1.08) -- node[below=3pt] {Indexraum} (12.19,1.08);
-\end{tikzpicture}
-\caption[Ausführungsmodell und Übersetzungspipeline in SYCL]{Ausführungsmodell von SYCL: Der Host reicht einen Kernel über eine Queue ein; Laufzeit und Backend übersetzen die Zwischendarstellung für das Zielgerät und führen sie über einen Indexraum aus}
-\label{fig:ausfuehrung}
+% Quelle: Diagramme/selbsterstellt/draw.drawio
+\includegraphics[width=\textwidth]{Diagramme/selbsterstellt/Stufe1.pdf}
+\caption[Rollenverteilung zwischen Host und Ger\"at]{Grundaufbau eines SYCL-Programms. Der Host reicht einen Kernel \"uber eine Queue ein, das Ger\"at f\"uhrt ihn als viele Work-Items in einem Indexraum aus}
+\label{fig:stufe1}
 \end{figure}
 
-Die parallele Arbeit wird als \emph{Kernel} beschrieben, der auf dem Gerät
-vielfach gleichzeitig ausgeführt wird. Jede Instanz heißt \emph{Work-Item} und
+Die parallele Arbeit wird als Kernel beschrieben, der auf dem Gerät
+vielfach gleichzeitig ausgeführt wird. Jede Instanz heißt Work-Item und
 besitzt eine eindeutige Position in einem ein- bis dreidimensionalen
-\emph{Indexraum}. Nach dem SPMD-Prinzip (\emph{Single Program, Multiple Data})
+Indexraum. Nach dem SPMD-Prinzip (Single Program, Multiple Data)
 beschreibt der Kernel das Verhalten eines einzelnen Work-Items, das über seine
 Position selbst bestimmt, welche Daten es bearbeitet. Aufträge gelangen nicht
-direkt an die Hardware, sondern über eine \emph{Queue}, die an einen Kontext und
-ein Gerät gebunden ist; das Einreichen kehrt sofort zurück, die Ausführung
+direkt an die Hardware, sondern über eine Queue, die an einen Kontext und
+ein Gerät gebunden ist. Das Einreichen kehrt sofort zurück, die Ausführung
 erfolgt asynchron \cite{khronos2020sycl}.
 
-SYCL folgt dem \emph{Single-Source}-Prinzip: Host- und Geräteteil eines Programms
+SYCL folgt dem Single-Source-Prinzip. Host- und Geräteteil eines Programms
 werden gemeinsam in Standard-C++ beschrieben. Weil Beschleuniger keine
 vollständigen Betriebssystemdienste bieten, ist der Sprachumfang auf dem Gerät
 eingeschränkt, etwa ohne dynamische Speicherverwaltung, Ausnahmen oder Rekursion.
 Der Compiler legt den Geräteteil als Zwischendarstellung (SPIR-V, PTX, LLVM-IR)
-neben dem Hostprogramm ab \cite{alpay2023sscp}; beim ersten Start übersetzt ihn
-der Treiber \emph{just in time} (JIT) für das konkrete Gerät. Wird stattdessen
-vorab Maschinencode erzeugt (\emph{Ahead-of-Time}, AOT), entfällt diese
+neben dem Hostprogramm ab \cite{alpay2023sscp}. Beim ersten Start übersetzt ihn
+der Treiber just in time (JIT) für das konkrete Gerät. Wird stattdessen
+vorab Maschinencode erzeugt (Ahead-of-Time, AOT), entfällt diese
 Startlatenz auf Kosten der Portabilität zwischen Hardwaregenerationen
 \cite{reinders2023dpcpp}.
 
@@ -451,83 +423,63 @@ Startlatenz auf Kosten der Portabilität zwischen Hardwaregenerationen
 
 Da Host und Gerät getrennte Speicher besitzen können, regelt SYCL sowohl den
 Datenaustausch zwischen beiden Seiten als auch die Speicherhierarchie auf dem
-Gerät (Abbildung~\ref{fig:speichermodell}). Für den Austausch stehen zwei
-Modelle bereit: \emph{Unified Shared Memory} (USM) sowie \emph{Buffer} mit
-\emph{Accessoren} \cite{khronos2020sycl}.
+Gerät (Abbildungen~\ref{fig:usm} und~\ref{fig:speicherebenen}). Für den
+Austausch stehen zwei Modelle bereit, Unified Shared Memory (USM) sowie Buffer
+mit Accessoren \cite{khronos2020sycl}.
 
 \begin{figure}[htbp]
 \centering
-\begin{tikzpicture}[font=\scriptsize]
-    % Host
-    \draw[neu] (0,0) rectangle (3.9,3.25);
-    \node[anchor=north, titel] at (1.95,3.20) {Host};
-    \node[kasten, neu, minimum width=3.3cm, minimum height=0.92cm, align=center] (hm) at (1.95,2.14)
-        {Host-Speicher};
-    \node[kasten, dashed, minimum width=3.3cm, minimum height=0.74cm, align=center] (sm) at (1.95,0.68)
-        {Gemeinsamer Speicher};
-
-    % Drei Übertragungspfade
-    \draw[<->, neu] (3.9,2.52) -- node[above] {USM-Gerätespeicher}
-        node[below, font=\tiny, text=black!65] {expliziter Transfer} (7.4,2.52);
-    \draw[<->, neu] (3.9,1.74) -- node[above] {Buffer + Accessor}
-        node[below, font=\tiny, text=black!65] {Laufzeit-verwaltet} (7.4,1.74);
-    \draw[<->, dashed, line width=0.8pt] (3.6,0.68) -- node[above] {USM, gemeinsam}
-        node[below, font=\tiny, text=black!65] {automatische Migration} (7.4,0.68);
-
-    % Gerät mit Speicherhierarchie
-    \draw[neu] (7.4,0) rectangle (14.8,3.25);
-    \node[anchor=north, titel] at (11.1,3.20) {Gerät (Speicherhierarchie)};
-    \node[kasten, neu, minimum width=6.9cm, minimum height=0.50cm] at (11.1,2.46)
-        {Globaler Speicher (alle Work-Groups, groß, hohe Latenz)};
-    \foreach \x/\w in {7.65/1, 11.25/2} {
-        \draw[neu] (\x,0.18) rectangle (\x+3.3,1.98);
-        \node[anchor=north west, font=\scriptsize] at (\x+0.06,1.95) {Work-Group \w};
-        \node[kastengrau, neu, minimum width=2.95cm, minimum height=0.40cm] at (\x+1.65,1.28) {Lokaler Speicher};
-        \node[kasten, neu, minimum width=1.38cm, minimum height=0.36cm] at (\x+0.87,0.52) {Privat};
-        \node[kasten, neu, minimum width=1.38cm, minimum height=0.36cm] at (\x+2.43,0.52) {Privat};
-    }
-\end{tikzpicture}
-\caption[Speicherverwaltung und geräteinterne Speicherhierarchie]{Datenverwaltung zwischen Host und Gerät über USM bzw.\ Buffer/Accessoren (links) sowie dreistufige Speicherhierarchie auf dem Gerät (rechts)}
-\label{fig:speichermodell}
+% Quelle: Diagramme/selbsterstellt/draw.drawio
+\includegraphics[width=\textwidth]{Diagramme/selbsterstellt/Speicher.pdf}
+\caption[Speichermodell zwischen Host und Ger\"at]{Speichermodell, aufbauend auf Abbildung~\ref{fig:stufe1}. Neu sind Host- und Ger\"atespeicher mit den Matrizen $A$, $B$ und $C$. Bei USM device kopiert der Host die Daten ausdr\"ucklich, bei gemeinsamem Speicher verschiebt die Laufzeit sie automatisch}
+\label{fig:usm}
 \end{figure}
 
 USM behält die gewohnte Arbeit mit Speicheradressen bei und unterscheidet drei
-Arten von Speicher: \emph{Gerätespeicher} liegt ausschließlich auf dem Gerät und
-muss ausdrücklich hin- und zurückkopiert werden. \emph{Host-Speicher} liegt auf
+Arten von Speicher. Gerätespeicher liegt ausschließlich auf dem Gerät und
+muss ausdrücklich hin- und zurückkopiert werden. Host-Speicher liegt auf
 dem Host, das Gerät greift über den Systembus direkt darauf zu.
-\emph{Gemeinsamer Speicher} ist von beiden Seiten aus erreichbar; die Laufzeit
+Gemeinsamer Speicher ist von beiden Seiten aus erreichbar, die Laufzeit
 verschiebt die Daten bei Bedarf automatisch. Das erleichtert die Portierung,
 nimmt dem Programm aber die Kontrolle über Zeitpunkt und Umfang der Transfers.
 
 Buffer und Accessoren trennen dagegen Datenhaltung und Zugriff
-\cite{reinders2023dpcpp}: Ein Buffer verwaltet Daten unabhängig davon, wo sie
-gerade physisch liegen; über einen Accessor gibt jeder Auftrag an, ob er liest,
+\cite{reinders2023dpcpp}. Ein Buffer verwaltet Daten unabhängig davon, wo sie
+gerade physisch liegen, und über einen Accessor gibt jeder Auftrag an, ob er liest,
 schreibt oder beides. Daraus leitet die Laufzeit alle Kopien selbst ab und
 schreibt geänderte Daten automatisch zurück, sobald der Buffer nicht mehr
 benötigt wird.
 
 Auf dem Gerät unterscheidet SYCL drei Speicherebenen
-(Abbildung~\ref{fig:speichermodell}, rechts) \cite{hwu2022pmpp}: Der
-\emph{globale Speicher} ist für alle Work-Items sichtbar und am größten, aber
-langsam. Der \emph{lokale Speicher} ist ein kleiner, schneller Speicher auf dem
+(Abbildung~\ref{fig:speicherebenen}) \cite{hwu2022pmpp}. Der
+globale Speicher ist für alle Work-Items sichtbar und am größten, aber
+langsam. Der lokale Speicher ist ein kleiner, schneller Speicher auf dem
 Chip (auf GPUs etwa Shared Memory), den sich die Work-Items einer Work-Group
-teilen. Der \emph{private Speicher} gehört einem einzelnen Work-Item und liegt
+teilen. Der private Speicher gehört einem einzelnen Work-Item und liegt
 bevorzugt in Registern. Mehrfach benötigte Daten aus dem globalen in den lokalen
 oder privaten Speicher zu verlagern, ist der zentrale Hebel für Bandbreite und
 Rechenleistung.
 
+\begin{figure}[htbp]
+\centering
+% Quelle: Diagramme/selbsterstellt/draw.drawio
+\includegraphics[width=\textwidth]{Diagramme/selbsterstellt/Speicherebenen.pdf}
+\caption[Speicherebenen auf dem Ger\"at]{Speicherebenen in SYCL, aufbauend auf Abbildung~\ref{fig:usm}. Neu sind die ger\"ateinternen Ebenen je Work-Group (lokaler Speicher) und je Work-Item (privat), die nach unten kleiner und schneller werden}
+\label{fig:speicherebenen}
+\end{figure}
+
 \subsection{Asynchrone Ausführung und Abhängigkeitsgraph}\label{sec:k-abhaengigkeiten}
 
 Weil Kernel und Speichertransfers asynchron eingereicht werden, braucht die
-Laufzeit eine Ordnung, die Datenrennen verhindert. Grundeinheit ist die
-\emph{Command Group}: Sie bündelt genau eine Aktion, etwa einen Kernel oder
-einen Transfer, mit ihren Vorbedingungen und liefert sofort ein \emph{Event}
+Laufzeit eine Ordnung, die Race Condition verhindert. Grundeinheit ist die
+Command Group. Sie bündelt genau eine Aktion, etwa einen Kernel oder
+einen Transfer, mit ihren Vorbedingungen und liefert sofort ein Event
 zurück, das den Auftrag repräsentiert \cite{khronos2020sycl}.
 
-Eine SYCL-Queue arbeitet standardmäßig \emph{out-of-order}: Unabhängige Aufträge
+Eine SYCL-Queue arbeitet standardmäßig out-of-order. Unabhängige Aufträge
 dürfen in beliebiger Reihenfolge und überlappend ausgeführt werden, sodass etwa
 Datentransfers parallel zu einem laufenden Kernel stattfinden können
-(Abbildung~\ref{fig:dag}, links). Eine \emph{In-Order}-Queue bildet dagegen eine
+(Abbildung~\ref{fig:dag}, links). Eine In-Order-Queue bildet dagegen eine
 lineare Kette, in der jeder Auftrag erst nach Abschluss des Vorgängers startet
 (rechts). Das vereinfacht streng sequentielle Zeitschrittverfahren, schließt aber
 Nebenläufigkeit zwischen unabhängigen Zweigen aus \cite{reinders2023dpcpp}.
@@ -537,7 +489,7 @@ Nebenläufigkeit zwischen unabhängigen Zweigen aus \cite{reinders2023dpcpp}.
 \begin{tikzpicture}[font=\scriptsize]
     % Links: Out-of-Order DAG
     \draw[neu] (0,0) rectangle (9.8,2.75);
-    \node[anchor=north, titel] at (4.9,2.70) {Out-of-Order-Queue: gerichteter Abhängigkeitsgraph (DAG)};
+    \node[anchor=north, titel] at (4.9,2.70) {Out-of-Order-Queue mit gerichtetem Abhängigkeitsgraph (DAG)};
     \node[auftrag, neu, minimum width=1.85cm] (t1) at (1.20,1.98) {Transfer $D_1$};
     \node[auftrag, neu, minimum width=1.85cm] (t2) at (1.20,1.30) {Transfer $D_2$};
     \node[auftrag, neu, minimum width=1.85cm] (t3) at (1.20,0.62) {Transfer $D_3$};
@@ -563,13 +515,13 @@ Nebenläufigkeit zwischen unabhängigen Zweigen aus \cite{reinders2023dpcpp}.
     \draw[->, gray!60] (s2) -- (s3);
     \draw[->, gray!60] (s3) -- (s4);
 \end{tikzpicture}
-\caption[Abhängigkeitsgraph (DAG) im Vergleich zur In-Order-Queue]{Ausführungssteuerung: Nebenläufiger Abhängigkeitsgraph (DAG) einer Out-of-Order-Queue (links) gegenüber der streng linearen Abarbeitung einer In-Order-Queue (rechts)}
+\caption[Abhängigkeitsgraph (DAG) im Vergleich zur In-Order-Queue]{Nebenläufiger Abhängigkeitsgraph (DAG) einer Out-of-Order-Queue (links) gegenüber der streng linearen Abarbeitung einer In-Order-Queue (rechts)}
 \label{fig:dag}
 \end{figure}
 
 In einer Out-of-Order-Queue baut die Laufzeit aus den Vorbedingungen einen
 gerichteten azyklischen Graphen (DAG) auf. Bei USM gibt das Programm die
-Abhängigkeiten ausdrücklich über die Events vorangegangener Aufträge an; bei
+Abhängigkeiten ausdrücklich über die Events vorangegangener Aufträge an, bei
 Buffern leitet die Laufzeit sie selbst aus den Lese- und Schreibzugriffen ab. Mit
 dem Host synchronisiert der Graph erst, wenn das Hauptprogramm gezielt auf ein
 Event, auf die gesamte Queue oder auf die Daten eines Buffers wartet.
@@ -579,8 +531,8 @@ Event, auf die gesamte Queue oder auf die Daten eines Buffers wartet.
 Ein einfacher Indexraum überlässt die Einteilung in Gruppen der Laufzeit und
 erlaubt weder gemeinsamen lokalen Speicher noch Synchronisation zwischen
 Work-Items. Für hardwarenahe Optimierungen teilt der hierarchische Indexraum
-(\emph{ND-Range}) den globalen Bereich in \emph{Work-Groups} fester Größe, die
-sich weiter in \emph{Sub-Groups} gliedern (Abbildung~\ref{fig:hierarchie},
+(ND-Range) den globalen Bereich in Work-Groups fester Größe, die
+sich weiter in Sub-Groups gliedern (Abbildung~\ref{fig:hierarchie},
 links) \cite{khronos2020sycl}. Jedes Work-Item kennt dann seine globale und
 lokale Position sowie seine Gruppe. Diese Hierarchie lässt sich auf GPUs (Grid,
 Thread-Block, Warp bzw.\ Wavefront, Hardware-Thread) ebenso abbilden wie auf CPUs
@@ -630,19 +582,19 @@ Thread-Block, Warp bzw.\ Wavefront, Hardware-Thread) ebenso abbilden wie auf CPU
 
 Alle Work-Items einer Work-Group laufen auf derselben Recheneinheit und teilen
 sich deren lokalen Speicher. Da die Reihenfolge, in der sie ausgeführt werden,
-nicht festgelegt ist, trennt eine \emph{Barriere} gemeinsame Lade- und
-Lesephasen: Sie hält alle Work-Items der Gruppe an, bis jedes sie erreicht hat,
+nicht festgelegt ist, trennt eine Barriere gemeinsame Lade- und
+Lesephasen. Sie hält alle Work-Items der Gruppe an, bis jedes sie erreicht hat,
 und macht deren Schreibzugriffe füreinander sichtbar. Zwischen verschiedenen
 Work-Groups synchronisiert erst das Ende des Kernels \cite{hwu2022pmpp}.
 
-Ergänzend bietet SYCL~2020 \emph{Gruppenkollektive} wie Reduktion, Präfixsumme
+Ergänzend bietet SYCL~2020 Gruppenkollektive wie Reduktion, Präfixsumme
 oder das Verteilen eines Werts an alle Work-Items einer Gruppe, die der Compiler
 auf schnelle Registeraustauschbefehle (etwa Warp-Shuffles) abbilden kann, ohne
 Umweg über den lokalen Speicher. Für Reduktionen über den gesamten Indexraum
-stellt SYCL eine fertige \emph{Reduktionsabstraktion} bereit, die die mehrstufige
+stellt SYCL eine fertige Reduktionsabstraktion bereit, die die mehrstufige
 Zusammenführung übernimmt. Müssen Werte dennoch gleichzeitig aus mehreren
-Gruppen aktualisiert werden, sorgen \emph{atomare Operationen} für korrekte
-Ergebnisse; ihre Speicherordnung und ihr Sichtbarkeitsbereich (Gruppe oder
+Gruppen aktualisiert werden, sorgen atomare Operationen für korrekte
+Ergebnisse. Ihre Speicherordnung und ihr Sichtbarkeitsbereich (Gruppe oder
 ganzes Gerät) lassen sich gezielt eingrenzen \cite{khronos2020sycl}.
 
 \subsection{Laufzeitanpassung, Spezialisierung und Fehlerbehandlung}\label{sec:k-anpassung}
@@ -650,7 +602,7 @@ ganzes Gerät) lassen sich gezielt eingrenzen \cite{khronos2020sycl}.
 Da sich gute Werte für Gruppen- oder Kachelgrößen zwischen Architekturen
 unterscheiden und Hardwaregrenzen nicht überschritten werden dürfen, ergänzt
 SYCL das Modell um drei Laufzeitmechanismen
-(Abbildung~\ref{fig:laufzeitanpassung}):
+(Abbildung~\ref{fig:laufzeitanpassung}).
 
 \begin{figure}[htbp]
 \centering
@@ -670,39 +622,39 @@ SYCL das Modell um drei Laufzeitmechanismen
     % 2. Einreichen + Spezialisierung + synchroner Fehler
     \draw[->, neu] (1.5,1.50) -- node[above] {2.\ Einreichen + Spezialisierung} (7.3,1.50);
     \draw[->, neu] (7.3,1.35) -- node[above] {JIT-Übersetzung \& Start} (13.1,1.35);
-    \draw[->, neu] (7.3,1.10) -- node[above] {synchron: sofortige Ausnahme} (1.5,1.10);
+    \draw[->, neu] (7.3,1.10) -- node[above] {synchron, sofortige Ausnahme} (1.5,1.10);
 
     % 3. Asynchrone Fehlerbehandlung
     \node[kasten, fill=white, minimum width=2.5cm] (err) at (13.1,0.78) {Laufzeitfehler am Gerät};
     \draw[->, dashed] (err.west) -- node[above] {gesammelt} (7.3,0.78);
     \draw[->, neu] (1.5,0.44) -- node[above] {3.\ Warten \& Fehler abholen} (7.3,0.44);
-    \draw[->, neu] (7.3,0.14) -- node[above] {asynchron: Fehlerbehandler} (1.5,0.14);
+    \draw[->, neu] (7.3,0.14) -- node[above] {asynchron, Fehlerbehandler} (1.5,0.14);
 \end{tikzpicture}
 \caption[Laufzeitanpassung, Spezialisierung und zweigeteilte Fehlerbehandlung]{Zusammenspiel von Geräteabfragen, JIT-Spezialisierung sowie synchroner und asynchroner Fehlerbehandlung}
 \label{fig:laufzeitanpassung}
 \end{figure}
 
 \begin{itemize}[nosep]
-    \item \textbf{Geräteabfragen:} Vor dem Start eines Kernels kann der Host
+    \item Geräteabfragen. Vor dem Start eines Kernels kann der Host
     Eigenschaften des Geräts abfragen, etwa die Zahl der Recheneinheiten, die
     maximale Work-Group-Größe sowie die Größe von lokalem und globalem Speicher
     \cite{khronos2020sycl}. So lassen sich ungültige Konfigurationen ausschließen
     und Parameter passend zum Gerät wählen.
-    \item \textbf{Specialization Constants:} Werte, die erst zur Laufzeit
+    \item Specialization Constants. Werte, die erst zur Laufzeit
     feststehen, werden vor der JIT-Übersetzung als Konstanten in den Kernel
     eingesetzt. Der Compiler kann sie dann wie feste Werte behandeln und etwa
     Schleifen abrollen. SPIR-V unterstützt dies direkt, während PTX-Backends es
     über einen Hilfsspeicher nachbilden \cite{dpcpp_spec_const} oder
     Erweiterungen benötigen \cite{adaptivecpp_ext}.
-    \item \textbf{Fehlerbehandlung:} \emph{Synchrone Fehler}, die schon beim
+    \item Fehlerbehandlung. Synchrone Fehler, die schon beim
     Einreichen erkannt werden (etwa eine unzulässige Gruppengröße), meldet SYCL
     sofort als Ausnahme im Hostprogramm \cite{reinders2023dpcpp}.
-    \emph{Asynchrone Fehler}, die erst bei der Ausführung auf dem Gerät
+    Asynchrone Fehler, die erst bei der Ausführung auf dem Gerät
     auftreten, sammelt die Laufzeit und übergibt sie an einen Fehlerbehandler der
     Queue, sobald der Host auf deren Abschluss wartet.
 \end{itemize}
 
-
+\newpage
 % ---------------------------------------------------------------------------
 \section{Ergebnisse}\label{sec:ergebnisse}
 % ---------------------------------------------------------------------------
@@ -710,7 +662,7 @@ SYCL das Modell um drei Laufzeitmechanismen
 Sämtliche Stufen und Varianten aller drei Fallbeispiele liefen ohne Codeänderung
 auf allen vier Zielgeräten und lieferten korrekte Ergebnisse.
 Abbildung~\ref{fig:cuda_vergleich} fasst die relative Leistung zu nativem CUDA
-bzw.\ CUB zusammen; alle Einzelwerte stehen in Anhang~\ref{sec:messungen}.
+bzw.\ CUB zusammen. Alle Einzelwerte stehen in Anhang~\ref{sec:messungen}.
 
 \begin{figure}[htbp]
 \centering
@@ -760,11 +712,11 @@ bzw.\ CUB zusammen; alle Einzelwerte stehen in Anhang~\ref{sec:messungen}.
 \subsection{Matrixmultiplikation}\label{sec:e-matmul}
 
 Den größten Leistungssprung bewirkt die Grundparallelisierung in Stufe~1
-(Tabelle~\ref{tab:stufenmessung}): Bei $n = 1024$ übertrifft sie die einfache
+(Tabelle~\ref{tab:stufenmessung}). Bei $n = 1024$ übertrifft sie die einfache
 sequentielle Schleife (Stufe~0) auf der CPU um den Faktor~87 und auf den GPUs um
 das 2200-Fache (RTX) bis 15\,600-Fache (H100). Expliziter Gerätespeicher in
 Stufe~2 verändert die reine Kernelzeit kaum ($\le 0{,}4\,\%$), macht aber den
-Datentransfer sichtbar (Tabelle~\ref{tab:zeiten}): Bei $n = 2048$ entspricht
+Datentransfer sichtbar (Tabelle~\ref{tab:zeiten}). Bei $n = 2048$ entspricht
 dieser auf der CPU 1\,\% der Kernelzeit, wächst mit der Rechengeschwindigkeit
 der GPUs jedoch auf 27\,\% (RTX), 37\,\% (L40S) und 74\,\% (H100). Je Lauf neu
 angelegte Buffer (Stufe~2b) benötigen außer auf der RTX (+1 bis +7\,\%) 12 bis
@@ -791,11 +743,11 @@ Totalausfall ($\text{PP} = 0{,}94$ bzw.\ $0{,}76$). Auf der CPU erreicht sie mit
 179 bzw.\ 176\,GFLOPS das beste Festwertniveau, büßt auf den GPUs jedoch trotz
 identischer Wahl 5 bis 43\,\% gegenüber Stufe~4 ein, weil DPC++ Specialization
 Constants auf dem CUDA-Backend über einen Parameterpuffer emuliert
-\cite{dpcpp_spec_const}; zudem verlängern JIT-Übersetzung (bis zum 14-Fachen)
+\cite{dpcpp_spec_const}. Zudem verlängern JIT-Übersetzung (bis zum 14-Fachen)
 und Kandidatensuche (weiteres 3,6- bis 8-Faches) den ersten Lauf deutlich
 (Tabelle~\ref{tab:zeiten}). Gegenüber CUDA (Tabelle~\ref{tab:matmul_cuda}) liegt
 SYCL in Stufe~3 mit 100 bis 108\,\% gleichauf, fällt in Stufe~4 ($T = 16$) aber
-auf 69\,\% (RTX), 72\,\% (L40S) und 80\,\% (H100) zurück: Während Kachelung den
+auf 69\,\% (RTX), 72\,\% (L40S) und 80\,\% (H100) zurück. Während Kachelung den
 CUDA-Kernel um 33 bis 60\,\% beschleunigt, bremst die generische
 PTX-Codeerzeugung von DPC++ lokalen Speicher und Barrieren aus. Gegenüber cuBLAS
 \cite{nvidia_cublas} bleiben ohne Register-Blocking \cite{volkov2008gemm} beide
@@ -848,24 +800,24 @@ Beim speichergebundenen 5-Punkt-Stencil erreicht Stufe~2 im zweidimensionalen
 Indexraum 97\,\% (RTX), 100\,\% (L40S) und 81\,\% (H100) der Bandbreite des
 entsprechenden CUDA-Kernels (Tabellen~\ref{tab:stencil}
 und~\ref{tab:stencil_stufen}). Anders als bei der Matrix-\allowbreak
-multiplikation wird hier das Speichermodell zum Hauptfaktor: Gemeinsamer
+multiplikation wird hier das Speichermodell zum Hauptfaktor. Gemeinsamer
 Speicher (Stufe~1) kostet gegenüber Stufe~2 auf L40S und H100 54 bzw.\ 74\,\%
-Bandbreite; neu angelegte Buffer (Stufe~2b) kosten 37 bzw.\ 60\,\%, und selbst
+Bandbreite, neu angelegte Buffer (Stufe~2b) kosten 37 bzw.\ 60\,\%, und selbst
 bei Wiederverwendung verbleiben durch Accessor- und Abhängigkeits-\allowbreak
 verwaltung 23 bzw.\ 43\,\% Verlust.
 
-Den größten Gewinn liefert die explizite Gruppengröße (Stufe~3): Mit $W = 16$
+Den größten Gewinn liefert die explizite Gruppengröße (Stufe~3). Mit $W = 16$
 steigt die H100 von 1553 auf 1931\,GB/s und erreicht 101\,\% von CUDA, womit die
-Lücke aus Stufe~2 allein aus der Gruppeneinteilung der Laufzeit stammt; zugleich
+Lücke aus Stufe~2 allein aus der Gruppeneinteilung der Laufzeit stammt. Zugleich
 ist der Parameter empfindlich ($W = 8$ kostet auf der H100 45\,\%, während auf
 der L40S $W = 32$ mit $+5\,\%$ führt). Lokaler Speicher mit Halo (Stufe~4) lohnt
 wegen wirksamer Hardware-Caches kaum ($+2\,\%$ auf L40S, $-16\,\%$ auf RTX,
-$-44\,\%$ auf CPU); auf der H100 verliert SYCL 20\,\%, der identische
+$-44\,\%$ auf CPU). Auf der H100 verliert SYCL 20\,\%, der identische
 CUDA-Kernel jedoch 60\,\%, wodurch SYCL dort 62\,\% schneller ist (1237 gegen
 765\,GB/s). Stufe~5 mindert die Bandbreite um 12\,\% (L40S) bzw.\ 54\,\% (H100)
 durch einen festen, von der Datenmenge unabhängigen Zusatzaufwand der emulierten
 Specialization Constant je Kernelstart (konstant rund 120\,µs pro Schritt auf
-der L40S bei $n = 4096$ und $n = 8192$, 262 bis 317\,µs auf der H100; eine
+der L40S bei $n = 4096$ und $n = 8192$, 262 bis 317\,µs auf der H100, eine
 divisionsfreie Halo-Variante ändert daran $< 1\,\%$) \cite{dpcpp_spec_const}.
 Ein Host-Warten je Zeitschritt kostet bei $n = 8192$ höchstens 2\,\%, ein auf 1D
 linearisierter Indexraum dagegen wegen der 64-Bit-Divisions- und
@@ -879,7 +831,7 @@ das Laufzeitverhalten (Tabellen~\ref{tab:reduktion}
 und~\ref{tab:reduktion_stufen}). Akkumuliert jedes Work-Item direkt per
 \texttt{sycl::\allowbreak atomic\_\allowbreak ref<float>} (Stufe~2), benötigt
 SYCL 8,3\,s (RTX), 31\,s (L40S) und 39\,s (H100) statt 1,3 bis 1,9\,ms in CUDA
-(Faktor 6300 bis 20\,500): Laut PTX-Analyse übersetzt DPC++ \texttt{fetch\_\allowbreak add}
+(Faktor 6300 bis 20\,500). Laut PTX-Analyse übersetzt DPC++ \texttt{fetch\_\allowbreak add}
 nicht in den nativen Hardwarebefehl, sondern in eine Compare-and-Swap-Schleife
 (\texttt{atom.\allowbreak relaxed.\allowbreak gpu.\allowbreak global.\allowbreak cas.\allowbreak b32}),
 deren Wiederholungen mit der Zahl aktiver Recheneinheiten eskalieren. Diese
@@ -890,7 +842,7 @@ $n = 2^{24}$ nahezu unveränderte Laufzeit).
 Die lokale Baumreduktion (Stufen~3/4, $W = 256$) senkt die globalen Atomics von
 $2^{20}$ auf 4096 und erreicht auf der RTX 96\,\% von CUDA, fällt bei höherer
 Multiprozessor-Zahl auf L40S (28\,\%) und H100 (5\,\%) wegen des verbleibenden
-CAS-Engpasses aber stark ab; \texttt{reduce\_\allowbreak over\_\allowbreak group}
+CAS-Engpasses aber stark ab. \texttt{reduce\_\allowbreak over\_\allowbreak group}
 liefert nahezu identische Werte (z.\,B.\ 406 vs.\ 404\,GB/s auf RTX, 106 vs.\
 111\,GB/s auf H100). Erst Stufe~5 senkt über Geräteabfragen und gröbere Gruppen
 ($W = 1024$) die Zahl der Gruppen auf rund 1100 und erzielt auf der L40S mit
@@ -906,26 +858,26 @@ der H100 zeigten für Stencil und Reduktion Abweichungen von höchstens 1 bzw.\
 \section{Diskussion}\label{sec:diskussion}
 % ---------------------------------------------------------------------------
 
-\paragraph{F1: Konzepte und Problemlösung.}
+\paragraph{F1 -- Konzepte und Problemlösung.}
 Herstellerbindung und doppelte Codebasen überwindet SYCL bereits auf der
-untersten Einstiegsstufe: Durch das Single-Source-Prinzip in Standard-C++17 und
+untersten Einstiegsstufe. Durch das Single-Source-Prinzip in Standard-C++17 und
 die Entkopplung über Backends läuft derselbe Quellcode -- und auf demselben
 System sogar dieselbe ausführbare Datei -- unverändert auf CPU und GPU\@. Den
 Zielkonflikt zwischen Abstraktion und hardwarenaher Kontrolle löst das
-Programmiermodell durch inkrementell kombinierbare Konzepte: Ein flacher
+Programmiermodell durch inkrementell kombinierbare Konzepte. Ein flacher
 Indexraum mit automatischer Seitenmigration (\texttt{malloc\_\allowbreak shared})
 oder laufzeitverwalteten Buffern genügt für korrekte Erstportierungen, während
 explizite Gerätespeichertransfers, Abhängigkeitsgraphen, hierarchische
 Gruppen (\texttt{nd\_\allowbreak range}), lokaler Speicher und Gruppenkollektive
 bei Bedarf feingranulare Kontrolle freigeben. Bequemlichkeit hat dabei einen
-messbaren Preis: Gemeinsamer Speicher und Buffer verursachen bei
+messbaren Preis. Gemeinsamer Speicher und Buffer verursachen bei
 speichergebundenen Kerneln 23 bis 74\,\% Bandbreitenverlust und erschweren eine
 isolierte Zeitmessung.
 
-\paragraph{F2: Performance-Portabilität und Implementierungseinfluss.}
+\paragraph{F2 -- Performance-Portabilität und Implementierungseinfluss.}
 Funktionale Portabilität ist über alle Stufen gegeben, Performance-\allowbreak
 Portabilität stellt sich jedoch nicht automatisch ein. Zum einen bleiben
-Strukturparameter hardwareabhängig: Die auf der CPU beste Kachelgröße ($T = 64$)
+Strukturparameter hardwareabhängig. Die auf der CPU beste Kachelgröße ($T = 64$)
 verletzt das Work-Group-Limit sämtlicher GPUs ($\text{PP} = 0$), und beim
 Stencil entscheidet allein die explizite Gruppengröße auf der H100 zwischen 81
 und 101\,\% der CUDA-Leistung. Laufzeit-\allowbreak introspektion
@@ -933,19 +885,19 @@ und 101\,\% der CUDA-Leistung. Laufzeit-\allowbreak introspektion
 zuverlässig und wählt auf jedem Gerät gültige, lokal gute Parameter, nimmt dem
 Entwickler die Auswahl relevanter Freiheitsgrade aber nicht ab. Zum anderen
 hängt der Abstand zu nativem CUDA stark von der Backend-Reife des Compilers ab
-\cite{deakin2020sycl}: Während einfache globale Kernel 81 bis 108\,\% erreichen,
+\cite{deakin2020sycl}. Während einfache globale Kernel 81 bis 108\,\% erreichen,
 führen die Emulation von Specialization Constants auf PTX \cite{dpcpp_spec_const}
 (statt nativer SPIR-V-\allowbreak Spezialisierung auf der CPU oder Erweiterungen
 wie in AdaptiveCpp \cite{adaptivecpp_ext}), die Übersetzung von lokalem Speicher
 (69 bis 80\,\% bei Matrix-\allowbreak multiplikation, umgekehrt 162\,\% beim
 H100-Stencil) und vor allem die CAS-Emulation von Gleitkomma-Atomics (bis auf
 5\,\% in der Baumreduktion) zu erheblichen Abweichungen. Zudem entscheidet die Problemklasse, welche Portierungsstufe sich
-lohnt: Bei rechengebundener Last zählen Kachelung und Registerausnutzung, bei
+lohnt. Bei rechengebundener Last zählen Kachelung und Registerausnutzung, bei
 speichergebundener Last hingegen Speichermodell, Gruppengeometrie und die
 Vermeidung atomarer Engpässe.
 
 \paragraph{Methodische Grenzen.}
-Die Ergebnisse gelten unter klaren Rahmenbedingungen: Untersucht wurden drei
+Die Ergebnisse gelten unter klaren Rahmenbedingungen. Untersucht wurden drei
 reguläre Kernel mit einer einzigen SYCL-Implementierung (DPC++~7.2) sowie GPUs
 nur eines Herstellers, da die AMD~MI300A im Messzeitraum nicht verfügbar war.
 Die PP-Metrik misst die Application Efficiency relativ zur besten eigenen
@@ -982,19 +934,20 @@ Speicher, Specialization Constants und Atomics auf PTX-/SASS-Ebene untersuchen.
 \subsection{Messbedingungen}\label{sec:messbedingungen}
 
 \begin{itemize}[nosep]
-    \item \textbf{SYCL:} DPC++~7.2 (Open-Source-Release von \texttt{intel/llvm}),
-    kompiliert mit \texttt{-fsycl -O3} und
+    \sloppy
+    \item SYCL. DPC++~7.2 (Open-Source-Release von
+    \texttt{intel/\allowbreak llvm}), kompiliert mit \texttt{-fsycl} \texttt{-O3} und
     \texttt{-fsycl-targets=\allowbreak nvptx64-\allowbreak nvidia-\allowbreak cuda,\allowbreak spir64}
     ohne explizites \texttt{-{}-cuda-\allowbreak gpu-\allowbreak arch}. Das Zielgerät wird zur Laufzeit
-    über \texttt{ONEAPI\_\allowbreak DEVICE\_\allowbreak SELECTOR} gewählt: GPUs über das CUDA-Backend,
+    über \texttt{ONEAPI\_\allowbreak DEVICE\_\allowbreak SELECTOR} gewählt, GPUs über das CUDA-Backend und
     der Ryzen~5~5600X über die Intel OpenCL-CPU-Laufzeit. Das sequentielle
     Ausgangsprogramm (Stufe~0) wird mit \texttt{g++ -O3 -std=c++17} übersetzt.
-    \item \textbf{Hardware:} Arbeitsplatzrechner mit AMD Ryzen~5~5600X (6 Kerne)
-    und NVIDIA GeForce RTX~5060~Ti (16\,GB, CUDA~13.4); DACHS-Cluster der
+    \item Hardware. Arbeitsplatzrechner mit AMD Ryzen~5~5600X (6 Kerne)
+    und NVIDIA GeForce RTX~5060~Ti (16\,GB, CUDA~13.4) sowie DACHS-Cluster der
     Hochschule Esslingen mit L40S (Host AMD EPYC~9254) und
     H100 80\,GB HBM3 (Host AMD EPYC~9454), jeweils CUDA-Toolkit~12.8 auf
     Treiber-CUDA~13.2.
-    \item \textbf{CUDA:} übersetzt mit \texttt{nvcc -O3 -std=c++17} und
+    \item CUDA. Übersetzt mit \texttt{nvcc -O3 -std=c++17} und
     \texttt{-arch=native} (RTX) bzw.\ auf DACHS mit \texttt{-gencode} für
     \texttt{compute\_89}/\texttt{sm\_89} (L40S) und
     \texttt{compute\_90}/\texttt{sm\_90} (H100).
@@ -1002,16 +955,16 @@ Speicher, Specialization Constants und Atomics auf PTX-/SASS-Ebene untersuchen.
     und entspricht damit Stufe~3 mit $W = 16$, da CUDA stets eine Blockgröße
     verlangt. Der gekachelte Kernel im Shared Memory entspricht Stufe~4 für
     $T \in \{8, 16, 32, 64\}$.
-    \item \textbf{cuBLAS:} SGEMM in einfacher Genauigkeit (FP32). Die
+    \item cuBLAS. SGEMM in einfacher Genauigkeit (FP32). Die
     TF32-Tensor-Cores sind abgeschaltet
     (\texttt{CUBLAS\_\allowbreak PEDANTIC\_\allowbreak MATH}), damit dieselbe
     Rechengenauigkeit verglichen wird wie in den eigenen Kerneln.
-    \item \textbf{Problemgrößen:} Matrixmultiplikation $n = 1024$ und $n = 2048$
+    \item Problemgrößen. Matrixmultiplikation $n = 1024$ und $n = 2048$
     (Stufe~0 nur bis $n = 1024$). Stencil $n = 8192$ (256\,MB je Gitter) mit
     100 Zeitschritten. Reduktion $n = 2^{26}$ (256\,MB). Kleinere Probleme
     ($n = 2^{24}$, 64\,MB) passen in den L2-Cache der L40S (96\,MB) und messen
-    deshalb den Cache statt des Speichers; sie sind nicht dargestellt.
-    \item \textbf{Zeitmessung:} \texttt{std::chrono::steady\_clock} auf dem Host,
+    deshalb den Cache statt des Speichers und sind nicht dargestellt.
+    \item Zeitmessung. \texttt{std::chrono::steady\_clock} auf dem Host,
     Median aus fünf Läufen nach einem getrennt erfassten ersten Lauf. Zwei
     unabhängige Messläufe von Stencil und Reduktion auf der H100 zeigten
     Abweichungen $\le 1\,\%$ (Stencil) bzw.\ $\le 4\,\%$ (Reduktion). Das
@@ -1027,7 +980,7 @@ Speicher, Specialization Constants und Atomics auf PTX-/SASS-Ebene untersuchen.
 \centering
 \footnotesize
 \setlength{\tabcolsep}{4pt}
-\caption[Matrixmultiplikation: Leistung je Stufe (GFLOPS)]{Matrixmultiplikation: Leistung je Stufe in GFLOPS für $n = 1024$ und $n = 2048$ (Median aus fünf Läufen). Stufe~0 läuft auf einem Kern der jeweiligen Host-CPU (Ryzen~5~5600X bzw.\ EPYC~9254 / 9454)}
+\caption[Leistung je Stufe bei der Matrixmultiplikation (GFLOPS)]{Leistung je Stufe der Matrixmultiplikation in GFLOPS für $n = 1024$ und $n = 2048$ (Median aus fünf Läufen). Stufe~0 läuft auf einem Kern der jeweiligen Host-CPU (Ryzen~5~5600X bzw.\ EPYC~9254 / 9454)}
 \label{tab:stufenmessung}
 \begin{tabular}{@{}l*{8}{>{\raggedleft\arraybackslash}p{0.95cm}}@{}}
 \toprule
@@ -1050,7 +1003,7 @@ Stufe & 1024 & 2048 & 1024 & 2048 & 1024 & 2048 & 1024 & 2048 \\
 \centering
 \footnotesize
 \setlength{\tabcolsep}{3.5pt}
-\caption[Matrixmultiplikation: Laufzeit je Stufe (ms)]{Matrixmultiplikation: Laufzeit je Stufe in ms für $n = 1024$ und $n = 2048$ (Median aus fünf Läufen; exemplarisch mit erstem Lauf für Stufen~1, 4 und~5). Ab Stufe~2 sind Kernel- und Transferzeit getrennt erfasst, außer bei Stufe~2b}
+\caption[Laufzeit je Stufe bei der Matrixmultiplikation (ms)]{Laufzeit je Stufe der Matrixmultiplikation in ms für $n = 1024$ und $n = 2048$ (Median aus fünf Läufen, exemplarisch mit erstem Lauf für Stufen~1, 4 und~5). Ab Stufe~2 sind Kernel- und Transferzeit getrennt erfasst, außer bei Stufe~2b}
 \label{tab:zeiten}
 \begin{tabular}{@{}l*{8}{r}@{}}
 \toprule
@@ -1078,7 +1031,7 @@ Stufe & 1024 & 2048 & 1024 & 2048 & 1024 & 2048 & 1024 & 2048 \\
 \centering
 \footnotesize
 \setlength{\tabcolsep}{4.5pt}
-\caption[Matrixmultiplikation: Effizienz je Kachelgröße und PP]{Matrixmultiplikation: Effizienz in \% der besten festen Kachelgröße desselben Geräts und Performance-Portabilität (PP) für $n = 1024$ und $n = 2048$ (\textsuperscript{*}für PP auf 100\,\% gedeckelt)}
+\caption[Effizienz je Kachelgröße und Performance-Portabilität]{Effizienz der Matrixmultiplikation in \% der besten festen Kachelgröße desselben Geräts und Performance-Portabilität (PP) für $n = 1024$ und $n = 2048$ (\textsuperscript{*}für PP auf 100\,\% gedeckelt)}
 \label{tab:kacheln}
 \begin{tabular}{@{}llrrrrr@{}}
 \toprule
@@ -1125,7 +1078,7 @@ cuBLAS SGEMM (FP32)                   & --   & 14333 & --   & 35404 & --   & 462
 \centering
 \footnotesize
 \setlength{\tabcolsep}{4pt}
-\caption[Stencil: effektive Bandbreite (GB/s)]{Stencil: effektive Bandbreite in GB/s (256\,MB je Gitter, 100 Zeitschritte, Median aus fünf Läufen; -- = keine CUDA-Variante)}
+\caption[Effektive Bandbreite beim Stencil (GB/s)]{Effektive Bandbreite beim Stencil in GB/s (256\,MB je Gitter, 100 Zeitschritte, Median aus fünf Läufen, -- = keine CUDA-Variante)}
 \label{tab:stencil}
 \begin{tabular}{@{}l*{7}{r}@{}}
 \toprule
@@ -1145,7 +1098,7 @@ lokaler Speicher ($T = 16$)    & 300  & 297  & 682  & 695  & 1237 & 765  & 8,7  
 \centering
 \footnotesize
 \setlength{\tabcolsep}{4pt}
-\caption[Stencil: Leistung je Stufe (GB/s)]{Stencil: effektive Bandbreite je Stufe in GB/s ($n = 8192$, 100 Zeitschritte, eigener Durchlauf vom 19.11.2026, Median aus fünf Läufen). Die relativen Angaben beziehen sich auf Stufe~2 desselben Durchlaufs}
+\caption[Leistung je Stufe beim Stencil (GB/s)]{Effektive Bandbreite je Stufe beim Stencil in GB/s ($n = 8192$, 100 Zeitschritte, eigener Durchlauf vom 19.11.2026, Median aus fünf Läufen). Die relativen Angaben beziehen sich auf Stufe~2 desselben Durchlaufs}
 \label{tab:stencil_stufen}
 \begin{tabular}{@{}llrrrr@{}}
 \toprule
@@ -1158,8 +1111,8 @@ Buffer, je Lauf neu angelegt             & 2b & 421 & $-37\,\%$ & 623  & $-60\,\
 Buffer, wiederverwendet                  & 2b & 515 & $-23\,\%$ & 878  & $-43\,\%$ \\
 Gerätespeicher, 2D-Indexraum             & 2  & 668 & --        & 1553 & --        \\
 Gruppengröße $W = 8$                     & 3  & 670 & $\pm 0\,\%$ & 848  & $-45\,\%$ \\
-Gruppengröße $W = 16$                    & 3  & 669 & $\pm 0\,\%$ & \textbf{1931} & $+24\,\%$ \\
-Gruppengröße $W = 32$                    & 3  & \textbf{700} & $+5\,\%$ & 1569 & $+1\,\%$ \\
+Gruppengröße $W = 16$                    & 3  & 669 & $\pm 0\,\%$ & 1931 & $+24\,\%$ \\
+Gruppengröße $W = 32$                    & 3  & 700 & $+5\,\%$ & 1569 & $+1\,\%$ \\
 Lokaler Speicher, $B = 16$               & 4  & 682 & $+2\,\%$  & 1238 & $-20\,\%$ \\
 Geräteabfrage, Halo mit Division ($B = 16$) & 5 & 592 & $-11\,\%$ & 716  & $-54\,\%$ \\
 Geräteabfrage, eigene Kachel ($B = 8$ / $16$) & 5 & 587 & $-12\,\%$ & 716  & $-54\,\%$ \\
@@ -1176,7 +1129,7 @@ CUDA, lokaler Speicher ($B = 16$)        & --- & 695 &           & 762  &       
 \centering
 \footnotesize
 \setlength{\tabcolsep}{4pt}
-\caption[Reduktion: effektive Bandbreite (GB/s)]{Reduktion: effektive Bandbreite in GB/s (256\,MB, Median aus fünf Läufen; -- = keine CUDA-Variante)}
+\caption[Effektive Bandbreite bei der Reduktion (GB/s)]{Effektive Bandbreite bei der Reduktion in GB/s (256\,MB, Median aus fünf Läufen, -- = keine CUDA-Variante)}
 \label{tab:reduktion}
 \begin{tabular}{@{}l*{7}{r}@{}}
 \toprule
@@ -1196,7 +1149,7 @@ eingebaut (\texttt{reduction}/CUB)   & 356  & 419  & 551  & 715  & 1020 & 2792 &
 \centering
 \footnotesize
 \setlength{\tabcolsep}{4pt}
-\caption[Reduktion: Leistung je Stufe (GB/s)]{Reduktion: effektive Bandbreite je Stufe in GB/s ($n = 2^{26}$, eigener Durchlauf vom 19.11.2026, Median aus fünf Läufen). Die letzte Spalte nennt die Zahl der atomaren Zugriffe auf das Gesamtergebnis}
+\caption[Leistung je Stufe bei der Reduktion (GB/s)]{Effektive Bandbreite je Stufe bei der Reduktion in GB/s ($n = 2^{26}$, eigener Durchlauf vom 19.11.2026, Median aus fünf Läufen). Die letzte Spalte nennt die Zahl der atomaren Zugriffe auf das Gesamtergebnis}
 \label{tab:reduktion_stufen}
 \begin{tabular}{@{}llrrl@{}}
 \toprule
@@ -1210,8 +1163,8 @@ Baum im lokalen Speicher ($W = 256$)  & 3/4 & 211 & 111 & 4096 \\
 \texttt{reduce\_over\_group} ($W = 256$) & 3/4 & 213 & 106 & 4096 \\
 Geräteabfrage, $W = 64$               & 5  & 437 & 293 & ca.\ 1140 \\
 Geräteabfrage, $W = 256$              & 5  & 529 & 403 & ca.\ 1140 \\
-Geräteabfrage, $W = 1024$ (selbst gewählt) & 5 & \textbf{711} & 557 & ca.\ 1100 \\
-Eingebaut (\texttt{sycl::reduction})  & --- & 607 & \textbf{827} & Implementierung \\
+Geräteabfrage, $W = 1024$ (selbst gewählt) & 5 & 711 & 557 & ca.\ 1100 \\
+Eingebaut (\texttt{sycl::reduction})  & --- & 607 & 827 & Implementierung \\
 \midrule
 CUDA, Baum im Shared Memory ($W = 256$) & --- & 742 & 2103 & 4096 \\
 CUDA/CUB                                & --- & 721 & 2704 & --- \\
