@@ -1,0 +1,237 @@
+\documentclass[11pt]{article}
+
+% --- Folienformat 16:9 (960x540bp = 33.87x19.05cm) ---
+\usepackage[paperwidth=960bp, paperheight=540bp, margin=0pt]{geometry}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc, shapes.geometric, backgrounds}
+
+\pgfdeclarelayer{bg}
+\pgfdeclarelayer{edges}
+\pgfdeclarelayer{labels}
+\pgfsetlayers{bg,edges,main,labels}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+
+% --- Reine Schwarz-Weiß / Graustufen-Palette ---
+\definecolor{bgCanvas}{RGB}{255, 255, 255}
+\definecolor{inkBlack}{RGB}{20, 20, 20}
+\definecolor{inkMid}{RGB}{95, 95, 95}
+
+\newcommand{\pTag}{\textbf{[+]}}
+\newcommand{\mTag}{\textbf{[--]}}
+\newcommand{\pmTag}{\textbf{[$\pm$]}}
+
+\tikzset{
+  every path/.style = {line cap=round, line join=round},
+  % --- Knoten-Stile ---
+  agoraNode/.style = {
+    ellipse, draw=inkBlack, line width=1.6pt, fill=white, text=inkBlack,
+    minimum width=3.20cm, minimum height=1.35cm, align=center,
+    font=\Large\bfseries
+  },
+  coreCard/.style = {
+    rounded corners=5pt, draw=inkBlack, line width=1.25pt, fill=black!3, text=inkBlack,
+    minimum width=4.15cm, align=center, inner xsep=9pt, inner ysep=6pt
+  },
+  shellCard/.style = {
+    rounded corners=4pt, draw=inkBlack!80, line width=1.05pt, fill=white, text=inkBlack,
+    minimum width=3.85cm, align=center, inner xsep=8pt, inner ysep=5.5pt
+  },
+  % --- Einheitlicher Pfeil-Stil ---
+  stdArrow/.style = {
+    line width=1.05pt, draw=inkBlack!85,
+    -{Stealth[length=2.3mm, width=1.55mm]},
+    preaction={draw=bgCanvas, line width=3.2pt, arrows=-}
+  },
+  % --- Labels ---
+  lbl/.style = {
+    font=\fontsize{6.2}{7.1}\selectfont, text=inkBlack, fill=bgCanvas,
+    inner xsep=2.4pt, inner ysep=1.2pt, align=center
+  },
+  lblBold/.style = {
+    font=\fontsize{6.4}{7.3}\selectfont\bfseries, text=inkBlack, fill=bgCanvas,
+    inner xsep=2.6pt, inner ysep=1.3pt, align=center
+  },
+}
+
+\begin{document}
+\begin{tikzpicture}[remember picture, overlay, shift={(current page.center)}]
+
+  % --- Reiner weißer Hintergrund (ohne gestrichelte Ringe) ---
+  \begin{pgfonlayer}{bg}
+    \fill[bgCanvas] (current page.south west) rectangle (current page.north east);
+  \end{pgfonlayer}
+
+  % --- Titel (oben links) ---
+  \fill[inkBlack] (-16.25, 8.95) rectangle ++(0.14, -0.92);
+  \node[anchor=north west, font=\Large\bfseries, text=inkBlack, inner sep=0pt]
+    at (-15.92, 8.93) {Agora: Game-Design Loops \& Schalenmodell};
+  \node[anchor=north west, font=\scriptsize, text=inkMid, inner sep=0pt]
+    at (-15.92, 8.30) {3 Kernelemente im Zentrum $\cdot$ 3 Schalenelemente mit gegenseitigen Abhängigkeiten};
+
+  % ==========================================================================
+  % KNOTEN
+  % ==========================================================================
+
+  % --- Zentrum: Agora ---
+  \node[agoraNode] (AG) at (0.0, -0.25) {Agora};
+  \draw[inkBlack!35, line width=0.65pt] (AG) ellipse (1.48cm and 0.60cm);
+
+  % --- 3 Kernelemente ---
+  \node[coreCard] (ST) at (0.0, 3.50) {
+    {\normalsize\bfseries Sozialer Treffpunkt}\\[2.5pt]
+    \begin{minipage}{3.2cm}
+      \scriptsize
+      $\bullet$ Menschen\\
+      $\bullet$ Kultur\\
+      $\bullet$ Freizeit
+    \end{minipage}
+  };
+
+  \node[coreCard] (H) at (-5.6, -2.40) {
+    {\normalsize\bfseries Handelsplatz}\\[2.5pt]
+    \begin{minipage}{3.2cm}
+      \scriptsize
+      $\bullet$ Finanzsystem\\
+      $\bullet$ Digitalität\\
+      $\bullet$ Ressourcen
+    \end{minipage}
+  };
+
+  \node[coreCard] (P) at (5.6, -2.40) {
+    {\normalsize\bfseries Politik}\\[2.5pt]
+    \begin{minipage}{3.2cm}
+      \scriptsize
+      $\bullet$ Exekutive\\
+      $\bullet$ Legislative\\
+      $\bullet$ Judikative
+    \end{minipage}
+  };
+
+  % --- 3 Schalenelemente ---
+  \node[shellCard] (I) at (-11.3, 3.15) {
+    {\normalsize\bfseries Infrastruktur}\\[2.5pt]
+    \scriptsize $\bullet$ Verkehr \enspace $\bullet$ Energie \enspace $\bullet$ Netze
+  };
+
+  \node[shellCard] (N) at (11.3, 3.15) {
+    {\normalsize\bfseries Normen \& Werte}\\[2.5pt]
+    \scriptsize $\bullet$ Vertrauen \enspace $\bullet$ Solidarität \enspace $\bullet$ Fairness
+  };
+
+  \node[shellCard] (U) at (0.0, -7.35) {
+    {\normalsize\bfseries Unternehmen}\\[2.5pt]
+    \scriptsize $\bullet$ Konzerne \enspace $\bullet$ Mittelstand \enspace $\bullet$ Start-ups
+  };
+
+  % ==========================================================================
+  % KANTEN & PFEILE (einheitlicher Stil, weiche organische Kurven)
+  % ==========================================================================
+  \begin{pgfonlayer}{edges}
+
+  % --- 1. Kern-Trias ---
+  \draw[stdArrow] (H.north)      to[out=78, in=182, looseness=1.05] (ST.west);
+  \draw[stdArrow] (ST.south west) to[out=205, in=55, looseness=1.05] (H.north east);
+
+  \draw[stdArrow] (ST.east)      to[out=-2, in=102, looseness=1.05] (P.north);
+  \draw[stdArrow] (P.north west) to[out=125, in=-25, looseness=1.05] (ST.south east);
+
+  \draw[stdArrow] (H.east)       to[out=12, in=168, looseness=0.95] (P.west);
+  \draw[stdArrow] (P.south west) to[out=-166, in=-14, looseness=0.95] (H.south east);
+
+  % --- 2. Kern <-> Schale ---
+  % Infrastruktur <-> Sozialer Treffpunkt
+  \draw[stdArrow] (I.east) to[out=12, in=168] (ST.168);
+
+  % Infrastruktur <-> Handelsplatz
+  \draw[stdArrow] (I.south east) to[out=-62, in=132, looseness=1.05] (H.north west);
+  \draw[stdArrow] (H.west)       to[out=162, in=-95, looseness=1.10] (I.south);
+
+  % Sozialer Treffpunkt <-> Normen & Werte
+  \draw[stdArrow] (ST.12)  to[out=12, in=168] (N.west);
+  \draw[stdArrow] (N.192)  to[out=192, in=-12] (ST.350);
+
+  % Normen & Werte <-> Politik
+  \draw[stdArrow] (N.south)      to[out=-85, in=18, looseness=1.10] (P.east);
+  \draw[stdArrow] (P.north east) to[out=48, in=-118, looseness=1.05] (N.south west);
+
+  % Handelsplatz <-> Unternehmen
+  \draw[stdArrow] (H.south)      to[out=-80, in=172, looseness=1.05] (U.west);
+  \draw[stdArrow] (U.north west) to[out=145, in=-35, looseness=1.05] (H.south east);
+
+  % Politik <-> Unternehmen
+  \draw[stdArrow] (P.south)      to[out=-100, in=8, looseness=1.05] (U.east);
+  \draw[stdArrow] (U.north east) to[out=35, in=-145, looseness=1.05] (P.south west);
+
+  % --- 3. Schale <-> Schale (Äußerer Loop, weite elliptische Bögen) ---
+  \draw[stdArrow] (N.south east) to[out=-68, in=2, looseness=1.05] (U.east);
+  \draw[stdArrow] (U.west)       to[out=178, in=-112, looseness=1.05] (I.south west);
+  \draw[stdArrow] (I.north east) to[out=28, in=152, looseness=0.90] (N.north west);
+
+  \end{pgfonlayer}
+
+  % ==========================================================================
+  % LABELS
+  % ==========================================================================
+  \begin{pgfonlayer}{labels}
+    % Kern-Trias
+    \node[lblBold] at (-4.35, 1.85)  {bietet Waren, Jobs\\[-1pt]\& Güter \pTag};
+    \node[lblBold] at (-2.30, 0.85)  {schafft Konsum\\[-1pt]\& Nachfrage \pTag};
+    \node[lblBold] at (4.35, 1.85)   {wählt \& artikuliert\\[-1pt]Anliegen \pTag};
+    \node[lblBold] at (2.30, 0.85)   {schützt Rechte\\[-1pt]\& setzt Rahmen \pmTag};
+    \node[lblBold] at (0.0, -1.75)   {finanziert über Steuern \& Abgaben \pTag};
+    \node[lblBold] at (0.0, -3.15)   {setzt Marktregeln \& Gesetze \pmTag};
+
+    % Kern <-> Schale: Infrastruktur
+    \node[lbl] at (-6.15, 4.15)  {schafft Zugang,\\[-1pt]Mobilität \& Raum \pTag};
+    \node[lbl] at (-7.45, 0.55)  {ermöglicht Logistik\\[-1pt]\& Lieferketten \pTag};
+    \node[lbl] at (-10.15, -0.55){treibt Ausbau \&\\[-1pt]Digitalisierung \pTag};
+
+    % Kern <-> Schale: Normen & Werte
+    \node[lbl] at (6.15, 4.15)   {verhandelt \& prägt\\[-1pt]Leitbilder \pTag};
+    \node[lbl] at (6.15, 2.55)   {stiften Vertrauen \&\\[-1pt]Zusammenhalt \pTag};
+    \node[lbl] at (10.15, -0.55) {setzen Maßstäbe\\[-1pt]für Gesetze \pTag};
+    \node[lbl] at (7.45, 0.55)   {verankert Werte\\[-1pt]im Recht \pTag};
+
+    % Kern <-> Schale: Unternehmen
+    \node[lbl] at (-5.05, -5.50) {liefert Kapital,\\[-1pt]Arbeit \& Rohstoffe \pTag};
+    \node[lbl] at (-2.35, -4.55) {schaffen Güter,\\[-1pt]Dienste \& Wert \pTag};
+    \node[lbl] at (5.05, -5.50)  {reguliert, besteuert\\[-1pt]\& fördert \pmTag};
+    \node[lbl] at (2.35, -4.55)  {betreiben Lobbyismus\\[-1pt]\& schaffen Jobs \pmTag};
+
+    % Schale <-> Schale (Äußerer Loop)
+    \node[lblBold] at (11.65, -3.55) {fordern Ethik, Fairness\\[-1pt]\& Nachhaltigkeit \mTag};
+    \node[lblBold] at (-11.65, -3.55){brauchen \& verschleißen\\[-1pt]Netze/Energie \mTag};
+    \node[lblBold] at (0.0, 6.45)    {vernetzt Gesellschaft \& beschleunigt Diskurs \pTag};
+  \end{pgfonlayer}
+
+  % ==========================================================================
+  % LEGENDE (unten links, kompakt)
+  % ==========================================================================
+  \begin{scope}[shift={(-16.25, -7.45)}]
+    \filldraw[fill=white, draw=inkBlack!25, rounded corners=4pt, line width=0.5pt]
+      (0, 0) rectangle (5.65, -1.60);
+    \node[anchor=north west, font=\scriptsize\bfseries, text=inkBlack, inner sep=0pt]
+      at (0.24, -0.18) {Legende};
+
+    \draw[inkBlack!85, line width=1.05pt, -{Stealth[length=2.1mm, width=1.45mm]}]
+      (0.24, -0.68) -- (0.82, -0.68);
+    \node[anchor=west, font=\tiny, text=inkBlack, inner sep=0pt]
+      at (0.94, -0.68) {Systemische Wirkung / Rückkopplung};
+
+    \node[anchor=west, font=\tiny, text=inkBlack, inner sep=0pt]
+      at (0.24, -1.16) {\pTag\ verstärkend \quad \mTag\ begrenzend / Kosten \quad \pmTag\ regulierend};
+  \end{scope}
+
+\end{tikzpicture}
+\end{document}
