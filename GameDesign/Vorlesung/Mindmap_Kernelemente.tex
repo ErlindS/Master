@@ -1,0 +1,38 @@
+\documentclass[11pt]{article}
+
+% --- Folienformat 16:9 (960x540bp) ---
+\usepackage[paperwidth=960bp, paperheight=540bp, margin=0pt]{geometry}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc, shapes.geometric}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+
+% --- Farben wie in Zeitgeist_Handel.tex ---
+\definecolor{clBlue}{RGB}{45, 115, 195}
+\definecolor{clGold}{RGB}{215, 165, 30}
+\definecolor{clGreen}{RGB}{42, 155, 85}
+\definecolor{clPurple}{RGB}{130, 95, 195}
+\definecolor{clRed}{RGB}{215, 70, 65}
+
+\newif\ifskKern
+
+\begin{document}
+\begin{tikzpicture}[remember picture, overlay]
+  \begin{scope}[shift={($(current page.center)+(0,-0.2)$)}, scale=1.55,
+                every node/.append style={transform shape}]
+    \skKerntrue
+    \input{agora_systemkarte.tex}
+  \end{scope}
+\end{tikzpicture}
+\end{document}

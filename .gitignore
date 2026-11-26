@@ -20,6 +20,8 @@
 *.pidb
 *.booproj
 # Heruntergeladene Datensätze
+KünstlicheIntelligenz/Labor
+KünstlicheIntelligenz/Labor/assignment*/data/
 KünstlicheIntelligenz/Labor/assignment/assignment3/data/
 KünstlicheIntelligenz/Labor/assignment/assignment4/data/
 KünstlicheIntelligenz/Labor/assignment/assignment5/data/

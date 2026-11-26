@@ -1,0 +1,83 @@
+4 Minuten Introduction
+Was ist Sycl (1 Minute)
+
+Einleitung mit: Ihr seid ein talentierter Software Entwickler (bild mit einem Finger zeigt ins Publikum) und weil ihr bestimmten Menschen vertraut habt (Bild von Jensen Huang einblenden), habt ihr euch entschieden mehrere Nvidia Grafikkarten zu kaufen (mehrere Nvidia Grafikkarten einblenden hintereinander stacked). Doch wie es kam sind definierte Nvidia Grafikkarten teuerer geworden (fallender Aktienkurs) oder ihr habt schlicht weg einfach das Vertrauen in die Grafikkarten Hersteller verloren (trauriger Jensen Huang), weswegen ihr euch eine AMD Grafikkarte gekauft habt.(Amd Grafikkarte einblendern) => Das Problem Nvidia Code läuft nicht auf den AMD Grafikkarten
+
+(Hier kommt die erste Abbildung wo drei kasten zu sehen sind wo von Quellcode -> .Cu code -> Nvidia) und wo keine Verbindung zu amd vorhanden ist. also QuellCode -> .Cu code -/-> AMD
+
+Für Amd bräuchte man statts Cuda nämlich HIP 
+
+=> Das ist jetzt Mies, aber Hilfe ist vorort und heißt SYCL (Das Wort Sycl wird groß eingeblendet.) Sycl ist ein zunächst ein Standard der Khronos Group, welche erlaubt heterogenen Code zu schreiben. (Das Bild wird gefixed und jetzt steht da QuellCode -> Sycl-Implementierung (jetzt zwei Pfeile von Sycl zu Cuda und AMD und Intel und CPU))
+
+Heterogen heißt in diesem Fall unterschiedlichen und ist das Gegenteil von Homogen. Also man kann den selben Code schreiben, aber für unterschiedliche Grafikkarten. Es existieren zwei bekanntere implementierungen ein mal adaptive Cpp von Heidelberg und einmal DPP von Intel. die Implementierung unterscheiden sich leicht, aber erfüllen beide den Standard. Der Anwendungsfall für Sycl ist also für Großrechenzentren ausgelegt. 
+
+Forschungsfrage (F1 & F2) (2 Minuten)
+
+(neue Folie)
+
+(Text wird eingeblendet)
+
+Darauf basierend. "Welche Konzepte werden einem zur verfügung gestellt zur Portierung von Programmen?"
+
+(Text wird eingeblendet)
+
+und "Exstieren unterschiedliche Implementierungsgrade von Sycl,  wo man am Ende doch die Hardware berücksichten muss"?
+
+2 Minuten Methodik
+
+=> Drei Beispiele
+
+Um meine Forschungsfragen zu beantworten habe ich 3 Fallbeispiele überlegt und jeweils implementiert. Einmal eine Matrix Multiplikation, Einmal Stencil und einmal eine Reduktion (jeweils animierte Bilder erscheinen, die das Beispiel zeigen). Diese dann jeweils in 5 Stufen unterteilt (neues Bild wo Stufen eingeblendet werden). Mit jeder Stufe habe ich tiefer in den Werkzeugkasten gegriffen namens Sycl.
+
+=> Dachs Cluster
+
+Jede Stufe wurde dann auf unterschiedlichen Rechengeräten ausgeführt. Also ich sprach vorhin nur von GPUs aber CPUs und FPGAs sollten ebenfalls möglich sein. Ich hatte zugriff auf den Dachs Cluster auf dem einmal eine H100 und eine H200 neben meiner 5060ti mit 16Gb und meiner Cpu einer 5600 von AMD. Dabei habe ich zwei Metriken jeweils gemessen. Einmal die Zeit, weil dies sich gut angeboten hat und einmal GFlops. Als Baseline dient ein Programm was native auf der CPU läuft und als Cuda alternative. (Bilder der Hardware wird eingeblendet.)
+
+8 Minuten Konzepte (Stufe 1-5)
+
+Stufe 1
+
+In den folgenden Minuten werde ich euch die unterschiedlichen Konzepte vorstellen und was das eigentlich Sycl zu hat. Dabei ziehe ich immer die Matrizenmultiplikation als Beispiel ran.
+
+Die erste Stufe ist die minimal invasivste Sufte meistens hat man ein Program und darin legt man eine Queue an. Was eine Queue ist kennt ihr vielleicht aus Algorithmen und Datenstrukturen. In diese Queue wird meist ein Work-Item angelegt oder auch ein Kernel. Dabei muss man jetzt auch von einem Host und einem Gerät unterscheiden. Ein host wird meistens die Instanz sein, die das Program ausführt und diese delegiert den Kernel einem Gerät. Wenn ein Kernel ein Gerät erreicht erhält, ist das ein Work-Item in einem Indexraum. 
+
+Weil Konzepte meist sinnvoll sind, sind zusätzliche Beispiele auch noch hilfreich. An dieser Stelle könnt, Seht ihr den Code für die Stufe 1. 
+
+Stufe 2
+
+Host und Gerät besitzen häufig getrennte Speicher, etwa den Arbeitsspeicher
+
+des Rechners und den Grafikspeicher einer GPU\@. SYCL bietet zwei Wege, Daten
+
+zwischen ihnen zu verwalten: Unified Shared Memory (USM) und Buffer.
+
+Buffer kann man sich wie einen Container vorstellen, welcher Endpunkte uzr Verfügung stellt. Geräte können dann zum Beispiel diese Daten anfragen, wenn man damit gerechnet werden sollte. 
+
+Unified Shared memory funktioniert eher wie ein Pointer. Die konkrete Funktionsweise ist, dann vom Modi abhängig, denn es gibt zwei. Die zwei Modi sind Device allocation und Shared allocation. Bei der Shared allocation werden Daten automatisch hin und her kopiert. bei der Device allocation müssen Daten explizit rüberkopiert werden. 
+
+In dem Beispiel sieht das dann folgendermaßen aus: 
+
+Stufe 3
+
+Die dritte Stufe beschäftig sich mit abhängigkeiten. Meistens gibt es nicht nur eine große Rechung idie gerechnet werden sollte, sondern es müssen mehrere Rechnungen in einer bestimmten Reihenfolge ausgeführt werden. Abhängig von der Problemstellung (Stencil) kann ein depend on verwendet werden. Meistens ist es nur eine hierarchische ausführung
+
+Stufe 4
+
+In der vierten Stufe wird ein trick verwendet, welcher auch in nicht sycl programmen verwendet wird. Nämlich das Aufteilen des Problem in kleinere Indexräume. Somit hat man einen globalen und einen lokalen Raum. Auch Workgroups genannt. Das hat den Vorteil ... 
+
+Stufe 5
+
+Die letzte Stufe baut nochmal auf Stufe 4 auf und fragt explizit die Kachelgröße ab, um herauszufinden welche Kachelgröße die passende Größe ist. Dies dient nur dazu zu zeigen, dass manchmal auch der Code auch von der Hardware abhängig ist. 
+
+6 Minuten Ergebnisse und Schluss
+
+=> 4 Zahlen präsentieren
+
+Soo, jetzt kommen die interessanten Zahlen. Ich gehe jedes Beispiel durch und was ihr gleich sehen könnt ist jede Stufe performt hat
+
+=> 2 Minuten Beantwortung F1 und F2
+
+Jetzt zur beantwortung meiner Fragen.
+
+  Welche Konzepte wurden eingesetzt?
+

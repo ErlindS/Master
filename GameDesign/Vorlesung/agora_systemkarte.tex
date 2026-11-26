@@ -1,0 +1,130 @@
+% ============================================================================
+% Agora-Systemkarte (Kern-Trias + Schalenelemente), farbig
+% Einbinden INNERHALB einer tikzpicture (Koordinaten um (0,0) zentriert).
+% Benötigt: arrows.meta, calc. Farbe: skC (= hkared, einheitlich rot);
+%           \newif\ifskKern im Preamble.
+% Vor dem \input \skKerntrue setzen, um nur die Kernelemente zu zeichnen.
+% ============================================================================
+\providecolor{hkared}{RGB}{198, 42, 18}
+\colorlet{skC}{hkared}  % einheitliche Farbe der Systemkarte
+\providecommand{\pTag}{\textbf{[+]}}
+\providecommand{\mTag}{\textbf{[--]}}
+\providecommand{\pmTag}{\textbf{[$\pm$]}}
+
+\tikzset{
+  skCore/.style = {
+    rounded corners=5pt, draw=#1!85!black, line width=1.4pt, fill=#1!10, text=black!85,
+    minimum width=4.15cm, align=center, inner xsep=9pt, inner ysep=6pt
+  },
+  skShell/.style = {
+    rounded corners=4pt, draw=#1!85!black, line width=1.15pt, fill=#1!5, text=black!85,
+    minimum width=3.85cm, align=center, inner xsep=8pt, inner ysep=5.5pt
+  },
+  skAgora/.style = {
+    ellipse, draw=skC!85!black, line width=2.0pt, fill=skC!12, text=black!85,
+    minimum width=3.20cm, minimum height=1.35cm, align=center, font=\Large\bfseries
+  },
+  % Pfeilfarbe = Element, von dem die Wirkung ausgeht
+  skArrow/.style = {
+    line width=2.2pt, draw=#1!80!black, rounded corners=9pt, line cap=round, line join=round,
+    -{Latex[round, length=3.4mm, width=3.2mm]},
+    preaction={draw=white, line width=5.5pt, arrows=-}
+  },
+  skLbl/.style = {
+    font=\fontsize{6.4}{7.3}\selectfont, text=#1!70!black, fill=white,
+    inner xsep=2.4pt, inner ysep=1.2pt, align=center
+  },
+  skLblB/.style = {
+    font=\fontsize{6.6}{7.5}\selectfont\bfseries, text=#1!70!black, fill=white,
+    inner xsep=2.6pt, inner ysep=1.3pt, align=center
+  },
+}
+
+% ---------------------------------------------------------------- Knoten
+\node[skAgora] (AG) at (0.0, -0.25) {Agora};
+\draw[skC!60, line width=0.65pt] (AG) ellipse (1.48cm and 0.60cm);
+
+\node[skCore=skC] (ST) at (0.0, 3.50) {
+  {\normalsize\bfseries Sozialer Treffpunkt}\\[2.5pt]
+  \begin{minipage}{3.2cm}\scriptsize
+    $\bullet$ Menschen\\ $\bullet$ Kultur\\ $\bullet$ Freizeit
+  \end{minipage}};
+\node[skCore=skC] (H) at (-5.6, -2.40) {
+  {\normalsize\bfseries Handelsplatz}\\[2.5pt]
+  \begin{minipage}{3.2cm}\scriptsize
+    $\bullet$ Finanzsystem\\ $\bullet$ Digitalität\\ $\bullet$ Ressourcen
+  \end{minipage}};
+\node[skCore=skC] (P) at (5.6, -2.40) {
+  {\normalsize\bfseries Politik}\\[2.5pt]
+  \begin{minipage}{3.2cm}\scriptsize
+    $\bullet$ Exekutive\\ $\bullet$ Legislative\\ $\bullet$ Judikative
+  \end{minipage}};
+
+\ifskKern\else
+\node[skShell=skC] (I) at (-11.3, 3.15) {
+  {\normalsize\bfseries Infrastruktur}\\[2.5pt]
+  \scriptsize $\bullet$ Verkehr \enspace $\bullet$ Energie \enspace $\bullet$ Netze};
+\node[skShell=skC] (N) at (11.3, 3.15) {
+  {\normalsize\bfseries Normen \& Werte}\\[2.5pt]
+  \scriptsize $\bullet$ Vertrauen \enspace $\bullet$ Solidarität \enspace $\bullet$ Fairness};
+\node[skShell=skC] (U) at (0.0, -7.35) {
+  {\normalsize\bfseries Unternehmen}\\[2.5pt]
+  \scriptsize $\bullet$ Konzerne \enspace $\bullet$ Mittelstand \enspace $\bullet$ Start-ups};
+\fi
+
+% ---------------------------------------------------------------- Pfeile
+\begin{scope}
+  % --- Kern-Trias ---
+  \draw[skArrow=skC]    ([xshift=-10mm]H.north) |- ([yshift=4mm]ST.west);
+  \draw[skArrow=skC]   ([yshift=-6mm]ST.west)  -| ([xshift=10mm]H.north);
+  \draw[skArrow=skC] ([xshift=10mm]P.north)  |- ([yshift=4mm]ST.east);
+  \draw[skArrow=skC]   ([yshift=-6mm]ST.east)  -| ([xshift=-10mm]P.north);
+  \draw[skArrow=skC]    ([yshift=5mm]H.east)    -- ([yshift=5mm]P.west);
+  \draw[skArrow=skC] ([yshift=-5mm]P.west)   -- ([yshift=-5mm]H.east);
+
+  \ifskKern\else
+  % --- Kern <-> Schale ---
+  \draw[skArrow=skC]   ([xshift=4mm]I.north)   |- (-6.0, 5.30) -| ([xshift=-10mm]ST.north);
+  \draw[skArrow=skC]   ([xshift=10mm]ST.north) |- (6.0, 5.30)  -| ([xshift=-4mm]N.north);
+  \draw[skArrow=skC]  ([xshift=4mm]N.north)   |- (6.0, 6.00)  -| ([xshift=4mm]ST.north);
+  \draw[skArrow=skC]   ([xshift=6mm]I.south)   |- ([yshift=5mm]H.west);
+  \draw[skArrow=skC]    ([yshift=-5mm]H.west)   -| ([xshift=-4mm]I.south);
+  \draw[skArrow=skC]  ([xshift=-6mm]N.south)  |- ([yshift=5mm]P.east);
+  \draw[skArrow=skC] ([yshift=-5mm]P.east)   -| ([xshift=4mm]N.south);
+  \draw[skArrow=skC]    ([xshift=-8mm]H.south)  |- ([yshift=3mm]U.west);
+  \draw[skArrow=skC]    ([xshift=-12mm]U.north) |- (-3.0, -5.00) -| ([xshift=10mm]H.south);
+  \draw[skArrow=skC] ([xshift=8mm]P.south)   |- ([yshift=3mm]U.east);
+  \draw[skArrow=skC]    ([xshift=12mm]U.north)  |- (3.0, -5.00)  -| ([xshift=-10mm]P.south);
+  % --- Schale <-> Schale ---
+  \draw[skArrow=skC]   ([xshift=-8mm]I.north)  |- (0.0, 6.80)   -| ([xshift=8mm]N.north);
+  \draw[skArrow=skC]  ([xshift=12mm]N.south)  |- ([yshift=-3mm]U.east);
+  \draw[skArrow=skC]    ([yshift=-3mm]U.west)   -| ([xshift=-12mm]I.south);
+  \fi
+\end{scope}
+
+% ---------------------------------------------------------------- Beschriftungen
+\begin{scope}
+  \node[skLblB=skC]    at ($([xshift=-10mm]H.north)+(0,3.0)$) {bietet Waren, Jobs\\[-1pt]\& Güter \pTag};
+  \node[skLblB=skC]   at ($([xshift=10mm]H.north)+(0,1.7)$)  {schafft Konsum\\[-1pt]\& Nachfrage \pTag};
+  \node[skLblB=skC] at ($([xshift=10mm]P.north)+(0,3.0)$)  {schützt Rechte\\[-1pt]\& setzt Rahmen \pmTag};
+  \node[skLblB=skC]   at ($([xshift=-10mm]P.north)+(0,1.7)$) {wählt \& artikuliert\\[-1pt]Anliegen \pTag};
+  \node[skLblB=skC]    at ($(H.east)!0.5!(P.west)+(0,0.5)$)   {finanziert über Steuern \& Abgaben \pTag};
+  \node[skLblB=skC] at ($(H.east)!0.5!(P.west)+(0,-0.5)$)  {setzt Marktregeln \& Gesetze \pmTag};
+
+  \ifskKern\else
+  \node[skLbl=skC]   at (-6.0, 5.30) {schafft Zugang, Mobilität \& Raum \pTag};
+  \node[skLbl=skC]   at ($([xshift=6mm]I.south |- H.west)!0.5!(H.west)+(0,0.5)$)  {ermöglicht Logistik\\[-1pt]\& Lieferketten \pTag};
+  \node[skLbl=skC]    at ($([xshift=-4mm]I.south |- H.west)!0.5!(H.west)+(0,-0.5)$) {treibt Ausbau \&\\[-1pt]Digitalisierung \pTag};
+  \node[skLbl=skC]   at (4.6, 5.30)  {verhandelt \& prägt Leitbilder \pTag};
+  \node[skLbl=skC]  at (7.6, 6.00)  {stiften Vertrauen \& Zusammenhalt \pTag};
+  \node[skLbl=skC]  at ($([xshift=-6mm]N.south |- P.east)!0.5!(P.east)+(0,0.5)$) {setzen Maßstäbe\\[-1pt]für Gesetze \pTag};
+  \node[skLbl=skC] at ($([xshift=4mm]N.south |- P.east)!0.5!(P.east)+(0,-0.5)$) {verankert Werte\\[-1pt]im Recht \pTag};
+  \node[skLbl=skC]    at ($([xshift=-8mm]H.south)+(0,-1.9)$) {liefert Kapital,\\[-1pt]Arbeit \& Rohstoffe \pTag};
+  \node[skLbl=skC]    at (-3.0, -5.00) {schaffen Güter,\\[-1pt]Dienste \& Wert \pTag};
+  \node[skLbl=skC] at ($([xshift=8mm]P.south)+(0,-1.9)$)  {reguliert, besteuert\\[-1pt]\& fördert \pmTag};
+  \node[skLbl=skC]    at (3.0, -5.00)  {betreiben Lobbyismus\\[-1pt]\& schaffen Jobs \pmTag};
+  \node[skLblB=skC] at ($([xshift=12mm]N.south)+(0,-4.2)$)  {fordern Ethik, Fairness\\[-1pt]\& Nachhaltigkeit \mTag};
+  \node[skLblB=skC]   at ($([xshift=-12mm]I.south)+(0,-4.2)$) {brauchen \& verschleißen\\[-1pt]Netze/Energie \mTag};
+  \node[skLblB=skC]  at (0.0, 6.80) {vernetzt Gesellschaft \& beschleunigt Diskurs \pTag};
+  \fi
+\end{scope}
